@@ -1,0 +1,49 @@
+﻿<#@ template inherits="AbstractDataHelper" debug="true" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzCodeGen.Utilities" #>
+<#@ import namespace="OzzCodeGen.AppEngines.Java" #>
+<# 
+    WriteDeclataritons(); #>
+
+public <# if (!IsCustomFile){ #>abstract <# } #>class <#= ClassName #> extends <#= BaseClassName #> {
+
+	public <#= ClassName #>(Context context, String name, CursorFactory factory, int version) {
+		super(context, name, factory, version);
+	}
+<# if (!IsCustomFile){ #>
+
+	@Override
+	protected List<String> getCreateScripts() {
+		String[] scriptFiles = {
+	<# int i = 0;
+	   foreach(var table in StorageEntitySettings)
+	   {
+			i++; #>
+				"<#= table.Name #>.sql"<# if (i < StorageEntitySettings.Count) { #>,<# } #> 
+	<# } #>
+				};
+		
+		List<String> scripts = new ArrayList<String>();
+		
+		for (int i = 0; i < scriptFiles.length; i++) {
+			try {
+				String createSql = readAssetsFile(scriptFiles[i]);
+				scripts.add(createSql);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return scripts;
+	}
+<#	} else { #>
+
+	@Override
+	protected List<String> getUpdateScripts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+<# } #>
+}

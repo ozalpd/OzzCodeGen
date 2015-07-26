@@ -1,0 +1,87 @@
+﻿<#@ template inherits="ClassBase" debug="true" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="OzzCodeGen.Definitions" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#+ 
+protected virtual void WriteUsingNamespaces()
+{
+    foreach (string n in UsingNamespaces)
+    {
+        WriteUsingNamespace(n);
+    }
+} #>
+<#+ 
+protected virtual void WriteUsingNamespace(string n)
+{ #>
+using <#= n #>;
+<#+
+} #>
+<#+ 
+protected virtual void BeginNamespace()
+{ 
+	if(!string.IsNullOrEmpty(NamespaceName))
+	{
+		PushIndent("    ");#>
+namespace <#= NamespaceName #>
+{
+<#+	}
+} #>
+<#+ protected virtual void EndNamespace()
+{ 
+	if(!string.IsNullOrEmpty(NamespaceName))
+	{
+		PopIndent();#>
+}
+<#+	}
+} #>
+<#+ 
+protected virtual void WriteFullProperty(string Accessibility, BaseProperty p, bool raisePropertyChanged, string defaultValue = "", string beforeChangeCode = "", string afterChangeCode = "") 
+{ #>
+        <#= Accessibility #> <#= p.TypeName #> <#= p.Name #>
+        {
+<#+ WritePropertyGet(p, defaultValue); #>
+<#+ WritePropertySet(p, raisePropertyChanged, beforeChangeCode, afterChangeCode); #>
+        }
+        <#= p.TypeName #> _<#= CamelCase(p.Name) #>;
+<#+ } #>
+<#+ 
+protected virtual void WritePropertySet(BaseProperty p, bool raisePropertyChanged, string beforeChangeCode = "", string afterChangeCode = "") 
+{ #>
+        set
+        {
+<#+ if(raisePropertyChanged) { #>
+            if (_<#= CamelCase(p.Name) #> == value) return;
+<#+ } #>
+<#+ if(!string.IsNullOrEmpty(beforeChangeCode)) { #>
+                <#= beforeChangeCode #>
+<#+ } #>
+            _<#= CamelCase(p.Name) #> = value;
+<#+ if(raisePropertyChanged) { #>
+            RaisePropertyChanged("<#= p.Name #>");
+<#+ } #>
+<#+ if(!string.IsNullOrEmpty(afterChangeCode)) { #>
+                <#= afterChangeCode #>
+<#+ } #>
+        }
+<#+ } #>
+<#+ 
+protected virtual void WritePropertyGet(BaseProperty p, string defaultValue = "") 
+{ #>
+        get
+        {
+<#+ if(!string.IsNullOrEmpty(defaultValue)) 
+	{
+		if(p.IsTypeNullable())
+		{ #>
+            if (_<#= CamelCase(p.Name) #> == null) _<#= CamelCase(p.Name) #> = <#= defaultValue #>;
+<#+		}
+		else if (p.IsTypeString())
+        { #>
+            if (string.IsNullOrEmpty(_<#= CamelCase(p.Name) #>)) _<#= CamelCase(p.Name) #> = <#= defaultValue #>;
+<#+		}
+	} #>
+            return _<#= CamelCase(p.Name) #>;
+        }
+<#+ } #>

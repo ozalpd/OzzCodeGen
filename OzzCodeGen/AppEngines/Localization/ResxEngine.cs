@@ -1,0 +1,285 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Xml.Serialization;
+using OzzCodeGen.AppEngines.Localization.Templates;
+using OzzCodeGen.AppEngines.Localization.UI;
+using OzzCodeGen.Definitions;
+using OzzCodeGen.Templates;
+using OzzCodeGen.UI;
+using OzzUtils;
+
+namespace OzzCodeGen.AppEngines.Localization
+{
+    [XmlInclude(typeof(LocalizationEntitySetting))]
+    public class ResxEngine : BaseAppEngine
+    {
+        public override string EngineId { get { return EngineTypes.LocalizationResxGenId; } }
+        public override string ProjectTypeName { get { return "Localization Resource Generator"; } }
+
+        [XmlIgnore]
+        public static string DefaultFileName { get { return "ResourceGen.settings"; } }
+        public override string GetDefaultFileName()
+        {
+            return DefaultFileName;
+        }
+
+
+        protected override BaseEntitySetting GetDefaultSetting(EntityDefinition entity)
+        {
+            var setting = new LocalizationEntitySetting()
+            {
+                DataModel = this.Project.DataModel,
+                Name = entity.Name
+            };
+            foreach (var property in entity.Properties)
+            {
+                if (property.DefinitionType != DefinitionType.Collection)
+                {
+                    var ps = GetDefaultPropertySetting(property, setting);
+                }
+            }
+            return setting;
+        }
+
+        public bool SingleResx
+        {
+            get { return _singleResx; }
+            set
+            {
+                _singleResx = value;
+                RaisePropertyChanged("SingleResx");
+            }
+        }
+        private bool _singleResx;
+
+        public string VocabularyDir
+        {
+            get { return _vocabularyDir; }
+            set
+            {
+                _vocabularyDir = value;
+                RaisePropertyChanged("VocabularyDir");
+            }
+        }
+        string _vocabularyDir;
+
+        [XmlIgnore]
+        public List<LocalizationEntitySetting> Entities { get; private set; }
+        protected override void OnEntitySettingsChanged()
+        {
+            var entities = new List<LocalizationEntitySetting>();
+            if (EntitySettings != null)
+            {
+                foreach (LocalizationEntitySetting item in EntitySettings)
+                {
+                    entities.Add(item);
+                }
+            }
+            Entities = entities;
+            RaisePropertyChanged("Entities");
+        }
+
+
+        protected LocalizationPropertySetting GetDefaultPropertySetting(BaseProperty property, LocalizationEntitySetting setting)
+        {
+            var ps = new LocalizationPropertySetting()
+            {
+                Name = property.Name,
+                EntitySetting = setting
+            };
+            setting.Properties.Add(ps);
+
+            return ps;
+        }
+
+        protected override void RefreshSetting(BaseEntitySetting setting, EntityDefinition entity, bool cleanRemovedItems)
+        {
+            var entitySetting = (LocalizationEntitySetting)setting;
+            entitySetting.DataModel = Project.DataModel;
+
+            List<LocalizationPropertySetting> remvProp = new List<LocalizationPropertySetting>();
+            foreach (var propSetting in entitySetting.Properties)
+            {
+                if (entity.Properties.FirstOrDefault(p => p.Name == propSetting.Name) == null)
+                {
+                    remvProp.Add(propSetting);
+                }
+            }
+            foreach (var propSetting in remvProp)
+            {
+                entitySetting.Properties.Remove(propSetting);
+            }
+
+            foreach (var propSetting in entity.Properties)
+            {
+                var ps = entitySetting.Properties.FirstOrDefault(p => p.Name == propSetting.Name);
+                if (ps == null)// && property.DefinitionType != DefinitionType.Collection
+                {
+                    ps = GetDefaultPropertySetting(propSetting, entitySetting);
+                }
+                else //if (ps != null)
+                {
+                    ps.EntitySetting = setting;
+                }
+            }
+        }
+
+        protected override System.Windows.Controls.UserControl GetUiControl()
+        {
+            if (_uiControl == null)
+            {
+                _uiControl = new ResxEngineUI();
+                _uiControl.AppEngine = this;
+            }
+            return _uiControl;
+        }
+        ResxEngineUI _uiControl = null;
+
+        public override List<string> GetTemplateList()
+        {
+            return new List<string>() { "ResourceFile" };
+        }
+
+        protected bool RenderTemplate(LocalizationResx template)
+        {
+            string file = Path.Combine(TargetDirectory, template.GetDefaultFileName());
+            return template.WriteToFile(file, OverwriteExisting || template.EntitySetting.OverwriteExisting);
+        }
+
+        protected bool RenderTemplate(LocalizationEntitySetting entitySettings)
+        {
+            bool allWritten = RenderTemplate(new LocalizationResx(entitySettings));
+
+            foreach (var item in Vocabularies)
+            {
+                allWritten = RenderTemplate(
+                        new LocalizationResx(entitySettings, item.Value)) & allWritten;
+            }
+            return allWritten;
+        }
+
+        public override bool RenderSelectedTemplate()
+        {
+            OpenVocabularies();
+            if (SingleResx)
+            {
+                var entitySingle = new LocalizationEntitySetting()
+                {
+                    Name = "AppForm",
+                    Properties = new List<LocalizationPropertySetting>()
+                };
+
+                foreach (LocalizationEntitySetting entity in EntitySettings.Where(e => e.Exclude == false))
+                {
+                    foreach (LocalizationPropertySetting p in entity.Properties)
+                    {
+                        if (!entitySingle.Properties.Where(lp => lp.Name == p.Name).Any())
+                        {
+                            entitySingle.Properties.Add(p);
+                        }
+                    }
+                }
+                var entityNames = new List<string>();
+                foreach (LocalizationEntitySetting entity in EntitySettings.Where(e => e.Exclude == false))
+                {
+                    entityNames.Add(entity.Name);
+                    entityNames.Add(string.Format("Create{0}", entity.Name));
+                    entityNames.Add(string.Format("Edit{0}", entity.Name));
+                    entityNames.Add(string.Format("Delete{0}", entity.Name));
+                    entityNames.Add(string.Format("{0}List", entity.Name.Pluralize()));
+                    entityNames.Add(entity.Name.Pluralize());
+                }
+                foreach (string entityName in entityNames)
+                {
+                    if (!entitySingle.Properties.Where(lp => lp.Name == entityName).Any())
+                    {
+                        entitySingle.Properties.Add(new LocalizationPropertySetting()
+                        {
+                            Name = entityName,
+                            LocalizeRequiredMsg = false,
+                            LocalizeValidationMsg = false
+                        });
+                    }
+                }
+                return RenderTemplate(entitySingle);
+            }
+            else if (RenderAllEntities)
+            {
+                bool allWritten = true;
+                foreach (LocalizationEntitySetting setting in EntitySettings.Where(e => e.Exclude == false))
+                {
+                    allWritten = RenderTemplate(setting) & allWritten;
+                }
+                return allWritten;
+            }
+            else if (CurrentEntitySetting == null)
+            {
+                return false;
+            }
+            else
+            {
+                return RenderTemplate((LocalizationEntitySetting)CurrentEntitySetting);
+            }
+        }
+
+        public override bool RenderAllTemplates()
+        {
+            throw new NotImplementedException();
+        }
+
+        [XmlIgnore]
+        public Dictionary<string, Vocabulary> Vocabularies
+        {
+            set { _vocabularies = value; }
+            get
+            {
+                if (_vocabularies == null)
+                    _vocabularies = new Dictionary<string, Vocabulary>();
+                return _vocabularies;
+            }
+        }
+        Dictionary<string, Vocabulary> _vocabularies;
+
+        public void OpenVocabularies()
+        {
+            if (string.IsNullOrEmpty(VocabularyDir))
+                return;
+
+            Vocabularies = Vocabulary.OpenVocabularies(VocabularyDir);
+        }
+
+        /// <summary>
+        /// Reads a project settings file and creates a ProjectSettings instance
+        /// </summary>
+        /// <param name="fileName">An XML file's path that contains project settings</param>
+        /// <returns></returns>
+        public static ResxEngine OpenFile(string fileName)
+        {
+            ResxEngine instance = GetInstanceFromFile(fileName, typeof(ResxEngine)) as ResxEngine;
+            if (string.IsNullOrEmpty(instance.VocabularyDir))
+            {
+                instance.VocabularyDir = Path.GetDirectoryName(fileName);
+            }
+            //instance.OpenVocabularies();
+
+            return instance;
+        }
+
+        public override UserControl GetSettingsDlgUI()
+        {
+            return null;
+        }
+
+        public override string GetDefaultTargetDir(string targetSolutionDir)
+        {
+            if (string.IsNullOrEmpty(targetSolutionDir))
+                return string.Empty;
+            return Path.Combine(targetSolutionDir, "App_GlobalResources");
+        }
+    }
+}

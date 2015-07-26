@@ -1,0 +1,47 @@
+﻿<Window x:Class="OzzCodeGen.Wpf.Dialogs.NewEntity" Name="window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="New Entity" Height="260" Width="408" ShowInTaskbar="False" 
+        Activated="window_Activated">
+
+    <Grid DataContext="{Binding ElementName=window, Mode=OneWay}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="32"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="1" DataContext="{Binding EntityDefinition}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="52"/>
+                <RowDefinition Height="26"/>
+            </Grid.RowDefinitions>
+            <TextBlock Name="txtName" Grid.Row="0" Grid.Column="0" Text="Entity Name:" Margin="5"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Margin="1" HorizontalAlignment="Stretch" TabIndex="0"/>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Namespace:" Margin="5"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NamespaceName}" Margin="1" HorizontalAlignment="Stretch" TabIndex="2"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Base Type:" Margin="5"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding BaseTypeName}" Margin="1" HorizontalAlignment="Stretch" TabIndex="3"/>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Abstract:" Margin="5"/>
+            <CheckBox Grid.Row="3" Grid.Column="1" IsChecked="{Binding Abstract}" VerticalAlignment="Center" TabIndex="4"/>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Comment:" Margin="5"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Comment}" Margin="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" TabIndex="5"/>
+        </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="13" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+            <Button Name="btnAccept" Content="OK" Width="72" Margin="5" IsDefault="True" Click="btnAccept_Click" TabIndex="11" />
+            <Button Name="btnCancel" Content="Cancel" Width="72" Margin="5" IsCancel="True" TabIndex="12"/>
+        </StackPanel>
+    </Grid>
+</Window>

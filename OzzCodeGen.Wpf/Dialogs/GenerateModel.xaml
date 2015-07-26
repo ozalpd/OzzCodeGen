@@ -1,0 +1,62 @@
+﻿<Window x:Name="window" x:Class="OzzCodeGen.Wpf.Dialogs.GenerateModel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Generate Model" Height="400" Width="450" MaxWidth="450">
+    <Grid DataContext="{Binding ElementName=window, Mode=OneWay}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="32"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+            <TextBlock Text="Model Provider:" Margin="5" Width="103"/>
+            <ComboBox Name="cboProviders" 
+                      ItemsSource="{Binding ModelProviders, Mode=OneWay}"
+                      SelectedItem="{Binding SelectedModelProvider, Mode=TwoWay}"
+                      Width="240" Margin="1" />
+            <Button Name="btnOpenSource" Content="Open" Width="72" Margin="1" 
+                    IsEnabled="False" Click="btnOpenSource_Click"/>
+        </StackPanel>
+        <Grid DataContext="{Binding Project}" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="112"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="2"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Data Model Name:" Margin="5"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name}" Margin="1" HorizontalAlignment="Stretch"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Model Namespace:" Margin="5"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding NamespaceName}" Margin="1" HorizontalAlignment="Stretch"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Filter Namespace:" Margin="5"/>
+            <ComboBox Name="cboFilterNamspace" Grid.Row="3" Grid.Column="1" Margin="1" 
+                      SelectionChanged="cboFilterNamspace_SelectionChanged"
+                      IsEnabled="False" />
+        </Grid>
+            <!-- Entities Datagrid -->
+        <DataGrid Name="grdEntities" AutoGenerateColumns="False" 
+                  Grid.Row="2" Grid.Column="0"
+                  CanUserAddRows="False"
+                  ItemsSource="{Binding DataModel, Mode=OneWay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Entity Name" Width="100"/>
+                <DataGridTextColumn Binding="{Binding BaseTypeName}" Header="Base Type" Width="100"/>
+                <DataGridTextColumn Binding="{Binding NamespaceName}" Header="Namespace" Width="100"/>
+                <DataGridTextColumn Binding="{Binding DisplayMember}" Header="Display Member" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right">
+            <Button Name="btnAccept" Content="OK" Width="72" Margin="5" IsDefault="True" IsEnabled="False" Click="btnAccept_Click"/>
+            <Button Name="btnCancel" Content="Cancel" Width="72" Margin="5" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>

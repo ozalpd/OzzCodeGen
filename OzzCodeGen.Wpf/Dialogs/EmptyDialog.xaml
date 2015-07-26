@@ -1,0 +1,9 @@
+﻿<Window x:Class="OzzCodeGen.Wpf.Dialogs.EmptyDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="OzzCodeGen Dialog" Height="300" Width="520"
+        ResizeMode="NoResize" ShowInTaskbar="False">
+    <Grid Name="MainGrid">
+        
+    </Grid>
+</Window>

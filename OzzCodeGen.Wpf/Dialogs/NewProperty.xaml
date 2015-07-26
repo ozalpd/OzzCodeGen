@@ -1,0 +1,145 @@
+﻿<Window x:Class="OzzCodeGen.Wpf.Dialogs.NewProperty" Name="window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="New Property" Height="400" Width="460" ShowInTaskbar="False">
+    <Grid DataContext="{Binding ElementName=window, Mode=OneWay}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="32"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" DataContext="{Binding PropertyDefinition}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="6"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="52"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Name="txtName" Grid.Row="0" Grid.Column="0" Text="Property Name:" Margin="5"/>
+            <TextBox Text="{Binding Name}" 
+                     Margin="1" Grid.Row="0" Grid.Column="1" 
+                     Grid.ColumnSpan="3"
+                     HorizontalAlignment="Stretch" 
+                     TabIndex="0"/>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Property Type:" Margin="5"/>
+            <ComboBox ItemsSource="{Binding UsableTypeNames}"
+                      Text="{Binding TypeName}" 
+                      Grid.Row="1" Grid.Column="1" Margin="1" 
+                      Grid.ColumnSpan="2"
+                      TabIndex="1"/>
+            <Button Name="btnPropertyName" Content="Set Property Name" ToolTip="Set Property Name same as Property Type"
+                    Grid.Row="1" Grid.Column="3" Margin="1" 
+                    TabIndex="2" Click="btnPropertyName_Click" />
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Source Type:" Margin="5"/>
+            <TextBox Text="{Binding SourceTypeName}" 
+                     Grid.Row="2" Grid.Column="1" Margin="1" 
+                     Grid.ColumnSpan="3"
+                     HorizontalAlignment="Stretch" 
+                     TabIndex="3"/>
+
+            <!-- Checkboxes Begins-->
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Server Computed:" Margin="5"/>
+            <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding IsServerComputed}" VerticalAlignment="Center" TabIndex="3"/>
+
+            <TextBlock Grid.Row="4" Grid.Column="2" Text="Store Generated:" Margin="5"/>
+            <CheckBox Grid.Row="4" Grid.Column="3" IsChecked="{Binding IsStoreGenerated}" VerticalAlignment="Center" TabIndex="4"/>
+
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="Client Computed:" Margin="5"/>
+            <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding IsClientComputed}" VerticalAlignment="Center" TabIndex="5"/>
+
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Editable:" Margin="5"/>
+            <CheckBox Grid.Row="6" Grid.Column="1" IsChecked="{Binding Editable}" VerticalAlignment="Center" TabIndex="6"/>
+
+            <TextBlock Grid.Row="6" Grid.Column="2" Text="UI Visible:" Margin="5"/>
+            <CheckBox Grid.Row="6" Grid.Column="3" IsChecked="{Binding UiVisible}" VerticalAlignment="Center" TabIndex="7"/>
+            <!-- Checkboxes Ends-->
+
+            <TextBlock Grid.Row="7" Grid.Column="0" Text="Comment:" Margin="5"/>
+            <TextBox Text="{Binding Comment}" 
+                     Grid.Row="7" Grid.Column="1" Margin="1" 
+                     Grid.ColumnSpan="3"
+                     HorizontalAlignment="Stretch" 
+                     TextWrapping="Wrap" 
+                     TabIndex="8"/>
+        </Grid>
+
+        <Grid Name="ComplexPropertySettingsContainer" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Create Dependecy:" 
+                       ToolTip="Create Dependecy Property"
+                       Grid.Row="0" Grid.Column="0" Margin="5"/>
+            <CheckBox IsChecked="{Binding CreateDependecy}" 
+                      Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" 
+                      ToolTip="Create Foreign Key"
+                      TabIndex="11"/>
+
+            <TextBlock Text="Depd. Prpr. Name:" ToolTip="Dependent Property Name" Grid.Row="1" Grid.Column="0" Margin="5"/>
+            <TextBox Text="{Binding DependentProperty.Name}"
+                     ToolTip="Dependent Property Name"
+                     Margin="1" Grid.Row="1" Grid.Column="1" 
+                     Grid.ColumnSpan="3"
+                     HorizontalAlignment="Stretch" 
+                     TabIndex="12"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Property Type:" Margin="5"/>
+            <ComboBox ItemsSource="{Binding DependentProperty.UsableTypeNames}"
+                      Text="{Binding DependentProperty.TypeName}" 
+                      Grid.Row="2" Grid.Column="1" Margin="1" 
+                      Grid.ColumnSpan="3"
+                      TabIndex="1"/>
+
+        </Grid>
+
+        <Grid Name="CollectionPropertySettingsContainer" Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="26"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Dependent Entity:" Margin="5"/>
+            <TextBox Text="{Binding DependentEntityName}" 
+                     Margin="1" Grid.Row="0" Grid.Column="1" 
+                     Grid.ColumnSpan="3"
+                     IsReadOnly="True"
+                     HorizontalAlignment="Stretch" 
+                     TabIndex="0"/>
+
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="13" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+            <Button Name="btnAccept" Content="OK" Width="72" Margin="5" IsDefault="True" Click="btnAccept_Click" TabIndex="121" />
+            <Button Name="btnCancel" Content="Cancel" Width="72" Margin="5" IsCancel="True" TabIndex="122"/>
+        </StackPanel>
+    </Grid>
+</Window>

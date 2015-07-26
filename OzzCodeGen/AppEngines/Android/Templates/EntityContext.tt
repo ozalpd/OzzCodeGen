@@ -1,0 +1,134 @@
+﻿<#@ template inherits="AbstractDataHelper" debug="true" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzCodeGen.Utilities" #>
+<#@ import namespace="OzzCodeGen.AppEngines.Java" #>
+<# 
+    var storeProperties = Entity.GetStorageProperties();
+	var primaryKey = Entity.GetPrimaryKey();
+    WriteDeclataritons(); #>
+
+public <# if (!IsCustomFile){ #>abstract <# } #>class <#= ClassName #> extends <#= BaseClassName #> {
+
+	public <#= ClassName #>(<#= AndroidAppEngine.GeneratedDataContext #> dataContext, String baseUrl) {
+<# if (IsCustomFile){ #>
+		super(dataContext, baseUrl);
+	}
+}
+<#	} else { #>
+		super(dataContext, "<#= GetStorageTableName() #>", baseUrl);
+		
+		colName = new ColumnNames();
+		colIndex = new ColumnIndexes();
+	}
+	protected final ColumnNames colName;
+	protected final ColumnIndexes colIndex;
+
+
+	@Override
+	protected String getUniqueIdField() {
+		return colName.<#= primaryKey.JavaName #>;
+	}
+	@Override
+	protected String getColumnNames() {
+<#  
+StringBuilder sb = new StringBuilder();
+foreach(var property in storeProperties)
+{
+	if(sb.Length > 0){
+		sb.Append(", ");
+    }
+	sb.Append(property.Name);
+} #>
+		return "<#= sb.ToString() #>";
+	}
+	
+	@Override
+	protected String getWhereClause(<#= Entity.Name #> entity) {
+		return String.format("%s = %s", getUniqueIdField(), entity.<#= primaryKey.Getter #>());
+	}
+	
+	@Override
+	protected <#= Entity.Name #> getEntityFromCursor(Cursor c){
+		if(c.getPosition() < 0){
+			return null;
+		}
+		<#= Entity.Name #> entity = new <#= Entity.Name #>();
+<# foreach(var property in storeProperties) { #>
+		entity.<#= property.GetCursorSetter("c", "colIndex." + property.JavaName, "dbContext.unixTimeToDate") #>;
+<# } #>
+		
+		return entity;
+	}
+
+	@Override
+	public void save(<#= Entity.Name #> entity) {
+<#  
+sb = new StringBuilder();
+foreach(var property in storeProperties)
+{
+	if(sb.Length > 0){
+		sb.Append(", ");
+    }
+	if (property.PropertyDefinition.IsTypeString())
+    {
+		sb.Append("'%s'");
+    }
+	else
+    {
+		sb.Append("%s");
+    }
+} #>
+		String saveStatement = String.format(
+				"Insert or Replace into %s (%s) Values (<#= sb.ToString() #>);", 
+				tableName,
+				getColumnNames(),
+<#  
+int i = 0;
+foreach(var property in storeProperties)
+{
+	i++; #>
+				<#= property.GetStorageGetter("entity", "dbContext.castToUnixTime") #><# if (i < storeProperties.Count) { #>,<# } else { #>);<# } #> 
+<# } #>
+		
+		Log.v("Saving", saveStatement);
+		
+		SQLiteDatabase db = dbContext.getWritableDatabase();
+		db.execSQL(saveStatement);
+		db.close();
+		
+		dataContext.onEntitySaved(entity);
+	}
+
+	@Override
+	public void downloadAll() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void downloadById(int uniqueId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public class ColumnNames{
+<#  
+foreach(var property in storeProperties)
+{ #>
+		public final String <#= property.JavaName #> = "<#= property.Name #>";
+<# } #>
+	}
+	public class ColumnIndexes{
+<#  
+i = -1;
+foreach(var property in storeProperties)
+{
+	i++; #>
+		public final int <#= property.JavaName #> = <#= i #>;
+<# } #>
+	}
+}
+<# } #>

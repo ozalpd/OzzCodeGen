@@ -1,0 +1,524 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{794C935F-7FC8-4D07-AB2F-BD37008F67CC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OzzCodeGen</RootNamespace>
+    <AssemblyName>OzzCodeGen</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppEngines\AbstractEntitySetting.cs" />
+    <Compile Include="AppEngines\Android\Templates\AbstractDataHelper.cs" />
+    <Compile Include="AppEngines\Android\Templates\DataContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\Android\Templates\DataContext.part.cs" />
+    <Compile Include="AppEngines\Android\Templates\EntityContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\Android\Templates\EntityContext.part.cs" />
+    <Compile Include="AppEngines\Android\Templates\SqliteHelper.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SqliteHelper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\Android\Templates\SqliteHelper.part.cs" />
+    <Compile Include="AppEngines\Java\Templates\AbstractJavaTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AbstractJavaTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\Java\Templates\AbstractJavaTemplate.part.cs" />
+    <Compile Include="AppEngines\Android\UI\AndroidEngineUI.xaml.cs">
+      <DependentUpon>AndroidEngineUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\AspNetMvc\AspNetMvcEngine.cs" />
+    <Compile Include="AppEngines\AspNetMvc\AspNetMvcEntitySetting.cs" />
+    <Compile Include="AppEngines\AspNetMvc\AspNetMvcPropertySetting.cs" />
+    <Compile Include="AppEngines\AspNetMvc\MvcViewType.enum.cs" />
+    <Compile Include="AppEngines\AspNetMvc\Templates\AbstractMvcView.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AbstractMvcView.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\AspNetMvc\Templates\MvcController.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\AspNetMvc\Templates\MvcController.part.cs" />
+    <Compile Include="AppEngines\AspNetMvc\Templates\AbstractMvcView.part.cs" />
+    <Compile Include="AppEngines\AspNetMvc\Templates\MvcDetailsView.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcDetailsView.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\AspNetMvc\Templates\MvcDetailsView.part.cs" />
+    <Compile Include="AppEngines\AspNetMvc\Templates\MvcEditView.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcEditView.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\AspNetMvc\Templates\MvcEditView.part.cs" />
+    <Compile Include="AppEngines\AspNetMvc\Templates\MvcIndexView.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcIndexView.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\AspNetMvc\Templates\MvcIndexView.part.cs" />
+    <Compile Include="AppEngines\AspNetMvc\UI\MvcEngineSettingsUI.xaml.cs">
+      <DependentUpon>MvcEngineSettingsUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\AspNetMvc\UI\MvcEngineUI.xaml.cs">
+      <DependentUpon>MvcEngineUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\DataLayer\Templates\MvcServerVM.part.cs" />
+    <Compile Include="AppEngines\Android\AndroidEngine.cs" />
+    <Compile Include="AppEngines\Java\AbstractJavaEngine.cs" />
+    <Compile Include="AppEngines\Java\JavaEntitySetting.cs" />
+    <Compile Include="AppEngines\Java\JavaPropertySetting.cs" />
+    <Compile Include="AppEngines\Java\Templates\JavaClass.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JavaClass.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\Java\Templates\JavaClass.part.cs" />
+    <Compile Include="AppEngines\Localization\LocalizationEntitySetting.cs" />
+    <Compile Include="AppEngines\Localization\LocalizationPropertySetting.cs" />
+    <Compile Include="AppEngines\Localization\ResxEngine.cs" />
+    <Compile Include="AppEngines\Localization\UI\ResxEngineUI.xaml.cs">
+      <DependentUpon>ResxEngineUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\Localization\Vocabulary.cs" />
+    <Compile Include="AppEngines\ObjectiveC\ObjcEngine.cs" />
+    <Compile Include="AppEngines\ObjectiveC\ObjcEntitySetting.cs" />
+    <Compile Include="AppEngines\ObjectiveC\ObjcHeaderType.cs" />
+    <Compile Include="AppEngines\ObjectiveC\Templates\BaseObjcClassImpl.cs" />
+    <Compile Include="AppEngines\ObjectiveC\Templates\BaseObjcHeader.cs" />
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcClassExtension.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ObjcClassExtension.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcClassExtension.part.cs" />
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcClassImpl.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ObjcClassImpl.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcClassImpl.part.cs" />
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcDbContextCustom.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ObjcDbContextCustom.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcDbContextCustom.part.cs" />
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcExtensionHeader.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ObjcExtensionHeader.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcExtensionHeader.part.cs" />
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcHeader.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ObjcHeader.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcHeader.part.cs" />
+    <Compile Include="AppEngines\ObjectiveC\ObjcPropertySetting.cs" />
+    <Compile Include="AppEngines\ObjectiveC\Templates\AbstractObjcTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AbstractObjcTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\ObjectiveC\Templates\AbstractObjcTemplate.part.cs" />
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcContextHeader.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ObjcContextHeader.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcContextHeader.part.cs" />
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcDbContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ObjcDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcDbContext.part.cs" />
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcEntityContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ObjcEntityContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\ObjectiveC\Templates\ObjcEntityContext.part.cs" />
+    <Compile Include="AppEngines\ObjectiveC\UI\ObjcEngineSettingsUI.xaml.cs">
+      <DependentUpon>ObjcEngineSettingsUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\ObjectiveC\UI\ObjcEngineUI.xaml.cs">
+      <DependentUpon>ObjcEngineUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\Storage\SqliteScriptsEngine.cs" />
+    <Compile Include="AppEngines\Storage\StorageEntitySetting.cs" />
+    <Compile Include="AppEngines\Storage\StorageColumnSetting.cs" />
+    <Compile Include="AppEngines\Storage\StorageScriptsEngine.cs" />
+    <Compile Include="AppEngines\Storage\Templates\Additionals.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Additionals.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\Storage\Templates\Additionals.part.cs" />
+    <Compile Include="AppEngines\Storage\Templates\AbstractStorageTemplate.part.cs" />
+    <Compile Include="AppEngines\Storage\Templates\MsSql\CreateMsSqlDb.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateMsSqlDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\Storage\Templates\MsSql\CreateMsSqlDb.part.cs" />
+    <Compile Include="AppEngines\Storage\Templates\MsSql\CreateTSqlTable.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateTSqlTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\Storage\Templates\MsSql\CreateTSqlTable.part.cs" />
+    <Compile Include="AppEngines\Storage\Templates\MsSql\DropMsSqlDb.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DropMsSqlDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\Storage\Templates\MsSql\DropMsSqlDb.part.cs" />
+    <Compile Include="AppEngines\Storage\Templates\MsSql\TsqlStoredProcs.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TsqlStoredProcs.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\Storage\Templates\MsSql\TsqlStoredProcs.part.cs" />
+    <Compile Include="AppEngines\Storage\Templates\Sqlite\CreateSqliteTable.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateSqliteTable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\Storage\Templates\Sqlite\CreateSqliteTable.part.cs" />
+    <Compile Include="AppEngines\Storage\TSqlScriptsEngine.cs" />
+    <Compile Include="AppEngines\Storage\UI\StorageEngineSettingsUI.xaml.cs">
+      <DependentUpon>StorageEngineSettingsUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\Storage\UI\StorageEngineUI.xaml.cs">
+      <DependentUpon>StorageEngineUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CodeGenProject.cs" />
+    <Compile Include="Definitions\BaseClassProperty.cs" />
+    <Compile Include="Definitions\EnumDefinition.cs" />
+    <Compile Include="Definitions\EnumDefinitionList.cs" />
+    <Compile Include="Definitions\EnumMember.cs" />
+    <Compile Include="Definitions\EnumMemberList.cs" />
+    <Compile Include="Providers\EmptyModel.cs" />
+    <Compile Include="Providers\EntitySource.cs" />
+    <Compile Include="Definitions\StringProperty.cs" />
+    <Compile Include="Definitions\CollectionProperty.cs" />
+    <Compile Include="Definitions\ComplexProperty.cs" />
+    <Compile Include="DataModel.cs" />
+    <Compile Include="Definitions\EntityPropertyList.cs" />
+    <Compile Include="Providers\IModelProvider.cs" />
+    <Compile Include="AppEngines\BaseAppEngine.cs" />
+    <Compile Include="AppEngines\DataLayer\DataLayerEngine.cs" />
+    <Compile Include="AppEngines\TargetLanguage.cs" />
+    <Compile Include="AppEngines\EngineTypes.cs" />
+    <Compile Include="PropertyDefaultSetting.cs" />
+    <Compile Include="PropertyDefaultSettingList.cs" />
+    <Compile Include="Providers\SourceCode\BaseCodeParser.cs" />
+    <Compile Include="Providers\SourceCode\CodeFile.cs" />
+    <Compile Include="Providers\SourceCode\SourceCodeBlock.cs" />
+    <Compile Include="AppEngines\BaseEntitySetting.cs" />
+    <Compile Include="AppEngines\BasePropertySetting.cs" />
+    <Compile Include="AppEngines\DataLayer\Templates\BaseDalTemplate.cs" />
+    <Compile Include="Templates\AbstractUnixTemplate.cs" />
+    <Compile Include="Templates\Cs\CsClassBase.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CsClassBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Definitions\EntityDefinition.cs" />
+    <Compile Include="Definitions\BaseProperty.cs" />
+    <Compile Include="BaseSavable.cs" />
+    <Compile Include="SavableList.cs" />
+    <Compile Include="Templates\AbstractTemplate.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Definitions\SimpleProperty.cs" />
+    <Compile Include="Templates\ClassBase.cs" />
+    <Compile Include="AppEngines\DataLayer\Templates\CustomEntityFile.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomEntityFile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\DataLayer\Templates\CustomEntityFile.part.cs" />
+    <Compile Include="AppEngines\DataLayer\Templates\MetadataClass.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MetadataClass.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\DataLayer\Templates\MetadataClass.part.cs" />
+    <Compile Include="AppEngines\DataLayer\Templates\MvcServerVM.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcServerVM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\EntitySetting.cs" />
+    <Compile Include="AppEngines\DataLayer\DalEntitySetting.cs" />
+    <Compile Include="AppEngines\DataLayer\DalPropertySetting.cs" />
+    <Compile Include="AppEngines\PropertySetting.cs" />
+    <Compile Include="AppEngines\Localization\Templates\LocalizationResx.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LocalizationResx.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\Localization\Templates\LocalizationResx.part.cs" />
+    <Compile Include="UI\AbstractEngineUI.cs" />
+    <Compile Include="UI\CommonTemplateSettings.xaml.cs">
+      <DependentUpon>CommonTemplateSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppEngines\DataLayer\UI\DataLayerEngineUI.xaml.cs">
+      <DependentUpon>DataLayerEngineUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\EmptyModelDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\EmptyModelDialog.Designer.cs">
+      <DependentUpon>EmptyModelDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\DataGridTools.cs" />
+    <Compile Include="Utilities\UiTools.cs" />
+    <Compile Include="_enums.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AppEngines\Android\Templates\DataContext.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DataContext.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\Android\Templates\EntityContext.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>EntityContext.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\Android\Templates\SqliteHelper.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>SqliteHelper.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\AspNetMvc\Templates\AbstractMvcView.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>AbstractMvcView.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\AspNetMvc\Templates\MvcController.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcController.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\AspNetMvc\Templates\MvcDetailsView.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcDetailsView.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\AspNetMvc\Templates\MvcEditView.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcEditView.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\AspNetMvc\Templates\MvcIndexView.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcIndexView.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\Java\Templates\AbstractJavaTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>AbstractJavaTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\Java\Templates\JavaClass.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>JavaClass.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\ObjectiveC\Templates\AbstractObjcTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>AbstractObjcTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\ObjectiveC\Templates\ObjcClassExtension.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ObjcClassExtension.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\ObjectiveC\Templates\ObjcClassImpl.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ObjcClassImpl.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\ObjectiveC\Templates\ObjcDbContextCustom.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ObjcDbContextCustom.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\ObjectiveC\Templates\ObjcExtensionHeader.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ObjcExtensionHeader.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\ObjectiveC\Templates\ObjcHeader.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ObjcHeader.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\ObjectiveC\Templates\ObjcContextHeader.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ObjcContextHeader.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\ObjectiveC\Templates\ObjcDbContext.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ObjcDbContext.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\ObjectiveC\Templates\ObjcEntityContext.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ObjcEntityContext.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\Storage\Templates\Additionals.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Additionals.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateMsSqlDb.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\Storage\Templates\MsSql\CreateTSqlTable.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateTSqlTable.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\Storage\Templates\MsSql\DropMsSqlDb.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DropMsSqlDb.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>TsqlStoredProcs.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\Storage\Templates\Sqlite\CreateSqliteTable.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CreateSqliteTable.cs</LastGenOutput>
+    </None>
+    <None Include="Templates\Cs\CsClassBase.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CsClassBase.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\DataLayer\Templates\CustomEntityFile.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CustomEntityFile.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\DataLayer\Templates\MetadataClass.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MetadataClass.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\DataLayer\Templates\MvcServerVM.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcServerVM.cs</LastGenOutput>
+    </None>
+    <None Include="AppEngines\Localization\Templates\LocalizationResx.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>LocalizationResx.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Templates\Cs\CsClassBase.part.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="AppEngines\Android\UI\AndroidEngineUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppEngines\AspNetMvc\UI\MvcEngineSettingsUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppEngines\AspNetMvc\UI\MvcEngineUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppEngines\Localization\UI\ResxEngineUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppEngines\ObjectiveC\UI\ObjcEngineSettingsUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppEngines\ObjectiveC\UI\ObjcEngineUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppEngines\Storage\UI\StorageEngineSettingsUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppEngines\Storage\UI\StorageEngineUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\CommonTemplateSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppEngines\DataLayer\UI\DataLayerEngineUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UI\EmptyModelDialog.resx">
+      <DependentUpon>EmptyModelDialog.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CommonLibraries\OzzUtils\OzzUtils.csproj">
+      <Project>{d417166b-12eb-43b5-af18-d634ae620f0b}</Project>
+      <Name>OzzUtils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,502 @@
+﻿<Window x:Name="window" x:Class="OzzCodeGen.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="clr-namespace:OzzCodeGen.Wpf"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Height="640" Width="1280" MinHeight="480" MinWidth="960"
+        Title="Ozz Code Generator" Loaded="Window_Loaded" Closing="window_Closing" Background="#FFD4D4D4">
+    <Window.Resources>
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Background" Value="#FFD4D4D4" />
+        </Style>
+        <Style TargetType="{x:Type TabControl}">
+            <Setter Property="Background" Value="#FFD4D4D4" />
+        </Style>
+        <Style TargetType="{x:Type DataGrid}">
+            <Setter Property="Background" Value="#FFD4D4D4" />
+        </Style>
+    </Window.Resources>
+    <Grid DataContext="{Binding ElementName=window, Mode=OneWay}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="32" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,2,0,0">
+            <!-- New, Open, Save etc. -->
+            <StackPanel x:Name="FileMenuStackPanel" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="btnNewProject" ToolTip="New Project" Click="btnNewProject_Click" Style="{StaticResource toolbarButtons}">
+                        <Image Source="Assets\NewDocumentHS.png" Stretch="None"/>
+                    </Button>
+                    <Button x:Name="btnOpen" Click="btnOpen_Click" ToolTip="Open Project" Style="{StaticResource toolbarButtons}" >
+                        <Image Source="Assets\openHS.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="btnSave" ToolTip="Save Project" Click="btnSave_Click" Style="{StaticResource toolbarButtons}"  >
+                        <Image Source="Assets\saveHS.png" Stretch="None"/>
+                    </Button>
+                    <Button x:Name="btnRefresh" ToolTip="Refresh"
+						Click="btnRefresh_Click"
+						Style="{StaticResource toolbarButtons}">
+                        <Image Source="Assets\refresh_16.png" Stretch="None" />
+                    </Button>
+                </StackPanel>
+                <ComboBox x:Name="cboRecentProjects" Width="150" Margin="4" HorizontalAlignment="Left" 
+					SelectedItem="{Binding SelectedProjectFile}" 
+					ItemsSource="{Binding Settings.RecentProjectFiles}"/>
+            </StackPanel>
+            <Grid DataContext="{Binding Project}" Width="640">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="124"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="124"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="26"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Project Name:" Margin="5"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Margin="1" HorizontalAlignment="Stretch" ToolTip="Project Name"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Project Namespace:" Margin="5"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NamespaceName}" Margin="1" HorizontalAlignment="Stretch" ToolTip="Project Namespace"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Entity Track Enum:" Margin="5" VerticalAlignment="Center" ToolTip="Enum Name for Entity Tracking"/>
+                <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding EntityTrackEnum}" Margin="1" HorizontalAlignment="Stretch" ToolTip="Enum Name for Entity Tracking"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="Target Solution Dir:" Margin="5" VerticalAlignment="Center" ToolTip="Solution Directory for Generated Target"/>
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding TargetSolutionDir}" Margin="1" HorizontalAlignment="Stretch" ToolTip="Solution Directory for Generated Target"/>
+            </Grid>
+        </StackPanel>
+
+        <TabControl x:Name="MainContainer" Grid.Row="1" Grid.Column="0">
+            <TabItem x:Name="EntityTab" Header="Entities">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MinWidth="140" MaxWidth="640" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical" Margin="0,24,4,0">
+                            <Button x:Name="btnAddEntity" 
+								ToolTip="Add Entity" 
+								Style="{StaticResource sidebarButtons}" 
+								Click="btnAddEntity_Click">
+                                <Button.ContextMenu>
+                                    <ContextMenu x:Name="mnuAddEntityMenu" AllowDrop="True">
+                                        <MenuItem Header="New Entity" Click="mnuAddEntity_Click"/>
+                                        <MenuItem Tag="Inherited" Header="New Inherited Entity" Click="mnuAddEntity_Click"/>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                                <Image Source="Assets\add.png" Stretch="None"/>
+                            </Button>
+
+                            <Button x:Name="btnRemoveEntity" 
+								ToolTip="Remove Entity" 
+								Style="{StaticResource sidebarButtons}" 
+								Click="btnRemoveEntity_Click">
+                                <Image Source="Assets\minus_red.png" Stretch="None"/>
+                            </Button>
+
+                            <Button x:Name="btnMoveEntityTop" 
+								ToolTip="Move Entity Top" 
+								Style="{StaticResource sidebarButtons}" 
+								Click="btnMoveEntityTop_Click">
+                                <Image Source="Assets\arrow_top.png" Stretch="None"/>
+                            </Button>
+
+                            <Button x:Name="btnMoveEntityUp" 
+								ToolTip="Move Entity Up" 
+								Style="{StaticResource sidebarButtons}" 
+								Click="btnMoveEntityUp_Click">
+                                <Image Source="Assets\arrow_up.png" Stretch="None"/>
+                            </Button>
+
+                            <Button x:Name="btnMoveEntityDown" 
+								ToolTip="Move Entity Down" 
+								Style="{StaticResource sidebarButtons}" 
+								Click="btnMoveEntityDown_Click">
+                                <Image Source="Assets\arrow_down.png" Stretch="None"/>
+                            </Button>
+
+                            <Button x:Name="btnMoveEntityBottom" 
+								ToolTip="Move Entity Bottom" 
+								Style="{StaticResource sidebarButtons}" 
+								Click="btnMoveEntityBottom_Click">
+                                <Image Source="Assets\arrow_bottom.png" Stretch="None"/>
+                            </Button>
+                        </StackPanel>
+                        <!-- Entities Datagrid -->
+                        <DataGrid x:Name="grdEntities" 
+							ItemsSource="{Binding DataModel}"
+							AutoGenerateColumns="False" 
+							CanUserAddRows="False"
+							SelectedIndex="0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Name}" Header="Entity Name" Width="120"/>
+                                <DataGridTextColumn Binding="{Binding BaseTypeName}" Header="Base Type" Width="100"/>
+                                <DataGridTextColumn Binding="{Binding NamespaceName}" Header="Namespace" Width="80"/>
+                                <DataGridCheckBoxColumn Binding="{Binding Abstract}" Header="Abstract" Width="40"/>
+                                <DataGridTextColumn Binding="{Binding DisplayName}" Header="Display Name" Width="100"/>
+                                <DataGridTextColumn Binding="{Binding DisplayMember}" Header="Display Member" Width="100"/>
+                                <DataGridCheckBoxColumn Binding="{Binding LetDownloadAll}" Header="Let Download All" Width="40"/>
+                            </DataGrid.Columns>
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="New Entity" Click="mnuAddEntity_Click"/>
+                                    <MenuItem Tag="Inherited" Header="New Inherited Entity" Click="mnuAddEntity_Click"/>
+                                    <MenuItem Header="Duplicate Selected Entity" Click="mnuDuplicateEntity_Click"/>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
+                        </DataGrid>
+                    </StackPanel>
+                    <Grid DataContext="{Binding SelectedItem, ElementName=grdEntities}" Grid.Row="1" Grid.Column="1" Margin="9,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" MinWidth="130" MaxWidth="660" />
+                            <ColumnDefinition Width="*" MinWidth="130" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical" Margin="0,24,4,0">
+                                <Button x:Name="btnAddProperty" 
+									ToolTip="Add Property" 
+									Style="{StaticResource sidebarButtons}" 
+									Click="btnAddProperty_Click">
+                                    <Button.ContextMenu>
+                                        <ContextMenu x:Name="mnuAddProperty" AllowDrop="True">
+                                            <MenuItem Header="Simple Property" Tag="simple" Click="mnuAddProperty_Click"/>
+                                            <MenuItem Header="String Property" Tag="string" Click="mnuAddProperty_Click"/>
+                                            <MenuItem Header="Navigation Object Property" Tag="complex" Click="mnuAddProperty_Click"/>
+                                            <MenuItem Header="Navigation Collection Property" Tag="collection" Click="mnuAddProperty_Click"/>
+                                        </ContextMenu>
+                                    </Button.ContextMenu>
+                                    <Image Source="Assets\add.png" Stretch="None"/>
+                                </Button>
+
+                                <Button x:Name="btnRemoveProperty" 
+									ToolTip="Remove Property" 
+									Style="{StaticResource sidebarButtons}" 
+									Click="btnRemoveProperty_Click">
+                                    <Image Source="Assets\minus_red.png" Stretch="None"/>
+                                </Button>
+
+                                <Button x:Name="btnMovePropertyTop" 
+									ToolTip="Move Property Top" 
+									Style="{StaticResource sidebarButtons}" 
+									Click="btnMovePropertyTop_Click">
+                                    <Image Source="Assets\arrow_top.png" Stretch="None"/>
+                                </Button>
+
+                                <Button x:Name="btnMovePropertyUp" 
+									ToolTip="Move Property Up" 
+									Style="{StaticResource sidebarButtons}" 
+									Click="btnMovePropertyUp_Click">
+                                    <Image Source="Assets\arrow_up.png" Stretch="None"/>
+                                </Button>
+
+                                <Button x:Name="btnMovePropertyDown" 
+									ToolTip="Move Property Down" 
+									Style="{StaticResource sidebarButtons}" 
+									Click="btnMovePropertyDown_Click">
+                                    <Image Source="Assets\arrow_down.png" Stretch="None"/>
+                                </Button>
+
+                                <Button x:Name="btnMovePropertyBottom" 
+									ToolTip="Move Property Bottom" 
+									Style="{StaticResource sidebarButtons}" 
+									Click="btnMovePropertyBottom_Click">
+                                    <Image Source="Assets\arrow_bottom.png" Stretch="None"/>
+                                </Button>
+
+                                <Button x:Name="btnOrderPropertiesByName" 
+									ToolTip="Order Properties by Names" 
+									Style="{StaticResource sidebarButtons}" Click="btnOrderPropertiesByName_Click">
+
+                                </Button>
+
+                            </StackPanel>
+                            <DataGrid x:Name="grdProperties" AutoGenerateColumns="False" 
+								ItemsSource="{Binding Properties}" 
+								IsSynchronizedWithCurrentItem="True" CanUserAddRows="False" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Name}" Header="Property Name" Width="100"/>
+                                    <DataGridTextColumn Binding="{Binding DisplayName}" Header="Display Name" Width="100"/>
+                                    <DataGridTextColumn Binding="{Binding TypeName}" Header="Type" Width="100"/>
+                                    <DataGridTextColumn Binding="{Binding DisplayOrder, NotifyOnValidationError=True}" Header="Display Order" Width="40"/>
+                                    <DataGridCheckBoxColumn Binding="{Binding UiVisible}" Header="UI Visible" Width="40"/>
+                                    <DataGridCheckBoxColumn Binding="{Binding Editable}" Header="Editable" Width="40"/>
+                                    <!--<DataGridCheckBoxColumn Binding="{Binding Transient}" Header="Transient" Width="40"/>-->
+                                    <DataGridCheckBoxColumn Binding="{Binding IsClientComputed}" Header="Client Computed" Width="40"/>
+                                    <DataGridCheckBoxColumn Binding="{Binding IsServerComputed}" Header="Server Computed" Width="40"/>
+                                    <DataGridCheckBoxColumn Binding="{Binding IsStoreGenerated}" Header="Store Generated" Width="40"/>
+                                    <DataGridTextColumn Binding="{Binding DefinitionType}" Header="Def. Type" Width="60" IsReadOnly="True"/>
+                                </DataGrid.Columns>
+                                <DataGrid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem x:Name="mnuAddToDefaultProperties"  Header="Add to DefaultProperties" Click="mnuAddToDefaultProperties_Click"/>
+                                        <MenuItem x:Name="mnuCopyDisplayNameToOthers"  Header="Copy Display Name to other entities" Click="mnuCopyDisplayNameToOthers_Click"/>
+                                    </ContextMenu>
+                                </DataGrid.ContextMenu>
+                            </DataGrid>
+                        </StackPanel>
+
+                        <Border BorderBrush="Gray" BorderThickness="1" 
+							Grid.Row="1" Grid.Column="1" 
+							Margin="9,0,5,0"
+							VerticalAlignment="Top">
+                            <StackPanel Orientation="Vertical" DataContext="{Binding SelectedItem, ElementName=grdProperties}">
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type ColumnDefinition}">
+                                        <Setter Property="Width" Value="105" />
+                                    </Style>
+                                </StackPanel.Resources>
+                                <TextBlock x:Name="lblPropertyHeader" Text="Property Definitions" TextAlignment="Center">
+                                    <TextBlock.Background>
+                                        <RadialGradientBrush>
+                                            <GradientStop Color="White" Offset="0"/>
+                                            <GradientStop Color="#FFE6E6E6" Offset="1"/>
+                                        </RadialGradientBrush>
+                                    </TextBlock.Background>
+                                </TextBlock>
+                                <StackPanel Orientation="Vertical" Margin="4,0,4,4">
+                                    <!-- Settings for all type properties-->
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="Store Generated:" 
+											ToolTip="Store generated value" 
+											Grid.Row="2" Grid.Column="0"/>
+                                        <CheckBox IsChecked="{Binding IsStoreGenerated, Mode=TwoWay}" 
+											ToolTip="Store generated value"
+											Grid.Row="2" Grid.Column="1" />
+
+                                        <TextBlock Text="Server Computed:" 
+											ToolTip="Server computed or generated value" 
+											Grid.Row="3" Grid.Column="0"/>
+                                        <CheckBox IsChecked="{Binding IsServerComputed, Mode=TwoWay}" 
+											ToolTip="Server generated value"
+											Grid.Row="3" Grid.Column="1" />
+
+                                        <TextBlock Text="Client Computed:" 
+											ToolTip="Client computed or generated value" 
+											Grid.Row="4" Grid.Column="0"/>
+                                        <CheckBox IsChecked="{Binding IsClientComputed, Mode=TwoWay}" 
+											ToolTip="Client generated value"
+											Grid.Row="4" Grid.Column="1" />
+
+                                        <TextBlock Grid.Row="7" Grid.Column="0" Text="Comment:" />
+                                        <TextBox Text="{Binding Comment}" 
+											Grid.Row="7" Grid.Column="1" Margin="1" 
+											Grid.ColumnSpan="3"
+											HorizontalAlignment="Stretch" Height="144"
+											TextWrapping="Wrap" 
+											TabIndex="8"/>
+                                    </Grid>
+                                    <!-- //Settings for all type properties-->
+                                    <!-- Settings for Simple properties-->
+                                    <Grid x:Name="SimplePropertyGrid">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="Is Primary Key:" Grid.Row="0" Grid.Column="0"/>
+                                        <CheckBox IsChecked="{Binding IsKey, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" />
+                                        <TextBlock Text="Is ForeignKey:" Grid.Row="1" Grid.Column="0"/>
+                                        <CheckBox IsChecked="{Binding IsForeignKey, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" />
+                                        <TextBlock Text="Is Nullable:" Grid.Row="2" Grid.Column="0"/>
+                                        <CheckBox IsChecked="{Binding IsNullable, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" />
+                                    </Grid>
+                                    <Grid x:Name="StringPropertyGrid">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="Max Lenght:" Grid.Row="0" Grid.Column="0"/>
+                                        <TextBox Text="{Binding MaxLenght, Mode=TwoWay, NotifyOnValidationError=True}" Grid.Row="0" Grid.Column="1"/>
+                                    </Grid>
+                                    <Grid x:Name="ClassPropertyGrid">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="Property Name:" Grid.Row="1" Grid.Column="0"/>
+                                        <TextBox Text="{Binding DependentPropertyName, Mode=TwoWay, NotifyOnValidationError=True}" Grid.Row="1" Grid.Column="1"/>
+
+                                        <TextBlock Text="Type:" Grid.Row="2" Grid.Column="0"/>
+                                        <TextBox Text="{Binding DependentPropertyType, Mode=TwoWay, NotifyOnValidationError=True}" Grid.Row="2" Grid.Column="1"/>
+                                    </Grid>
+                                    <Grid x:Name="CollectionPropertyGrid">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="Declaring Entity:" Grid.Row="0" Grid.Column="0"/>
+                                        <TextBox Text="{Binding DependentPropertyDeclaringType, Mode=TwoWay, NotifyOnValidationError=True}" Grid.Row="0" Grid.Column="1"/>
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        <GridSplitter Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" />
+                    </Grid>
+                    <!--<GridSplitter Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" Height="8" />-->
+                    <GridSplitter Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Enums">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="32" />
+                        <ColumnDefinition Width="*" MinWidth="140" MaxWidth="612" />
+                        <ColumnDefinition Width="144" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="28"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="btnAddEnum" 
+							ToolTip="Add New Enum"
+							Content="Add Enum"
+							Style="{StaticResource toolbarBigBtn}"
+							Click="btnAddEnum_Click"/>
+
+                        <Button x:Name="btnRemoveEnum"
+							ToolTip="Remove selected enum" 
+							Content="Remove Enum"
+							Style="{StaticResource toolbarBigBtn}" 
+							Click="btnRemoveEnum_Click"/>
+
+                    </StackPanel>
+
+                    <DataGrid x:Name="grdEnums" Grid.Column="0" Grid.Row="1"
+						ItemsSource="{Binding EnumDefinitions}"
+						AutoGenerateColumns="False"
+						CanUserAddRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Name}" Header="Enum Name" Width="160"/>
+                            <DataGridTextColumn Binding="{Binding NamespaceName}" Header="Namespace" Width="160"/>
+                            <DataGridTextColumn Binding="{Binding Comment}" Header="Comment" Width="160"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Orientation="Vertical"
+						Grid.Column="1" Grid.Row="1"
+						Margin="0,24,0,0">
+                        <Button x:Name="btnAddEnumMember"
+							ToolTip="Add new member to selected enum"
+							Style="{StaticResource sidebarButtons}"
+							Click="btnAddEnumMember_Click">
+                            <Image Source="Assets\add.png" Stretch="None"/>
+                        </Button>
+
+                        <Button x:Name="btnRemoveEnumMember" 
+							ToolTip="Remove selected enum member"
+							Style="{StaticResource sidebarButtons}"
+							Click="btnRemoveEnumMember_Click">
+                            <Image Source="Assets\minus_red.png" Stretch="None"/>
+                        </Button>
+
+                        <Button x:Name="btnMoveEnumMemberTop" 
+							ToolTip="Move selected enum member top" 
+							Style="{StaticResource sidebarButtons}" 
+							Click="btnMoveEnumMemberTop_Click">
+                            <Image Source="Assets\arrow_top.png" Stretch="None"/>
+                        </Button>
+
+                        <Button x:Name="btnMoveEnumMemberUp" 
+							ToolTip="Move selected enum member up" 
+							Style="{StaticResource sidebarButtons}" 
+							Click="btnMoveEnumMemberUp_Click">
+                            <Image Source="Assets\arrow_up.png" Stretch="None"/>
+                        </Button>
+
+                        <Button x:Name="btnMoveEnumMemberDown" 
+							ToolTip="Move selected enum member down" 
+							Style="{StaticResource sidebarButtons}" 
+							Click="btnMoveEnumMemberDown_Click">
+                            <Image Source="Assets\arrow_down.png" Stretch="None"/>
+                        </Button>
+
+                        <Button x:Name="btnMoveEnumMemberBottom" 
+							ToolTip="Move selected enum member bottom" 
+							Style="{StaticResource sidebarButtons}"
+							Click="btnMoveEnumMemberBottom_Click">
+                            <Image Source="Assets\arrow_bottom.png" Stretch="None"/>
+                        </Button>
+                    </StackPanel>
+                    <Grid DataContext="{Binding SelectedItem, ElementName=grdEnums}" Grid.Column="2" Grid.Row="1">
+                        <DataGrid x:Name="grdEnumMembers"
+							ItemsSource="{Binding Members, Mode=TwoWay}"
+							AutoGenerateColumns="False"
+							CanUserAddRows="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Name}" Header="Member Name" Width="160"/>
+                                <DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="64"/>
+                                <DataGridTextColumn Binding="{Binding Comment}" Header="Comment" Width="160"/>
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Target Projects">
+                <Grid x:Name="TargetGrid" DataContext="{Binding Project.CurrentAppEngine}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="#FF9090AF" BorderThickness="1" Grid.ColumnSpan="2" VerticalAlignment="Stretch">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="btnAddTarget" Content="Add New Target"
+									ToolTip="Add New Target Project" Height="24" 
+									Click="btnAddTarget_Click" Padding="8,0,8,0" 
+									Margin="2,2,4,2" />
+                                <TextBlock Text="App Engine:" ToolTip="Engine for Target Application" Height="20" Width="70" Margin="4,0,0,0" />
+                                <ComboBox x:Name="cboAppEngines" Width="180" Height="24" Margin="4,0,4,0" ToolTip="Engine for Target Application" SelectionChanged="cboAppEngines_SelectionChanged" />
+
+                                <TextBlock Text="Selected Application Engine: " Height="24" Padding="4,0,4,0" Background="#FFC8C8C8" FontSize="16"/>
+                                <TextBlock Text="{Binding ProjectTypeName, Mode=OneWay}" 
+									ToolTip="{Binding ProjectTypeName, Mode=OneWay}" 
+									Width="360" Height="24" Padding="4,0,4,0" Background="#FFC8C8C8" FontSize="16"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

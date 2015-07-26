@@ -1,0 +1,197 @@
+﻿<#@ template inherits="BaseObjcClassImpl" debug="true" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzUtils" #>
+<# WriteDeclataritons(); #>
+#import "AppSettings.h"
+
+//Do not modify this file! Generate it again!
+@interface <#= ObjectiveCName #>()
+@property (nonatomic, readonly) NSArray *scriptFiles;
+@property (nonatomic) NSString *servicerUrl;
+@end
+
+@implementation <#= ObjectiveCName #>
+- (void)dealloc
+{
+    self.delegate = nil;
+    sqlite3_close(self.dbHandler);
+#if !__has_feature(objc_arc)
+<#  foreach (var storageEntity in StorageEntitySettings)
+	{ 
+		string entityContext = storageEntity.Name.ToCamelCase().Pluralize();
+		var entity = AppEngine.GetEntityByName(storageEntity.Name); #>
+    if(_<#= entityContext #>){
+        [_<#= entityContext #> release];
+    }
+<#  } #>
+    if(_scriptFiles){
+        [_scriptFiles release];
+    }
+    [super dealloc];
+#endif
+}
+
+#pragma mark - Property Implementations
+- (NSString *)servicerUrl
+{
+    if (_servicerUrl==nil) {
+<# 
+	if (AppEngine.BaseEntityContext == "NSObject")	{ #>
+        _servicerUrl = @"<#= AppEngine.ServerUrl #>";
+<#  }
+	else { #>
+        _servicerUrl = [[AppSettings sharedSettings] servicerUrl];
+<#  } #>
+    }
+    return _servicerUrl;
+}
+@synthesize servicerUrl = _servicerUrl;
+
+@synthesize isDataLoading = _isDataLoading;
+<#  foreach (var storageEntity in StorageEntitySettings)
+	{ 
+		string entityContext = storageEntity.Name.ToCamelCase().Pluralize();
+		var entity = AppEngine.GetEntityByName(storageEntity.Name); #>
+
+- (<#= storageEntity.Name #>Context *)<#= entityContext #>
+{
+    if(_<#= entityContext #> == nil){
+<# 
+	if (AppEngine.BaseEntityContext == "NSObject")
+	{ #>
+        _<#= entityContext #> = [[<#= storageEntity.Name #>Context alloc] initWithContext:self];
+<#  } else { #>
+        _<#= entityContext #> = [[<#= storageEntity.Name #>Context alloc] initWithContext:self andWithBaseUrl:self.servicerUrl];
+<#  } #>
+        _<#= entityContext #>.delegate = self;
+<# 
+	if (entity != null && entity.AutoSaveToLocal)
+	{ #>
+        _<#= entityContext #>.autoSaveDownloaded = YES;
+<#  } #>
+    }
+    return _<#= entityContext #>;
+}
+<#= storageEntity.Name #>Context *_<#= entityContext #>;
+<#  } #>
+
+#pragma mark - EntityContextDelegate
+- (void)onGotEntity:(id)entity fromJsonDictionary:(NSDictionary *)dictionary typeOfEntity:(<#= AppEngine.ClassPrefix #><#= AppEngine.Project.EntityTrackEnum #>)entityType
+{
+    //Do not modify this method, modify it from custom base class
+}
+- (void)onGotEntityFromDb:(id)entity typeOfEntity:(<#= AppEngine.ClassPrefix #><#= AppEngine.Project.EntityTrackEnum #>)entityType
+{
+    //Do not modify this method, modify it from custom base class
+}
+- (void)onEntitySaved:(id)entity typeOfEntity:(<#= AppEngine.ClassPrefix #><#= AppEngine.Project.EntityTrackEnum #>)entityType
+{
+    //Do not modify this method, modify it from custom base class
+}
+- (void)onDeletingEntity:(id)entity typeOfEntity:(<#= AppEngine.ClassPrefix #><#= AppEngine.Project.EntityTrackEnum #>)entityType
+{
+    //Do not modify this method, modify it from custom base class
+}
+- (void)onEntityDeleted:(id)entity typeOfEntity:(<#= AppEngine.ClassPrefix #><#= AppEngine.Project.EntityTrackEnum #>)entityType
+{
+    //Do not modify this method, modify it from custom base class
+}
+- (void)onDeletingTypeOfEntities:(KryEntityType)entityType
+{
+    //Do not modify this method, modify it from custom base class
+}
+- (void)onDeletedTypeOfEntities:(KryEntityType)entityType
+{
+    //Do not modify this method, modify it from custom base class
+}
+- (void)onFailToDeleteEntity:(id)entity sqliteResult:(int)result typeOfEntity:(<#= AppEngine.ClassPrefix #><#= AppEngine.Project.EntityTrackEnum #>)entityType
+{
+    if(entity)
+    {
+        if([entity isKindOfClass:[<#= AppEngine.ClassPrefix #>AbstractEntity class]])
+        {
+            KryAbstractEntity *<#= AppEngine.ClassPrefix.ToLowerInvariant() #>Entity = (<#= AppEngine.ClassPrefix #>AbstractEntity *)entity;
+            NSLog(@"Delete Error: Entity with uniqueId %ld, type %lu ", (long)<#= AppEngine.ClassPrefix.ToLowerInvariant() #>Entity.uniqueId, (unsigned long)entityType);
+        }
+        else
+        {
+            NSLog(@"Delete Error: Entity  class of %@, type %lu", [entity class], (unsigned long)entityType);
+        }
+    }
+    else
+    {
+        NSLog(@"Delete Error: Entity is null. Entity Type %lu.", (unsigned long)entityType);
+    }
+}
+
+#pragma mark - DataContextDelegate
+- (void)onDataLoading
+{
+    _isDataLoading = YES;
+    [self.delegate onDataLoading];
+}
+- (void)onArrayLoaded:(NSArray *)array typeOfEntity:(<#= AppEngine.ClassPrefix #><#= AppEngine.Project.EntityTrackEnum #>)entityType
+{
+    _isDataLoading = NO;
+    [self.delegate onArrayLoaded:array typeOfEntity:entityType];
+}
+- (void)onEntityLoaded:(id)entity typeOfEntity:(<#= AppEngine.ClassPrefix #><#= AppEngine.Project.EntityTrackEnum #>)entityType
+{
+    _isDataLoading = NO;
+    [self.delegate onEntityLoaded:entity typeOfEntity:entityType];
+}
+
+- (void)onError:(NSString *)errorMsg
+{
+    _isDataLoading = NO;
+    [self.delegate onError:errorMsg];
+}
+- (void)onParseError:(NSString *)errorMsg
+{
+    if([self.delegate respondsToSelector:@selector(didReceiveData:)]){
+        [self.delegate onParseError:errorMsg];
+    }
+}
+
+- (void)didReceiveResponse:(NSURLResponse *)response
+{
+    if([self.delegate respondsToSelector:@selector(didReceiveData:)]){
+        [self.delegate didReceiveResponse:response];
+    }
+}
+- (void)didReceiveData:(NSData *)data
+{
+    _isDataLoading = NO;
+    if([self.delegate respondsToSelector:@selector(didReceiveData:)]){
+        [self.delegate didReceiveData:data];
+    }
+}
+
+#pragma mark - Private Methods
+- (BOOL)createTables
+{
+    BOOL result = YES;
+    for (NSString *file in self.scriptFiles) {
+        result = ([self executeSqlFile:file] == SQLITE_OK) & result;
+    }
+    
+    return result;
+}
+
+- (NSArray *)scriptFiles
+{
+    if(_scriptFiles == nil){
+        _scriptFiles = @[
+<#  foreach (var entity in StorageEntitySettings)
+	{ #>
+                         [[NSBundle mainBundle] pathForResource:@"<#= entity.Name #>" ofType:@"sql"],
+<#  } #>
+                         ];
+    }
+    return _scriptFiles;
+}
+NSArray *_scriptFiles;
+@end

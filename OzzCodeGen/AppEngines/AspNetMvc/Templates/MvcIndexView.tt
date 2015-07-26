@@ -1,0 +1,194 @@
+﻿<#@ template inherits="AbstractMvcView" debug="true" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzCodeGen.Templates" #>
+<#@ import namespace="OzzCodeGen.Templates.Cs" #>
+<#@ import namespace="OzzCodeGen.Definitions" #>
+<#@ import namespace="OzzUtils" #>
+<# 
+bool searchable = Entity.DisplayColumns.Where(e => e.UseInSearch).Any();
+var properties = Entity.DisplayColumns.Where(e => e.InIndexView);
+var collectionProperties = Entity.GetInheritedCollectionProperties();
+WriteUsingNamespaces(); #>
+@model IEnumerable<<#= Entity.Name #>>
+@{
+    ViewBag.Title = @AppFormString.<#= Entity.Name.Pluralize() #>;
+}
+<div class="row well">
+    <div class="col-md-8">
+        <h4>@AppFormString.<#= Entity.Name.Pluralize() #></h4>
+    </div>
+<#  if(searchable)
+    { #>
+    @using (Html.BeginForm())
+    {
+        <div class="col-md-3">
+            <div class="input-group">
+                @Html.TextBox("SearchString", null, new { @class = "form-control" })
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    }
+<#  } #>
+</div>
+<div class="row">
+    <div class="col-md-12 table-responsive">
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    @AppCommandString.Command
+                </th>
+<#
+foreach (var property in properties) 
+{
+#>
+                <th>
+                    @AppFormString.<#= property.Name #>
+                </th>
+<#
+} #>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+<#
+foreach (var property in collectionProperties) 
+{
+#>
+                int <#= property.Name.ToCamelCase() #>Count = item.<#= property.Name #>.Count;
+<#
+}
+if (collectionProperties.Any()) 
+{
+#>
+                bool canDelete = (<# foreach (var property in collectionProperties){ #><#= property.Name.ToCamelCase() #>Count + <# } #>0) == 0;
+<#
+} #>
+                <tr>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-tasks"></span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink(AppCommandString.Edit, "Edit", new { id = item.Id })</li>
+                                <li>@Html.ActionLink(AppCommandString.Details, "Details", new { id = item.Id })</li>
+                                <li>
+<#
+if (collectionProperties.Any()) 
+{
+    int collNr = 0;
+#>
+                                    @if (canDelete)
+                                    {
+                                        <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('@(item.ToString())', @item.Id);">
+                                            @AppCommandString.Delete
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        string cannotDelete = string.Format("<# foreach (var property in collectionProperties){ #><#= property.Name #>: {<#= collNr #>}<br/><# collNr++; } #>"<# foreach (var property in collectionProperties){ #>, <#= property.Name.ToCamelCase() #>Count <# } #>);
+                                        <a href="#messageBox" data-toggle="modal" 
+                                            onclick="showCannotDelete('@(item.ToString())', '@cannotDelete');">
+                                            @AppCommandString.Delete
+                                        </a>
+                                    }
+<# } else { #>
+                                    <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('@(item.ToString())', @item.Id);">
+                                        @AppCommandString.Delete
+                                    </a>
+<#
+} #>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+<#
+foreach (var property in properties) 
+{
+    if(property.PropertyDefinition is CollectionProperty)
+    {
+#>
+                <td>
+                    @<#= property.Name.ToCamelCase() #>Count
+                </td>
+<#  } else { #>
+                <td>
+                    @Html.DisplayFor(modelItem => item.<#= property.Name #>)
+                </td>
+<#  }
+} #>
+            </tr>
+}
+        </table>
+    </div>
+</div>
+<!-- Message Box -->
+<div class="modal fade" id="messageBox">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#0094ff;color:#fff;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 id="messageBoxTitle" class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <p id="messageBoxText"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="messageBoxCancelButton" type="button" class="btn btn-default" data-dismiss="modal">
+                    @AppCommandString.Cancel
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="deleteConfirm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">@AppCommandString.Delete</h4>
+            </div>
+            <div class="modal-body">
+                <p id="deleteText"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@AppCommandString.Cancel</button>
+                <a id="deleteButton" style="width:70px;" class="btn btn-danger">@AppCommandString.Delete</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@section scripts{
+    <script>
+        function setDelete(item, id) {
+            $('#deleteText').html('You are about to delete the record<br/><b>' + item + '</b>.<br/>Are you sure ?');
+            $('#deleteButton').attr('href', '/<#= Entity.ControllerName #>/Delete/' + id);
+        }
+        function showMessageBox(title, text, cancelButton) {
+            if (cancelButton) {
+                $('#messageBoxCancelButton').show();
+            }
+            else {
+                $('#messageBoxCancelButton').hide();
+            }
+            $('#messageBoxTitle').html(title);
+            $('#messageBoxText').html(text);
+            $('#messageBox').modal('show');
+        }
+        function hideMessageBox() {
+            $('#messageBox').modal('hide');
+        }
+        function showCannotDelete(item, relatedRecords) {
+            var msgText = 'Record<br/><b>' + item + '</b> can not be deleted.<br/>Because of related records, below<br/>' + relatedRecords;
+            showMessageBox('Record can\'t be deleted!', msgText, true);
+        }
+    </script>
+}

@@ -1,0 +1,61 @@
+﻿<#@ template inherits="AbstractStorageTemplate" debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".sql" #>
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>](
+<#    if(TableDefinition.PrimaryKeyColumn != null) { #>
+    <#= TableDefinition.GetPrimaryKeyDeclaration() #>,
+<#  }
+	else { #>
+	--No Primary Key defined!
+<#  } #>
+<#    var columns = TableDefinition.UseInheritance ?
+			TableDefinition.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false) :
+			TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false);
+
+      foreach (var column in columns)
+      {#>
+    <#= TableDefinition.GetColumnDeclaration(column) #>,
+<#    } #>
+<#    if(TableDefinition.ModifyTrack) 
+	  { 
+		foreach (var column in AppEngine.GetModifyTrackColumns())
+		{
+			if(columns.Where(c=>c.Name.Equals(column.Name)).Count()==0)
+			{#>
+    <#= TableDefinition.GetColumnDeclaration(column) #>,
+<#			}
+		}
+      } #>
+<#    if(TableDefinition.PrimaryKeyColumn != null) { #>
+  CONSTRAINT [PK_<#= TableDefinition.TableName #>] PRIMARY KEY CLUSTERED ([<#= TableDefinition.PrimaryKeyColumn.Name #>] ASC)
+  WITH (PAD_INDEX  = OFF,
+    STATISTICS_NORECOMPUTE  = OFF,
+    IGNORE_DUP_KEY = OFF,
+    ALLOW_ROW_LOCKS  = ON,
+    ALLOW_PAGE_LOCKS  = ON)
+  ON [PRIMARY]) ON [PRIMARY]
+<#  } #>
+Go
+<#	foreach (var column in columns.Where(c=>c.Indexed))
+    {#>
+Create Nonclustered Index [idx_<#= TableDefinition.TableName #>_<#= column.Name #>] On [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>]([<#= column.Name #>] <# if(column.SortDesc) {#>Desc<#} else {#>Asc<# } #>)
+Go
+<#  } #>
+<#    if(TableDefinition.Name == "EntityUpdate" && columns.Where(c => c.Name == "UpdateDate").Any()) { #>
+
+CREATE PROCEDURE EntityUpdated
+	@EntityTypeId    int
+AS
+BEGIN
+	Update [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>] Set [UpdateDate] = GETDATE()
+	Where [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>].[<#= TableDefinition.PrimaryKeyColumn.Name #>] = @EntityTypeId
+END
+Go
+<#  } #>

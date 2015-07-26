@@ -1,0 +1,904 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using OzzCodeGen.Definitions;
+using Microsoft.Win32;
+using OzzCodeGen.Wpf.Dialogs;
+using System.ComponentModel;
+using OzzCodeGen.Wpf.Models;
+using System.IO;
+using OzzCodeGen.AppEngines;
+using OzzCodeGen.Providers;
+using System.Windows.Threading;
+
+namespace OzzCodeGen.Wpf
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window, INotifyPropertyChanged
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            Title = string.Format("Ozz Code Generator - Build on {0}", BuildInfo.Date);
+            MainContainer.IsEnabled = false;
+            settingsFile = System.IO.Path.Combine(
+                            System.IO.Path.GetDirectoryName(
+                            System.Reflection.Assembly.GetExecutingAssembly().Location),
+                            "OzzCodeGen.settings");
+
+            if (File.Exists(settingsFile))
+            {
+                Settings = AppSettings.OpenFile(settingsFile);
+            }
+            else
+            {
+                Settings = new AppSettings();
+            }
+
+            Settings.MainWindowPosition.SetWindowPositions(this);
+
+            SimplePropertyGrid.Visibility = Visibility.Collapsed;
+            StringPropertyGrid.Visibility = Visibility.Collapsed;
+            ClassPropertyGrid.Visibility = Visibility.Collapsed;
+            CollectionPropertyGrid.Visibility = Visibility.Collapsed;
+
+            modelProviders = new List<IModelProvider>(); // Add model provider to list when new one available
+            modelProviders.Add(new EmptyModel());
+            modelProviders.Add(new OzzCodeGen.Providers.Ef.Ef5());
+            modelProviders.Add(new OzzCodeGen.Providers.SourceCode.ObjectiveC());
+        }
+        List<IModelProvider> modelProviders;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged(string propertyName)
+        {
+            if (!string.IsNullOrEmpty(propertyName) && PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            grdProperties.Items.CurrentChanged += OnPropertiesGridItemChanged;
+        }
+
+        private void OnPropertiesGridItemChanged(object sender, EventArgs e)
+        {
+            SimplePropertyGrid.Visibility = BoolToVisibility(grdProperties.SelectedItem is SimpleProperty);
+            StringPropertyGrid.Visibility = BoolToVisibility(grdProperties.SelectedItem is StringProperty);
+            ClassPropertyGrid.Visibility = BoolToVisibility(grdProperties.SelectedItem is BaseClassProperty);
+            CollectionPropertyGrid.Visibility = BoolToVisibility(grdProperties.SelectedItem is CollectionProperty);
+            if (grdProperties.SelectedItem is BaseClassProperty)
+            {
+                lblPropertyHeader.Text = "Property's Dependency Definitions";
+            }
+            else
+            {
+                lblPropertyHeader.Text = "Property's Definitions";
+            }
+        }
+
+        private void cboAppEngines_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string appEngine = cboAppEngines.SelectedItem.ToString();
+            var engine = Project.GetAppEngine(appEngine);
+            if (engine != null)
+            {
+                Project.CurrentAppEngine = engine;
+            }
+            Project.AppEngineList.Remove(appEngine);
+            Project.AppEngineList.Insert(0, appEngine);
+        }
+
+        private void AddAppEngineName(List<string> engines, string appEngineId)
+        {
+            if (!Project.AppEngineList.Contains(appEngineId))
+            {
+                engines.Add(appEngineId);
+            }
+        }
+
+        private List<string> GetAppEngines()
+        {
+            var engines = new List<string>();
+
+            AddAppEngineName(engines, EngineTypes.EfDbFirstDataLayerId);
+            AddAppEngineName(engines, EngineTypes.LocalizationResxGenId);
+            AddAppEngineName(engines, EngineTypes.AspNetMvcEngineId);
+            AddAppEngineName(engines, EngineTypes.TSqlScriptsId);
+            AddAppEngineName(engines, EngineTypes.SqliteScriptsId);
+            AddAppEngineName(engines, EngineTypes.AndroidEngineId);
+            AddAppEngineName(engines, EngineTypes.ObjcEngineId);
+
+            return engines;
+        }
+
+        private void btnAddTarget_Click(object sender, RoutedEventArgs e)
+        {
+            SelectEngine dlgEngine = new SelectEngine();
+            dlgEngine.Engines = GetAppEngines();
+            dlgEngine.Owner = this;
+
+            if (dlgEngine.ShowDialog() ?? false)
+            {
+                var engine = EngineTypes.GetInstance(dlgEngine.SelectedEngine);
+                engine.TargetDirectory = engine.GetDefaultTargetDir(Project.TargetSolutionDir);
+                var settingsUI = engine.GetSettingsDlgUI();
+                if (settingsUI != null)
+                {
+                    var dlg = new EmptyDialog();
+                    dlg.PutUserControl(settingsUI);
+                    settingsUI.DataContext = engine;
+                    dlg.ShowDialog();
+                }
+                Project.AddEngine(engine);
+            }
+        }
+
+        private void btnNewProject_Click(object sender, RoutedEventArgs e)
+        {
+            GenerateModel modelGenDlg = new GenerateModel();
+            modelGenDlg.ModelProviders = modelProviders;
+            modelGenDlg.Owner = this;
+            if (modelGenDlg.ShowDialog() ?? false)
+            {
+                Project = modelGenDlg.Project;
+            }
+        }
+
+        private void btnOpen_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openDlg = new OpenFileDialog();
+            openDlg.Filter = "Code Generator Model Files|*" + fileExtension;
+            if (openDlg.ShowDialog(this) ?? false)
+            {
+                OpenProject(openDlg.FileName);
+            }
+        }
+
+
+        private void OpenProject(string fileName)
+        {
+            if (!File.Exists(fileName))
+            {
+                throw new FileNotFoundException(string.Format("File \"{0}\" not found!", fileName));
+            }
+            CodeGenProject project = CodeGenProject.OpenFile(fileName);
+            Settings.AddToRecentFiles(fileName);
+            Project = project;
+            Project.HasProjectChanges = false;
+
+            IModelProvider modelProvider = modelProviders.First(m => m.ProviderId == Project.ModelProviderId);
+            btnRefresh.IsEnabled = modelProvider.CanRefresh;
+        }
+
+        const string fileExtension = ".OzzGen";
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            SaveProject();
+        }
+
+        private void SaveProject()
+        {
+            if (string.IsNullOrEmpty(Project.SavedFileName) ||
+                !System.IO.File.Exists(Project.SavedFileName))
+            {
+                SaveModelAs();
+            }
+            else
+            {
+                Project.SaveToFile();
+            }
+        }
+
+        private void SaveModelAs()
+        {
+            SaveFileDialog saveDlg = new SaveFileDialog();
+
+            saveDlg.Filter = "Code Generator Model Files|*" + fileExtension;
+            if ((saveDlg.ShowDialog(this) ?? false) &&
+                !string.IsNullOrEmpty(saveDlg.FileName))
+            {
+                string fileName;
+                if (System.IO.Path.GetExtension(saveDlg.FileName).Equals(fileExtension))
+                {
+                    fileName = saveDlg.FileName;
+                }
+                else
+                {
+                    fileName = saveDlg.FileName + fileExtension;
+                }
+                Project.SaveToFile(fileName);
+                Settings.AddToRecentFiles(fileName);
+                Settings.SaveToFile(settingsFile);
+            }
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            IModelProvider modelProvider = modelProviders.First(m => m.ProviderId == Project.ModelProviderId);
+            if (!modelProvider.CanRefresh) return;
+
+            Project.RefreshDataModel(modelProvider, true);
+            RefreshEntitiesGrid();
+        }
+
+        private Visibility BoolToVisibility(bool b)
+        {
+            if (b) return Visibility.Visible;
+            else return Visibility.Collapsed;
+        }
+
+
+        public FileDefinition SelectedProjectFile
+        {
+            get { return _selectedProjectFile; }
+            set
+            {
+                if (_selectedProjectFile == value)
+                {
+                    return;
+                }
+
+                if (value != null && File.Exists(value.FullPath))
+                {
+                    OpenProject(value.FullPath);
+                }
+                else if (value != null) //means not File.Exists(value.FullPath)
+                {
+                    AskToRemoveFromRecentFiles(value);
+                }
+                _selectedProjectFile = value;
+                RaisePropertyChanged("SelectedProjectFile");
+            }
+        }
+        private FileDefinition _selectedProjectFile;
+
+        private void AskToRemoveFromRecentFiles(FileDefinition file)
+        {
+            var dlgResult = MessageBox.Show(
+                    string.Format("Project file \"{0}\" does not exist! Do you want to remove the reference to the file from Recent File list?", file.Name),
+                    "File Not Foud!",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Exclamation);
+            if (dlgResult == MessageBoxResult.Yes)
+            {
+                var recentFiles = Settings.RecentProjectFiles.Where(f => f != file);
+                var timer = new DispatcherTimer();
+                timer.Interval = new TimeSpan(100000);
+                timer.Tick += (object sender, EventArgs e) =>
+                {
+                    cboRecentProjects.SelectedItem = null;
+                    Settings.RecentProjectFiles = recentFiles.ToList();
+                    timer.Stop();
+                };
+                timer.Start();
+            }
+        }
+        
+        public AppSettings Settings
+        {
+            get { return _settings; }
+            set
+            {
+                if (_settings == value) return;
+                _settings = value;
+                RaisePropertyChanged("Settings");
+            }
+        }
+        AppSettings _settings;
+        string settingsFile;
+         
+
+        public CodeGenProject Project
+        {
+            get { return _project; }
+            set
+            {
+                if (_project == value) return;
+                _project = value;
+                DataModel = _project.DataModel;
+                grdEntities.ItemsSource = DataModel;
+                cboAppEngines.ItemsSource = null;
+                cboAppEngines.ItemsSource = Project.AppEngineList;
+
+                grdEnums.ItemsSource = null;
+                grdEnums.ItemsSource = Project.EnumDefinitions;
+
+                _project.PropertyChanged += (o, e) =>
+                {
+                    if (e.PropertyName == "CurrentAppEngine")
+                    {
+                        SetTargetProjectUI();
+                    }
+                    else if (e.PropertyName == "AppEngineList")
+                    {
+                        cboAppEngines.ItemsSource = null;
+                        cboAppEngines.ItemsSource = Project.AppEngineList;
+                    }
+                };
+                RaisePropertyChanged("Project");
+                MainContainer.IsEnabled = true;
+                SetTargetProjectUI();
+            }
+        }
+
+        public List<string> AppEngineList { get { return Project.AppEngineList; } }
+
+        public EntityDefinition SelectedEntity
+        {
+            get
+            {
+                if (grdEntities.SelectedItem == null)
+                    return null;
+                return (EntityDefinition)grdEntities.SelectedItem;
+            }
+        }
+
+        public BaseProperty SelectedProperty
+        {
+            get
+            {
+                if (grdProperties.SelectedItem == null)
+                    return null;
+                return (BaseProperty)grdProperties.SelectedItem;
+            }
+        }
+
+        private void SetTargetProjectUI()
+        {
+            if (Project.CurrentAppEngine == null) return;
+
+            if (appEngineUI != null) appEngineUI.Visibility = Visibility.Collapsed;
+            appEngineUI = Project.CurrentAppEngine.UiControl;
+            if (this.TargetGrid.Children.Contains(appEngineUI))
+            {
+                appEngineUI.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.TargetGrid.Children.Add(appEngineUI);
+                Grid.SetColumn(appEngineUI, 0);
+                Grid.SetRow(appEngineUI, 1);
+            }
+        }
+        private CodeGenProject _project;
+        private UserControl appEngineUI;
+
+        public DataModel DataModel
+        {
+            get { return _dataModel; }
+            set
+            {
+                if (_dataModel == value) return;
+                _dataModel = value;
+                RaisePropertyChanged("DataModel");
+            }
+        }
+        DataModel _dataModel;
+
+        public DataModel EnumDefinitions
+        {
+            get { return _enumDefinitions; }
+            set
+            {
+                if (_enumDefinitions == value) return;
+                _enumDefinitions = value;
+                RaisePropertyChanged("EnumDefinitions");
+            }
+        }
+        DataModel _enumDefinitions;
+
+        private void window_Closing(object sender, CancelEventArgs e)
+        {
+            //if (Project != null && Project.HasProjectChanges)
+            //{
+            //    var result = MessageBox.Show("Do you want to save changes?", "Project has changes!", MessageBoxButton.YesNoCancel);
+            //    switch (result)
+            //    {
+            //        case MessageBoxResult.Cancel:
+            //            e.Cancel = true;
+            //            break;
+            //        case MessageBoxResult.No:
+            //            //Do nothing
+            //            break;
+            //        case MessageBoxResult.None:
+            //            SaveProject();
+            //            break;
+            //        case MessageBoxResult.OK:
+            //            break;
+            //        case MessageBoxResult.Yes:
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
+
+            Settings.MainWindowPosition.GetWindowPositions(this);
+            Settings.SaveToFile(settingsFile);
+        }
+
+        private BaseProperty GetSelectedProperty()
+        {
+            if (grdProperties.SelectedItem is BaseProperty)
+            {
+                return (BaseProperty)grdProperties.SelectedItem;
+            }
+            else
+            {
+                MessageBox.Show("No selected property found!", "No Settings!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return null;
+            }
+        }
+
+        private void mnuAddToDefaultProperties_Click(object sender, RoutedEventArgs e)
+        {
+            BaseProperty selected = GetSelectedProperty();
+            if (selected != null)
+            {
+                if (Project.AddToDefaultProperties(selected))
+                    MessageBox.Show("Property has just been added to Default Properties.", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                else
+                    MessageBox.Show("Settings has not been added to Default Properties!", "Fail!", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void mnuApplyToAllProperties_Click(object sender, RoutedEventArgs e)
+        {
+            PropertyDefaultSetting setting = null;
+
+            if (setting != null)
+            {
+                if (Project.ApplyToAllProperties(setting))
+                    MessageBox.Show("Settings has just been applied to all entities.", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                else
+                    MessageBox.Show("Settings has not been applied!", "Fail!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+                MessageBox.Show("No selected settings found!", "No Settings!", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
+        private void mnuCopyDisplayNameToOthers_Click(object sender, RoutedEventArgs e)
+        {
+            BaseProperty selected = GetSelectedProperty();
+            if (selected != null)
+            {
+                if (Project.ApplyDisplayNameToOthers(selected))
+                    MessageBox.Show("DisplayName has just been set to other properties.", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                else
+                    MessageBox.Show("Operation failed!", "Fail!", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+        }
+
+        private NewEntity GetNewEntityDialog()
+        {
+            var dlg = new NewEntity();
+            dlg.EntityDefinition = new EntityDefinition()
+            {
+                Name = "Untitled",
+                NamespaceName = Project.NamespaceName
+            };
+            dlg.Closed += NewEntityDialog_Closed;
+            dlg.Owner = this;
+            return dlg;
+        }
+
+        void NewEntityDialog_Closed(object sender, EventArgs e)
+        {
+            var dlg = (NewEntity)sender;
+            if (dlg.DialogResult ?? false)
+            {
+                DataModel.Add(dlg.EntityDefinition);
+                dlg.EntityDefinition.DisplayName = string.Empty;
+                RefreshEntitiesGrid();
+                grdEntities.SelectedIndex = grdEntities.Items.Count - 1;
+            }
+            dlg.Closed-=NewEntityDialog_Closed;
+        }
+
+        private void mnuAddEntity_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = GetNewEntityDialog();
+            var tag = ((MenuItem)sender).Tag;
+            if (tag != null && tag.ToString() == "Inherited")
+                dlg.EntityDefinition.BaseTypeName = ((EntityDefinition)grdEntities.SelectedItem).Name;
+            dlg.ShowDialog();
+        }
+
+        private void mnuDuplicateEntity_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedEntity == null) return;
+            var dlg = GetNewEntityDialog();
+            dlg.EntityDefinition = SelectedEntity.Clone();
+
+            dlg.ShowDialog();
+        }
+
+        private void btnAddEntity_Click(object sender, RoutedEventArgs e)
+        {
+            mnuAddEntityMenu.IsOpen = true;
+        }
+
+        private void btnRemoveEntity_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedEntity == null ||
+                MessageBox.Show(string.Format("Are you sure to delete {0}?", SelectedEntity.Name),
+                        string.Format("Deleting {0}!", SelectedEntity.Name),
+                        MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                return;
+
+            Project.RemoveEntity(SelectedEntity);
+            RefreshEntitiesGrid();
+        }
+
+
+        private void btnMoveEntityTop_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedEntity != null)
+            {
+                DataModel.MoveTop(SelectedEntity);
+                RefreshEntitiesGrid();
+                SetEnumMemberGridIndex(0, grdEntities);
+            }
+        }
+
+        private void btnMoveEntityUp_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedEntity != null)
+            {
+                int i = grdEntities.SelectedIndex - 1;
+                DataModel.MoveUp(SelectedEntity);
+                RefreshEntitiesGrid();
+                SetEnumMemberGridIndex(i, grdEntities);
+            }
+        }
+
+        private void btnMoveEntityDown_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedEntity != null)
+            {
+                int i = grdEntities.SelectedIndex + 1;
+                DataModel.MoveDown(SelectedEntity);
+                RefreshEntitiesGrid();
+                SetEnumMemberGridIndex(i, grdEntities);
+            }
+        }
+
+        private void btnMoveEntityBottom_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedEntity != null)
+            {
+                DataModel.MoveBottom(SelectedEntity);
+                RefreshEntitiesGrid();
+                SetEnumMemberGridIndex(grdEntities.Items.Count - 1, grdEntities);
+            }
+        }
+
+        public void AddProperty(DefinitionType propertyType, EntityDefinition entity)
+        {
+            var dlg = new NewProperty();
+            var p = BaseProperty.CreatePropertyDefinition(propertyType, "UntitledProperty");
+            p.EntityDefinition = entity;
+            dlg.PropertyDefinition = p;
+
+            dlg.Closed += NewPropertyDialog_Closed;
+            dlg.PropertyDefinition.TypeName = dlg.PropertyDefinition.UsableTypeNames.FirstOrDefault();
+            dlg.Owner = this;
+            dlg.ShowDialog();
+        }
+
+        void NewPropertyDialog_Closed(object sender, EventArgs e)
+        {
+            var dlg = (NewProperty)sender;
+            if (dlg.DialogResult ?? false)
+            {
+                int i = grdEntities.SelectedIndex;
+                var property = dlg.PropertyDefinition;
+                var entity = property.EntityDefinition;
+
+                if (property.DefinitionType == DefinitionType.Complex && dlg.CreateDependecy)
+                {
+                    entity.Properties.Add(dlg.DependentProperty, true);
+                    dlg.DependentProperty.DisplayName = string.Empty;
+                    ((BaseClassProperty)property).DependentPropertyName = dlg.DependentProperty.Name;
+                    ((BaseClassProperty)property).DependentPropertyType = dlg.DependentProperty.TypeName;
+                }
+                entity.Properties.Add(property, true);
+                property.DisplayName = string.Empty;
+
+                grdEntities.SelectedIndex = -1;
+                grdEntities.SelectedIndex = i;
+                int j = grdProperties.Items.Count - 1;
+                grdProperties.SelectedIndex = j;
+            }
+
+            dlg.Closed -= NewPropertyDialog_Closed;
+        }
+
+        private void btnAddProperty_Click(object sender, RoutedEventArgs e)
+        {
+            mnuAddProperty.IsOpen = true;
+        }
+
+        private void btnRemoveProperty_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedProperty == null ||
+                MessageBox.Show(string.Format("Are you sure to delete {0}?", SelectedProperty.Name),
+                        string.Format("Deleting {0}!", SelectedProperty.Name),
+                        MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                return;
+            
+            var properties = SelectedProperty.EntityDefinition.Properties;
+            properties.Remove(SelectedProperty);
+            RefreshPropertiesGrid();
+        }
+
+        private void mnuAddProperty_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedEntity == null) return;
+            var menuItem = (MenuItem)sender;
+            DefinitionType propertyType;
+            switch (menuItem.Tag.ToString())
+            {
+                case "string":
+                    propertyType = DefinitionType.String;
+                    break;
+
+                case "complex":
+                    propertyType = DefinitionType.Complex;
+                    break;
+
+                case "collection":
+                    propertyType = DefinitionType.Collection;
+                    break;
+
+                default:
+                    propertyType = DefinitionType.Simple;
+                    break;
+            }
+
+            AddProperty(propertyType, SelectedEntity);
+        }
+
+        private void btnOrderPropertiesByName_Click(object sender, RoutedEventArgs e)
+        {
+            var properties = SelectedProperty.EntityDefinition.Properties;
+            var ordered = properties.OrderByDescending(p => p.Name).ToList();
+            foreach (var item in ordered)
+            {
+                properties.MoveTop(item);
+            }
+            RefreshPropertiesGrid();
+        }
+
+        private void btnMovePropertyTop_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedProperty != null)
+            {
+                var properties = SelectedProperty.EntityDefinition.Properties;
+                properties.MoveTop(SelectedProperty);
+                RefreshPropertiesGrid();
+                SetEnumMemberGridIndex(0, grdProperties);
+            }
+        }
+
+        private void btnMovePropertyUp_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedProperty != null)
+            {
+                var properties = SelectedProperty.EntityDefinition.Properties;
+                int i = grdProperties.SelectedIndex - 1;
+                properties.MoveUp(SelectedProperty);
+                RefreshPropertiesGrid();
+                SetEnumMemberGridIndex(i, grdProperties);
+            }
+        }
+
+        private void btnMovePropertyDown_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedProperty != null)
+            {
+                var properties = SelectedProperty.EntityDefinition.Properties;
+                int i = grdProperties.SelectedIndex + 1;
+                properties.MoveDown(SelectedProperty);
+                RefreshPropertiesGrid();
+                SetEnumMemberGridIndex(i, grdProperties);
+            }
+        }
+
+        private void btnMovePropertyBottom_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedProperty != null)
+            {
+                var properties = SelectedProperty.EntityDefinition.Properties;
+                properties.MoveBottom(SelectedProperty);
+                RefreshPropertiesGrid();
+                SetEnumMemberGridIndex(grdProperties.Items.Count - 1, grdProperties);
+            }
+        }
+
+        private void RefreshEntitiesGrid()
+        {
+            grdEntities.ItemsSource = null;
+            grdEntities.ItemsSource = DataModel;
+        }
+
+        private void RefreshPropertiesGrid()
+        {
+            int i = grdEntities.SelectedIndex;
+            grdEntities.SelectedIndex = -1;
+            grdEntities.SelectedIndex = i;
+        }
+
+        private void RefreshEnumMemberGrid()
+        {
+            int i = grdEnums.SelectedIndex;
+            grdEnums.SelectedIndex = -1;
+            grdEnums.SelectedIndex = i;
+        }
+
+        private void SetEnumMemberGridIndex(int index, DataGrid grid)
+        {
+            if (grid.Items.Count > 0)
+            {
+                if (index < 0) index = 0;
+                if (index > grid.Items.Count - 1)
+                {
+                    index = grid.Items.Count - 1;
+                }
+                grid.SelectedIndex = index;
+            }
+        }
+
+
+
+        private EnumMember GetSelectedEnumMember()
+        {
+            if (grdEnumMembers.SelectedItem == null)
+            {
+                return null;
+            }
+            else
+            {
+                return (EnumMember)grdEnumMembers.SelectedItem;
+            }
+        }
+
+        private EnumDefinition GetSelectedEnumDefinition()
+        {
+            if (grdEnums.SelectedItem == null)
+            {
+                return null;
+            }
+            else
+            {
+                return (EnumDefinition)grdEnums.SelectedItem;
+            }
+        }
+
+        private void btnAddEnum_Click(object sender, RoutedEventArgs e)
+        {
+            var newEnum = new EnumDefinition()
+            {
+                Name = "UntitledEnum",
+                NamespaceName = Project.NamespaceName
+            };
+            newEnum.Members.Add(new EnumMember()
+            {
+                Name = "UntitledMember",
+                Value = 1
+            });
+            grdEnums.ItemsSource = null;
+            Project.EnumDefinitions.Add(newEnum);
+            grdEnums.ItemsSource = Project.EnumDefinitions;
+            grdEnums.SelectedIndex = grdEnums.Items.Count - 1;
+        }
+
+        private void btnRemoveEnum_Click(object sender, RoutedEventArgs e)
+        {
+
+            var enumDef = GetSelectedEnumDefinition();
+            if (enumDef == null ||
+                MessageBox.Show(string.Format("Are you sure to delete {0}?", enumDef.Name),
+                        string.Format("Deleting {0}!", enumDef.Name),
+                        MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                return;
+
+            grdEnums.ItemsSource = null;
+            Project.EnumDefinitions.Remove(enumDef);
+            grdEnums.ItemsSource = Project.EnumDefinitions;
+            grdEnums.SelectedIndex = grdEnums.Items.Count - 1;
+        }
+
+        private void btnAddEnumMember_Click(object sender, RoutedEventArgs e)
+        {
+            var enumDef = GetSelectedEnumDefinition();
+            if (enumDef != null)
+            {
+                int i = enumDef.Members.Count + 1;
+                enumDef.Members.Add(new EnumMember()
+                {
+                    Name = "UntitledMember",
+                    Value = i
+                });
+
+                RefreshEnumMemberGrid();
+            }
+        }
+
+        private void btnRemoveEnumMember_Click(object sender, RoutedEventArgs e)
+        {
+            var enumDef = GetSelectedEnumDefinition();
+            var enumMember = GetSelectedEnumMember();
+
+            if (enumMember == null || enumDef == null ||
+                MessageBox.Show(string.Format("Are you sure to delete {0}.{1}?", enumDef.Name, enumMember.Name),
+                        string.Format("Deleting {0}.{1}!", enumDef.Name, enumMember.Name),
+                        MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                return;
+
+            enumDef.Members.Remove(enumMember);
+            RefreshEnumMemberGrid();
+        }
+
+        private void btnMoveEnumMemberTop_Click(object sender, RoutedEventArgs e)
+        {
+            var enumMember = GetSelectedEnumMember();
+            if (enumMember != null)
+            {
+                var members = enumMember.EnumDefinition.Members;
+                members.MoveTop(enumMember);
+                RefreshEnumMemberGrid();
+                SetEnumMemberGridIndex(0, grdEnumMembers);
+            }
+        }
+
+        private void btnMoveEnumMemberUp_Click(object sender, RoutedEventArgs e)
+        {
+            var enumMember = GetSelectedEnumMember();
+            if (enumMember != null)
+            {
+                var members = enumMember.EnumDefinition.Members;
+                int i = grdEnumMembers.SelectedIndex - 1;
+                members.MoveUp(enumMember);
+                RefreshEnumMemberGrid();
+                SetEnumMemberGridIndex(i, grdEnumMembers);
+            }
+        }
+
+        private void btnMoveEnumMemberDown_Click(object sender, RoutedEventArgs e)
+        {
+            var enumMember = GetSelectedEnumMember();
+            if (enumMember != null)
+            {
+                var members = enumMember.EnumDefinition.Members;
+                int i = grdEnumMembers.SelectedIndex + 1;
+                members.MoveDown(enumMember);
+                RefreshEnumMemberGrid();
+                SetEnumMemberGridIndex(i, grdEnumMembers);
+            }
+        }
+
+        private void btnMoveEnumMemberBottom_Click(object sender, RoutedEventArgs e)
+        {
+            var enumMember = GetSelectedEnumMember();
+            if (enumMember != null)
+            {
+                var members = enumMember.EnumDefinition.Members;
+                members.MoveBottom(enumMember);
+                RefreshEnumMemberGrid();
+                SetEnumMemberGridIndex(grdEnumMembers.Items.Count - 1, grdEnumMembers);
+            }
+        }
+    }
+}
