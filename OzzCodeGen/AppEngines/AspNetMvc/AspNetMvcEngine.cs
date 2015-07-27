@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using OzzCodeGen.AppEngines.AspNetMvc.Templates;
 using OzzCodeGen.AppEngines.AspNetMvc.UI;
 using OzzCodeGen.AppEngines.DataLayer;
 using OzzCodeGen.AppEngines.Localization;
 using OzzCodeGen.Definitions;
+using System.Collections.ObjectModel;
 
 namespace OzzCodeGen.AppEngines.AspNetMvc
 {
@@ -71,10 +69,21 @@ namespace OzzCodeGen.AppEngines.AspNetMvc
         }
 
         [XmlIgnore]
-        public List<AspNetMvcEntitySetting> Entities { get; private set; }
+        public ObservableCollection<AspNetMvcEntitySetting> Entities
+        {
+            get { return _entities; }
+            set
+            {
+                if (_entities == value) return;
+                _entities = value;
+                RaisePropertyChanged("Entities");
+            }
+        }
+        private ObservableCollection<AspNetMvcEntitySetting> _entities;
+
         protected override void OnEntitySettingsChanged()
         {
-            var entities = new List<AspNetMvcEntitySetting>();
+            var entities = new ObservableCollection<AspNetMvcEntitySetting>();
             if (EntitySettings != null)
             {
                 foreach (AspNetMvcEntitySetting item in EntitySettings)
@@ -83,7 +92,6 @@ namespace OzzCodeGen.AppEngines.AspNetMvc
                 }
             }
             Entities = entities;
-            RaisePropertyChanged("Entities");
         }
 
         protected override void RefreshSetting(BaseEntitySetting setting, Definitions.EntityDefinition entity, bool cleanRemovedItems)

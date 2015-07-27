@@ -12,6 +12,7 @@ using OzzCodeGen.Definitions;
 using OzzCodeGen.Templates;
 using OzzCodeGen.UI;
 using OzzUtils;
+using System.Collections.ObjectModel;
 
 namespace OzzCodeGen.AppEngines.Localization
 {
@@ -69,10 +70,19 @@ namespace OzzCodeGen.AppEngines.Localization
         string _vocabularyDir;
 
         [XmlIgnore]
-        public List<LocalizationEntitySetting> Entities { get; private set; }
+        public ObservableCollection<LocalizationEntitySetting> Entities
+        {
+            get { return _entities; }
+            set
+            {           //This should only be changed inside of the engine
+                return; //WPF binding cause an error when set is private in .NET 4.6
+            }           //TODO: Find more proper way than this!
+        }
+        private ObservableCollection<LocalizationEntitySetting> _entities;
+
         protected override void OnEntitySettingsChanged()
         {
-            var entities = new List<LocalizationEntitySetting>();
+            var entities = new ObservableCollection<LocalizationEntitySetting>();
             if (EntitySettings != null)
             {
                 foreach (LocalizationEntitySetting item in EntitySettings)
@@ -80,7 +90,7 @@ namespace OzzCodeGen.AppEngines.Localization
                     entities.Add(item);
                 }
             }
-            Entities = entities;
+            _entities = entities;
             RaisePropertyChanged("Entities");
         }
 

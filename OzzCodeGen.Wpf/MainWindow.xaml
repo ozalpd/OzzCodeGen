@@ -5,17 +5,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Height="640" Width="1280" MinHeight="480" MinWidth="960"
-        Title="Ozz Code Generator" Loaded="Window_Loaded" Closing="window_Closing" Background="#FFD4D4D4">
+        Title="Ozz Code Generator"
+        Loaded="Window_Loaded" Closing="window_Closing">
     <Window.Resources>
-        <Style TargetType="{x:Type TabItem}">
-            <Setter Property="Background" Value="#FFD4D4D4" />
-        </Style>
-        <Style TargetType="{x:Type TabControl}">
-            <Setter Property="Background" Value="#FFD4D4D4" />
-        </Style>
-        <Style TargetType="{x:Type DataGrid}">
-            <Setter Property="Background" Value="#FFD4D4D4" />
-        </Style>
     </Window.Resources>
     <Grid DataContext="{Binding ElementName=window, Mode=OneWay}">
         <Grid.RowDefinitions>
@@ -486,12 +478,13 @@
 									Click="btnAddTarget_Click" Padding="8,0,8,0" 
 									Margin="2,2,4,2" />
                                 <TextBlock Text="App Engine:" ToolTip="Engine for Target Application" Height="20" Width="70" Margin="4,0,0,0" />
-                                <ComboBox x:Name="cboAppEngines" Width="180" Height="24" Margin="4,0,4,0" ToolTip="Engine for Target Application" SelectionChanged="cboAppEngines_SelectionChanged" />
+                                <ComboBox x:Name="cboAppEngines" Width="180" Height="24" Margin="4,0,4,0"
+                                          ToolTip="Engine for Target Application"
+                                          SelectionChanged="cboAppEngines_SelectionChanged" />
 
-                                <TextBlock Text="Selected Application Engine: " Height="24" Padding="4,0,4,0" Background="#FFC8C8C8" FontSize="16"/>
+                                <TextBlock Text="Selected Application Engine: " Style="{StaticResource selectedAppEngineTextBlock}"/>
                                 <TextBlock Text="{Binding ProjectTypeName, Mode=OneWay}" 
-									ToolTip="{Binding ProjectTypeName, Mode=OneWay}" 
-									Width="360" Height="24" Padding="4,0,4,0" Background="#FFC8C8C8" FontSize="16"/>
+									Width="460" Style="{StaticResource selectedAppEngineTextBlock}"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>

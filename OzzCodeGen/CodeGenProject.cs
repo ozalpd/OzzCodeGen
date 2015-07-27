@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
 using OzzCodeGen.AppEngines;
 using OzzCodeGen.Definitions;
@@ -17,10 +16,10 @@ namespace OzzCodeGen
 
         public CodeGenProject()
         {
-            this.PropertyChanged += (o, e) =>
-            {
-                if (e.PropertyName != "HasProjectChanges") HasProjectChanges = true;
-            };
+            //this.PropertyChanged += (o, e) =>
+            //{
+            //    if (e.PropertyName != "HasProjectChanges") HasProjectChanges = true;
+            //};
 
             _appEngines = new List<BaseAppEngine>();
         }
