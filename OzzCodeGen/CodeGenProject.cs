@@ -61,17 +61,35 @@ namespace OzzCodeGen
         }
         private string _modelProviderId;
 
-        public string TargetSolutionDir
+        public string TargetFolder
         {
-            get { return _targetSolutionDir; }
+            get { return _targetFolder; }
             set
             {
-                if (_targetSolutionDir == value) return;
-                _targetSolutionDir = value;
-                RaisePropertyChanged("TargetSolutionDir");
+                if (_targetFolder == value) return;
+                _targetFolder = value;
+                RaisePropertyChanged("TargetFolder");
             }
         }
-        private string _targetSolutionDir;
+        string _targetFolder;
+
+        [XmlIgnore]
+        public string TargetSolutionDir
+        {
+            get
+            {
+                if(string.IsNullOrEmpty(TargetFolder))
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    return Path.GetFullPath(
+                            Path.Combine(
+                                Path.GetDirectoryName(SavedFileName), TargetFolder));
+                }
+            }
+        }
 
 
         public string ModelSource

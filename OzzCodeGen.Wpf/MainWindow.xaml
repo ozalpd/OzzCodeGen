@@ -56,8 +56,8 @@
 
                 <TextBlock Grid.Row="0" Grid.Column="2" Text="Entity Track Enum:" Margin="5" VerticalAlignment="Center" ToolTip="Enum Name for Entity Tracking"/>
                 <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding EntityTrackEnum}" Margin="1" HorizontalAlignment="Stretch" ToolTip="Enum Name for Entity Tracking"/>
-                <TextBlock Grid.Row="1" Grid.Column="2" Text="Target Solution Dir:" Margin="5" VerticalAlignment="Center" ToolTip="Solution Directory for Generated Target"/>
-                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding TargetSolutionDir}" Margin="1" HorizontalAlignment="Stretch" ToolTip="Solution Directory for Generated Target"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="Target Folder:" Margin="5" VerticalAlignment="Center" ToolTip="Solution Directory for Generated Target"/>
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding TargetFolder}" Margin="1" HorizontalAlignment="Stretch" ToolTip="Solution Directory for Generated Target"/>
             </Grid>
         </StackPanel>
 
