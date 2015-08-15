@@ -11,7 +11,7 @@ namespace OzzCodeGen.AppEngines.DataLayer.Templates
 
         public override string GetDefaultFileName()
         {
-            return EntitySetting.Name + ".Cust.cs";
+            return EntitySetting.Name + ".cust.cs";
         }
     }
 }

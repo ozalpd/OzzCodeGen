@@ -58,16 +58,41 @@ namespace OzzCodeGen.AppEngines.Localization
         }
         private bool _singleResx;
 
-        public string VocabularyDir
+
+        public string VocabularyFolder
         {
-            get { return _vocabularyDir; }
+            get { return _vocabularyFolder; }
             set
             {
-                _vocabularyDir = value;
-                RaisePropertyChanged("VocabularyDir");
+                _vocabularyFolder = value;
+                RaisePropertyChanged("VocabularyFolder");
             }
         }
-        string _vocabularyDir;
+        private string _vocabularyFolder;
+
+        [XmlIgnore]
+        public string VocabularyDir
+        {
+            get
+            {
+                if (Project != null &&
+                    !string.IsNullOrEmpty(Project.SavedFileName) &&
+                    !string.IsNullOrEmpty(VocabularyFolder))
+                {
+                    return Path.GetFullPath(
+                            Path.Combine(
+                                Path.GetDirectoryName(Project.SavedFileName), VocabularyFolder));
+                }
+                else if (Project != null && !string.IsNullOrEmpty(Project.SavedFileName))
+                {
+                    return Path.GetDirectoryName(Project.SavedFileName);
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
 
         [XmlIgnore]
         public ObservableCollection<LocalizationEntitySetting> Entities
@@ -271,10 +296,6 @@ namespace OzzCodeGen.AppEngines.Localization
         public static ResxEngine OpenFile(string fileName)
         {
             ResxEngine instance = GetInstanceFromFile(fileName, typeof(ResxEngine)) as ResxEngine;
-            if (string.IsNullOrEmpty(instance.VocabularyDir))
-            {
-                instance.VocabularyDir = Path.GetDirectoryName(fileName);
-            }
             //instance.OpenVocabularies();
 
             return instance;
@@ -285,11 +306,9 @@ namespace OzzCodeGen.AppEngines.Localization
             return null;
         }
 
-        public override string GetDefaultTargetDir(string targetSolutionDir)
+        public override string GetDefaultTargetFolder()
         {
-            if (string.IsNullOrEmpty(targetSolutionDir))
-                return string.Empty;
-            return Path.Combine(targetSolutionDir, "App_GlobalResources");
+            return "App_GlobalResources";
         }
     }
 }

@@ -25,20 +25,23 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Target Project Directory:" Grid.Column="0" Grid.Row="1" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Name="txtTargetDirectory" Text="{Binding TargetDirectory, Mode=TwoWay}" 
+            <TextBlock Text="Target Project Folder:" Grid.Column="0" Grid.Row="1" Margin="4,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Name="txtTargetDirectory" Text="{Binding TargetFolder, Mode=TwoWay}" 
+                     ToolTip="{Binding TargetDirectory}"
                      Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"
                      Height="24" 
                      Margin="4,0,0,0" LostFocus="txtTargetDirectory_LostFocus"/>
 
-            <TextBlock Text="Controllers Directory:" Grid.Column="0" Grid.Row="2" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Name="txtControllersDir" Text="{Binding TargetControllersDir, Mode=TwoWay}" 
+            <TextBlock Text="Controllers Folder:" Grid.Column="0" Grid.Row="2" Margin="4,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Name="txtControllersDir" Text="{Binding TargetControllersFolder, Mode=TwoWay}" 
+                     ToolTip="{Binding TargetControllersDir}"
                      Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3"
                      Height="24" 
                      Margin="4,0,0,0"/>
 
-            <TextBlock Text="Views Directory:" Grid.Column="0" Grid.Row="3" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Name="txtViewsDir" Text="{Binding TargetViewsDir, Mode=TwoWay}" 
+            <TextBlock Text="Views Folder:" Grid.Column="0" Grid.Row="3" Margin="4,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Name="txtViewsDir" Text="{Binding TargetViewsFolder, Mode=TwoWay}" 
+                     ToolTip="{Binding TargetViewsDir}"
                      Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"
                      Height="24" 
                      Margin="4,0,0,0"/>

@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Xml.Serialization;
 using OzzCodeGen.Definitions;
-using OzzCodeGen.Templates;
 
 namespace OzzCodeGen.AppEngines
 {
@@ -28,12 +25,29 @@ namespace OzzCodeGen.AppEngines
             get { return _project; }
             set
             {
+                if (_project != null)
+                {
+                    _project.PropertyChanged -= Project_PropertyChanged;
+                }
                 _project = value;
-                ProjectId = Project.ProjectId; //TODO: put a check point here
-                RefreshFromProject(true);
+                if (_project != null)
+                {
+                    ProjectId = Project.ProjectId;
+                    _project.PropertyChanged += Project_PropertyChanged;
+                    RefreshFromProject(true);
+                }
             }
         }
         CodeGenProject _project;
+
+        protected virtual void Project_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("TargetFolder"))
+            {
+                OnTargetDirectoryChanged();
+            }
+        }
+
 
         /// <summary>
         /// Name of the entity
@@ -67,24 +81,46 @@ namespace OzzCodeGen.AppEngines
         }
         private string _namespaceName;
 
+        public string TargetFolder
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_targetFolder))
+                {
+                    _targetFolder = GetDefaultTargetFolder();
+                }
+                return _targetFolder;
+            }
+            set
+            {
+                if (_targetFolder == value) return;
+                _targetFolder = value;
+                RaisePropertyChanged("TargetFolder");
+                OnTargetDirectoryChanged();
+            }
+        }
+        string _targetFolder;
+        protected virtual void OnTargetDirectoryChanged()
+        {
+            RaisePropertyChanged("TargetDirectory");
+        }
+        public abstract string GetDefaultTargetFolder();
+
+        [XmlIgnore]
         public string TargetDirectory
         {
             get
             {
-                if (string.IsNullOrEmpty(_targetDirectory) && Project != null)
+                if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
                 {
-                    _targetDirectory = GetDefaultTargetDir(Project.TargetSolutionDir);
+                    return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, TargetFolder));
                 }
-                return _targetDirectory;
-            }
-            set
-            {
-                if (_targetDirectory == value) return;
-                _targetDirectory = value;
-                RaisePropertyChanged("TargetDirectory");
+                else
+                {
+                    return string.Empty;
+                }
             }
         }
-        private string _targetDirectory;
 
         [XmlIgnore]
         public bool OverwriteExisting
@@ -208,7 +244,6 @@ namespace OzzCodeGen.AppEngines
         protected abstract void RefreshSetting(BaseEntitySetting setting, EntityDefinition entity, bool cleanRemovedItems);
         public abstract bool RenderSelectedTemplate();
         public abstract bool RenderAllTemplates();
-        public abstract string GetDefaultTargetDir(string targetSolutionDir);
 
         protected abstract UserControl GetUiControl();
         public abstract UserControl GetSettingsDlgUI();
@@ -240,14 +275,14 @@ namespace OzzCodeGen.AppEngines
             }
         }
         private UserControl _uiControl;
-        
+
 
         public override void SaveToFile()
         {
             SavedFileName = Path.Combine(
                        Path.GetDirectoryName(Project.SavedFileName),
                        GetDefaultFileName());
-            
+
             base.SaveToFile();
         }
 

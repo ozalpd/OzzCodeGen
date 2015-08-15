@@ -53,6 +53,17 @@ namespace OzzCodeGen.AppEngines.ObjectiveC
         [XmlIgnore]
         public ObjcEngine AppEngine { get; set; }
 
+        public override bool Exclude
+        {
+            get { return _exclude; }
+            set
+            {
+                _exclude = value;
+                RaisePropertyChanged("Exclude");
+            }
+        }
+        bool _exclude;
+
         public string ObjectiveCName
         {
             get

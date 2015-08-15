@@ -130,8 +130,9 @@ namespace OzzCodeGen.Wpf
             if (dlgEngine.ShowDialog() ?? false)
             {
                 var engine = EngineTypes.GetInstance(dlgEngine.SelectedEngine);
-                engine.TargetDirectory = engine.GetDefaultTargetDir(Project.TargetSolutionDir);
+                //engine.TargetFolder = engine.GetDefaultTargetFolder();
                 var settingsUI = engine.GetSettingsDlgUI();
+                Project.AddEngine(engine);
                 if (settingsUI != null)
                 {
                     var dlg = new EmptyDialog();
@@ -139,7 +140,6 @@ namespace OzzCodeGen.Wpf
                     settingsUI.DataContext = engine;
                     dlg.ShowDialog();
                 }
-                Project.AddEngine(engine);
             }
         }
 

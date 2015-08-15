@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using OzzCodeGen.AppEngines.Android.Templates;
 using OzzCodeGen.AppEngines.Java;
 using OzzCodeGen.AppEngines.Java.Templates;
-using OzzCodeGen.AppEngines.Storage;
 
 namespace OzzCodeGen.AppEngines.Android
 {
@@ -140,9 +136,9 @@ namespace OzzCodeGen.AppEngines.Android
         }
 
         
-        public override string GetDefaultTargetDir(string targetSolutionDir)
+        public override string GetDefaultTargetFolder()
         {
-            return Path.Combine(targetSolutionDir, "Android");
+            return "Android";
         }
 
         public string GetModelsDir()

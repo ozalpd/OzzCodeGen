@@ -205,12 +205,12 @@ namespace OzzCodeGen.AppEngines.ObjectiveC
 
         public string GetModelsDir()
         {
-            return Path.GetDirectoryName(TargetDirectory) + "\\Models";
+            return Path.Combine(TargetDirectory, "Models");
         }
 
         public string GetContextDir()
         {
-            return Path.GetDirectoryName(TargetDirectory) + "\\Context";
+            return Path.Combine(TargetDirectory, "Context");
         }
 
 
@@ -515,11 +515,9 @@ namespace OzzCodeGen.AppEngines.ObjectiveC
             return new ObjcEngineSettingsUI();
         }
 
-        public override string GetDefaultTargetDir(string targetSolutionDir)
+        public override string GetDefaultTargetFolder()
         {
-            if (string.IsNullOrEmpty(targetSolutionDir))
-                return string.Empty;
-            return Path.Combine(targetSolutionDir, "ObjC");
+            return "Objective-C Files";
         }
     }
 }

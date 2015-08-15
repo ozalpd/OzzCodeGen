@@ -27,9 +27,15 @@ namespace OzzCodeGen.AppEngines.Storage
 
         [XmlIgnore]
         public static string DefaultFileName { get { return "SqliteScriptsGen.settings"; } }
+
         public override string GetDefaultFileName()
         {
             return DefaultFileName;
+        }
+
+        public override string GetDefaultTargetFolder()
+        {
+            return "SqliteScripts";
         }
 
         public override List<string> GetTemplateList()

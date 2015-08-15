@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using OzzCodeGen.AppEngines.Storage;
 
@@ -37,6 +34,16 @@ namespace OzzCodeGen.AppEngines.Java
         private bool _autoSaveToLocal;
 
 
+        public override bool Exclude
+        {
+            get { return _exclude; }
+            set
+            {
+                _exclude = value;
+                RaisePropertyChanged("Exclude");
+            }
+        }
+        bool _exclude;
 
 
         [XmlIgnore]

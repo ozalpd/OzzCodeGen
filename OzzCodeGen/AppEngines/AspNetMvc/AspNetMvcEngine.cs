@@ -128,11 +128,6 @@ namespace OzzCodeGen.AppEngines.AspNetMvc
             }
         }
 
-        public override string GetDefaultTargetDir(string targetSolutionDir)
-        {
-            return targetSolutionDir;
-        }
-
         protected override System.Windows.Controls.UserControl GetUiControl()
         {
             if (_engineUI == null)
@@ -314,46 +309,89 @@ namespace OzzCodeGen.AppEngines.AspNetMvc
         }
 
 
+        public override string GetDefaultTargetFolder()
+        {
+            return "MVC Files";
+        }
 
+
+        public string TargetViewsFolder
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_targetViewsFolder))
+                {
+                    _targetViewsFolder = "Views";
+                }
+                return _targetViewsFolder;
+            }
+            set
+            {
+                _targetViewsFolder = value;
+                RaisePropertyChanged("TargetViewsFolder");
+                RaisePropertyChanged("TargetViewsDir");
+            }
+        }
+        private string _targetViewsFolder;
+
+        [XmlIgnore]
         public string TargetViewsDir
         {
             get
             {
-                if (string.IsNullOrEmpty(_targetViewsDir) && Project != null)
+                if (string.IsNullOrEmpty(TargetDirectory))
                 {
-                    _targetViewsDir = string.IsNullOrEmpty(Project.TargetSolutionDir) ?
-                                    string.Empty :
-                                    Path.Combine(Project.TargetSolutionDir, "Views");
+                    return string.Empty;
                 }
-                return _targetViewsDir;
+                else
+                {
+                    return Path.GetFullPath(Path.Combine(TargetDirectory, TargetViewsFolder));
+                }
+            }
+        }
+
+
+        public string TargetControllersFolder
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_targetControllersFolder))
+                {
+                    _targetControllersFolder = "Controllers";
+                }
+                return _targetControllersFolder;
             }
             set
             {
-                _targetViewsDir = value;
-                RaisePropertyChanged("TargetViewsDir");
+                _targetControllersFolder = value;
+                RaisePropertyChanged("TargetControllersFolder");
+                RaisePropertyChanged("TargetControllersDir");
             }
         }
-        private string _targetViewsDir;
+        private string _targetControllersFolder;
 
+        [XmlIgnore]
         public string TargetControllersDir
         {
             get
             {
-                if (string.IsNullOrEmpty(_targetControllersDir) && Project != null)
+                if (string.IsNullOrEmpty(TargetDirectory))
                 {
-                    _targetControllersDir = string.IsNullOrEmpty(Project.TargetSolutionDir) ?
-                                    string.Empty :
-                                    Path.Combine(Project.TargetSolutionDir, "Controllers");
+                    return string.Empty;
                 }
-                return _targetControllersDir;
-            }
-            set
-            {
-                _targetControllersDir = value;
-                RaisePropertyChanged("TargetControllersDir");
+                else
+                {
+                    return Path.GetFullPath(Path.Combine(TargetDirectory, TargetControllersFolder));
+                }
             }
         }
-        private string _targetControllersDir;
+
+        protected override void OnTargetDirectoryChanged()
+        {
+            base.OnTargetDirectoryChanged();
+            RaisePropertyChanged("TargetControllersDir");
+            RaisePropertyChanged("TargetViewsDir");
+        }
 
         public string ControllersNamespace
         {

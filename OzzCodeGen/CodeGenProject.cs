@@ -63,7 +63,14 @@ namespace OzzCodeGen
 
         public string TargetFolder
         {
-            get { return _targetFolder; }
+            get
+            {
+                if (string.IsNullOrEmpty(_targetFolder))
+                {
+                    _targetFolder = "..\\Generated Codes";
+                }
+                return _targetFolder;
+            }
             set
             {
                 if (_targetFolder == value) return;

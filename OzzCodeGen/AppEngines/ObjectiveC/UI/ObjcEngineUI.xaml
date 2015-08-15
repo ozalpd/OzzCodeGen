@@ -50,8 +50,8 @@
                 <CheckBox Content="Overwrite Existing" IsChecked="{Binding OverwriteExisting}" ToolTip="Overwrite Existing Files" VerticalAlignment="Center" />
             </StackPanel>
 
-            <TextBlock Text="Target Directory:" Grid.Column="2" Grid.Row="0" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding TargetDirectory, Mode=TwoWay}" 
+            <TextBlock Text="Target Folder:" Grid.Column="2" Grid.Row="0" Margin="4,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding TargetFolder, Mode=TwoWay}" 
                      Grid.Column="3" Grid.Row="0" 
                      Height="24" 
                      Margin="4,0,0,0"/>

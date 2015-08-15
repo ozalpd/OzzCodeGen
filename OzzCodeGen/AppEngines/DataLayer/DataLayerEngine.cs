@@ -30,21 +30,45 @@ namespace OzzCodeGen.AppEngines.DataLayer
             return DefaultFileName;
         }
 
+        protected override void OnTargetDirectoryChanged()
+        {
+            base.OnTargetDirectoryChanged();
+            RaisePropertyChanged("ViewModelsDirectory");
+            RaisePropertyChanged("CustFilesDirectory");
+        }
+
+
+        public string CustFilesFolder
+        {
+            get { return _custFilesFolder; }
+            set
+            {
+                _custFilesFolder = value;
+                RaisePropertyChanged("CustFilesFolder");
+                RaisePropertyChanged("CustFilesDirectory");
+            }
+        }
+        private string _custFilesFolder;
+
+
         public string CustFilesDirectory
         {
             get
             {
-                if (string.IsNullOrEmpty(_custFilesDirectory)) _custFilesDirectory = TargetDirectory;
-                return _custFilesDirectory;
-            }
-            set
-            {
-                if (_custFilesDirectory == value) return;
-                _custFilesDirectory = value;
-                RaisePropertyChanged("CustFilesDirectory");
+                if (string.IsNullOrEmpty(TargetDirectory))
+                {
+                    return string.Empty;
+                }
+                else if (string.IsNullOrEmpty(CustFilesFolder))
+                {
+                    return TargetDirectory;
+                }
+                else
+                {
+                    return Path.GetFullPath(Path.Combine(TargetDirectory, CustFilesFolder));
+                }
             }
         }
-        private string _custFilesDirectory;
 
         public string ViewModelNamespace
         {
@@ -62,21 +86,45 @@ namespace OzzCodeGen.AppEngines.DataLayer
         }
         private string _viewModelNamespace;
 
-        public string ViewModelFilesDirectory
+
+        public string ViewModelsFolder
         {
             get
             {
-                if (string.IsNullOrEmpty(_viewModelFilesDirectory)) _viewModelFilesDirectory = TargetDirectory;
-                return _viewModelFilesDirectory;
+                if (string.IsNullOrEmpty(_viewModelsFolder))
+                {
+                    _viewModelsFolder = "..\\ViewModels";
+                }
+                return _viewModelsFolder;
             }
             set
             {
-                if (_viewModelFilesDirectory == value) return;
-                _viewModelFilesDirectory = value;
-                RaisePropertyChanged("ViewModelFilesDirectory");
+                _viewModelsFolder = value;
+                RaisePropertyChanged("ViewModelsFolder");
+                RaisePropertyChanged("ViewModelsDirectory");
             }
         }
-        private string _viewModelFilesDirectory;
+        private string _viewModelsFolder;
+
+        [XmlIgnore]
+        public string ViewModelsDirectory
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(TargetDirectory))
+                {
+                    return string.Empty;
+                }
+                else if (string.IsNullOrEmpty(ViewModelsFolder))
+                {
+                    return TargetDirectory;
+                }
+                else
+                {
+                    return Path.GetFullPath(Path.Combine(TargetDirectory, ViewModelsFolder));
+                }
+            }
+        }
 
         protected override BaseEntitySetting GetDefaultSetting(EntityDefinition entity)
         {
@@ -259,7 +307,7 @@ namespace OzzCodeGen.AppEngines.DataLayer
 
             if (template is MvcServerVM)
             {
-                fileName = Path.Combine(ViewModelFilesDirectory, template.GetDefaultFileName());
+                fileName = Path.Combine(ViewModelsDirectory, template.GetDefaultFileName());
             }
             else
             {
@@ -401,11 +449,9 @@ namespace OzzCodeGen.AppEngines.DataLayer
             return null;
         }
 
-        public override string GetDefaultTargetDir(string targetSolutionDir)
+        public override string GetDefaultTargetFolder()
         {
-            if (string.IsNullOrEmpty(targetSolutionDir))
-                return string.Empty;
-            return Path.Combine(targetSolutionDir, "Models");
+            return "Models";
         }
 
 

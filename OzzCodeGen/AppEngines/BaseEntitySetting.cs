@@ -27,7 +27,7 @@ namespace OzzCodeGen.AppEngines
         }
         private string _name;
 
-        public bool Exclude
+        public virtual bool Exclude
         {
             get
             {

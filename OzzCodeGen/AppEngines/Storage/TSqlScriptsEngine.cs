@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Xml.Serialization;
 using OzzCodeGen.AppEngines.Storage.Templates;
 using OzzCodeGen.AppEngines.Storage.Templates.MsSql;
 using OzzCodeGen.Definitions;
-using OzzCodeGen.UI;
 
 namespace OzzCodeGen.AppEngines.Storage
 {
@@ -28,9 +23,15 @@ namespace OzzCodeGen.AppEngines.Storage
 
         [XmlIgnore]
         public static string DefaultFileName { get { return "TSqlScriptsGen.settings"; } }
+
         public override string GetDefaultFileName()
         {
             return DefaultFileName;
+        }
+
+        public override string GetDefaultTargetFolder()
+        {
+            return "T-SQL Scripts";
         }
 
         public override List<string> GetTemplateList()

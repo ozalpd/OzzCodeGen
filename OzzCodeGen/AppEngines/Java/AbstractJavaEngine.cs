@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using OzzCodeGen.AppEngines.Storage;
 using OzzCodeGen.Definitions;
@@ -145,7 +142,7 @@ namespace OzzCodeGen.AppEngines.Java
             {
                 DataModel = this.Project.DataModel,
                 AppEngine = this,
-                Exclude = entity.Abstract,
+                //Exclude = entity.Abstract,
                 Name = entity.Name
             };
 
@@ -207,9 +204,9 @@ namespace OzzCodeGen.AppEngines.Java
             }
         }
 
-        public override string GetDefaultTargetDir(string targetSolutionDir)
+        public override string GetDefaultTargetFolder()
         {
-            return targetSolutionDir + "\\Java";
+            return "Java";
         }
     }
 }

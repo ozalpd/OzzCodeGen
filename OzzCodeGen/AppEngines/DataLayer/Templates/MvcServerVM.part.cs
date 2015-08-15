@@ -10,7 +10,7 @@ namespace OzzCodeGen.AppEngines.DataLayer.Templates
     {
         public override string GetDefaultFileName()
         {
-            return EntitySetting.Name + "ViewModel.Gen.cs";
+            return EntitySetting.Name + "ViewModel.gen.cs";
         }
     }
 }

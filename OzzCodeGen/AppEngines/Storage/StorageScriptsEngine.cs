@@ -2,21 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Xml.Serialization;
 using OzzCodeGen.AppEngines.Storage.Templates;
 using OzzCodeGen.AppEngines.Storage.UI;
 using OzzCodeGen.Definitions;
-using OzzCodeGen.UI;
 using OzzUtils;
 
 namespace OzzCodeGen.AppEngines.Storage
 {
     public abstract class StorageScriptsEngine : BaseAppEngine
     {
-
         [XmlIgnore]
         public List<StorageEntitySetting> Entities
         {
@@ -395,13 +391,6 @@ namespace OzzCodeGen.AppEngines.Storage
         public override UserControl GetSettingsDlgUI()
         {
             return new StorageEngineSettingsUI();
-        }
-
-        public override string GetDefaultTargetDir(string targetSolutionDir)
-        {
-            if (string.IsNullOrEmpty(targetSolutionDir))
-                return string.Empty;
-            return Path.Combine(targetSolutionDir, "DbScripts");
         }
     }
 }
