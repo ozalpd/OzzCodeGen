@@ -507,7 +507,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CommonLibraries\OzzUtils\OzzUtils.csproj">
+    <ProjectReference Include="..\..\CommonLibraries\OzzUtils\OzzUtils.csproj">
       <Project>{d417166b-12eb-43b5-af18-d634ae620f0b}</Project>
       <Name>OzzUtils</Name>
     </ProjectReference>
