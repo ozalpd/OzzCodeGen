@@ -13,20 +13,6 @@ namespace OzzCodeGen.AppEngines.Storage
 {
     public abstract class StorageScriptsEngine : BaseAppEngine
     {
-        [XmlIgnore]
-        public List<StorageEntitySetting> Entities
-        {
-            get { return _entitySettings; }
-            set
-            {
-                if (_entitySettings == value) return;
-                _entitySettings = value;
-                RaisePropertyChanged("Entities");
-            }
-        }
-        private List<StorageEntitySetting> _entitySettings;
-
-
         public bool PluralizeTableNames
         {
             get { return _pluralize; }
@@ -54,23 +40,6 @@ namespace OzzCodeGen.AppEngines.Storage
             }
         }
         private string _databaseName;
-
-        protected virtual string GetDefaultDbName()
-        {
-            if (Project == null)
-                return string.Empty;
-
-            string s;
-            if (Project.Name.EndsWith("DAL"))
-            {
-                s = Project.Name.Substring(0, Project.Name.Length - 3);
-            }
-            else
-            {
-                s = Project.Name;
-            }
-            return s + "DB";
-        }
 
         public string DatabaseServer
         {
@@ -119,6 +88,37 @@ namespace OzzCodeGen.AppEngines.Storage
             get { return _lastScripts; }
         }
         private string _lastScripts;
+
+        [XmlIgnore]
+        public List<StorageEntitySetting> Entities
+        {
+            get { return _entitySettings; }
+            set
+            {
+                if (_entitySettings == value) return;
+                _entitySettings = value;
+                RaisePropertyChanged("Entities");
+            }
+        }
+        private List<StorageEntitySetting> _entitySettings;
+
+
+        protected virtual string GetDefaultDbName()
+        {
+            if (Project == null)
+                return string.Empty;
+
+            string s;
+            if (Project.Name.EndsWith("DAL"))
+            {
+                s = Project.Name.Substring(0, Project.Name.Length - 3);
+            }
+            else
+            {
+                s = Project.Name;
+            }
+            return s + "DB";
+        }
 
         [XmlIgnore]
         public List<string> AdditionalCommands
