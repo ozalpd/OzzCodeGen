@@ -9,37 +9,83 @@
 @sqlcmd -S <#= AppEngine.DatabaseServer #> -d Master -E -Q "CREATE DATABASE [<#= AppEngine.DatabaseName #>]"
 @echo .
 
-@echo .
-@echo .
-@call _Essentials.bat
 <# 
-var tables = AppEngine.GetCreateTableList();
 int i = 0;
-foreach (var table in tables)
-{ 
-	i++;#>
-
-@echo .
-@echo .
-@echo <#= i #> - Executing <#= table.Name #>.sql...
-@sqlcmd -S <#= AppEngine.DatabaseServer #> -d <#= AppEngine.DatabaseName #> -E -i <#= table.Name #>.sql
-<#  if(!string.IsNullOrEmpty(table.FinishingScript))
-	{ #>
-@sqlcmd -S <#= AppEngine.DatabaseServer #> -d <#= AppEngine.DatabaseName #> -E -i <#= table.FinishingScript #>
-<#  }
-	if(table.StoredProcs)
-	{ #>
-@sqlcmd -S <#= AppEngine.DatabaseServer #> -d <#= AppEngine.DatabaseName #> -E -i <#= table.TableName #>-SP.sql
-<#  }
+var beforeScripts = AppEngine.BeforeScripts.Split(';');
+var afterScripts = AppEngine.AfterScripts.Split(';');
+foreach (var script in beforeScripts)
+{
+	if(!string.IsNullOrWhiteSpace(script))
+    {
+		i++;
+		WriteExecutingFile(script, i);
+    }
 }
-i++; #>
+var tables = AppEngine.GetCreateTableList();
+foreach (var table in tables.Where(e => !e.Exclude))
+{ 
+	i++;
+	WriteExecutingFile(table.Name + ".sql", i);
+	if (!string.IsNullOrWhiteSpace(table.FinishingScript))
+	{
+		var finishingScripts = table.FinishingScript.Split(';');
+		foreach (var script in finishingScripts)
+		{
+			if(!string.IsNullOrWhiteSpace(script))
+			{
+				WriteExecutingFile(script);
+			}
+		}
+	}
+	if(table.StoredProcs)
+	{
+		WriteExecutingFile(table.TableName + "-SP.sql");
+    }
+}
+i++;
+WriteExecutingFile("_FinishingSetup.sql", i);
+
+foreach (var script in afterScripts)
+{
+	if(!string.IsNullOrWhiteSpace(script))
+    {
+		i++;
+		WriteExecutingFile(script, i);
+    }
+}
+ #>
+
+@echo .
+@echo * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+@echo *
+@echo * Create scripts for database <#= AppEngine.DatabaseName #> executed on Server <#= AppEngine.DatabaseServer #>
+@echo *
+@echo * Please check history for errors.
+@echo *
+@echo * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+@echo .
+@pause
+<#+ 
+void WriteExecutingFile(string fileName, int counter = 0)
+{
+	if (counter>0)
+    { #>
 
 @echo .
 @echo .
-@echo Executing FinishingSetup.sql...
-@sqlcmd -S <#= AppEngine.DatabaseServer #> -d <#= AppEngine.DatabaseName #> -E -i FinishingSetup.sql
-@echo .
-@echo .
-@echo Calling _FinishingSetup.bat...
-@call _FinishingSetup.bat
-@pause
+@echo <#= counter #> - Executing <#= fileName #>...
+<#+ }
+	if(fileName.EndsWith(".bat"))
+    {#>
+@call <#= fileName #>
+<#+ }
+	else if(fileName.EndsWith(".sql"))
+    {#>
+@sqlcmd -S <#= AppEngine.DatabaseServer #> -d <#= AppEngine.DatabaseName #> -E -i <#= fileName #>
+<#+ }
+	else
+    {#>
+@<#= fileName #>
+<#+ }
+}
+ #>

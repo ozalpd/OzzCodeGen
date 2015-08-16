@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzzCodeGen.Wpf", "OzzCodeGe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzzCodeGen.Providers.SourceCode.XCode", "OzzCodeGen.Providers.SourceCode.XCode\OzzCodeGen.Providers.SourceCode.XCode.csproj", "{2C94BF6C-958D-4CD0-A71C-3B2B0BE7E250}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzzUtils", "..\..\CommonLibraries\OzzUtils\OzzUtils.csproj", "{D417166B-12EB-43B5-AF18-D634AE620F0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzzUtils", "..\CommonLibraries\OzzUtils\OzzUtils.csproj", "{D417166B-12EB-43B5-AF18-D634AE620F0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

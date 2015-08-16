@@ -12,7 +12,7 @@ namespace OzzCodeGen.AppEngines.Storage.Templates
 
         public override string GetDefaultFileName()
         {
-            return "FinishingSetup.sql";
+            return "_FinishingSetup.sql";
         }
     }
 }

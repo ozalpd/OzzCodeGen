@@ -58,6 +58,10 @@ namespace OzzCodeGen.AppEngines.Storage
                     column.DataType = "bit";
                     break;
 
+                case "byte":
+                    column.DataType = "tinyint";
+                    break;
+
                 default:
                     break;
             }
@@ -229,6 +233,7 @@ namespace OzzCodeGen.AppEngines.Storage
             };
         }
 
+        //TODO: Read this from a file
         public override List<StorageColumnSetting> GetModifyTrackColumns()
         {
             if (_modifyTracColumns != null)

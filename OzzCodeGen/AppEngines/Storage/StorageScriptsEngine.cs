@@ -37,7 +37,7 @@ namespace OzzCodeGen.AppEngines.Storage
             }
         }
         private bool _pluralize = true;
-        
+
 
         public string DatabaseName
         {
@@ -90,6 +90,35 @@ namespace OzzCodeGen.AppEngines.Storage
         }
         private string _databaseServer;
 
+        /// <summary>
+        /// Script files will be executed before creating database
+        /// File names must be seperated by a semicolon
+        /// </summary>
+        public string BeforeScripts
+        {
+            set
+            {
+                _beforeScripts = value;
+                RaisePropertyChanged("BeforeScripts");
+            }
+            get { return _beforeScripts; }
+        }
+        private string _beforeScripts;
+
+        /// <summary>
+        /// Script files will be executed after creating database
+        /// File names must be seperated by a semicolon
+        /// </summary>
+        public string AfterScripts
+        {
+            set
+            {
+                _lastScripts = value;
+                RaisePropertyChanged("AfterScripts");
+            }
+            get { return _lastScripts; }
+        }
+        private string _lastScripts;
 
         [XmlIgnore]
         public List<string> AdditionalCommands
@@ -103,7 +132,7 @@ namespace OzzCodeGen.AppEngines.Storage
             set { _additionalCommands = value; }
         }
         private List<string> _additionalCommands;
-        
+
 
         protected override void OnEntitySettingsChanged()
         {
@@ -179,7 +208,7 @@ namespace OzzCodeGen.AppEngines.Storage
                     bool triggerNullable = ps.Nullable;//Force to set default value
                     ps.Nullable = simple.IsNullable;
                 }
-                
+
                 if (complex != null)
                 {
                     ps.ForeignKeyTable = GetTableName(complex.TypeName);
@@ -220,7 +249,7 @@ namespace OzzCodeGen.AppEngines.Storage
             column.DataType = column.PropertyDefinition.TypeName;
 
             //TODO: Find dependent property
-            if (column.PropertyDefinition.DefinitionType == DefinitionType.Complex  && 
+            if (column.PropertyDefinition.DefinitionType == DefinitionType.Complex &&
                 column.DataType != "ICollection")
             {
                 column.Name += "Id";

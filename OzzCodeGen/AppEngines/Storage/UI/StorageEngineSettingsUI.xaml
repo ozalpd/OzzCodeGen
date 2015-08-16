@@ -28,6 +28,7 @@
 
             <TextBlock Text="Target Folder:" Grid.Column="0" Grid.Row="1" Margin="4,0,0,0" VerticalAlignment="Center"/>
             <TextBox Text="{Binding TargetFolder, Mode=TwoWay}" 
+                     ToolTip="{Binding TargetDirectory}"
                      Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"
                      Height="24" 
                      Margin="4,0,0,0"/>
