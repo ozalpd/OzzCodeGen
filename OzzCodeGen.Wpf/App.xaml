@@ -21,7 +21,7 @@
         <Style x:Key="selectedAppEngineTextBlock" TargetType="{x:Type TextBlock}">
             <Setter Property="Height" Value="24" />
             <Setter Property="Background" Value="#FFC8C8C8" />
-            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontSize" Value="18" />
             <Setter Property="Padding" Value="4,0,4,0" />
         </Style>
     </Application.Resources>
