@@ -237,7 +237,7 @@ namespace OzzCodeGen.AppEngines
                 }
                 RefreshSetting(target, e, cleanRemovedItems);
             }
-            EntitySettings = entities.OrderBy(e => e.Name).ToList();
+            EntitySettings = entities.OrderBy(e => e.EntityDefinition.DisplayOrder).ToList();
         }
 
         protected abstract BaseEntitySetting GetDefaultSetting(EntityDefinition entity);

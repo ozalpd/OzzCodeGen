@@ -275,6 +275,7 @@ namespace OzzCodeGen.AppEngines.Storage
                     remvProp.Add(thisProp);
                 }
             }
+
             foreach (var dalProp in remvProp)
             {
                 entitySetting.Properties.Remove(dalProp);
@@ -292,6 +293,10 @@ namespace OzzCodeGen.AppEngines.Storage
                     ps.EntitySetting = setting;
                 }
             }
+
+            entitySetting.Properties = entitySetting
+                .Properties.OrderBy(p => p.PropertyDefinition.DisplayOrder)
+                .ToList();
         }
 
         protected override UserControl GetUiControl()

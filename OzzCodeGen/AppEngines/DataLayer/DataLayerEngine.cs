@@ -231,6 +231,9 @@ namespace OzzCodeGen.AppEngines.DataLayer
                     ps.EntitySetting = setting;
                 }
             }
+            dataLayerSetting.Properties = dataLayerSetting
+                .Properties.OrderBy(p => p.PropertyDefinition.DisplayOrder)
+                .ToList();
         }
 
         protected DalPropertySetting GetDefaultPropertySetting(BaseProperty property, DalEntitySetting setting)

@@ -1,11 +1,6 @@
 ﻿using OzzCodeGen.Definitions;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen
@@ -23,6 +18,12 @@ namespace OzzCodeGen
         {
             Remove(entity);
             Insert(newIndex, entity);
+            int i = 0;
+            foreach (var item in this)
+            {
+                i++;
+                item.DisplayOrder = i;
+            }
         }
 
         public void MoveTop(EntityDefinition entity)

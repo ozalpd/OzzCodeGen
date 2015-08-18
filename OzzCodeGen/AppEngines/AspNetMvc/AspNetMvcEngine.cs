@@ -126,6 +126,9 @@ namespace OzzCodeGen.AppEngines.AspNetMvc
                     ps.EntitySetting = setting;
                 }
             }
+            entitySetting.Properties = entitySetting
+                .Properties.OrderBy(p => p.PropertyDefinition.DisplayOrder)
+                .ToList();
         }
 
         protected override System.Windows.Controls.UserControl GetUiControl()

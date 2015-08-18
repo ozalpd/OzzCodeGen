@@ -331,6 +331,9 @@ namespace OzzCodeGen.AppEngines.ObjectiveC
                     ps.EntitySetting = setting;
                 }
             }
+            entitySetting.Properties = entitySetting
+                .Properties.OrderBy(p => p.PropertyDefinition.DisplayOrder)
+                .ToList();
         }
 
         protected override UserControl GetUiControl()

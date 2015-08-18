@@ -202,6 +202,9 @@ namespace OzzCodeGen.AppEngines.Java
                     ps.EntitySetting = setting;
                 }
             }
+            entitySetting.Properties = entitySetting
+                .Properties.OrderBy(p => p.PropertyDefinition.DisplayOrder)
+                .ToList();
         }
 
         public override string GetDefaultTargetFolder()
