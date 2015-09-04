@@ -170,7 +170,7 @@ namespace OzzCodeGen.AppEngines.Java
             return ps;
         }
 
-        protected override void RefreshSetting(BaseEntitySetting setting, Definitions.EntityDefinition entity, bool cleanRemovedItems)
+        protected override void RefreshSetting(BaseEntitySetting setting, EntityDefinition entity, bool cleanRemovedItems)
         {
             var entitySetting = (JavaEntitySetting)setting;
             entitySetting.DataModel = Project.DataModel;

@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Xml.Serialization;
 using OzzCodeGen.AppEngines.Localization.Templates;
 using OzzCodeGen.AppEngines.Localization.UI;
 using OzzCodeGen.Definitions;
-using OzzCodeGen.Templates;
-using OzzCodeGen.UI;
 using OzzUtils;
 using System.Collections.ObjectModel;
 

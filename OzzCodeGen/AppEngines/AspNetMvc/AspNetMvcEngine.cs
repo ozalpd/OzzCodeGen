@@ -94,7 +94,7 @@ namespace OzzCodeGen.AppEngines.AspNetMvc
             Entities = entities;
         }
 
-        protected override void RefreshSetting(BaseEntitySetting setting, Definitions.EntityDefinition entity, bool cleanRemovedItems)
+        protected override void RefreshSetting(BaseEntitySetting setting, EntityDefinition entity, bool cleanRemovedItems)
         {
             var entitySetting = (AspNetMvcEntitySetting)setting;
             entitySetting.DataModel = Project.DataModel;
