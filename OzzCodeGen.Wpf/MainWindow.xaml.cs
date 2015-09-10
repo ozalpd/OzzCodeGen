@@ -177,6 +177,7 @@ namespace OzzCodeGen.Wpf
             Project.HasProjectChanges = false;
 
             IModelProvider modelProvider = modelProviders.First(m => m.ProviderId == Project.ModelProviderId);
+            modelProvider.Project = Project;
             btnRefresh.IsEnabled = modelProvider.CanRefresh;
         }
 

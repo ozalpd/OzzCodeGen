@@ -18,6 +18,7 @@ namespace OzzCodeGen.Providers
         DataModel GetDataModel(string modelSource);
         EntityDefinition GetDefaultEntityDefinition();
         CodeGenProject CreateProject(string modelSource);
+        CodeGenProject Project { get; set; }
 
         /// <summary>
         /// Refreshes a DataModel from source.

@@ -40,6 +40,8 @@ namespace OzzCodeGen.Providers
             get { return false; }
         }
 
+        public CodeGenProject Project { get; set; }
+
         protected EmptyModelDialog ModelDialog
         {
             get
