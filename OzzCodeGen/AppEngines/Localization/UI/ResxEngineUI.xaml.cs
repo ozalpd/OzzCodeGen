@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using OzzCodeGen.UI;
+using OzzLocalization;
 
 namespace OzzCodeGen.AppEngines.Localization.UI
 {
@@ -44,5 +33,25 @@ namespace OzzCodeGen.AppEngines.Localization.UI
             }
         }
 
+        private void btnRefreshVocabulary_Click(object sender, RoutedEventArgs e)
+        {
+            var engine = (ResxEngine)AppEngine;
+            var combinedEntity = engine.CombineEntities();
+            var vocabularies = Vocabulary.OpenVocabularies(engine.VocabularyDir);
+            foreach (var dict in vocabularies)
+            {
+                foreach (var item in combinedEntity.Properties)
+                {
+                    dict.Value.AddUnique(new Vocab() { Name = item.Name });
+                }
+
+                var sortedVocabulary = new Vocabulary(dict.Value.CultureCode);
+                foreach (var item in dict.Value.OrderBy(v => v.Name))
+                {
+                    sortedVocabulary.Add(item);
+                }
+                sortedVocabulary.SaveToFile(dict.Value.FilePath);
+            }
+        }
     }
 }

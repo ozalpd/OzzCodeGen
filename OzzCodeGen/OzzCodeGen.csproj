@@ -132,7 +132,6 @@
     <Compile Include="AppEngines\Localization\UI\ResxEngineUI.xaml.cs">
       <DependentUpon>ResxEngineUI.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppEngines\Localization\Vocabulary.cs" />
     <Compile Include="AppEngines\ObjectiveC\ObjcEngine.cs" />
     <Compile Include="AppEngines\ObjectiveC\ObjcEntitySetting.cs" />
     <Compile Include="AppEngines\ObjectiveC\ObjcHeaderType.cs" />
@@ -282,7 +281,6 @@
     <Compile Include="Definitions\EntityDefinition.cs" />
     <Compile Include="Definitions\BaseProperty.cs" />
     <Compile Include="BaseSavable.cs" />
-    <Compile Include="SavableList.cs" />
     <Compile Include="Templates\AbstractTemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Definitions\SimpleProperty.cs" />
@@ -507,9 +505,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CommonLibraries\OzzUtils.Wpf\OzzUtils.Wpf.csproj">
+      <Project>{930d101f-c0a8-4f5b-986d-6c71ce3c66f0}</Project>
+      <Name>OzzUtils.Wpf</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\CommonLibraries\OzzUtils\OzzUtils.csproj">
       <Project>{d417166b-12eb-43b5-af18-d634ae620f0b}</Project>
       <Name>OzzUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OzzLocalization\OzzLocalization.csproj">
+      <Project>{7e5b007e-ba07-4685-b014-cbd9d8de3c14}</Project>
+      <Name>OzzLocalization</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -27,7 +27,9 @@ namespace OzzCodeGen.Providers
 
         public CodeGenProject CreateProject(string modelSource)
         {
-            return ModelDialog.GetProject();
+            var project = ModelDialog.GetProject();
+            project.ModelProvider = this;
+            return project;
         }
 
         public DataModel RefreshDataModel(string modelSource, DataModel model, bool cleanRemovedItems)

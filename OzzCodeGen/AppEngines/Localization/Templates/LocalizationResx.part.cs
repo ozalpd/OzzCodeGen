@@ -5,13 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using OzzCodeGen.Templates;
 using OzzUtils;
+using OzzLocalization;
 
 namespace OzzCodeGen.AppEngines.Localization.Templates
 {
     public partial class LocalizationResx : AbstractTemplate
     {
-        //public LocalizationResource() { }
-
         public LocalizationResx(LocalizationEntitySetting entitySetting)
         {
             EntitySetting = entitySetting;
@@ -47,16 +46,16 @@ namespace OzzCodeGen.AppEngines.Localization.Templates
         {
             get
             {
-                return GetTitle(EntitySetting.Name);
+                return GetTranslation(EntitySetting.Name);
             }
         }
 
         protected string GetPropertyLabel(LocalizationPropertySetting property)
         {
-            return GetTitle(property.Name);
+            return GetTranslation(property.Name);
         }
 
-        public string GetTitle(string name)
+        public string GetTranslation(string name)
         {
             Vocab vocab = null;
             if (Vocabulary != null)
@@ -70,7 +69,7 @@ namespace OzzCodeGen.AppEngines.Localization.Templates
                     vocab = Vocabulary.FirstOrDefault(v => v.Name == s);
 
                     if (vocab != null)
-                        return vocab.Title;// +" ID";
+                        return vocab.Translation;// +" ID";
                 }
                 else if (vocab == null && (name.EndsWith("X") || name.EndsWith("Y") || name.EndsWith("Z")))
                 {
@@ -79,18 +78,18 @@ namespace OzzCodeGen.AppEngines.Localization.Templates
                     if (vocab != null)
                     {
                         string end = name.Substring(name.Length - 1, 1);
-                        return string.Format("{0} {1}", vocab.Title, end);
+                        return string.Format("{0} {1}", vocab.Translation, end);
                     }
                 }
             }
 
             if (vocab != null)
             {
-                return vocab.Title;
+                return vocab.Translation;
             }
             else
             {
-                return name.ToTitleCase();
+                return name.PascalCaseToTitleCase();
             }
         }
 
@@ -141,7 +140,7 @@ namespace OzzCodeGen.AppEngines.Localization.Templates
             }
             else
             {
-                return vocab.Title;
+                return vocab.Translation;
             }
         }
 
@@ -170,7 +169,7 @@ namespace OzzCodeGen.AppEngines.Localization.Templates
             }
             else
             {
-                return vocab.Title;
+                return vocab.Translation;
             }
         }
     }

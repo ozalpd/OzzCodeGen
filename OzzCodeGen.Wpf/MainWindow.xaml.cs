@@ -46,13 +46,7 @@ namespace OzzCodeGen.Wpf
             StringPropertyGrid.Visibility = Visibility.Collapsed;
             ClassPropertyGrid.Visibility = Visibility.Collapsed;
             CollectionPropertyGrid.Visibility = Visibility.Collapsed;
-
-            modelProviders = new List<IModelProvider>(); // Add model provider to list when new one available
-            modelProviders.Add(new EmptyModel());
-            modelProviders.Add(new OzzCodeGen.Providers.Ef.Ef5());
-            modelProviders.Add(new OzzCodeGen.Providers.SourceCode.ObjectiveC());
         }
-        List<IModelProvider> modelProviders;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -146,7 +140,7 @@ namespace OzzCodeGen.Wpf
         private void btnNewProject_Click(object sender, RoutedEventArgs e)
         {
             GenerateModel modelGenDlg = new GenerateModel();
-            modelGenDlg.ModelProviders = modelProviders;
+            modelGenDlg.ModelProviders = GetModelProviders();
             modelGenDlg.Owner = this;
             if (modelGenDlg.ShowDialog() ?? false)
             {
@@ -165,6 +159,16 @@ namespace OzzCodeGen.Wpf
         }
 
 
+        protected List<IModelProvider> GetModelProviders()
+        {
+            var modelProviders = new List<IModelProvider>();
+            modelProviders.Add(new EmptyModel());
+            modelProviders.Add(new OzzCodeGen.Providers.Ef.Ef5());
+            modelProviders.Add(new OzzCodeGen.Providers.SourceCode.ObjectiveC());
+
+            return modelProviders;
+        }
+
         private void OpenProject(string fileName)
         {
             if (!File.Exists(fileName))
@@ -176,9 +180,8 @@ namespace OzzCodeGen.Wpf
             Project = project;
             Project.HasProjectChanges = false;
 
-            IModelProvider modelProvider = modelProviders.First(m => m.ProviderId == Project.ModelProviderId);
-            modelProvider.Project = Project;
-            btnRefresh.IsEnabled = modelProvider.CanRefresh;
+            Project.ModelProvider = GetModelProviders().First(m => m.ProviderId == Project.ModelProviderId);
+            btnRefresh.IsEnabled = Project.ModelProvider.CanRefresh;
         }
 
         const string fileExtension = ".OzzGen";
@@ -226,10 +229,9 @@ namespace OzzCodeGen.Wpf
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            IModelProvider modelProvider = modelProviders.First(m => m.ProviderId == Project.ModelProviderId);
-            if (!modelProvider.CanRefresh) return;
+            if (!Project.ModelProvider.CanRefresh) return;
 
-            Project.RefreshDataModel(modelProvider, true);
+            Project.RefreshDataModel(true);
             RefreshEntitiesGrid();
         }
 

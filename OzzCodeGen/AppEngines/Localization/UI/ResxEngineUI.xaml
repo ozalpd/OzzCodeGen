@@ -5,7 +5,7 @@
                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                         mc:Ignorable="d"
-                        d:DesignHeight="400" d:DesignWidth="600">
+                        d:DesignHeight="400" d:DesignWidth="920">
     <Border BorderBrush="#FF9090AF" Padding="2" Margin="2">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -18,49 +18,54 @@
                 <RowDefinition Height="28"/>
                 <RowDefinition Height="28"/>
                 <RowDefinition Height="28"/>
-                <!--
-                <RowDefinition Height="24"/>
-                <RowDefinition Height="24"/>
-                <RowDefinition Height="24"/>
-                <RowDefinition Height="24"/>
-                <RowDefinition Height="24"/>
-                <RowDefinition Height="24"/>-->
+                <RowDefinition Height="28"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
 
             <Button Name="btnRenderTemplate" Content="Render Template" 
                     Grid.RowSpan="2"
-                    Width="120" Margin="0,2,0,4"
+                    Width="120" Margin="0,2,0,2"
                     Click="btnRenderTemplate_Click"/>
+            <Button Name="btnRefresh" Content="Refresh" 
+                    Grid.Row="2" Grid.Column="0"
+                    Width="120" Margin="0,2,0,2"
+                    Click="btnRefresh_Click"/>
+            
+            <CheckBox IsChecked="{Binding RenderAllEntities}"
+                      Content="Render All Entities"
+                      ToolTip="Render All Entities"
+                          Margin="8,0,0,0"
+                          Grid.Column="1" Grid.Row="0"
+                          VerticalAlignment="Center" />
+            <CheckBox IsChecked="{Binding OverwriteExisting}"
+                      Content="Overwrite Existing Files"
+                      ToolTip="Render for every entity in the model."
+                          Margin="8,0,0,0"
+                          Grid.Column="1" Grid.Row="1"
+                          VerticalAlignment="Center" />
 
+            <Button Name="btnRefreshVocabulary"
+                    Content="Refresh Vocabulary"
+                    ToolTip="Refresh Vocabulary Files"
+                    Grid.Column="1" Grid.Row="2"
+                    Width="120" Margin="4,2,0,2" HorizontalAlignment="Left"
+                    Click="btnRefreshVocabulary_Click"/>
+            <TextBlock Text="Vocabulary Folder:" Grid.Column="0" Grid.Row="3" Margin="4,4,0,0"/>
+            <TextBox Text="{Binding VocabularyFolder, Mode=TwoWay}"
+                     ToolTip="{Binding VocabularyDir}"
+                     Grid.Column="1" Grid.Row="3"
+                     Height="24" 
+                     Margin="4,0,0,0"/>
+            
+            <!--
             <ComboBox Grid.Row="0" Grid.Column="1"
                       ItemsSource="{Binding Templates}"
                       SelectedItem="{Binding SelectedTemplate}"
                       HorizontalAlignment="Left"
                       Width="144" Height="24"
-                      Margin="0"/>
-            
-            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="4" Grid.Row="2">
-                <Button Name="btnRefresh" Content="Refresh" 
-                        HorizontalAlignment="Left" Width="120" Height="24"
-                        Click="btnRefresh_Click"/>
-
-                <CheckBox IsChecked="{Binding SingleResx}"
-                          Content="Single Resx File"
-                          Margin="8,0,0,0"
-                          VerticalAlignment="Center"
-                          ToolTip="Render single resx file for every entity in the model." />
-                <CheckBox IsChecked="{Binding RenderAllEntities}"
-                          Content="All Entities"
-                          Margin="8,0,0,0"
-                          VerticalAlignment="Center"
-                          ToolTip="Render for every entity in the model." />
-                <CheckBox Content="Overwrite Existing Files"
-                          Margin="8,0,0,0"
-                          VerticalAlignment="Center"
-                          IsChecked="{Binding OverwriteExisting}" />
-            </StackPanel>
+                      Margin="2"/>
+-->
 
             <TextBlock Text="Target Folder:" Grid.Column="2" Grid.Row="0" Margin="4,4,0,0"/>
             <TextBox Text="{Binding TargetFolder, Mode=TwoWay}"
@@ -69,10 +74,21 @@
                      Height="24" 
                      Margin="4,0,0,0"/>
 
-            <TextBlock Text="Vocabulary Folder:" Grid.Column="2" Grid.Row="1" Margin="4,4,0,0"/>
-            <TextBox Text="{Binding VocabularyFolder, Mode=TwoWay}"
-                     ToolTip="{Binding VocabularyDir}"
+            <TextBlock Text="Namespace:" Grid.Column="2" Grid.Row="1" Margin="4,4,0,0"/>
+            <TextBox Text="{Binding NamespaceName, Mode=TwoWay}"
+                     ToolTip="NamespaceName"
                      Grid.Column="3" Grid.Row="1"
+                     Height="24" 
+                     Margin="4,0,0,0"/>
+
+            <CheckBox IsChecked="{Binding SingleResx}"
+                      Content="Single Resx File:"
+                      Grid.Column="2" Grid.Row="2" Margin="4,0,0,0"
+                      VerticalAlignment="Center"
+                      ToolTip="Render single resx file for every entity in the model." />
+            <TextBox Text="{Binding SingleResxFilename, Mode=TwoWay}"
+                     ToolTip="Name for single output file"
+                     Grid.Column="3" Grid.Row="2"
                      Height="24" 
                      Margin="4,0,0,0"/>
 

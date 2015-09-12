@@ -9,6 +9,7 @@ using OzzCodeGen.AppEngines.Localization.UI;
 using OzzCodeGen.Definitions;
 using OzzUtils;
 using System.Collections.ObjectModel;
+using OzzLocalization;
 
 namespace OzzCodeGen.AppEngines.Localization
 {
@@ -25,6 +26,34 @@ namespace OzzCodeGen.AppEngines.Localization
             return DefaultFileName;
         }
 
+        protected override string GetDefaultNamespace()
+        {
+            if (Project==null)
+            {
+                return string.Empty;
+            }
+            if (string.IsNullOrEmpty(TargetDirectory))
+            {
+                return Project.NamespaceName;
+            }
+            string targetFolderName = Path.GetFileName(TargetDirectory);
+            return string.Format("{0}.{1}", Project.NamespaceName, targetFolderName);
+        }
+
+        protected override void OnTargetDirectoryChanging()
+        {
+            usingDefaultNamespace = NamespaceName.Equals(GetDefaultNamespace());
+        }
+
+        protected override void OnTargetDirectoryChanged()
+        {
+            base.OnTargetDirectoryChanged();
+            if (usingDefaultNamespace)
+            {
+                NamespaceName = GetDefaultNamespace();
+            }
+        }
+        bool usingDefaultNamespace = false;
 
         protected override BaseEntitySetting GetDefaultSetting(EntityDefinition entity)
         {
@@ -45,14 +74,33 @@ namespace OzzCodeGen.AppEngines.Localization
 
         public bool SingleResx
         {
-            get { return _singleResx; }
+            get { return _singleResx ?? true; }
             set
             {
                 _singleResx = value;
                 RaisePropertyChanged("SingleResx");
             }
         }
-        private bool _singleResx;
+        private bool? _singleResx;
+
+
+        public string SingleResxFilename
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_singleResxFilename))
+                {
+                    _singleResxFilename = "AppForm";
+                }
+                return _singleResxFilename;
+            }
+            set
+            {
+                _singleResxFilename = value;
+                RaisePropertyChanged("SingleResxFilename");
+            }
+        }
+        private string _singleResxFilename;
 
 
         public string VocabularyFolder
@@ -197,50 +245,61 @@ namespace OzzCodeGen.AppEngines.Localization
             return allWritten;
         }
 
+        /// <summary>
+        /// Combines all entities in to a single one
+        /// </summary>
+        /// <returns></returns>
+        public LocalizationEntitySetting CombineEntities()
+        {
+            var combinedEntity = new LocalizationEntitySetting()
+            {
+                Name = SingleResxFilename,
+                Properties = new List<LocalizationPropertySetting>()
+            };
+
+            foreach (LocalizationEntitySetting entity in EntitySettings.Where(e => e.Exclude == false))
+            {
+                foreach (LocalizationPropertySetting p in entity.Properties)
+                {
+                    if (!combinedEntity.Properties.Where(lp => lp.Name == p.Name).Any())
+                    {
+                        combinedEntity.Properties.Add(p);
+                    }
+                }
+            }
+            var entityNames = new List<string>();
+            foreach (LocalizationEntitySetting entity in EntitySettings.Where(e => e.Exclude == false))
+            {
+                entityNames.Add(entity.Name);
+                entityNames.Add(string.Format("Create{0}", entity.Name));
+                entityNames.Add(string.Format("Edit{0}", entity.Name));
+                entityNames.Add(string.Format("Delete{0}", entity.Name));
+                entityNames.Add(string.Format("{0}List", entity.Name.Pluralize()));
+                entityNames.Add(entity.Name.Pluralize());
+            }
+            foreach (string entityName in entityNames)
+            {
+                if (!combinedEntity.Properties.Where(lp => lp.Name == entityName).Any())
+                {
+                    combinedEntity.Properties.Add(new LocalizationPropertySetting()
+                    {
+                        Name = entityName,
+                        LocalizeRequiredMsg = false,
+                        LocalizeValidationMsg = false
+                    });
+                }
+            }
+
+            combinedEntity.Properties = combinedEntity.Properties.OrderBy(p => p.Name).ToList();
+            return combinedEntity;
+        }
+
         public override bool RenderSelectedTemplate()
         {
             OpenVocabularies();
             if (SingleResx)
             {
-                var entitySingle = new LocalizationEntitySetting()
-                {
-                    Name = "AppForm",
-                    Properties = new List<LocalizationPropertySetting>()
-                };
-
-                foreach (LocalizationEntitySetting entity in EntitySettings.Where(e => e.Exclude == false))
-                {
-                    foreach (LocalizationPropertySetting p in entity.Properties)
-                    {
-                        if (!entitySingle.Properties.Where(lp => lp.Name == p.Name).Any())
-                        {
-                            entitySingle.Properties.Add(p);
-                        }
-                    }
-                }
-                var entityNames = new List<string>();
-                foreach (LocalizationEntitySetting entity in EntitySettings.Where(e => e.Exclude == false))
-                {
-                    entityNames.Add(entity.Name);
-                    entityNames.Add(string.Format("Create{0}", entity.Name));
-                    entityNames.Add(string.Format("Edit{0}", entity.Name));
-                    entityNames.Add(string.Format("Delete{0}", entity.Name));
-                    entityNames.Add(string.Format("{0}List", entity.Name.Pluralize()));
-                    entityNames.Add(entity.Name.Pluralize());
-                }
-                foreach (string entityName in entityNames)
-                {
-                    if (!entitySingle.Properties.Where(lp => lp.Name == entityName).Any())
-                    {
-                        entitySingle.Properties.Add(new LocalizationPropertySetting()
-                        {
-                            Name = entityName,
-                            LocalizeRequiredMsg = false,
-                            LocalizeValidationMsg = false
-                        });
-                    }
-                }
-                return RenderTemplate(entitySingle);
+                return RenderTemplate(CombineEntities());
             }
             else if (RenderAllEntities)
             {

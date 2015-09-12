@@ -94,12 +94,14 @@ namespace OzzCodeGen.AppEngines
             set
             {
                 if (_targetFolder == value) return;
+                OnTargetDirectoryChanging();
                 _targetFolder = value;
                 RaisePropertyChanged("TargetFolder");
                 OnTargetDirectoryChanged();
             }
         }
         string _targetFolder;
+        protected virtual void OnTargetDirectoryChanging() { }
         protected virtual void OnTargetDirectoryChanged()
         {
             RaisePropertyChanged("TargetDirectory");

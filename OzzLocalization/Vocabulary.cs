@@ -1,15 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using OzzUtils.Wpf;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 
-namespace OzzCodeGen.AppEngines.Localization
+namespace OzzLocalization
 {
-    public class Vocab
-    {
-        public string Name { get; set; }
-        public string Title { get; set; }
-    }
-
     public class Vocabulary : SavableList<Vocab>
     {
         public Vocabulary(string cultureCode)
@@ -17,12 +13,26 @@ namespace OzzCodeGen.AppEngines.Localization
             CultureCode = cultureCode;
         }
 
+        [XmlIgnore]
         public string CultureCode { get; private set; }
+
+        [XmlIgnore]
+        public string FilePath { get; set; }
+
+        public void AddUnique(Vocab vocab)
+        {
+            if (!this.Any(v => v.Name.Equals(vocab.Name)))
+            {
+                Add(vocab);
+            }
+        }
 
         public static Vocabulary OpenFile(string fileName, string cultureCode)
         {
             List<Vocab> vocabulary = OpenVocabList(fileName);
             Vocabulary instance = new Vocabulary(cultureCode);
+            instance.FilePath = fileName;
+
             foreach (var item in vocabulary)
             {
                 instance.Add(item);

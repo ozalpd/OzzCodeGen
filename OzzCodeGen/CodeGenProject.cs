@@ -61,6 +61,19 @@ namespace OzzCodeGen
         }
         private string _modelProviderId;
 
+        [XmlIgnore]
+        public IModelProvider ModelProvider
+        {
+            get { return _modelProvider; }
+            set
+            {
+                _modelProvider = value;
+                _modelProvider.Project = this;
+                RaisePropertyChanged("ModelProvider");
+            }
+        }
+        IModelProvider _modelProvider;
+
         public string TargetFolder
         {
             get
@@ -327,9 +340,9 @@ namespace OzzCodeGen
             AddEngine(EngineTypes.GetInstance(appEngine));
         }
 
-        public void RefreshDataModel(IModelProvider modelProvider, bool cleanRemovedItems)
+        public void RefreshDataModel(bool cleanRemovedItems)
         {
-            modelProvider.RefreshDataModel(ModelSource, DataModel, cleanRemovedItems);
+            ModelProvider.RefreshDataModel(ModelSource, DataModel, cleanRemovedItems);
             foreach (var engine in this._appEngines)
             {
                 engine.RefreshFromProject(true);
