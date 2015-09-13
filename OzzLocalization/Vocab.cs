@@ -81,5 +81,11 @@ namespace OzzLocalization
             }
         }
         string _toolTip;
+
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -326,24 +326,24 @@ namespace OzzCodeGen.AppEngines.Localization
         }
 
         [XmlIgnore]
-        public Dictionary<string, Vocabulary> Vocabularies
+        public Vocabularies Vocabularies
         {
             set { _vocabularies = value; }
             get
             {
                 if (_vocabularies == null)
-                    _vocabularies = new Dictionary<string, Vocabulary>();
+                    _vocabularies = new Vocabularies();
                 return _vocabularies;
             }
         }
-        Dictionary<string, Vocabulary> _vocabularies;
+        Vocabularies _vocabularies;
 
         public void OpenVocabularies()
         {
             if (string.IsNullOrEmpty(VocabularyDir))
                 return;
 
-            Vocabularies = Vocabulary.OpenVocabularies(VocabularyDir);
+            Vocabularies = Vocabularies.OpenVocabularies(VocabularyDir);
         }
 
         /// <summary>

@@ -37,20 +37,17 @@ namespace OzzCodeGen.AppEngines.Localization.UI
         {
             var engine = (ResxEngine)AppEngine;
             var combinedEntity = engine.CombineEntities();
-            var vocabularies = Vocabulary.OpenVocabularies(engine.VocabularyDir);
+            var vocabularies = Vocabularies.OpenVocabularies(engine.VocabularyDir);
             foreach (var dict in vocabularies)
             {
+                var vocabulary = dict.Value;
                 foreach (var item in combinedEntity.Properties)
                 {
-                    dict.Value.AddUnique(new Vocab() { Name = item.Name });
+                    vocabulary.AddUnique(new Vocab() { Name = item.Name });
                 }
 
-                var sortedVocabulary = new Vocabulary(dict.Value.CultureCode);
-                foreach (var item in dict.Value.OrderBy(v => v.Name))
-                {
-                    sortedVocabulary.Add(item);
-                }
-                sortedVocabulary.SaveToFile(dict.Value.FilePath);
+                vocabulary.OrderByName();
+                vocabulary.SaveToFile(vocabulary.FilePath);
             }
         }
     }

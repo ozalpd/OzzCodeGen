@@ -27,6 +27,16 @@ namespace OzzLocalization
             }
         }
 
+        public void OrderByName()
+        {
+            var sorted = this.OrderBy(v => v.Name).ToList();
+            Clear();
+            foreach(var item in sorted)
+            {
+                Add(item);
+            }
+        }
+
         public static Vocabulary OpenFile(string fileName, string cultureCode)
         {
             List<Vocab> vocabulary = OpenVocabList(fileName);
@@ -51,20 +61,6 @@ namespace OzzLocalization
             reader.Close();
 
             return instance;
-        }
-
-        public static Dictionary<string, Vocabulary> OpenVocabularies(string directory)
-        {
-            Dictionary<string, Vocabulary> vocabularies = new Dictionary<string, Vocabulary>();
-            string[] files = Directory.GetFiles(directory, "vocabulary.??.xml");
-
-            foreach (string file in files)
-            {
-                string[] parts = file.Split('.');
-                vocabularies.Add(parts[1], OpenFile(file, parts[1]));
-            }
-
-            return vocabularies;
         }
     }
 }

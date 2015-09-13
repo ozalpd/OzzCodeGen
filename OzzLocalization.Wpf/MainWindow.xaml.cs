@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OzzLocalization.Wpf.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -24,12 +25,16 @@ namespace OzzLocalization.Wpf
         public MainWindow()
         {
             InitializeComponent();
-            settingsFile = System.IO.Path.Combine(
-                            System.IO.Path.GetDirectoryName(
-                            System.Reflection.Assembly.GetExecutingAssembly().Location),
-                            "OzzVocabularyEditor.settings");
+            Settings.MainWindowPosition.SetWindowPositions(this);
         }
-        string settingsFile;
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            Settings.MainWindowPosition.GetWindowPositions(this);
+            Settings.SaveSettings();
+        }
+
+        protected AppSettings Settings { get { return AppSettings.GetAppSettings(); } }
 
         private void btnNewProject_Click(object sender, RoutedEventArgs e)
         {
@@ -53,10 +58,5 @@ namespace OzzLocalization.Wpf
 
 
 
-        private void Window_Closing(object sender, CancelEventArgs e)
-        {
-            //Settings.MainWindowPosition.GetWindowPositions(this);
-            //Settings.SaveToFile(settingsFile);
-        }
     }
 }
