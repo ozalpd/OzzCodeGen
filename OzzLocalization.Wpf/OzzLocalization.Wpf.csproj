@@ -110,6 +110,18 @@
       <Name>OzzLocalization</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\NewDocumentHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\openHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\saveHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\refresh_16.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

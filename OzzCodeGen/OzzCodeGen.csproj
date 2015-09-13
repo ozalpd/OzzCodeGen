@@ -280,7 +280,6 @@
     </Compile>
     <Compile Include="Definitions\EntityDefinition.cs" />
     <Compile Include="Definitions\BaseProperty.cs" />
-    <Compile Include="BaseSavable.cs" />
     <Compile Include="Templates\AbstractTemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Definitions\SimpleProperty.cs" />

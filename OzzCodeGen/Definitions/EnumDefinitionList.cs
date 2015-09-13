@@ -1,4 +1,4 @@
-﻿using OzzUtils.Wpf;
+﻿using OzzUtils.Savables;
 using System.Linq;
 
 namespace OzzCodeGen.Definitions

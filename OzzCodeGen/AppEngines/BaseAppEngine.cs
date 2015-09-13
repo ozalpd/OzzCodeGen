@@ -6,10 +6,11 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Xml.Serialization;
 using OzzCodeGen.Definitions;
+using OzzUtils.Savables;
 
 namespace OzzCodeGen.AppEngines
 {
-    public abstract class BaseAppEngine : BaseSavable, INotifyPropertyChanged
+    public abstract class BaseAppEngine : SavableObject, INotifyPropertyChanged
     {
         [XmlIgnore]
         public abstract string EngineId { get; }

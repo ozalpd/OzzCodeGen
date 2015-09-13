@@ -6,10 +6,11 @@ using OzzUtils;
 using System.ComponentModel;
 using System.Xml.Serialization;
 using OzzCodeGen.Providers;
+using OzzUtils.Savables;
 
 namespace OzzCodeGen.Definitions
 {
-    public class EntityDefinition : BaseSavable, INotifyPropertyChanged
+    public class EntityDefinition : SavableObject, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

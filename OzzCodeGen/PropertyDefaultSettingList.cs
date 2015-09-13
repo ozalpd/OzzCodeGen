@@ -1,4 +1,4 @@
-﻿using OzzUtils.Wpf;
+﻿using OzzUtils.Savables;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -7,8 +7,6 @@ namespace OzzCodeGen
 {
     public class PropertyDefaultSettingList : SavableList<PropertyDefaultSetting>
     {
-
-
         /// <summary>
         /// Reads a project settings file and creates a PropertyDefaultSettingList instance
         /// </summary>

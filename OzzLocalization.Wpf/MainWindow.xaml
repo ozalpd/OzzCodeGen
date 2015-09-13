@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OzzLocalization.Wpf"
         mc:Ignorable="d"
-        Title="Ozz Localization" Height="350" Width="525">
+        Title="Vocabulary Editor"
+        Closing="Window_Closing"
+        Height="320" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="btnNewProject" ToolTip="New Project" Click="btnNewProject_Click" Style="{StaticResource toolbarButtons}">
+                <Image Source="Assets\NewDocumentHS.png" Stretch="None"/>
+            </Button>
+            <Button x:Name="btnOpen" Click="btnOpen_Click" ToolTip="Open Project" Style="{StaticResource toolbarButtons}" >
+                <Image Source="Assets\openHS.png" Stretch="None" />
+            </Button>
+            <Button x:Name="btnSave" ToolTip="Save Project" Click="btnSave_Click" Style="{StaticResource toolbarButtons}"  >
+                <Image Source="Assets\saveHS.png" Stretch="None"/>
+            </Button>
+            <Button x:Name="btnRefresh" ToolTip="Refresh"
+						Click="btnRefresh_Click"
+						Style="{StaticResource toolbarButtons}">
+                <Image Source="Assets\refresh_16.png" Stretch="None" />
+            </Button>
+            <ComboBox x:Name="cboRecentProjects" Width="150" Margin="4" HorizontalAlignment="Left" 
+					SelectedItem="{Binding SelectedProjectFile}" 
+					ItemsSource="{Binding Settings.RecentProjectFiles}"/>
+        </StackPanel>
     </Grid>
 </Window>

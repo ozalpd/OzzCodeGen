@@ -13,7 +13,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="32" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,2,0,0">
             <!-- New, Open, Save etc. -->

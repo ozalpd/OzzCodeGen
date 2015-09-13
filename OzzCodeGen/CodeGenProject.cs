@@ -7,10 +7,11 @@ using System.Xml.Serialization;
 using OzzCodeGen.AppEngines;
 using OzzCodeGen.Definitions;
 using OzzCodeGen.Providers;
+using OzzUtils.Savables;
 
 namespace OzzCodeGen
 {
-    public class CodeGenProject : BaseSavable, INotifyPropertyChanged
+    public class CodeGenProject : SavableObject, INotifyPropertyChanged
     {
         protected List<BaseAppEngine> _appEngines;
 

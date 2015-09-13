@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using OzzUtils.Savables;
 
 namespace OzzCodeGen.Definitions
 {
-    public class EnumDefinition : BaseSavable, INotifyPropertyChanged
+    public class EnumDefinition : SavableObject, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
