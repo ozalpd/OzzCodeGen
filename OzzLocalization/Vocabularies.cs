@@ -11,8 +11,8 @@ namespace OzzLocalization
     {
 
         public static string NotrCode = "notr"; //Notr or default vocabulary code
-        protected static string FilePattern = "vocabulary.??.xml";
-        protected static string GetNotrFileName() //should be "vocabulary.notr.xml"
+        public static string FilePattern = "vocabulary.??.xml";
+        public static string GetNotrFileName() //should be "vocabulary.notr.xml"
         {
             return FilePattern.Replace("??", NotrCode);
         }

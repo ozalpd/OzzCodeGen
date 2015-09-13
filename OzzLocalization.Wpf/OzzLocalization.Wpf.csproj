@@ -56,6 +56,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dialogs\SetProjectTitle.xaml.cs">
+      <DependentUpon>SetProjectTitle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\VocabularyEditorVM.cs" />
+    <Page Include="Dialogs\SetProjectTitle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -71,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AppSettings.cs" />
+    <Compile Include="Models\ProjectDir.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -123,6 +132,7 @@
   <ItemGroup>
     <Resource Include="Assets\refresh_16.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -29,6 +29,25 @@ namespace OzzLocalization.Wpf.Models
 
 
 
+        public List<ProjectDir> RecentProjects
+        {
+            get
+            {
+                if (_recentProjects == null)
+                {
+                    _recentProjects = new List<ProjectDir>();
+                }
+                return _recentProjects;
+            }
+            set
+            {
+                if (_recentProjects == value) return;
+                _recentProjects = value;
+                RaisePropertyChanged("RecentProjects");
+            }
+        }
+        private List<ProjectDir> _recentProjects;
+
 
 
 
