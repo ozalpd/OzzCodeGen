@@ -32,9 +32,17 @@
 				Style="{StaticResource toolbarButtons}">
                 <Image Source="Assets\refresh_16.png" Stretch="None" />
             </Button>
-            <ComboBox x:Name="cboRecentProjects" Width="150" Margin="4" HorizontalAlignment="Left" 
-				SelectedItem="{Binding SelectedProject}" 
-				ItemsSource="{Binding AppSettings.RecentProjects}"/>
+            <ComboBox ItemsSource="{Binding AppSettings.RecentProjects}"
+                      SelectedItem="{Binding SelectedProject}" 
+                      Width="150" Margin="4" HorizontalAlignment="Left" />
+            <TextBlock Text="Culture:" Margin="6,8,2,6"/>
+            <ComboBox ItemsSource="{Binding CultureCodes}"
+                      SelectedItem="{Binding SelectedCultureCode}" 
+                      Width="60" Margin="4" HorizontalAlignment="Left"
+                      IsEnabled="{Binding CanSelectCultureCode}" />
         </StackPanel>
+        
+        <DataGrid ItemsSource="{Binding SelectedVocabulary}"
+                  AutoGenerateColumns="True" Grid.Row="2"/>
     </Grid>
 </Window>

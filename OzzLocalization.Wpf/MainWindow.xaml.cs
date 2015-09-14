@@ -34,6 +34,10 @@ namespace OzzLocalization.Wpf
         private void Window_Activated(object sender, EventArgs e)
         {
             ViewModel.AppSettings = Settings;
+
+            //Not implemented yet
+            btnNewProject.IsEnabled = false;
+            btnRefresh.IsEnabled = false;//Is this button really neccessary?
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -76,7 +80,7 @@ namespace OzzLocalization.Wpf
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-
+            ViewModel.Vocabularies.SaveVocabularies();
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)

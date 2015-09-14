@@ -26,9 +26,6 @@ namespace OzzLocalization.Wpf.Models
         }
         WindowPosition _mainWindowPosition;
 
-
-
-
         public List<ProjectDir> RecentProjects
         {
             get
@@ -47,10 +44,6 @@ namespace OzzLocalization.Wpf.Models
             }
         }
         private List<ProjectDir> _recentProjects;
-
-
-
-
 
         public static AppSettings GetAppSettings()
         {

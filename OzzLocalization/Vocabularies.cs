@@ -32,13 +32,31 @@ namespace OzzLocalization
 
         public Vocabulary GetVocabulary(string cultureCode)
         {
-            if (this.ContainsKey(cultureCode))
+            if (!string.IsNullOrEmpty(cultureCode) && this.ContainsKey(cultureCode))
             {
                 return this.FirstOrDefault(v => v.Key.Equals(cultureCode)).Value;
             }
             else
             {
                 return null;
+            }
+        }
+
+        public List<string> GetCultureCodes()
+        {
+            var codes = new List<string>();
+            foreach(var item in this)
+            {
+                codes.Add(item.Key);
+            }
+            return codes;
+        }
+
+        public void SaveVocabularies()
+        {
+            foreach (var item in this)
+            {
+                item.Value.SaveToFile(item.Value.FilePath);
             }
         }
 
