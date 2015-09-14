@@ -1,0 +1,102 @@
+﻿<#@ template inherits="BaseObjcHeader" debug="true" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzCodeGen.Utilities" #>
+<# WriteDeclataritons(); #>
+
+<# 
+	if(HeaderType == ObjcHeaderType.Constants) WriteDefines();
+	if(HeaderType == ObjcHeaderType.Enums) WriteEnums();
+	/* * * EntityClass Header * * */
+	if(HeaderType == ObjcHeaderType.EntityClass) 
+    { #>
+@interface <#= ObjectiveCName #> : <#= BaseClassName #>
+
+<#  foreach(var property in Entity.PropertiesIncluded)
+	{ #>
+@property <#= property.GetPropertyDeclaration() #>;
+<#		if(property.IsArrayType())
+		{ #>
+<#= property.DeclareAddMethod() #>;
+<#= property.DeclareAtIndexMethod() #>;
+<#		} #>
+<#  } #>
+@end
+<# } #>
+<#
+	/* * * EmptyClass Header * * */
+	if(HeaderType == ObjcHeaderType.EmptyClass)
+	{ #>
+@interface <#= ObjectiveCName #> : <#= BaseClassName #>
+
+@end
+<# } #>
+<#+ 
+protected virtual void WriteEnums()
+{
+    var enums = CodeEngine.Project.EnumDefinitions;
+    foreach (var item in enums)
+    { #>
+<#+ if(!string.IsNullOrEmpty(item.Comment)){ #>/* <#= item.Comment #> */<#+ } #> 
+typedef NS_ENUM(NSUInteger,  <#= CodeEngine.ClassPrefix #><#= item.Name #>){
+<#+ 
+        int i = 0;
+		foreach(var member in item.Members)
+        { 
+			i++;
+			#>
+    <#= CodeEngine.ClassPrefix #><#= item.Name #><#= member.Name #> = <#= member.Value #><#+ if(i < item.Members.Count){ #>,<#+ } #><#+ if(!string.IsNullOrEmpty(member.Comment)){ #>  //<#= member.Comment #><#+ } #> 
+<#+     } #>
+};
+<#+ if(item.Name == CodeEngine.Project.EntityTrackEnum){ #>
+/* DataContextDelegate */
+@protocol <#= CodeEngine.ClassPrefix #>DataContextDelegate <NSObject>
+- (void)onError:(NSString *)errorMsg;
+
+@optional
+- (void)didReceiveResponse:(NSURLResponse *)response;
+- (void)didReceiveData:(NSData *)data;
+
+- (void)onParseError:(NSString *)errorMsg;
+
+@required
+- (void)onDataLoading;
+@property (nonatomic, readonly) BOOL isDataLoading;
+- (void)onArrayLoaded:(NSArray *)array typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+- (void)onEntityLoaded:(id)entity typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+- (void)onEntityDeleted:(id)entity typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+@end
+
+/* EntityContextDelegate */
+@protocol <#= CodeEngine.ClassPrefix #>EntityContextDelegate <NSObject>
+- (void)onGotEntity:(id)entity fromJsonDictionary:(NSDictionary *)dictionary typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+- (void)onGotEntityFromDb:(id)entity typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+- (void)onEntitySaved:(id)entity typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+- (void)onDeletingEntity:(id)entity typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+- (void)onEntityDeleted:(id)entity typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+- (void)onFailToDeleteEntity:(id)entity sqliteResult:(int)result typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+@end
+
+<#+     } #>
+<#+
+    }
+  }
+#>
+<#+ 
+void WriteDefines()
+{ 
+	foreach(string item in CodeEngine.PropertyNames)
+	{ 
+		if(item.StartsWith("//"))
+		{#>
+//
+<#= item #>
+<#+		}
+		else
+		{ #>
+#define <#=  item #>Key @"<#= item #>"
+<#+		}
+	}
+} #>

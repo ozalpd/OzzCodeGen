@@ -1,0 +1,121 @@
+﻿<#@ template inherits="BaseObjcHeader" debug="true" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzUtils" #>
+<# WriteDeclataritons(); #>
+//Do not modify this file! Generate it again!
+<# /* * * DbContext Header * * */
+   if(HeaderType == ObjcHeaderType.DbContext) 
+   { #>
+@interface <#= ObjectiveCName #> : <#= CodeEngine.SqliteHelper #><<#= CodeEngine.ClassPrefix #>DataContextDelegate, <#= CodeEngine.ClassPrefix #>EntityContextDelegate>
+
+- (void)onDataLoading;
+@property (nonatomic, readonly) BOOL isDataLoading;
+- (void)onArrayLoaded:(NSArray *)array typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+- (void)onEntityLoaded:(id)entity typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+- (void)onError:(NSString *)errorMsg;
+- (void)onParseError:(NSString *)errorMsg;
+
+- (void)didReceiveResponse:(NSURLResponse *)response;
+- (void)didReceiveData:(NSData *)data;
+
+#pragma mark - EntityContextDelegate
+- (void)onGotEntity:(id)entity fromJsonDictionary:(NSDictionary *)dictionary typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+- (void)onGotEntityFromDb:(id)entity typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+- (void)onEntitySaved:(id)entity typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+
+- (void)onDeletingEntity:(id)entity typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+- (void)onEntityDeleted:(id)entity typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+- (void)onFailToDeleteEntity:(id)entity sqliteResult:(int)result typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType;
+
+- (void)onDeletingTypeOfEntities:(KryEntityType)entityType;
+- (void)onDeletedTypeOfEntities:(KryEntityType)entityType;
+
+@property (assign) id<<#= CodeEngine.ClassPrefix #>DataContextDelegate> delegate;
+
+
+<#  foreach (var entity in StorageEntitySettings)
+    { #>
+@property (nonatomic, readonly) <#= entity.Name #>Context *<#= entity.Name.ToCamelCase().Pluralize() #>;
+<#  } #>
+@end
+<# } #>
+<# /* * * EntityContext Header * * */
+   if(HeaderType == ObjcHeaderType.EntityContext) 
+   { #>
+<#     if(SqliteProperties.Any())
+       { #>
+
+@interface ColName<#= Entity.Name #> : NSObject
+<#         foreach (string col in SqliteProperties)
+           { #>
+@property (nonatomic, readonly, weak) NSString *<#= col #>;
+<#            } #>
+@end
+
+@interface ColNr<#= Entity.Name #> : NSObject
+<#         foreach (string col in SqliteProperties)
+           { #>
+@property (nonatomic, readonly) int <#= col #>;
+<#            } #>
+@end
+<#        } #>
+
+@interface Base<#= ObjectiveCName #> : <#= CodeEngine.BaseEntityContext #>
+
+<# 
+    if (CodeEngine.BaseEntityContext == "NSObject")
+    { #>
+- (id)initWithContext:(OzzSqliteHelper *)context;
+@property (nonatomic, weak) OzzSqliteHelper *dbContext;
+<# } else { #>
+@property (assign) id<<#= CodeEngine.ClassPrefix #>DataContextDelegate, <#= CodeEngine.ClassPrefix #>EntityContextDelegate> delegate;
+<# } #>
+@property (nonatomic, readonly, weak) NSString *tableName;
+@property (nonatomic, readonly, weak) NSString *columnNames;
+@property (nonatomic, readonly) ColName<#= Entity.Name #> *colName;
+@property (nonatomic, readonly) ColNr<#= Entity.Name #> *colNr;
+@property (nonatomic, readonly) NSInteger recordCount;
+
+- (<#= Entity.ObjectiveCName #> *)getEntityFromDictionary:(NSDictionary *)dictionary;
+
+#pragma mark - CRUD methods for local DB
+/* Create and Update same method */
+- (int)insert:(<#= Entity.ObjectiveCName #> *)entity;
+- (int)save:(<#= Entity.ObjectiveCName #> *)entity;
+
+/* Read methods */
+//- (NSInteger)getRecordCount;
+- (NSArray *)loadAll;
+- (<#= Entity.ObjectiveCName #> *)loadById:(NSInteger)uniqueId;
+<#    foreach(var fKey in ForeignKeyProperties.OrderBy(f => f.Name))
+    { #>
+- (NSArray *)loadBy<#= fKey.Name #>:(NSInteger)<#= fKey.Name.ToCamelCase() #>;
+<# } #>
+- (NSArray *)loadByQuery:(NSString *)query;
+
+/* Delete methods */
+- (int)deleteAll:(BOOL)fastDelete;
+- (int)deleteEntity:(<#= Entity.ObjectiveCName #> *)entity;
+<#    foreach(var fKey in ForeignKeyProperties.OrderBy(f => f.Name))
+    { #>
+- (int)deleteBy<#= fKey.Name #>:(NSInteger)<#= fKey.Name.ToCamelCase() #> fastDelete:(BOOL)fastDelete;
+<# } #>
+
+/* Helper methods for CRUD */
+- (<#= Entity.ObjectiveCName #> *)getEntityFromStatement:(sqlite3_stmt *)statement;
+- (NSString *)selectStatement;
+- (NSString *)selectStatementWithFilter:(NSString *)filter;
+
+- (BOOL)validateEntiy:(<#= Entity.ObjectiveCName #> *)entity;
+
+#pragma mark - Network methods
+<# if(Entity.EntityDefinition.LetDownloadAll){ #>
+- (void)downloadAll;
+<# } #>
+- (void)downloadById:(NSInteger)uniqueId;
+
+@end
+<# } #>

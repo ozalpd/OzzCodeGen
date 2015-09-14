@@ -3,9 +3,9 @@ using OzzUtils.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace OzzLocalization.Wpf.ViewModels
 {
@@ -30,16 +30,20 @@ namespace OzzLocalization.Wpf.ViewModels
         {
             set
             {
-                if (_selectedProject == value) return;
+                if (_selectedProject == value)
+                    return;
 
                 _selectedProject = value;
-                var recentProjects = AppSettings.RecentProjects
-                    .Where(p => p.FullPath
-                        .Equals(_selectedProject.FullPath, StringComparison.InvariantCultureIgnoreCase) == false)
-                    .ToList();
-                recentProjects.Insert(0, _selectedProject);
-                AppSettings.RecentProjects = recentProjects;
-                OpenSelectedProject();
+                if (_selectedProject != null)
+                {
+                    var recentProjects = AppSettings.RecentProjects
+                        .Where(p => p.FullPath
+                            .Equals(_selectedProject.FullPath, StringComparison.InvariantCultureIgnoreCase) == false)
+                        .ToList();
+                    recentProjects.Insert(0, _selectedProject);
+                    AppSettings.RecentProjects = recentProjects;
+                    OpenSelectedProject();
+                }
                 RaisePropertyChanged("SelectedProject");
             }
             get
@@ -132,9 +136,30 @@ namespace OzzLocalization.Wpf.ViewModels
 
         public void OpenSelectedProject()
         {
-            Vocabularies = Vocabularies.OpenVocabularies(SelectedProject.FullPath);
-            CultureCodes = Vocabularies.GetCultureCodes();
-            SelectedCultureCode = CultureCodes.FirstOrDefault();
+            if (SelectedProject == null)
+                return;
+
+            if (Directory.Exists(SelectedProject.FullPath))
+            {
+                Vocabularies = Vocabularies.OpenVocabularies(SelectedProject.FullPath);
+                CultureCodes = Vocabularies.GetCultureCodes();
+                SelectedCultureCode = CultureCodes.FirstOrDefault();
+            }
+            else
+            {
+                var dlgResult = MessageBox.Show("Project directory could not be found! Do you want to remove the reference to the file from Recent File list?",
+                                    "File Not Foud!",
+                                    MessageBoxButton.YesNo,
+                                    MessageBoxImage.Exclamation);
+                if (dlgResult == MessageBoxResult.Yes)
+                {
+                    var recentProjects = AppSettings.RecentProjects
+                            .Where(p => p.FullPath
+                                .Equals(SelectedProject.FullPath, StringComparison.InvariantCultureIgnoreCase) == false)
+                            .ToList();
+                    AppSettings.RecentProjects = recentProjects;
+                }
+            }
         }
 
     }

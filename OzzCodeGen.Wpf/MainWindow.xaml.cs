@@ -9,7 +9,7 @@ using OzzCodeGen.Wpf.Dialogs;
 using System.ComponentModel;
 using OzzCodeGen.Wpf.Models;
 using System.IO;
-using OzzCodeGen.AppEngines;
+using OzzCodeGen.CodeEngines;
 using OzzCodeGen.Providers;
 using System.Windows.Threading;
 
@@ -80,37 +80,42 @@ namespace OzzCodeGen.Wpf
             }
         }
 
-        private void cboAppEngines_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cboCodeEngines_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string appEngine = cboAppEngines.SelectedItem.ToString();
-            var engine = Project.GetAppEngine(appEngine);
+            var selectedItem = cboCodeEngines.SelectedItem;
+            if (selectedItem == null)
+            {
+                return; //TODO: Niye null oluyor arastir...
+            }
+            string strEngine = selectedItem.ToString();
+            var engine = Project.GetCodeEngine(strEngine);
             if (engine != null)
             {
-                Project.CurrentAppEngine = engine;
+                Project.CurrentCodeEngine = engine;
             }
-            Project.AppEngineList.Remove(appEngine);
-            Project.AppEngineList.Insert(0, appEngine);
+            Project.CodeEngineList.Remove(strEngine);
+            Project.CodeEngineList.Insert(0, strEngine);
         }
 
-        private void AddAppEngineName(List<string> engines, string appEngineId)
+        private void AddCodeEngineName(List<string> engines, string engineId)
         {
-            if (!Project.AppEngineList.Contains(appEngineId))
+            if (!Project.CodeEngineList.Contains(engineId))
             {
-                engines.Add(appEngineId);
+                engines.Add(engineId);
             }
         }
 
-        private List<string> GetAppEngines()
+        private List<string> GetCodeEngines()
         {
             var engines = new List<string>();
 
-            AddAppEngineName(engines, EngineTypes.EfDbFirstDataLayerId);
-            AddAppEngineName(engines, EngineTypes.LocalizationResxGenId);
-            AddAppEngineName(engines, EngineTypes.AspNetMvcEngineId);
-            AddAppEngineName(engines, EngineTypes.TSqlScriptsId);
-            AddAppEngineName(engines, EngineTypes.SqliteScriptsId);
-            AddAppEngineName(engines, EngineTypes.AndroidEngineId);
-            AddAppEngineName(engines, EngineTypes.ObjcEngineId);
+            AddCodeEngineName(engines, EngineTypes.EfDbFirstDataLayerId);
+            AddCodeEngineName(engines, EngineTypes.LocalizationResxGenId);
+            AddCodeEngineName(engines, EngineTypes.AspNetMvcEngineId);
+            AddCodeEngineName(engines, EngineTypes.TSqlScriptsId);
+            AddCodeEngineName(engines, EngineTypes.SqliteScriptsId);
+            AddCodeEngineName(engines, EngineTypes.AndroidEngineId);
+            AddCodeEngineName(engines, EngineTypes.ObjcEngineId);
 
             return engines;
         }
@@ -118,7 +123,7 @@ namespace OzzCodeGen.Wpf
         private void btnAddTarget_Click(object sender, RoutedEventArgs e)
         {
             SelectEngine dlgEngine = new SelectEngine();
-            dlgEngine.Engines = GetAppEngines();
+            dlgEngine.Engines = GetCodeEngines();
             dlgEngine.Owner = this;
 
             if (dlgEngine.ShowDialog() ?? false)
@@ -311,22 +316,22 @@ namespace OzzCodeGen.Wpf
                 _project = value;
                 DataModel = _project.DataModel;
                 grdEntities.ItemsSource = DataModel;
-                cboAppEngines.ItemsSource = null;
-                cboAppEngines.ItemsSource = Project.AppEngineList;
+                cboCodeEngines.ItemsSource = null;
+                cboCodeEngines.ItemsSource = Project.CodeEngineList;
 
                 grdEnums.ItemsSource = null;
                 grdEnums.ItemsSource = Project.EnumDefinitions;
 
                 _project.PropertyChanged += (o, e) =>
                 {
-                    if (e.PropertyName == "CurrentAppEngine")
+                    if (e.PropertyName == "CurrentCodeEngine")
                     {
                         SetTargetProjectUI();
                     }
-                    else if (e.PropertyName == "AppEngineList")
+                    else if (e.PropertyName == "CodeEngineList")
                     {
-                        cboAppEngines.ItemsSource = null;
-                        cboAppEngines.ItemsSource = Project.AppEngineList;
+                        cboCodeEngines.ItemsSource = null;
+                        cboCodeEngines.ItemsSource = Project.CodeEngineList;
                     }
                 };
                 RaisePropertyChanged("Project");
@@ -335,7 +340,7 @@ namespace OzzCodeGen.Wpf
             }
         }
 
-        public List<string> AppEngineList { get { return Project.AppEngineList; } }
+        public List<string> CodeEngineList { get { return Project.CodeEngineList; } }
 
         public EntityDefinition SelectedEntity
         {
@@ -359,23 +364,23 @@ namespace OzzCodeGen.Wpf
 
         private void SetTargetProjectUI()
         {
-            if (Project.CurrentAppEngine == null) return;
+            if (Project.CurrentCodeEngine == null) return;
 
-            if (appEngineUI != null) appEngineUI.Visibility = Visibility.Collapsed;
-            appEngineUI = Project.CurrentAppEngine.UiControl;
-            if (this.TargetGrid.Children.Contains(appEngineUI))
+            if (engineUI != null) engineUI.Visibility = Visibility.Collapsed;
+            engineUI = Project.CurrentCodeEngine.UiControl;
+            if (this.TargetGrid.Children.Contains(engineUI))
             {
-                appEngineUI.Visibility = Visibility.Visible;
+                engineUI.Visibility = Visibility.Visible;
             }
             else
             {
-                this.TargetGrid.Children.Add(appEngineUI);
-                Grid.SetColumn(appEngineUI, 0);
-                Grid.SetRow(appEngineUI, 1);
+                this.TargetGrid.Children.Add(engineUI);
+                Grid.SetColumn(engineUI, 0);
+                Grid.SetRow(engineUI, 1);
             }
         }
         private CodeGenProject _project;
-        private UserControl appEngineUI;
+        private UserControl engineUI;
 
         public DataModel DataModel
         {

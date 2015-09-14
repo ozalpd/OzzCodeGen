@@ -1,0 +1,91 @@
+﻿<#@ template inherits="AbstractStorageTemplate" debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".bat" #>
+@echo .
+@echo Creating Database...
+@sqlcmd -S <#= CodeEngine.DatabaseServer #> -d Master -E -Q "CREATE DATABASE [<#= CodeEngine.DatabaseName #>]"
+@echo .
+
+<# 
+int i = 0;
+var beforeScripts = CodeEngine.BeforeScripts.Split(';');
+var afterScripts = CodeEngine.AfterScripts.Split(';');
+foreach (var script in beforeScripts)
+{
+	if(!string.IsNullOrWhiteSpace(script))
+    {
+		i++;
+		WriteExecutingFile(script, i);
+    }
+}
+var tables = CodeEngine.GetCreateTableList();
+foreach (var table in tables.Where(e => !e.Exclude))
+{ 
+	i++;
+	WriteExecutingFile(table.Name + ".sql", i);
+	if (!string.IsNullOrWhiteSpace(table.FinishingScript))
+	{
+		var finishingScripts = table.FinishingScript.Split(';');
+		foreach (var script in finishingScripts)
+		{
+			if(!string.IsNullOrWhiteSpace(script))
+			{
+				WriteExecutingFile(script);
+			}
+		}
+	}
+	if(table.StoredProcs)
+	{
+		WriteExecutingFile(table.TableName + "-SP.sql");
+    }
+}
+i++;
+WriteExecutingFile("_FinishingSetup.sql", i);
+
+foreach (var script in afterScripts)
+{
+	if(!string.IsNullOrWhiteSpace(script))
+    {
+		i++;
+		WriteExecutingFile(script, i);
+    }
+}
+ #>
+
+@echo .
+@echo * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+@echo *
+@echo * Create scripts for database <#= CodeEngine.DatabaseName #> executed on Server <#= CodeEngine.DatabaseServer #>
+@echo *
+@echo * Please check history for errors.
+@echo *
+@echo * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+@echo .
+@pause
+<#+ 
+void WriteExecutingFile(string fileName, int counter = 0)
+{
+	if (counter>0)
+    { #>
+
+@echo .
+@echo .
+@echo <#= counter #> - Executing <#= fileName #>...
+<#+ }
+	if(fileName.EndsWith(".bat"))
+    {#>
+@call <#= fileName #>
+<#+ }
+	else if(fileName.EndsWith(".sql"))
+    {#>
+@sqlcmd -S <#= CodeEngine.DatabaseServer #> -d <#= CodeEngine.DatabaseName #> -E -i <#= fileName #>
+<#+ }
+	else
+    {#>
+@<#= fileName #>
+<#+ }
+}
+ #>

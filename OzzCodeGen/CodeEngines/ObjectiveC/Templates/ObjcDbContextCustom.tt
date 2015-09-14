@@ -1,0 +1,121 @@
+﻿<#@ template inherits="BaseObjcClassImpl" debug="true" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzCodeGen.Definitions" #>
+<#@ import namespace="OzzUtils" #>
+<# WriteDeclataritons(); #>
+<# 
+var entityTrackEnum = CodeEngine.Project.EnumDefinitions.FirstOrDefault(e => e.Name == CodeEngine.Project.EntityTrackEnum);
+ #>
+@interface <#= ObjectiveCName #>()
+
+@end
+
+@implementation <#= ObjectiveCName #>
+<#  
+if(entityTrackEnum != null)
+{#>
+
+#pragma mark - Load from NSDictionary
+/*
+ * Below method runs after loading an entity
+ * from an NSDictionary object
+ */
+- (void)onGotEntity:(id)entity fromJsonDictionary:(NSDictionary *)dictionary typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType
+{
+<# WriteSwitchStatement(entityTrackEnum, "onGot", "", "fromJsonDictionary:dictionary"); #>
+}
+<# WriteMethods(entityTrackEnum, "onGot", "", "fromJsonDictionary:(NSDictionary *)dictionary"); #>
+
+#pragma mark - Load from Local Database
+/*
+ * Below method runs after loading an entity
+ * from local database
+ */
+- (void)onGotEntityFromDb:(id)entity typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType
+{
+<# WriteSwitchStatement(entityTrackEnum, "onGot", "FromDb", ""); #>
+}
+<# WriteMethods(entityTrackEnum, "onGot", "FromDb", ""); #>
+
+#pragma mark - Save to Local Database
+/*
+ * Below method runs after saving an entity
+ * to local database
+ */
+- (void)onEntitySaved:(id)entity typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType
+{
+<# WriteSwitchStatement(entityTrackEnum, "on", "Saved", ""); #>
+}
+<# WriteMethods(entityTrackEnum, "on", "Saved", ""); #>
+
+#pragma mark - Deleting from Local Database
+- (void)onDeletingEntity:(id)entity typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType
+{
+<# WriteSwitchStatement(entityTrackEnum, "onDeleting", "FromDb", ""); #>
+}
+<# WriteMethods(entityTrackEnum, "onDeleting", "FromDb", ""); #>
+
+#pragma mark - Deleted from Local Database
+- (void)onEntityDeleted:(id)entity typeOfEntity:(<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #>)entityType
+{
+<# WriteSwitchStatement(entityTrackEnum, "onDeleted", "FromDb", ""); #>
+}
+<# WriteMethods(entityTrackEnum, "onDeleted", "FromDb", ""); #>
+
+#pragma mark - Deleting whole table from Local Database
+- (void)onDeletingTypeOfEntities:(KryEntityType)entityType
+{
+    <# WriteSwitchStatement(entityTrackEnum, "onAll", "EntitiesDeleting", "", false); #>
+}
+<# WriteMethods(entityTrackEnum, "onAll", "EntitiesDeleting", "", false); #>
+
+#pragma mark - Deleted whole table from Local Database
+- (void)onDeletedTypeOfEntities:(KryEntityType)entityType
+{
+    <# WriteSwitchStatement(entityTrackEnum, "onAll", "EntitiesDeleted", "", false); #>
+}
+<# WriteMethods(entityTrackEnum, "onAll", "EntitiesDeleted", "", false); #>
+
+<# 
+} #>
+@end
+<#+ 
+private void WriteSwitchStatement(EnumDefinition enumDef, string metdodPrefix, string methodBody, string methodParameter, bool passEntity = true)
+{ 
+    string suffix = string.IsNullOrEmpty(methodParameter) ? "" : " " + methodParameter;
+#>
+    switch (entityType) {
+<#+ 
+    foreach(var member in enumDef.Members.OrderBy(e => e.Name))
+    {
+		string entityParam = passEntity ? string.Format(":({0}{1} *)entity", CodeEngine.ClassPrefix, member.Name) : "";
+	#>
+        case <#= CodeEngine.ClassPrefix #><#= enumDef.Name #><#= member.Name #>:
+            /* <#= member.Name #> */
+//            [self <#= metdodPrefix #><#= member.Name #><#= methodBody #><#= entityParam #><#= suffix #>];
+            break;
+
+<#+ } #>
+        default:
+            break;
+    }
+<#+ 
+} #>
+<#+
+private void WriteMethods(EnumDefinition enumDef, string metdodPrefix, string methodBody, string methodSuffix, bool passEntity = true)
+{ #>
+<#+ 
+    foreach(var member in enumDef.Members.OrderBy(e => e.Name))
+    {
+		string entityParam = passEntity ? string.Format(":({0}{1} *){2}", CodeEngine.ClassPrefix, member.Name, member.Name.ToCamelCase()) : "";
+	 #>
+- (void)<#= metdodPrefix #><#= member.Name #><#= methodBody #><#= entityParam #> <#= methodSuffix #>
+{
+    
+}
+<#+ } #>
+<#+ 
+} #>

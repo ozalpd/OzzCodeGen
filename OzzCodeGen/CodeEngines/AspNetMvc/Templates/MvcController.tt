@@ -1,0 +1,216 @@
+﻿<#@ template inherits="CsClassBase" debug="true" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzCodeGen.Templates" #>
+<#@ import namespace="OzzCodeGen.Templates.Cs" #>
+<#@ import namespace="OzzCodeGen.Definitions" #>
+<#@ import namespace="OzzUtils" #>
+<# 
+var searchProperties = Entity.DisplayColumns.Where(e => e.UseInSearch);
+WriteUsingNamespaces(); #>
+
+namespace <#= Entity.CodeEngine.ControllersNamespace #>
+{
+    public partial class <#= Entity.ControllerName #>Controller : <#= Entity.BaseControllerName #>
+    {
+<#
+if (CustomFile)
+{ 
+	var vbagProperties = Entity.DisplayColumns.Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
+	if (vbagProperties.Any())
+	{ #>
+        partial void SetViewBags(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>)
+		{
+<#      foreach (var item in vbagProperties)
+        { 
+			 WriteViewBagSelectList(item); 
+ 		} #>
+		}
+<#  }
+}
+else 
+{ #>
+        private <#= Entity.Name #> Find<#= Entity.Name #>(int id)
+        {
+            return Get<#= Entity.Name #>Query()
+                    .FirstOrDefault(x => x.Id == id);
+        }
+        partial void SetViewBags(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
+        partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
+
+        
+        <#= CanViewAttrib #>//GET: /<#= Entity.ControllerName #>/
+<#  if(searchProperties.Any())
+    { #>
+        public ActionResult Index(string searchString)
+<#  } else { #>
+        public ActionResult Index()
+<#  } #>
+        {
+            var query = Get<#= Entity.Name #>Query();
+<#  if(searchProperties.Any())
+    { 
+	int k = 0;#>
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                query = from a in query
+                        where
+<#        foreach (var item in searchProperties)
+          {
+			k++;#>
+                            a.<#= item.Name #>.Contains(searchString)<# if (k < searchProperties.Count()){ #> |<# } #> 
+<#        } #>
+                        select a;
+            }
+<#  } #>
+            return View(query);
+        }
+
+        <#= CanViewAttrib #>// GET: /<#= Entity.ControllerName #>/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = Find<#= Entity.Name #>(id.Value);
+
+            if (<#= Entity.Name.ToCamelCase() #> == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(<#= Entity.Name.ToCamelCase() #>);
+        }
+
+        <#= CanEditAttrib #>// GET: /<#= Entity.ControllerName #>/Create
+        public ActionResult Create()
+        {
+            var <#= Entity.Name.ToCamelCase() #> = new <#= Entity.ModelForEdit #>();
+            SetDefaults(<#= Entity.Name.ToCamelCase() #>);
+            SetViewBags(null);
+            return View(<#= Entity.Name.ToCamelCase() #>);
+        }
+
+        <#= CanEditAttrib #>// POST: /<#= Entity.ControllerName #>/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>)
+        {
+            Context.SetInsertDefaults(<#= Entity.Name.ToCamelCase() #>, this);
+
+            if (ModelState.IsValid)
+            {
+<#  if(Entity.ModelForEdit == Entity.Name)
+	{#> 
+                Context.<#= Entity.DataSetName #>.Add(<#= Entity.Name.ToCamelCase() #>);
+<#  } else { #>
+                Context.<#= Entity.DataSetName #>.Add(<#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>());
+<#  } #>
+                SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            SetViewBags(<#= Entity.Name.ToCamelCase() #>);
+            return View(<#= Entity.Name.ToCamelCase() #>);
+        }
+
+        <#= CanEditAttrib #>// GET: /<#= Entity.ControllerName #>/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = Find<#= Entity.Name #>(id.Value);
+
+            if (<#= Entity.Name.ToCamelCase() #> == null)
+            {
+                return HttpNotFound();
+            }
+
+<#  string instanceName = Entity.ModelForEdit == Entity.Name ? Entity.Name.ToCamelCase() : Entity.ModelForEdit.ToCamelCase();
+	if(Entity.ModelForEdit != Entity.Name)
+	{ #>
+            var <#= instanceName #> = new <#= Entity.ModelForEdit #>(<#= Entity.Name.ToCamelCase() #>);
+<#  } #>
+            SetViewBags(<#= instanceName #>);
+            return View(<#= instanceName #>);
+        }
+
+        <#= CanEditAttrib #>// POST: /<#= Entity.ControllerName #>/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>)
+        {
+            Context.SetInsertDefaults(<#= Entity.Name.ToCamelCase() #>, this);
+
+            if (ModelState.IsValid)
+            {
+<#  if(Entity.ModelForEdit == Entity.Name)
+	{#> 
+                Context.Entry(<#= Entity.Name.ToCamelCase() #>).State = EntityState.Modified;
+<#  } else { #>
+                Context.Entry(<#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>()).State = EntityState.Modified;
+<#  } #>
+                SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            SetViewBags(<#= Entity.Name.ToCamelCase() #>);
+            return View(<#= Entity.Name.ToCamelCase() #>);
+        }
+
+        <#= CanDeleteAttrib #>// GET: /<#= Entity.ControllerName #>/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = Find<#= Entity.Name #>(id.Value);
+
+            if (<#= Entity.Name.ToCamelCase() #> == null)
+            {
+                return HttpNotFound();
+            }
+            
+            Context.<#= Entity.DataSetName #>.Remove(<#= Entity.Name.ToCamelCase() #>);
+            SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+<#  } #>
+    }
+}
+<#+ 
+protected void WriteViewBagSelectList(AspNetMvcPropertySetting propertySetting)
+{ 
+	var foreign = Entity.GetForeignKeyEntity(propertySetting);
+	string propValue = propertySetting.IsNullable() ? "(" : "";
+	propValue += Entity.Name.ToCamelCase();
+	propValue += ".";
+	propValue += propertySetting.Name;
+	if(propertySetting.IsNullable())
+	{
+		propValue += " ?? 0)";
+    }
+	string start = foreign == null | propertySetting.UseForEdit != "DropDownList" ? "//" : "";#>
+
+            <#= start #>int <#= propertySetting.Name.ToCamelCase() #> = <#= Entity.Name.ToCamelCase() #> == null ? 0 : <#= propValue #>;
+<#+
+	if (foreign == null)
+	{ #>
+			//Can't detect forein entity type for <#= propertySetting.Name #>
+			//TODO: ViewBag.<#= propertySetting.Name #> = new SelectList(Context.QueryName, "Id", "Title", 0);
+<#+	}
+	else
+	{
+		var pkey = foreign.GetPrimeryKey();
+		string pkeyName = pkey == null ? "Id" : pkey.Name;
+				 #>
+            <#= start #>ViewBag.<#= propertySetting.Name #> = new SelectList(Context.<#= foreign.GetDataSetQuery() #>, "<#= pkeyName #>", "<#= foreign.EntityDefinition.DisplayMember #>", <#= propertySetting.Name.ToCamelCase() #>);
+<#+			}
+} #>

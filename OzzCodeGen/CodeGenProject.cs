@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-using OzzCodeGen.AppEngines;
+using OzzCodeGen.CodeEngines;
 using OzzCodeGen.Definitions;
 using OzzCodeGen.Providers;
 using OzzUtils.Savables;
@@ -13,7 +13,7 @@ namespace OzzCodeGen
 {
     public class CodeGenProject : SavableObject, INotifyPropertyChanged
     {
-        protected List<BaseAppEngine> _appEngines;
+        protected List<BaseCodeEngine> _codeEngines;
 
         public CodeGenProject()
         {
@@ -22,7 +22,7 @@ namespace OzzCodeGen
             //    if (e.PropertyName != "HasProjectChanges") HasProjectChanges = true;
             //};
 
-            _appEngines = new List<BaseAppEngine>();
+            _codeEngines = new List<BaseCodeEngine>();
         }
 
         public Guid ProjectId
@@ -168,7 +168,7 @@ namespace OzzCodeGen
 
         public bool RemoveEntity(EntityDefinition item)
         {
-            foreach (var engine in _appEngines)
+            foreach (var engine in _codeEngines)
             {
                 var entity = engine.EntitySettings.FirstOrDefault(e => e.EntityDefinition == item);
                 if (entity != null)
@@ -179,7 +179,7 @@ namespace OzzCodeGen
 
             bool result = DataModel.Remove(item);
 
-            foreach (var engine in _appEngines)
+            foreach (var engine in _codeEngines)
             {
                 engine.RefreshFromProject(true);
             }
@@ -225,20 +225,20 @@ namespace OzzCodeGen
         private bool _hasProjectChanges;
 
         
-        public List<string> AppEngineList
+        public List<string> CodeEngineList
         {
             get
             {
-                if (_appEngineList == null) _appEngineList = new List<string>();
-                return _appEngineList;
+                if (_codeEngineList == null) _codeEngineList = new List<string>();
+                return _codeEngineList;
             }
             set
             {
-                _appEngineList = value;
-                RaisePropertyChanged("AppEngineList");
+                _codeEngineList = value;
+                RaisePropertyChanged("CodeEngineList");
             }
         }
-        private List<string> _appEngineList;
+        private List<string> _codeEngineList;
 
         public string ServiceUrl
         {
@@ -253,17 +253,17 @@ namespace OzzCodeGen
 
 
         [XmlIgnore]
-        public BaseAppEngine CurrentAppEngine
+        public BaseCodeEngine CurrentCodeEngine
         {
-            get { return _currentAppEngine; }
+            get { return _currentCodeEngine; }
             set
             {
-                if (_currentAppEngine == value) return;
-                _currentAppEngine = value;
-                RaisePropertyChanged("CurrentAppEngine");
+                if (_currentCodeEngine == value) return;
+                _currentCodeEngine = value;
+                RaisePropertyChanged("CurrentCodeEngine");
             }
         }
-        private BaseAppEngine _currentAppEngine;
+        private BaseCodeEngine _currentCodeEngine;
 
 
         [XmlIgnore]
@@ -320,31 +320,31 @@ namespace OzzCodeGen
             return true;
         }
 
-        public BaseAppEngine GetAppEngine(string appEngineId)
+        public BaseCodeEngine GetCodeEngine(string codeEngineId)
         {
-            return _appEngines.FirstOrDefault(t => t.EngineId == appEngineId);
+            return _codeEngines.FirstOrDefault(t => t.EngineId == codeEngineId);
         }
 
-        public void AddEngine(BaseAppEngine appEngine)
+        public void AddEngine(BaseCodeEngine codeEngine)
         {
-            _appEngines.Add(appEngine);
-            appEngine.Project = this;
-            AddEngine(appEngine.EngineId);
-            CurrentAppEngine = appEngine;
+            _codeEngines.Add(codeEngine);
+            codeEngine.Project = this;
+            AddEngine(codeEngine.EngineId);
+            CurrentCodeEngine = codeEngine;
         }
 
-        public void AddEngine(string appEngine)
+        public void AddEngine(string codeEngine)
         {
-            if (AppEngineList.Contains(appEngine)) return;
-            AppEngineList.Insert(0, appEngine);
-            RaisePropertyChanged("AppEngineList");
-            AddEngine(EngineTypes.GetInstance(appEngine));
+            if (CodeEngineList.Contains(codeEngine)) return;
+            CodeEngineList.Insert(0, codeEngine);
+            RaisePropertyChanged("CodeEngineList");
+            AddEngine(EngineTypes.GetInstance(codeEngine));
         }
 
         public void RefreshDataModel(bool cleanRemovedItems)
         {
             ModelProvider.RefreshDataModel(ModelSource, DataModel, cleanRemovedItems);
-            foreach (var engine in this._appEngines)
+            foreach (var engine in this._codeEngines)
             {
                 engine.RefreshFromProject(true);
             }
@@ -368,7 +368,7 @@ namespace OzzCodeGen
         {
             DefaultPropertySettings.SaveToFile(DefaultPropertySettingsFile);
 
-            foreach (var engine in _appEngines)
+            foreach (var engine in _codeEngines)
             {
                 engine.SaveToFile();
             }
@@ -379,13 +379,13 @@ namespace OzzCodeGen
             DefaultPropertySettings = PropertyDefaultSettingList.OpenFile(DefaultPropertySettingsFile);
 
             string dir = Path.GetDirectoryName(SavedFileName);
-            foreach (string targetId in AppEngineList)
+            foreach (string targetId in CodeEngineList)
             {
                 AddEngine(EngineTypes.OpenFile(dir, targetId));
             }
-            if (_appEngines.FirstOrDefault() != null)
+            if (_codeEngines.FirstOrDefault() != null)
             {
-                CurrentAppEngine = _appEngines.FirstOrDefault();
+                CurrentCodeEngine = _codeEngines.FirstOrDefault();
             }
         }
 

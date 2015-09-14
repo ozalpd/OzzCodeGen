@@ -464,7 +464,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Target Projects">
-                <Grid x:Name="TargetGrid" DataContext="{Binding Project.CurrentAppEngine}">
+                <Grid x:Name="TargetGrid" DataContext="{Binding Project.CurrentCodeEngine}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="*"/>
@@ -477,15 +477,15 @@
 									Click="btnAddTarget_Click" Padding="8,0,8,0" 
 									Margin="2,2,4,2" />
                                 <TextBlock Text="App Engine:" ToolTip="Engine for Target Application" Height="20" Width="70" Margin="4,0,0,0" />
-                                <ComboBox x:Name="cboAppEngines" Width="180" Height="24" Margin="4,0,4,0"
+                                <ComboBox x:Name="cboCodeEngines" Width="180" Height="24" Margin="4,0,4,0"
                                           ToolTip="Engine for Target Application"
-                                          SelectionChanged="cboAppEngines_SelectionChanged" />
+                                          SelectionChanged="cboCodeEngines_SelectionChanged" />
                                 <!--
                                 <TextBlock Text="Selected Application Engine: "
-                                           Style="{StaticResource selectedAppEngineTextBlock}"/>-->
+                                           Style="{StaticResource selectedCodeEngineTextBlock}"/>-->
                                 <TextBlock Text="{Binding ProjectTypeName, Mode=OneWay}" 
                                            Width="600"
-                                           Style="{StaticResource selectedAppEngineTextBlock}"/>
+                                           Style="{StaticResource selectedCodeEngineTextBlock}"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>

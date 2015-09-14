@@ -1,0 +1,493 @@
+﻿<#@ template inherits="BaseObjcClassImpl" debug="true" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzUtils" #>
+<# WriteDeclataritons(); #>
+#import "OzzDictionaryExtension.h"
+
+//Do not modify this file! Generate it again!
+@interface Base<#= ObjectiveCName #>()
+@property (nonatomic) NSInteger recordCount;
+@end
+
+@implementation Base<#= ObjectiveCName #>
+<# 
+    if (CodeEngine.BaseEntityContext == "NSObject")
+    { #>
+- (id)initWithContext:(OzzSqliteHelper *)context andWithBaseUrl:(NSString *)baseUrl
+{
+    self = [super init];
+    if(self){
+        _dbContext = dbContext;
+		_baseUrl = baseUrl;
+		_recordCount = -1;
+    }
+    return self;
+}
+<#  } else { #>
+- (id)initWithContext:(OzzSqliteHelper *)dbContext andWithBaseUrl:(NSString *)baseUrl
+{
+    self = [super initWithContext:dbContext andWithBaseUrl:baseUrl];
+    if (self) {
+        self.recordCount = -1;
+    }
+    return self;
+}
+<#  } #>
+- (void)dealloc
+{
+    self.delegate = nil;
+#if !__has_feature(objc_arc)
+    if(_colName){
+        [_colName release];
+    }
+    if(_colNr){
+        [_colNr release];
+    }
+    [super dealloc];
+#endif
+}
+
+- (void)finalize
+{
+    _delegate = nil;
+    _colName = nil;
+    _colNr = nil;
+    [super finalize];
+}
+
+#pragma mark - Property Implementations
+- (NSInteger)recordCount
+{
+    if (_recordCount<0) {
+        _recordCount = [self getRecordCount];
+#if(DEBUG==1)
+        NSLog(@"DB has %ld %@ records", (long)_recordCount, self.tableName);
+#endif
+    }
+    return _recordCount;
+}
+@synthesize recordCount = _recordCount;
+
+#pragma mark - Local DB - Read methods
+- (NSInteger)getRecordCount
+{
+    return [self.dbContext getRecordCountFromTable:self.tableName];
+}
+
+- (<#= Entity.ObjectiveCName #> *)loadById:(NSInteger)uniqueId
+{
+    NSString *query = [self selectStatementWithFilter:
+                       [NSString stringWithFormat:@"Id = %ld", (long)uniqueId]];
+    
+    self.dataSet = [self loadByQuery:query];
+    return [self.dataSet lastObject];
+}
+
+- (NSArray *)loadAll
+{
+    self.dataSet = [self loadByQuery:self.selectStatement];
+    return self.dataSet;
+}
+
+<#    foreach(var fKey in ForeignKeyProperties.OrderBy(f => f.Name))
+    { #>
+- (NSArray *)loadBy<#= fKey.Name #>:(NSInteger)<#= fKey.Name.ToCamelCase() #>
+{
+    NSString *query = [self selectStatementWithFilter:
+                       [NSString stringWithFormat:@"%@ = %ld",
+                        self.colName.<#= fKey.Name.ToCamelCase() #>,
+                        (long)<#= fKey.Name.ToCamelCase() #>]];
+
+    self.dataSet = [self loadByQuery:query];
+    return self.dataSet;
+}
+<# } #>
+- (NSArray *)loadByQuery:(NSString *)query
+{
+    BOOL isdbClosed = !self.dbContext.isDbOpen;
+    if (isdbClosed) {
+        [self.dbContext openDb];
+    }
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    sqlite3_stmt *statement = [self.dbContext prepareStatement:query];
+    
+    if (statement)
+    {
+        while (sqlite3_step(statement) == SQLITE_ROW)
+        {
+            [array addObject:[self getEntityFromStatement:statement]];
+        }
+        sqlite3_clear_bindings(statement);
+        sqlite3_reset(statement);
+        sqlite3_finalize(statement);
+    }
+    if (isdbClosed) {
+        [self.dbContext closeDb];
+    }
+
+    return array;
+}
+
+#pragma mark - Local DB - Save (Create + Update) methods
+- (int)save:(<#= Entity.ObjectiveCName #> *)entity
+{
+    NSString *sqlStmt = [self saveStatement:entity];
+    int i = [self.dbContext executeQuery:sqlStmt];
+    [self.delegate onEntitySaved:entity typeOfEntity:<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #><#= Entity.Name #>];
+    self.recordCount = -1; //force to execute count query
+
+    return i;
+}
+
+- (int)insert:(<#= Entity.ObjectiveCName #> *)entity
+{
+    NSString *sqlStmt = [self insertStatement:entity];
+    int i = [self.dbContext executeQuery:sqlStmt];
+<# 
+	ObjcPropertySetting pkey = Entity.Properties.Where(p => p.IsKey).FirstOrDefault();
+	if(pkey!=null){ #>
+	entity.<#= pkey.ObjectiveCName #> = sqlite3_last_insert_rowid(self.dbContext.dbHandler);
+<# } #>
+    [self.delegate onEntitySaved:entity typeOfEntity:<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #><#= Entity.Name #>];
+    self.recordCount = -1; //force to execute count query
+
+    return i;
+}
+
+- (NSString *)saveStatement:(<#= Entity.ObjectiveCName #> *)entity
+{
+    NSString *stmt = <#= GetInsertStatement(true) #>
+    return stmt;
+}
+
+- (NSString *)insertStatement:(<#= Entity.ObjectiveCName #> *)entity
+{
+    NSString *stmt = <#= GetInsertStatement() #>
+    return stmt;
+}
+
+#pragma mark - Local DB - Delete methods
+
+-(int)deleteEntity:(<#= Entity.ObjectiveCName #> *)entity
+{
+    if(entity == nil)
+    {
+        [self.delegate onFailToDeleteEntity:nil
+                               sqliteResult:SQLITE_NOTFOUND
+                               typeOfEntity:<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #><#= Entity.Name #>];
+        return SQLITE_NOTFOUND;
+    }
+
+    [self.delegate onDeletingEntity:entity
+                       typeOfEntity:<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #><#= Entity.Name #>];
+    NSString *query = [NSString
+                       stringWithFormat:@"Delete from %@ Where Id = %ld",
+                       self.tableName,
+                       (long)entity.uniqueId];
+    [self.dbContext openDb];
+    int result = [self executeQuery:query];
+    if(result == SQLITE_DONE)
+    {
+        [self.delegate onEntityDeleted:entity
+                          typeOfEntity:<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #><#= Entity.Name #>];
+    }
+    else
+    {
+        [self.delegate onFailToDeleteEntity:entity
+                               sqliteResult:result
+                               typeOfEntity:<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #><#= Entity.Name #>];
+    }
+    [self.dbContext closeDb];
+    self.recordCount = -1; //force to execute count query
+
+    return result;
+}
+
+- (int)deleteAll:(BOOL)fastDelete
+{
+    if(fastDelete)
+    {
+        [self.delegate onDeletingTypeOfEntities:<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #><#= Entity.Name #>];
+        [self.dbContext openDb];
+        NSString *query = [NSString stringWithFormat:@"Delete from %@", self.tableName];
+        int result = [self.dbContext executeQuery:query];
+        [self.dbContext closeDb];
+        [self.delegate onDeletedTypeOfEntities:<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #><#= Entity.Name #>];
+        self.recordCount = -1; //force to execute count query
+
+        return result;
+    }
+    else
+    {
+        NSArray *array = [self loadByQuery:self.selectStatement];
+        return [self deleteArray:array];
+    }
+}
+<#  foreach(var fKey in ForeignKeyProperties.OrderBy(f => f.Name))
+    { #>
+
+- (int)deleteBy<#= fKey.Name #>:(NSInteger)<#= fKey.Name.ToCamelCase() #> fastDelete:(BOOL)fastDelete
+{
+    if(fastDelete)
+    {
+        [self.dbContext openDb];
+        NSString *query = [NSString
+                           stringWithFormat:@"Delete from %@ Where %@ = %ld",
+                           self.tableName,
+                           self.colName.<#= fKey.Name.ToCamelCase() #>,
+                           (long)<#= fKey.Name.ToCamelCase() #>];
+        int result = [self.dbContext executeQuery:query];
+        [self.dbContext closeDb];
+        self.recordCount = -1; //force to execute count query
+
+        return result;
+    }
+    else
+    {
+        NSArray *array = [self loadBy<#= fKey.Name #>:<#= fKey.Name.ToCamelCase() #>];
+        return [self deleteArray:array];
+    }
+}
+<# } #>
+
+- (int)deleteArray:(NSArray *)array
+{
+    int result = SQLITE_OK;
+    
+    for (<#= Entity.ObjectiveCName #> *entity in array)
+    {
+        int i = [self deleteEntity:entity];
+        if(!i == SQLITE_OK){
+            result = i;
+        }
+    }
+	self.recordCount = -1; //force to execute count query
+
+    return result;
+}
+
+#pragma mark - Local DB - Helper methods
+- (int)executeQuery:(NSString *)query
+{
+    sqlite3_stmt *statement = [self.dbContext prepareStatement:query];
+    return sqlite3_step(statement);
+}
+
+- (NSString *)selectStatement
+{
+<#  if(OrderedProperties.Where(p => p.Name == "DisplayOrder").Any())
+	{ #>
+    return [NSString
+            stringWithFormat:@"Select %@ From %@ Order By %@ Asc",
+            self.columnNames,
+            self.tableName,
+            self.colName.displayOrder];
+<#  } else { #>
+    return [NSString stringWithFormat:@"Select %@ From %@", self.columnNames, self.tableName];
+<#  } #>
+}
+
+- (NSString *)selectStatementWithFilter:(NSString *)filter
+{
+    if(filter)
+    {
+<#  if(OrderedProperties.Where(p => p.Name == "DisplayOrder").Any())
+	{ #>
+        return [NSString
+                stringWithFormat:@"Select %@ From %@ Where %@ Order By %@ Asc",
+                self.columnNames,
+                self.tableName,
+                filter,
+                self.colName.displayOrder];
+<#  } else { #>
+        return [NSString
+                stringWithFormat:@"Select %@ From %@ Where %@",
+                self.columnNames,
+                self.tableName,
+                filter];
+<#  } #>
+    }
+    else
+    {
+        return [self selectStatement];
+    }
+}
+
+- (<#= Entity.ObjectiveCName #> *)getEntityFromStatement:(sqlite3_stmt *)statement
+{
+    <#= Entity.ObjectiveCName #> *entity = [[<#= Entity.ObjectiveCName #> alloc]init];
+	ColNr<#= Entity.Name #> *colNr = self.colNr;
+<#  foreach (var item in OrderedProperties) { #>
+    entity.<#= item.ObjectiveCName #> = [self.dbContext <#= ReadFromSqliteStatement(item) #>:statement andWithColNr:colNr.<#= item.ObjectiveCName #><# if(item.PropertyDefinition.IsTypeDateTime()){ #> isTextColumn:NO<# } #>];
+<#  } #>
+
+    [self.delegate onGotEntityFromDb:entity typeOfEntity:<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #><#= Entity.Name #>];
+
+    return entity;
+}
+
+#pragma mark - NSDictionary Helper methods
+- (<#= Entity.ObjectiveCName #> *)getEntityFromDictionary:(NSDictionary *)dictionary
+{
+    <#= Entity.ObjectiveCName #> *entity = [[<#= Entity.ObjectiveCName #> alloc]init];
+	ColName<#= Entity.Name #> *colName = self.colName;
+<#  foreach (var item in OrderedProperties) { #>
+    entity.<#= item.ObjectiveCName #> = [dictionary <#= DictionaryExtensionMethod(item) #>:colName.<#= item.ObjectiveCName #>];
+<#  } #>
+
+    [self.delegate onGotEntity:entity fromJsonDictionary:dictionary typeOfEntity:<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #><#= Entity.Name #>];
+
+    return entity;
+}
+
+<#  //That means we have a jsonContext
+    if (CodeEngine.BaseEntityContext != "NSObject")
+    { #>
+#pragma mark - Network methods
+<# if(Entity.EntityDefinition.LetDownloadAll){ #>
+- (void)downloadAll
+{
+    if(![self.delegate isDataLoading])
+	{
+        [self.jsonContext loadData:@"Get<#= Entity.Name #>List"];
+    }
+}
+<# } #>
+- (void)downloadById:(NSInteger)uniqueId
+{
+    if(![self.delegate isDataLoading])
+	{
+        [self.jsonContext loadData:[NSString stringWithFormat:@"Get<#= Entity.Name #>/%ld", (long)uniqueId]];
+    }
+}
+
+#pragma mark - JsonHelperDelegate
+
+- (void)onJsonArrayLoaded:(NSArray *)jsonArray
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    BOOL beforeSave = true;
+    for (NSDictionary *dict in jsonArray)
+	{
+        <#= Entity.ObjectiveCName #> *entity = [self getEntityFromDictionary:dict];
+        if((self.autoSaveDownloaded) && [self validateEntiy:entity])
+		{
+            if (beforeSave && self.fullUpdateMode)
+			{
+                [self deleteAll:true];
+                beforeSave = false;
+                [self.dbContext openDb];
+                [self.dbContext openTransaction];
+            }
+            [self save:entity];
+        }
+        [array addObject:entity];
+    }
+    
+    if (self.autoSaveDownloaded)
+    {
+        [self.dbContext closeDb];
+        self.fullUpdateMode = false;
+    }
+    self.dataSet = array;
+    [self.delegate onArrayLoaded:array typeOfEntity:<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #><#= Entity.Name #>];
+}
+
+- (void)onJsonDictionaryLoaded:(NSDictionary *)jsonDict
+{
+    <#= Entity.ObjectiveCName #> *entity = [self getEntityFromDictionary:jsonDict];
+    if(self.autoSaveDownloaded){
+        [self save:entity];
+    }
+    [self.delegate onEntityLoaded:entity typeOfEntity:<#= CodeEngine.ClassPrefix #><#= CodeEngine.Project.EntityTrackEnum #><#= Entity.Name #>];
+}
+
+- (void)onJsonLoading
+{
+    [self.delegate onDataLoading];
+}
+
+- (void)onError:(NSString *)errorMsg
+{
+    [self.delegate onError:errorMsg];
+    [super onError:errorMsg];
+}
+- (void)onParseError:(NSString *)errorMsg
+{
+    if([self.delegate respondsToSelector:@selector(didReceiveData:)]){
+        [self.delegate onParseError:errorMsg];
+    }
+    [super onParseError:errorMsg];
+}
+
+- (void)didReceiveResponse:(NSURLResponse *)response
+{
+    if([self.delegate respondsToSelector:@selector(didReceiveData:)]){
+        [self.delegate didReceiveResponse:response];
+    }
+}
+- (void)didReceiveData:(NSData *)data
+{
+    if([self.delegate respondsToSelector:@selector(didReceiveData:)]){
+        [self.delegate didReceiveData:data];
+    }
+}
+
+#pragma mark - Entity Methods
+- (BOOL)validateEntiy:(<#= Entity.ObjectiveCName #> *)entity
+{
+    return <#  foreach (var item in NonNullableProperties) { #>entity.<#= GetValidationTest(item) #> &&
+	       <#  } #>true;
+}
+
+<#  } #>
+#pragma mark - Columns
+- (ColName<#= Entity.Name #> *)colName
+{
+    if(_colName == nil){
+        _colName = [[ColName<#= Entity.Name #> alloc] init];
+    }
+    return _colName;
+}
+@synthesize colName = _colName;
+
+- (ColNr<#= Entity.Name #> *)colNr
+{
+    if(_colNr == nil){
+        _colNr = [[ColNr<#= Entity.Name #> alloc] init];
+    }
+    return _colNr;
+}
+@synthesize colNr = _colNr;
+
+- (NSString *)columnNames
+{
+    return @"<#= ColumnNames #>";
+}
+- (NSString *)tableName
+{
+    return @"<#= StorageEntitySetting.TableName #>";
+}
+@end
+
+#pragma mark - ColName<#= Entity.Name #>
+@implementation ColName<#= Entity.Name #>
+<#  foreach (var item in OrderedProperties)
+    { #>
+- (NSString *)<#= item.ObjectiveCName #> { return @"<#= item.Name #>"; }
+<#  } #>
+@end
+
+#pragma mark - ColNr<#= Entity.Name #>
+@implementation ColNr<#= Entity.Name #>
+<#  int i = 0;
+    foreach (string col in HeaderTemplate.SqliteProperties)
+    { #>
+- (int)<#= col #> { return <#= i #>; }
+<# 
+        i++;
+    } #>
+@end
