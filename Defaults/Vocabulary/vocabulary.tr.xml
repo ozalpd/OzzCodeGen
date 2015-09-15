@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfVocab xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Vocab>
+    <Name>AddNew</Name>
+    <Translation>Yeni Ekle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Address</Name>
+    <Translation>Adres</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Always</Name>
+    <Translation>Her zaman</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Cancel</Name>
+    <Translation>Vazgeç</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Categories</Name>
+    <Translation>Kategoriler</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Category</Name>
+    <Translation>Kategori</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Choose</Name>
+    <Translation>Seç</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Cities</Name>
+    <Translation>Şehirler</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>City</Name>
+    <Translation>Şehir</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CityName</Name>
+    <Translation>Şehir</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Clear</Name>
+    <Translation>Temizle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Clone</Name>
+    <Translation>Klonla</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Code</Name>
+    <Translation>Kod</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Command</Name>
+    <Translation>Komut</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ConfirmEmail</Name>
+    <Translation>Eposta Doğrulama</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ConfirmPassword</Name>
+    <Translation>Parola Doğrulama</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Country</Name>
+    <Translation>Ülke</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CountryName</Name>
+    <Translation>Ülke</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CreateDate</Name>
+    <Translation>Oluşturma Tarihi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CreateNew</Name>
+    <Translation>Yeni Oluştur</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CreatorId</Name>
+    <Translation>Oluşturan</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CreatorIp</Name>
+    <Translation>Oluşturan IP</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Date</Name>
+    <Translation>Tarihi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Deleting</Name>
+    <Translation>Siliniyor</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Depth</Name>
+    <Translation>Derinlik</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Description</Name>
+    <Translation>Açıklama</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Details</Name>
+    <Translation>Detaylar</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>DisplayOrder</Name>
+    <Translation>Gösterim Sırası</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>District</Name>
+    <Translation>Mahalle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>DistrictName</Name>
+    <Translation>Mahalle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>DoNotSet</Name>
+    <Translation>Seçilmedi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Duplicate</Name>
+    <Translation>Çoğalt</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Email</Name>
+    <Translation>E-Posta</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ExpireDate</Name>
+    <Translation>Yayın Sonlama Tarihi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Fast</Name>
+    <Translation>Hızlı</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Fax</Name>
+    <Translation>Faks</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Female</Name>
+    <Translation>Kadın</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>FirstName</Name>
+    <Translation>Ad</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Height</Name>
+    <Translation>Yükseklik</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Id</Name>
+    <Translation>Kayıt No</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ImageFile</Name>
+    <Translation>Resim Dosyası</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ImageFileName</Name>
+    <Translation>Resim Dosyası</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ImageFileNames</Name>
+    <Translation>Resim Dosyaları</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ImageFiles</Name>
+    <Translation>Resim Dosyaları</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Index</Name>
+    <Translation>Indeks</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>IsPublished</Name>
+    <Translation>Yayında</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Lastname</Name>
+    <Translation>Soyad</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Latitude</Name>
+    <Translation>Enlem</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Loading</Name>
+    <Translation>Yükleniyor</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Location</Name>
+    <Translation>Mevkii</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>LogIn</Name>
+    <Translation>Giriş Yap</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>LogOff</Name>
+    <Translation>Çıkış Yap</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>LogOn</Name>
+    <Translation>Giriş Yap</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>LogOut</Name>
+    <Translation>Çıkış Yap</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Longitude</Name>
+    <Translation>Boylam</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Male</Name>
+    <Translation>Erkek</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ModifierId</Name>
+    <Translation>Değiştiren</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ModifierIp</Name>
+    <Translation>Değiştiren IP</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ModifyDate</Name>
+    <Translation>Değişiklik Tarihi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ModifyNr</Name>
+    <Translation>Değişiklik No</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Name</Name>
+    <Translation>İsim</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Never</Name>
+    <Translation>Asla</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>No</Name>
+    <Translation>Hayır</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Normal</Name>
+    <Translation>Normal</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Often</Name>
+    <Translation>Sık sık</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ParentCategories</Name>
+    <Translation>Üst Kategoriler</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ParentCategory</Name>
+    <Translation>Üst Kategori</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Password</Name>
+    <Translation>Parola</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Phone</Name>
+    <Translation>Telefon</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>PhoneHome</Name>
+    <Translation>Ev Telefonu</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>PhoneMobile</Name>
+    <Translation>Mobil Telefon</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>PhoneOther</Name>
+    <Translation>Diğer Telefon</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>PhoneWork</Name>
+    <Translation>İş Telefonu</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Print</Name>
+    <Translation>Yazdır</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Product</Name>
+    <Translation>Ürün</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ProductCategories</Name>
+    <Translation>Ürün Kategorileri</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ProductCategoriesList</Name>
+    <Translation>Ürün Kategori Listesi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ProductCategory</Name>
+    <Translation>Ürün Kategorisi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Products</Name>
+    <Translation>Ürünler</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ProductsList</Name>
+    <Translation>Ürün Listesi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>PublishDate</Name>
+    <Translation>Yayın Tarihi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Quantity</Name>
+    <Translation>Miktar</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Rarely</Name>
+    <Translation>Nadiren</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Register</Name>
+    <Translation>Kayıt ol</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Save</Name>
+    <Translation>Kaydet</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Search</Name>
+    <Translation>Ara</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>SearchActives</Name>
+    <Translation>Aktiflerde Ara</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Select</Name>
+    <Translation>Seç</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>SelectPlease</Name>
+    <Translation>Lütfen Seçiniz</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Size</Name>
+    <Translation>Ölçü</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Slow</Name>
+    <Translation>Yavaş</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Sometimes</Name>
+    <Translation>Bazen</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>SubCategories</Name>
+    <Translation>Alt Kategoriler</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>SubCategory</Name>
+    <Translation>Alt Kategori</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Surname</Name>
+    <Translation>Soyad</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>TaxNr</Name>
+    <Translation>Vergi No</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>TaxOffice</Name>
+    <Translation>Vergi Dairesi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Title</Name>
+    <Translation>Başlık</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Township</Name>
+    <Translation>İlçe</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>TownshipName</Name>
+    <Translation>İlçe</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Townships</Name>
+    <Translation>İlçeler</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Unit</Name>
+    <Translation>Birim</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Update</Name>
+    <Translation>Güncelle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>UserName</Name>
+    <Translation>Kullanıcı Adı</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>UserName</Name>
+    <Translation>Kullanıcı Adı</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Width</Name>
+    <Translation>Genişlik</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Yes</Name>
+    <Translation>Evet</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ZipCode</Name>
+    <Translation>Posta Kodu</Translation>
+  </Vocab>
+</ArrayOfVocab>

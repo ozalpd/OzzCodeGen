@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using OzzCodeGen.Definitions;
 using OzzCodeGen.Providers;
+using System.IO;
+using OzzCodeGen.CodeEngines.Localization;
+using OzzCodeGen.CodeEngines;
 
 namespace OzzCodeGen.UI
 {
@@ -20,7 +23,7 @@ namespace OzzCodeGen.UI
         }
 
         public string ModelSource { get; set; }
-        public IModelProvider Provider { get; set; }
+        public EmptyModel Provider { get; set; }
 
         public EntityDefinition GetEntityDefinition()
         {
@@ -48,14 +51,37 @@ namespace OzzCodeGen.UI
 
         public CodeGenProject GetProject()
         {
-            var project = new CodeGenProject()
+            //TODO: Put a ComboBox (eg cboProjectTemplateFiles) in UI
+            //      and use selected ProjectTemplateFile instead of EmptyModel.ProjectTemplateFile
+            var templatePath = Path.Combine(Provider.DefaultsFolder, EmptyModel.ProjectTemplateFile);
+            CodeGenProject project = null;
+            if (File.Exists(templatePath))
             {
-                Name = txtProjectName.Text.Trim(),
-                NamespaceName = txtNamespace.Text.Trim(),
-                ModelProviderId = Provider.ProviderId,
-                ModelSource = ModelSource,
-                DataModel = GetDataModel()
-            };
+                project = CodeGenProject.OpenFile(templatePath);
+                if(project.CodeEngineList.Any(c=>c.Equals(EngineTypes.LocalizationResxGenId)))
+                {
+                    var localizationEngine = (ResxEngine)project.GetCodeEngine(EngineTypes.LocalizationResxGenId);
+                    localizationEngine.OpenVocabularies();
+                    localizationEngine.SaveWithVocabularies = true;
+                }
+            }
+            else
+            {
+                project = new CodeGenProject()
+                {
+                    DataModel = GetDataModel()
+                };
+            }
+
+            project.Name = txtProjectName.Text.Trim();
+            project.NamespaceName = txtNamespace.Text.Trim();
+            project.ModelProviderId = Provider.ProviderId;
+            project.ModelSource = ModelSource;
+            project.SavedFileName = string.Empty;
+            foreach(var item in project.DataModel)
+            {
+                item.NamespaceName = project.NamespaceName;
+            }
 
             return project;
         }

@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using OzzCodeGen.Providers;
 
 namespace OzzCodeGen.Wpf.Dialogs
@@ -24,16 +15,6 @@ namespace OzzCodeGen.Wpf.Dialogs
         public GenerateModel()
         {
             InitializeComponent();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void RaisePropertyChanged(string propertyName)
-        {
-            if (!string.IsNullOrEmpty(propertyName) && PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
 
 
@@ -88,12 +69,31 @@ namespace OzzCodeGen.Wpf.Dialogs
         }
         private List<IModelProvider> _modelProviders;
 
+        public string DefaultsFolder
+        {
+            set
+            {
+                _defaultsFolder = value;
+                RaisePropertyChanged("DefaultsFolder");
+            }
+            get { return _defaultsFolder; }
+        }
+        private string _defaultsFolder;
+
+
         private void btnOpenSource_Click(object sender, RoutedEventArgs e)
         {
             IModelProvider provider = SelectedModelProvider;
+            if (provider is EmptyModel)
+            {
+                ((EmptyModel)provider).DefaultsFolder = DefaultsFolder;
+            }
+
             string source = provider.SelectSource();
-            if (string.IsNullOrEmpty(source)) return;
-            Project = provider.CreateProject(source);
+            if (string.IsNullOrEmpty(source))
+                return;
+
+            Project = provider.GenerateProject(source);
             cboProviders.IsEnabled = false;
 
             FillCboFilterNamespace();
@@ -141,7 +141,17 @@ namespace OzzCodeGen.Wpf.Dialogs
 
         private void cboFilterNamspace_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged(string propertyName)
+        {
+            if (!string.IsNullOrEmpty(propertyName) && PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

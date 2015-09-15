@@ -11,7 +11,6 @@ namespace OzzLocalization.Wpf.ViewModels
 {
     public class VocabularyEditorVM : AbstractViewModel
     {
-
         public AppSettings AppSettings
         {
             set
@@ -69,16 +68,91 @@ namespace OzzLocalization.Wpf.ViewModels
 
         public void SetSelectedVocabulary()
         {
-            var vocabs = Vocabularies.GetVocabulary(SelectedCultureCode);
+            if (Vocabularies == null)
+                return;
+            IEnumerable<Vocab> vocabs = Vocabularies.GetVocabulary(SelectedCultureCode);
+
             if (vocabs == null)
             {
                 SelectedVocabulary = null;
                 return;
             }
-            //TODO: Filtre vs.
-            //.Where(v=>v.IsTranslated()==false)
-            SelectedVocabulary = vocabs != null ? new ObservableCollection<Vocab>(vocabs) : null;
+
+            if (FilterUntranslatedOnly)
+            {
+                vocabs = vocabs.Where(v => v.IsTranslated == false);
+            }
+            if (!string.IsNullOrEmpty(FilterByName))
+            {
+                vocabs = vocabs.Where(v => v.Name.ToLower().Contains(FilterByName.ToLower()));
+            }
+            if (!string.IsNullOrEmpty(FilterByTranslation))
+            {
+                vocabs = vocabs.Where(v => v.Translation.ToLower().Contains(FilterByTranslation.ToLower()));
+            }
+            if (!string.IsNullOrEmpty(FilterByAnyString))
+            {
+                vocabs = vocabs.Where(v => v.Name.ToLower().Contains(FilterByAnyString.ToLower()) ||
+                                           v.Translation.ToLower().Contains(FilterByAnyString.ToLower()) ||
+                                           (v.ToolTip!=null && v.ToolTip.ToLower().Contains(FilterByAnyString.ToLower())) ||
+                                           (v.RequiredMsg != null && v.RequiredMsg.ToLower().Contains(FilterByAnyString.ToLower())) ||
+                                           (v.ValidationMsg != null && v.ValidationMsg.ToLower().Contains(FilterByAnyString.ToLower())));
+            }
+
+            SelectedVocabulary = new ObservableCollection<Vocab>(vocabs);
         }
+
+        //public bool UntranslatedOnly
+
+        public bool FilterUntranslatedOnly
+        {
+            set
+            {
+                _filterUntranslatedOnly = value;
+                SetSelectedVocabulary();
+                RaisePropertyChanged("FilterUntranslatedOnly");
+            }
+            get { return _filterUntranslatedOnly; }
+        }
+        private bool _filterUntranslatedOnly;
+
+
+        public string FilterByAnyString
+        {
+            set
+            {
+                _filterByAnyString = value;
+                SetSelectedVocabulary();
+                RaisePropertyChanged("FilterByAnyString");
+            }
+            get { return _filterByAnyString; }
+        }
+        private string _filterByAnyString;
+
+        public string FilterByName
+        {
+            set
+            {
+                _filterName = value;
+                SetSelectedVocabulary();
+                RaisePropertyChanged("FilterByName");
+            }
+            get { return _filterName; }
+        }
+        private string _filterName;
+
+        public string FilterByTranslation
+        {
+            set
+            {
+                _filterByTranslation = value;
+                SetSelectedVocabulary();
+                RaisePropertyChanged("FilterByTranslation");
+            }
+            get { return _filterByTranslation; }
+        }
+        private string _filterByTranslation;
+
 
         public Vocabularies Vocabularies
         {
@@ -133,6 +207,19 @@ namespace OzzLocalization.Wpf.ViewModels
         }
         private string _selectedCultureCode;
 
+        public void CombineVocabularies()
+        {
+            var combinedVocabulary = Vocabularies.GetCombinedVocabulary();
+            foreach (var dict in Vocabularies)
+            {
+                var v = dict.Value;
+                foreach (var item in combinedVocabulary)
+                {
+                    v.AddUnique(item);
+                }
+                v.OrderByName();
+            }
+        }
 
         public void OpenSelectedProject()
         {
@@ -143,7 +230,12 @@ namespace OzzLocalization.Wpf.ViewModels
             {
                 Vocabularies = Vocabularies.OpenVocabularies(SelectedProject.FullPath);
                 CultureCodes = Vocabularies.GetCultureCodes();
-                SelectedCultureCode = CultureCodes.FirstOrDefault();
+                var firstCulture = CultureCodes
+                        .Where(c => c.Equals(Vocabularies.NotrCode) == false)
+                        .FirstOrDefault();
+                SelectedCultureCode = string.IsNullOrEmpty(firstCulture) ? 
+                            CultureCodes.FirstOrDefault() :
+                            firstCulture;
             }
             else
             {
@@ -160,6 +252,7 @@ namespace OzzLocalization.Wpf.ViewModels
                     AppSettings.RecentProjects = recentProjects;
                 }
             }
+            SetSelectedVocabulary();
         }
 
     }

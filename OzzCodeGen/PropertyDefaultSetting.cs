@@ -64,7 +64,7 @@ namespace OzzCodeGen
             {
                 if (string.IsNullOrEmpty(displayName))
                 {
-                    displayName = Name.ToTitleCase();
+                    displayName = Name.PascalCaseToTitleCase();
                 }
                 return displayName;
             }

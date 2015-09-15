@@ -18,8 +18,6 @@ namespace OzzCodeGen.CodeEngines
         public abstract string ProjectTypeName { get; }
         public abstract string GetDefaultFileName();
 
-        public Guid ProjectId { get; set; }
-
         [XmlIgnore]
         public CodeGenProject Project
         {
@@ -33,7 +31,6 @@ namespace OzzCodeGen.CodeEngines
                 _project = value;
                 if (_project != null)
                 {
-                    ProjectId = Project.ProjectId;
                     _project.PropertyChanged += Project_PropertyChanged;
                     RefreshFromProject(true);
                 }

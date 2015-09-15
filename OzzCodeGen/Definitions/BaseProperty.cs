@@ -32,7 +32,7 @@ namespace OzzCodeGen.Definitions
                 name = value;
                 if (string.IsNullOrEmpty(DisplayName))
                 {
-                    DisplayName = name.ToTitleCase();
+                    DisplayName = name.PascalCaseToTitleCase();
                 }
                 RaisePropertyChanged("Name");
             }
@@ -77,7 +77,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (string.IsNullOrEmpty(displayName))
                 {
-                    displayName = Name.ToTitleCase();
+                    displayName = Name.PascalCaseToTitleCase();
                 }
                 return displayName;
             }

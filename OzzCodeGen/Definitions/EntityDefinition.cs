@@ -27,17 +27,19 @@ namespace OzzCodeGen.Definitions
         /// </summary>
         public string Name
         {
-            get { return name; }
             set
             {
-                if (name == value) return;
+                if (name == value)
+                    return;
+
+                bool isDefaultDisplayName = DisplayName.Equals(name.PascalCaseToTitleCase());
                 name = value;
-                if (string.IsNullOrEmpty(displayName))
-                {
-                    DisplayName = name.ToTitleCase();
-                }
+                if (isDefaultDisplayName)
+                    DisplayName = name.PascalCaseToTitleCase();
+
                 RaisePropertyChanged("Name");
             }
+            get { return name; }
         }
         private string name;
 
@@ -149,7 +151,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (string.IsNullOrEmpty(displayName))
                 {
-                    displayName = Name.ToTitleCase();
+                    displayName = Name.PascalCaseToTitleCase();
                 }
                 return displayName;
             }

@@ -25,17 +25,6 @@ namespace OzzCodeGen
             _codeEngines = new List<BaseCodeEngine>();
         }
 
-        public Guid ProjectId
-        {
-            set { _projectId = value; }
-            get
-            {
-                if (!_projectId.HasValue) _projectId = Guid.NewGuid();
-                return _projectId.Value;
-            }
-        }
-        Guid? _projectId;
-
         public string Name { get; set; }
 
         public string NamespaceName
@@ -99,7 +88,7 @@ namespace OzzCodeGen
         {
             get
             {
-                if(string.IsNullOrEmpty(TargetFolder))
+                if(string.IsNullOrEmpty(TargetFolder) || string.IsNullOrEmpty(SavedFileName))
                 {
                     return string.Empty;
                 }
@@ -265,57 +254,12 @@ namespace OzzCodeGen
         }
         private BaseCodeEngine _currentCodeEngine;
 
-
-        [XmlIgnore]
-        public PropertyDefaultSettingList DefaultPropertySettings
-        {
-            get
-            {
-                if (_defaultPropertySettings == null) _defaultPropertySettings = new PropertyDefaultSettingList();
-                return _defaultPropertySettings;
-            }
-            set
-            {
-                _defaultPropertySettings = value;
-                RaisePropertyChanged("DefaultPropertySettings");
-            }
-        }
-        PropertyDefaultSettingList _defaultPropertySettings;
-
-        [XmlIgnore]
-        public string DefaultPropertySettingsFile
-        {
-            get
-            {
-                return Path.Combine(Path.GetDirectoryName(SavedFileName), "DefaultProperties.xml");
-            }
-        }
-
-        public bool AddToDefaultProperties(BaseProperty p)
-        {
-            if (DefaultPropertySettings.FirstOrDefault(dp => dp.Name == p.Name) != null) return false;
-            var defaultProp = p.GetDefaultSetting();
-            DefaultPropertySettings.Add(defaultProp);
-            RaisePropertyChanged("DefaultPropertySettings");
-            return true;
-        }
-
         public bool ApplyDisplayNameToOthers(BaseProperty property)
         {
             foreach (var entity in DataModel)
             {
                 var found = entity.Properties.FirstOrDefault(p => p.Name == property.Name);
                 if (found != null && found != property) found.DisplayName = property.DisplayName;
-            }
-            return true;
-        }
-
-        public bool ApplyToAllProperties(PropertyDefaultSetting setting)
-        {
-            foreach (var entity in DataModel)
-            {
-                var property = entity.Properties.FirstOrDefault(p => p.Name == setting.Name);
-                if (property != null) property.ApplySetting(setting);
             }
             return true;
         }
@@ -362,12 +306,12 @@ namespace OzzCodeGen
             base.SaveToFile(FileName);
             SaveBoundFiles();
             HasProjectChanges = false;
+            RaisePropertyChanged("TargetSolutionDir");
+            RaisePropertyChanged("TargetFolder");
         }
 
         protected void SaveBoundFiles()
         {
-            DefaultPropertySettings.SaveToFile(DefaultPropertySettingsFile);
-
             foreach (var engine in _codeEngines)
             {
                 engine.SaveToFile();
@@ -376,8 +320,6 @@ namespace OzzCodeGen
 
         public void LoadBoundFiles()
         {
-            DefaultPropertySettings = PropertyDefaultSettingList.OpenFile(DefaultPropertySettingsFile);
-
             string dir = Path.GetDirectoryName(SavedFileName);
             foreach (string targetId in CodeEngineList)
             {

@@ -222,12 +222,6 @@
                                     <DataGridCheckBoxColumn Binding="{Binding IsStoreGenerated}" Header="Store Generated" Width="40"/>
                                     <DataGridTextColumn Binding="{Binding DefinitionType}" Header="Def. Type" Width="60" IsReadOnly="True"/>
                                 </DataGrid.Columns>
-                                <DataGrid.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem x:Name="mnuAddToDefaultProperties"  Header="Add to DefaultProperties" Click="mnuAddToDefaultProperties_Click"/>
-                                        <MenuItem x:Name="mnuCopyDisplayNameToOthers"  Header="Copy Display Name to other entities" Click="mnuCopyDisplayNameToOthers_Click"/>
-                                    </ContextMenu>
-                                </DataGrid.ContextMenu>
                             </DataGrid>
                         </StackPanel>
 

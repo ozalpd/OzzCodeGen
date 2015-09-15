@@ -17,7 +17,7 @@ namespace OzzCodeGen.Providers
         /// <returns>Generated DataModel instance</returns>
         DataModel GetDataModel(string modelSource);
         EntityDefinition GetDefaultEntityDefinition();
-        CodeGenProject CreateProject(string modelSource);
+        CodeGenProject GenerateProject(string modelSource);
         CodeGenProject Project { get; set; }
 
         /// <summary>

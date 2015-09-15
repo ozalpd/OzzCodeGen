@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OzzLocalization
 {
@@ -50,6 +47,28 @@ namespace OzzLocalization
                 codes.Add(item.Key);
             }
             return codes;
+        }
+
+        public void DuplicateVocabularies(string targetFolder)
+        {
+            foreach(var item in this)
+            {
+                var v = item.Value;
+                v.SaveToFile(Path.Combine(targetFolder, Path.GetFileName(v.FilePath)));
+            }
+        }
+
+        public Vocabulary GetCombinedVocabulary()
+        {
+            var combined = new Vocabulary(Vocabularies.NotrCode);
+            foreach (var dict in this)
+            {
+                foreach (var item in dict.Value)
+                {
+                    combined.AddUnique(new Vocab() { Name = item.Name });
+                }
+            }
+            return combined;
         }
 
         public void SaveVocabularies()

@@ -147,6 +147,7 @@ namespace OzzCodeGen.Wpf
             GenerateModel modelGenDlg = new GenerateModel();
             modelGenDlg.ModelProviders = GetModelProviders();
             modelGenDlg.Owner = this;
+            modelGenDlg.DefaultsFolder = GetDefaultsFolder();
             if (modelGenDlg.ShowDialog() ?? false)
             {
                 Project = modelGenDlg.Project;
@@ -163,6 +164,23 @@ namespace OzzCodeGen.Wpf
             }
         }
 
+
+
+        private string GetDefaultsFolder()
+        {
+            if (string.IsNullOrEmpty(Settings.DefaultsFolder)
+                || !Directory.Exists(Settings.DefaultsFolder))
+            {
+                var openDlg = new OpenFileDialog();
+                openDlg.Filter = "DefaultEmptyProvider project file|" + EmptyModel.ProjectTemplateFile;
+                if (openDlg.ShowDialog(this) ?? false)
+                {
+                    Settings.DefaultsFolder = Path.GetDirectoryName(openDlg.FileName);
+                }
+            }
+
+            return Settings.DefaultsFolder;
+        }
 
         protected List<IModelProvider> GetModelProviders()
         {
@@ -448,53 +466,14 @@ namespace OzzCodeGen.Wpf
             }
         }
 
-        private void mnuAddToDefaultProperties_Click(object sender, RoutedEventArgs e)
-        {
-            BaseProperty selected = GetSelectedProperty();
-            if (selected != null)
-            {
-                if (Project.AddToDefaultProperties(selected))
-                    MessageBox.Show("Property has just been added to Default Properties.", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
-                else
-                    MessageBox.Show("Settings has not been added to Default Properties!", "Fail!", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-
-        private void mnuApplyToAllProperties_Click(object sender, RoutedEventArgs e)
-        {
-            PropertyDefaultSetting setting = null;
-
-            if (setting != null)
-            {
-                if (Project.ApplyToAllProperties(setting))
-                    MessageBox.Show("Settings has just been applied to all entities.", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
-                else
-                    MessageBox.Show("Settings has not been applied!", "Fail!", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else
-                MessageBox.Show("No selected settings found!", "No Settings!", MessageBoxButton.OK, MessageBoxImage.Warning);
-        }
-
-        private void mnuCopyDisplayNameToOthers_Click(object sender, RoutedEventArgs e)
-        {
-            BaseProperty selected = GetSelectedProperty();
-            if (selected != null)
-            {
-                if (Project.ApplyDisplayNameToOthers(selected))
-                    MessageBox.Show("DisplayName has just been set to other properties.", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
-                else
-                    MessageBox.Show("Operation failed!", "Fail!", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-
-        }
-
         private NewEntity GetNewEntityDialog()
         {
             var dlg = new NewEntity();
             dlg.EntityDefinition = new EntityDefinition()
             {
                 Name = "Untitled",
-                NamespaceName = Project.NamespaceName
+                NamespaceName = Project.NamespaceName,
+                DisplayOrder = Project.DataModel.Count
             };
             dlg.Closed += NewEntityDialog_Closed;
             dlg.Owner = this;

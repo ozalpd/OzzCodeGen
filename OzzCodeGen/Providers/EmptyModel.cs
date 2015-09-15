@@ -25,7 +25,7 @@ namespace OzzCodeGen.Providers
             return ModelDialog.GetDataModel();
         }
 
-        public CodeGenProject CreateProject(string modelSource)
+        public CodeGenProject GenerateProject(string modelSource)
         {
             var project = ModelDialog.GetProject();
             project.ModelProvider = this;
@@ -62,7 +62,7 @@ namespace OzzCodeGen.Providers
         public string SelectSource()
         {
             var result = ModelDialog.ShowDialog();
-            if(result == System.Windows.Forms.DialogResult.OK)
+            if (result == System.Windows.Forms.DialogResult.OK)
             {
                 return ModelDialog.ModelSource;
             }
@@ -72,6 +72,8 @@ namespace OzzCodeGen.Providers
             }
         }
 
+        public string DefaultsFolder { get; set; }
+        public static string ProjectTemplateFile = "DefaultEmptyProvider.OzzGen";
 
         public EntityDefinition GetDefaultEntityDefinition()
         {

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeGenProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>DefaultProject</Name>
+  <NamespaceName>DefaultProject</NamespaceName>
+  <ModelProviderId>Model_Provider_Empty</ModelProviderId>
+  <TargetFolder>..\Generated Codes</TargetFolder>
+  <ModelSource>EmptyModel</ModelSource>
+  <EntityTrackEnum>EntityType</EntityTrackEnum>
+  <EnumDefinitions />
+  <DataModel>
+    <EntityDefinition>
+      <Name>IPrimaryKey</Name>
+      <EntitySource />
+      <Comment>For defining the PrimaryKey of entities</Comment>
+      <NamespaceName>DefaultProject</NamespaceName>
+      <DisplayOrder>1</DisplayOrder>
+      <Abstract>true</Abstract>
+      <LetDownloadAll>false</LetDownloadAll>
+      <DisplayName>IPrimaryKey</DisplayName>
+      <DisplayMember>Id</DisplayMember>
+      <Properties>
+        <BaseProperty xsi:type="SimpleProperty">
+          <Name>Id</Name>
+          <Comment>PrimaryKey field</Comment>
+          <DisplayOrder>1</DisplayOrder>
+          <DisplayName>Id</DisplayName>
+          <Editable>false</Editable>
+          <TypeName>int</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>true</IsStoreGenerated>
+          <UiVisible>false</UiVisible>
+          <IsKey>true</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+        </BaseProperty>
+      </Properties>
+    </EntityDefinition>
+    <EntityDefinition>
+      <Name>IModified</Name>
+      <EntitySource />
+      <Comment>Keeps who did modify for each entity</Comment>
+      <NamespaceName>DefaultProject</NamespaceName>
+      <DisplayOrder>2</DisplayOrder>
+      <Abstract>true</Abstract>
+      <LetDownloadAll>false</LetDownloadAll>
+      <DisplayName>IModified</DisplayName>
+      <DisplayMember>ModifierId</DisplayMember>
+      <BaseTypeName>ICreated</BaseTypeName>
+      <Properties>
+        <BaseProperty xsi:type="SimpleProperty">
+          <Name>ModifyNr</Name>
+          <Comment>Database record's modify number</Comment>
+          <DisplayOrder>10101</DisplayOrder>
+          <DisplayName>Modify Nr</DisplayName>
+          <Editable>false</Editable>
+          <TypeName>int</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>true</IsStoreGenerated>
+          <UiVisible>false</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+        </BaseProperty>
+        <BaseProperty xsi:type="SimpleProperty">
+          <Name>ModifyDate</Name>
+          <Comment>Database record's modify date</Comment>
+          <DisplayOrder>10102</DisplayOrder>
+          <DisplayName>Modify Date</DisplayName>
+          <Editable>false</Editable>
+          <TypeName>DateTime</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>true</IsStoreGenerated>
+          <UiVisible>false</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+        </BaseProperty>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>ModifierId</Name>
+          <DisplayOrder>10103</DisplayOrder>
+          <DisplayName>Modified User</DisplayName>
+          <Editable>false</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>true</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>false</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+          <MaxLenght>48</MaxLenght>
+        </BaseProperty>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>ModifierIp</Name>
+          <DisplayOrder>10104</DisplayOrder>
+          <DisplayName>Modifier Ip</DisplayName>
+          <Editable>false</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>true</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>false</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+          <MaxLenght>48</MaxLenght>
+        </BaseProperty>
+      </Properties>
+    </EntityDefinition>
+    <EntityDefinition>
+      <Name>ICreated</Name>
+      <EntitySource />
+      <Comment>Keeps who did create for each entity</Comment>
+      <NamespaceName>DefaultProject</NamespaceName>
+      <DisplayOrder>3</DisplayOrder>
+      <Abstract>true</Abstract>
+      <LetDownloadAll>false</LetDownloadAll>
+      <DisplayName>ICreated</DisplayName>
+      <DisplayMember>CreatorId</DisplayMember>
+      <BaseTypeName>IPrimaryKey</BaseTypeName>
+      <Properties>
+        <BaseProperty xsi:type="SimpleProperty">
+          <Name>CreateDate</Name>
+          <DisplayOrder>10111</DisplayOrder>
+          <DisplayName>Create Date</DisplayName>
+          <Editable>false</Editable>
+          <TypeName>DateTime</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>true</IsStoreGenerated>
+          <UiVisible>false</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+        </BaseProperty>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>CreatorId</Name>
+          <DisplayOrder>10112</DisplayOrder>
+          <DisplayName>Created User</DisplayName>
+          <Editable>false</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>true</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>false</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+          <MaxLenght>48</MaxLenght>
+        </BaseProperty>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>CreatorIp</Name>
+          <DisplayOrder>10113</DisplayOrder>
+          <DisplayName>Creator Ip</DisplayName>
+          <Editable>false</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>true</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>false</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+          <MaxLenght>48</MaxLenght>
+        </BaseProperty>
+      </Properties>
+    </EntityDefinition>
+    <EntityDefinition>
+      <Name>UntitledEntity</Name>
+      <EntitySource />
+      <NamespaceName>DefaultProject</NamespaceName>
+      <DisplayOrder>3</DisplayOrder>
+      <Abstract>false</Abstract>
+      <LetDownloadAll>false</LetDownloadAll>
+      <DisplayName>Untitled Entity</DisplayName>
+      <DisplayMember>Title</DisplayMember>
+      <BaseTypeName>IModified</BaseTypeName>
+      <Properties>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>Title</Name>
+          <DisplayOrder>101</DisplayOrder>
+          <DisplayName>Title</DisplayName>
+          <Editable>true</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>true</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+          <MaxLenght>128</MaxLenght>
+        </BaseProperty>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>Code</Name>
+          <DisplayOrder>102</DisplayOrder>
+          <DisplayName>Code</DisplayName>
+          <Editable>true</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>true</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>true</IsNullable>
+          <MaxLenght>48</MaxLenght>
+        </BaseProperty>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>Description</Name>
+          <DisplayOrder>103</DisplayOrder>
+          <DisplayName>Description</DisplayName>
+          <Editable>true</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>true</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>true</IsNullable>
+          <MaxLenght>256</MaxLenght>
+        </BaseProperty>
+      </Properties>
+    </EntityDefinition>
+  </DataModel>
+  <StripSourcePrefixes>false</StripSourcePrefixes>
+  <SourceClassPrefix />
+  <CodeEngineList>
+    <string>Localization_Resource_Generator</string>
+  </CodeEngineList>
+</CodeGenProject>

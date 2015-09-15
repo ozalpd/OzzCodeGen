@@ -2,6 +2,7 @@
 using System.Windows;
 using OzzCodeGen.UI;
 using OzzLocalization;
+using System.Collections.Generic;
 
 namespace OzzCodeGen.CodeEngines.Localization.UI
 {
@@ -36,12 +37,19 @@ namespace OzzCodeGen.CodeEngines.Localization.UI
         private void btnRefreshVocabulary_Click(object sender, RoutedEventArgs e)
         {
             var engine = (ResxEngine)CodeEngine;
-            var combinedEntity = engine.CombineEntities();
             var vocabularies = Vocabularies.OpenVocabularies(engine.VocabularyDir);
+            var combinedVocabulary = vocabularies.GetCombinedVocabulary();
+
+            var combinedEntity = engine.CombineEntities();
+            foreach (var item in combinedEntity.Properties)
+            {
+                combinedVocabulary.AddUnique(new Vocab() { Name = item.Name });
+            }
+
             foreach (var dict in vocabularies)
             {
                 var vocabulary = dict.Value;
-                foreach (var item in combinedEntity.Properties)
+                foreach (var item in combinedVocabulary)
                 {
                     vocabulary.AddUnique(new Vocab() { Name = item.Name });
                 }

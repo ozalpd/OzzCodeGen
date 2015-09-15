@@ -15,6 +15,26 @@ namespace OzzCodeGen.CodeEngines.Localization
             get { return EntityDefinition.BaseTypeName; }
         }
 
+
+        public bool LocalizeEntityName
+        {
+            set
+            {
+                _localizeEntityName = value;
+                RaisePropertyChanged("LocalizeEntityName");
+            }
+            get
+            {
+                if (_localizeEntityName == null)
+                {
+                    _localizeEntityName = !this.EntityDefinition.Abstract;
+                }
+                return _localizeEntityName.Value;
+            }
+        }
+        private bool? _localizeEntityName;
+
+
         public List<LocalizationPropertySetting> Properties
         {
             get

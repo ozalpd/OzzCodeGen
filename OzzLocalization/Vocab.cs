@@ -5,15 +5,6 @@ namespace OzzLocalization
 {
     public class Vocab : AbstractViewModel
     {
-        public bool IsTranslated()
-        {
-            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Translation))
-            {
-                return false;
-            }
-            return !Translation.Equals(GetDefaultTranslation());
-        }
-
         public string Name
         {
             get { return _name; }
@@ -21,6 +12,7 @@ namespace OzzLocalization
             {
                 _name = value;
                 RaisePropertyChanged("Name");
+                RaisePropertyChanged("IsTranslated");
             }
         }
         string _name;
@@ -47,6 +39,18 @@ namespace OzzLocalization
         public string GetDefaultTranslation()
         {
             return Name.PascalCaseToTitleCase();
+        }
+
+        public bool IsTranslated
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Translation))
+                {
+                    return false;
+                }
+                return !Translation.Equals(GetDefaultTranslation());
+            }
         }
 
         public string RequiredMsg

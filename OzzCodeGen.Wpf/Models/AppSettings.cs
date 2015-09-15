@@ -1,16 +1,15 @@
-﻿using System;
+﻿using OzzUtils.Wpf;
+using OzzUtils.Wpf.Savables;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen.Wpf.Models
 {
     [Serializable()]
-    public class AppSettings : INotifyPropertyChanged
+    public class AppSettings : SavableViewModel
     {
 
         public WindowPosition MainWindowPosition
@@ -45,6 +44,18 @@ namespace OzzCodeGen.Wpf.Models
             }
         }
         private List<FileDefinition> _recentProjectFiles;
+
+
+        public string DefaultsFolder
+        {
+            set
+            {
+                _defaultsFolder = value;
+                RaisePropertyChanged("DefaultsFolder");
+            }
+            get { return _defaultsFolder; }
+        }
+        private string _defaultsFolder;
 
 
         public void AddToRecentFiles(string fileName)
@@ -84,24 +95,6 @@ namespace OzzCodeGen.Wpf.Models
             reader.Close();
 
             return settings;
-        }
-
-        public virtual void SaveToFile(string FileName)
-        {
-            StreamWriter writer = new StreamWriter(FileName);
-            XmlSerializer x = new XmlSerializer(this.GetType());
-            x.Serialize(writer, this);
-            writer.Close();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void RaisePropertyChanged(string propertyName)
-        {
-            if (!string.IsNullOrEmpty(propertyName) && PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
     }
 }

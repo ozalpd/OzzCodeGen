@@ -115,7 +115,6 @@
   <ItemGroup>
     <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\FileDefinition.cs" />
-    <Compile Include="Models\WindowPosition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

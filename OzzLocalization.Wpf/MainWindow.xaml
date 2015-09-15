@@ -15,7 +15,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="32" />
+            <RowDefinition Height="32" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="24" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <Button x:Name="btnNewProject" ToolTip="New Project" Click="btnNewProject_Click" Style="{StaticResource toolbarButtons}">
@@ -27,22 +29,42 @@
             <Button x:Name="btnSave" ToolTip="Save Project" Click="btnSave_Click" Style="{StaticResource toolbarButtons}"  >
                 <Image Source="Assets\saveHS.png" Stretch="None"/>
             </Button>
-            <Button x:Name="btnRefresh" ToolTip="Refresh"
+            <Button x:Name="btnRefresh" ToolTip="Combine Vocabularies"
 				Click="btnRefresh_Click"
 				Style="{StaticResource toolbarButtons}">
                 <Image Source="Assets\refresh_16.png" Stretch="None" />
             </Button>
-            <ComboBox ItemsSource="{Binding AppSettings.RecentProjects}"
-                      SelectedItem="{Binding SelectedProject}" 
-                      Width="150" Margin="4" HorizontalAlignment="Left" />
-            <TextBlock Text="Culture:" Margin="6,8,2,6"/>
+            <TextBlock Text="Select Culture:" Margin="6,8,2,6"/>
             <ComboBox ItemsSource="{Binding CultureCodes}"
                       SelectedItem="{Binding SelectedCultureCode}" 
                       Width="60" Margin="4" HorizontalAlignment="Left"
                       IsEnabled="{Binding CanSelectCultureCode}" />
         </StackPanel>
-        
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <ComboBox ItemsSource="{Binding AppSettings.RecentProjects}"
+                      SelectedItem="{Binding SelectedProject}" 
+                      Width="150" Margin="4" HorizontalAlignment="Left" />
+            <Button Name="btnFilter" Content="Filter" Margin="6,4,2,4" Width="60" Click="btnFilter_Click"/>
+            <TextBlock Text="By Text:" Margin="6,8,2,6"/>
+            <TextBox Text="{Binding FilterByAnyString}" Margin="6,4,2,4" Width="80"/>
+            <!--
+            <TextBlock Text="By Name:" Margin="6,8,2,6"/>
+            <TextBox Text="{Binding FilterByName}" Margin="6,4,2,4" Width="80"/>
+            <TextBlock Text="By Translation:" Margin="6,8,2,6"/>
+            <TextBox Text="{Binding FilterByTranslation}" Margin="6,4,2,4" Width="80"/>
+            -->
+            <CheckBox IsChecked="{Binding FilterUntranslatedOnly}"
+                      Content="Untranslateds Only" Margin="6,8,2,6"/>
+        </StackPanel>
+
         <DataGrid ItemsSource="{Binding SelectedVocabulary}"
-                  AutoGenerateColumns="True" Grid.Row="2"/>
+                  AutoGenerateColumns="True"
+                  Grid.Row="2"/>
+        
+        <StatusBar Grid.Row="3">
+            <TextBlock Text="{Binding SelectedVocabulary.Count, Mode=OneWay, StringFormat=Vocabs: \{0\}}"
+                       Width="64"
+                       Margin="4,0"/>
+        </StatusBar>
     </Grid>
 </Window>

@@ -268,7 +268,9 @@ namespace OzzCodeGen.CodeEngines.Localization
                 }
             }
             var entityNames = new List<string>();
-            foreach (LocalizationEntitySetting entity in EntitySettings.Where(e => e.Exclude == false))
+            foreach (LocalizationEntitySetting entity in
+                EntitySettings.Where(e => e.Exclude == false &&
+                ((LocalizationEntitySetting)e).LocalizeEntityName))
             {
                 entityNames.Add(entity.Name);
                 entityNames.Add(string.Format("Create{0}", entity.Name));
@@ -324,6 +326,23 @@ namespace OzzCodeGen.CodeEngines.Localization
         {
             throw new NotImplementedException();
         }
+
+        public override void SaveToFile()
+        {
+            base.SaveToFile();
+            if (SaveWithVocabularies)
+            {
+                Vocabularies.DuplicateVocabularies(VocabularyDir);
+            }
+        }
+
+        public override void SaveToFile(string fileName)
+        {
+            base.SaveToFile(fileName);
+        }
+
+        [XmlIgnore]
+        public bool SaveWithVocabularies { get; set; }
 
         [XmlIgnore]
         public Vocabularies Vocabularies

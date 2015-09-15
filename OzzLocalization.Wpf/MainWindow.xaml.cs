@@ -3,20 +3,8 @@ using OzzLocalization.Wpf.Dialogs;
 using OzzLocalization.Wpf.Models;
 using OzzLocalization.Wpf.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace OzzLocalization.Wpf
 {
@@ -35,9 +23,7 @@ namespace OzzLocalization.Wpf
         {
             ViewModel.AppSettings = Settings;
 
-            //Not implemented yet
-            btnNewProject.IsEnabled = false;
-            btnRefresh.IsEnabled = false;//Is this button really neccessary?
+            btnNewProject.IsEnabled = false;//Is this button really neccessary?
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -85,7 +71,13 @@ namespace OzzLocalization.Wpf
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
+            ViewModel.CombineVocabularies();
+            ViewModel.SetSelectedVocabulary();
+        }
 
+        private void btnFilter_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SetSelectedVocabulary();
         }
     }
 }

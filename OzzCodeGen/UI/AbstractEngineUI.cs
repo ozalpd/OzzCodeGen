@@ -98,7 +98,7 @@ namespace OzzCodeGen.UI
                 if (ColumnWidths.ContainsKey(c.Header.ToString()))
                     c.Width = ColumnWidths[c.Header.ToString()];
 
-                c.Header = c.Header.ToString().ToTitleCase();
+                c.Header = c.Header.ToString().PascalCaseToTitleCase();
             }
             int i = 0;
             DataGridTools.ReorderDataGridColumn(dataGrid, "Name", i);
