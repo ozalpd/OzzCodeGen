@@ -47,15 +47,17 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
             #line 12 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
  
 int i = 0;
-var beforeScripts = CodeEngine.BeforeScripts.Split(';');
-var afterScripts = CodeEngine.AfterScripts.Split(';');
-foreach (var script in beforeScripts)
+if(!string.IsNullOrEmpty(CodeEngine.BeforeScripts))
 {
-	if(!string.IsNullOrWhiteSpace(script))
-    {
-		i++;
-		WriteExecutingFile(script, i);
-    }
+	var beforeScripts = CodeEngine.BeforeScripts.Split(';');
+	foreach (var script in beforeScripts)
+	{
+		if(!string.IsNullOrWhiteSpace(script))
+		{
+			i++;
+			WriteExecutingFile(script, i);
+		}
+	}
 }
 var tables = CodeEngine.GetCreateTableList();
 foreach (var table in tables.Where(e => !e.Exclude))
@@ -80,14 +82,17 @@ foreach (var table in tables.Where(e => !e.Exclude))
 }
 i++;
 WriteExecutingFile("_FinishingSetup.sql", i);
-
-foreach (var script in afterScripts)
+if(!string.IsNullOrEmpty(CodeEngine.AfterScripts))
 {
-	if(!string.IsNullOrWhiteSpace(script))
-    {
-		i++;
-		WriteExecutingFile(script, i);
-    }
+	var afterScripts = CodeEngine.AfterScripts.Split(';');
+	foreach (var script in afterScripts)
+	{
+		if(!string.IsNullOrWhiteSpace(script))
+		{
+			i++;
+			WriteExecutingFile(script, i);
+		}
+	}
 }
  
             
@@ -96,14 +101,14 @@ foreach (var script in afterScripts)
             this.Write("\r\n@echo .\r\n@echo * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * " +
                     "* * * * * * * *\r\n@echo *\r\n@echo * Create scripts for database ");
             
-            #line 61 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+            #line 66 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.DatabaseName));
             
             #line default
             #line hidden
             this.Write(" executed on Server ");
             
-            #line 61 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+            #line 66 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.DatabaseServer));
             
             #line default
@@ -114,7 +119,7 @@ foreach (var script in afterScripts)
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 68 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 73 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
  
 void WriteExecutingFile(string fileName, int counter = 0)
 {
@@ -124,42 +129,42 @@ void WriteExecutingFile(string fileName, int counter = 0)
         #line default
         #line hidden
         
-        #line 72 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 77 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write("\r\n@echo .\r\n@echo .\r\n@echo ");
 
         
         #line default
         #line hidden
         
-        #line 76 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 81 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(counter));
 
         
         #line default
         #line hidden
         
-        #line 76 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 81 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write(" - Executing ");
 
         
         #line default
         #line hidden
         
-        #line 76 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 81 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fileName));
 
         
         #line default
         #line hidden
         
-        #line 76 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 81 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write("...\r\n");
 
         
         #line default
         #line hidden
         
-        #line 77 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 82 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
  }
 	if(fileName.EndsWith(".bat"))
     {
@@ -167,28 +172,28 @@ this.Write("...\r\n");
         #line default
         #line hidden
         
-        #line 79 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 84 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write("@call ");
 
         
         #line default
         #line hidden
         
-        #line 80 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 85 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fileName));
 
         
         #line default
         #line hidden
         
-        #line 80 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 85 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write("\r\n");
 
         
         #line default
         #line hidden
         
-        #line 81 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 86 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
  }
 	else if(fileName.EndsWith(".sql"))
     {
@@ -196,56 +201,56 @@ this.Write("\r\n");
         #line default
         #line hidden
         
-        #line 83 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 88 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write("@sqlcmd -S ");
 
         
         #line default
         #line hidden
         
-        #line 84 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 89 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.DatabaseServer));
 
         
         #line default
         #line hidden
         
-        #line 84 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 89 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write(" -d ");
 
         
         #line default
         #line hidden
         
-        #line 84 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 89 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.DatabaseName));
 
         
         #line default
         #line hidden
         
-        #line 84 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 89 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write(" -E -i ");
 
         
         #line default
         #line hidden
         
-        #line 84 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 89 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fileName));
 
         
         #line default
         #line hidden
         
-        #line 84 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 89 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write("\r\n");
 
         
         #line default
         #line hidden
         
-        #line 85 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 90 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
  }
 	else
     {
@@ -253,28 +258,28 @@ this.Write("\r\n");
         #line default
         #line hidden
         
-        #line 87 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 92 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write("@");
 
         
         #line default
         #line hidden
         
-        #line 88 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 93 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fileName));
 
         
         #line default
         #line hidden
         
-        #line 88 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 93 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
 this.Write("\r\n");
 
         
         #line default
         #line hidden
         
-        #line 89 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
+        #line 94 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
  }
 }
  

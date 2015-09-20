@@ -11,15 +11,17 @@
 
 <# 
 int i = 0;
-var beforeScripts = CodeEngine.BeforeScripts.Split(';');
-var afterScripts = CodeEngine.AfterScripts.Split(';');
-foreach (var script in beforeScripts)
+if(!string.IsNullOrEmpty(CodeEngine.BeforeScripts))
 {
-	if(!string.IsNullOrWhiteSpace(script))
-    {
-		i++;
-		WriteExecutingFile(script, i);
-    }
+	var beforeScripts = CodeEngine.BeforeScripts.Split(';');
+	foreach (var script in beforeScripts)
+	{
+		if(!string.IsNullOrWhiteSpace(script))
+		{
+			i++;
+			WriteExecutingFile(script, i);
+		}
+	}
 }
 var tables = CodeEngine.GetCreateTableList();
 foreach (var table in tables.Where(e => !e.Exclude))
@@ -44,14 +46,17 @@ foreach (var table in tables.Where(e => !e.Exclude))
 }
 i++;
 WriteExecutingFile("_FinishingSetup.sql", i);
-
-foreach (var script in afterScripts)
+if(!string.IsNullOrEmpty(CodeEngine.AfterScripts))
 {
-	if(!string.IsNullOrWhiteSpace(script))
-    {
-		i++;
-		WriteExecutingFile(script, i);
-    }
+	var afterScripts = CodeEngine.AfterScripts.Split(';');
+	foreach (var script in afterScripts)
+	{
+		if(!string.IsNullOrWhiteSpace(script))
+		{
+			i++;
+			WriteExecutingFile(script, i);
+		}
+	}
 }
  #>
 
