@@ -66,6 +66,21 @@ namespace OzzLocalization.Wpf.ViewModels
         }
         private ObservableCollection<Vocab> _selectedVocabulary;
 
+        public Vocab SelectedVocab
+        {
+            set
+            {
+                _selectedVocab = value;
+                RaisePropertyChanged("SelectedVocab");
+            }
+            get
+            {
+                return _selectedVocab;
+            }
+        }
+        private Vocab _selectedVocab;
+
+
         public void SetSelectedVocabulary()
         {
             if (Vocabularies == null)

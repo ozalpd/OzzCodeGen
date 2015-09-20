@@ -8,18 +8,27 @@
         mc:Ignorable="d"
         Title="Vocabulary Editor"
         Closing="Window_Closing"
-        Height="320" Width="800" Activated="Window_Activated">
+        Height="320" Width="800" MinWidth="640"
+        Activated="Window_Activated"
+        Icon="Assets/App-organizer.ico">
     <Window.DataContext>
         <ViewModels:VocabularyEditorVM/>
     </Window.DataContext>
+    <Window.Resources>
+        <ViewModels:BrushColorConverter x:Key="IsTranslatedConverter" ColorForTrueValue="White" ColorForFalseValue="#FFFFCACA"/>
+    </Window.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="320"/>
+            <ColumnDefinition Width="*" MinWidth="320"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="32" />
             <RowDefinition Height="32" />
             <RowDefinition Height="*" />
             <RowDefinition Height="24" />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
             <Button x:Name="btnNewProject" ToolTip="New Project" Click="btnNewProject_Click" Style="{StaticResource toolbarButtons}">
                 <Image Source="Assets\NewDocumentHS.png" Stretch="None"/>
             </Button>
@@ -40,10 +49,10 @@
                       Width="60" Margin="4" HorizontalAlignment="Left"
                       IsEnabled="{Binding CanSelectCultureCode}" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="1">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2">
             <ComboBox ItemsSource="{Binding AppSettings.RecentProjects}"
                       SelectedItem="{Binding SelectedProject}" 
-                      Width="150" Margin="4" HorizontalAlignment="Left" />
+                      Width="200" Margin="4,4,34,4" HorizontalAlignment="Left" />
             <Button Name="btnFilter" Content="Filter" Margin="6,4,2,4" Width="60" Click="btnFilter_Click"/>
             <TextBlock Text="By Text:" Margin="6,8,2,6"/>
             <TextBox Text="{Binding FilterByAnyString}" Margin="6,4,2,4" Width="80"/>
@@ -57,12 +66,56 @@
                       Content="Untranslateds Only" Margin="6,8,2,6"/>
         </StackPanel>
 
+        <!-- Left side -->
         <DataGrid ItemsSource="{Binding SelectedVocabulary}"
-                  AutoGenerateColumns="True"
-                  Grid.Row="2"/>
+                  SelectedItem="{Binding SelectedVocab}"
+                  AutoGenerateColumns="False" Grid.Row="2">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Name (Clause)" Width="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"
+                                       Background="{Binding IsTranslated, Converter={StaticResource IsTranslatedConverter}}"
+                                       Foreground="Black"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Translation" Width="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Translation}"
+                                       Background="{Binding IsTranslated, Converter={StaticResource IsTranslatedConverter}}"
+                                       Foreground="Black"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Translation}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding RequiredMsg}" Header="Required Message" Width="120"/>
+                <DataGridTextColumn Binding="{Binding ValidationMsg}" Header="Validation Message" Width="120"/>
+                <DataGridTextColumn Binding="{Binding ToolTip}" Header="ToolTip (Hint)" Width="120"/>
+
+                <DataGridCheckBoxColumn Binding="{Binding IsTranslated, Mode=OneWay}" Header="Translated" Width="40" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
         
-        <StatusBar Grid.Row="3">
+        
+        
+        <GridSplitter Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" ResizeDirection="Columns" Width="4" />
+        <!-- Right side-->
+        <Grid Grid.Column="1"  Grid.Row="2">
+            <!-- TODO: Edit Selected vocab here -->
+            <!-- TODO: Edit & See Other culture vocab here -->
+        </Grid>
+        <!-- Bottom -->
+        <StatusBar Grid.Row="3" Grid.ColumnSpan="2">
             <TextBlock Text="{Binding SelectedVocabulary.Count, Mode=OneWay, StringFormat=Vocabs: \{0\}}"
+                       Width="64"
+                       Margin="4,0"/>
+            <TextBlock Text="{Binding SelectedVocab.Name, Mode=OneWay}"
                        Width="64"
                        Margin="4,0"/>
         </StatusBar>

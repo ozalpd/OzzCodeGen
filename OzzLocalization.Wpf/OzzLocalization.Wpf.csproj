@@ -35,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Assets\App-organizer.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -59,6 +62,7 @@
     <Compile Include="Dialogs\SetProjectTitle.xaml.cs">
       <DependentUpon>SetProjectTitle.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\BrushColorConverter.cs" />
     <Compile Include="ViewModels\VocabularyEditorVM.cs" />
     <Page Include="Dialogs\SetProjectTitle.xaml">
       <SubType>Designer</SubType>
@@ -132,7 +136,9 @@
   <ItemGroup>
     <Resource Include="Assets\refresh_16.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\App-organizer.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -6,7 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Height="640" Width="1280" MinHeight="480" MinWidth="960"
         Title="Ozz Code Generator"
-        Loaded="Window_Loaded" Closing="window_Closing">
+        Loaded="Window_Loaded" Closing="window_Closing"
+        Icon="Assets/App-software.ico">
     <Window.Resources>
     </Window.Resources>
     <Grid DataContext="{Binding ElementName=window, Mode=OneWay}">
