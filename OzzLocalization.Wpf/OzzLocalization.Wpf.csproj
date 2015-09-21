@@ -62,7 +62,6 @@
     <Compile Include="Dialogs\SetProjectTitle.xaml.cs">
       <DependentUpon>SetProjectTitle.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\BrushColorConverter.cs" />
     <Compile Include="ViewModels\VocabularyEditorVM.cs" />
     <Page Include="Dialogs\SetProjectTitle.xaml">
       <SubType>Designer</SubType>
