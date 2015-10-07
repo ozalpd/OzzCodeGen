@@ -34,9 +34,8 @@
             this.txtProjectName = new System.Windows.Forms.TextBox();
             this.txtNamespace = new System.Windows.Forms.TextBox();
             this.lblNamespace = new System.Windows.Forms.Label();
-            this.chkCreateDefaultEntity = new System.Windows.Forms.CheckBox();
-            this.txtDefaultEntityName = new System.Windows.Forms.TextBox();
-            this.lblDefaultEntityName = new System.Windows.Forms.Label();
+            this.lblTemplate = new System.Windows.Forms.Label();
+            this.cboTemplates = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btnAccept
@@ -46,7 +45,7 @@
             this.btnAccept.Location = new System.Drawing.Point(180, 273);
             this.btnAccept.Name = "btnAccept";
             this.btnAccept.Size = new System.Drawing.Size(88, 28);
-            this.btnAccept.TabIndex = 11;
+            this.btnAccept.TabIndex = 3;
             this.btnAccept.Text = "OK";
             this.btnAccept.UseVisualStyleBackColor = true;
             // 
@@ -58,31 +57,31 @@
             this.btnCancel.Location = new System.Drawing.Point(281, 273);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(88, 28);
-            this.btnCancel.TabIndex = 12;
+            this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // lblProjectName
             // 
             this.lblProjectName.AutoSize = true;
-            this.lblProjectName.Location = new System.Drawing.Point(12, 24);
+            this.lblProjectName.Location = new System.Drawing.Point(12, 27);
             this.lblProjectName.Name = "lblProjectName";
             this.lblProjectName.Size = new System.Drawing.Size(74, 13);
-            this.lblProjectName.TabIndex = 2;
+            this.lblProjectName.TabIndex = 22;
             this.lblProjectName.Text = "Project Name:";
             // 
             // txtProjectName
             // 
-            this.txtProjectName.Location = new System.Drawing.Point(122, 21);
+            this.txtProjectName.Location = new System.Drawing.Point(122, 24);
             this.txtProjectName.Name = "txtProjectName";
             this.txtProjectName.Size = new System.Drawing.Size(247, 20);
             this.txtProjectName.TabIndex = 0;
-            this.txtProjectName.Text = "Untitled";
+            this.txtProjectName.Text = "NewProject";
             this.txtProjectName.Leave += new System.EventHandler(this.txtProjectName_Leave);
             // 
             // txtNamespace
             // 
-            this.txtNamespace.Location = new System.Drawing.Point(122, 47);
+            this.txtNamespace.Location = new System.Drawing.Point(122, 50);
             this.txtNamespace.Name = "txtNamespace";
             this.txtNamespace.Size = new System.Drawing.Size(247, 20);
             this.txtNamespace.TabIndex = 1;
@@ -90,40 +89,29 @@
             // lblNamespace
             // 
             this.lblNamespace.AutoSize = true;
-            this.lblNamespace.Location = new System.Drawing.Point(12, 50);
+            this.lblNamespace.Location = new System.Drawing.Point(12, 53);
             this.lblNamespace.Name = "lblNamespace";
             this.lblNamespace.Size = new System.Drawing.Size(103, 13);
-            this.lblNamespace.TabIndex = 4;
+            this.lblNamespace.TabIndex = 24;
             this.lblNamespace.Text = "Project Namespace:";
             // 
-            // chkCreateDefaultEntity
+            // lblTemplate
             // 
-            this.chkCreateDefaultEntity.AutoSize = true;
-            this.chkCreateDefaultEntity.Location = new System.Drawing.Point(122, 74);
-            this.chkCreateDefaultEntity.Name = "chkCreateDefaultEntity";
-            this.chkCreateDefaultEntity.Size = new System.Drawing.Size(123, 17);
-            this.chkCreateDefaultEntity.TabIndex = 2;
-            this.chkCreateDefaultEntity.Text = "Create Default Entity";
-            this.chkCreateDefaultEntity.UseVisualStyleBackColor = true;
-            this.chkCreateDefaultEntity.CheckedChanged += new System.EventHandler(this.chkCreateDefaultEntity_CheckedChanged);
+            this.lblTemplate.AutoSize = true;
+            this.lblTemplate.Location = new System.Drawing.Point(12, 95);
+            this.lblTemplate.Name = "lblTemplate";
+            this.lblTemplate.Size = new System.Drawing.Size(87, 13);
+            this.lblTemplate.TabIndex = 23;
+            this.lblTemplate.Text = "Select Template:";
             // 
-            // txtDefaultEntityName
+            // cboTemplates
             // 
-            this.txtDefaultEntityName.Enabled = false;
-            this.txtDefaultEntityName.Location = new System.Drawing.Point(122, 97);
-            this.txtDefaultEntityName.Name = "txtDefaultEntityName";
-            this.txtDefaultEntityName.Size = new System.Drawing.Size(247, 20);
-            this.txtDefaultEntityName.TabIndex = 3;
-            this.txtDefaultEntityName.Text = "AbstractEntity";
-            // 
-            // lblDefaultEntityName
-            // 
-            this.lblDefaultEntityName.AutoSize = true;
-            this.lblDefaultEntityName.Location = new System.Drawing.Point(12, 100);
-            this.lblDefaultEntityName.Name = "lblDefaultEntityName";
-            this.lblDefaultEntityName.Size = new System.Drawing.Size(104, 13);
-            this.lblDefaultEntityName.TabIndex = 15;
-            this.lblDefaultEntityName.Text = "Default Entity Name:";
+            this.cboTemplates.FormattingEnabled = true;
+            this.cboTemplates.Location = new System.Drawing.Point(122, 91);
+            this.cboTemplates.Name = "cboTemplates";
+            this.cboTemplates.Size = new System.Drawing.Size(247, 21);
+            this.cboTemplates.TabIndex = 2;
+            this.cboTemplates.SelectedIndexChanged += new System.EventHandler(this.cboTemplates_SelectedIndexChanged);
             // 
             // EmptyModelDialog
             // 
@@ -132,9 +120,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(381, 313);
-            this.Controls.Add(this.txtDefaultEntityName);
-            this.Controls.Add(this.lblDefaultEntityName);
-            this.Controls.Add(this.chkCreateDefaultEntity);
+            this.Controls.Add(this.cboTemplates);
+            this.Controls.Add(this.lblTemplate);
             this.Controls.Add(this.txtNamespace);
             this.Controls.Add(this.lblNamespace);
             this.Controls.Add(this.txtProjectName);
@@ -161,8 +148,7 @@
         private System.Windows.Forms.TextBox txtProjectName;
         private System.Windows.Forms.TextBox txtNamespace;
         private System.Windows.Forms.Label lblNamespace;
-        private System.Windows.Forms.CheckBox chkCreateDefaultEntity;
-        private System.Windows.Forms.TextBox txtDefaultEntityName;
-        private System.Windows.Forms.Label lblDefaultEntityName;
+        private System.Windows.Forms.Label lblTemplate;
+        private System.Windows.Forms.ComboBox cboTemplates;
     }
 }

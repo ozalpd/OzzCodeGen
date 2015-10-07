@@ -21,6 +21,18 @@
     <Translation>Her zaman</Translation>
   </Vocab>
   <Vocab>
+    <Name>ApproveDate</Name>
+    <Translation>Onay Tarihi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ApprovedUserId</Name>
+    <Translation>Onaylayan Kullanıcı</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ApprovedUserIp</Name>
+    <Translation>Onaylayanın IP</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Cancel</Name>
     <Translation>Vazgeç</Translation>
   </Vocab>
@@ -65,6 +77,26 @@
     <Translation>Komut</Translation>
   </Vocab>
   <Vocab>
+    <Name>Companies</Name>
+    <Translation>Şirketler</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CompaniesList</Name>
+    <Translation>Şirket Listesi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Company</Name>
+    <Translation>Şirket</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CompanyId</Name>
+    <Translation>Şirket No</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CompanyName</Name>
+    <Translation>Şirket İsmi</Translation>
+  </Vocab>
+  <Vocab>
     <Name>ConfirmEmail</Name>
     <Translation>Eposta Doğrulama</Translation>
   </Vocab>
@@ -91,6 +123,10 @@
   <Vocab>
     <Name>CountryName</Name>
     <Translation>Ülke</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CreateCompany</Name>
+    <Translation>Şirket Ekle</Translation>
   </Vocab>
   <Vocab>
     <Name>CreateContact</Name>
@@ -129,6 +165,10 @@
     <Translation>Sipariş Ekle</Translation>
   </Vocab>
   <Vocab>
+    <Name>CreateSupplier</Name>
+    <Translation>Tedarikçi Ekle</Translation>
+  </Vocab>
+  <Vocab>
     <Name>CreatorId</Name>
     <Translation>Oluşturan</Translation>
   </Vocab>
@@ -139,6 +179,10 @@
   <Vocab>
     <Name>Customer</Name>
     <Translation>Müşteri</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CustomerCode</Name>
+    <Translation>Müşteri Kodu</Translation>
   </Vocab>
   <Vocab>
     <Name>CustomerId</Name>
@@ -155,6 +199,10 @@
   <Vocab>
     <Name>Date</Name>
     <Translation>Tarihi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>DeleteCompany</Name>
+    <Translation>Şirketi Sil</Translation>
   </Vocab>
   <Vocab>
     <Name>DeleteContact</Name>
@@ -183,6 +231,10 @@
   <Vocab>
     <Name>DeletePuchaseOrder</Name>
     <Translation>Siparişi Sil</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>DeleteSupplier</Name>
+    <Translation>Tedarikçiyi Sil</Translation>
   </Vocab>
   <Vocab>
     <Name>Deleting</Name>
@@ -225,6 +277,10 @@
     <Translation>Çoğalt</Translation>
   </Vocab>
   <Vocab>
+    <Name>EditCompany</Name>
+    <Translation>Şirketi Düzenle</Translation>
+  </Vocab>
+  <Vocab>
     <Name>EditContact</Name>
     <Translation>Kişiyi Düzenle</Translation>
   </Vocab>
@@ -251,6 +307,10 @@
   <Vocab>
     <Name>EditPuchaseOrder</Name>
     <Translation>Siparişi Düzenle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>EditSupplier</Name>
+    <Translation>Tedarikçiyi Düzenle</Translation>
   </Vocab>
   <Vocab>
     <Name>Email</Name>
@@ -311,6 +371,10 @@
   <Vocab>
     <Name>Index</Name>
     <Translation>Indeks</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>IsApproved</Name>
+    <Translation>Onaylandı</Translation>
   </Vocab>
   <Vocab>
     <Name>IsPublished</Name>
@@ -599,6 +663,22 @@
   <Vocab>
     <Name>SubCategory</Name>
     <Translation>Alt Kategori</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Supplier</Name>
+    <Translation>Tedarikçi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>SupplierCode</Name>
+    <Translation>Tedarikçi Kodu</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Suppliers</Name>
+    <Translation>Tedarikçiler</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>SuppliersList</Name>
+    <Translation>Tedarikçi Listesi</Translation>
   </Vocab>
   <Vocab>
     <Name>Surname</Name>

@@ -21,6 +21,18 @@
     <Translation>Always</Translation>
   </Vocab>
   <Vocab>
+    <Name>ApproveDate</Name>
+    <Translation>Approve Date</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ApprovedUserId</Name>
+    <Translation>Approved User Id</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>ApprovedUserIp</Name>
+    <Translation>Approved User Ip</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Cancel</Name>
     <Translation>Cancel</Translation>
   </Vocab>
@@ -65,6 +77,26 @@
     <Translation>Command</Translation>
   </Vocab>
   <Vocab>
+    <Name>Companies</Name>
+    <Translation>Companies</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CompaniesList</Name>
+    <Translation>Companies List</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Company</Name>
+    <Translation>Company</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CompanyId</Name>
+    <Translation>Company Id</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CompanyName</Name>
+    <Translation>Company Name</Translation>
+  </Vocab>
+  <Vocab>
     <Name>ConfirmEmail</Name>
     <Translation>Confirm Email</Translation>
   </Vocab>
@@ -91,6 +123,10 @@
   <Vocab>
     <Name>CountryName</Name>
     <Translation>Country Name</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CreateCompany</Name>
+    <Translation>Create Company</Translation>
   </Vocab>
   <Vocab>
     <Name>CreateContact</Name>
@@ -129,6 +165,10 @@
     <Translation>Create Puchase Order</Translation>
   </Vocab>
   <Vocab>
+    <Name>CreateSupplier</Name>
+    <Translation>Create Supplier</Translation>
+  </Vocab>
+  <Vocab>
     <Name>CreatorId</Name>
     <Translation>Creator</Translation>
   </Vocab>
@@ -139,6 +179,10 @@
   <Vocab>
     <Name>Customer</Name>
     <Translation>Customer</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CustomerCode</Name>
+    <Translation>Customer Code</Translation>
   </Vocab>
   <Vocab>
     <Name>CustomerId</Name>
@@ -155,6 +199,10 @@
   <Vocab>
     <Name>Date</Name>
     <Translation>Date</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>DeleteCompany</Name>
+    <Translation>Delete Company</Translation>
   </Vocab>
   <Vocab>
     <Name>DeleteContact</Name>
@@ -183,6 +231,10 @@
   <Vocab>
     <Name>DeletePuchaseOrder</Name>
     <Translation>Delete Puchase Order</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>DeleteSupplier</Name>
+    <Translation>Delete Supplier</Translation>
   </Vocab>
   <Vocab>
     <Name>Deleting</Name>
@@ -225,6 +277,10 @@
     <Translation>Duplicate</Translation>
   </Vocab>
   <Vocab>
+    <Name>EditCompany</Name>
+    <Translation>Edit Company</Translation>
+  </Vocab>
+  <Vocab>
     <Name>EditContact</Name>
     <Translation>Edit Contact</Translation>
   </Vocab>
@@ -251,6 +307,10 @@
   <Vocab>
     <Name>EditPuchaseOrder</Name>
     <Translation>Edit Puchase Order</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>EditSupplier</Name>
+    <Translation>Edit Supplier</Translation>
   </Vocab>
   <Vocab>
     <Name>Email</Name>
@@ -311,6 +371,10 @@
   <Vocab>
     <Name>Index</Name>
     <Translation>Index</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>IsApproved</Name>
+    <Translation>Is Approved</Translation>
   </Vocab>
   <Vocab>
     <Name>IsPublished</Name>
@@ -599,6 +663,22 @@
   <Vocab>
     <Name>SubCategory</Name>
     <Translation>Sub Category</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Supplier</Name>
+    <Translation>Supplier</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>SupplierCode</Name>
+    <Translation>Supplier Code</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Suppliers</Name>
+    <Translation>Suppliers</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>SuppliersList</Name>
+    <Translation>Suppliers List</Translation>
   </Vocab>
   <Vocab>
     <Name>Surname</Name>

@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using OzzCodeGen.Definitions;
 using OzzCodeGen.Providers;
 using System.IO;
 using OzzCodeGen.CodeEngines.Localization;
 using OzzCodeGen.CodeEngines;
+using System.Collections.Generic;
 
 namespace OzzCodeGen.UI
 {
@@ -25,35 +19,28 @@ namespace OzzCodeGen.UI
         public string ModelSource { get; set; }
         public EmptyModel Provider { get; set; }
 
-        public EntityDefinition GetEntityDefinition()
-        {
-            var entity = Provider.GetDefaultEntityDefinition();
-            entity.Name = txtDefaultEntityName.Text.Trim();
-
-
-
-            return entity;
-        }
-
         public DataModel GetDataModel()
         {
             var model = new DataModel();
-            if (chkCreateDefaultEntity.Checked)
-            {
-                var entity = Provider.GetDefaultEntityDefinition();
-                entity.Name = txtDefaultEntityName.Text.Trim();
-                entity.NamespaceName = txtNamespace.Text.Trim();
-                model.Add(entity);
-            }
-
             return model;
         }
 
+        public List<ModelTemplate> ModelTemplates
+        {
+            get { return _modelTemplates; }
+            set
+            {
+                _modelTemplates = value;
+                cboTemplates.Items.AddRange(ModelTemplates.ToArray());
+            }
+        }
+        private List<ModelTemplate> _modelTemplates;
+
+        public ModelTemplate SelectedTemplate { get; private set; }
+
         public CodeGenProject GetProject()
         {
-            //TODO: Put a ComboBox (eg cboProjectTemplateFiles) in UI
-            //      and use selected ProjectTemplateFile instead of EmptyModel.ProjectTemplateFile
-            var templatePath = Path.Combine(Provider.DefaultsFolder, EmptyModel.ProjectTemplateFile);
+            var templatePath = SelectedTemplate != null ? SelectedTemplate.Path : string.Empty;
             CodeGenProject project = null;
             if (File.Exists(templatePath))
             {
@@ -97,9 +84,9 @@ namespace OzzCodeGen.UI
             }
         }
 
-        private void chkCreateDefaultEntity_CheckedChanged(object sender, EventArgs e)
+        private void cboTemplates_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtDefaultEntityName.Enabled = chkCreateDefaultEntity.Checked;
+            SelectedTemplate = (ModelTemplate)cboTemplates.SelectedItem;
         }
     }
 }

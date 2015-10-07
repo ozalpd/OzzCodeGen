@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OzzCodeGen.Definitions;
 using OzzCodeGen.UI;
+using System.IO;
 
 namespace OzzCodeGen.Providers
 {
@@ -53,6 +54,7 @@ namespace OzzCodeGen.Providers
                     _modelDialog = new EmptyModelDialog();
                     _modelDialog.Provider = this;
                     _modelDialog.ModelSource = "EmptyModel";
+                    _modelDialog.ModelTemplates = ModelTemplates;
                 }
                 return _modelDialog;
             }
@@ -75,30 +77,44 @@ namespace OzzCodeGen.Providers
         public string DefaultsFolder { get; set; }
         public static string ProjectTemplateFile = "DefaultEmptyProvider.OzzGen";
 
-        public EntityDefinition GetDefaultEntityDefinition()
+
+        public List<ModelTemplate> ModelTemplates
         {
-            var entity = EntityDefinition.CreateDefaultEntityDefinition();
+            set { _modelTemplates = value; }
+            get
+            {
+                if (_modelTemplates == null)
+                {
+                    _modelTemplates = GetModelTemplates();
 
-            var title = BaseProperty.CreatePropertyDefinition("string", "Title");
-            ((StringProperty)title).MaxLenght = 50;
-            entity.Properties.Add(title);
+                }
+                return _modelTemplates;
+            }
+        }
+        private List<ModelTemplate> _modelTemplates;
 
-            entity.Properties.Add(BaseProperty.CreatePropertyDefinition("int", "ModifyNr", true));
-            entity.Properties.Add(BaseProperty.CreatePropertyDefinition("DateTime", "ModifyDate", true));
-            entity.Properties.Add(BaseProperty.CreatePropertyDefinition("DateTime", "CreateDate", true));
+        private List<ModelTemplate> GetModelTemplates()
+        {
+            var templates = new List<ModelTemplate>();
+            if (Directory.Exists(DefaultsFolder))
+            {
+                AppendTemplates(templates, DefaultsFolder);
+            }
+            return templates;
+        }
 
-            var modifierIp = BaseProperty.CreatePropertyDefinition("string", "ModifierIp");
-            ((StringProperty)modifierIp).MaxLenght = 50;
-            modifierIp.IsServerComputed = true;
-            entity.Properties.Add(modifierIp);
-
-            var creatorIp = BaseProperty.CreatePropertyDefinition("string", "CreatorIp");
-            ((StringProperty)creatorIp).MaxLenght = 50;
-            creatorIp.IsServerComputed = true;
-            entity.Properties.Add(creatorIp);
-
-            entity.Abstract = true;
-            return entity;
+        private void AppendTemplates(List<ModelTemplate> templates, string directory)
+        {
+            var files = Directory.GetFiles(directory, "*.OzzGen");
+            foreach (var item in files)
+            {
+                templates.Add(new ModelTemplate(item));
+            }
+            var dirs = Directory.GetDirectories(directory);
+            foreach (var item in dirs)
+            {
+                AppendTemplates(templates, item);
+            }
         }
     }
 }

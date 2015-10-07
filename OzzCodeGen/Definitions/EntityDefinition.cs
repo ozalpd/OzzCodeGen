@@ -275,19 +275,6 @@ namespace OzzCodeGen.Definitions
             }
         }
 
-        public static EntityDefinition CreateDefaultEntityDefinition()
-        {
-            var entity = new EntityDefinition();
-
-            var idProperty = BaseProperty.CreatePropertyDefinition("int");
-            idProperty.Name = "Id";
-            idProperty.IsStoreGenerated = true;
-            ((SimpleProperty)idProperty).IsNullable = false;
-            entity.Properties.Add(idProperty);
-
-            return entity;
-        }
-
         public EntityDefinition Clone()
         {
             var clone = new EntityDefinition()

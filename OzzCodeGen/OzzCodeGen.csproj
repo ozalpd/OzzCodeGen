@@ -257,6 +257,7 @@
     <Compile Include="Definitions\EnumMember.cs" />
     <Compile Include="Definitions\EnumMemberList.cs" />
     <Compile Include="Providers\EmptyModel.cs" />
+    <Compile Include="Providers\ModelTemplate.cs" />
     <Compile Include="Providers\EntitySource.cs" />
     <Compile Include="Definitions\StringProperty.cs" />
     <Compile Include="Definitions\CollectionProperty.cs" />

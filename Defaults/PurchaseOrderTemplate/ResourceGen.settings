@@ -19,6 +19,32 @@
       </Properties>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="LocalizationEntitySetting">
+      <Name>ICreated</Name>
+      <Exclude>false</Exclude>
+      <OverwriteExisting>false</OverwriteExisting>
+      <LocalizeEntityName>false</LocalizeEntityName>
+      <Properties>
+        <LocalizationPropertySetting>
+          <Name>CreateDate</Name>
+          <Exclude>false</Exclude>
+          <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
+          <LocalizeValidationMsg>false</LocalizeValidationMsg>
+        </LocalizationPropertySetting>
+        <LocalizationPropertySetting>
+          <Name>CreatorId</Name>
+          <Exclude>false</Exclude>
+          <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
+          <LocalizeValidationMsg>false</LocalizeValidationMsg>
+        </LocalizationPropertySetting>
+        <LocalizationPropertySetting>
+          <Name>CreatorIp</Name>
+          <Exclude>false</Exclude>
+          <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
+          <LocalizeValidationMsg>false</LocalizeValidationMsg>
+        </LocalizationPropertySetting>
+      </Properties>
+    </BaseEntitySetting>
+    <BaseEntitySetting xsi:type="LocalizationEntitySetting">
       <Name>IModified</Name>
       <Exclude>false</Exclude>
       <OverwriteExisting>false</OverwriteExisting>
@@ -51,25 +77,31 @@
       </Properties>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="LocalizationEntitySetting">
-      <Name>ICreated</Name>
+      <Name>IApproval</Name>
       <Exclude>false</Exclude>
       <OverwriteExisting>false</OverwriteExisting>
       <LocalizeEntityName>false</LocalizeEntityName>
       <Properties>
         <LocalizationPropertySetting>
-          <Name>CreateDate</Name>
+          <Name>IsApproved</Name>
           <Exclude>false</Exclude>
           <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
           <LocalizeValidationMsg>false</LocalizeValidationMsg>
         </LocalizationPropertySetting>
         <LocalizationPropertySetting>
-          <Name>CreatorId</Name>
+          <Name>ApproveDate</Name>
           <Exclude>false</Exclude>
           <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
           <LocalizeValidationMsg>false</LocalizeValidationMsg>
         </LocalizationPropertySetting>
         <LocalizationPropertySetting>
-          <Name>CreatorIp</Name>
+          <Name>ApprovedUserId</Name>
+          <Exclude>false</Exclude>
+          <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
+          <LocalizeValidationMsg>false</LocalizeValidationMsg>
+        </LocalizationPropertySetting>
+        <LocalizationPropertySetting>
+          <Name>ApprovedUserIp</Name>
           <Exclude>false</Exclude>
           <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
           <LocalizeValidationMsg>false</LocalizeValidationMsg>
@@ -103,11 +135,17 @@
       </Properties>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="LocalizationEntitySetting">
-      <Name>Customer</Name>
+      <Name>Company</Name>
       <Exclude>false</Exclude>
       <OverwriteExisting>false</OverwriteExisting>
       <LocalizeEntityName>true</LocalizeEntityName>
       <Properties>
+        <LocalizationPropertySetting>
+          <Name>CompanyName</Name>
+          <Exclude>false</Exclude>
+          <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
+          <LocalizeValidationMsg>false</LocalizeValidationMsg>
+        </LocalizationPropertySetting>
         <LocalizationPropertySetting>
           <Name>Phone1</Name>
           <Exclude>false</Exclude>
@@ -177,6 +215,40 @@
       </Properties>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="LocalizationEntitySetting">
+      <Name>Supplier</Name>
+      <Exclude>false</Exclude>
+      <OverwriteExisting>false</OverwriteExisting>
+      <LocalizeEntityName>true</LocalizeEntityName>
+      <Properties>
+        <LocalizationPropertySetting>
+          <Name>SupplierCode</Name>
+          <Exclude>false</Exclude>
+          <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
+          <LocalizeValidationMsg>false</LocalizeValidationMsg>
+        </LocalizationPropertySetting>
+      </Properties>
+    </BaseEntitySetting>
+    <BaseEntitySetting xsi:type="LocalizationEntitySetting">
+      <Name>Customer</Name>
+      <Exclude>false</Exclude>
+      <OverwriteExisting>false</OverwriteExisting>
+      <LocalizeEntityName>true</LocalizeEntityName>
+      <Properties>
+        <LocalizationPropertySetting>
+          <Name>CustomerCode</Name>
+          <Exclude>false</Exclude>
+          <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
+          <LocalizeValidationMsg>false</LocalizeValidationMsg>
+        </LocalizationPropertySetting>
+        <LocalizationPropertySetting>
+          <Name>Orders</Name>
+          <Exclude>false</Exclude>
+          <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
+          <LocalizeValidationMsg>false</LocalizeValidationMsg>
+        </LocalizationPropertySetting>
+      </Properties>
+    </BaseEntitySetting>
+    <BaseEntitySetting xsi:type="LocalizationEntitySetting">
       <Name>Contact</Name>
       <Exclude>false</Exclude>
       <OverwriteExisting>false</OverwriteExisting>
@@ -231,13 +303,13 @@
           <LocalizeValidationMsg>false</LocalizeValidationMsg>
         </LocalizationPropertySetting>
         <LocalizationPropertySetting>
-          <Name>CustomerId</Name>
+          <Name>CompanyId</Name>
           <Exclude>false</Exclude>
           <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
           <LocalizeValidationMsg>false</LocalizeValidationMsg>
         </LocalizationPropertySetting>
         <LocalizationPropertySetting>
-          <Name>Customer</Name>
+          <Name>Company</Name>
           <Exclude>false</Exclude>
           <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
           <LocalizeValidationMsg>false</LocalizeValidationMsg>
@@ -303,6 +375,12 @@
       <LocalizeEntityName>true</LocalizeEntityName>
       <Properties>
         <LocalizationPropertySetting>
+          <Name>Title</Name>
+          <Exclude>false</Exclude>
+          <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
+          <LocalizeValidationMsg>false</LocalizeValidationMsg>
+        </LocalizationPropertySetting>
+        <LocalizationPropertySetting>
           <Name>CustomerId</Name>
           <Exclude>false</Exclude>
           <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
@@ -322,6 +400,18 @@
         </LocalizationPropertySetting>
         <LocalizationPropertySetting>
           <Name>DueDate</Name>
+          <Exclude>false</Exclude>
+          <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
+          <LocalizeValidationMsg>false</LocalizeValidationMsg>
+        </LocalizationPropertySetting>
+        <LocalizationPropertySetting>
+          <Name>Code</Name>
+          <Exclude>false</Exclude>
+          <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
+          <LocalizeValidationMsg>false</LocalizeValidationMsg>
+        </LocalizationPropertySetting>
+        <LocalizationPropertySetting>
+          <Name>Description</Name>
           <Exclude>false</Exclude>
           <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
           <LocalizeValidationMsg>false</LocalizeValidationMsg>

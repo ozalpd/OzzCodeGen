@@ -2,7 +2,7 @@
 <TSqlScriptsEngine xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Language>CSharp</Language>
   <NamespaceName>PurchaseOrderTemplate</NamespaceName>
-  <TargetFolder>T-SQL Scripts</TargetFolder>
+  <TargetFolder>..\T-SQL Scripts</TargetFolder>
   <EntitySettings>
     <BaseEntitySetting xsi:type="StorageEntitySetting">
       <Name>IPrimaryKey</Name>
@@ -21,6 +21,51 @@
           <DataType>int</DataType>
           <Lenght>0</Lenght>
           <PrimaryKey>true</PrimaryKey>
+          <Indexed>false</Indexed>
+          <SortDesc>false</SortDesc>
+          <Nullable>false</Nullable>
+        </StorageColumnSetting>
+      </Properties>
+    </BaseEntitySetting>
+    <BaseEntitySetting xsi:type="StorageEntitySetting">
+      <Name>ICreated</Name>
+      <Exclude>true</Exclude>
+      <OverwriteExisting>false</OverwriteExisting>
+      <InheritedEntity>IPrimaryKey</InheritedEntity>
+      <UseInheritance>false</UseInheritance>
+      <SchemaName>dbo</SchemaName>
+      <TableName>ICreateds</TableName>
+      <ModifyTrack>false</ModifyTrack>
+      <StoredProcs>false</StoredProcs>
+      <CustomStoredProcs>false</CustomStoredProcs>
+      <Properties>
+        <StorageColumnSetting>
+          <Name>CreateDate</Name>
+          <Exclude>false</Exclude>
+          <DataType>DateTime</DataType>
+          <Lenght>0</Lenght>
+          <PrimaryKey>false</PrimaryKey>
+          <Indexed>false</Indexed>
+          <SortDesc>false</SortDesc>
+          <Nullable>false</Nullable>
+          <InsertDefault>GetDate()</InsertDefault>
+        </StorageColumnSetting>
+        <StorageColumnSetting>
+          <Name>CreatorId</Name>
+          <Exclude>false</Exclude>
+          <DataType>VarChar</DataType>
+          <Lenght>48</Lenght>
+          <PrimaryKey>false</PrimaryKey>
+          <Indexed>false</Indexed>
+          <SortDesc>false</SortDesc>
+          <Nullable>false</Nullable>
+        </StorageColumnSetting>
+        <StorageColumnSetting>
+          <Name>CreatorIp</Name>
+          <Exclude>false</Exclude>
+          <DataType>VarChar</DataType>
+          <Lenght>48</Lenght>
+          <PrimaryKey>false</PrimaryKey>
           <Indexed>false</Indexed>
           <SortDesc>false</SortDesc>
           <Nullable>false</Nullable>
@@ -47,7 +92,7 @@
           <PrimaryKey>false</PrimaryKey>
           <Indexed>false</Indexed>
           <SortDesc>false</SortDesc>
-          <Nullable>true</Nullable>
+          <Nullable>false</Nullable>
           <InsertDefault>1</InsertDefault>
         </StorageColumnSetting>
         <StorageColumnSetting>
@@ -58,13 +103,13 @@
           <PrimaryKey>false</PrimaryKey>
           <Indexed>true</Indexed>
           <SortDesc>true</SortDesc>
-          <Nullable>true</Nullable>
+          <Nullable>false</Nullable>
           <InsertDefault>GetDate()</InsertDefault>
         </StorageColumnSetting>
         <StorageColumnSetting>
           <Name>ModifierId</Name>
           <Exclude>false</Exclude>
-          <DataType>nVarChar</DataType>
+          <DataType>VarChar</DataType>
           <Lenght>48</Lenght>
           <PrimaryKey>false</PrimaryKey>
           <Indexed>false</Indexed>
@@ -74,29 +119,39 @@
         <StorageColumnSetting>
           <Name>ModifierIp</Name>
           <Exclude>false</Exclude>
-          <DataType>nVarChar</DataType>
+          <DataType>VarChar</DataType>
           <Lenght>48</Lenght>
           <PrimaryKey>false</PrimaryKey>
           <Indexed>false</Indexed>
           <SortDesc>false</SortDesc>
-          <Nullable>true</Nullable>
+          <Nullable>false</Nullable>
         </StorageColumnSetting>
       </Properties>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="StorageEntitySetting">
-      <Name>ICreated</Name>
+      <Name>IApproval</Name>
       <Exclude>true</Exclude>
       <OverwriteExisting>false</OverwriteExisting>
-      <InheritedEntity>IPrimaryKey</InheritedEntity>
+      <InheritedEntity>IModified</InheritedEntity>
       <UseInheritance>false</UseInheritance>
       <SchemaName>dbo</SchemaName>
-      <TableName>ICreateds</TableName>
+      <TableName>IApprovals</TableName>
       <ModifyTrack>false</ModifyTrack>
       <StoredProcs>false</StoredProcs>
       <CustomStoredProcs>false</CustomStoredProcs>
       <Properties>
         <StorageColumnSetting>
-          <Name>CreateDate</Name>
+          <Name>IsApproved</Name>
+          <Exclude>false</Exclude>
+          <DataType>bit</DataType>
+          <Lenght>0</Lenght>
+          <PrimaryKey>false</PrimaryKey>
+          <Indexed>true</Indexed>
+          <SortDesc>false</SortDesc>
+          <Nullable>false</Nullable>
+        </StorageColumnSetting>
+        <StorageColumnSetting>
+          <Name>ApproveDate</Name>
           <Exclude>false</Exclude>
           <DataType>DateTime</DataType>
           <Lenght>0</Lenght>
@@ -104,22 +159,21 @@
           <Indexed>false</Indexed>
           <SortDesc>false</SortDesc>
           <Nullable>true</Nullable>
-          <InsertDefault>GetDate()</InsertDefault>
         </StorageColumnSetting>
         <StorageColumnSetting>
-          <Name>CreatorId</Name>
+          <Name>ApprovedUserId</Name>
           <Exclude>false</Exclude>
-          <DataType>nVarChar</DataType>
+          <DataType>VarChar</DataType>
           <Lenght>48</Lenght>
           <PrimaryKey>false</PrimaryKey>
           <Indexed>false</Indexed>
           <SortDesc>false</SortDesc>
-          <Nullable>false</Nullable>
+          <Nullable>true</Nullable>
         </StorageColumnSetting>
         <StorageColumnSetting>
-          <Name>CreatorIp</Name>
+          <Name>ApprovedUserIp</Name>
           <Exclude>false</Exclude>
-          <DataType>nVarChar</DataType>
+          <DataType>VarChar</DataType>
           <Lenght>48</Lenght>
           <PrimaryKey>false</PrimaryKey>
           <Indexed>false</Indexed>
@@ -173,17 +227,27 @@
       </Properties>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="StorageEntitySetting">
-      <Name>Customer</Name>
+      <Name>Company</Name>
       <Exclude>false</Exclude>
       <OverwriteExisting>false</OverwriteExisting>
-      <InheritedEntity>IDescription</InheritedEntity>
+      <InheritedEntity>IModified</InheritedEntity>
       <UseInheritance>false</UseInheritance>
       <SchemaName>dbo</SchemaName>
-      <TableName>Customers</TableName>
+      <TableName>Companies</TableName>
       <ModifyTrack>false</ModifyTrack>
       <StoredProcs>false</StoredProcs>
       <CustomStoredProcs>false</CustomStoredProcs>
       <Properties>
+        <StorageColumnSetting>
+          <Name>CompanyName</Name>
+          <Exclude>false</Exclude>
+          <DataType>nVarChar</DataType>
+          <Lenght>128</Lenght>
+          <PrimaryKey>false</PrimaryKey>
+          <Indexed>true</Indexed>
+          <SortDesc>false</SortDesc>
+          <Nullable>false</Nullable>
+        </StorageColumnSetting>
         <StorageColumnSetting>
           <Name>Phone1</Name>
           <Exclude>false</Exclude>
@@ -238,7 +302,7 @@
           <Name>City</Name>
           <Exclude>false</Exclude>
           <DataType>nVarChar</DataType>
-          <Lenght>128</Lenght>
+          <Lenght>64</Lenght>
           <PrimaryKey>false</PrimaryKey>
           <Indexed>true</Indexed>
           <SortDesc>false</SortDesc>
@@ -283,6 +347,54 @@
           <Indexed>false</Indexed>
           <SortDesc>false</SortDesc>
           <Nullable>true</Nullable>
+        </StorageColumnSetting>
+      </Properties>
+    </BaseEntitySetting>
+    <BaseEntitySetting xsi:type="StorageEntitySetting">
+      <Name>Supplier</Name>
+      <Exclude>false</Exclude>
+      <OverwriteExisting>false</OverwriteExisting>
+      <InheritedEntity>Company</InheritedEntity>
+      <UseInheritance>true</UseInheritance>
+      <SchemaName>dbo</SchemaName>
+      <TableName>Suppliers</TableName>
+      <ModifyTrack>false</ModifyTrack>
+      <StoredProcs>false</StoredProcs>
+      <CustomStoredProcs>false</CustomStoredProcs>
+      <Properties>
+        <StorageColumnSetting>
+          <Name>SupplierCode</Name>
+          <Exclude>false</Exclude>
+          <DataType>nVarChar</DataType>
+          <Lenght>255</Lenght>
+          <PrimaryKey>false</PrimaryKey>
+          <Indexed>false</Indexed>
+          <SortDesc>false</SortDesc>
+          <Nullable>false</Nullable>
+        </StorageColumnSetting>
+      </Properties>
+    </BaseEntitySetting>
+    <BaseEntitySetting xsi:type="StorageEntitySetting">
+      <Name>Customer</Name>
+      <Exclude>false</Exclude>
+      <OverwriteExisting>false</OverwriteExisting>
+      <InheritedEntity>IDescription</InheritedEntity>
+      <UseInheritance>true</UseInheritance>
+      <SchemaName>dbo</SchemaName>
+      <TableName>Customers</TableName>
+      <ModifyTrack>false</ModifyTrack>
+      <StoredProcs>false</StoredProcs>
+      <CustomStoredProcs>false</CustomStoredProcs>
+      <Properties>
+        <StorageColumnSetting>
+          <Name>CustomerCode</Name>
+          <Exclude>false</Exclude>
+          <DataType>nVarChar</DataType>
+          <Lenght>128</Lenght>
+          <PrimaryKey>false</PrimaryKey>
+          <Indexed>false</Indexed>
+          <SortDesc>false</SortDesc>
+          <Nullable>false</Nullable>
         </StorageColumnSetting>
       </Properties>
     </BaseEntitySetting>
@@ -379,7 +491,7 @@
           <Nullable>true</Nullable>
         </StorageColumnSetting>
         <StorageColumnSetting>
-          <Name>CustomerId</Name>
+          <Name>CompanyId</Name>
           <Exclude>false</Exclude>
           <DataType>int</DataType>
           <Lenght>0</Lenght>
@@ -387,7 +499,7 @@
           <Indexed>true</Indexed>
           <SortDesc>false</SortDesc>
           <Nullable>false</Nullable>
-          <ForeignKeyTable>Customers</ForeignKeyTable>
+          <ForeignKeyTable>Companies</ForeignKeyTable>
         </StorageColumnSetting>
       </Properties>
     </BaseEntitySetting>
@@ -454,6 +566,16 @@
       <CustomStoredProcs>false</CustomStoredProcs>
       <Properties>
         <StorageColumnSetting>
+          <Name>Title</Name>
+          <Exclude>false</Exclude>
+          <DataType>nVarChar</DataType>
+          <Lenght>128</Lenght>
+          <PrimaryKey>false</PrimaryKey>
+          <Indexed>false</Indexed>
+          <SortDesc>false</SortDesc>
+          <Nullable>false</Nullable>
+        </StorageColumnSetting>
+        <StorageColumnSetting>
           <Name>CustomerId</Name>
           <Exclude>false</Exclude>
           <DataType>int</DataType>
@@ -481,6 +603,26 @@
           <Lenght>0</Lenght>
           <PrimaryKey>false</PrimaryKey>
           <Indexed>true</Indexed>
+          <SortDesc>false</SortDesc>
+          <Nullable>true</Nullable>
+        </StorageColumnSetting>
+        <StorageColumnSetting>
+          <Name>Code</Name>
+          <Exclude>false</Exclude>
+          <DataType>nVarChar</DataType>
+          <Lenght>48</Lenght>
+          <PrimaryKey>false</PrimaryKey>
+          <Indexed>false</Indexed>
+          <SortDesc>false</SortDesc>
+          <Nullable>true</Nullable>
+        </StorageColumnSetting>
+        <StorageColumnSetting>
+          <Name>Description</Name>
+          <Exclude>false</Exclude>
+          <DataType>nVarChar</DataType>
+          <Lenght>256</Lenght>
+          <PrimaryKey>false</PrimaryKey>
+          <Indexed>false</Indexed>
           <SortDesc>false</SortDesc>
           <Nullable>true</Nullable>
         </StorageColumnSetting>
@@ -545,6 +687,6 @@
   </EntitySettings>
   <RenderAllEntities>true</RenderAllEntities>
   <PluralizeTableNames>true</PluralizeTableNames>
-  <DatabaseName>PurchaseOrderTemplateDB</DatabaseName>
+  <DatabaseName>PurchaseOrdersDB</DatabaseName>
   <DatabaseServer>.\SqlExpress</DatabaseServer>
 </TSqlScriptsEngine>

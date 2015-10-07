@@ -37,11 +37,71 @@
       </Properties>
     </EntityDefinition>
     <EntityDefinition>
+      <Name>ICreated</Name>
+      <EntitySource />
+      <Comment>Keeps who did create for each entity</Comment>
+      <NamespaceName>PurchaseOrderTemplate</NamespaceName>
+      <DisplayOrder>2</DisplayOrder>
+      <Abstract>true</Abstract>
+      <LetDownloadAll>false</LetDownloadAll>
+      <DisplayName>ICreated</DisplayName>
+      <DisplayMember>CreatorId</DisplayMember>
+      <BaseTypeName>IPrimaryKey</BaseTypeName>
+      <Properties>
+        <BaseProperty xsi:type="SimpleProperty">
+          <Name>CreateDate</Name>
+          <DisplayOrder>10030010</DisplayOrder>
+          <DisplayName>Create Date</DisplayName>
+          <Editable>false</Editable>
+          <TypeName>DateTime</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>true</IsStoreGenerated>
+          <UiVisible>false</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+        </BaseProperty>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>CreatorId</Name>
+          <Comment>UserId of record's creator.</Comment>
+          <DisplayOrder>10030020</DisplayOrder>
+          <DisplayName>Created User</DisplayName>
+          <Editable>false</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>true</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>false</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+          <MaxLenght>48</MaxLenght>
+        </BaseProperty>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>CreatorIp</Name>
+          <Comment>IP Address of record's creator.</Comment>
+          <DisplayOrder>10030030</DisplayOrder>
+          <DisplayName>Creator Ip</DisplayName>
+          <Editable>false</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>true</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>false</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+          <MaxLenght>48</MaxLenght>
+        </BaseProperty>
+      </Properties>
+    </EntityDefinition>
+    <EntityDefinition>
       <Name>IModified</Name>
       <EntitySource />
       <Comment>Keeps who did modify for each entity</Comment>
       <NamespaceName>PurchaseOrderTemplate</NamespaceName>
-      <DisplayOrder>2</DisplayOrder>
+      <DisplayOrder>3</DisplayOrder>
       <Abstract>true</Abstract>
       <LetDownloadAll>false</LetDownloadAll>
       <DisplayName>IModified</DisplayName>
@@ -65,7 +125,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>ModifyDate</Name>
-          <Comment>Database record's modify date</Comment>
+          <Comment>Date of last modification of the record.</Comment>
           <DisplayOrder>10010020</DisplayOrder>
           <DisplayName>Modify Date</DisplayName>
           <Editable>false</Editable>
@@ -80,6 +140,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>ModifierId</Name>
+          <Comment>UserId of last modifier of the record.</Comment>
           <DisplayOrder>10010030</DisplayOrder>
           <DisplayName>Modified User</DisplayName>
           <Editable>false</Editable>
@@ -95,6 +156,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>ModifierIp</Name>
+          <Comment>IP Address of last modifier of the record.</Comment>
           <DisplayOrder>10010040</DisplayOrder>
           <DisplayName>Modifier Ip</DisplayName>
           <Editable>false</Editable>
@@ -111,35 +173,49 @@
       </Properties>
     </EntityDefinition>
     <EntityDefinition>
-      <Name>ICreated</Name>
+      <Name>IApproval</Name>
       <EntitySource />
-      <Comment>Keeps who did create for each entity</Comment>
       <NamespaceName>PurchaseOrderTemplate</NamespaceName>
-      <DisplayOrder>3</DisplayOrder>
+      <DisplayOrder>4</DisplayOrder>
       <Abstract>true</Abstract>
       <LetDownloadAll>false</LetDownloadAll>
-      <DisplayName>ICreated</DisplayName>
-      <DisplayMember>CreatorId</DisplayMember>
-      <BaseTypeName>IPrimaryKey</BaseTypeName>
+      <DisplayName>IApproval</DisplayName>
+      <DisplayMember>ModifierId</DisplayMember>
+      <BaseTypeName>IModified</BaseTypeName>
       <Properties>
         <BaseProperty xsi:type="SimpleProperty">
-          <Name>CreateDate</Name>
-          <DisplayOrder>10010110</DisplayOrder>
-          <DisplayName>Create Date</DisplayName>
+          <Name>IsApproved</Name>
+          <DisplayOrder>10061000</DisplayOrder>
+          <DisplayName>Is Approved</DisplayName>
+          <Editable>true</Editable>
+          <TypeName>bool</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>true</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+        </BaseProperty>
+        <BaseProperty xsi:type="SimpleProperty">
+          <Name>ApproveDate</Name>
+          <DisplayOrder>10061010</DisplayOrder>
+          <DisplayName>Approve Date</DisplayName>
           <Editable>false</Editable>
           <TypeName>DateTime</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>true</IsStoreGenerated>
-          <UiVisible>false</UiVisible>
+          <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
-          <IsNullable>false</IsNullable>
+          <IsNullable>true</IsNullable>
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
-          <Name>CreatorId</Name>
-          <DisplayOrder>10010120</DisplayOrder>
-          <DisplayName>Created User</DisplayName>
+          <Name>ApprovedUserId</Name>
+          <Comment>UserId of record's approver.</Comment>
+          <DisplayOrder>10061020</DisplayOrder>
+          <DisplayName>Approved User</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
@@ -148,12 +224,13 @@
           <UiVisible>false</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
-          <IsNullable>false</IsNullable>
+          <IsNullable>true</IsNullable>
           <MaxLenght>48</MaxLenght>
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
-          <Name>CreatorIp</Name>
-          <DisplayOrder>10010130</DisplayOrder>
+          <Name>ApprovedUserIp</Name>
+          <Comment />
+          <DisplayOrder>10061030</DisplayOrder>
           <DisplayName>Creator Ip</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -163,7 +240,7 @@
           <UiVisible>false</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
-          <IsNullable>false</IsNullable>
+          <IsNullable>true</IsNullable>
           <MaxLenght>48</MaxLenght>
         </BaseProperty>
       </Properties>
@@ -172,7 +249,7 @@
       <Name>IDescription</Name>
       <EntitySource />
       <NamespaceName>PurchaseOrderTemplate</NamespaceName>
-      <DisplayOrder>4</DisplayOrder>
+      <DisplayOrder>5</DisplayOrder>
       <Abstract>true</Abstract>
       <LetDownloadAll>false</LetDownloadAll>
       <DisplayName>IDescription</DisplayName>
@@ -227,16 +304,31 @@
       </Properties>
     </EntityDefinition>
     <EntityDefinition>
-      <Name>Customer</Name>
+      <Name>Company</Name>
       <EntitySource />
       <NamespaceName>PurchaseOrderTemplate</NamespaceName>
-      <DisplayOrder>5</DisplayOrder>
-      <Abstract>false</Abstract>
+      <DisplayOrder>6</DisplayOrder>
+      <Abstract>true</Abstract>
       <LetDownloadAll>false</LetDownloadAll>
-      <DisplayName>Customer</DisplayName>
-      <DisplayMember>Title</DisplayMember>
-      <BaseTypeName>IDescription</BaseTypeName>
+      <DisplayName>Company</DisplayName>
+      <DisplayMember>ModifierId</DisplayMember>
+      <BaseTypeName>IModified</BaseTypeName>
       <Properties>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>CompanyName</Name>
+          <DisplayOrder>100100</DisplayOrder>
+          <DisplayName>Company Name</DisplayName>
+          <Editable>true</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>true</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+          <MaxLenght>128</MaxLenght>
+        </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>Phone1</Name>
           <DisplayOrder>400100</DisplayOrder>
@@ -376,7 +468,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>Notes</Name>
-          <DisplayOrder>601100</DisplayOrder>
+          <DisplayOrder>501100</DisplayOrder>
           <DisplayName>Notes</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -391,7 +483,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="CollectionProperty">
           <Name>Contacts</Name>
-          <DisplayOrder>800100</DisplayOrder>
+          <DisplayOrder>600100</DisplayOrder>
           <DisplayName>Contacts</DisplayName>
           <Editable>true</Editable>
           <TypeName>ICollection&lt;Contact&gt;</TypeName>
@@ -403,10 +495,77 @@
       </Properties>
     </EntityDefinition>
     <EntityDefinition>
+      <Name>Supplier</Name>
+      <EntitySource />
+      <NamespaceName>PurchaseOrderTemplate</NamespaceName>
+      <DisplayOrder>7</DisplayOrder>
+      <Abstract>false</Abstract>
+      <LetDownloadAll>false</LetDownloadAll>
+      <DisplayName>Supplier</DisplayName>
+      <DisplayMember>ModifierId</DisplayMember>
+      <BaseTypeName>Company</BaseTypeName>
+      <Properties>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>SupplierCode</Name>
+          <DisplayOrder>0</DisplayOrder>
+          <DisplayName>Supplier Code</DisplayName>
+          <Editable>true</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>true</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+          <MaxLenght>0</MaxLenght>
+        </BaseProperty>
+      </Properties>
+    </EntityDefinition>
+    <EntityDefinition>
+      <Name>Customer</Name>
+      <EntitySource />
+      <NamespaceName>PurchaseOrderTemplate</NamespaceName>
+      <DisplayOrder>8</DisplayOrder>
+      <Abstract>false</Abstract>
+      <LetDownloadAll>false</LetDownloadAll>
+      <DisplayName>Customer</DisplayName>
+      <DisplayMember>Title</DisplayMember>
+      <BaseTypeName>Company</BaseTypeName>
+      <Properties>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>CustomerCode</Name>
+          <DisplayOrder>300100</DisplayOrder>
+          <DisplayName>Customer Code</DisplayName>
+          <Editable>true</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>true</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+          <MaxLenght>128</MaxLenght>
+        </BaseProperty>
+        <BaseProperty xsi:type="CollectionProperty">
+          <Name>Orders</Name>
+          <DisplayOrder>801100</DisplayOrder>
+          <DisplayName>Orders</DisplayName>
+          <Editable>true</Editable>
+          <TypeName>ICollection&lt;PuchaseOrder&gt;</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>true</UiVisible>
+        </BaseProperty>
+      </Properties>
+    </EntityDefinition>
+    <EntityDefinition>
       <Name>Contact</Name>
       <EntitySource />
       <NamespaceName>PurchaseOrderTemplate</NamespaceName>
-      <DisplayOrder>6</DisplayOrder>
+      <DisplayOrder>9</DisplayOrder>
       <Abstract>false</Abstract>
       <LetDownloadAll>false</LetDownloadAll>
       <DisplayName>Contact</DisplayName>
@@ -534,9 +693,9 @@
           <MaxLenght>255</MaxLenght>
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
-          <Name>CustomerId</Name>
+          <Name>CompanyId</Name>
           <DisplayOrder>900300</DisplayOrder>
-          <DisplayName>Customer Id</DisplayName>
+          <DisplayName>Company Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
           <IsClientComputed>false</IsClientComputed>
@@ -548,16 +707,16 @@
           <IsNullable>false</IsNullable>
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
-          <Name>Customer</Name>
+          <Name>Company</Name>
           <DisplayOrder>900400</DisplayOrder>
-          <DisplayName>Customer</DisplayName>
+          <DisplayName>Company</DisplayName>
           <Editable>true</Editable>
-          <TypeName>Customer</TypeName>
+          <TypeName>Company</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
           <UiVisible>true</UiVisible>
-          <DependentPropertyName>CustomerId</DependentPropertyName>
+          <DependentPropertyName>CompanyId</DependentPropertyName>
           <DependentPropertyType>int</DependentPropertyType>
         </BaseProperty>
       </Properties>
@@ -566,7 +725,7 @@
       <Name>ProductCategory</Name>
       <EntitySource />
       <NamespaceName>PurchaseOrderTemplate</NamespaceName>
-      <DisplayOrder>7</DisplayOrder>
+      <DisplayOrder>10</DisplayOrder>
       <Abstract>false</Abstract>
       <LetDownloadAll>true</LetDownloadAll>
       <DisplayName>Product Category</DisplayName>
@@ -628,7 +787,7 @@
       <Name>Product</Name>
       <EntitySource />
       <NamespaceName>PurchaseOrderTemplate</NamespaceName>
-      <DisplayOrder>8</DisplayOrder>
+      <DisplayOrder>11</DisplayOrder>
       <Abstract>false</Abstract>
       <LetDownloadAll>false</LetDownloadAll>
       <DisplayName>Product</DisplayName>
@@ -668,16 +827,31 @@
       <Name>PuchaseOrder</Name>
       <EntitySource />
       <NamespaceName>PurchaseOrderTemplate</NamespaceName>
-      <DisplayOrder>8</DisplayOrder>
+      <DisplayOrder>12</DisplayOrder>
       <Abstract>false</Abstract>
       <LetDownloadAll>false</LetDownloadAll>
       <DisplayName>Puchase Order</DisplayName>
       <DisplayMember>Title</DisplayMember>
-      <BaseTypeName>IDescription</BaseTypeName>
+      <BaseTypeName>IApproval</BaseTypeName>
       <Properties>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>Title</Name>
+          <DisplayOrder>300010</DisplayOrder>
+          <DisplayName>Title</DisplayName>
+          <Editable>true</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>true</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+          <MaxLenght>128</MaxLenght>
+        </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>CustomerId</Name>
-          <DisplayOrder>400100</DisplayOrder>
+          <DisplayOrder>401100</DisplayOrder>
           <DisplayName>Customer Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
@@ -691,7 +865,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>Customer</Name>
-          <DisplayOrder>400200</DisplayOrder>
+          <DisplayOrder>401200</DisplayOrder>
           <DisplayName>Customer</DisplayName>
           <Editable>true</Editable>
           <TypeName>Customer</TypeName>
@@ -704,7 +878,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>OrderDate</Name>
-          <DisplayOrder>600100</DisplayOrder>
+          <DisplayOrder>601100</DisplayOrder>
           <DisplayName>Order Date</DisplayName>
           <Editable>true</Editable>
           <TypeName>DateTime</TypeName>
@@ -718,7 +892,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>DueDate</Name>
-          <DisplayOrder>600200</DisplayOrder>
+          <DisplayOrder>601200</DisplayOrder>
           <DisplayName>Due Date</DisplayName>
           <Editable>true</Editable>
           <TypeName>DateTime</TypeName>
@@ -731,8 +905,38 @@
           <IsNullable>true</IsNullable>
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
+          <Name>Code</Name>
+          <DisplayOrder>602000</DisplayOrder>
+          <DisplayName>Code</DisplayName>
+          <Editable>true</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>true</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>true</IsNullable>
+          <MaxLenght>48</MaxLenght>
+        </BaseProperty>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>Description</Name>
+          <DisplayOrder>603000</DisplayOrder>
+          <DisplayName>Description</DisplayName>
+          <Editable>true</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>true</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>true</IsNullable>
+          <MaxLenght>256</MaxLenght>
+        </BaseProperty>
+        <BaseProperty xsi:type="StringProperty">
           <Name>Notes</Name>
-          <DisplayOrder>601100</DisplayOrder>
+          <DisplayOrder>606000</DisplayOrder>
           <DisplayName>Notes</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -751,7 +955,7 @@
       <Name>OrderItem</Name>
       <EntitySource />
       <NamespaceName>PurchaseOrderTemplate</NamespaceName>
-      <DisplayOrder>9</DisplayOrder>
+      <DisplayOrder>13</DisplayOrder>
       <Abstract>false</Abstract>
       <LetDownloadAll>false</LetDownloadAll>
       <DisplayName>Order Item</DisplayName>
