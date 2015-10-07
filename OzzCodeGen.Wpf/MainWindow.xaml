@@ -214,7 +214,8 @@
                                     <DataGridTextColumn Binding="{Binding Name}" Header="Property Name" Width="100"/>
                                     <DataGridTextColumn Binding="{Binding DisplayName}" Header="Display Name" Width="100"/>
                                     <DataGridTextColumn Binding="{Binding TypeName}" Header="Type" Width="100"/>
-                                    <DataGridTextColumn Binding="{Binding DisplayOrder, NotifyOnValidationError=True}" Header="Display Order" Width="40"/>
+                                    <DataGridTextColumn Binding="{Binding DisplayOrder, NotifyOnValidationError=True}"
+                                                        Header="Display Order" Width="80" CellStyle="{StaticResource CellRightAlign}"/>
                                     <DataGridCheckBoxColumn Binding="{Binding UiVisible}" Header="UI Visible" Width="40"/>
                                     <DataGridCheckBoxColumn Binding="{Binding Editable}" Header="Editable" Width="40"/>
                                     <!--<DataGridCheckBoxColumn Binding="{Binding Transient}" Header="Transient" Width="40"/>-->

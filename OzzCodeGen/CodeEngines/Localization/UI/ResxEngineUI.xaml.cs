@@ -22,18 +22,6 @@ namespace OzzCodeGen.CodeEngines.Localization.UI
             PropertiesDataGrid = grdPropertySettings;
         }
 
-        private void mnuEntityOptions_Click(object sender, RoutedEventArgs e)
-        {
-            var engine = (ResxEngine)CodeEngine;
-            foreach (var entity in engine.Entities)
-            {
-                foreach (var item in entity.Properties)
-                {
-                    item.ResetLocalizeRequiredMsg();
-                }
-            }
-        }
-
         private void btnRefreshVocabulary_Click(object sender, RoutedEventArgs e)
         {
             var engine = (ResxEngine)CodeEngine;

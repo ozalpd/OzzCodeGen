@@ -24,5 +24,9 @@
             <Setter Property="FontSize" Value="18" />
             <Setter Property="Padding" Value="4,0,4,0" />
         </Style>
+        <Style x:Key="CellRightAlign">
+            <Setter Property="Control.HorizontalAlignment" Value="Stretch" />
+            <Setter Property="TextBlock.TextAlignment" Value="Right"/>
+        </Style>
     </Application.Resources>
 </Application>

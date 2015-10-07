@@ -51,7 +51,7 @@
         <BaseProperty xsi:type="SimpleProperty">
           <Name>ModifyNr</Name>
           <Comment>Database record's modify number</Comment>
-          <DisplayOrder>10101</DisplayOrder>
+          <DisplayOrder>10010010</DisplayOrder>
           <DisplayName>Modify Nr</DisplayName>
           <Editable>false</Editable>
           <TypeName>int</TypeName>
@@ -66,7 +66,7 @@
         <BaseProperty xsi:type="SimpleProperty">
           <Name>ModifyDate</Name>
           <Comment>Database record's modify date</Comment>
-          <DisplayOrder>10102</DisplayOrder>
+          <DisplayOrder>10010020</DisplayOrder>
           <DisplayName>Modify Date</DisplayName>
           <Editable>false</Editable>
           <TypeName>DateTime</TypeName>
@@ -80,7 +80,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>ModifierId</Name>
-          <DisplayOrder>10103</DisplayOrder>
+          <DisplayOrder>10010030</DisplayOrder>
           <DisplayName>Modified User</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -95,7 +95,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>ModifierIp</Name>
-          <DisplayOrder>10104</DisplayOrder>
+          <DisplayOrder>10010040</DisplayOrder>
           <DisplayName>Modifier Ip</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -124,7 +124,7 @@
       <Properties>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>CreateDate</Name>
-          <DisplayOrder>10111</DisplayOrder>
+          <DisplayOrder>10010110</DisplayOrder>
           <DisplayName>Create Date</DisplayName>
           <Editable>false</Editable>
           <TypeName>DateTime</TypeName>
@@ -138,7 +138,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>CreatorId</Name>
-          <DisplayOrder>10112</DisplayOrder>
+          <DisplayOrder>10010120</DisplayOrder>
           <DisplayName>Created User</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -153,7 +153,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>CreatorIp</Name>
-          <DisplayOrder>10113</DisplayOrder>
+          <DisplayOrder>10010130</DisplayOrder>
           <DisplayName>Creator Ip</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -181,7 +181,7 @@
       <Properties>
         <BaseProperty xsi:type="StringProperty">
           <Name>Title</Name>
-          <DisplayOrder>101</DisplayOrder>
+          <DisplayOrder>1000100</DisplayOrder>
           <DisplayName>Title</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -196,7 +196,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>Code</Name>
-          <DisplayOrder>102</DisplayOrder>
+          <DisplayOrder>1000200</DisplayOrder>
           <DisplayName>Code</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -211,7 +211,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>Description</Name>
-          <DisplayOrder>103</DisplayOrder>
+          <DisplayOrder>1000300</DisplayOrder>
           <DisplayName>Description</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
