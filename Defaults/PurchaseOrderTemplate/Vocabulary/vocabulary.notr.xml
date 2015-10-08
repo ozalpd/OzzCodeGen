@@ -45,6 +45,10 @@
     <Translation>Category</Translation>
   </Vocab>
   <Vocab>
+    <Name>CategoryId</Name>
+    <Translation>Category Id</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Choose</Name>
     <Translation>Choose</Translation>
   </Vocab>

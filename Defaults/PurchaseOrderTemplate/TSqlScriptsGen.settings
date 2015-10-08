@@ -541,7 +541,7 @@
       <CustomStoredProcs>false</CustomStoredProcs>
       <Properties>
         <StorageColumnSetting>
-          <Name>ProductCategoryId</Name>
+          <Name>CategoryId</Name>
           <Exclude>false</Exclude>
           <DataType>int</DataType>
           <Lenght>0</Lenght>

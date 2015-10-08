@@ -45,6 +45,10 @@
     <Translation>Kategori</Translation>
   </Vocab>
   <Vocab>
+    <Name>CategoryId</Name>
+    <Translation>Kategori No</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Choose</Name>
     <Translation>Seç</Translation>
   </Vocab>

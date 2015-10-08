@@ -36,6 +36,11 @@ namespace OzzLocalization.Wpf.Models
         }
         private string _title;
 
+        public bool DirectoryExists
+        {
+            get { return Directory.Exists(FullPath); }
+        }
+
         private void SetTitle()
         {
             if (string.IsNullOrEmpty(FullPath))

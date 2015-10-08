@@ -17,6 +17,7 @@
     </Window.DataContext>
     <Window.Resources>
         <Converters:BoolToColorConverter x:Key="IsTranslatedConverter" ColorForFalseValue="#FFFFDFDA" />
+        <Converters:BoolToColorConverter x:Key="FileExistsConverter" ColorForFalseValue="#FFD00000" ColorForTrueValue="#FF00C000" />
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -53,7 +54,17 @@
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2">
             <ComboBox ItemsSource="{Binding AppSettings.RecentProjects}"
                       SelectedItem="{Binding SelectedProject}" 
-                      Width="200" Margin="4,4,34,4" HorizontalAlignment="Left" />
+                      Width="200" Margin="4,4,34,4" HorizontalAlignment="Left">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Fill="{Binding DirectoryExists, Converter={StaticResource FileExistsConverter}}"
+                                         Width="6" Height="6" Margin="0,0,2,0" />
+                            <TextBlock Text="{Binding Path=Title}" ToolTip="{Binding Path=FullPath}" MinWidth="182"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <Button Name="btnFilter" Content="Filter" Margin="6,4,2,4" Width="60" Click="btnFilter_Click"/>
             <TextBlock Text="By Text:" Margin="6,8,2,6"/>
             <TextBox Text="{Binding FilterByAnyString}" Margin="6,4,2,4" Width="80"/>

@@ -235,7 +235,7 @@ namespace OzzCodeGen.CodeEngines.Localization
 
         protected bool RenderTemplate(LocalizationEntitySetting entitySettings)
         {
-            bool allWritten = RenderTemplate(new LocalizationResx(entitySettings));
+            bool allWritten = true; // RenderTemplate(new LocalizationResx(entitySettings));
 
             foreach (var item in Vocabularies)
             {

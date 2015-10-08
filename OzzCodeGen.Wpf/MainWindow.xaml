@@ -4,11 +4,13 @@
         xmlns:my="clr-namespace:OzzCodeGen.Wpf"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Converters="clr-namespace:OzzUtils.Wpf.Converters;assembly=OzzUtils.Wpf"
         mc:Ignorable="d" Height="640" Width="1280" MinHeight="480" MinWidth="960"
         Title="Ozz Code Generator"
         Loaded="Window_Loaded" Closing="window_Closing"
         Icon="Assets/App-software.ico">
     <Window.Resources>
+        <Converters:BoolToColorConverter x:Key="FileExistsConverter" ColorForFalseValue="#FFD00000" ColorForTrueValue="#FF00C000" />
     </Window.Resources>
     <Grid DataContext="{Binding ElementName=window, Mode=OneWay}">
         <Grid.RowDefinitions>
@@ -36,7 +38,17 @@
                 </StackPanel>
                 <ComboBox x:Name="cboRecentProjects" Width="150" Margin="4" HorizontalAlignment="Left" 
 					SelectedItem="{Binding SelectedProjectFile}" 
-					ItemsSource="{Binding Settings.RecentProjectFiles}"/>
+					ItemsSource="{Binding Settings.RecentProjectFiles}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Fill="{Binding FileExists, Converter={StaticResource FileExistsConverter}}"
+                                         Width="6" Height="6" Margin="0,0,2,0" />
+                                <TextBlock Text="{Binding Path=Name}" ToolTip="{Binding Path=FullPath}" MinWidth="142"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </StackPanel>
             <Grid DataContext="{Binding Project}" Width="640">
                 <Grid.ColumnDefinitions>

@@ -95,14 +95,23 @@ namespace OzzCodeGen.CodeEngines.Localization.Templates
 
         public override string GetDefaultFileName()
         {
-            if (Vocabulary == null)
+            StringBuilder sb = new StringBuilder();
+            sb.Append(EntitySetting.Name);
+
+            if (!(EntitySetting.Name.EndsWith("strings", StringComparison.InvariantCultureIgnoreCase) ||
+                    EntitySetting.Name.EndsWith("str", StringComparison.InvariantCultureIgnoreCase) ||
+                    EntitySetting.Name.EndsWith("string", StringComparison.InvariantCultureIgnoreCase)))
             {
-                return EntitySetting.Name + "String.Resx";
+                sb.Append("String");
             }
-            else
+            if (Vocabulary != null && !Vocabulary.CultureCode.Equals("notr"))
             {
-                return string.Format("{0}String.{1}.Resx", EntitySetting.Name, Vocabulary.CultureCode);
+                sb.Append('.');
+                sb.Append(Vocabulary.CultureCode);
             }
+            sb.Append(".Resx");
+
+            return sb.ToString();
         }
 
         protected string GetPropertyRequiredMsg(LocalizationPropertySetting property)

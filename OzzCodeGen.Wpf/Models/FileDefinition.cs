@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,6 @@ namespace OzzCodeGen.Wpf.Models
 {
     public class FileDefinition : INotifyPropertyChanged
     {
-
         public string Name
         {
             get { return _name; }
@@ -21,7 +21,6 @@ namespace OzzCodeGen.Wpf.Models
             }
         }
         private string _name;
-
 
         public string FullPath
         {
@@ -36,6 +35,11 @@ namespace OzzCodeGen.Wpf.Models
             }
         }
         private string _fullPath;
+
+        public bool FileExists
+        {
+            get { return File.Exists(FullPath); }
+        }
 
 
         public override string ToString()

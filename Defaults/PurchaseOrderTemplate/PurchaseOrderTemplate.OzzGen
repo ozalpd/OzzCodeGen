@@ -50,7 +50,7 @@
       <Properties>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>CreateDate</Name>
-          <DisplayOrder>10030010</DisplayOrder>
+          <DisplayOrder>10090010</DisplayOrder>
           <DisplayName>Create Date</DisplayName>
           <Editable>false</Editable>
           <TypeName>DateTime</TypeName>
@@ -65,7 +65,7 @@
         <BaseProperty xsi:type="StringProperty">
           <Name>CreatorId</Name>
           <Comment>UserId of record's creator.</Comment>
-          <DisplayOrder>10030020</DisplayOrder>
+          <DisplayOrder>10090020</DisplayOrder>
           <DisplayName>Created User</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -81,7 +81,7 @@
         <BaseProperty xsi:type="StringProperty">
           <Name>CreatorIp</Name>
           <Comment>IP Address of record's creator.</Comment>
-          <DisplayOrder>10030030</DisplayOrder>
+          <DisplayOrder>10090030</DisplayOrder>
           <DisplayName>Creator Ip</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -111,7 +111,7 @@
         <BaseProperty xsi:type="SimpleProperty">
           <Name>ModifyNr</Name>
           <Comment>Database record's modify number</Comment>
-          <DisplayOrder>10010010</DisplayOrder>
+          <DisplayOrder>10080010</DisplayOrder>
           <DisplayName>Modify Nr</DisplayName>
           <Editable>false</Editable>
           <TypeName>int</TypeName>
@@ -126,7 +126,7 @@
         <BaseProperty xsi:type="SimpleProperty">
           <Name>ModifyDate</Name>
           <Comment>Date of last modification of the record.</Comment>
-          <DisplayOrder>10010020</DisplayOrder>
+          <DisplayOrder>10080020</DisplayOrder>
           <DisplayName>Modify Date</DisplayName>
           <Editable>false</Editable>
           <TypeName>DateTime</TypeName>
@@ -141,7 +141,7 @@
         <BaseProperty xsi:type="StringProperty">
           <Name>ModifierId</Name>
           <Comment>UserId of last modifier of the record.</Comment>
-          <DisplayOrder>10010030</DisplayOrder>
+          <DisplayOrder>10080030</DisplayOrder>
           <DisplayName>Modified User</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -157,7 +157,7 @@
         <BaseProperty xsi:type="StringProperty">
           <Name>ModifierIp</Name>
           <Comment>IP Address of last modifier of the record.</Comment>
-          <DisplayOrder>10010040</DisplayOrder>
+          <DisplayOrder>10080040</DisplayOrder>
           <DisplayName>Modifier Ip</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -795,7 +795,7 @@
       <BaseTypeName>IDescription</BaseTypeName>
       <Properties>
         <BaseProperty xsi:type="SimpleProperty">
-          <Name>ProductCategoryId</Name>
+          <Name>CategoryId</Name>
           <DisplayOrder>600100</DisplayOrder>
           <DisplayName>Product Category Id</DisplayName>
           <Editable>true</Editable>
@@ -809,7 +809,7 @@
           <IsNullable>false</IsNullable>
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
-          <Name>ProductCategory</Name>
+          <Name>Category</Name>
           <DisplayOrder>600200</DisplayOrder>
           <DisplayName>Product Category</DisplayName>
           <Editable>true</Editable>
@@ -818,7 +818,7 @@
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
           <UiVisible>true</UiVisible>
-          <DependentPropertyName>ProductCategoryId</DependentPropertyName>
+          <DependentPropertyName>CategoryId</DependentPropertyName>
           <DependentPropertyType>int</DependentPropertyType>
         </BaseProperty>
       </Properties>
