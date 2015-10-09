@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ResxEngine xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Language>CSharp</Language>
-  <NamespaceName>DefaultProject.Resources</NamespaceName>
+  <NamespaceName>PurchaseOrderTemplate.Resources</NamespaceName>
   <TargetFolder>Resources</TargetFolder>
   <EntitySettings>
     <BaseEntitySetting xsi:type="LocalizationEntitySetting">
@@ -464,7 +464,8 @@
     </BaseEntitySetting>
   </EntitySettings>
   <RenderAllEntities>false</RenderAllEntities>
+  <ErrorResxFilename>ErrorStrings</ErrorResxFilename>
   <SingleResx>true</SingleResx>
-  <SingleResxFilename>LocalizedStrings</SingleResxFilename>
+  <SingleResxFilename>EntityStrings</SingleResxFilename>
   <VocabularyFolder>Vocabulary</VocabularyFolder>
 </ResxEngine>

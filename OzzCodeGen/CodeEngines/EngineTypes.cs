@@ -15,6 +15,7 @@ namespace OzzCodeGen.CodeEngines
         public const string AspNetMvcEngineId = "AspNetMvc_Controller_View_Generator";
         public const string EfDbFirstDataLayerId = "EF_DatabaseFirst_DataLayer";
         public const string LocalizationResxGenId = "Localization_Resource_Generator";
+        public const string MetadataCodeEngineId = "Metadata_Class_Generator";
 
         public const string TSqlScriptsId = "T-Sql_Scripts_Generator";
         public const string SqliteScriptsId = "Sqlite_Scripts_Generator";
@@ -29,6 +30,9 @@ namespace OzzCodeGen.CodeEngines
         {
             switch (targetProjectId)
             {
+                case MetadataCodeEngineId:
+                    return new Metadata.MetadataCodeEngine();
+
                 case AspNetMvcEngineId:
                     return new AspNetMvc.AspNetMvcEngine();
 
@@ -61,6 +65,10 @@ namespace OzzCodeGen.CodeEngines
 
             switch (targetProjectId)
             {
+                case MetadataCodeEngineId:
+                    fileName = Path.Combine(Directory, Metadata.MetadataCodeEngine.DefaultFileName);
+                    return Metadata.MetadataCodeEngine.OpenFile(fileName);
+
                 case AspNetMvcEngineId:
                     fileName = Path.Combine(Directory, AspNetMvc.AspNetMvcEngine.DefaultFileName);
                     return AspNetMvc.AspNetMvcEngine.OpenFile(fileName);

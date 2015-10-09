@@ -1038,6 +1038,7 @@
   <SourceClassPrefix />
   <CodeEngineList>
     <string>T-Sql_Scripts_Generator</string>
+    <string>Metadata_Class_Generator</string>
     <string>Localization_Resource_Generator</string>
   </CodeEngineList>
 </CodeGenProject>

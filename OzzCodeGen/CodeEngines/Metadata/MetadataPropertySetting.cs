@@ -1,0 +1,255 @@
+﻿using OzzCodeGen.Definitions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+namespace OzzCodeGen.CodeEngines.Metadata
+{
+    public class MetadataPropertySetting : BasePropertySetting
+    {
+        [XmlIgnore]
+        public MetadataEntitySetting MetadataEntitySetting
+        {
+            get { return (MetadataEntitySetting)EntitySetting; }
+        }
+
+        [XmlIgnore]
+        public MetadataCodeEngine CodeEngine
+        {
+            get { return MetadataEntitySetting.CodeEngine; }
+        }
+
+        /// <summary>
+        /// UIHint of the Property
+        /// </summary>
+        public string UIHint
+        {
+            get { return _uiHint; }
+            set
+            {
+                if (_uiHint == value) return;
+                _uiHint = value;
+                RaisePropertyChanged("UIHint");
+            }
+        }
+        private string _uiHint;
+
+        /// <summary>
+        /// DataType of the Property
+        /// </summary>
+        public string DataType
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_dataType) && IsSimpleOrString)
+                {
+                    _dataType = GetDefaultDataType();
+                }
+                return _dataType;
+            }
+            set
+            {
+                if (_dataType == value || !IsSimpleOrString)
+                    return;
+                _dataType = string.IsNullOrEmpty(GetDefaultDataType()) && value.Equals(DataTypes.NotSpecial) ?
+                            string.Empty : value;
+                RaisePropertyChanged("DataType");
+            }
+        }
+        private string _dataType;
+
+        private string GetDefaultDataType()
+        {
+            var lowerName = Name.ToLowerInvariant();
+            if (lowerName.Contains("phone"))
+            {
+                return DataTypes.PhoneNumber;
+            }
+            if (lowerName.Contains("email") || lowerName.Contains("e-mail"))
+            {
+                return DataTypes.EmailAddress;
+            }
+            if (lowerName.Contains("postalcode") || lowerName.Contains("zip"))
+            {
+                return DataTypes.PostalCode;
+            }
+            if (lowerName.Equals("description") || lowerName.Contains("notes"))
+            {
+                return DataTypes.MultilineText;
+            }
+            if (lowerName.Equals("price") || lowerName.Contains("cost"))
+            {
+                return DataTypes.Currency;
+            }
+            if (lowerName.Equals("password"))
+            {
+                return DataTypes.Password;
+            }
+            if (lowerName.Contains("imageurl"))
+            {
+                return DataTypes.ImageUrl;
+            }
+            if (lowerName.EndsWith("url"))
+            {
+                return DataTypes.Url;
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Range of the Property
+        /// </summary>
+        public string Range
+        {
+            get { return _range; }
+            set
+            {
+                if (_range == value) return;
+                _range = value;
+                RaisePropertyChanged("Range");
+            }
+        }
+        private string _range;
+
+        /// <summary>
+        /// RegularExpression of the Property
+        /// </summary>
+        public string RegularExpression
+        {
+            get { return _regularExpression; }
+            set
+            {
+                if (_regularExpression == value) return;
+                _regularExpression = value;
+                RaisePropertyChanged("RegularExpression");
+            }
+        }
+        private string _regularExpression;
+
+        public string GetDisplayAttrib()
+        {
+            if (!string.IsNullOrEmpty(ResourceName))
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("[Display(ResourceType = typeof(");
+                sb.Append(ResourceName);
+                sb.Append("), Name = \"");
+                sb.Append(Name);
+                sb.Append("\")]");
+
+                return sb.ToString();
+            }
+            if (!string.IsNullOrEmpty(PropertyDefinition.DisplayName))
+            {
+                return "[DisplayName(\"" + PropertyDefinition.DisplayName + "\")]";
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        [XmlIgnore]
+        protected string ResourceName
+        {
+            get
+            {
+                if (!CodeEngine.UseResourceFiles)
+                {
+                    return string.Empty;
+                }
+
+                if (string.IsNullOrEmpty(_resourceName))
+                {
+                    var resxEngine = CodeEngine.ResxEngine;
+
+                    if (resxEngine != null && resxEngine.SingleResx)
+                    {
+                        _resourceName = resxEngine.SingleResxFilename; //resxEngine.MergeWithNamespace(resxEngine.SingleResxFilename);
+                    }
+                    else if (resxEngine != null)
+                    {
+                        var resxEntity = resxEngine
+                                        .Entities
+                                        .FirstOrDefault(e => e.Name.Equals(MetadataEntitySetting.Name));
+                        _resourceName = resxEngine.GetDefaultTargetFile(resxEntity); //resxEngine.MergeWithNamespace(resxEngine.GetDefaultTargetFile(resxEntity));
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
+                }
+                return _resourceName;
+            }
+        }
+        string _resourceName;
+
+
+        protected string GetDefaultRequiredMsg(BaseProperty PropertyDefinition)
+        {
+            if (PropertyDefinition == null || PropertyDefinition.IsTypeBoolean())
+            {
+                return string.Empty;
+            }
+
+            if (PropertyDefinition is SimpleProperty)
+            {
+                if (((SimpleProperty)PropertyDefinition).IsKey || ((SimpleProperty)PropertyDefinition).IsNullable)
+                {
+                    return string.Empty;
+                }
+                if (CodeEngine.UseResourceFiles && CodeEngine.ResxEngine != null &&
+                    !string.IsNullOrEmpty(CodeEngine.ResxEngine.ErrorResxFilename))
+                {
+                    var resxEngine = CodeEngine.ResxEngine;
+                    /*
+                    var resxEntity = resxEngine
+                                    .Entities
+                                    .FirstOrDefault(e => e.Name.Equals(MetadataEntitySetting.Name));
+                    var resxProperty = resxEntity == null ? null :
+                                        resxEntity.Properties.FirstOrDefault(p => p.Name.Equals(Name));
+                                        */
+                    //TODO: get reqString from resxProperty
+                    var reqString = "Required";
+                    var errorResx = resxEngine.ErrorResxFilename; //resxEngine.MergeWithNamespace(resxEngine.ErrorResxFilename);
+                    return string.Format("ErrorMessageResourceType = typeof({0}), ErrorMessageResourceName = \"Required\"",
+                               errorResx, reqString);
+                }
+                else
+                {
+                    return "[Required]";
+                }
+            }
+
+            return string.Empty;
+        }
+
+
+        /// <summary>
+        /// Required of the Property
+        /// </summary>
+        public string Required
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_required))
+                {
+                    bool fl = this.EntitySetting.EntityDefinition == null;
+                    _required = GetDefaultRequiredMsg(PropertyDefinition);
+                }
+                return _required;
+            }
+            set
+            {
+                if (_required == value) return;
+                _required = value;
+                RaisePropertyChanged("Required");
+            }
+        }
+        private string _required;
+    }
+}

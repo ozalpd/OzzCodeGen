@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MetadataCodeEngine xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Language>CSharp</Language>
+  <NamespaceName>DefaultProject.Models</NamespaceName>
+  <TargetFolder>Metadata</TargetFolder>
+  <EntitySettings>
+    <BaseEntitySetting xsi:type="MetadataEntitySetting">
+      <Name>IPrimaryKey</Name>
+      <Exclude>true</Exclude>
+      <OverwriteExisting>false</OverwriteExisting>
+      <Properties>
+        <MetadataPropertySetting>
+          <Name>Id</Name>
+          <Exclude>true</Exclude>
+          <DataType />
+          <Required />
+        </MetadataPropertySetting>
+      </Properties>
+    </BaseEntitySetting>
+    <BaseEntitySetting xsi:type="MetadataEntitySetting">
+      <Name>ICreated</Name>
+      <Exclude>true</Exclude>
+      <OverwriteExisting>false</OverwriteExisting>
+      <Properties>
+        <MetadataPropertySetting>
+          <Name>CreateDate</Name>
+          <Exclude>true</Exclude>
+          <DataType />
+          <Required>ErrorMessageResourceType = typeof(DefaultProject.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
+        </MetadataPropertySetting>
+        <MetadataPropertySetting>
+          <Name>CreatorId</Name>
+          <Exclude>true</Exclude>
+          <DataType />
+          <Required>ErrorMessageResourceType = typeof(DefaultProject.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
+        </MetadataPropertySetting>
+        <MetadataPropertySetting>
+          <Name>CreatorIp</Name>
+          <Exclude>true</Exclude>
+          <DataType />
+          <Required>ErrorMessageResourceType = typeof(DefaultProject.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
+        </MetadataPropertySetting>
+      </Properties>
+    </BaseEntitySetting>
+    <BaseEntitySetting xsi:type="MetadataEntitySetting">
+      <Name>IModified</Name>
+      <Exclude>true</Exclude>
+      <OverwriteExisting>false</OverwriteExisting>
+      <Properties>
+        <MetadataPropertySetting>
+          <Name>ModifyNr</Name>
+          <Exclude>true</Exclude>
+          <DataType />
+          <Required>ErrorMessageResourceType = typeof(DefaultProject.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
+        </MetadataPropertySetting>
+        <MetadataPropertySetting>
+          <Name>ModifyDate</Name>
+          <Exclude>true</Exclude>
+          <DataType />
+          <Required>ErrorMessageResourceType = typeof(DefaultProject.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
+        </MetadataPropertySetting>
+        <MetadataPropertySetting>
+          <Name>ModifierId</Name>
+          <Exclude>true</Exclude>
+          <DataType />
+          <Required>ErrorMessageResourceType = typeof(DefaultProject.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
+        </MetadataPropertySetting>
+        <MetadataPropertySetting>
+          <Name>ModifierIp</Name>
+          <Exclude>true</Exclude>
+          <DataType />
+          <Required>ErrorMessageResourceType = typeof(DefaultProject.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
+        </MetadataPropertySetting>
+      </Properties>
+    </BaseEntitySetting>
+    <BaseEntitySetting xsi:type="MetadataEntitySetting">
+      <Name>UntitledEntity</Name>
+      <Exclude>false</Exclude>
+      <OverwriteExisting>false</OverwriteExisting>
+      <Properties>
+        <MetadataPropertySetting>
+          <Name>Title</Name>
+          <Exclude>false</Exclude>
+          <DataType />
+          <Required>ErrorMessageResourceType = typeof(DefaultProject.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
+        </MetadataPropertySetting>
+        <MetadataPropertySetting>
+          <Name>Code</Name>
+          <Exclude>false</Exclude>
+          <DataType />
+          <Required />
+        </MetadataPropertySetting>
+        <MetadataPropertySetting>
+          <Name>Description</Name>
+          <Exclude>false</Exclude>
+          <DataType>MultilineText</DataType>
+          <Required />
+        </MetadataPropertySetting>
+      </Properties>
+    </BaseEntitySetting>
+  </EntitySettings>
+  <RenderAllEntities>false</RenderAllEntities>
+  <UseResourceFiles>true</UseResourceFiles>
+</MetadataCodeEngine>

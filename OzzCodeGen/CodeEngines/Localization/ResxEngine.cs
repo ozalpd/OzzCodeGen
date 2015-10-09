@@ -72,6 +72,26 @@ namespace OzzCodeGen.CodeEngines.Localization
             return setting;
         }
 
+
+        public string ErrorResxFilename
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_errorResxFilename))
+                {
+                    _errorResxFilename = "ErrorStrings";
+                }
+                return _errorResxFilename;
+            }
+            set
+            {
+                _errorResxFilename = value;
+                RaisePropertyChanged("ErrorResxFilename");
+            }
+        }
+        private string _errorResxFilename;
+
+
         public bool SingleResx
         {
             get { return _singleResx ?? true; }
@@ -81,8 +101,20 @@ namespace OzzCodeGen.CodeEngines.Localization
                 RaisePropertyChanged("SingleResx");
             }
         }
-        private bool? _singleResx;
 
+        public string GetDefaultTargetFile(LocalizationEntitySetting entity)
+        {
+            if (SingleResx)
+            {
+                return entity.Name;
+            }
+            else
+            {
+                return string.Format("{0}{1}", entity.Name, "String");
+            }
+        }
+
+        private bool? _singleResx;
 
         public string SingleResxFilename
         {
@@ -90,7 +122,7 @@ namespace OzzCodeGen.CodeEngines.Localization
             {
                 if (string.IsNullOrEmpty(_singleResxFilename))
                 {
-                    _singleResxFilename = "AppForm";
+                    _singleResxFilename = "EntityStrings";
                 }
                 return _singleResxFilename;
             }
@@ -240,7 +272,7 @@ namespace OzzCodeGen.CodeEngines.Localization
             foreach (var item in Vocabularies)
             {
                 allWritten = RenderTemplate(
-                        new LocalizationResx(entitySettings, item.Value)) & allWritten;
+                        new LocalizationResx(entitySettings, item.Value, this)) & allWritten;
             }
             return allWritten;
         }

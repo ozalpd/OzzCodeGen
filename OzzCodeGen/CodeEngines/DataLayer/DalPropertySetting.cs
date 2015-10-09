@@ -109,11 +109,6 @@ namespace OzzCodeGen.CodeEngines.DataLayer
 
         public string GetDisplayAttrib()
         {
-            //if (!string.IsNullOrEmpty(ResourceName))
-            //{
-            //    return string.Format("[Display(Name = \"{1}\", ResourceType = typeof({0}))]",
-            //                   ResourceName, PropertyDefinition.Name);
-            //}
             if (!string.IsNullOrEmpty(PropertyDefinition.DisplayName))
             {
                 return "[DisplayName(\"" + PropertyDefinition.DisplayName + "\")]";
@@ -134,7 +129,7 @@ namespace OzzCodeGen.CodeEngines.DataLayer
                     var entity = (DalEntitySetting)EntitySetting;
                     if (entity.CodeEngine.ResxEngine != null)
                     {
-                        _resourceName = entity.CodeEngine.ResxEngine.SingleResx ? "Resources.AppFormString" :
+                        _resourceName = entity.CodeEngine.ResxEngine.SingleResx ? entity.CodeEngine.ResxEngine.SingleResxFilename :
                                             string.Format("Resources.{0}String", PropertyDefinition.EntityDefinition.Name);
                     }
                     else

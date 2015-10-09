@@ -58,6 +58,15 @@ namespace OzzCodeGen.CodeEngines
         }
         BaseProperty _entityDefinition = null;
 
+        [XmlIgnore]
+        public bool IsSimpleOrString
+        {
+            get
+            {
+                return PropertyDefinition is SimpleProperty || PropertyDefinition is StringProperty;
+            }
+        }
+
         public bool IsForeignKey()
         {
             return PropertyDefinition is SimpleProperty && 

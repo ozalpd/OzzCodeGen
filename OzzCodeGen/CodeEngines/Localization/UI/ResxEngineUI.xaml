@@ -92,6 +92,26 @@
                      Height="24" 
                      Margin="4,0,0,0"/>
 
+
+            <TextBlock Text="Error Resx File:"
+                       ToolTip="Name for resx file of error messages"
+                       Grid.Column="2" Grid.Row="3" Margin="4,4,0,0"/>
+            <TextBox Text="{Binding ErrorResxFilename, Mode=TwoWay}"
+                     Grid.Column="3" Grid.Row="3"
+                     Height="24" 
+                     Margin="4,0,0,0">
+                <TextBox.ToolTip>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}\{1}.resx">
+                                <Binding Path="TargetDirectory" />
+                                <Binding Path="ErrorResxFilename" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </TextBox.ToolTip>
+            </TextBox>
+
             <Grid Grid.Row="8" Grid.ColumnSpan="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

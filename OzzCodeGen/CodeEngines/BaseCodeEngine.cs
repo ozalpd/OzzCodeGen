@@ -62,6 +62,11 @@ namespace OzzCodeGen.CodeEngines
         }
         private TargetLanguage _language;
 
+        public string MergeWithNamespace(string name)
+        {
+            return string.Format("{0}.{1}", NamespaceName, name);
+        }
+
         public string NamespaceName
         {
             get

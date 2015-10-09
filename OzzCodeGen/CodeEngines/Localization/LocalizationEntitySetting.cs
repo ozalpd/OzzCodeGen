@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.Localization
@@ -14,7 +10,6 @@ namespace OzzCodeGen.CodeEngines.Localization
         {
             get { return EntityDefinition.BaseTypeName; }
         }
-
 
         public bool LocalizeEntityName
         {
@@ -33,7 +28,6 @@ namespace OzzCodeGen.CodeEngines.Localization
             }
         }
         private bool? _localizeEntityName;
-
 
         public List<LocalizationPropertySetting> Properties
         {

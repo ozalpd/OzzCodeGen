@@ -37,11 +37,69 @@
       </Properties>
     </EntityDefinition>
     <EntityDefinition>
+      <Name>ICreated</Name>
+      <EntitySource />
+      <Comment>Keeps who did create for each entity</Comment>
+      <NamespaceName>DefaultProject</NamespaceName>
+      <DisplayOrder>2</DisplayOrder>
+      <Abstract>true</Abstract>
+      <LetDownloadAll>false</LetDownloadAll>
+      <DisplayName>ICreated</DisplayName>
+      <DisplayMember>CreatorId</DisplayMember>
+      <BaseTypeName>IPrimaryKey</BaseTypeName>
+      <Properties>
+        <BaseProperty xsi:type="SimpleProperty">
+          <Name>CreateDate</Name>
+          <DisplayOrder>10010110</DisplayOrder>
+          <DisplayName>Create Date</DisplayName>
+          <Editable>false</Editable>
+          <TypeName>DateTime</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>true</IsStoreGenerated>
+          <UiVisible>false</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+        </BaseProperty>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>CreatorId</Name>
+          <DisplayOrder>10010120</DisplayOrder>
+          <DisplayName>Created User</DisplayName>
+          <Editable>false</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>true</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>false</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+          <MaxLenght>48</MaxLenght>
+        </BaseProperty>
+        <BaseProperty xsi:type="StringProperty">
+          <Name>CreatorIp</Name>
+          <DisplayOrder>10010130</DisplayOrder>
+          <DisplayName>Creator Ip</DisplayName>
+          <Editable>false</Editable>
+          <TypeName>string</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>true</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>false</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+          <MaxLenght>48</MaxLenght>
+        </BaseProperty>
+      </Properties>
+    </EntityDefinition>
+    <EntityDefinition>
       <Name>IModified</Name>
       <EntitySource />
       <Comment>Keeps who did modify for each entity</Comment>
       <NamespaceName>DefaultProject</NamespaceName>
-      <DisplayOrder>2</DisplayOrder>
+      <DisplayOrder>3</DisplayOrder>
       <Abstract>true</Abstract>
       <LetDownloadAll>false</LetDownloadAll>
       <DisplayName>IModified</DisplayName>
@@ -111,68 +169,10 @@
       </Properties>
     </EntityDefinition>
     <EntityDefinition>
-      <Name>ICreated</Name>
-      <EntitySource />
-      <Comment>Keeps who did create for each entity</Comment>
-      <NamespaceName>DefaultProject</NamespaceName>
-      <DisplayOrder>3</DisplayOrder>
-      <Abstract>true</Abstract>
-      <LetDownloadAll>false</LetDownloadAll>
-      <DisplayName>ICreated</DisplayName>
-      <DisplayMember>CreatorId</DisplayMember>
-      <BaseTypeName>IPrimaryKey</BaseTypeName>
-      <Properties>
-        <BaseProperty xsi:type="SimpleProperty">
-          <Name>CreateDate</Name>
-          <DisplayOrder>10010110</DisplayOrder>
-          <DisplayName>Create Date</DisplayName>
-          <Editable>false</Editable>
-          <TypeName>DateTime</TypeName>
-          <IsClientComputed>false</IsClientComputed>
-          <IsServerComputed>false</IsServerComputed>
-          <IsStoreGenerated>true</IsStoreGenerated>
-          <UiVisible>false</UiVisible>
-          <IsKey>false</IsKey>
-          <IsForeignKey>false</IsForeignKey>
-          <IsNullable>false</IsNullable>
-        </BaseProperty>
-        <BaseProperty xsi:type="StringProperty">
-          <Name>CreatorId</Name>
-          <DisplayOrder>10010120</DisplayOrder>
-          <DisplayName>Created User</DisplayName>
-          <Editable>false</Editable>
-          <TypeName>string</TypeName>
-          <IsClientComputed>false</IsClientComputed>
-          <IsServerComputed>true</IsServerComputed>
-          <IsStoreGenerated>false</IsStoreGenerated>
-          <UiVisible>false</UiVisible>
-          <IsKey>false</IsKey>
-          <IsForeignKey>false</IsForeignKey>
-          <IsNullable>false</IsNullable>
-          <MaxLenght>48</MaxLenght>
-        </BaseProperty>
-        <BaseProperty xsi:type="StringProperty">
-          <Name>CreatorIp</Name>
-          <DisplayOrder>10010130</DisplayOrder>
-          <DisplayName>Creator Ip</DisplayName>
-          <Editable>false</Editable>
-          <TypeName>string</TypeName>
-          <IsClientComputed>false</IsClientComputed>
-          <IsServerComputed>true</IsServerComputed>
-          <IsStoreGenerated>false</IsStoreGenerated>
-          <UiVisible>false</UiVisible>
-          <IsKey>false</IsKey>
-          <IsForeignKey>false</IsForeignKey>
-          <IsNullable>false</IsNullable>
-          <MaxLenght>48</MaxLenght>
-        </BaseProperty>
-      </Properties>
-    </EntityDefinition>
-    <EntityDefinition>
       <Name>UntitledEntity</Name>
       <EntitySource />
       <NamespaceName>DefaultProject</NamespaceName>
-      <DisplayOrder>3</DisplayOrder>
+      <DisplayOrder>4</DisplayOrder>
       <Abstract>false</Abstract>
       <LetDownloadAll>false</LetDownloadAll>
       <DisplayName>Untitled Entity</DisplayName>
@@ -230,6 +230,7 @@
   <StripSourcePrefixes>false</StripSourcePrefixes>
   <SourceClassPrefix />
   <CodeEngineList>
+    <string>Metadata_Class_Generator</string>
     <string>Localization_Resource_Generator</string>
   </CodeEngineList>
 </CodeGenProject>

@@ -19,6 +19,8 @@ namespace OzzCodeGen.UI
 
             ReadOnlyColumns.Add("Name");
 
+            HiddenColumns.Add("IsKey");
+            HiddenColumns.Add("IsSimpleOrString");
             HiddenColumns.Add("DataModel");
             HiddenColumns.Add("EntityDefinition");
             HiddenColumns.Add("EntitySetting");

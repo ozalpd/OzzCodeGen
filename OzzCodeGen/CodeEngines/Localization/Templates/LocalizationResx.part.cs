@@ -11,18 +11,16 @@ namespace OzzCodeGen.CodeEngines.Localization.Templates
 {
     public partial class LocalizationResx : AbstractTemplate
     {
-        public LocalizationResx(LocalizationEntitySetting entitySetting)
-        {
-            EntitySetting = entitySetting;
-        }
-
-        public LocalizationResx(LocalizationEntitySetting entitySetting, Vocabulary vocabulary)
+        public LocalizationResx(LocalizationEntitySetting entitySetting,
+            Vocabulary vocabulary, ResxEngine engine)
         {
             EntitySetting = entitySetting;
             Vocabulary = vocabulary;
+            CodeEngine = engine;
         }
 
         public Vocabulary Vocabulary { get; private set; }
+        public ResxEngine CodeEngine { get; private set; }
 
         public LocalizationEntitySetting EntitySetting
         {
@@ -96,20 +94,14 @@ namespace OzzCodeGen.CodeEngines.Localization.Templates
         public override string GetDefaultFileName()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(EntitySetting.Name);
+            sb.Append(CodeEngine.GetDefaultTargetFile(EntitySetting));
 
-            if (!(EntitySetting.Name.EndsWith("strings", StringComparison.InvariantCultureIgnoreCase) ||
-                    EntitySetting.Name.EndsWith("str", StringComparison.InvariantCultureIgnoreCase) ||
-                    EntitySetting.Name.EndsWith("string", StringComparison.InvariantCultureIgnoreCase)))
-            {
-                sb.Append("String");
-            }
             if (Vocabulary != null && !Vocabulary.CultureCode.Equals("notr"))
             {
                 sb.Append('.');
                 sb.Append(Vocabulary.CultureCode);
             }
-            sb.Append(".Resx");
+            sb.Append(".resx");
 
             return sb.ToString();
         }
