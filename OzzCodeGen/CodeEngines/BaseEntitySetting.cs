@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using OzzCodeGen.Definitions;
 
@@ -33,7 +30,7 @@ namespace OzzCodeGen.CodeEngines
             {
                 if (!_exclude.HasValue)
                 {
-                    _exclude = EntityDefinition.Abstract;
+                    _exclude = EntityDefinition != null && EntityDefinition.Abstract;
                 }
                 return _exclude.Value;
             }
@@ -76,7 +73,7 @@ namespace OzzCodeGen.CodeEngines
         {
             get
             {
-                if (_entityDefinition == null)
+                if (_entityDefinition == null && DataModel != null)
                 {
                     _entityDefinition = DataModel.FirstOrDefault(e => e.Name == Name);
                 }
@@ -91,7 +88,7 @@ namespace OzzCodeGen.CodeEngines
             return Name;
         }
 
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void RaisePropertyChanged(string propertyName)

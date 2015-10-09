@@ -196,6 +196,107 @@ namespace OzzCodeGen.CodeEngines.Localization
         }
 
 
+        public ObservableCollection<LocalizationEntitySetting> SupplementaryEntities
+        {
+            set
+            {
+                _supplementaryEntities = value;
+                RaisePropertyChanged("SupplementaryEntities");
+            }
+            get
+            {
+                if (_supplementaryEntities == null)
+                    _supplementaryEntities = new ObservableCollection<LocalizationEntitySetting>();
+                return _supplementaryEntities;
+            }
+        }
+        private ObservableCollection<LocalizationEntitySetting> _supplementaryEntities;
+
+        public void SetSupplementaryEntities()
+        {
+            foreach (var entity in DefaultSupplementaryEntities)
+            {
+                if (!SupplementaryEntities.Any(e => e.Name.Equals(entity)))
+                {
+                    SupplementaryEntities.Add(new LocalizationEntitySetting()
+                    {
+                        Name = entity,
+                        LocalizeEntityName = false
+                    });
+                }
+            }
+        }
+        public static string[] DefaultSupplementaryEntities = {
+            "ActionStrings",
+            "CommonStrings",
+            "MessageStrings"
+        };
+
+        [XmlIgnore]
+        public LocalizationEntitySetting SelectedSuplmEntity
+        {
+            get { return _selectedSuplmEntity; }
+            set
+            {
+                if (_selectedSuplmEntity == value)
+                    return;
+                _selectedSuplmEntity = value;
+                RaisePropertyChanged("SelectedSuplmEntity");
+            }
+        }
+        private LocalizationEntitySetting _selectedSuplmEntity;
+
+        [XmlIgnore]
+        public LocalizationPropertySetting SelectedSuplmProperty
+        {
+            set
+            {
+                _selectedSuplmProperty = value;
+                RaisePropertyChanged("SelectedSuplmProperty");
+            }
+            get
+            {
+                return _selectedSuplmProperty;
+            }
+        }
+        private LocalizationPropertySetting _selectedSuplmProperty;
+
+
+        public bool ExistSupplmProperty(string propertyName)
+        {
+            bool exist = false;
+            foreach(var item in SupplementaryEntities)
+            {
+                exist = item
+                        .Properties
+                        .Any(p => p.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase));
+                if (exist) break;
+            }
+            return exist;
+        }
+
+        public bool AddSupplmProperty(string propertyName)
+        {
+            if (SelectedSuplmEntity==null || ExistSupplmProperty(propertyName))
+                return false;
+
+            var property = new LocalizationPropertySetting()
+            {
+                Name = propertyName.ToPascalCase(),
+                Exclude = false,
+                LocalizeRequiredMsg = false,
+                LocalizeValidationMsg = false
+            };
+
+            SelectedSuplmEntity.Properties.Add(property);
+            SelectedSuplmEntity.Properties = new ObservableCollection<LocalizationPropertySetting>(
+                                                SelectedSuplmEntity
+                                                .Properties
+                                                .OrderBy(p => p.Name));
+
+            return true;
+        }
+
         protected LocalizationPropertySetting GetDefaultPropertySetting(BaseProperty property, LocalizationEntitySetting setting)
         {
             var ps = new LocalizationPropertySetting()
@@ -238,9 +339,10 @@ namespace OzzCodeGen.CodeEngines.Localization
                     ps.EntitySetting = setting;
                 }
             }
-            entitySetting.Properties = entitySetting
-                .Properties.OrderBy(p => p.PropertyDefinition.DisplayOrder)
-                .ToList();
+            entitySetting.Properties = new ObservableCollection<LocalizationPropertySetting>(
+                                        entitySetting
+                                        .Properties
+                                        .OrderBy(p => p.PropertyDefinition.DisplayOrder));
         }
 
         protected override System.Windows.Controls.UserControl GetUiControl()
@@ -286,7 +388,7 @@ namespace OzzCodeGen.CodeEngines.Localization
             var combinedEntity = new LocalizationEntitySetting()
             {
                 Name = SingleResxFilename,
-                Properties = new List<LocalizationPropertySetting>()
+                Properties = new ObservableCollection<LocalizationPropertySetting>()
             };
 
             foreach (LocalizationEntitySetting entity in EntitySettings.Where(e => e.Exclude == false))
@@ -324,20 +426,31 @@ namespace OzzCodeGen.CodeEngines.Localization
                 }
             }
 
-            combinedEntity.Properties = combinedEntity.Properties.OrderBy(p => p.Name).ToList();
+            combinedEntity.Properties = new ObservableCollection<LocalizationPropertySetting>(
+                                            combinedEntity
+                                            .Properties
+                                            .OrderBy(p => p.Name));
             return combinedEntity;
         }
 
         public override bool RenderSelectedTemplate()
         {
             OpenVocabularies();
+            bool allWritten = true;
+            if (RenderAllEntities || SingleResx)
+            {
+                foreach (var item in SupplementaryEntities.Where(e => e.Properties.Count > 0))
+                {
+                    allWritten = RenderTemplate(item) & allWritten;
+                }
+            }
+
             if (SingleResx)
             {
-                return RenderTemplate(CombineEntities());
+                return RenderTemplate(CombineEntities()) & allWritten;
             }
             else if (RenderAllEntities)
             {
-                bool allWritten = true;
                 foreach (LocalizationEntitySetting setting in EntitySettings.Where(e => e.Exclude == false))
                 {
                     allWritten = RenderTemplate(setting) & allWritten;
@@ -350,7 +463,7 @@ namespace OzzCodeGen.CodeEngines.Localization
             }
             else
             {
-                return RenderTemplate((LocalizationEntitySetting)CurrentEntitySetting);
+                return RenderTemplate((LocalizationEntitySetting)CurrentEntitySetting) & allWritten;
             }
         }
 

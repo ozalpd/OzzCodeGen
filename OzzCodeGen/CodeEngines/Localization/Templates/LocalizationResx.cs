@@ -65,99 +65,111 @@ namespace OzzCodeGen.CodeEngines.Localization.Templates
                     "orms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>\r" +
                     "\n  </resheader>\r\n  <resheader name=\"writer\">\r\n    <value>System.Resources.ResXRe" +
                     "sourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyT" +
-                    "oken=b77a5c561934e089</value>\r\n  </resheader>\r\n  \r\n\t<data name=\"ModelName\" xml:s" +
-                    "pace=\"preserve\">\r\n\t\t<value>");
+                    "oken=b77a5c561934e089</value>\r\n  </resheader>\r\n");
             
-            #line 71 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+            #line 69 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+ if(!CodeEngine.SingleResx){ 
+            
+            #line default
+            #line hidden
+            this.Write("  \r\n\t<data name=\"ModelName\" xml:space=\"preserve\">\r\n\t\t<value>");
+            
+            #line 72 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ModelName));
             
             #line default
             #line hidden
             this.Write("</value>\r\n\t</data>\r\n\t<data name=\"ModelTitle\" xml:space=\"preserve\">\r\n\t    <value>");
             
-            #line 74 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+            #line 75 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ModelTitle));
             
             #line default
             #line hidden
             this.Write("</value>\r\n\t</data>\r\n");
             
-            #line 76 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+            #line 77 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+ } 
+            
+            #line default
+            #line hidden
+            
+            #line 78 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
  foreach (LocalizationPropertySetting property in EntitySetting.Properties) { 
             
             #line default
             #line hidden
             this.Write("\r\n\t<data name=\"");
             
-            #line 78 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+            #line 80 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write("\" xml:space=\"preserve\">\r\n\t\t<value>");
             
-            #line 79 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+            #line 81 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetPropertyLabel(property)));
             
             #line default
             #line hidden
             this.Write("</value>\r\n\t</data>\r\n");
             
-            #line 81 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+            #line 83 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
  if(property.LocalizeRequiredMsg){ 
             
             #line default
             #line hidden
             this.Write("\t<data name=\"");
             
-            #line 82 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+            #line 84 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write("RequiredMsg\" xml:space=\"preserve\">\r\n\t\t<value>");
             
-            #line 83 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+            #line 85 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetPropertyRequiredMsg(property)));
             
             #line default
             #line hidden
             this.Write("</value>\r\n\t</data>\r\n");
             
-            #line 85 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+            #line 87 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 86 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+            #line 88 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
  if(property.LocalizeValidationMsg){ 
             
             #line default
             #line hidden
             this.Write("\t<data name=\"");
             
-            #line 87 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+            #line 89 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write("ValidationMsg\" xml:space=\"preserve\">\r\n\t\t<value>");
             
-            #line 88 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+            #line 90 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetPropertyValidationMsg(property)));
             
             #line default
             #line hidden
             this.Write("</value>\r\n\t</data>\r\n");
             
-            #line 90 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+            #line 92 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 91 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
+            #line 93 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Localization\Templates\LocalizationResx.tt"
  } 
             
             #line default

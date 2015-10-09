@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using OzzCodeGen.Definitions;
 
@@ -46,17 +43,17 @@ namespace OzzCodeGen.CodeEngines
         {
             get
             {
-                if (_entityDefinition == null && EntitySetting != null)
+                if (_propertyDefinition == null && EntitySetting != null)
                 {
-                    _entityDefinition = EntitySetting
+                    _propertyDefinition = EntitySetting
                                         .EntityDefinition
                                         .Properties
                                         .FirstOrDefault(e => e.Name == Name);
                 }
-                return _entityDefinition;
+                return _propertyDefinition;
             }
         }
-        BaseProperty _entityDefinition = null;
+        BaseProperty _propertyDefinition = null;
 
         [XmlIgnore]
         public bool IsSimpleOrString

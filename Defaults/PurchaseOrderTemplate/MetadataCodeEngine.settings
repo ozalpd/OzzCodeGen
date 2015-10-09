@@ -441,5 +441,6 @@
     </BaseEntitySetting>
   </EntitySettings>
   <RenderAllEntities>false</RenderAllEntities>
+  <GenerateForDTO>false</GenerateForDTO>
   <UseResourceFiles>true</UseResourceFiles>
 </MetadataCodeEngine>

@@ -66,6 +66,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+<# if(!CodeEngine.SingleResx){ #>
   
 	<data name="ModelName" xml:space="preserve">
 		<value><#= ModelName #></value>
@@ -73,6 +74,7 @@
 	<data name="ModelTitle" xml:space="preserve">
 	    <value><#= ModelTitle #></value>
 	</data>
+<# } #>
 <# foreach (LocalizationPropertySetting property in EntitySetting.Properties) { #>
 
 	<data name="<#= property.Name #>" xml:space="preserve">

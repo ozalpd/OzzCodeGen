@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.Localization
@@ -8,7 +9,11 @@ namespace OzzCodeGen.CodeEngines.Localization
         [XmlIgnore]
         public string BaseTypeName
         {
-            get { return EntityDefinition.BaseTypeName; }
+            get
+            {
+                return EntityDefinition==null ? string.Empty : EntityDefinition.BaseTypeName;
+
+            }
         }
 
         public bool LocalizeEntityName
@@ -29,11 +34,11 @@ namespace OzzCodeGen.CodeEngines.Localization
         }
         private bool? _localizeEntityName;
 
-        public List<LocalizationPropertySetting> Properties
+        public ObservableCollection<LocalizationPropertySetting> Properties
         {
             get
             {
-                if (_properties == null) _properties = new List<LocalizationPropertySetting>();
+                if (_properties == null) _properties = new ObservableCollection<LocalizationPropertySetting>();
                 return _properties;
             }
             set
@@ -43,6 +48,6 @@ namespace OzzCodeGen.CodeEngines.Localization
                 RaisePropertyChanged("Properties");
             }
         }
-        protected List<LocalizationPropertySetting> _properties;
+        protected ObservableCollection<LocalizationPropertySetting> _properties;
     }
 }

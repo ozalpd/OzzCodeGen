@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfVocab xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Vocab>
+    <Name>Action</Name>
+    <Translation>Hareket</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Add</Name>
+    <Translation>Ekle</Translation>
+  </Vocab>
+  <Vocab>
     <Name>AddNew</Name>
     <Translation>Yeni Ekle</Translation>
   </Vocab>
@@ -129,6 +137,10 @@
     <Translation>Ülke</Translation>
   </Vocab>
   <Vocab>
+    <Name>Create</Name>
+    <Translation>Oluştur</Translation>
+  </Vocab>
+  <Vocab>
     <Name>CreateCompany</Name>
     <Translation>Şirket Ekle</Translation>
   </Vocab>
@@ -205,6 +217,10 @@
     <Translation>Tarihi</Translation>
   </Vocab>
   <Vocab>
+    <Name>Delete</Name>
+    <Translation>Sil</Translation>
+  </Vocab>
+  <Vocab>
     <Name>DeleteCompany</Name>
     <Translation>Şirketi Sil</Translation>
   </Vocab>
@@ -257,6 +273,10 @@
     <Translation>Detaylar</Translation>
   </Vocab>
   <Vocab>
+    <Name>Display</Name>
+    <Translation>Göster</Translation>
+  </Vocab>
+  <Vocab>
     <Name>DisplayOrder</Name>
     <Translation>Gösterim Sırası</Translation>
   </Vocab>
@@ -279,6 +299,10 @@
   <Vocab>
     <Name>Duplicate</Name>
     <Translation>Çoğalt</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Edit</Name>
+    <Translation>Düzenle</Translation>
   </Vocab>
   <Vocab>
     <Name>EditCompany</Name>
@@ -643,6 +667,10 @@
   <Vocab>
     <Name>SelectPlease</Name>
     <Translation>Lütfen Seçiniz</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Show</Name>
+    <Translation>Göster</Translation>
   </Vocab>
   <Vocab>
     <Name>Size</Name>

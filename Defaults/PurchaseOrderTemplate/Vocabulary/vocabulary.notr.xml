@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfVocab xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Vocab>
+    <Name>Action</Name>
+    <Translation>Action</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Add</Name>
+    <Translation>Add</Translation>
+  </Vocab>
+  <Vocab>
     <Name>AddNew</Name>
     <Translation>Add New</Translation>
   </Vocab>
@@ -10,11 +18,11 @@
   </Vocab>
   <Vocab>
     <Name>Address1</Name>
-    <Translation>Address1</Translation>
+    <Translation>Address Line 1</Translation>
   </Vocab>
   <Vocab>
     <Name>Address2</Name>
-    <Translation>Address2</Translation>
+    <Translation>Address Line 2</Translation>
   </Vocab>
   <Vocab>
     <Name>Always</Name>
@@ -26,11 +34,11 @@
   </Vocab>
   <Vocab>
     <Name>ApprovedUserId</Name>
-    <Translation>Approved User Id</Translation>
+    <Translation>Approved User ID</Translation>
   </Vocab>
   <Vocab>
     <Name>ApprovedUserIp</Name>
-    <Translation>Approved User Ip</Translation>
+    <Translation>Approved User IP</Translation>
   </Vocab>
   <Vocab>
     <Name>Cancel</Name>
@@ -46,7 +54,7 @@
   </Vocab>
   <Vocab>
     <Name>CategoryId</Name>
-    <Translation>Category Id</Translation>
+    <Translation>Category</Translation>
   </Vocab>
   <Vocab>
     <Name>Choose</Name>
@@ -129,6 +137,10 @@
     <Translation>Country Name</Translation>
   </Vocab>
   <Vocab>
+    <Name>Create</Name>
+    <Translation>Create</Translation>
+  </Vocab>
+  <Vocab>
     <Name>CreateCompany</Name>
     <Translation>Create Company</Translation>
   </Vocab>
@@ -205,6 +217,10 @@
     <Translation>Date</Translation>
   </Vocab>
   <Vocab>
+    <Name>Delete</Name>
+    <Translation>Delete</Translation>
+  </Vocab>
+  <Vocab>
     <Name>DeleteCompany</Name>
     <Translation>Delete Company</Translation>
   </Vocab>
@@ -257,6 +273,10 @@
     <Translation>Details</Translation>
   </Vocab>
   <Vocab>
+    <Name>Display</Name>
+    <Translation>Display</Translation>
+  </Vocab>
+  <Vocab>
     <Name>DisplayOrder</Name>
     <Translation>Display Order</Translation>
   </Vocab>
@@ -279,6 +299,10 @@
   <Vocab>
     <Name>Duplicate</Name>
     <Translation>Duplicate</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Edit</Name>
+    <Translation>Edit</Translation>
   </Vocab>
   <Vocab>
     <Name>EditCompany</Name>
@@ -642,7 +666,11 @@
   </Vocab>
   <Vocab>
     <Name>SelectPlease</Name>
-    <Translation>Select Please</Translation>
+    <Translation>Please Select</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Show</Name>
+    <Translation>Show</Translation>
   </Vocab>
   <Vocab>
     <Name>Size</Name>
