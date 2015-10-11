@@ -58,7 +58,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 if (string.IsNullOrEmpty(_baseControllerName))
                 {
-                    _baseControllerName = "AbstractController";
+                    _baseControllerName = ((AspNetMvcEngine)CodeEngine).BaseControllerName;
                 }
                 return _baseControllerName;
             }
@@ -87,6 +87,61 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
         }
         private string _modelForEdit;
+
+
+        public string WhoCanView
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_canView))
+                {
+                    _canView = "Users";
+                }
+                return _canView;
+            }
+            set
+            {
+                _canView = value;
+                RaisePropertyChanged("WhoCanView");
+            }
+        }
+        private string _canView;
+
+        public string WhoCanEdit
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_canEdit))
+                {
+                    _canEdit = "Admin, Editor";
+                }
+                return _canEdit;
+            }
+            set
+            {
+                _canEdit = value;
+                RaisePropertyChanged("WhoCanEdit");
+            }
+        }
+        private string _canEdit;
+
+        public string WhoCanDelete
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_canDelete))
+                {
+                    _canDelete = "Admin";
+                }
+                return _canDelete;
+            }
+            set
+            {
+                _canDelete = value;
+                RaisePropertyChanged("WhoCanDelete");
+            }
+        }
+        private string _canDelete;
 
 
         public bool GenerateController
@@ -182,61 +237,6 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private bool? _editView;
 
 
-        public string WhoCanView
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_canView))
-                {
-                    _canView = "Users";
-                }
-                return _canView;
-            }
-            set
-            {
-                _canView = value;
-                RaisePropertyChanged("WhoCanView");
-            }
-        }
-        private string _canView;
-
-        public string WhoCanEdit
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_canEdit))
-                {
-                    _canEdit = "Admin, Editor";
-                }
-                return _canEdit;
-            }
-            set
-            {
-                _canEdit = value;
-                RaisePropertyChanged("WhoCanEdit");
-            }
-        }
-        private string _canEdit;
-
-        public string WhoCanDelete
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_canDelete))
-                {
-                    _canDelete = "Admin";
-                }
-                return _canDelete;
-            }
-            set
-            {
-                _canDelete = value;
-                RaisePropertyChanged("WhoCanDelete");
-            }
-        }
-        private string _canDelete;
-
-        
         public string GetAuthorizeAttrib(string roleName)
         {
             if (string.IsNullOrEmpty(roleName) || roleName.Equals("everyone", StringComparison.InvariantCultureIgnoreCase))

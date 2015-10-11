@@ -17,23 +17,26 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.UI
             HiddenColumns.Add("FilterViewType");
             HiddenColumns.Add("FilteredDisplayColumns");
             HiddenColumns.Add("DisplayColumns");
-            HiddenColumns.Add("GenerateController");
-            HiddenColumns.Add("IndexView");
-            HiddenColumns.Add("DetailsView");
-            HiddenColumns.Add("CreateView");
-            HiddenColumns.Add("EditView");
+            //HiddenColumns.Add("GenerateController");
+            //HiddenColumns.Add("IndexView");
+            //HiddenColumns.Add("DetailsView");
+            //HiddenColumns.Add("CreateView");
+            //HiddenColumns.Add("EditView");
             HiddenColumns.Add("OverwriteExisting");
 
+            ColumnWidths["Name"] = 120;
             ColumnWidths.Add("BaseType", 120);
-            //ColumnWidths.Add("GenerateController", 90);
-            //ColumnWidths.Add("IndexView", 40);
-            //ColumnWidths.Add("DetailsView", 40);
-            //ColumnWidths.Add("CreateView", 40);
-            //ColumnWidths.Add("EditView", 40);
+            ColumnWidths.Add("GenerateController", 90);
+            ColumnWidths.Add("IndexView", 40);
+            ColumnWidths.Add("DetailsView", 40);
+            ColumnWidths.Add("CreateView", 40);
+            ColumnWidths.Add("EditView", 40);
 
             EntitiesDataGrid = grdEntitySettings;
             PropertiesDataGrid = grdPropertySettings;
         }
+
+        public AspNetMvcEngine Engine { get { return (AspNetMvcEngine)CodeEngine; } }
 
         private void mnuEntityOptions_Click(object sender, RoutedEventArgs e)
         {

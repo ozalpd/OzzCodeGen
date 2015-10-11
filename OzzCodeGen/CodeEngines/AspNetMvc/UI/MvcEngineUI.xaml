@@ -6,7 +6,7 @@
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                        mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="900">
+                        mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="900">
     <UserControl.Resources>
         <ObjectDataProvider x:Key="mvcViewTypes" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -19,305 +19,294 @@
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="Margin" Value="4,4,0,0"/>
         </Style>
-        <Style x:Key="textBoxStyle" TargetType="{x:Type TextBox}">
-            <Setter Property="Height" Value="24" />
-            <Setter Property="Margin" Value="4,0,0,0"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-        <Style x:Key="textBlockStyle" TargetType="{x:Type TextBlock}">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="4,0,0,0"/>
+        <Style x:Key="CellRightAlign">
+            <Setter Property="Control.HorizontalAlignment" Value="Stretch" />
+            <Setter Property="TextBlock.TextAlignment" Value="Right"/>
         </Style>
     </UserControl.Resources>
 
-    <Border BorderBrush="#FF9090AF" Padding="2" Margin="2">
-        <Grid Background="#FFB0C4DE">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="128"/>
-                <ColumnDefinition Width="64"/>
-                <ColumnDefinition Width="*" MaxWidth="132"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*" MaxWidth="132"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="32"/>
-                <RowDefinition Height="36"/>
-                <RowDefinition Height="32"/>
-                <RowDefinition Height="28"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+    <Grid Background="#FFB0C4DE">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="128"/>
+            <ColumnDefinition Width="64"/>
+            <ColumnDefinition Width="*" MaxWidth="132"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" MaxWidth="132"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="28"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            <!-- TopBar Buttons -->
-            <Button Name="btnRenderTemplate"
+        <!-- TopBar Buttons -->
+        <Button Name="btnRenderTemplate"
                     Content="Render Template"
                     Grid.Row="2" Grid.Column="0"
                     Style="{StaticResource topbarButtons}"
                     Click="btnRenderTemplate_Click"/>
-                
-            <Button Name="btnRenderAllTemplates" Content="Render All Templates" 
+
+        <Button Name="btnRenderAllTemplates" Content="Render All Templates" 
                     Grid.Row="1" Grid.Column="0"
                     Style="{StaticResource topbarButtons}"
                     Click="btnRenderAllTemplates_Click"/>
 
-            <StackPanel Orientation="Horizontal"
+        <StackPanel Orientation="Horizontal"
                         Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
                         Background="#40FFFFFF" Margin="4,2">
-                <TextBlock Text="Template:" VerticalAlignment="Center" Margin="4,0,16,0"/>
-                <ComboBox ItemsSource="{Binding Templates}"
+            <TextBlock Text="Template:" VerticalAlignment="Center" Margin="4,0,16,0"/>
+            <ComboBox ItemsSource="{Binding Templates}"
                       SelectedItem="{Binding SelectedTemplate}"
                       Width="192" Height="24" HorizontalAlignment="Left"/>
-            </StackPanel>
-            
-            <CheckBox IsChecked="{Binding RenderAllEntities}"
+        </StackPanel>
+
+        <CheckBox IsChecked="{Binding RenderAllEntities}"
                       Content="Render All Entities"
                       Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
                       VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,4,0,0"
                       ToolTip="Render for every entity in the model." />
-                
-            <Button Name="btnRefresh" Content="Refresh"
+
+        <Button Name="btnRefresh" Content="Refresh"
                     Grid.Row="0" Grid.Column="0"
                     Style="{StaticResource topbarButtons}"
                     Click="btnRefresh_Click"/>
-            <!--// TopBar Buttons -->
+        <!--// TopBar Buttons -->
 
-            <TabControl TabStripPlacement="Left" 
+        <TabControl TabStripPlacement="Left" 
                         Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="4" Margin="0,4,4,0"
                         BorderBrush="#FFB0CFEF">
-                <TabControl.Resources>
-                    <Style TargetType="TabItem">
-                        <Setter Property="Background" Value="#FFB0C4DE"/>
-                    </Style>
-                </TabControl.Resources>
-                <TabItem Header="Paths &amp; Folders">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" MaxWidth="132"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*" MaxWidth="132"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        
-                        <TextBlock Text="Target Project Folder:" Grid.Column="0" Grid.Row="0" Style="{StaticResource textBlockStyle}"/>
-                        <TextBox Name="txtTargetDirectory" Text="{Binding TargetFolder, Mode=TwoWay}"
-                                 ToolTip="{Binding TargetDirectory}"
-                                 Grid.Row="0" Grid.Column="1" Style="{StaticResource textBoxStyle}"/>
-
-                        <TextBlock Text="Controllers Folder:" Grid.Column="0" Grid.Row="1" Style="{StaticResource textBlockStyle}"/>
-                        <TextBox Text="{Binding TargetControllersFolder, Mode=TwoWay}"
-                                 ToolTip="{Binding TargetControllersDir}"
-                                 Grid.Row="1" Grid.Column="1" Style="{StaticResource textBoxStyle}"/>
-
-                        <TextBlock Text="Views Folder:" Grid.Column="0" Grid.Row="2" Style="{StaticResource textBlockStyle}"/>
-                        <TextBox Text="{Binding TargetViewsFolder, Mode=TwoWay}"
-                                 ToolTip="{Binding TargetViewsDir}"
-                                 Grid.Row="2" Grid.Column="1" Style="{StaticResource textBoxStyle}"/>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="Namespaces">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" MaxWidth="132"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="Models Namespace:" Grid.Column="0" Grid.Row="0" Style="{StaticResource textBlockStyle}"/>
-                        <TextBox Text="{Binding ModelsNamespace, Mode=TwoWay}" 
-                                 Style="{StaticResource textBoxStyle}" Grid.Column="1" Grid.Row="0"/>
-
-                        <TextBlock Text="Controllers Namespace:" Grid.Column="0" Grid.Row="1" Style="{StaticResource textBlockStyle}"/>
-                        <TextBox Text="{Binding ControllersNamespace, Mode=TwoWay}" 
-                                 Style="{StaticResource textBoxStyle}" Grid.Column="1" Grid.Row="1"/>
-
-                        <TextBlock Text="Views Namespace:" Grid.Column="0" Grid.Row="2" Style="{StaticResource textBlockStyle}"/>
-                        <TextBox Text="{Binding ViewsNamespace, Mode=TwoWay}" 
-                                 Style="{StaticResource textBoxStyle}" Grid.Column="1" Grid.Row="2"/>
-
-                        <TextBlock Text="ViewModels Namespace:" Grid.Column="0" Grid.Row="3" Style="{StaticResource textBlockStyle}"/>
-                        <TextBox Text="{Binding ViewModelsNamespace, Mode=TwoWay}" 
-                                 Style="{StaticResource textBoxStyle}" Grid.Column="1" Grid.Row="3"/>
-
-                    </Grid>
-                </TabItem>
-            </TabControl>
-
-            <!-- Grid of data grids -->
-            <Grid Grid.Row="8" Grid.ColumnSpan="6" Margin="4,2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="4*"/>
-                </Grid.ColumnDefinitions>
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Background" Value="#FFB0C4DE"/>
+                </Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Height" Value="24" />
+                    <Setter Property="Margin" Value="4,0,0,0"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="4,0,0,0"/>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Header="File System" ToolTip="Folder names &amp; paths for target files">
                 <Grid>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MaxWidth="132"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*" MaxWidth="132"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid Name="grdEntitySettings" ItemsSource="{Binding Entities, Mode=TwoWay}" 
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Target Project Folder:" Grid.Column="0" Grid.Row="0"/>
+                    <TextBox Name="txtTargetDirectory" Text="{Binding TargetFolder, Mode=TwoWay}" ToolTip="{Binding TargetDirectory}" Grid.Row="0" Grid.Column="1"/>
+
+                    <TextBlock Text="Controllers Folder:" Grid.Column="0" Grid.Row="1"/>
+                    <TextBox Text="{Binding TargetControllersFolder, Mode=TwoWay}" ToolTip="{Binding TargetControllersDir}" Grid.Row="1" Grid.Column="1"/>
+
+                    <TextBlock Text="Views Folder:" Grid.Column="0" Grid.Row="2"/>
+                    <TextBox Text="{Binding TargetViewsFolder, Mode=TwoWay}" ToolTip="{Binding TargetViewsDir}" Grid.Row="2" Grid.Column="1"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Code Related" ToolTip="Class names &amp; namespaces for files to be generated">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MaxWidth="132"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*" MaxWidth="132"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Models Namespace:" ToolTip="Namespace for data model classes" Grid.Column="0" Grid.Row="0"/>
+                    <TextBox Text="{Binding ModelsNamespace, Mode=TwoWay}" Grid.Column="1" Grid.Row="0"/>
+
+                    <TextBlock Text="Default Base Controller:" ToolTip="Default base class name for controllers" Grid.Column="2" Grid.Row="0"/>
+                    <TextBox Text="{Binding BaseControllerName, Mode=TwoWay}" Grid.Column="3" Grid.Row="0"/>
+
+                    <TextBlock Text="Controllers Namespace:" ToolTip="Namespace for controller classes" Grid.Column="0" Grid.Row="1"/>
+                    <TextBox Text="{Binding ControllersNamespace, Mode=TwoWay}" Grid.Column="1" Grid.Row="1"/>
+
+                    <TextBlock Text="Views Namespace:" ToolTip="Namespace for view classes" Grid.Column="0" Grid.Row="2"/>
+                    <TextBox Text="{Binding ViewsNamespace, Mode=TwoWay}" Grid.Column="1" Grid.Row="2"/>
+
+                    <TextBlock Text="ViewModels Namespace:" ToolTip="Namespace for data ViewModel classes" Grid.Column="0" Grid.Row="3"/>
+                    <TextBox Text="{Binding ViewModelsNamespace, Mode=TwoWay}" Grid.Column="1" Grid.Row="3"/>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <!-- Grid of data grids -->
+        <Grid Grid.Row="8" Grid.ColumnSpan="6" Margin="4,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="420"/>
+                <ColumnDefinition Width="5*" MinWidth="200" MaxWidth="760"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="240"/>
+                </Grid.ColumnDefinitions>
+                <DataGrid Name="grdEntitySettings" ItemsSource="{Binding Entities, Mode=TwoWay}" 
                           SelectedItem="{Binding CurrentEntitySetting, Mode=TwoWay}"
                           AutoGeneratedColumns="grdEntitySettings_AutoGeneratedColumns"
                           CanUserDeleteRows="False" CanUserAddRows="False"
                           AutoGeneratingColumn="grdEntitySettings_AutoGeneratingColumn">
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Name="mnuEntityOptions"  Header="Reset All Required Msgs" Click="mnuEntityOptions_Click" />
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
-                    </DataGrid>
-                    <Grid DataContext="{Binding SelectedItem, ElementName=grdEntitySettings}"
-                          Grid.Column="1" Margin="4,0,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="16"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="22"/>
-                            <RowDefinition Height="22"/>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="12"/>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="{Binding Name}" Grid.ColumnSpan="2" Grid.Row="0"
-                                   ToolTip="{Binding Name}"
-                                   VerticalAlignment="Stretch"
-                                   TextAlignment="Center"
-                                   FontWeight="Bold">
-                            <TextBlock.Background>
-                                <RadialGradientBrush>
-                                    <GradientStop Color="White" Offset="0"/>
-                                    <GradientStop Color="#FFE6E6E6" Offset="1"/>
-                                </RadialGradientBrush>
-                            </TextBlock.Background>
-                        </TextBlock>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Name="mnuEntityOptions"  Header="Reset All Required Msgs" Click="mnuEntityOptions_Click" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
 
-
-                        <TextBlock Text="Generate" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Center" TextAlignment="Center">
-                            <TextBlock.Background>
-                                <RadialGradientBrush>
-                                    <GradientStop Color="White" Offset="0"/>
-                                    <GradientStop Color="#FFE6E6E6" Offset="1"/>
-                                </RadialGradientBrush>
-                            </TextBlock.Background>
-                        </TextBlock>
-
-                        <TextBlock Text="Controllers:" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"/>
-                        <CheckBox IsChecked="{Binding GenerateController}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"/>
-
-                        <TextBlock Text="Index View:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
-                        <CheckBox IsChecked="{Binding IndexView}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"/>
-
-                        <TextBlock Text="Details View:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
-                        <CheckBox IsChecked="{Binding DetailsView}" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center"/>
-
-                        <TextBlock Text="Create View:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"/>
-                        <CheckBox IsChecked="{Binding CreateView}" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center"/>
-
-                        <TextBlock Text="Edit View:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center"/>
-                        <CheckBox IsChecked="{Binding EditView}" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center"/>
-
-                        <TextBlock Text="" Grid.ColumnSpan="2" Grid.Row="7" VerticalAlignment="Center" TextAlignment="Center">
-                            <TextBlock.Background>
-                                <RadialGradientBrush>
-                                    <GradientStop Color="White" Offset="0"/>
-                                    <GradientStop Color="#FFE6E6E6" Offset="1"/>
-                                </RadialGradientBrush>
-                            </TextBlock.Background>
-                        </TextBlock>
-
-                        <TextBlock Text="Overwrite Existing:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center"/>
-                        <CheckBox IsChecked="{Binding OverwriteExisting}" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center"/>
-                    </Grid>
-                </Grid>
-                <GridSplitter Grid.Column="1" Grid.RowSpan="4" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="9" ResizeDirection="Columns" />
-
-                <Grid DataContext="{Binding SelectedItem, ElementName=grdEntitySettings}"
-                      Grid.Column="1" Margin="9,0,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="9"/>
-                        <RowDefinition Height="2*"/>
-                    </Grid.RowDefinitions>
-                    <DataGrid Name="grdPropertySettings"
-                              ItemsSource="{Binding Properties, Mode=TwoWay}"
-                              AutoGenerateColumns="False"
-                              CanUserAddRows="False"
-                              CanUserDeleteRows="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Name}" Header="Property Name" Width="120" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding PropertyDefinition.DisplayOrder, Mode=TwoWay}" Header="Disp.Order"/>
-                            <DataGridCheckBoxColumn Binding="{Binding Exclude, Mode=TwoWay}" Header="Exclude" />
-                            <DataGridCheckBoxColumn Binding="{Binding HasValidation, Mode=TwoWay}" Header="Has Validation" Width="60" />
-                            <DataGridCheckBoxColumn Binding="{Binding UseInSearch, Mode=TwoWay}" Header="Search" />
-                            <DataGridCheckBoxColumn Binding="{Binding InIndexView, Mode=TwoWay}" Header="InIndex" />
-                            <DataGridCheckBoxColumn Binding="{Binding InDetailsView, Mode=TwoWay}" Header="InDetails" />
-                            <DataGridCheckBoxColumn Binding="{Binding InCreateView, Mode=TwoWay}" Header="InCreate" />
-                            <DataGridCheckBoxColumn Binding="{Binding InEditView, Mode=TwoWay}" Header="InEdit" />
-                            <DataGridTemplateColumn Header="Use for Edit" Width="120">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding UseForEdit}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                                <DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataTemplate>
-                                        <ComboBox ItemsSource="{Binding UseForEditList}" SelectedItem="{Binding UseForEdit}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellEditingTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Name="mnuPropertyOptions"  Header="Options" IsEnabled="False" />
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
-                    </DataGrid>
-
-                    <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="9" ResizeDirection="Rows" />
-
-                    <StackPanel Grid.Row="2" Height="20" VerticalAlignment="Top" Orientation="Horizontal">
-                        <TextBlock Text="Display Columns:" VerticalAlignment="Center" Margin="4,0,0,0" />
-                        <ComboBox ItemsSource="{Binding Source={StaticResource mvcViewTypes}}"
-                                  SelectedItem="{Binding FilterViewType}"
-                                  Width="160" Margin="8,0,0,0" />
+                <StackPanel DataContext="{Binding SelectedItem, ElementName=grdEntitySettings}"
+                            Grid.Column="1" Margin="2,0,0,0">
+                    <StackPanel.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="BorderBrush" Value="#FF206080"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="Margin" Value="0,0,4,4"/>
+                        </Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Height" Value="19"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Background" Value="#A0FFFFFF"/>
+                            <Setter Property="Margin" Value="0,4,0,0"/>
+                            <Setter Property="Padding" Value="4,1"/>
+                        </Style>
+                        <Style TargetType="CheckBox">
+                            <Setter Property="Margin" Value="2"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Border>
+                        <StackPanel>
+                            <TextBlock Text="Target File" TextAlignment="Center" Background="#D0FFFFFF" Margin="0"/>
+                            <CheckBox IsChecked="{Binding OverwriteExisting}" Content="Overwrite Existing File"/>
+                        </StackPanel>
+                    </Border>
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="90">
+                            <StackPanel>
+                                <TextBlock Text="Generate" TextAlignment="Center" Margin="0" Background="#D0FFFFFF"/>
+                                <CheckBox IsChecked="{Binding GenerateController}" Content="Controllers"/>
+                                <CheckBox IsChecked="{Binding IndexView}" Content="Index View" />
+                                <CheckBox IsChecked="{Binding DetailsView}" Content="Details View" />
+                                <CheckBox IsChecked="{Binding CreateView}" Content="Create View"/>
+                                <CheckBox IsChecked="{Binding EditView}" Content="Edit View"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Width="140">
+                            <StackPanel>
+                                <TextBlock Text="Roles Can View" Margin="0"/>
+                                <TextBox Text="{Binding WhoCanView}"/>
+                                <TextBlock Text="Roles Can Edit"/>
+                                <TextBox Text="{Binding WhoCanEdit}"/>
+                                <TextBlock Text="Roles Can Delete"/>
+                                <TextBox Text="{Binding WhoCanDelete}"/>
+                            </StackPanel>
+                        </Border>
                     </StackPanel>
-                    <DataGrid ItemsSource="{Binding FilteredDisplayColumns, Mode=OneWay}"
-                              Grid.Row="2"
-                              AutoGenerateColumns="False"
-                              CanUserAddRows="False" IsReadOnly="True"
-                              CanUserDeleteRows="False" ToolTip="Display Columns" Margin="0,20,0,0">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Name}" Header="Property Name" Width="120" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding PropertyDefinition.EntityDefinition.Name}" Header="Entity Name" Width="120" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding PropertyDefinition.DisplayOrder, Mode=TwoWay}" Header="Disp.Order"/>
-                            <DataGridCheckBoxColumn Binding="{Binding HasValidation, Mode=TwoWay}" Header="Has Validation" Width="60" />
-                            <DataGridCheckBoxColumn Binding="{Binding UseInSearch, Mode=TwoWay}" Header="Search" />
-                            <DataGridCheckBoxColumn Binding="{Binding InIndexView, Mode=TwoWay}" Header="IndexView" />
-                            <DataGridCheckBoxColumn Binding="{Binding InDetailsView, Mode=TwoWay}" Header="InDetails" />
-                            <DataGridCheckBoxColumn Binding="{Binding InCreateView, Mode=TwoWay}" Header="InCreate" />
-                            <DataGridCheckBoxColumn Binding="{Binding InEditView, Mode=TwoWay}" Header="InEdit" />
-                            <DataGridTextColumn Binding="{Binding UseForEdit, Mode=TwoWay}" Header="Use For Edit" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
+                    <Border>
+                        <StackPanel>
+                            <TextBlock Text="Edit Model Class" ToolTip="Model class for Create/Edit methods." Margin="0"/>
+                            <TextBox Text="{Binding ModelForEdit}" ToolTip="Model class or ViewModel for Create/Edit methods."/>
+                            <TextBlock Text="Controller Base" ToolTip="Base class for controller to generated."/>
+                            <TextBox Text="{Binding BaseControllerName}" ToolTip="Base class for controller to generated."/>
+                            <TextBlock Text="Controller Name"/>
+                            <TextBox Text="{Binding ControllerName}"/>
+                            <TextBlock Text="Dataset Name" ToolTip="Dataset for entity"/>
+                            <TextBox Text="{Binding DataSetName}" ToolTip="Dataset for entity"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+
+            <GridSplitter Grid.Column="1" Grid.RowSpan="4" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="9" ResizeDirection="Columns" />
+
+            <Grid DataContext="{Binding SelectedItem, ElementName=grdEntitySettings}"
+                      Grid.Column="1" Margin="9,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="9"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <DataGrid Name="grdPropertySettings"
+                            ItemsSource="{Binding Properties, Mode=TwoWay}"
+                            AutoGenerateColumns="False"
+                            CanUserAddRows="False"
+                            CanUserDeleteRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Property Name" Width="120" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding PropertyDefinition.DisplayOrder, Mode=TwoWay}" Header="Disp.Order" CellStyle="{StaticResource CellRightAlign}"/>
+                        <DataGridCheckBoxColumn Binding="{Binding Exclude, Mode=TwoWay}" Header="Exclude" />
+                        <DataGridCheckBoxColumn Binding="{Binding HasValidation, Mode=TwoWay}" Header="Has Validation" Width="60" />
+                        <DataGridCheckBoxColumn Binding="{Binding UseInSearch, Mode=TwoWay}" Header="Search" />
+                        <DataGridCheckBoxColumn Binding="{Binding InIndexView, Mode=TwoWay}" Header="InIndex" />
+                        <DataGridCheckBoxColumn Binding="{Binding InDetailsView, Mode=TwoWay}" Header="InDetails" />
+                        <DataGridCheckBoxColumn Binding="{Binding InCreateView, Mode=TwoWay}" Header="InCreate" />
+                        <DataGridCheckBoxColumn Binding="{Binding InEditView, Mode=TwoWay}" Header="InEdit" />
+                        <DataGridTemplateColumn Header="Use for Edit" Width="120">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding UseForEdit}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellEditingTemplate>
+                                <DataTemplate>
+                                    <ComboBox ItemsSource="{Binding UseForEditList}" SelectedItem="{Binding UseForEdit}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellEditingTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Name="mnuPropertyOptions"  Header="Options" IsEnabled="False" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
+
+                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="9" ResizeDirection="Rows" />
+
+                <StackPanel Grid.Row="2" Height="20" VerticalAlignment="Top" Orientation="Horizontal">
+                    <TextBlock Text="Display Columns:" VerticalAlignment="Center" Margin="4,0,0,0" />
+                    <ComboBox ItemsSource="{Binding Source={StaticResource mvcViewTypes}}"
+                                          SelectedItem="{Binding FilterViewType}"
+                                          Width="160" Margin="8,0,0,0" />
+                </StackPanel>
+                <DataGrid ItemsSource="{Binding FilteredDisplayColumns, Mode=OneWay}"
+                                      Grid.Row="2"
+                                      AutoGenerateColumns="False"
+                                      CanUserAddRows="False" IsReadOnly="True"
+                                      CanUserDeleteRows="False" ToolTip="Display Columns" Margin="0,20,0,0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Property Name" Width="120" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding PropertyDefinition.EntityDefinition.Name}" Header="Member Of" Width="120" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding PropertyDefinition.DisplayOrder, Mode=TwoWay}" Header="Disp.Order" CellStyle="{StaticResource CellRightAlign}"/>
+                        <DataGridCheckBoxColumn Binding="{Binding HasValidation, Mode=TwoWay}" Header="Has Validation" Width="60" />
+                        <DataGridCheckBoxColumn Binding="{Binding UseInSearch, Mode=TwoWay}" Header="Search" />
+                        <DataGridCheckBoxColumn Binding="{Binding InIndexView, Mode=TwoWay}" Header="IndexView" />
+                        <DataGridCheckBoxColumn Binding="{Binding InDetailsView, Mode=TwoWay}" Header="InDetails" />
+                        <DataGridCheckBoxColumn Binding="{Binding InCreateView, Mode=TwoWay}" Header="InCreate" />
+                        <DataGridCheckBoxColumn Binding="{Binding InEditView, Mode=TwoWay}" Header="InEdit" />
+                        <DataGridTextColumn Binding="{Binding UseForEdit, Mode=TwoWay}" Header="Use For Edit" />
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
         </Grid>
-    </Border>
+    </Grid>
 </local:AbstractEngineUI>

@@ -427,29 +427,6 @@ namespace OzzCodeGen.Wpf
 
         private void window_Closing(object sender, CancelEventArgs e)
         {
-            //if (Project != null && Project.HasProjectChanges)
-            //{
-            //    var result = MessageBox.Show("Do you want to save changes?", "Project has changes!", MessageBoxButton.YesNoCancel);
-            //    switch (result)
-            //    {
-            //        case MessageBoxResult.Cancel:
-            //            e.Cancel = true;
-            //            break;
-            //        case MessageBoxResult.No:
-            //            //Do nothing
-            //            break;
-            //        case MessageBoxResult.None:
-            //            SaveProject();
-            //            break;
-            //        case MessageBoxResult.OK:
-            //            break;
-            //        case MessageBoxResult.Yes:
-            //            break;
-            //        default:
-            //            break;
-            //    }
-            //}
-
             Settings.MainWindowPosition.GetWindowPositions(this);
             Settings.SaveToFile(settingsFile);
         }

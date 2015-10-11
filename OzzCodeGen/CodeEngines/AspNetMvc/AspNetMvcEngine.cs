@@ -418,11 +418,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         {
             get
             {
-                if (string.IsNullOrEmpty(_modelsNamespace) && DataLayerEngine != null)
-                {
-                    _modelsNamespace = DataLayerEngine.NamespaceName;
-                }
-                else if (string.IsNullOrEmpty(_modelsNamespace) && Project != null)
+                if (string.IsNullOrEmpty(_modelsNamespace) && Project != null)
                 {
                     _modelsNamespace = Project.NamespaceName + "." + "Models";
                 }
@@ -473,20 +469,24 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private string _viewsNamespace;
 
 
-        [XmlIgnore]
-        public DataLayerEngine DataLayerEngine
+        public string BaseControllerName
         {
             get
             {
-                if (_dataLayerEngine == null && Project != null)
+                if (string.IsNullOrEmpty(_baseControllerName))
                 {
-                    var engine = Project.GetCodeEngine(EngineTypes.EfDbFirstDataLayerId);
-                    _dataLayerEngine = engine != null ? (DataLayerEngine)engine : null;
+                    _baseControllerName = "AbstractController";
                 }
-                return _dataLayerEngine;
+                return _baseControllerName;
+            }
+            set
+            {
+                _baseControllerName = value;
+                RaisePropertyChanged("BaseControllerName");
             }
         }
-        private DataLayerEngine _dataLayerEngine;
+        private string _baseControllerName;
+
 
         [XmlIgnore]
         public ResxEngine ResxEngine

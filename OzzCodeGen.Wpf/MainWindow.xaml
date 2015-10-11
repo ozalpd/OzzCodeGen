@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Converters="clr-namespace:OzzUtils.Wpf.Converters;assembly=OzzUtils.Wpf"
-        mc:Ignorable="d" Height="640" Width="1280" MinHeight="480" MinWidth="960"
+        mc:Ignorable="d" Height="640" Width="1200" MinHeight="580" MinWidth="960"
         Title="Ozz Code Generator"
         Loaded="Window_Loaded" Closing="window_Closing"
         Icon="Assets/App-software.ico">
