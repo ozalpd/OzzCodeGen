@@ -507,7 +507,7 @@
       <Properties>
         <BaseProperty xsi:type="StringProperty">
           <Name>SupplierCode</Name>
-          <DisplayOrder>0</DisplayOrder>
+          <DisplayOrder>300100</DisplayOrder>
           <DisplayName>Supplier Code</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>

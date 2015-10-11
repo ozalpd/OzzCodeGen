@@ -4,10 +4,10 @@ using System.Linq;
 using System.Xml.Serialization;
 using OzzCodeGen.CodeEngines.AspNetMvc.Templates;
 using OzzCodeGen.CodeEngines.AspNetMvc.UI;
-using OzzCodeGen.CodeEngines.DataLayer;
 using OzzCodeGen.CodeEngines.Localization;
 using OzzCodeGen.Definitions;
 using System.Collections.ObjectModel;
+using OzzUtils;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc
 {
@@ -486,6 +486,25 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
         }
         private string _baseControllerName;
+
+
+        public string DataContextClass
+        {
+            set
+            {
+                _dataContextClass = value;
+                RaisePropertyChanged("DataContextClass");
+            }
+            get
+            {
+                if (string.IsNullOrEmpty(_dataContextClass))
+                {
+                    _dataContextClass = string.Format("{0}Context", Project.Name.ToPascalCase());
+                }
+                return _dataContextClass;
+            }
+        }
+        private string _dataContextClass;
 
 
         [XmlIgnore]

@@ -26,8 +26,8 @@ namespace OzzCodeGen.Wpf
 
             Title = string.Format("Ozz Code Generator - Build on {0}", BuildInfo.Date);
             MainContainer.IsEnabled = false;
-            settingsFile = System.IO.Path.Combine(
-                            System.IO.Path.GetDirectoryName(
+            settingsFile = Path.Combine(
+                            Path.GetDirectoryName(
                             System.Reflection.Assembly.GetExecutingAssembly().Location),
                             "OzzCodeGen.settings");
 
@@ -136,6 +136,8 @@ namespace OzzCodeGen.Wpf
                 if (settingsUI != null)
                 {
                     var dlg = new EmptyDialog();
+                    dlg.Owner = this;
+                    dlg.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                     dlg.PutUserControl(settingsUI);
                     settingsUI.DataContext = engine;
                     dlg.ShowDialog();
