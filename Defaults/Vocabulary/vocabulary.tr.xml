@@ -2,7 +2,7 @@
 <ArrayOfVocab xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Vocab>
     <Name>Action</Name>
-    <Translation>Hareket</Translation>
+    <Translation>Eylem</Translation>
   </Vocab>
   <Vocab>
     <Name>Add</Name>
@@ -270,7 +270,7 @@
   </Vocab>
   <Vocab>
     <Name>Details</Name>
-    <Translation>Detaylar</Translation>
+    <Translation>Detay</Translation>
   </Vocab>
   <Vocab>
     <Name>Display</Name>
@@ -429,6 +429,10 @@
     <Translation>Mevkii</Translation>
   </Vocab>
   <Vocab>
+    <Name>Login</Name>
+    <Translation>Giriş Yap</Translation>
+  </Vocab>
+  <Vocab>
     <Name>LogIn</Name>
     <Translation>Giriş Yap</Translation>
   </Vocab>
@@ -439,6 +443,10 @@
   <Vocab>
     <Name>LogOn</Name>
     <Translation>Giriş Yap</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Logout</Name>
+    <Translation>Çıkış Yap</Translation>
   </Vocab>
   <Vocab>
     <Name>LogOut</Name>

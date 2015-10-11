@@ -673,6 +673,16 @@
           <ForeignKeyTable>Products</ForeignKeyTable>
         </StorageColumnSetting>
         <StorageColumnSetting>
+          <Name>Quantity</Name>
+          <Exclude>false</Exclude>
+          <DataType>int</DataType>
+          <Lenght>0</Lenght>
+          <PrimaryKey>false</PrimaryKey>
+          <Indexed>false</Indexed>
+          <SortDesc>false</SortDesc>
+          <Nullable>false</Nullable>
+        </StorageColumnSetting>
+        <StorageColumnSetting>
           <Name>Notes</Name>
           <Exclude>false</Exclude>
           <DataType>nVarChar</DataType>

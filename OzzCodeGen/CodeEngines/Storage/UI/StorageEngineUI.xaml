@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="800">
     <Border BorderBrush="#FF9090AF" Padding="2" Margin="2">
-        <Grid>
+        <Grid Background="#FFF8ECC4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="120"/>

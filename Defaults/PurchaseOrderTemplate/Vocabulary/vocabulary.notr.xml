@@ -429,6 +429,10 @@
     <Translation>Location</Translation>
   </Vocab>
   <Vocab>
+    <Name>Login</Name>
+    <Translation>Login</Translation>
+  </Vocab>
+  <Vocab>
     <Name>LogIn</Name>
     <Translation>Log In</Translation>
   </Vocab>
@@ -439,6 +443,10 @@
   <Vocab>
     <Name>LogOn</Name>
     <Translation>Log On</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Logout</Name>
+    <Translation>Logout</Translation>
   </Vocab>
   <Vocab>
     <Name>LogOut</Name>

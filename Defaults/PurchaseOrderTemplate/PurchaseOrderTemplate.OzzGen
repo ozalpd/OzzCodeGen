@@ -1016,6 +1016,20 @@
           <DependentPropertyName>ProductId</DependentPropertyName>
           <DependentPropertyType>int</DependentPropertyType>
         </BaseProperty>
+        <BaseProperty xsi:type="SimpleProperty">
+          <Name>Quantity</Name>
+          <DisplayOrder>600500</DisplayOrder>
+          <DisplayName>Quantity</DisplayName>
+          <Editable>true</Editable>
+          <TypeName>int</TypeName>
+          <IsClientComputed>false</IsClientComputed>
+          <IsServerComputed>false</IsServerComputed>
+          <IsStoreGenerated>false</IsStoreGenerated>
+          <UiVisible>true</UiVisible>
+          <IsKey>false</IsKey>
+          <IsForeignKey>false</IsForeignKey>
+          <IsNullable>false</IsNullable>
+        </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>Notes</Name>
           <DisplayOrder>601100</DisplayOrder>
@@ -1038,7 +1052,7 @@
   <SourceClassPrefix />
   <CodeEngineList>
     <string>Localization_Resource_Generator</string>
-    <string>Metadata_Class_Generator</string>
     <string>T-Sql_Scripts_Generator</string>
+    <string>Metadata_Class_Generator</string>
   </CodeEngineList>
 </CodeGenProject>

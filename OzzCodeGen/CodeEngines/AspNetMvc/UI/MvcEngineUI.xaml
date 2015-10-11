@@ -2,110 +2,152 @@
                         xmlns:local="clr-namespace:OzzCodeGen.UI"
                         xmlns:System="clr-namespace:System;assembly=mscorlib"
                         xmlns:AspNetMvc="clr-namespace:OzzCodeGen.CodeEngines.AspNetMvc"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="900">
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                        mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="900">
     <UserControl.Resources>
-        <ObjectDataProvider x:Key="mvcViewTypes" MethodName="GetValues"
-                            ObjectType="{x:Type System:Enum}">
+        <ObjectDataProvider x:Key="mvcViewTypes" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="AspNetMvc:MvcViewType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <Style x:Key="topbarButtons" TargetType="{x:Type Button}">
+            <Setter Property="Height" Value="Auto" />
+            <Setter Property="Width" Value="122" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Margin" Value="4,4,0,0"/>
+        </Style>
+        <Style x:Key="textBoxStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Margin" Value="4,0,0,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="textBlockStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="4,0,0,0"/>
+        </Style>
     </UserControl.Resources>
 
     <Border BorderBrush="#FF9090AF" Padding="2" Margin="2">
-        <Grid>
+        <Grid Background="#FFB0C3DE">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" MaxWidth="120"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="128"/>
+                <ColumnDefinition Width="64"/>
                 <ColumnDefinition Width="*" MaxWidth="132"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*" MaxWidth="132"/>
-                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="28"/>
-                <RowDefinition Height="28"/>
-                <RowDefinition Height="28"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="36"/>
+                <RowDefinition Height="32"/>
                 <RowDefinition Height="28"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                <Button Name="btnRenderTemplate" Content="Render Template" 
-                        HorizontalAlignment="Left" Width="120" Height="24" 
-                        Click="btnRenderTemplate_Click"/>
-                <ComboBox ItemsSource="{Binding Templates}" SelectedItem="{Binding SelectedTemplate}" Width="164" Height="24" Margin="8,0,0,0"/>
+            <!-- TopBar Buttons -->
+            <Button Name="btnRenderTemplate"
+                    Content="Render Template"
+                    Grid.Row="2" Grid.Column="0"
+                    Style="{StaticResource topbarButtons}"
+                    Click="btnRenderTemplate_Click"/>
+                
+            <Button Name="btnRenderAllTemplates" Content="Render All Templates" 
+                    Grid.Row="1" Grid.Column="0"
+                    Style="{StaticResource topbarButtons}"
+                    Click="btnRenderAllTemplates_Click"/>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
+                        Background="#FFB0CFEF" Margin="4,2">
+                <TextBlock Text="Template:" VerticalAlignment="Center" Margin="4,0,16,0"/>
+                <ComboBox ItemsSource="{Binding Templates}"
+                      SelectedItem="{Binding SelectedTemplate}"
+                      Width="192" Height="24" HorizontalAlignment="Left"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="1">
-                <Button Name="btnRenderAllTemplates" Content="Render All Templates" 
-                        HorizontalAlignment="Left" Width="120" Height="24" 
-                        Click="btnRenderAllTemplates_Click"/>
-                <Button Name="btnRefresh" Content="Refresh" Grid.Row="2"
-                        Margin="8,0,0,0"
-                        HorizontalAlignment="Left" Width="120" Height="24"
-                        Click="btnRefresh_Click"/>
-            </StackPanel>
+            
+            <CheckBox IsChecked="{Binding RenderAllEntities}"
+                      Content="Render All Entities"
+                      Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                      VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,4,0,0"
+                      ToolTip="Render for every entity in the model." />
+                
+            <Button Name="btnRefresh" Content="Refresh"
+                    Grid.Row="0" Grid.Column="0"
+                    Style="{StaticResource topbarButtons}"
+                    Click="btnRefresh_Click"/>
+            <!--// TopBar Buttons -->
 
+            <TabControl TabStripPlacement="Left"
+                        Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="4" Margin="0,4,4,0">
+                <TabItem Header="Paths &amp; Folders">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="132"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" MaxWidth="132"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Text="Target Project Folder:" Grid.Column="0" Grid.Row="0" Style="{StaticResource textBlockStyle}"/>
+                        <TextBox Name="txtTargetDirectory" Text="{Binding TargetFolder, Mode=TwoWay}"
+                                 ToolTip="{Binding TargetDirectory}"
+                                 Grid.Row="0" Grid.Column="1" Style="{StaticResource textBoxStyle}"/>
 
-            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="2">
-                <CheckBox IsChecked="{Binding RenderAllEntities}" Content="All Entities" VerticalAlignment="Center" Width="120" ToolTip="Render for every entity in the model." />
-                <!--
-                <CheckBox Content="Overwrite Existing Files" Margin="4,0,0,0" VerticalAlignment="Center" IsChecked="{Binding OverwriteExisting}" />
-                -->
-            </StackPanel>
+                        <TextBlock Text="Controllers Folder:" Grid.Column="0" Grid.Row="1" Style="{StaticResource textBlockStyle}"/>
+                        <TextBox Text="{Binding TargetControllersFolder, Mode=TwoWay}"
+                                 ToolTip="{Binding TargetControllersDir}"
+                                 Grid.Row="1" Grid.Column="1" Style="{StaticResource textBoxStyle}"/>
 
-            <TextBlock Text="Models Namespace:" Grid.Column="2" Grid.Row="0" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding ModelsNamespace, Mode=TwoWay}" 
-                     Grid.Column="3" Grid.Row="0"
-                     Height="24" 
-                     Margin="4,0,0,0"/>
+                        <TextBlock Text="Views Folder:" Grid.Column="0" Grid.Row="2" Style="{StaticResource textBlockStyle}"/>
+                        <TextBox Text="{Binding TargetViewsFolder, Mode=TwoWay}"
+                                 ToolTip="{Binding TargetViewsDir}"
+                                 Grid.Row="2" Grid.Column="1" Style="{StaticResource textBoxStyle}"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Namespaces">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="132"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Models Namespace:" Grid.Column="0" Grid.Row="0" Style="{StaticResource textBlockStyle}"/>
+                        <TextBox Text="{Binding ModelsNamespace, Mode=TwoWay}" 
+                                 Style="{StaticResource textBoxStyle}" Grid.Column="1" Grid.Row="0"/>
 
-            <TextBlock Text="Target Project Folder:" Grid.Column="4" Grid.Row="0" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Name="txtTargetDirectory" Text="{Binding TargetFolder, Mode=TwoWay}" 
-                     ToolTip="{Binding TargetDirectory}"
-                     Grid.Row="0" Grid.Column="5"
-                     Height="24" 
-                     Margin="4,0,0,0"/>
+                        <TextBlock Text="Controllers Namespace:" Grid.Column="0" Grid.Row="1" Style="{StaticResource textBlockStyle}"/>
+                        <TextBox Text="{Binding ControllersNamespace, Mode=TwoWay}" 
+                                 Style="{StaticResource textBoxStyle}" Grid.Column="1" Grid.Row="1"/>
 
-            <TextBlock Text="Controllers Namespace:" Grid.Column="2" Grid.Row="1" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding ControllersNamespace, Mode=TwoWay}" 
-                     Grid.Column="3" Grid.Row="1"
-                     Height="24" 
-                     Margin="4,0,0,0"/>
+                        <TextBlock Text="Views Namespace:" Grid.Column="0" Grid.Row="2" Style="{StaticResource textBlockStyle}"/>
+                        <TextBox Text="{Binding ViewsNamespace, Mode=TwoWay}" 
+                                 Style="{StaticResource textBoxStyle}" Grid.Column="1" Grid.Row="2"/>
 
-            <TextBlock Text="Controllers Folder:" Grid.Column="4" Grid.Row="1" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding TargetControllersFolder, Mode=TwoWay}"
-                     ToolTip="{Binding TargetControllersDir}"
-                     Grid.Column="5" Grid.Row="1"
-                     Height="24" 
-                     Margin="4,0,0,0"/>
+                        <TextBlock Text="ViewModels Namespace:" Grid.Column="0" Grid.Row="3" Style="{StaticResource textBlockStyle}"/>
+                        <TextBox Text="{Binding ViewModelsNamespace, Mode=TwoWay}" 
+                                 Style="{StaticResource textBoxStyle}" Grid.Column="1" Grid.Row="3"/>
 
-            <TextBlock Text="Views Namespace:" Grid.Column="2" Grid.Row="2" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding ViewsNamespace, Mode=TwoWay}" 
-                     Grid.Column="3" Grid.Row="2"
-                     Height="24" 
-                     Margin="4,0,0,0"/>
-
-            <TextBlock Text="Views Folder:" Grid.Column="4" Grid.Row="2" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding TargetViewsFolder, Mode=TwoWay}" 
-                     ToolTip="{Binding TargetViewsDir}"
-                     Grid.Column="5" Grid.Row="2"
-                     Height="24" 
-                     Margin="4,0,0,0"/>
-
-            <TextBlock Text="ViewModels Namespace:" Grid.Column="2" Grid.Row="3" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding ViewModelsNamespace, Mode=TwoWay}" 
-                     Grid.Column="3" Grid.Row="3"
-                     Height="24" 
-                     Margin="4,0,0,0"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
 
             <!-- Grid of data grids -->
-            <Grid Grid.Row="8" Grid.ColumnSpan="6">
+            <Grid Grid.Row="8" Grid.ColumnSpan="6" Margin="4,2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*"/>
                     <ColumnDefinition Width="4*"/>
