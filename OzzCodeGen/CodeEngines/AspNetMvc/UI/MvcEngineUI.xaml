@@ -31,7 +31,7 @@
     </UserControl.Resources>
 
     <Border BorderBrush="#FF9090AF" Padding="2" Margin="2">
-        <Grid Background="#FFB0C3DE">
+        <Grid Background="#FFB0C4DE">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="128"/>
                 <ColumnDefinition Width="64"/>
@@ -61,7 +61,7 @@
 
             <StackPanel Orientation="Horizontal"
                         Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
-                        Background="#FFB0CFEF" Margin="4,2">
+                        Background="#40FFFFFF" Margin="4,2">
                 <TextBlock Text="Template:" VerticalAlignment="Center" Margin="4,0,16,0"/>
                 <ComboBox ItemsSource="{Binding Templates}"
                       SelectedItem="{Binding SelectedTemplate}"
@@ -80,8 +80,14 @@
                     Click="btnRefresh_Click"/>
             <!--// TopBar Buttons -->
 
-            <TabControl TabStripPlacement="Left"
-                        Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="4" Margin="0,4,4,0">
+            <TabControl TabStripPlacement="Left" 
+                        Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="4" Margin="0,4,4,0"
+                        BorderBrush="#FFB0CFEF">
+                <TabControl.Resources>
+                    <Style TargetType="TabItem">
+                        <Setter Property="Background" Value="#FFB0C4DE"/>
+                    </Style>
+                </TabControl.Resources>
                 <TabItem Header="Paths &amp; Folders">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -239,12 +245,13 @@
                         <CheckBox IsChecked="{Binding OverwriteExisting}" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center"/>
                     </Grid>
                 </Grid>
-                <GridSplitter Grid.Column="1" Grid.RowSpan="4" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" />
+                <GridSplitter Grid.Column="1" Grid.RowSpan="4" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="9" ResizeDirection="Columns" />
 
-                <Grid DataContext="{Binding SelectedItem, ElementName=grdEntitySettings}" Grid.Column="1" Margin="8,0,0,0">
+                <Grid DataContext="{Binding SelectedItem, ElementName=grdEntitySettings}"
+                      Grid.Column="1" Margin="9,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="6"/>
+                        <RowDefinition Height="9"/>
                         <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
                     <DataGrid Name="grdPropertySettings"
@@ -283,13 +290,13 @@
                         </DataGrid.ContextMenu>
                     </DataGrid>
 
-                    <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="8" ResizeDirection="Rows" />
+                    <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="9" ResizeDirection="Rows" />
 
                     <StackPanel Grid.Row="2" Height="20" VerticalAlignment="Top" Orientation="Horizontal">
-                        <TextBlock Text="Display Columns:" VerticalAlignment="Center"/>
+                        <TextBlock Text="Display Columns:" VerticalAlignment="Center" Margin="4,0,0,0" />
                         <ComboBox ItemsSource="{Binding Source={StaticResource mvcViewTypes}}"
                                   SelectedItem="{Binding FilterViewType}"
-                                  Width="120" Margin="8,0,0,0" />
+                                  Width="160" Margin="8,0,0,0" />
                     </StackPanel>
                     <DataGrid ItemsSource="{Binding FilteredDisplayColumns, Mode=OneWay}"
                               Grid.Row="2"

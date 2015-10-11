@@ -367,10 +367,10 @@
                                 </StackPanel>
                             </StackPanel>
                         </Border>
-                        <GridSplitter Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" />
+                        <GridSplitter Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="9" ResizeDirection="Columns" />
                     </Grid>
                     <!--<GridSplitter Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" Height="8" />-->
-                    <GridSplitter Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" />
+                    <GridSplitter Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="9" ResizeDirection="Columns" />
                 </Grid>
             </TabItem>
             <TabItem Header="Enums">

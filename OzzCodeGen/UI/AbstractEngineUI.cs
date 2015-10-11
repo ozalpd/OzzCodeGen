@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using OzzCodeGen.CodeEngines;
 using OzzCodeGen.Utilities;
 using OzzUtils;
+using System.Windows.Media;
 
 namespace OzzCodeGen.UI
 {
@@ -26,7 +27,6 @@ namespace OzzCodeGen.UI
             HiddenColumns.Add("EntitySetting");
             HiddenColumns.Add("PropertyDefinition");
         }
-
 
         protected virtual void RaisePropertyChanged(string propertyName)
         {

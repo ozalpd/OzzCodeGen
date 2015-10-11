@@ -161,7 +161,7 @@
 
                     </Grid>
                 </Grid>
-                <GridSplitter Grid.Column="1" Grid.RowSpan="4" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" />
+                <GridSplitter Grid.Column="1" Grid.RowSpan="4" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8"  ResizeDirection="Columns"/>
 
                 <Grid DataContext="{Binding SelectedItem, ElementName=grdEntitySettings}" Grid.Column="1" Margin="8,0,0,0">
                     <Grid.ColumnDefinitions>
