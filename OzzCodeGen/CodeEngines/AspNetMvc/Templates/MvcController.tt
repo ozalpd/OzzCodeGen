@@ -10,6 +10,9 @@
 <#
 string dataContextIntance = Entity.CodeEngine.DataContextInstance;
 var searchProperties = Entity.DisplayColumns.Where(e => e.UseInSearch);
+var pkeyProperty = Entity.GetPrimeryKey();
+string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
+
 WriteUsingNamespaces(); #>
 
 namespace <#= Entity.CodeEngine.ControllersNamespace #>
@@ -29,6 +32,9 @@ if (CustomFile)
 			 WriteViewBagSelectList(item); 
  		} #>
 		}
+        
+		//Purpose: To set default property values for newly created <#= Entity.ModelForEdit #> entity
+		//partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>) { }
 <#  }
 }
 else 
@@ -53,7 +59,7 @@ else
         {
             return await <#= dataContextIntance #>
                             .Get<#= Entity.Name #>Query()
-                            .FirstOrDefaultAsync(x => x.Id == id);
+                            .FirstOrDefaultAsync(x => x.<#= pKey #> == id);
         }
         partial void SetViewBags(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
         partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
@@ -206,6 +212,7 @@ else
 <#+ 
 protected void WriteViewBagSelectList(AspNetMvcPropertySetting propertySetting)
 { 
+	string dataContextIntance = Entity.CodeEngine.DataContextInstance;
 	var foreign = Entity.GetForeignKeyEntity(propertySetting);
 	string propValue = propertySetting.IsNullable() ? "(" : "";
 	propValue += Entity.Name.ToCamelCase();
@@ -215,20 +222,20 @@ protected void WriteViewBagSelectList(AspNetMvcPropertySetting propertySetting)
 	{
 		propValue += " ?? 0)";
     }
-	string start = foreign == null | propertySetting.UseForEdit != "DropDownList" ? "//" : "";#>
-
-            <#= start #>int <#= propertySetting.Name.ToCamelCase() #> = <#= Entity.Name.ToCamelCase() #> == null ? 0 : <#= propValue #>;
-<#+
 	if (foreign == null)
 	{ #>
 			//Can't detect forein entity type for <#= propertySetting.Name #>
-			//TODO: ViewBag.<#= propertySetting.Name #> = new SelectList(Context.QueryName, "Id", "Title", 0);
+			//TODO: ViewBag.<#= propertySetting.Name #> = new SelectList(<#= dataContextIntance #>.QueryName, "Id", "Title", 0);
 <#+	}
 	else
 	{
+		string comment = propertySetting.UseForEdit != "DropDownList" ? "//" : string.Empty;
 		var pkey = foreign.GetPrimeryKey();
 		string pkeyName = pkey == null ? "Id" : pkey.Name;
 				 #>
-            <#= start #>ViewBag.<#= propertySetting.Name #> = new SelectList(Context.<#= foreign.GetDataSetQuery() #>, "<#= pkeyName #>", "<#= foreign.EntityDefinition.DisplayMember #>", <#= propertySetting.Name.ToCamelCase() #>);
+            //TODO: Optimize query
+			var query<#= propertySetting.Name #> = <#= dataContextIntance #>.<#= foreign.GetDataSetQuery() #>;
+            <#= comment #>int <#= propertySetting.Name.ToCamelCase() #> = <#= Entity.Name.ToCamelCase() #> == null ? 0 : <#= propValue #>;
+			<#= comment #>ViewBag.<#= propertySetting.Name #> = new SelectList(query<#= propertySetting.Name #>, "<#= pkeyName #>", "<#= foreign.EntityDefinition.DisplayMember #>", <#= propertySetting.Name.ToCamelCase() #>);
 <#+			}
 } #>
