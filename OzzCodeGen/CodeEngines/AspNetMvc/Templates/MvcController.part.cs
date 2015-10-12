@@ -42,8 +42,8 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             namespaces.Add("System.Data");
             namespaces.Add("System.Data.Entity");
             namespaces.Add("System.Net");
-            namespaces.Add("System.Web");
             namespaces.Add("System.Web.Mvc");
+            namespaces.Add("System.Threading.Tasks");
             namespaces.Add(Entity.CodeEngine.ViewModelsNamespace);
             namespaces.Add(Entity.CodeEngine.ModelsNamespace);
 

@@ -25,7 +25,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
             set
             {
-                _controllerName = value;
+                _controllerName = value.ToPascalCase();
                 RaisePropertyChanged("ControllerName");
             }
         }
@@ -44,30 +44,48 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
             set
             {
-                _dataSetName = value;
+                _dataSetName = value.ToPascalCase();
                 RaisePropertyChanged("DataSetName");
             }
         }
         private string _dataSetName;
 
-        public string BaseControllerName
+        /// <summary>
+        /// DataContext class for MVC Controller
+        /// </summary>
+        public string DataContextClass
         {
             get
             {
-                if (string.IsNullOrEmpty(_baseControllerName))
-                {
-                    _baseControllerName = ((AspNetMvcEngine)CodeEngine).BaseControllerName;
-                }
-                return _baseControllerName;
+                if (string.IsNullOrEmpty(_dataContextClass))
+                    _dataContextClass = CodeEngine.DataContextClass;
+                return _dataContextClass;
             }
             set
             {
-                _baseControllerName = value;
-                RaisePropertyChanged("BaseControllerName");
+                _dataContextClass = value;
+                RaisePropertyChanged("DataContextClass");
             }
         }
-        private string _baseControllerName;
+        private string _dataContextClass;
 
+        /// <summary>
+        /// Parameter for Save and SaveAsync methods of data context
+        /// </summary>
+        public string SaveParameter
+        {
+            get { return _saveParameter; }
+            set
+            {
+                _saveParameter = value;
+                RaisePropertyChanged("SaveParameter");
+            }
+        }
+        private string _saveParameter;
+
+        /// <summary>
+        /// Model or ViewModel class name for Create/Edit methods
+        /// </summary>
         public string ModelForEdit
         {
             get
@@ -80,7 +98,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
             set
             {
-                _modelForEdit = value;
+                _modelForEdit = value.ToPascalCase();
                 RaisePropertyChanged("ModelForEdit");
             }
         }
@@ -235,6 +253,28 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private bool? _editView;
 
 
+        /// <summary>
+        /// Base controller class for MVC Controller
+        /// </summary>
+        public string BaseControllerName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_baseControllerName))
+                {
+                    _baseControllerName = CodeEngine.BaseControllerName;
+                }
+                return _baseControllerName;
+            }
+            set
+            {
+                _baseControllerName = value.ToPascalCase();
+                RaisePropertyChanged("BaseControllerName");
+            }
+        }
+        private string _baseControllerName;
+
+
         public string GetAuthorizeAttrib(string roleName)
         {
             if (string.IsNullOrEmpty(roleName) || roleName.Equals("everyone", StringComparison.InvariantCultureIgnoreCase))
@@ -317,7 +357,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
 
 
         [XmlIgnore]
-        public MvcViewType FilterViewType
+        public MvcFilterType FilterViewType
         {
             get { return _filterViewType; }
             set
@@ -327,7 +367,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 RaisePropertyChanged("FilteredDisplayColumns");
             }
         }
-        private MvcViewType _filterViewType;
+        private MvcFilterType _filterViewType;
 
         [XmlIgnore]
         public IEnumerable<AspNetMvcPropertySetting> FilteredDisplayColumns
@@ -336,15 +376,15 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 switch (FilterViewType)
                 {
-                    case MvcViewType.AllViews:
+                    case MvcFilterType.AllProperties:
                         return GetInheritedIncludedProperties();
-                    case MvcViewType.IndexView:
+                    case MvcFilterType.IndexViewProperties:
                         return GetInheritedIncludedProperties().Where(c => c.InIndexView);
-                    case MvcViewType.DetailsView:
+                    case MvcFilterType.DetailsViewProperties:
                         return GetInheritedIncludedProperties().Where(c => c.InDetailsView);
-                    case MvcViewType.CreateView:
+                    case MvcFilterType.CreateViewProperties:
                         return GetInheritedIncludedProperties().Where(c => c.InCreateView);
-                    case MvcViewType.EditView:
+                    case MvcFilterType.EditViewProperties:
                         return GetInheritedIncludedProperties().Where(c => c.InEditView);
                     default:
                         return GetInheritedIncludedProperties();

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using OzzCodeGen.UI;
+using System.ComponentModel;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.UI
 {
@@ -48,6 +49,11 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.UI
                     
             //    }
             //}
+        }
+
+        private void btnSetToControllers_Click(object sender, RoutedEventArgs e)
+        {
+            Engine.SetSaveParameterToControllers();
         }
     }
 }

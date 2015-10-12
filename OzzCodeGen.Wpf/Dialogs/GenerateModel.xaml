@@ -1,7 +1,7 @@
 ﻿<Window x:Name="window" x:Class="OzzCodeGen.Wpf.Dialogs.GenerateModel"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Generate Model" Height="400" Width="450" MaxWidth="450">
+        Title="Generate Model" Height="400" Width="450" MaxWidth="450" Loaded="window_Loaded">
     <Grid DataContext="{Binding ElementName=window, Mode=OneWay}">
         <Grid.RowDefinitions>
             <RowDefinition Height="26"/>

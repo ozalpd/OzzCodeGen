@@ -7,7 +7,8 @@
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzUtils" #>
-<# 
+<#
+string dataContextIntance = Entity.CodeEngine.DataContextInstance;
 var searchProperties = Entity.DisplayColumns.Where(e => e.UseInSearch);
 WriteUsingNamespaces(); #>
 
@@ -32,24 +33,41 @@ if (CustomFile)
 }
 else 
 { #>
-        private <#= Entity.Name #> Find<#= Entity.Name #>(int id)
+<# if (Entity.CodeEngine.GenerateDataContext)
+{ #>
+        protected <#= Entity.DataContextClass #> <#= dataContextIntance #>
         {
-            return Get<#= Entity.Name #>Query()
-                    .FirstOrDefault(x => x.Id == id);
+            get
+            {
+                if (_<#= dataContextIntance.ToCamelCase() #> == null)
+                {
+                    _<#= dataContextIntance.ToCamelCase() #> = new <#= Entity.DataContextClass #>();
+                }
+                return _<#= dataContextIntance.ToCamelCase() #>;
+            }
+        }
+        private <#= Entity.DataContextClass #> _<#= dataContextIntance.ToCamelCase() #>;
+
+<# } #>
+        private async Task<<#= Entity.Name #>> FindAsync<#= Entity.Name #>(int id)
+        {
+            return await <#= dataContextIntance #>
+                            .Get<#= Entity.Name #>Query()
+                            .FirstOrDefaultAsync(x => x.Id == id);
         }
         partial void SetViewBags(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
         partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
 
         
-        <#= CanViewAttrib #>//GET: /<#= Entity.ControllerName #>/
+        <#= CanViewAttrib #>
 <#  if(searchProperties.Any())
     { #>
-        public ActionResult Index(string searchString)
+        public async Task<ActionResult> Index(string searchString)
 <#  } else { #>
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
 <#  } #>
         {
-            var query = Get<#= Entity.Name #>Query();
+            var query = <#= dataContextIntance #>.Get<#= Entity.Name #>Query();
 <#  if(searchProperties.Any())
     { 
 	int k = 0;#>
@@ -65,17 +83,17 @@ else
                         select a;
             }
 <#  } #>
-            return View(query);
+            return View(await query.ToListAsync());
         }
 
-        <#= CanViewAttrib #>// GET: /<#= Entity.ControllerName #>/Details/5
-        public ActionResult Details(int? id)
+        <#= CanViewAttrib #>
+        public async Task<ActionResult> Details(int? id)  //GET: /<#= Entity.ControllerName #>/Details/5
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = Find<#= Entity.Name #>(id.Value);
+            <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = await FindAsync<#= Entity.Name #>(id.Value);
 
             if (<#= Entity.Name.ToCamelCase() #> == null)
             {
@@ -85,8 +103,8 @@ else
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
 
-        <#= CanEditAttrib #>// GET: /<#= Entity.ControllerName #>/Create
-        public ActionResult Create()
+        <#= CanEditAttrib #>
+        public ActionResult Create()  //GET: /<#= Entity.ControllerName #>/Create
         {
             var <#= Entity.Name.ToCamelCase() #> = new <#= Entity.ModelForEdit #>();
             SetDefaults(<#= Entity.Name.ToCamelCase() #>);
@@ -94,22 +112,22 @@ else
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
 
-        <#= CanEditAttrib #>// POST: /<#= Entity.ControllerName #>/Create
+        <#= CanEditAttrib #>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>)
+        public async Task<ActionResult> Create(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
         {
-            Context.SetInsertDefaults(<#= Entity.Name.ToCamelCase() #>, this);
+            <#= dataContextIntance #>.SetInsertDefaults(<#= Entity.Name.ToCamelCase() #>, this);
 
             if (ModelState.IsValid)
             {
 <#  if(Entity.ModelForEdit == Entity.Name)
 	{#> 
-                Context.<#= Entity.DataSetName #>.Add(<#= Entity.Name.ToCamelCase() #>);
+                <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(<#= Entity.Name.ToCamelCase() #>);
 <#  } else { #>
-                Context.<#= Entity.DataSetName #>.Add(<#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>());
+                <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(<#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>());
 <#  } #>
-                SaveChanges();
+                await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
                 return RedirectToAction("Index");
             }
 
@@ -117,14 +135,14 @@ else
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
 
-        <#= CanEditAttrib #>// GET: /<#= Entity.ControllerName #>/Edit/5
-        public ActionResult Edit(int? id)
+        <#= CanEditAttrib #>
+        public async Task<ActionResult> Edit(int? id)  //GET: /<#= Entity.ControllerName #>/Edit/5
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = Find<#= Entity.Name #>(id.Value);
+            <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = await FindAsync<#= Entity.Name #>(id.Value);
 
             if (<#= Entity.Name.ToCamelCase() #> == null)
             {
@@ -140,22 +158,22 @@ else
             return View(<#= instanceName #>);
         }
 
-        <#= CanEditAttrib #>// POST: /<#= Entity.ControllerName #>/Edit/5
+        <#= CanEditAttrib #>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>)
+        public async Task<ActionResult> Edit(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Edit/5
         {
-            Context.SetInsertDefaults(<#= Entity.Name.ToCamelCase() #>, this);
+            <#= dataContextIntance #>.SetInsertDefaults(<#= Entity.Name.ToCamelCase() #>, this);
 
             if (ModelState.IsValid)
             {
 <#  if(Entity.ModelForEdit == Entity.Name)
 	{#> 
-                Context.Entry(<#= Entity.Name.ToCamelCase() #>).State = EntityState.Modified;
+                <#= dataContextIntance #>.Entry(<#= Entity.Name.ToCamelCase() #>).State = EntityState.Modified;
 <#  } else { #>
-                Context.Entry(<#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>()).State = EntityState.Modified;
+                <#= dataContextIntance #>.Entry(<#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>()).State = EntityState.Modified;
 <#  } #>
-                SaveChanges();
+                await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
                 return RedirectToAction("Index");
             }
 
@@ -163,22 +181,22 @@ else
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
 
-        <#= CanDeleteAttrib #>// GET: /<#= Entity.ControllerName #>/Delete/5
-        public ActionResult Delete(int? id)
+        <#= CanDeleteAttrib #>
+        public async Task<ActionResult> Delete(int? id)  //GET: /<#= Entity.ControllerName #>/Delete/5
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = Find<#= Entity.Name #>(id.Value);
+            <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = await FindAsync<#= Entity.Name #>(id.Value);
 
             if (<#= Entity.Name.ToCamelCase() #> == null)
             {
                 return HttpNotFound();
             }
             
-            Context.<#= Entity.DataSetName #>.Remove(<#= Entity.Name.ToCamelCase() #>);
-            SaveChanges();
+            <#= dataContextIntance #>.<#= Entity.DataSetName #>.Remove(<#= Entity.Name.ToCamelCase() #>);
+            await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
 
             return RedirectToAction("Index");
         }

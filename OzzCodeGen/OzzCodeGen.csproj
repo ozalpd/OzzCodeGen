@@ -82,7 +82,7 @@
     <Compile Include="CodeEngines\AspNetMvc\AspNetMvcEngine.cs" />
     <Compile Include="CodeEngines\AspNetMvc\AspNetMvcEntitySetting.cs" />
     <Compile Include="CodeEngines\AspNetMvc\AspNetMvcPropertySetting.cs" />
-    <Compile Include="CodeEngines\AspNetMvc\MvcViewType.enum.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\MvcFilterType.enum.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\AbstractMvcView.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

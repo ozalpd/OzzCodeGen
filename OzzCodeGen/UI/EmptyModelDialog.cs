@@ -6,6 +6,7 @@ using System.IO;
 using OzzCodeGen.CodeEngines.Localization;
 using OzzCodeGen.CodeEngines;
 using System.Collections.Generic;
+using OzzUtils;
 
 namespace OzzCodeGen.UI
 {
@@ -79,8 +80,8 @@ namespace OzzCodeGen.UI
             {
                 txtNamespace.Text = txtProjectName.Text
                                     .Trim()
-                                    .Replace(' ', '.')
-                                    .Replace('-', '.');
+                                    .Replace('-', '.')
+                                    .ToPascalCase();
             }
         }
 

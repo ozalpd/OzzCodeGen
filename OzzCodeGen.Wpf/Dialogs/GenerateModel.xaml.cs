@@ -153,5 +153,10 @@ namespace OzzCodeGen.Wpf.Dialogs
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        private void window_Loaded(object sender, RoutedEventArgs e)
+        {
+            SelectedModelProvider = ModelProviders.FirstOrDefault();
+        }
     }
 }

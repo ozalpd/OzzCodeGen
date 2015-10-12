@@ -408,7 +408,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
             set
             {
-                _controllersNamespace = value;
+                _controllersNamespace = value.ToPascalCase();
                 RaisePropertyChanged("ControllersNamespace");
             }
         }
@@ -426,7 +426,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
             set
             {
-                _modelsNamespace = value;
+                _modelsNamespace = value.ToPascalCase();
                 RaisePropertyChanged("ModelsNamespace");
             }
         }
@@ -444,7 +444,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
             set
             {
-                _viewModelsNamespace = value;
+                _viewModelsNamespace = value.ToPascalCase();
                 RaisePropertyChanged("ViewModelsNamespace");
             }
         }
@@ -462,13 +462,15 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
             set
             {
-                _viewsNamespace = value;
+                _viewsNamespace = value.ToPascalCase();
                 RaisePropertyChanged("ViewsNamespace");
             }
         }
         private string _viewsNamespace;
 
-
+        /// <summary>
+        /// Default base class for MVC Controller
+        /// </summary>
         public string BaseControllerName
         {
             get
@@ -481,20 +483,33 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
             set
             {
-                _baseControllerName = value;
-                RaisePropertyChanged("BaseControllerName");
+                string oldValue = _baseControllerName;
+                onBaseControllerNameChanging(value);
+                onBaseControllerNameChanged(oldValue);
+            }
+        }
+        public virtual void onBaseControllerNameChanging(string newValue)
+        {
+            _baseControllerName = newValue.ToPascalCase();
+        }
+        public virtual void onBaseControllerNameChanged(string oldValue)
+        {
+            RaisePropertyChanged("BaseControllerName");
+            foreach (var item in Entities)
+            {
+                if (item.BaseControllerName.Equals(oldValue))
+                {
+                    item.BaseControllerName = BaseControllerName;
+                }
             }
         }
         private string _baseControllerName;
 
-
+        /// <summary>
+        /// Class name for repository or data context
+        /// </summary>
         public string DataContextClass
         {
-            set
-            {
-                _dataContextClass = value;
-                RaisePropertyChanged("DataContextClass");
-            }
             get
             {
                 if (string.IsNullOrEmpty(_dataContextClass))
@@ -503,8 +518,89 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 }
                 return _dataContextClass;
             }
+            set
+            {
+                string oldValue = _dataContextClass;
+                onDataContextClassChanging(value);
+                onDataContextClassChanged(oldValue);
+            }
+        }
+        public virtual void onDataContextClassChanging(string newValue)
+        {
+            _dataContextClass = newValue.ToPascalCase();
+        }
+        public virtual void onDataContextClassChanged(string oldValue)
+        {
+            RaisePropertyChanged("DataContextClass");
+            foreach (var item in Entities)
+            {
+                item.DataContextClass = DataContextClass;
+            }
         }
         private string _dataContextClass;
+
+        /// <summary>
+        /// Default instance name for controllers' DataContext or Repository
+        /// </summary>
+        public string DataContextInstance
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_dataContextInstance))
+                    _dataContextInstance = "DataContext";
+                return _dataContextInstance;
+            }
+            set
+            {
+                string oldValue = _dataContextInstance;
+                onDataContextInstanceChanging(value);
+                onDataContextInstanceChanged(oldValue);
+            }
+        }
+        public virtual void onDataContextInstanceChanging(string newValue)
+        {
+            _dataContextInstance = newValue.ToPascalCase();
+        }
+        public virtual void onDataContextInstanceChanged(string oldValue)
+        {
+            RaisePropertyChanged("DataContextInstance");
+            //foreach (var item in Entities)
+            //{
+            //    if (item.DataContextInstance.Equals(oldValue))
+            //    {
+            //        item.DataContextInstance = DataContextInstance;
+            //    }
+            //}
+        }
+        private string _dataContextInstance;
+
+        /// <summary>
+        /// Parameter for Save and SaveAsync methods of controllers' data context
+        /// </summary>
+        public string SaveParameter
+        {
+            get { return _saveParameter; }
+            set
+            {
+                _saveParameter = value;
+                RaisePropertyChanged("SaveParameter");
+            }
+        }
+        private string _saveParameter;
+
+        /// <summary>
+        /// Generate DataContext property in controllers
+        /// </summary>
+        public bool GenerateDataContext
+        {
+            get { return _generateDataContext; }
+            set
+            {
+                _generateDataContext = value;
+                RaisePropertyChanged("GenerateDataContext");
+            }
+        }
+        private bool _generateDataContext;
 
 
         [XmlIgnore]
@@ -523,6 +619,13 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private ResxEngine _resxEngine;
 
 
+        public void SetSaveParameterToControllers()
+        {
+            foreach (var item in Entities)
+            {
+                item.SaveParameter = SaveParameter;
+            }
+        }
 
         /// <summary>
         /// Reads a project settings file and creates a ProjectSettings instance
