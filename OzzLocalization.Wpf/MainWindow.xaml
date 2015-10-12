@@ -16,8 +16,8 @@
         <ViewModels:VocabularyEditorVM/>
     </Window.DataContext>
     <Window.Resources>
-        <Converters:BoolToColorConverter x:Key="IsTranslatedConverter" ColorForFalseValue="#FFFFDFDA" />
-        <Converters:BoolToColorConverter x:Key="FileExistsConverter" ColorForFalseValue="#FFD00000" ColorForTrueValue="#FF00C000" />
+        <Converters:BoolToColor x:Key="IsTranslatedConverter" ColorForFalseValue="#FFFFDFDA" />
+        <Converters:BoolToColor x:Key="FileExistsConverter" ColorForFalseValue="#FFD00000" ColorForTrueValue="#FF00C000" />
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>

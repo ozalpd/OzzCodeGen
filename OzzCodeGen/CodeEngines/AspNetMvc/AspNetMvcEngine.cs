@@ -596,6 +596,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _generateDataContext; }
             set
             {
+                if (_generateDataContext == value) return;
                 _generateDataContext = value;
                 RaisePropertyChanged("GenerateDataContext");
             }

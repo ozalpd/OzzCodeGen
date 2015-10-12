@@ -10,7 +10,7 @@
         Loaded="Window_Loaded" Closing="window_Closing"
         Icon="Assets/App-software.ico">
     <Window.Resources>
-        <Converters:BoolToColorConverter x:Key="FileExistsConverter" ColorForFalseValue="#FFD00000" ColorForTrueValue="#FF00C000" />
+        <Converters:BoolToColor x:Key="FileExistsConverter" ColorForFalseValue="#FFD00000" ColorForTrueValue="#FF00C000" />
     </Window.Resources>
     <Grid DataContext="{Binding ElementName=window, Mode=OneWay}">
         <Grid.RowDefinitions>

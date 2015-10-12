@@ -14,7 +14,7 @@
                 <x:Type TypeName="AspNetMvc:MvcFilterType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <Converters:BoolInverterConverter x:Key="boolInverter"/>
+        <Converters:BoolInverter x:Key="boolInverter"/>
         <Style x:Key="topbarButtons" TargetType="{x:Type Button}">
             <Setter Property="Height" Value="Auto" />
             <Setter Property="Width" Value="122" />
@@ -167,10 +167,10 @@
                     <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
                         <TextBlock Text="{Binding DataContextInstance, StringFormat='\{0\} Property'}" MinWidth="120"/>
                         <RadioButton Content="Generate"
-                                     IsChecked="{Binding GenerateDataContext}" GroupName="GenerateDataContext"
+                                     IsChecked="{Binding GenerateDataContext}" 
                                      ToolTip="Generate property in controllers"/>
                         <RadioButton Content="Exists in BaseClass"
-                                     IsChecked="{Binding GenerateDataContext, Converter={StaticResource boolInverter}}"  GroupName="GenerateDataContext"
+                                     IsChecked="{Binding GenerateDataContext, Converter={StaticResource boolInverter}}"
                                      ToolTip="Do not generate property. It's already present in the base controller class."/>
                     </StackPanel>
 
