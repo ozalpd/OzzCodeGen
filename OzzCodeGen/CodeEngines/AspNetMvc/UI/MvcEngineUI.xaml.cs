@@ -55,5 +55,10 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.UI
         {
             Engine.SetSaveParameterToControllers();
         }
+
+        private void btnSetRolesToControllers_Click(object sender, RoutedEventArgs e)
+        {
+            Engine.SetRolesToControllers();
+        }
     }
 }

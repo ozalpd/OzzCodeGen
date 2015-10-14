@@ -36,16 +36,17 @@
             <ColumnDefinition Width="*" MaxWidth="132"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="32"/>
-            <RowDefinition Height="36"/>
-            <RowDefinition Height="32"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="26"/>
             <RowDefinition Height="28"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
         <!-- TopBar TabControl -->
         <TabControl TabStripPlacement="Left"
-                    Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="4"
+                    Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="5"
                     Padding="2" Margin="0,4,4,0"
                     BorderBrush="#FFB0CFEF">
             <TabControl.Resources>
@@ -118,6 +119,7 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="Data Model Namespace:" ToolTip="Namespace for data model classes" Grid.Column="2" Grid.Row="0"/>
@@ -147,13 +149,13 @@
                     <TextBlock Text="Data Context Instance:" ToolTip="Instance name for data repository or data context in BaseController or controllers" Grid.Column="2" Grid.Row="2"/>
                     <TextBox Text="{Binding DataContextInstance, Mode=TwoWay}" Grid.Column="3" Grid.Row="2"/>
 
-                    <StackPanel Grid.Column="0" Grid.Row="3"></StackPanel>
-                    <TextBlock Text="Save Parameter:" Grid.Column="0" Grid.Row="3">
+                    <StackPanel Grid.Column="2" Grid.Row="3">
+                    <TextBlock Text="Save Parameter:">
                         <TextBlock.ToolTip>
                             <TextBlock Text="{Binding DataContextInstance, StringFormat='Parameter for Save and SaveAsync methods of \{0\} property'}"/>
                         </TextBlock.ToolTip>
-                    </TextBlock>
-                    <Grid Grid.Column="1" Grid.Row="3">
+                    </TextBlock></StackPanel>
+                    <Grid Grid.Column="3" Grid.Row="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*" MaxWidth="112"/>
@@ -165,8 +167,33 @@
                                 Click="btnSetToControllers_Click"/>
                     </Grid>
 
-                    <StackPanel Grid.Column="2" Grid.Row="3"></StackPanel>
-                    <StackPanel Grid.Column="3" Grid.Row="3"></StackPanel>
+                    <Grid Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="#20A0FFD0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="132"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" MaxWidth="132"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Roles Can Edit" Grid.Column="0" Grid.Row="0"/>
+                        <TextBox Text="{Binding RolesCanEdit}" Grid.Column="1" Grid.Row="0"/>
+                        <TextBlock Text="Roles Can View" Grid.Column="2" Grid.Row="0"/>
+                        <TextBox Text="{Binding RolesCanView}" Grid.Column="3" Grid.Row="0"/>
+                        <TextBlock Text="Roles Can Delete" Grid.Column="0" Grid.Row="4"/>
+                        <TextBox Text="{Binding RolesCanDelete}" Grid.Column="1" Grid.Row="4"/>
+                        <Button Content="Set Roles to Controllers"
+                                Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2"
+                                Margin="2" Width="144" HorizontalAlignment="Right"
+                                Click="btnSetRolesToControllers_Click"/>
+                    </Grid>
+
+                    <StackPanel Grid.Row="4" Grid.Column="2"></StackPanel>
+                    <StackPanel Grid.Row="4" Grid.Column="3"></StackPanel>
+                    
+                    
                 </Grid>
             </TabItem>
             <TabItem>
@@ -213,12 +240,12 @@
         <Button Name="btnRenderTemplate"
                 Content="Render Template"
                 IsEnabled="{Binding CanRender}"
-                Grid.Row="2" Grid.Column="0"
+                Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"
                 Style="{StaticResource topbarButtons}"
                 Click="btnRenderTemplate_Click"/>
 
         <StackPanel Orientation="Horizontal"
-                        Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
+                        Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
                         Background="#40FFFFFF" Margin="4,2,44,2">
             <TextBlock Text="Template:" VerticalAlignment="Center" Margin="4,0,16,0"/>
             <ComboBox ItemsSource="{Binding Templates}"
@@ -228,7 +255,7 @@
 
         <CheckBox IsChecked="{Binding RenderAllEntities}"
                       Content="Render All Entities"
-                      Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                      Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
                       VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,4,0,0"
                       ToolTip="Render for every entity in the model." />
         <!--// TopBar Buttons -->
@@ -295,11 +322,11 @@
                         <Border Width="140">
                             <StackPanel>
                                 <TextBlock Text="Roles Can View" Margin="0"/>
-                                <TextBox Text="{Binding WhoCanView}"/>
+                                <TextBox Text="{Binding RolesCanView}"/>
                                 <TextBlock Text="Roles Can Edit"/>
-                                <TextBox Text="{Binding WhoCanEdit}"/>
+                                <TextBox Text="{Binding RolesCanEdit}"/>
                                 <TextBlock Text="Roles Can Delete"/>
-                                <TextBox Text="{Binding WhoCanDelete}"/>
+                                <TextBox Text="{Binding RolesCanDelete}"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>

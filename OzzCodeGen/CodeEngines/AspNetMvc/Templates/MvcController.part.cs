@@ -23,6 +23,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 
         public AspNetMvcEntitySetting Entity { get; private set; }
         public bool CustomFile { get; private set; }
+        public AspNetMvcEngine CodeEngine { get { return Entity.CodeEngine; } }
 
         public override string GetDefaultFileName()
         {
@@ -44,8 +45,8 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             namespaces.Add("System.Net");
             namespaces.Add("System.Web.Mvc");
             namespaces.Add("System.Threading.Tasks");
-            namespaces.Add(Entity.CodeEngine.ViewModelsNamespace);
-            namespaces.Add(Entity.CodeEngine.ModelsNamespace);
+            namespaces.Add(CodeEngine.ViewModelsNamespace);
+            namespaces.Add(CodeEngine.ModelsNamespace);
 
             return namespaces;
         }
@@ -54,7 +55,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         {
             get
             {
-                return Entity.GetAuthorizeAttrib(Entity.WhoCanEdit);
+                return CodeEngine.GetAuthorizeAttrib(Entity.RolesCanEdit);
             }
         }
 
@@ -62,7 +63,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         {
             get
             {
-                return Entity.GetAuthorizeAttrib(Entity.WhoCanDelete);
+                return CodeEngine.GetAuthorizeAttrib(Entity.RolesCanDelete);
             }
         }
 
@@ -70,7 +71,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         {
             get
             {
-                return Entity.GetAuthorizeAttrib(Entity.WhoCanView);
+                return CodeEngine.GetAuthorizeAttrib(Entity.RolesCanView);
             }
         }
 

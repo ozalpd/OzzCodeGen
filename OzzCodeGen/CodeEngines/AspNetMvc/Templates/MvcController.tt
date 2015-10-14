@@ -8,14 +8,15 @@
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzUtils" #>
 <#
-string dataContextIntance = Entity.CodeEngine.DataContextInstance;
+var codeEngine = Entity.CodeEngine;
+string dataContextIntance = codeEngine.DataContextInstance;
 var searchProperties = Entity.DisplayColumns.Where(e => e.UseInSearch);
 var pkeyProperty = Entity.GetPrimeryKey();
 string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
 
 WriteUsingNamespaces(); #>
 
-namespace <#= Entity.CodeEngine.ControllersNamespace #>
+namespace <#= codeEngine.ControllersNamespace #>
 {
     public partial class <#= Entity.ControllerName #>Controller : <#= Entity.BaseControllerName #>
     {
@@ -39,7 +40,7 @@ if (CustomFile)
 }
 else 
 { #>
-<# if (Entity.CodeEngine.GenerateDataContext)
+<# if (codeEngine.GenerateDataContext)
 { #>
         protected <#= Entity.DataContextClass #> <#= dataContextIntance #>
         {
@@ -211,9 +212,10 @@ else
 }
 <#+ 
 protected void WriteViewBagSelectList(AspNetMvcPropertySetting propertySetting)
-{ 
-	string dataContextIntance = Entity.CodeEngine.DataContextInstance;
-	var foreign = Entity.GetForeignKeyEntity(propertySetting);
+{
+    var codeEngine = Entity.CodeEngine;
+	string dataContextIntance = codeEngine.DataContextInstance;
+	var foreign = codeEngine.GetForeignKeyEntity(propertySetting);
 	string propValue = propertySetting.IsNullable() ? "(" : "";
 	propValue += Entity.Name.ToCamelCase();
 	propValue += ".";

@@ -9,6 +9,7 @@ using OzzCodeGen.Definitions;
 using System.Collections.ObjectModel;
 using OzzUtils;
 using OzzCodeGen.CodeEngines.Storage;
+using System;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc
 {
@@ -35,6 +36,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         {
             var setting = new AspNetMvcEntitySetting()
             {
+                Name = entity.Name,
                 DataModel = this.Project.DataModel,
                 CodeEngine = this,
                 Exclude = entity.Abstract,
@@ -43,7 +45,12 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 DetailsView = !entity.Abstract,
                 CreateView = !entity.Abstract,
                 EditView = !entity.Abstract,
-                Name = entity.Name
+                RolesCanView = RolesCanView,
+                RolesCanEdit = RolesCanEdit,
+                RolesCanDelete = RolesCanDelete,
+                SaveParameter = SaveParameter,
+                DataContextClass = DataContextClass,
+                BaseControllerName = BaseControllerName
             };
 
             foreach (var property in entity.Properties)
@@ -604,6 +611,48 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private bool _generateDataContext;
 
+        public string RolesCanView
+        {
+            get { return _canView; }
+            set
+            {
+                _canView = value;
+                RaisePropertyChanged("RolesCanView");
+            }
+        }
+        private string _canView;
+
+        public string RolesCanEdit
+        {
+            get { return _canEdit; }
+            set
+            {
+                _canEdit = value;
+                RaisePropertyChanged("RolesCanEdit");
+            }
+        }
+        private string _canEdit;
+
+        public string RolesCanDelete
+        {
+            get { return _canDelete; }
+            set
+            {
+                _canDelete = value;
+                RaisePropertyChanged("RolesCanDelete");
+            }
+        }
+        private string _canDelete;
+
+        public void SetRolesToControllers()
+        {   
+            foreach (var item in Entities)
+            {
+                item.RolesCanDelete = RolesCanDelete;
+                item.RolesCanEdit = RolesCanEdit;
+                item.RolesCanView = RolesCanView;
+            }
+        }
 
         [XmlIgnore]
         public ResxEngine ResxEngine
@@ -637,6 +686,56 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
         }
         StorageCodeEngine _storageEngine;
+
+        /// <summary>
+        /// Returns [Authorize(Roles = \"roleName\")] attribute or empty string depending on roleName parameter.
+        /// </summary>
+        /// <param name="roleName">If value is 'users' returns [Authorize]. If value is empty string or 'everyone' returns empty string.</param>
+        /// <returns></returns>
+        public string GetAuthorizeAttrib(string roleName)
+        {
+            if (string.IsNullOrEmpty(roleName) || roleName.Equals("everyone", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return string.Empty;
+            }
+            else if (roleName.Equals("users", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return "[Authorize]";
+            }
+            else
+            {
+                return string.Format("[Authorize(Roles = \"{0}\")]", roleName);
+            }
+        }
+
+        /// <summary>
+        /// Gets AspNetMvcEntitySetting instance of property's object type
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public AspNetMvcEntitySetting GetForeignKeyEntity(AspNetMvcPropertySetting property)
+        {
+            if (!property.IsForeignKey())
+            {
+                return null;
+            }
+
+            var entity = (AspNetMvcEntitySetting)property.EntitySetting;
+            var complexProp = entity.GetInheritedComplexProperties()
+                                .FirstOrDefault(p => ((ComplexProperty)p.PropertyDefinition).DependentPropertyName == property.Name);
+
+            AspNetMvcEntitySetting result = null;
+
+            if (complexProp != null)
+            {
+                result = Entities
+                        .FirstOrDefault(e => e.EntityDefinition.Name.Equals(complexProp.PropertyDefinition.TypeName));
+            }
+            var pkey = result.GetPrimeryKey();
+            string s = result.EntityDefinition.DisplayMember;
+
+            return result;
+        }
 
 
         public void SetSaveParameterToControllers()

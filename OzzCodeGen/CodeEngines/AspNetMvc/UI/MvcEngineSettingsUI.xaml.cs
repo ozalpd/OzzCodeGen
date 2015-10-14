@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.UI
 {
@@ -41,6 +42,53 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.UI
             {
                 txtViewsDir.Text = System.IO.Path.Combine(targetDir, "Views");
             }
+
+            //a funny way to set default properties
+            txtRolesCanDelete.Text = "admin";
+            txtRolesCanEdit.Text = "editor, admin";
+            txtRolesCanView.Text = "everyone";
+        }
+
+        //part 2 a funny way to set default properties
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtTargetDirectory.Focus();
+            var interval = new TimeSpan(0, 0, 0, 0, 200);
+
+            int i = 0;
+            var tmrFocus = new DispatcherTimer();
+            tmrFocus.Interval = interval;
+            tmrFocus.Start();
+
+            tmrFocus.Tick += (o, a) =>
+            {
+                switch (i)
+                {
+                    case 0:
+                        txtRolesCanDelete.Focus();
+                        break;
+
+                    case 1:
+                        txtRolesCanEdit.Focus();
+                        break;
+
+                    case 2:
+                        txtRolesCanView.Focus();
+                        break;
+
+                    case 3:
+                        txtTargetDirectory.Focus();
+                        txtTargetDirectory.SelectAll();
+                        break;
+
+                    case 4:
+
+                    default:
+                        tmrFocus.Stop();
+                        break;
+                }
+                i++;
+            };
         }
     }
 }

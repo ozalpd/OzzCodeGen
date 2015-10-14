@@ -105,56 +105,35 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private string _modelForEdit;
 
 
-        public string WhoCanView
+        public string RolesCanView
         {
-            get
-            {
-                if (string.IsNullOrEmpty(_canView))
-                {
-                    _canView = "Users";
-                }
-                return _canView;
-            }
+            get { return _canView; }
             set
             {
                 _canView = value;
-                RaisePropertyChanged("WhoCanView");
+                RaisePropertyChanged("RolesCanView");
             }
         }
         private string _canView;
 
-        public string WhoCanEdit
+        public string RolesCanEdit
         {
-            get
-            {
-                if (string.IsNullOrEmpty(_canEdit))
-                {
-                    _canEdit = "Admin, Editor";
-                }
-                return _canEdit;
-            }
+            get { return _canEdit; }
             set
             {
                 _canEdit = value;
-                RaisePropertyChanged("WhoCanEdit");
+                RaisePropertyChanged("RolesCanEdit");
             }
         }
         private string _canEdit;
 
-        public string WhoCanDelete
+        public string RolesCanDelete
         {
-            get
-            {
-                if (string.IsNullOrEmpty(_canDelete))
-                {
-                    _canDelete = "Admin";
-                }
-                return _canDelete;
-            }
+            get { return _canDelete; }
             set
             {
                 _canDelete = value;
-                RaisePropertyChanged("WhoCanDelete");
+                RaisePropertyChanged("RolesCanDelete");
             }
         }
         private string _canDelete;
@@ -275,22 +254,6 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private string _baseControllerName;
 
 
-        public string GetAuthorizeAttrib(string roleName)
-        {
-            if (string.IsNullOrEmpty(roleName) || roleName.Equals("everyone", StringComparison.InvariantCultureIgnoreCase))
-            {
-                return string.Empty;
-            }
-            else if (roleName.Equals("users", StringComparison.InvariantCultureIgnoreCase))
-            {
-                return "[Authorize]";
-            }
-            else
-            {
-                return string.Format("[Authorize(Roles = \"{0}\")]", roleName);
-            }
-        }
-
         private string GetDataSetName()
         {
             var baseEntity = GetBaseEntitySetting();
@@ -319,30 +282,6 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 return DataSetName;
             }
-        }
-
-        public AspNetMvcEntitySetting GetForeignKeyEntity(AspNetMvcPropertySetting property)
-        {
-            if (!property.IsForeignKey())
-            {
-                return null;
-            }
-
-            var complexProp = GetInheritedComplexProperties()
-                                .FirstOrDefault(p => ((ComplexProperty)p.PropertyDefinition).DependentPropertyName == property.Name);
-
-            AspNetMvcEntitySetting result = null;
-
-            if (complexProp != null)
-            {
-                result = CodeEngine
-                        .Entities
-                        .FirstOrDefault(e => e.EntityDefinition.Name.Equals(complexProp.PropertyDefinition.TypeName));
-            }
-            var pkey = result.GetPrimeryKey();
-            string s = result.EntityDefinition.DisplayMember;
-
-            return result;
         }
 
         public override AbstractEntitySetting<AspNetMvcPropertySetting> GetBaseEntitySetting()
