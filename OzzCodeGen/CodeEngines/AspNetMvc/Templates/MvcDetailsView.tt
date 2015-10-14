@@ -12,26 +12,26 @@ var properties = Entity.DisplayColumns.Where(e => e.InDetailsView);
 WriteUsingNamespaces(); #>
 @model <#= Entity.Name #>
 @{
-    ViewBag.Title = AppFormString.<#= Entity.Name #>;
+    ViewBag.Title = <#= EntityResource #>.<#= Entity.Name #>;
 }
 
-<h2>@AppFormString.<#= Entity.Name #></h2>
+<h2>@<#= EntityResource #>.<#= Entity.Name #> @ActionStrings.Details</h2>
 
 <#
 foreach (var property in properties) 
 {
 #>
-<div class="row mt10">
+<div class="row">
     <label class="control-label col-md-2">
-        @AppFormString.<#= property.Name #>
+        @Html.DisplayNameFor(model => model.<#= property.Name #>)
     </label>
-    <div class="col-md-4">
+    <div class="col-md-10">
         @Html.DisplayFor(m => m.<#= property.Name #>)
     </div>
 </div>
 <#
 } #>
 <p>
-    @Html.ActionLink(@AppCommandString.Edit, "Edit", new { id = Model.Id }) |
-    @Html.ActionLink(@AppCommandString.Index, "Index")
+    @Html.ActionLink(@ActionStrings.Edit, "Edit", new { id = Model.Id }) |
+    @Html.ActionLink(@ActionStrings.BackToIndex, "Index")
 </p>

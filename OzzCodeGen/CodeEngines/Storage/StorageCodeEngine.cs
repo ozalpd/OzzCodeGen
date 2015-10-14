@@ -11,7 +11,8 @@ using OzzUtils;
 
 namespace OzzCodeGen.CodeEngines.Storage
 {
-    public abstract class StorageScriptsEngine : BaseCodeEngine
+    //Renamed from StorageScriptsEngine
+    public abstract class StorageCodeEngine : BaseCodeEngine
     {
         public bool PluralizeTableNames
         {

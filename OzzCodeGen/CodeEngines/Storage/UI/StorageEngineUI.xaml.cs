@@ -51,7 +51,7 @@ namespace OzzCodeGen.CodeEngines.Storage.UI
             if (selectedEntity == null || selectedEntity.PrimaryKeyColumn != null)
                 return;
 
-            var pKey = ((StorageScriptsEngine)CodeEngine).GetDefaultPrimaryKey();
+            var pKey = ((StorageCodeEngine)CodeEngine).GetDefaultPrimaryKey();
             pKey.EntitySetting = selectedEntity;
             selectedEntity.Properties.Insert(0, pKey);
             selectedEntity.PrimaryKeyColumn = pKey;

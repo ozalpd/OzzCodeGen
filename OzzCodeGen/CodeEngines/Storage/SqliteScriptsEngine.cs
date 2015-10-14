@@ -12,7 +12,7 @@ using OzzCodeGen.Definitions;
 namespace OzzCodeGen.CodeEngines.Storage
 {
     [XmlInclude(typeof(StorageEntitySetting))]
-    public class SqliteScriptsEngine : StorageScriptsEngine
+    public class SqliteScriptsEngine : StorageCodeEngine
     {
         public override string EngineId
         {

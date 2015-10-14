@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OzzCodeGen.CodeEngines.Localization;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,46 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         }
 
         public AspNetMvcEntitySetting Entity { get; private set; }
+
+        public ResxEngine Resx { get { return Entity.CodeEngine.ResxEngine; } }
+        public LocalizationEntitySetting ResxEntity
+        {
+            get
+            {
+                if (Resx != null && _resxEntity == null)
+                {
+                    _resxEntity = Resx
+                                    .Entities
+                                    .FirstOrDefault(e => e.Name.Equals(Entity.Name));
+                }
+                return _resxEntity;
+            }
+        }
+        LocalizationEntitySetting _resxEntity;
+
+        public string EntityResource
+        {
+            get
+            {
+                if (Resx != null)
+                {
+                    return Resx.SingleResx ? Resx.SingleResxFilename :
+                        ResxEntity != null ? Resx.GetDefaultTargetFile(ResxEntity) : string.Empty;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
+        public string DisplayMember
+        {
+            get
+            {
+                return Entity.EntityDefinition.DisplayMember;
+            }
+        }
 
         public List<string> UsingNamespaces
         {
@@ -34,9 +75,9 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             var namespaces = new List<string>();
             namespaces.Add(Entity.CodeEngine.ViewModelsNamespace);
             namespaces.Add(Entity.CodeEngine.ModelsNamespace);
-            if (Entity.CodeEngine.ResxEngine != null)
+            if (Resx != null)
             {
-                namespaces.Add("Resources");
+                namespaces.Add(Resx.NamespaceName);
             }
 
             return namespaces;

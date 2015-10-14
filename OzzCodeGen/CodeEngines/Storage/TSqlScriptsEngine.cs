@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
 using OzzCodeGen.CodeEngines.Storage.Templates;
@@ -9,7 +8,7 @@ using OzzCodeGen.Definitions;
 namespace OzzCodeGen.CodeEngines.Storage
 {
     [XmlInclude(typeof(StorageEntitySetting))]
-    public class TSqlScriptsEngine : StorageScriptsEngine
+    public class TSqlScriptsEngine : StorageCodeEngine
     {
         public override string EngineId
         {

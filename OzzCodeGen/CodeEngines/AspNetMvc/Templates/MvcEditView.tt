@@ -7,6 +7,7 @@
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzCodeGen.Utilities" #>
+<#@ import namespace="OzzUtils" #>
 <# 
 var properties = CreateForm ? 
         Entity.DisplayColumns.Where(e => e.InCreateView) :
@@ -17,13 +18,13 @@ WriteUsingNamespaces(); #>
 @{
 <#  if(CreateForm)
 	{ #>
-    ViewBag.Title = @AppCommandString.CreateNew;
+    ViewBag.Title = <#= EntityResource #>.Create<#= Entity.Name #>;
 <#  } else { #>
-    ViewBag.Title = @AppCommandString.Edit;
+    ViewBag.Title = <#= EntityResource #>.Edit<#= Entity.Name #>;
 <#  } #>
 }
 
-<h2>@AppFormString.<#= Entity.Name #></h2>
+<h2>@<#= EntityResource #>.<#= Entity.Name #></h2>
 
 @using (Html.BeginForm())
 {
@@ -45,13 +46,11 @@ foreach (var property in properties)
     else 
     { #>
         <div class="form-group">
-            <label class="control-label col-md-2" for="<#= property.Name #>">
-                @AppFormString.<#= property.Name #>
-            </label>
-            <div class="col-md-4">
+            @Html.LabelFor(model => model.<#= property.Name #>, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
 <#      if (property.UseForEdit == "DropDownList")
         { #>
-                @Html.DropDownList("<#= property.Name #>", AppCommandString.SelectPlease)
+                @Html.DropDownList("<#= property.Name #>", null, ActionStrings.SelectPlease, htmlAttributes: new { @class = "form-control" })
 <#      } else if (property.UseForEdit == "ReadOnlyDisplay") { #>
                 @Html.DisplayFor(m => m.<#= property.Name #>)
 <#      } else if (property.UseForEdit == "ImageUpload") { #>
@@ -61,13 +60,11 @@ foreach (var property in properties)
 <#      } else if (property.UseForEdit == "TextArea") { #>
                 @Html.TextAreaFor(m => m.<#= property.Name #>, new { @class = "form-control" })
 <#      } else { #>
-                @Html.EditorFor(m => m.<#= property.Name #>)
+                @Html.EditorFor(m => m.<#= property.Name #>, new { htmlAttributes = new { @class = "form-control" } })
 <#      } #>
-            </div>
 <#      if (property.HasValidation)
         { #>
-            <div class="col-md-4">
-                @Html.ValidationMessageFor(m => m.<#= property.Name #>)
+                @Html.ValidationMessageFor(m => m.<#= property.Name #>, "", new { @class = "text-danger" })
             </div>
 <#      } #>
         </div>
@@ -77,10 +74,10 @@ foreach (var property in properties)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-2">
-                @Html.ActionLink(@AppCommandString.BackToIndex, "Index", null, new { @class = "btn btn-default" })
+                @Html.ActionLink(@ActionStrings.BackToIndex, "Index", null, new { @class = "btn btn-default" })
             </div>
             <div class="col-md-2">
-                <input type="submit" value='@AppCommandString.Save' class="btn btn-default" />
+                <input type="submit" value='@ActionStrings.Save' class="btn btn-default" />
             </div>
         </div>
     </div>

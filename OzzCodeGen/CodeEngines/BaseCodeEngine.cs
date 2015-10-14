@@ -191,6 +191,7 @@ namespace OzzCodeGen.CodeEngines
                 _currentEntitySetting = value;
                 RaisePropertyChanged("CurrentEntitySetting");
                 OnCurrentEntitySettingChanged();
+                CanRender = (RenderAllEntities || CurrentEntitySetting != null) && !string.IsNullOrEmpty(SelectedTemplate);
             }
         }
         private BaseEntitySetting _currentEntitySetting;
@@ -204,9 +205,24 @@ namespace OzzCodeGen.CodeEngines
             {
                 _renderAll = value;
                 RaisePropertyChanged("RenderAllEntities");
+                CanRender = (RenderAllEntities || CurrentEntitySetting != null) && !string.IsNullOrEmpty(SelectedTemplate);
             }
         }
         private bool _renderAll;
+
+
+        [XmlIgnore]
+        public bool CanRender
+        {
+            get { return _canRender; }
+            set
+            {
+                _canRender = value;
+                RaisePropertyChanged("CanRender");
+            }
+        }
+        private bool _canRender;
+
 
         public virtual void RefreshFromProject(bool cleanRemovedItems)
         {

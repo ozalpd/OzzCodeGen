@@ -205,7 +205,7 @@ namespace OzzCodeGen.CodeEngines.Storage
 
 
         [XmlIgnore]
-        public StorageScriptsEngine CodeEngine { get; set; }
+        public StorageCodeEngine CodeEngine { get; set; }
 
         [XmlIgnore]
         public List<StorageEntitySetting> ForeignTables

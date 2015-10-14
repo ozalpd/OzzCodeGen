@@ -8,6 +8,7 @@ using OzzCodeGen.CodeEngines.Localization;
 using OzzCodeGen.Definitions;
 using System.Collections.ObjectModel;
 using OzzUtils;
+using OzzCodeGen.CodeEngines.Storage;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc
 {
@@ -609,7 +610,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         {
             get
             {
-                if (_resxEngine == null && Project != null)
+                if (Project != null && _resxEngine == null)
                 {
                     var engine = Project.GetCodeEngine(EngineTypes.LocalizationResxGenId);
                     _resxEngine = engine != null ? (ResxEngine)engine : null;
@@ -618,6 +619,24 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
         }
         private ResxEngine _resxEngine;
+
+
+        [XmlIgnore]
+        public StorageCodeEngine StorageEngine
+        {
+            get
+            {
+                if (Project != null && _storageEngine== null)
+                {
+                    //TODO: If a new kind server side StorageCodeEngine will be added, it should be caught here
+                    //for now only StorageCodeEngine is EngineTypes.TSqlScriptsId
+                    var engine = Project.GetCodeEngine(EngineTypes.TSqlScriptsId);
+                    _storageEngine = engine == null ? null : (TSqlScriptsEngine)engine;
+                }
+                return _storageEngine;
+            }
+        }
+        StorageCodeEngine _storageEngine;
 
 
         public void SetSaveParameterToControllers()

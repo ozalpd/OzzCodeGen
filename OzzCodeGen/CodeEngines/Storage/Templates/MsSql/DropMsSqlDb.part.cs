@@ -8,7 +8,7 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
 {
     public partial class DropMsSqlDb : AbstractStorageTemplate
     {
-        public DropMsSqlDb(StorageScriptsEngine engine) : base(engine) { }
+        public DropMsSqlDb(StorageCodeEngine engine) : base(engine) { }
 
         public override string GetDefaultFileName()
         {

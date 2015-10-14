@@ -47,21 +47,35 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write("\r\n@{\r\n    ViewBag.Title = AppFormString.");
+            this.Write("\r\n@{\r\n    ViewBag.Title = ");
+            
+            #line 15 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
+            
+            #line default
+            #line hidden
+            this.Write(".");
             
             #line 15 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
-            this.Write(";\r\n}\r\n\r\n<h2>@AppFormString.");
+            this.Write(";\r\n}\r\n\r\n<h2>@");
+            
+            #line 18 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
+            
+            #line default
+            #line hidden
+            this.Write(".");
             
             #line 18 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
-            this.Write("</h2>\r\n\r\n");
+            this.Write(" @ActionStrings.Details</h2>\r\n\r\n");
             
             #line 20 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
 
@@ -71,15 +85,15 @@ foreach (var property in properties)
             
             #line default
             #line hidden
-            this.Write("<div class=\"row mt10\">\r\n    <label class=\"control-label col-md-2\">\r\n        @AppF" +
-                    "ormString.");
+            this.Write("<div class=\"row\">\r\n    <label class=\"control-label col-md-2\">\r\n        @Html.Disp" +
+                    "layNameFor(model => model.");
             
             #line 26 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
-            this.Write("\r\n    </label>\r\n    <div class=\"col-md-4\">\r\n        @Html.DisplayFor(m => m.");
+            this.Write(")\r\n    </label>\r\n    <div class=\"col-md-10\">\r\n        @Html.DisplayFor(m => m.");
             
             #line 29 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
@@ -94,8 +108,8 @@ foreach (var property in properties)
             
             #line default
             #line hidden
-            this.Write("<p>\r\n    @Html.ActionLink(@AppCommandString.Edit, \"Edit\", new { id = Model.Id }) " +
-                    "|\r\n    @Html.ActionLink(@AppCommandString.Index, \"Index\")\r\n</p>\r\n");
+            this.Write("<p>\r\n    @Html.ActionLink(@ActionStrings.Edit, \"Edit\", new { id = Model.Id }) |\r\n" +
+                    "    @Html.ActionLink(@ActionStrings.BackToIndex, \"Index\")\r\n</p>\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

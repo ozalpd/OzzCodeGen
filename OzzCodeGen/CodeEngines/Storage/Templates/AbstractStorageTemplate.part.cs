@@ -8,7 +8,7 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates
 {
     public abstract partial class AbstractStorageTemplate : AbstractTemplate
     {
-        public AbstractStorageTemplate(StorageScriptsEngine engine)
+        public AbstractStorageTemplate(StorageCodeEngine engine)
         {
             CodeEngine = engine;
         }
@@ -19,7 +19,7 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates
             CodeEngine = tableDefinition.CodeEngine;
         }
 
-        public StorageScriptsEngine CodeEngine { get; private set; }
+        public StorageCodeEngine CodeEngine { get; private set; }
         public StorageEntitySetting TableDefinition { get; private set; }
 
         public string GetColumnType(StorageColumnSetting column)

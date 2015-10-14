@@ -42,40 +42,8 @@
             <RowDefinition Height="28"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <!-- TopBar Buttons -->
-        <Button Name="btnRenderTemplate"
-                    Content="Render Template"
-                    Grid.Row="2" Grid.Column="0"
-                    Style="{StaticResource topbarButtons}"
-                    Click="btnRenderTemplate_Click"/>
-
-        <Button Name="btnRenderAllTemplates" Content="Render All Templates" 
-                    Grid.Row="1" Grid.Column="0"
-                    Style="{StaticResource topbarButtons}"
-                    Click="btnRenderAllTemplates_Click"/>
-
-        <StackPanel Orientation="Horizontal"
-                        Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
-                        Background="#40FFFFFF" Margin="4,2">
-            <TextBlock Text="Template:" VerticalAlignment="Center" Margin="4,0,16,0"/>
-            <ComboBox ItemsSource="{Binding Templates}"
-                      SelectedItem="{Binding SelectedTemplate}"
-                      Width="192" Height="24" HorizontalAlignment="Left"/>
-        </StackPanel>
-
-        <CheckBox IsChecked="{Binding RenderAllEntities}"
-                      Content="Render All Entities"
-                      Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
-                      VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,4,0,0"
-                      ToolTip="Render for every entity in the model." />
-
-        <Button Name="btnRefresh" Content="Refresh"
-                    Grid.Row="0" Grid.Column="0"
-                    Style="{StaticResource topbarButtons}"
-                    Click="btnRefresh_Click"/>
-        <!--// TopBar Buttons -->
-
+        
+        <!-- TopBar TabControl -->
         <TabControl TabStripPlacement="Left"
                     Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="4"
                     Padding="2" Margin="0,4,4,0"
@@ -227,6 +195,43 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <!--// TopBar TabControl -->
+
+        <!-- TopBar Buttons -->
+        <Button Name="btnRefresh" Content="Refresh"
+                Grid.Row="0" Grid.Column="0"
+                Style="{StaticResource topbarButtons}"
+                Click="btnRefresh_Click"/>
+        
+        <Button Name="btnRenderAllTemplates"
+                Content="Render All Templates" 
+                IsEnabled="{Binding CanRender}"
+                Grid.Row="1" Grid.Column="0"
+                Style="{StaticResource topbarButtons}"
+                Click="btnRenderAllTemplates_Click"/>
+
+        <Button Name="btnRenderTemplate"
+                Content="Render Template"
+                IsEnabled="{Binding CanRender}"
+                Grid.Row="2" Grid.Column="0"
+                Style="{StaticResource topbarButtons}"
+                Click="btnRenderTemplate_Click"/>
+
+        <StackPanel Orientation="Horizontal"
+                        Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
+                        Background="#40FFFFFF" Margin="4,2,44,2">
+            <TextBlock Text="Template:" VerticalAlignment="Center" Margin="4,0,16,0"/>
+            <ComboBox ItemsSource="{Binding Templates}"
+                      SelectedItem="{Binding SelectedTemplate}"
+                      Width="200" Height="24" HorizontalAlignment="Left"/>
+        </StackPanel>
+
+        <CheckBox IsChecked="{Binding RenderAllEntities}"
+                      Content="Render All Entities"
+                      Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                      VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,4,0,0"
+                      ToolTip="Render for every entity in the model." />
+        <!--// TopBar Buttons -->
 
         <!-- Grid of data grids -->
         <Grid Grid.Row="8" Grid.ColumnSpan="6" Margin="4,2">
@@ -381,7 +386,7 @@
                 <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="9" ResizeDirection="Rows" />
 
                 <StackPanel Grid.Row="2" Height="20" VerticalAlignment="Top" Orientation="Horizontal">
-                    <TextBlock Text="Display Columns:" VerticalAlignment="Center" Margin="4,0,0,0" />
+                    <TextBlock Text="Display Properties:" VerticalAlignment="Center" Margin="4,0,0,0" />
                     <ComboBox ItemsSource="{Binding Source={StaticResource mvcViewTypes}}"
                                           SelectedItem="{Binding FilterViewType}"
                                           Width="160" Margin="8,0,0,0" />

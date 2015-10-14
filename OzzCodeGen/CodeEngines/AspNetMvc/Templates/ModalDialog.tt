@@ -1,0 +1,43 @@
+﻿<#@ template language="C#" inherits="AbstractMvcView" debug="true" hostspecific="false" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<# 
+WriteUsingNamespaces(); #>
+<div class="modal fade" id="messageBox"> @* Message Box *@
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 id="messageBoxTitle" class="modal-title"></h2>
+            </div>
+            <div class="modal-body">
+                <p id="messageBoxText"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="messageBoxCancelButton" type="button" class="btn btn-default" data-dismiss="modal">
+                    @ActionStrings.Cancel
+                </button>
+            </div>
+        </div>@* /.modal-content *@
+    </div>@* /.modal-dialog *@
+</div>@* /.modal *@
+
+<div class="modal fade" id="deleteConfirm"> @* Delete Confirm Dialog *@
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">@ActionStrings.Delete</h2>
+            </div>
+            <div class="modal-body">
+                <p id="deleteText"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@ActionStrings.Cancel</button>
+                <a id="deleteButton" style="width:70px;" class="btn btn-danger">@ActionStrings.Delete</a>
+            </div>
+        </div>@* /.modal-content *@
+    </div>@* /.modal-dialog *@
+</div>@* /.modal *@

@@ -70,6 +70,12 @@
       <DependentUpon>SqliteHelper.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\Android\Templates\SqliteHelper.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\ModalDialog.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModalDialog.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeEngines\AspNetMvc\Templates\ModalDialog.part.cs" />
     <Compile Include="CodeEngines\Java\Templates\AbstractJavaTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -218,7 +224,7 @@
     <Compile Include="CodeEngines\Storage\SqliteScriptsEngine.cs" />
     <Compile Include="CodeEngines\Storage\StorageEntitySetting.cs" />
     <Compile Include="CodeEngines\Storage\StorageColumnSetting.cs" />
-    <Compile Include="CodeEngines\Storage\StorageScriptsEngine.cs" />
+    <Compile Include="CodeEngines\Storage\StorageCodeEngine.cs" />
     <Compile Include="CodeEngines\Storage\Templates\Additionals.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -540,6 +546,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CodeEngines\AspNetMvc\Templates\ModalDialog.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ModalDialog.cs</LastGenOutput>
+    </Content>
     <Content Include="CodeEngines\Metadata\Templates\MetadataClassTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MetadataClassTemplate.cs</LastGenOutput>
