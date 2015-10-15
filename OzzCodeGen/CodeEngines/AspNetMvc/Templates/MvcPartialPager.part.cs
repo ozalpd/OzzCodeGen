@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
-    public partial class ModalDialog : AbstractMvcView
+   public partial class MvcPartialPager : AbstractMvcView
     {
-        public ModalDialog(AspNetMvcEntitySetting entity) : base(entity) { }
+        public MvcPartialPager(AspNetMvcEntitySetting entity) : base(entity) { }
 
-        public static string DefaultFileName = "_MessageBoxPartial.cshtml";
+        public static string DefaultFileName = "_PagerPartial.cshtml";
 
         public override string GetDefaultFileName()
         {

@@ -15,7 +15,7 @@ WriteUsingNamespaces(); #>
         $('#searchForm').submit();
     }
     function setDelete(item, id) {
-        $('#deleteText').html('You are about to delete the record<br/><b>' + item + '</b>.<br/>Are you sure?');
+        $('#deleteText').html('@MessageStrings.YouAreAboutToDelete ' + item + '.<br/>@MessageStrings.AreYouSure?');
         $('#deleteButton').attr('href', '/@Model/Delete/' + id);
     }
     function showMessageBox(title, text, cancelButton) {
@@ -33,7 +33,7 @@ WriteUsingNamespaces(); #>
         $('#messageBox').modal('hide');
     }
     function showCannotDelete(item, relatedRecords) {
-        var msgText = 'Record<br/><b>' + item + '</b> can not be deleted.<br/>Because of related records, below<br/>' + relatedRecords;
-        showMessageBox('Unable to Delete!', msgText, true);
+        var msgText = '@MessageStrings.CanNotDelete ' + item + '.<br/>@MessageStrings.BecauseOfRelatedRecords.<br/>' + relatedRecords;
+        showMessageBox('@MessageStrings.UnableToDelete!', msgText, true);
     }
 </script>

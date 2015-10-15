@@ -73,7 +73,7 @@ if (collectionProperties.Any())
         <tr>
             <td>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <button type="button" title="@ActionStrings.Action" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
                         <span class="glyphicon glyphicon-tasks"></span> <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
@@ -87,19 +87,19 @@ if (collectionProperties.Any())
 #>
                             @if (canDelete)
                             {
-                                <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('@(item.<#= DisplayMember #>)', @item.Id);">
+                                <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('<b>@(item.<#= DisplayMember #>)</b>', @item.Id);">
                                     @ActionStrings.Delete
                                 </a>
                             }
                             else
                             {
                                 string cannotDelete = string.Format("<# foreach (var property in collectionProperties){ #><#= property.Name #>: {<#= collNr #>}<br/><# collNr++; } #>"<# foreach (var property in collectionProperties){ #>, <#= property.Name.ToCamelCase() #>Count <# } #>);
-                                <a onclick="showCannotDelete('@(item.<#= DisplayMember #>)', '@cannotDelete');">
+                                <a onclick="showCannotDelete('<b>@(item.<#= DisplayMember #>)</b>', '@cannotDelete');">
                                     @ActionStrings.Delete
                                 </a>
                             }
 <# } else { #>
-                            <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('@(item.<#= DisplayMember #>)', @item.Id);">
+                            <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('<b>@(item.<#= DisplayMember #>)</b>', @item.Id);">
                                 @ActionStrings.Delete
                             </a>
 <#

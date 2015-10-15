@@ -15,7 +15,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         {
             get
             {
-                return Path.GetFileNameWithoutExtension(ModalDialog.DefaultFileName);
+                return Path.GetFileNameWithoutExtension(MvcPartialModalDialog.DefaultFileName);
             }
         }
 
@@ -24,24 +24,24 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         {
             string sharedViewsDir = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(FilePath)), "Shared");
 
-            string modalFilePath = Path.Combine(sharedViewsDir, ModalDialog.DefaultFileName);
+            string modalFilePath = Path.Combine(sharedViewsDir, MvcPartialModalDialog.DefaultFileName);
             if (!File.Exists(modalFilePath))
             {
-                var modalTemplate = new ModalDialog(Entity);
+                var modalTemplate = new MvcPartialModalDialog(Entity);
                 modalTemplate.WriteToFile(modalFilePath, false);
             }
 
-            string pagerFilePath = Path.Combine(sharedViewsDir, PagerPartial.DefaultFileName);
+            string pagerFilePath = Path.Combine(sharedViewsDir, MvcPartialPager.DefaultFileName);
             if (!File.Exists(pagerFilePath))
             {
-                var pagerTemplate = new PagerPartial(Entity);
+                var pagerTemplate = new MvcPartialPager(Entity);
                 pagerTemplate.WriteToFile(pagerFilePath, false);
             }
 
-            string scriptFilePath = Path.Combine(sharedViewsDir, IndexScriptsPartial.DefaultFileName);
+            string scriptFilePath = Path.Combine(sharedViewsDir, MvcPartialIndexScripts.DefaultFileName);
             if (!File.Exists(scriptFilePath))
             {
-                var scriptTemplate = new IndexScriptsPartial(Entity);
+                var scriptTemplate = new MvcPartialIndexScripts(Entity);
                 scriptTemplate.WriteToFile(scriptFilePath, false);
             }
 

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
-    public partial class IndexScriptsPartial
+    public partial class MvcPartialIndexScripts
     {
-        public IndexScriptsPartial(AspNetMvcEntitySetting entity) : base(entity) { }
+        public MvcPartialIndexScripts(AspNetMvcEntitySetting entity) : base(entity) { }
 
         public static string DefaultFileName = "_IndexScriptsPartial.cshtml";
 

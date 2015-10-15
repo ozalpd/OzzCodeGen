@@ -18,9 +18,9 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\IndexScriptsPartial.tt"
+    #line 1 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialIndexScripts.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public partial class IndexScriptsPartial : AbstractMvcView
+    public partial class MvcPartialIndexScripts : AbstractMvcView
     {
 #line hidden
         /// <summary>
@@ -29,7 +29,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         public override string TransformText()
         {
             
-            #line 6 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\IndexScriptsPartial.tt"
+            #line 6 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialIndexScripts.tt"
  
 WriteUsingNamespaces(); 
             
@@ -45,7 +45,7 @@ WriteUsingNamespaces();
         $('#searchForm').submit();
     }
     function setDelete(item, id) {
-        $('#deleteText').html('You are about to delete the record<br/><b>' + item + '</b>.<br/>Are you sure?');
+        $('#deleteText').html('@MessageStrings.YouAreAboutToDelete ' + item + '.<br/>@MessageStrings.AreYouSure?');
         $('#deleteButton').attr('href', '/@Model/Delete/' + id);
     }
     function showMessageBox(title, text, cancelButton) {
@@ -63,8 +63,8 @@ WriteUsingNamespaces();
         $('#messageBox').modal('hide');
     }
     function showCannotDelete(item, relatedRecords) {
-        var msgText = 'Record<br/><b>' + item + '</b> can not be deleted.<br/>Because of related records, below<br/>' + relatedRecords;
-        showMessageBox('Unable to Delete!', msgText, true);
+        var msgText = '@MessageStrings.CanNotDelete ' + item + '.<br/>@MessageStrings.BecauseOfRelatedRecords.<br/>' + relatedRecords;
+        showMessageBox('@MessageStrings.UnableToDelete!', msgText, true);
     }
 </script>");
             return this.GenerationEnvironment.ToString();

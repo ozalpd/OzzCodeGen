@@ -41,8 +41,24 @@
     <Translation>Approved User IP</Translation>
   </Vocab>
   <Vocab>
+    <Name>AreYouSure</Name>
+    <Translation>Are you sure</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>BackToIndex</Name>
+    <Translation>Back to List</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>BecauseOfRelatedRecords</Name>
+    <Translation>Because of related records</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Cancel</Name>
     <Translation>Cancel</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CanNotDelete</Name>
+    <Translation>Can not delete</Translation>
   </Vocab>
   <Vocab>
     <Name>Categories</Name>
@@ -489,6 +505,10 @@
     <Translation>No</Translation>
   </Vocab>
   <Vocab>
+    <Name>NoResults</Name>
+    <Translation>No Results</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Normal</Name>
     <Translation>Normal</Translation>
   </Vocab>
@@ -653,6 +673,10 @@
     <Translation>Rarely</Translation>
   </Vocab>
   <Vocab>
+    <Name>Record</Name>
+    <Translation>Record</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Register</Name>
     <Translation>Register</Translation>
   </Vocab>
@@ -749,6 +773,10 @@
     <Translation>Townships</Translation>
   </Vocab>
   <Vocab>
+    <Name>UnableToDelete</Name>
+    <Translation>Unable to Delete</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Unit</Name>
     <Translation>Unit</Translation>
   </Vocab>
@@ -767,6 +795,10 @@
   <Vocab>
     <Name>Yes</Name>
     <Translation>Yes</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>YouAreAboutToDelete</Name>
+    <Translation>You are about to delete the record</Translation>
   </Vocab>
   <Vocab>
     <Name>ZipCode</Name>
