@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
@@ -13,6 +9,20 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         public override string GetDefaultFileName()
         {
             return "Details.cshtml";
+        }
+
+        public override bool WriteToFile(string FilePath, bool overwriteExisting)
+        {
+            string sharedViewsDir = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(FilePath)), "Shared");
+
+            string buttonsViewPath = Path.Combine(sharedViewsDir, MvcPartialDetailFormButtons.DefaultFileName);
+            if (!File.Exists(buttonsViewPath))
+            {
+                var buttonsTemplate = new MvcPartialDetailFormButtons(Entity);
+                buttonsTemplate.WriteToFile(buttonsViewPath, false);
+            }
+
+            return base.WriteToFile(FilePath, overwriteExisting);
         }
     }
 }

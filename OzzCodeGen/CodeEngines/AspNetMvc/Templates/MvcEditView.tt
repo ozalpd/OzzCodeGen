@@ -71,16 +71,8 @@ foreach (var property in properties)
 <#  } #>
 <#
 } #>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-2">
-                @Html.ActionLink(@ActionStrings.BackToIndex, "Index", null, new { @class = "btn btn-default" })
-            </div>
-            <div class="col-md-2">
-                <input type="submit" value='@ActionStrings.Save' class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+    @Html.Partial("<#= MvcPartialSaveButtons.ViewName #>")
+</div>
 }
 
 @section Scripts

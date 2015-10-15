@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
@@ -27,6 +23,20 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             {
                 return "Edit.cshtml";
             }
+        }
+
+        public override bool WriteToFile(string FilePath, bool overwriteExisting)
+        {
+            string sharedViewsDir = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(FilePath)), "Shared");
+
+            string buttonsViewPath = Path.Combine(sharedViewsDir, MvcPartialSaveButtons.DefaultFileName);
+            if (!File.Exists(buttonsViewPath))
+            {
+                var buttonsTemplate = new MvcPartialSaveButtons(Entity);
+                buttonsTemplate.WriteToFile(buttonsViewPath, false);
+            }
+
+            return base.WriteToFile(FilePath, overwriteExisting);
         }
     }
 }

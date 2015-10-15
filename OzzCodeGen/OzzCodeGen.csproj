@@ -70,6 +70,12 @@
       <DependentUpon>SqliteHelper.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\Android\Templates\SqliteHelper.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialDetailFormButtons.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcPartialDetailFormButtons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialDetailFormButtons.part.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialIndexScripts.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -88,6 +94,12 @@
       <DependentUpon>MvcPartialPager.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialPager.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialSaveButtons.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcPartialSaveButtons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialSaveButtons.part.cs" />
     <Compile Include="CodeEngines\Java\Templates\AbstractJavaTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -558,6 +570,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CodeEngines\AspNetMvc\Templates\MvcPartialDetailFormButtons.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcPartialDetailFormButtons.cs</LastGenOutput>
+    </Content>
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcPartialIndexScripts.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MvcPartialIndexScripts.cs</LastGenOutput>
@@ -569,6 +585,10 @@
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcPartialPager.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MvcPartialPager.cs</LastGenOutput>
+    </Content>
+    <Content Include="CodeEngines\AspNetMvc\Templates\MvcPartialSaveButtons.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcPartialSaveButtons.cs</LastGenOutput>
     </Content>
     <Content Include="CodeEngines\Metadata\Templates\MetadataClassTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

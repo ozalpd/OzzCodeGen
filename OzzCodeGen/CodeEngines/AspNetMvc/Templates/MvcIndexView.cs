@@ -355,9 +355,29 @@ foreach (var property in properties)
             
             #line default
             #line hidden
-            this.Write("        </tr>\r\n    }\r\n</table>\r\n    @Html.Partial(\"_PagerPartial\")\r\n    @Html.Par" +
-                    "tial(\"_MessageBoxPartial\")\r\n}\r\nelse\r\n{\r\n    <h4>There is no result to display!</" +
-                    "h4>\r\n}\r\n@section scripts{\r\n    @Html.Partial(\"_IndexScriptsPartial\", \"");
+            this.Write("        </tr>\r\n    }\r\n</table>\r\n    @Html.Partial(\"");
+            
+            #line 125 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(MvcPartialPager.ViewName));
+            
+            #line default
+            #line hidden
+            this.Write("\")\r\n    @Html.Partial(\"");
+            
+            #line 126 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(MvcPartialModalDialog.ViewName));
+            
+            #line default
+            #line hidden
+            this.Write("\")\r\n}\r\nelse\r\n{\r\n    <h4>@MessageStrings.NoResults!</h4>\r\n}\r\n@section scripts{\r\n  " +
+                    "  @Html.Partial(\"");
+            
+            #line 133 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(MvcPartialIndexScripts.ViewName));
+            
+            #line default
+            #line hidden
+            this.Write("\", \"");
             
             #line 133 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ControllerName));

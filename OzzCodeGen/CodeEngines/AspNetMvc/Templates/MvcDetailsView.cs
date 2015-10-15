@@ -108,13 +108,14 @@ foreach (var property in properties)
             
             #line default
             #line hidden
-            this.Write(@"<div class=""row"">
-    <div class=""col-md-6"">
-        @Html.ActionLink(@ActionStrings.Edit, ""Edit"", null, new { id = Model.Id }, new { @class = ""btn btn-default"" })
-        @Html.ActionLink(@ActionStrings.BackToIndex, ""Index"", null, new { @class = ""btn btn-default"" })
-    </div>
-</div>
-");
+            this.Write("@Html.Partial(\"");
+            
+            #line 34 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(MvcPartialDetailFormButtons.ViewName));
+            
+            #line default
+            #line hidden
+            this.Write("\")\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

@@ -122,13 +122,13 @@ foreach (var property in properties)
         </tr>
     }
 </table>
-    @Html.Partial("_PagerPartial")
-    @Html.Partial("_MessageBoxPartial")
+    @Html.Partial("<#= MvcPartialPager.ViewName #>")
+    @Html.Partial("<#= MvcPartialModalDialog.ViewName #>")
 }
 else
 {
-    <h4>There is no result to display!</h4>
+    <h4>@MessageStrings.NoResults!</h4>
 }
 @section scripts{
-    @Html.Partial("_IndexScriptsPartial", "<#= Entity.ControllerName #>")
+    @Html.Partial("<#= MvcPartialIndexScripts.ViewName #>", "<#= Entity.ControllerName #>")
 }

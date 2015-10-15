@@ -1,10 +1,10 @@
 ﻿namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
-    public partial class MvcPartialPager : AbstractMvcView
+    public partial class MvcPartialDetailFormButtons
     {
-        public MvcPartialPager(AspNetMvcEntitySetting entity) : base(entity) { }
+        public MvcPartialDetailFormButtons(AspNetMvcEntitySetting entity) : base(entity) { }
 
-        public static string ViewName = "_PagerPartial";
+        public static string ViewName = "_DetailFormButtonsPartial";
         public static string DefaultFileName = ViewName + ".cshtml";
 
         public override string GetDefaultFileName()

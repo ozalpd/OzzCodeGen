@@ -35,10 +35,7 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write(@"@using CriticalPath.Web.Models
-@using CriticalPath.Data
-@using CriticalPath.Data.Resources
-@Model string
+            this.Write(@"@model string
 <script>
     function setPager(pageNr) {
         $('#pageNr').val(pageNr);

@@ -294,24 +294,17 @@ foreach (var property in properties)
             
             #line default
             #line hidden
-            this.Write(@"
-        <div class=""form-group"">
-            <div class=""col-md-offset-2 col-md-2"">
-                @Html.ActionLink(@ActionStrings.BackToIndex, ""Index"", null, new { @class = ""btn btn-default"" })
-            </div>
-            <div class=""col-md-2"">
-                <input type=""submit"" value='@ActionStrings.Save' class=""btn btn-default"" />
-            </div>
-        </div>
-    </div>
-}
-
-@section Scripts
-{
-    @Scripts.Render(""~/bundles/jqueryval"")
-");
+            this.Write("    @Html.Partial(\"");
             
-            #line 89 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 74 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(MvcPartialSaveButtons.ViewName));
+            
+            #line default
+            #line hidden
+            this.Write("\")\r\n</div>\r\n}\r\n\r\n@section Scripts\r\n{\r\n    @Scripts.Render(\"~/bundles/jqueryval\")\r" +
+                    "\n");
+            
+            #line 81 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   if(properties.Where(p => p.UseForEdit == "ImageUpload").Any())
     { 
             
@@ -320,14 +313,14 @@ foreach (var property in properties)
             this.Write("    @Scripts.Render(\"~/bundles/angular\")\r\n    @Scripts.Render(\"~/bundles/fileUplo" +
                     "ad\")\r\n");
             
-            #line 93 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 85 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   } 
             
             #line default
             #line hidden
             this.Write("}\r\n");
             
-            #line 95 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 87 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   if(properties.Where(p => p.UseForEdit == "ImageUpload").Any())
     { 
             
@@ -336,7 +329,7 @@ foreach (var property in properties)
             this.Write("@section styles{\r\n    <link href=\"~/Content/fileupload.css\" rel=\"stylesheet\" />\r\n" +
                     "}\r\n");
             
-            #line 100 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 92 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   } 
             
             #line default
