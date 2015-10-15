@@ -1,0 +1,69 @@
+﻿<#@ template language="C#" inherits="AbstractMvcView" debug="true" hostspecific="false" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<# 
+WriteUsingNamespaces(); #>
+@{
+    Layout = null;
+    int pageNr = ViewBag.pageNr;
+    int totalCount = ViewBag.totalCount;
+    int pageSize = ViewBag.pageSize;
+    int pageCount = ViewBag.pageCount;
+    int pagers = pageCount > 10 ? 10 : pageCount;
+    int pagerStart = pageNr > 5 ? pageNr - (pagers / 2) : 1;
+    if ((pagerStart + pagers) > pageCount)
+    {
+        pagerStart = pageCount - pagers + 1;
+    }
+}
+<nav>
+    <ul class="pagination">
+        @if (pageNr == 1)
+        {
+            <li class="disabled">
+                <a aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="#" aria-label="Previous" onclick="setPager(@(pageNr-1))">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        }
+        @for (int i = pagerStart; i < (pagerStart + pagers); i++)
+        {
+            if (pageNr == i)
+            {
+                <li class="active"><a>@i <span class="sr-only">(current)</span></a></li>
+            }
+            else
+            {
+                <li><a href="#" onclick="setPager(@i)">@i</a></li>
+            }
+        }
+        @if (pageNr < pageCount)
+        {
+
+            <li>
+                <a href="#" aria-label="Next" onclick="setPager(@(pageNr+1))">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        }
+        else
+        {
+
+            <li class="disabled">
+                <a aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        }
+    </ul>
+</nav>

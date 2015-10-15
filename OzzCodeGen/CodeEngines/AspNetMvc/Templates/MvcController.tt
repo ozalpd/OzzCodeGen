@@ -69,9 +69,9 @@ else
         <#= CanViewAttrib #>
 <#  if(searchProperties.Any())
     { #>
-        public async Task<ActionResult> Index(string searchString)
+        public async Task<ActionResult> Index(string searchString, int pageNr = 1, int pageSize = 10)
 <#  } else { #>
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int pageNr = 1, int pageSize = 10)
 <#  } #>
         {
             var query = <#= dataContextIntance #>.Get<#= Entity.Name #>Query();
@@ -90,7 +90,25 @@ else
                         select a;
             }
 <#  } #>
-            return View(await query.ToListAsync());
+            int totalCount = await query.CountAsync();
+            int pageCount = totalCount > 0 ? (int)Math.Ceiling(totalCount / (double)pageSize) : 0;
+            if (pageNr < 1) pageNr = 1;
+            if (pageNr > pageCount) pageNr = pageCount;
+            int skip = (pageNr - 1) * pageSize;
+
+            ViewBag.pageNr = pageNr;
+            ViewBag.totalCount = totalCount;
+            ViewBag.pageSize = pageSize;
+            ViewBag.pageCount = pageCount;
+
+            if (totalCount > 0)
+            {
+                return View(await query.Skip(skip).Take(pageSize).ToListAsync());
+            }
+            else
+            {
+                return View(new List<<#= Entity.Name #>>());
+            }
         }
 
         <#= CanViewAttrib #>

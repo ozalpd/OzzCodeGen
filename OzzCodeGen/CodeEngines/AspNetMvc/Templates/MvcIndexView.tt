@@ -15,6 +15,10 @@ WriteUsingNamespaces(); #>
 @model IEnumerable<<#= Entity.Name #>>
 @{
     ViewBag.Title = @<#= EntityResource #>.<#= Entity.Name.Pluralize() #>;
+    int pageNr = ViewBag.pageNr;
+    int totalCount = ViewBag.totalCount;
+    int pageSize = ViewBag.pageSize;
+    int pageCount = ViewBag.pageCount;
 }
 <div class="row well">
     <div class="col-md-8">
@@ -22,13 +26,14 @@ WriteUsingNamespaces(); #>
     </div>
 <#  if(searchable)
     { #>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "searchForm" }))
     {
-        <div class="col-md-3">
+        @Html.Hidden("pageNr", pageNr)
+        <div class="col-md-4">
             <div class="input-group">
                 @Html.TextBox("SearchString", null, new { @class = "form-control" })
                 <span class="input-group-btn">
-                    <button type="submit" class="btn btn-default">
+                    <button type="button" class="btn btn-default" onclick="setPager(1)">
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
                 </span>
@@ -37,6 +42,8 @@ WriteUsingNamespaces(); #>
     }
 <#  } #>
 </div>
+@if (totalCount > 0)
+{
 <table class="table table-hover">
     <tr>
         <th>@ActionStrings.Action</th>
@@ -115,30 +122,13 @@ foreach (var property in properties)
         </tr>
     }
 </table>
-@Html.Partial("<#= ModalDialogPartial #>")
+    @Html.Partial("_PagerPartial")
+    @Html.Partial("_MessageBoxPartial")
+}
+else
+{
+    <h4>There is no result to display!</h4>
+}
 @section scripts{
-    <script>
-        function setDelete(item, id) {
-            $('#deleteText').html('You are about to delete the record<br/><b>' + item + '</b>.<br/>Are you sure?');
-            $('#deleteButton').attr('href', '/<#= Entity.ControllerName #>/Delete/' + id);
-        }
-        function showMessageBox(title, text, cancelButton) {
-            if (cancelButton) {
-                $('#messageBoxCancelButton').show();
-            }
-            else {
-                $('#messageBoxCancelButton').hide();
-            }
-            $('#messageBoxTitle').html(title);
-            $('#messageBoxText').html(text);
-            $('#messageBox').modal('show');
-        }
-        function hideMessageBox() {
-            $('#messageBox').modal('hide');
-        }
-        function showCannotDelete(item, relatedRecords) {
-            var msgText = 'Record<br/><b>' + item + '</b> can not be deleted.<br/>Because of related records, below<br/>' + relatedRecords;
-            showMessageBox('Unable to Delete!', msgText, true);
-        }
-    </script>
+    @Html.Partial("_IndexScriptsPartial", "<#= Entity.ControllerName #>")
 }

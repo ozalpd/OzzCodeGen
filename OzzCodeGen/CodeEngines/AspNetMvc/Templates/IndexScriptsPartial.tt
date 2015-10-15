@@ -1,0 +1,39 @@
+﻿<#@ template language="C#" inherits="AbstractMvcView" debug="true" hostspecific="false" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<# 
+WriteUsingNamespaces(); #>
+@using CriticalPath.Web.Models
+@using CriticalPath.Data
+@using CriticalPath.Data.Resources
+@Model string
+<script>
+    function setPager(pageNr) {
+        $('#pageNr').val(pageNr);
+        $('#searchForm').submit();
+    }
+    function setDelete(item, id) {
+        $('#deleteText').html('You are about to delete the record<br/><b>' + item + '</b>.<br/>Are you sure?');
+        $('#deleteButton').attr('href', '/@Model/Delete/' + id);
+    }
+    function showMessageBox(title, text, cancelButton) {
+        if (cancelButton) {
+            $('#messageBoxCancelButton').show();
+        }
+        else {
+            $('#messageBoxCancelButton').hide();
+        }
+        $('#messageBoxTitle').html(title);
+        $('#messageBoxText').html(text);
+        $('#messageBox').modal('show');
+    }
+    function hideMessageBox() {
+        $('#messageBox').modal('hide');
+    }
+    function showCannotDelete(item, relatedRecords) {
+        var msgText = 'Record<br/><b>' + item + '</b> can not be deleted.<br/>Because of related records, below<br/>' + relatedRecords;
+        showMessageBox('Unable to Delete!', msgText, true);
+    }
+</script>

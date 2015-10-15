@@ -70,12 +70,24 @@
       <DependentUpon>SqliteHelper.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\Android\Templates\SqliteHelper.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\IndexScriptsPartial.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IndexScriptsPartial.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeEngines\AspNetMvc\Templates\IndexScriptsPartial.part.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\ModalDialog.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModalDialog.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\AspNetMvc\Templates\ModalDialog.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\PagerPartial.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PagerPartial.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeEngines\AspNetMvc\Templates\PagerPartial.part.cs" />
     <Compile Include="CodeEngines\Java\Templates\AbstractJavaTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -546,9 +558,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CodeEngines\AspNetMvc\Templates\IndexScriptsPartial.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>IndexScriptsPartial.cs</LastGenOutput>
+    </Content>
     <Content Include="CodeEngines\AspNetMvc\Templates\ModalDialog.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ModalDialog.cs</LastGenOutput>
+    </Content>
+    <Content Include="CodeEngines\AspNetMvc\Templates\PagerPartial.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>PagerPartial.cs</LastGenOutput>
     </Content>
     <Content Include="CodeEngines\Metadata\Templates\MetadataClassTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

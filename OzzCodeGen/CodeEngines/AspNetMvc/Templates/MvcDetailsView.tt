@@ -31,7 +31,9 @@ foreach (var property in properties)
 </div>
 <#
 } #>
-<p>
-    @Html.ActionLink(@ActionStrings.Edit, "Edit", new { id = Model.Id }) |
-    @Html.ActionLink(@ActionStrings.BackToIndex, "Index")
-</p>
+<div class="row">
+    <div class="col-md-6">
+        @Html.ActionLink(@ActionStrings.Edit, "Edit", null, new { id = Model.Id }, new { @class = "btn btn-default" })
+        @Html.ActionLink(@ActionStrings.BackToIndex, "Index", null, new { @class = "btn btn-default" })
+    </div>
+</div>

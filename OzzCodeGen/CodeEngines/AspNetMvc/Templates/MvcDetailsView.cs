@@ -108,8 +108,13 @@ foreach (var property in properties)
             
             #line default
             #line hidden
-            this.Write("<p>\r\n    @Html.ActionLink(@ActionStrings.Edit, \"Edit\", new { id = Model.Id }) |\r\n" +
-                    "    @Html.ActionLink(@ActionStrings.BackToIndex, \"Index\")\r\n</p>\r\n");
+            this.Write(@"<div class=""row"">
+    <div class=""col-md-6"">
+        @Html.ActionLink(@ActionStrings.Edit, ""Edit"", null, new { id = Model.Id }, new { @class = ""btn btn-default"" })
+        @Html.ActionLink(@ActionStrings.BackToIndex, ""Index"", null, new { @class = ""btn btn-default"" })
+    </div>
+</div>
+");
             return this.GenerationEnvironment.ToString();
         }
     }
