@@ -48,6 +48,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 RolesCanView = RolesCanView,
                 RolesCanEdit = RolesCanEdit,
                 RolesCanDelete = RolesCanDelete,
+                RolesCanCreate = RolesCanCreate,
                 SaveParameter = SaveParameter,
                 DataContextClass = DataContextClass,
                 BaseControllerName = BaseControllerName
@@ -633,6 +634,17 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private string _canEdit;
 
+        public string RolesCanCreate
+        {
+            get { return _canCreate; }
+            set
+            {
+                _canCreate = value;
+                RaisePropertyChanged("RolesCanCreate");
+            }
+        }
+        private string _canCreate;
+
         public string RolesCanDelete
         {
             get { return _canDelete; }
@@ -651,6 +663,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 item.RolesCanDelete = RolesCanDelete;
                 item.RolesCanEdit = RolesCanEdit;
                 item.RolesCanView = RolesCanView;
+                item.RolesCanCreate = RolesCanCreate;
             }
         }
 

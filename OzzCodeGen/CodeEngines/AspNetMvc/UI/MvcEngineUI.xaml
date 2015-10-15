@@ -182,16 +182,19 @@
                         <TextBox Text="{Binding RolesCanEdit}" Grid.Column="1" Grid.Row="0"/>
                         <TextBlock Text="Roles Can View" Grid.Column="2" Grid.Row="0"/>
                         <TextBox Text="{Binding RolesCanView}" Grid.Column="3" Grid.Row="0"/>
-                        <TextBlock Text="Roles Can Delete" Grid.Column="0" Grid.Row="4"/>
-                        <TextBox Text="{Binding RolesCanDelete}" Grid.Column="1" Grid.Row="4"/>
+                        <TextBlock Text="Roles Can Create" Grid.Column="0" Grid.Row="4"/>
+                        <TextBox Text="{Binding RolesCanCreate}" Grid.Column="1" Grid.Row="4"/>
+                        <TextBlock Text="Roles Can Delete" Grid.Column="2" Grid.Row="4"/>
+                        <TextBox Text="{Binding RolesCanDelete}" Grid.Column="3" Grid.Row="4"/>
+                    </Grid>
+
+                    <StackPanel Grid.Row="4" Grid.Column="3"></StackPanel>
+                    <StackPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Background="#20A0FFD0">
                         <Button Content="Set Roles to Controllers"
                                 Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2"
                                 Margin="2" Width="144" HorizontalAlignment="Right"
                                 Click="btnSetRolesToControllers_Click"/>
-                    </Grid>
-
-                    <StackPanel Grid.Row="4" Grid.Column="2"></StackPanel>
-                    <StackPanel Grid.Row="4" Grid.Column="3"></StackPanel>
+                    </StackPanel>
                     
                     
                 </Grid>
@@ -302,16 +305,16 @@
                             <Setter Property="Margin" Value="2"/>
                         </Style>
                     </StackPanel.Resources>
-                    <Border>
-                        <StackPanel Background="#FFFFB040">
-                            <TextBlock Text="Target File" TextAlignment="Center" Background="#D0FFFFFF" Margin="0"/>
-                            <CheckBox IsChecked="{Binding OverwriteExisting}" Content="Overwrite Existing File"/>
-                        </StackPanel>
-                    </Border>
                     <StackPanel Orientation="Horizontal">
                         <Border Width="90">
                             <StackPanel>
-                                <TextBlock Text="Generate" TextAlignment="Center" Margin="0" Background="#D0FFFFFF"/>
+                                <StackPanel Background="#FFFFB040">
+                                    <TextBlock Text="Target File" TextAlignment="Center" Background="#D0FFFFFF" Margin="0"/>
+                                    <CheckBox IsChecked="{Binding OverwriteExisting}"
+                                              Content="Overwrite"
+                                              ToolTip="Overwrite existing file"/>
+                                </StackPanel>
+                                <TextBlock Text="Generate" TextAlignment="Center" Background="#D0FFFFFF"/>
                                 <CheckBox IsChecked="{Binding GenerateController}" Content="Controllers"/>
                                 <CheckBox IsChecked="{Binding IndexView}" Content="Index View" />
                                 <CheckBox IsChecked="{Binding DetailsView}" Content="Details View" />
@@ -323,6 +326,8 @@
                             <StackPanel>
                                 <TextBlock Text="Roles Can View" Margin="0"/>
                                 <TextBox Text="{Binding RolesCanView}"/>
+                                <TextBlock Text="Roles Can Create"/>
+                                <TextBox Text="{Binding RolesCanCreate}"/>
                                 <TextBlock Text="Roles Can Edit"/>
                                 <TextBox Text="{Binding RolesCanEdit}"/>
                                 <TextBlock Text="Roles Can Delete"/>

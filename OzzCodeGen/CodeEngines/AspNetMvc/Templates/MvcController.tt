@@ -14,6 +14,10 @@ var searchProperties = Entity.DisplayColumns.Where(e => e.UseInSearch);
 var pkeyProperty = Entity.GetPrimeryKey();
 string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
 
+string[] createRoles = Entity.RolesCanCreateToArray();
+string[] editRoles = Entity.RolesCanEditToArray();
+string[] deleteRoles = Entity.RolesCanDeleteToArray();
+
 WriteUsingNamespaces(); #>
 
 namespace <#= codeEngine.ControllersNamespace #>
@@ -23,19 +27,55 @@ namespace <#= codeEngine.ControllersNamespace #>
 <#
 if (CustomFile)
 { 
-	var vbagProperties = Entity.DisplayColumns.Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
-	if (vbagProperties.Any())
-	{ #>
+    var vbagProperties = Entity.DisplayColumns.Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
+    if (vbagProperties.Any())
+    { #>
         partial void SetViewBags(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>)
-		{
+        {
 <#      foreach (var item in vbagProperties)
         { 
-			 WriteViewBagSelectList(item); 
- 		} #>
-		}
+             WriteViewBagSelectList(item); 
+         } #>
+        }
         
-		//Purpose: To set default property values for newly created <#= Entity.ModelForEdit #> entity
-		//partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>) { }
+        //Purpose: To set default property values for newly created <#= Entity.ModelForEdit #> entity
+        //partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>) { }
+
+        protected virtual async Task<bool> CanUserEdit()
+        {
+            if (!_canUserEdit.HasValue)
+            {
+                _canUserEdit = Request.IsAuthenticated<# if(editRoles==null){ #>;<# }
+             else
+             { foreach(var role in editRoles){ #> && await UserManager.IsInRoleAsync(UserID, "<#= role.Trim() #>")<# }} #>;
+            }
+            return _canUserEdit.Value;
+        }
+        bool? _canUserEdit;
+
+        protected virtual async Task<bool> CanUserCreate()
+        {
+            if (!_canUserCreate.HasValue)
+            {
+                _canUserCreate = Request.IsAuthenticated<# if(createRoles==null){ #>;<# }
+             else
+             { foreach(var role in createRoles){ #> && await UserManager.IsInRoleAsync(UserID, "<#= role.Trim() #>")<# }} #>;
+            }
+            return _canUserCreate.Value;
+        }
+        bool? _canUserCreate;
+
+        protected virtual async Task<bool> CanUserDelete()
+        {
+            if (!_canUserDelete.HasValue)
+            {
+                _canUserDelete = Request.IsAuthenticated<# if(deleteRoles==null){ #>;<# }
+             else
+             { foreach(var role in deleteRoles){ #> && await UserManager.IsInRoleAsync(UserID, "<#= role.Trim() #>")<# }} #>;
+            }
+            return _canUserDelete.Value;
+        }
+        bool? _canUserDelete;
 <#  }
 }
 else 
@@ -77,14 +117,14 @@ else
             var query = <#= dataContextIntance #>.Get<#= Entity.Name #>Query();
 <#  if(searchProperties.Any())
     { 
-	int k = 0;#>
+    int k = 0;#>
             if (!string.IsNullOrEmpty(searchString))
             {
                 query = from a in query
                         where
 <#        foreach (var item in searchProperties)
           {
-			k++;#>
+            k++;#>
                             a.<#= item.Name #>.Contains(searchString)<# if (k < searchProperties.Count()){ #> |<# } #> 
 <#        } #>
                         select a;
@@ -100,6 +140,10 @@ else
             ViewBag.totalCount = totalCount;
             ViewBag.pageSize = pageSize;
             ViewBag.pageCount = pageCount;
+
+            ViewBag.canUserEdit = await CanUserEdit();
+            ViewBag.canUserCreate = await CanUserCreate();
+            ViewBag.canUserDelete = await CanUserDelete();
 
             if (totalCount > 0)
             {
@@ -147,7 +191,7 @@ else
             if (ModelState.IsValid)
             {
 <#  if(Entity.ModelForEdit == Entity.Name)
-	{#> 
+    {#> 
                 <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(<#= Entity.Name.ToCamelCase() #>);
 <#  } else { #>
                 <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(<#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>());
@@ -175,8 +219,8 @@ else
             }
 
 <#  string instanceName = Entity.ModelForEdit == Entity.Name ? Entity.Name.ToCamelCase() : Entity.ModelForEdit.ToCamelCase();
-	if(Entity.ModelForEdit != Entity.Name)
-	{ #>
+    if(Entity.ModelForEdit != Entity.Name)
+    { #>
             var <#= instanceName #> = new <#= Entity.ModelForEdit #>(<#= Entity.Name.ToCamelCase() #>);
 <#  } #>
             SetViewBags(<#= instanceName #>);
@@ -193,7 +237,7 @@ else
             if (ModelState.IsValid)
             {
 <#  if(Entity.ModelForEdit == Entity.Name)
-	{#> 
+    {#> 
                 <#= dataContextIntance #>.Entry(<#= Entity.Name.ToCamelCase() #>).State = EntityState.Modified;
 <#  } else { #>
                 <#= dataContextIntance #>.Entry(<#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>()).State = EntityState.Modified;
@@ -232,30 +276,30 @@ else
 protected void WriteViewBagSelectList(AspNetMvcPropertySetting propertySetting)
 {
     var codeEngine = Entity.CodeEngine;
-	string dataContextIntance = codeEngine.DataContextInstance;
-	var foreign = codeEngine.GetForeignKeyEntity(propertySetting);
-	string propValue = propertySetting.IsNullable() ? "(" : "";
-	propValue += Entity.Name.ToCamelCase();
-	propValue += ".";
-	propValue += propertySetting.Name;
-	if(propertySetting.IsNullable())
-	{
-		propValue += " ?? 0)";
+    string dataContextIntance = codeEngine.DataContextInstance;
+    var foreign = codeEngine.GetForeignKeyEntity(propertySetting);
+    string propValue = propertySetting.IsNullable() ? "(" : "";
+    propValue += Entity.Name.ToCamelCase();
+    propValue += ".";
+    propValue += propertySetting.Name;
+    if(propertySetting.IsNullable())
+    {
+        propValue += " ?? 0)";
     }
-	if (foreign == null)
-	{ #>
-			//Can't detect forein entity type for <#= propertySetting.Name #>
-			//TODO: ViewBag.<#= propertySetting.Name #> = new SelectList(<#= dataContextIntance #>.QueryName, "Id", "Title", 0);
-<#+	}
-	else
-	{
-		string comment = propertySetting.UseForEdit != "DropDownList" ? "//" : string.Empty;
-		var pkey = foreign.GetPrimeryKey();
-		string pkeyName = pkey == null ? "Id" : pkey.Name;
-				 #>
+    if (foreign == null)
+    { #>
+            //Can't detect forein entity type for <#= propertySetting.Name #>
+            //TODO: ViewBag.<#= propertySetting.Name #> = new SelectList(<#= dataContextIntance #>.QueryName, "Id", "Title", 0);
+<#+    }
+    else
+    {
+        string comment = propertySetting.UseForEdit != "DropDownList" ? "//" : string.Empty;
+        var pkey = foreign.GetPrimeryKey();
+        string pkeyName = pkey == null ? "Id" : pkey.Name;
+                 #>
             //TODO: Optimize query
-			var query<#= propertySetting.Name #> = <#= dataContextIntance #>.<#= foreign.GetDataSetQuery() #>;
+            var query<#= propertySetting.Name #> = <#= dataContextIntance #>.<#= foreign.GetDataSetQuery() #>;
             <#= comment #>int <#= propertySetting.Name.ToCamelCase() #> = <#= Entity.Name.ToCamelCase() #> == null ? 0 : <#= propValue #>;
-			<#= comment #>ViewBag.<#= propertySetting.Name #> = new SelectList(query<#= propertySetting.Name #>, "<#= pkeyName #>", "<#= foreign.EntityDefinition.DisplayMember #>", <#= propertySetting.Name.ToCamelCase() #>);
-<#+			}
+            <#= comment #>ViewBag.<#= propertySetting.Name #> = new SelectList(query<#= propertySetting.Name #>, "<#= pkeyName #>", "<#= foreign.EntityDefinition.DisplayMember #>", <#= propertySetting.Name.ToCamelCase() #>);
+<#+            }
 } #>

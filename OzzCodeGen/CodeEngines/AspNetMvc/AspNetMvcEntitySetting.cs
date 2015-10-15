@@ -116,6 +116,17 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private string _canView;
 
+        public string RolesCanCreate
+        {
+            get { return _canCreate; }
+            set
+            {
+                _canCreate = value;
+                RaisePropertyChanged("RolesCanCreate");
+            }
+        }
+        private string _canCreate;
+
         public string RolesCanEdit
         {
             get { return _canEdit; }
@@ -137,6 +148,64 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
         }
         private string _canDelete;
+
+
+
+        public string[] RolesCanViewToArray()
+        {
+            if (string.IsNullOrEmpty(RolesCanView) ||
+                RolesCanView.Equals("everyone", StringComparison.InvariantCultureIgnoreCase)
+                || RolesCanView.Equals("users", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return null;
+            }
+            else
+            {
+                return RolesCanView.Split(',');
+            }
+        }
+
+        public string[] RolesCanCreateToArray()
+        {
+            if (string.IsNullOrEmpty(RolesCanCreate) ||
+                RolesCanCreate.Equals("everyone", StringComparison.InvariantCultureIgnoreCase)
+                || RolesCanCreate.Equals("users", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return null;
+            }
+            else
+            {
+                return RolesCanCreate.Split(',');
+            }
+        }
+
+        public string[] RolesCanEditToArray()
+        {
+            if (string.IsNullOrEmpty(RolesCanEdit) ||
+                RolesCanEdit.Equals("everyone", StringComparison.InvariantCultureIgnoreCase)
+                || RolesCanEdit.Equals("users", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return null;
+            }
+            else
+            {
+                return RolesCanEdit.Split(',');
+            }
+        }
+
+        public string[] RolesCanDeleteToArray()
+        {
+            if (string.IsNullOrEmpty(RolesCanDelete) ||
+                RolesCanDelete.Equals("everyone", StringComparison.InvariantCultureIgnoreCase)
+                || RolesCanDelete.Equals("users", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return null;
+            }
+            else
+            {
+                return RolesCanDelete.Split(',');
+            }
+        }
 
 
         public bool GenerateController
