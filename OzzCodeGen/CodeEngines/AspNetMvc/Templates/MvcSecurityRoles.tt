@@ -1,0 +1,21 @@
+﻿<#@ template language="C#" inherits="CsClassBase" debug="true" hostspecific="false" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzCodeGen.Templates.Cs" #>
+<#@ import namespace="OzzUtils" #>
+<# 
+var roles = CodeEngine.SecurityRoles.Where(r => !r.Equals(CodeEngine.AdminRole));
+ #>
+namespace <#= CodeEngine.ModelsNamespace #>
+{
+    public static partial class SecurityRoles
+    {
+        public static string Admin = "<#= CodeEngine.AdminRole #>";
+<#  foreach (var role in roles)
+        { #>
+        public static string <#= role.ToPascalCase() #> = "<#= role #>";
+<#  } #>
+    }
+}

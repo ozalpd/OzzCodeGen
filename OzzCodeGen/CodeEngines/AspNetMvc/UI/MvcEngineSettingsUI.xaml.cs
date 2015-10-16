@@ -43,9 +43,12 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.UI
                 txtViewsDir.Text = System.IO.Path.Combine(targetDir, "Views");
             }
 
-            //a funny way to set default properties
+            //TODO: put this logic in to code engine
+            //This view knows nothing about the model
+            //so, I'm using a funny way to set default properties
             txtRolesCanDelete.Text = "admin";
             txtRolesCanEdit.Text = "editor, admin";
+            txtRolesCanCreate.Text = "editor, admin";
             txtRolesCanView.Text = "everyone";
         }
 
@@ -77,11 +80,13 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.UI
                         break;
 
                     case 3:
-                        txtTargetDirectory.Focus();
-                        txtTargetDirectory.SelectAll();
+                        txtRolesCanCreate.Focus();
                         break;
 
                     case 4:
+                        txtTargetDirectory.Focus();
+                        txtTargetDirectory.SelectAll();
+                        break;
 
                     default:
                         tmrFocus.Stop();

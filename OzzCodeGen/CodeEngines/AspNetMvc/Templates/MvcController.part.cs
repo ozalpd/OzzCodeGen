@@ -1,89 +1,49 @@
-﻿using System;
+﻿using OzzUtils;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OzzCodeGen.Templates.Cs;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
-    public partial class MvcController : CsClassBase
+    public partial class MvcController : AbstractMvcController
     {
-        public MvcController(AspNetMvcEntitySetting entity)
-        {
-            Entity = entity;
-        }
-
-        public MvcController(AspNetMvcEntitySetting entity, bool customFile)
-        {
-            Entity = entity;
-            CustomFile = customFile;
-        }
-
-        public AspNetMvcEntitySetting Entity { get; private set; }
-        public bool CustomFile { get; private set; }
-        public AspNetMvcEngine CodeEngine { get { return Entity.CodeEngine; } }
+        public MvcController(AspNetMvcEntitySetting entity, bool customFile = false)
+            : base(entity, customFile) { }
 
         public override string GetDefaultFileName()
         {
             if (CustomFile)
             {
-                return Entity.ControllerName + "Controller.Cust.cs";
+                return Entity.ControllerName + "Controller.part.cs";
             }
             else
             {
-                return Entity.ControllerName + "Controller.Gen.cs";
+                return Entity.ControllerName + "Controller.g.cs";
             }
         }
 
         public override List<string> DefaultUsingNamespaceList()
         {
             var namespaces = base.DefaultUsingNamespaceList();
-            namespaces.Add("System.Data");
-            namespaces.Add("System.Data.Entity");
-            namespaces.Add("System.Net");
-            namespaces.Add("System.Web.Mvc");
-            namespaces.Add("System.Threading.Tasks");
-            namespaces.Add(CodeEngine.ViewModelsNamespace);
-            namespaces.Add(CodeEngine.ModelsNamespace);
-
+            namespaces.AddUnique(
+                        "System.Net",
+                        "System.Web.Mvc",
+                        "System.Data",
+                        "System.Data.Entity");
+            namespaces.AddUnique(CodeEngine.ModelsNamespace);
+            namespaces.AddUnique(CodeEngine.DataModelsNamespace);
+            namespaces.AddUnique(CodeEngine.ViewModelsNamespace);
             return namespaces;
         }
 
-        public string CanEditAttrib
-        {
-            get
-            {
-                return CodeEngine.GetAuthorizeAttrib(Entity.RolesCanEdit);
-            }
-        }
-
-        public string CanDeleteAttrib
-        {
-            get
-            {
-                return CodeEngine.GetAuthorizeAttrib(Entity.RolesCanDelete);
-            }
-        }
-
-        public string CanViewAttrib
-        {
-            get
-            {
-                return CodeEngine.GetAuthorizeAttrib(Entity.RolesCanView);
-            }
-        }
-
-        public override bool WriteToFile(string FilePath, bool overwriteExisting)
+        public override bool WriteToFile(string filePath, bool overwriteExisting)
         {
             if (!CustomFile)
             {
                 var customFile = new MvcController(Entity, true);
-                string customPath = Path.Combine(Path.GetDirectoryName(FilePath), customFile.GetDefaultFileName());
+                string customPath = Path.Combine(Path.GetDirectoryName(filePath), customFile.GetDefaultFileName());
                 customFile.WriteToFile(customPath, false);
             }
-            return base.WriteToFile(FilePath, overwriteExisting);
+            return base.WriteToFile(filePath, overwriteExisting);
         }
     }
 }

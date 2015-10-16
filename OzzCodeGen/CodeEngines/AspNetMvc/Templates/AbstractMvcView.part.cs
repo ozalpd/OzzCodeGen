@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OzzUtils;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
@@ -73,11 +74,12 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         protected virtual List<string> DefaultUsingNamespaceList()
         {
             var namespaces = new List<string>();
-            namespaces.Add(Entity.CodeEngine.ViewModelsNamespace);
-            namespaces.Add(Entity.CodeEngine.ModelsNamespace);
+            namespaces.AddUnique(Entity.CodeEngine.ModelsNamespace);
+            namespaces.AddUnique(Entity.CodeEngine.DataModelsNamespace);
+            namespaces.AddUnique(Entity.CodeEngine.ViewModelsNamespace);
             if (Resx != null)
             {
-                namespaces.Add(Resx.NamespaceName);
+                namespaces.AddUnique(Resx.NamespaceName);
             }
 
             return namespaces;

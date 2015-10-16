@@ -110,7 +110,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canView; }
             set
             {
-                _canView = value;
+                _canView = value.ToLowerInvariant();
                 RaisePropertyChanged("RolesCanView");
             }
         }
@@ -121,7 +121,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canCreate; }
             set
             {
-                _canCreate = value;
+                _canCreate = value.ToLowerInvariant();
                 RaisePropertyChanged("RolesCanCreate");
             }
         }
@@ -132,7 +132,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canEdit; }
             set
             {
-                _canEdit = value;
+                _canEdit = value.ToLowerInvariant();
                 RaisePropertyChanged("RolesCanEdit");
             }
         }
@@ -143,7 +143,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canDelete; }
             set
             {
-                _canDelete = value;
+                _canDelete = value.ToLowerInvariant();
                 RaisePropertyChanged("RolesCanDelete");
             }
         }

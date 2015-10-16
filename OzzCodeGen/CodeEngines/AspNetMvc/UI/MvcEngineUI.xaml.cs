@@ -60,5 +60,45 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.UI
         {
             Engine.SetRolesToControllers();
         }
+
+        private void btnRefreshRoles_Click(object sender, RoutedEventArgs e)
+        {
+            Engine.RefreshSecurityRoles();
+        }
+
+        private void btnAddRole_Click(object sender, RoutedEventArgs e)
+        {
+            AddSecurityRole();
+        }
+
+        private void AddSecurityRole()
+        {
+            if (string.IsNullOrEmpty(txtAddRole.Text))
+                return;
+            Engine.AddSecurityRole(txtAddRole.Text.Replace(" ", ""));
+            txtAddRole.Text = string.Empty;
+            Engine.RefreshSecurityRoles();
+        }
+
+        private void btnRemoveRole_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstSecurityRoles.SelectedItem == null)
+                return;
+            Engine.SecurityRoles.Remove((string)lstSecurityRoles.SelectedItem);
+            Engine.RefreshSecurityRoles();
+        }
+
+        private void Grid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Return)
+            {
+                AddSecurityRole();
+            }
+        }
+
+        private void btnRenderRolesClass_Click(object sender, RoutedEventArgs e)
+        {
+            Engine.RenderSecurityRoles();
+        }
     }
 }

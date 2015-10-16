@@ -90,6 +90,129 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private ObservableCollection<AspNetMvcEntitySetting> _entities;
 
+
+
+        private string _adminRole;
+        public string AdminRole
+        {
+            get { return _adminRole; }
+            set
+            {
+                string oldValue = _adminRole;
+                onAdminRoleChanging(value);
+                onAdminRoleChanged(oldValue);
+            }
+        }
+        public virtual void onAdminRoleChanging(string newValue)
+        {
+            _adminRole = newValue.ToPascalCase().ToLowerInvariant();
+        }
+        public virtual void onAdminRoleChanged(string oldValue)
+        {
+            RaisePropertyChanged("AdminRole");
+            if (string.IsNullOrEmpty(oldValue))
+                return;
+
+            if (SecurityRoles.Contains(oldValue))
+            {
+                SecurityRoles.Remove(oldValue);
+                SecurityRoles.Insert(0, AdminRole);
+            }
+
+            if (!string.IsNullOrEmpty(RolesCanCreate))
+                RolesCanCreate = RolesCanCreate.Replace(oldValue, AdminRole);
+            if (!string.IsNullOrEmpty(RolesCanEdit))
+                RolesCanEdit = RolesCanEdit.Replace(oldValue, AdminRole);
+            if (!string.IsNullOrEmpty(RolesCanDelete))
+                RolesCanDelete = RolesCanDelete.Replace(oldValue, AdminRole);
+            if (!string.IsNullOrEmpty(RolesCanView))
+                RolesCanView = RolesCanView.Replace(oldValue, AdminRole);
+            foreach (var entity in Entities)
+            {
+                if (!string.IsNullOrEmpty(entity.RolesCanCreate))
+                    entity.RolesCanCreate = entity.RolesCanCreate.Replace(oldValue, AdminRole);
+                if (!string.IsNullOrEmpty(entity.RolesCanEdit))
+                    entity.RolesCanEdit = entity.RolesCanEdit.Replace(oldValue, AdminRole);
+                if (!string.IsNullOrEmpty(entity.RolesCanDelete))
+                    entity.RolesCanDelete = entity.RolesCanDelete.Replace(oldValue, AdminRole);
+                if (!string.IsNullOrEmpty(entity.RolesCanView))
+                    entity.RolesCanView = entity.RolesCanView.Replace(oldValue, AdminRole);
+            }
+        }
+
+
+        public ObservableCollection<string> SecurityRoles
+        {
+            get
+            {
+                if (_securityRoles == null)
+                    _securityRoles = new ObservableCollection<string>();
+                return _securityRoles;
+            }
+            set
+            {
+                _securityRoles = value;
+                RaisePropertyChanged("SecurityRoles");
+            }
+        }
+        private ObservableCollection<string> _securityRoles;
+
+        public void RefreshSecurityRoles()
+        {
+            if (string.IsNullOrEmpty(AdminRole))
+                AdminRole = "admin";
+
+            AppendSecurityRoles(AdminRole);
+
+            if (!string.IsNullOrEmpty(RolesCanCreate))
+                AppendSecurityRoles(RolesCanCreate.Split(','));
+            if (!string.IsNullOrEmpty(RolesCanEdit))
+                AppendSecurityRoles(RolesCanEdit.Split(','));
+            if (!string.IsNullOrEmpty(RolesCanDelete))
+                AppendSecurityRoles(RolesCanDelete.Split(','));
+            if (!string.IsNullOrEmpty(RolesCanView))
+                AppendSecurityRoles(RolesCanView.Split(','));
+
+            if (Entities != null)
+            {
+                foreach (var entity in Entities)
+                {
+                    AppendSecurityRoles(entity.RolesCanCreateToArray());
+                    AppendSecurityRoles(entity.RolesCanEditToArray());
+                    AppendSecurityRoles(entity.RolesCanDeleteToArray());
+                    AppendSecurityRoles(entity.RolesCanViewToArray());
+                }
+            }
+
+            SecurityRoles = new ObservableCollection<string>(SecurityRoles.OrderBy(x => x));
+        }
+
+        private void AppendSecurityRoles(params string[] roles)
+        {
+            if (roles == null)
+                return;
+
+            foreach (var role in roles)
+            {
+                AddSecurityRole(role);
+            }
+        }
+
+        public void AddSecurityRole(string role)
+        {
+            string s = FormatRole(role);
+            if (!SecurityRoles.Contains(s) && !rolesMeanDifferent.Contains(s))
+            {
+                SecurityRoles.Add(s);
+            }
+        }
+
+        private string FormatRole(string role)
+        {
+            return role.ToLowerInvariant().Trim();
+        }
+        string[] rolesMeanDifferent = { "users", "everyone" };
+
         protected override void OnEntitySettingsChanged()
         {
             var entities = new ObservableCollection<AspNetMvcEntitySetting>();
@@ -138,6 +261,8 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             entitySetting.Properties = entitySetting
                 .Properties.OrderBy(p => p.PropertyDefinition.DisplayOrder)
                 .ToList();
+
+            RefreshSecurityRoles();
         }
 
         protected override System.Windows.Controls.UserControl GetUiControl()
@@ -160,15 +285,14 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
 
         public bool RenderTemplate(string templateName, bool multiTemplates)
         {
+            bool rendered = true;
             if (RenderAllEntities)
             {
-                bool rendered = true;
                 foreach (var item in Entities)
                 {
                     rendered = RenderTemplate(item, templateName, true) & rendered;
                 }
 
-                return rendered;
             }
             else if (CurrentEntitySetting == null)
             {
@@ -176,8 +300,15 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
             else
             {
-                return RenderTemplate((AspNetMvcEntitySetting)CurrentEntitySetting, templateName, multiTemplates);
+                rendered = RenderTemplate((AspNetMvcEntitySetting)CurrentEntitySetting, templateName, multiTemplates) & rendered;
             }
+
+            if (templateName.Equals(controllerClass))
+            {
+                rendered = RenderBaseController() & rendered;
+            }
+
+            return rendered;
         }
 
         public bool RenderTemplate(AspNetMvcEntitySetting entity, string templateName, bool multiTemplates)
@@ -253,6 +384,18 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             return rendered;
         }
 
+        public bool RenderSecurityRoles()
+        {
+            var rolesTmpl = new MvcSecurityRoles(this);
+            return rolesTmpl.WriteToFile(rolesTmpl.GetDefaultFilePath(), true);
+        }
+
+        public bool RenderBaseController()
+        {
+            var baseCtrlTmpl = new MvcBaseController(this);
+            return baseCtrlTmpl.WriteToFile(baseCtrlTmpl.GetDefaultFilePath(), true);
+        }
+
         private List<string> GetViewTemplates()
         {
             return new List<string>()
@@ -276,7 +419,6 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 mvcEditView,
             };
         }
-        private const string customPartial = "Custom partial file for ASP.NET MVC Controller";
         private const string controllerClass = "Controller for ASP.NET MVC";
         private const string mvcAllViews = "All Views for ASP.NET MVC";
         private const string mvcIndexView = "Index View for ASP.NET MVC";
@@ -363,6 +505,42 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
 
 
+        public string TargetModelsFolder
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_targetModelsFolder))
+                {
+                    _targetModelsFolder = "Models";
+                }
+                return _targetModelsFolder;
+            }
+            set
+            {
+                _targetModelsFolder = value;
+                RaisePropertyChanged("TargetModelsFolder");
+                RaisePropertyChanged("TargetModelsDir");
+            }
+        }
+        private string _targetModelsFolder;
+
+        [XmlIgnore]
+        public string TargetModelsDir
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(TargetDirectory))
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    return Path.GetFullPath(Path.Combine(TargetDirectory, TargetModelsFolder));
+                }
+            }
+        }
+
+
         public string TargetControllersFolder
         {
             get
@@ -441,6 +619,24 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private string _modelsNamespace;
 
+        public string DataModelsNamespace
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_dataModelsNamespace) && Project != null)
+                {
+                    _dataModelsNamespace = Project.NamespaceName + "." + "Models";
+                }
+                return _dataModelsNamespace;
+            }
+            set
+            {
+                _dataModelsNamespace = value.ToPascalCase();
+                RaisePropertyChanged("DataModelsNamespace");
+            }
+        }
+        private string _dataModelsNamespace;
+
         public string ViewModelsNamespace
         {
             get
@@ -513,6 +709,23 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
         }
         private string _baseControllerName;
+
+
+        public string BaseOfBaseController
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_baseOfBaseController))
+                    _baseOfBaseController = "Controller";
+                return _baseOfBaseController;
+            }
+            set
+            {
+                _baseOfBaseController = value.ToPascalCase();
+                RaisePropertyChanged("BaseOfBaseController");
+            }
+        }
+        private string _baseOfBaseController;
 
         /// <summary>
         /// Class name for repository or data context
@@ -617,7 +830,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canView; }
             set
             {
-                _canView = value;
+                _canView = value.ToLowerInvariant();
                 RaisePropertyChanged("RolesCanView");
             }
         }
@@ -628,7 +841,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canEdit; }
             set
             {
-                _canEdit = value;
+                _canEdit = value.ToLowerInvariant();
                 RaisePropertyChanged("RolesCanEdit");
             }
         }
@@ -639,7 +852,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canCreate; }
             set
             {
-                _canCreate = value;
+                _canCreate = value.ToLowerInvariant();
                 RaisePropertyChanged("RolesCanCreate");
             }
         }
@@ -650,7 +863,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canDelete; }
             set
             {
-                _canDelete = value;
+                _canDelete = value.ToLowerInvariant();
                 RaisePropertyChanged("RolesCanDelete");
             }
         }
@@ -665,6 +878,8 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 item.RolesCanView = RolesCanView;
                 item.RolesCanCreate = RolesCanCreate;
             }
+
+            RefreshSecurityRoles();
         }
 
         [XmlIgnore]

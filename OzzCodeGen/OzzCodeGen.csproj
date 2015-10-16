@@ -70,6 +70,13 @@
       <DependentUpon>SqliteHelper.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\Android\Templates\SqliteHelper.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\AbstractMvcController.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcBaseController.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcBaseController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcBaseController.part.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialDetailFormButtons.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -100,6 +107,12 @@
       <DependentUpon>MvcPartialSaveButtons.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialSaveButtons.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcSecurityRoles.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcSecurityRoles.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcSecurityRoles.part.cs" />
     <Compile Include="CodeEngines\Java\Templates\AbstractJavaTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -570,6 +583,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CodeEngines\AspNetMvc\Templates\MvcBaseController.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcBaseController.cs</LastGenOutput>
+    </Content>
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcPartialDetailFormButtons.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MvcPartialDetailFormButtons.cs</LastGenOutput>
@@ -589,6 +606,10 @@
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcPartialSaveButtons.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MvcPartialSaveButtons.cs</LastGenOutput>
+    </Content>
+    <Content Include="CodeEngines\AspNetMvc\Templates\MvcSecurityRoles.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcSecurityRoles.cs</LastGenOutput>
     </Content>
     <Content Include="CodeEngines\Metadata\Templates\MetadataClassTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

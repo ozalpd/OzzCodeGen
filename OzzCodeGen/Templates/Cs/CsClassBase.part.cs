@@ -18,7 +18,6 @@ namespace OzzCodeGen.Templates.Cs
             {
                 "System",
                 "System.Linq",
-                "System.Text",
                 "System.Collections",
                 "System.Collections.Generic"
             };

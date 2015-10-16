@@ -66,9 +66,12 @@
 
             <TextBlock Text="Roles Can Edit" Grid.Column="0" Grid.Row="7"/>
             <TextBox Name="txtRolesCanEdit" Text="{Binding RolesCanEdit}" Grid.Column="1" Grid.Row="7"/>
+
+            <TextBlock Text="Roles Can Create" Grid.Column="2" Grid.Row="7"/>
+            <TextBox Name="txtRolesCanCreate" Text="{Binding RolesCanCreate}" Grid.Column="3" Grid.Row="7"/>
             
-            <TextBlock Text="Roles Can View" Grid.Column="2" Grid.Row="7"/>
-            <TextBox Name="txtRolesCanView" Text="{Binding RolesCanView}" Grid.Column="3" Grid.Row="7"/>
+            <TextBlock Text="Roles Can View" Grid.Column="2" Grid.Row="8"/>
+            <TextBox Name="txtRolesCanView" Text="{Binding RolesCanView}" Grid.Column="3" Grid.Row="8"/>
 
             <TextBlock Text="Roles Can Delete" Grid.Column="0" Grid.Row="8"/>
             <TextBox Name="txtRolesCanDelete" Text="{Binding RolesCanDelete}" Grid.Column="1" Grid.Row="8"/>

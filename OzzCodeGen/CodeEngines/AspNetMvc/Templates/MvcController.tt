@@ -1,4 +1,4 @@
-﻿<#@ template inherits="CsClassBase" debug="true" hostspecific="false" language="C#" #>
+﻿<#@ template inherits="AbstractMvcController" debug="true" hostspecific="false" language="C#" #>
 <#@ assembly name="System.Core" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
@@ -8,8 +8,7 @@
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzUtils" #>
 <#
-var codeEngine = Entity.CodeEngine;
-string dataContextIntance = codeEngine.DataContextInstance;
+string dataContextIntance = CodeEngine.DataContextInstance;
 var searchProperties = Entity.DisplayColumns.Where(e => e.UseInSearch);
 var pkeyProperty = Entity.GetPrimeryKey();
 string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
@@ -20,9 +19,9 @@ string[] deleteRoles = Entity.RolesCanDeleteToArray();
 
 WriteUsingNamespaces(); #>
 
-namespace <#= codeEngine.ControllersNamespace #>
+namespace <#= CodeEngine.ControllersNamespace #>
 {
-    public partial class <#= Entity.ControllerName #>Controller : <#= Entity.BaseControllerName #>
+    public partial class <#= Entity.ControllerName #>Controller<# if (!CustomFile){ #> : <#= Entity.BaseControllerName #><# } #> 
     {
 <#
 if (CustomFile)
@@ -41,13 +40,15 @@ if (CustomFile)
         //Purpose: To set default property values for newly created <#= Entity.ModelForEdit #> entity
         //partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>) { }
 
+
+<#  } #>
         protected virtual async Task<bool> CanUserEdit()
         {
             if (!_canUserEdit.HasValue)
             {
                 _canUserEdit = Request.IsAuthenticated<# if(editRoles==null){ #>;<# }
              else
-             { foreach(var role in editRoles){ #> && await UserManager.IsInRoleAsync(UserID, "<#= role.Trim() #>")<# }} #>;
+             { foreach(var role in editRoles){ #> && await <#= IsUserInRoleMethods[role.Trim()] #>Async()<# }} #>;
             }
             return _canUserEdit.Value;
         }
@@ -59,7 +60,7 @@ if (CustomFile)
             {
                 _canUserCreate = Request.IsAuthenticated<# if(createRoles==null){ #>;<# }
              else
-             { foreach(var role in createRoles){ #> && await UserManager.IsInRoleAsync(UserID, "<#= role.Trim() #>")<# }} #>;
+             { foreach(var role in createRoles){ #> && await <#= IsUserInRoleMethods[role.Trim()] #>Async()<# }} #>;
             }
             return _canUserCreate.Value;
         }
@@ -71,31 +72,14 @@ if (CustomFile)
             {
                 _canUserDelete = Request.IsAuthenticated<# if(deleteRoles==null){ #>;<# }
              else
-             { foreach(var role in deleteRoles){ #> && await UserManager.IsInRoleAsync(UserID, "<#= role.Trim() #>")<# }} #>;
+             { foreach(var role in deleteRoles){ #> && await <#= IsUserInRoleMethods[role.Trim()] #>Async()<# }} #>;
             }
             return _canUserDelete.Value;
         }
         bool? _canUserDelete;
-<#  }
-}
+<# }
 else 
 { #>
-<# if (codeEngine.GenerateDataContext)
-{ #>
-        protected <#= Entity.DataContextClass #> <#= dataContextIntance #>
-        {
-            get
-            {
-                if (_<#= dataContextIntance.ToCamelCase() #> == null)
-                {
-                    _<#= dataContextIntance.ToCamelCase() #> = new <#= Entity.DataContextClass #>();
-                }
-                return _<#= dataContextIntance.ToCamelCase() #>;
-            }
-        }
-        private <#= Entity.DataContextClass #> _<#= dataContextIntance.ToCamelCase() #>;
-
-<# } #>
         private async Task<<#= Entity.Name #>> FindAsync<#= Entity.Name #>(int id)
         {
             return await <#= dataContextIntance #>
@@ -269,15 +253,44 @@ else
 
             return RedirectToAction("Index");
         }
-<#  } #>
+<#  if (CodeEngine.GenerateDataContext)
+    { #>
+        
+        protected <#= Entity.DataContextClass #> <#= dataContextIntance #>
+        {
+            get
+            {
+                if (_<#= dataContextIntance.ToCamelCase() #> == null)
+                {
+                    _<#= dataContextIntance.ToCamelCase() #> = new <#= Entity.DataContextClass #>();
+                }
+                return _<#= dataContextIntance.ToCamelCase() #>;
+            }
+        }
+        private <#= Entity.DataContextClass #> _<#= dataContextIntance.ToCamelCase() #>;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_<#= dataContextIntance.ToCamelCase() #> != null)
+                {
+                    _<#= dataContextIntance.ToCamelCase() #>.Dispose();
+                    _<#= dataContextIntance.ToCamelCase() #> = null;
+                }
+            }
+            base.Dispose(disposing);
+        }
+<#   } #>
+<# } #>
     }
 }
 <#+ 
 protected void WriteViewBagSelectList(AspNetMvcPropertySetting propertySetting)
 {
     var codeEngine = Entity.CodeEngine;
-    string dataContextIntance = codeEngine.DataContextInstance;
-    var foreign = codeEngine.GetForeignKeyEntity(propertySetting);
+    string dataContextIntance = CodeEngine.DataContextInstance;
+    var foreign = CodeEngine.GetForeignKeyEntity(propertySetting);
     string propValue = propertySetting.IsNullable() ? "(" : "";
     propValue += Entity.Name.ToCamelCase();
     propValue += ".";
