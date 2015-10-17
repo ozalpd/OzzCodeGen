@@ -1,10 +1,7 @@
 ﻿using OzzCodeGen.CodeEngines.Localization;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OzzUtils;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
@@ -85,7 +82,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             return namespaces;
         }
 
-        public string GetDefaultFilePath()
+        public virtual string GetDefaultFilePath()
         {
             return Path.Combine(Entity.CodeEngine.TargetViewsDir, Entity.ControllerName, GetDefaultFileName());
         }

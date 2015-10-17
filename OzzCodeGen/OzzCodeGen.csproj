@@ -114,6 +114,12 @@
       <DependentUpon>MvcSecurityRoles.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcSecurityRoles.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcViewSnippets.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcViewSnippets.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcViewSnippets.part.cs" />
     <Compile Include="CodeEngines\Java\Templates\AbstractJavaTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -611,6 +617,10 @@
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcSecurityRoles.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MvcSecurityRoles.cs</LastGenOutput>
+    </Content>
+    <Content Include="CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcViewSnippets.cs</LastGenOutput>
     </Content>
     <Content Include="CodeEngines\Metadata\Templates\MetadataClassTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

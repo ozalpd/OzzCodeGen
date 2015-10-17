@@ -373,7 +373,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
 
         public override string GetDefaultTargetFolder()
         {
-            return "MVC Files";
+            return Project != null ? Project.Name : "MVC Files";
         }
 
 
@@ -444,6 +444,42 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 else
                 {
                     return Path.GetFullPath(Path.Combine(TargetDirectory, TargetModelsFolder));
+                }
+            }
+        }
+
+
+        public string SnippetsFolder
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_SnippetsFolder))
+                {
+                    _SnippetsFolder = "MVC-CodeSnippets";
+                }
+                return _SnippetsFolder;
+            }
+            set
+            {
+                _SnippetsFolder = value;
+                RaisePropertyChanged("SnippetsFolder");
+                RaisePropertyChanged("SnippetsDir");
+            }
+        }
+        private string _SnippetsFolder;
+
+        [XmlIgnore]
+        public string SnippetsDir
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(TargetDirectory))
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, SnippetsFolder));
                 }
             }
         }

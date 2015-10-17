@@ -947,6 +947,7 @@
   </SecurityRoles>
   <TargetViewsFolder>Views</TargetViewsFolder>
   <TargetModelsFolder>Models</TargetModelsFolder>
+  <SnippetsFolder>MVC-CodeSnippets</SnippetsFolder>
   <TargetControllersFolder>Controllers</TargetControllersFolder>
   <ControllersNamespace>PurchaseOrderTemplate.Controllers</ControllersNamespace>
   <ModelsNamespace>PurchaseOrderTemplate.Models</ModelsNamespace>

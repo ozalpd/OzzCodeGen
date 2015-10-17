@@ -1,0 +1,29 @@
+﻿<#@ template language="C#" inherits="AbstractMvcView" debug="true" hostspecific="false" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzUtils" #>
+<# 
+var fkeyProperties = Entity.GetInheritedIncludedProperties().Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
+WriteUsingNamespaces(); #>
+
+            <!-- Menu Snippet for <#= Entity.ControllerName #>Controller -->
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    @<#= EntityResource #>.<#= Entity.Name.Pluralize() #><b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink(@<#= EntityResource #>.<#= Entity.Name.Pluralize() #>, "Index", "<#= Entity.ControllerName #>")</li>
+                    <li>@Html.ActionLink(@<#= EntityResource #>.Create<#= Entity.Name #>, "Create", "<#= Entity.ControllerName #>")</li>
+<#  foreach (var property in fkeyProperties)
+    { 
+		var foreignEntity = CodeEngine.GetForeignKeyEntity(property);
+		if (foreignEntity!=null && foreignEntity!=Entity ){#>
+                    <li class="divider"></li>
+                    <li>@Html.ActionLink(@<#= EntityResource #>.<#= foreignEntity.Name.Pluralize() #>, "Index", "<#= foreignEntity.ControllerName #>")</li>
+                    <li>@Html.ActionLink(@<#= EntityResource #>.Create<#= foreignEntity.Name #>, "Create", "<#= foreignEntity.ControllerName #>")</li>
+<#		}
+	} #>
+                </ul>
+            </li>

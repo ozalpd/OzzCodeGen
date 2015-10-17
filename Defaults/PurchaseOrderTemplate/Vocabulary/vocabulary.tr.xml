@@ -393,6 +393,10 @@
     <Translation>Yükseklik</Translation>
   </Vocab>
   <Vocab>
+    <Name>Home</Name>
+    <Translation>Ana Sayfa</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Id</Name>
     <Translation>Kayıt No</Translation>
   </Vocab>

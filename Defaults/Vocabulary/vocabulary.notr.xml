@@ -393,6 +393,10 @@
     <Translation>Height</Translation>
   </Vocab>
   <Vocab>
+    <Name>Home</Name>
+    <Translation>Home</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Id</Name>
     <Translation>Record Nr</Translation>
   </Vocab>
