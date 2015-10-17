@@ -24,7 +24,7 @@ namespace OzzCodeGen.Wpf
         {
             InitializeComponent();
 
-            Title = string.Format("Ozz Code Generator - Build on {0}", BuildInfo.Date);
+            Title = string.Format("Ozz Code Generator - {0}", BuildInfo.Date);
             MainContainer.IsEnabled = false;
             settingsFile = Path.Combine(
                             Path.GetDirectoryName(

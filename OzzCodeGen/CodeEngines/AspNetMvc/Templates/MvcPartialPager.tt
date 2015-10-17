@@ -23,16 +23,26 @@ WriteUsingNamespaces(); #>
         @if (pageNr == 1)
         {
             <li class="disabled">
-                <a aria-label="Previous">
+                <a aria-label="First">
                     <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="disabled">
+                <a aria-label="Previous">
+                    <span aria-hidden="true">&lsaquo;</span>
                 </a>
             </li>
         }
         else
         {
             <li>
-                <a href="#" aria-label="Previous" onclick="setPager(@(pageNr-1))">
+                <a href="#" aria-label="First" onclick="setPager(1)">
                     <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" aria-label="Previous" onclick="setPager(@(pageNr-1))">
+                    <span aria-hidden="true">&lsaquo;</span>
                 </a>
             </li>
         }
@@ -49,18 +59,26 @@ WriteUsingNamespaces(); #>
         }
         @if (pageNr < pageCount)
         {
-
             <li>
                 <a href="#" aria-label="Next" onclick="setPager(@(pageNr+1))">
+                    <span aria-hidden="true">&rsaquo;</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" aria-label="Last" onclick="setPager(@(pageCount))">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
         }
         else
         {
-
             <li class="disabled">
                 <a aria-label="Next">
+                    <span aria-hidden="true">&rsaquo;</span>
+                </a>
+            </li>
+            <li class="disabled">
+                <a aria-label="Last">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

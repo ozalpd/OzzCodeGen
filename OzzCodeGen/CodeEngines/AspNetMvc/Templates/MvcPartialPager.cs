@@ -18,7 +18,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialPager.tt"
+    #line 1 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialPager.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
     public partial class MvcPartialPager : AbstractMvcView
     {
@@ -29,7 +29,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         public override string TransformText()
         {
             
-            #line 6 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialPager.tt"
+            #line 6 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialPager.tt"
  
 WriteUsingNamespaces(); 
             
@@ -41,22 +41,32 @@ WriteUsingNamespaces();
                     "rStart = pageNr > 5 ? pageNr - (pagers / 2) : 1;\r\n    if ((pagerStart + pagers) " +
                     "> pageCount)\r\n    {\r\n        pagerStart = pageCount - pagers + 1;\r\n    }\r\n}\r\n<na" +
                     "v>\r\n    <ul class=\"pagination\">\r\n        @if (pageNr == 1)\r\n        {\r\n         " +
-                    "   <li class=\"disabled\">\r\n                <a aria-label=\"Previous\">\r\n           " +
-                    "         <span aria-hidden=\"true\">&laquo;</span>\r\n                </a>\r\n        " +
-                    "    </li>\r\n        }\r\n        else\r\n        {\r\n            <li>\r\n               " +
-                    " <a href=\"#\" aria-label=\"Previous\" onclick=\"setPager(@(pageNr-1))\">\r\n           " +
-                    "         <span aria-hidden=\"true\">&laquo;</span>\r\n                </a>\r\n        " +
-                    "    </li>\r\n        }\r\n        @for (int i = pagerStart; i < (pagerStart + pagers" +
-                    "); i++)\r\n        {\r\n            if (pageNr == i)\r\n            {\r\n               " +
-                    " <li class=\"active\"><a>@i <span class=\"sr-only\">(current)</span></a></li>\r\n     " +
-                    "       }\r\n            else\r\n            {\r\n                <li><a href=\"#\" oncli" +
-                    "ck=\"setPager(@i)\">@i</a></li>\r\n            }\r\n        }\r\n        @if (pageNr < p" +
-                    "ageCount)\r\n        {\r\n\r\n            <li>\r\n                <a href=\"#\" aria-label" +
-                    "=\"Next\" onclick=\"setPager(@(pageNr+1))\">\r\n                    <span aria-hidden=" +
-                    "\"true\">&raquo;</span>\r\n                </a>\r\n            </li>\r\n        }\r\n     " +
-                    "   else\r\n        {\r\n\r\n            <li class=\"disabled\">\r\n                <a aria" +
-                    "-label=\"Next\">\r\n                    <span aria-hidden=\"true\">&raquo;</span>\r\n   " +
-                    "             </a>\r\n            </li>\r\n        }\r\n    </ul>\r\n</nav>");
+                    "   <li class=\"disabled\">\r\n                <a aria-label=\"First\">\r\n              " +
+                    "      <span aria-hidden=\"true\">&laquo;</span>\r\n                </a>\r\n           " +
+                    " </li>\r\n            <li class=\"disabled\">\r\n                <a aria-label=\"Previo" +
+                    "us\">\r\n                    <span aria-hidden=\"true\">&lsaquo;</span>\r\n            " +
+                    "    </a>\r\n            </li>\r\n        }\r\n        else\r\n        {\r\n            <li" +
+                    ">\r\n                <a href=\"#\" aria-label=\"First\" onclick=\"setPager(1)\">\r\n      " +
+                    "              <span aria-hidden=\"true\">&laquo;</span>\r\n                </a>\r\n   " +
+                    "         </li>\r\n            <li>\r\n                <a href=\"#\" aria-label=\"Previo" +
+                    "us\" onclick=\"setPager(@(pageNr-1))\">\r\n                    <span aria-hidden=\"tru" +
+                    "e\">&lsaquo;</span>\r\n                </a>\r\n            </li>\r\n        }\r\n        " +
+                    "@for (int i = pagerStart; i < (pagerStart + pagers); i++)\r\n        {\r\n          " +
+                    "  if (pageNr == i)\r\n            {\r\n                <li class=\"active\"><a>@i <spa" +
+                    "n class=\"sr-only\">(current)</span></a></li>\r\n            }\r\n            else\r\n  " +
+                    "          {\r\n                <li><a href=\"#\" onclick=\"setPager(@i)\">@i</a></li>\r" +
+                    "\n            }\r\n        }\r\n        @if (pageNr < pageCount)\r\n        {\r\n        " +
+                    "    <li>\r\n                <a href=\"#\" aria-label=\"Next\" onclick=\"setPager(@(page" +
+                    "Nr+1))\">\r\n                    <span aria-hidden=\"true\">&rsaquo;</span>\r\n        " +
+                    "        </a>\r\n            </li>\r\n            <li>\r\n                <a href=\"#\" a" +
+                    "ria-label=\"Last\" onclick=\"setPager(@(pageCount))\">\r\n                    <span ar" +
+                    "ia-hidden=\"true\">&raquo;</span>\r\n                </a>\r\n            </li>\r\n      " +
+                    "  }\r\n        else\r\n        {\r\n            <li class=\"disabled\">\r\n               " +
+                    " <a aria-label=\"Next\">\r\n                    <span aria-hidden=\"true\">&rsaquo;</s" +
+                    "pan>\r\n                </a>\r\n            </li>\r\n            <li class=\"disabled\">" +
+                    "\r\n                <a aria-label=\"Last\">\r\n                    <span aria-hidden=\"" +
+                    "true\">&raquo;</span>\r\n                </a>\r\n            </li>\r\n        }\r\n    </" +
+                    "ul>\r\n</nav>");
             return this.GenerationEnvironment.ToString();
         }
     }

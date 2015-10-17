@@ -22,7 +22,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
     {
         protected virtual async Task<bool> IsUserAdminAsync()
         {
-            if (_isUserAdmin.HasValue)
+            if (!_isUserAdmin.HasValue)
             {
                 _isUserAdmin = Request.IsAuthenticated && 
                                 await UserManager.IsInRoleAsync(UserID, SecurityRoles.Admin);
@@ -39,7 +39,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
 
         protected virtual async Task<bool> <#= IsUserInRoleMethods[role.Trim()] #>Async()
         {
-            if (<#= varName #>.HasValue)
+            if (!<#= varName #>.HasValue)
             {
                 <#= varName #> = Request.IsAuthenticated && 
                                     await UserManager.IsInRoleAsync(UserID, SecurityRoles.<#= role.ToPascalCase() #>);
