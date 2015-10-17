@@ -697,6 +697,6 @@
   </EntitySettings>
   <RenderAllEntities>true</RenderAllEntities>
   <PluralizeTableNames>true</PluralizeTableNames>
-  <DatabaseName>PurchaseOrdersDB</DatabaseName>
+  <DatabaseName>PurchaseOrderTemplateDB</DatabaseName>
   <DatabaseServer>.\SqlExpress</DatabaseServer>
 </TSqlScriptsEngine>

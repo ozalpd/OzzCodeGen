@@ -1051,8 +1051,9 @@
   <StripSourcePrefixes>false</StripSourcePrefixes>
   <SourceClassPrefix />
   <CodeEngineList>
+    <string>AspNetMvc_Controller_View_Generator</string>
     <string>Localization_Resource_Generator</string>
-    <string>T-Sql_Scripts_Generator</string>
     <string>Metadata_Class_Generator</string>
+    <string>T-Sql_Scripts_Generator</string>
   </CodeEngineList>
 </CodeGenProject>

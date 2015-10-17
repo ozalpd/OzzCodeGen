@@ -103,6 +103,19 @@ namespace OzzCodeGen.CodeEngines.Storage
         }
         private List<StorageEntitySetting> _entitySettings;
 
+        public override void OnProjectNameChanged(string oldValue)
+        {
+            base.OnProjectNameChanged(oldValue);
+            if (isDefaultDbName)
+                DatabaseName = GetDefaultDbName();
+        }
+        public override void OnProjectNameChanging(string newValue)
+        {
+            isDefaultDbName = DatabaseName.Equals(GetDefaultDbName());
+            base.OnProjectNameChanging(newValue);
+        }
+        bool isDefaultDbName;
+
 
         protected virtual string GetDefaultDbName()
         {

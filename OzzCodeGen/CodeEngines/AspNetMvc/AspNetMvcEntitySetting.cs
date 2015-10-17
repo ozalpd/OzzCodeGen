@@ -25,7 +25,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
             set
             {
-                _controllerName = value.ToPascalCase();
+                _controllerName = value != null ? value.ToPascalCase() : string.Empty;
                 RaisePropertyChanged("ControllerName");
             }
         }
@@ -44,7 +44,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
             set
             {
-                _dataSetName = value.ToPascalCase();
+                _dataSetName = value != null ? value.ToPascalCase() : string.Empty;
                 RaisePropertyChanged("DataSetName");
             }
         }
@@ -98,7 +98,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
             set
             {
-                _modelForEdit = value.ToPascalCase();
+                _modelForEdit = value != null ? value.ToPascalCase() : string.Empty;
                 RaisePropertyChanged("ModelForEdit");
             }
         }
@@ -110,7 +110,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canView; }
             set
             {
-                _canView = value.ToLowerInvariant();
+                _canView = value != null ? value.ToLowerInvariant() : string.Empty;
                 RaisePropertyChanged("RolesCanView");
             }
         }
@@ -121,7 +121,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canCreate; }
             set
             {
-                _canCreate = value.ToLowerInvariant();
+                _canCreate = value != null ? value.ToLowerInvariant() : string.Empty;
                 RaisePropertyChanged("RolesCanCreate");
             }
         }
@@ -132,7 +132,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canEdit; }
             set
             {
-                _canEdit = value.ToLowerInvariant();
+                _canEdit = value != null ? value.ToLowerInvariant() : string.Empty;
                 RaisePropertyChanged("RolesCanEdit");
             }
         }
@@ -143,7 +143,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canDelete; }
             set
             {
-                _canDelete = value.ToLowerInvariant();
+                _canDelete = value != null ? value.ToLowerInvariant() : string.Empty;
                 RaisePropertyChanged("RolesCanDelete");
             }
         }
@@ -316,7 +316,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
             set
             {
-                _baseControllerName = value.ToPascalCase();
+                _baseControllerName = value != null ? value.ToPascalCase() : string.Empty;
                 RaisePropertyChanged("BaseControllerName");
             }
         }

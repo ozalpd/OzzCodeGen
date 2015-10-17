@@ -12,7 +12,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 
         public AspNetMvcEngine CodeEngine { get; private set; }
 
-        public static string DefaultFileName = "SecurityRoles.gen.cs";
+        public static string DefaultFileName = "SecurityRoles.g.cs";
         public override string GetDefaultFileName()
         {
             return DefaultFileName;

@@ -10,11 +10,12 @@ using System.Collections.ObjectModel;
 using OzzUtils;
 using OzzCodeGen.CodeEngines.Storage;
 using System;
+using System.ComponentModel;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc
 {
     [XmlInclude(typeof(AspNetMvcEntitySetting))]
-    public class AspNetMvcEngine : BaseCodeEngine
+    public partial class AspNetMvcEngine : BaseCodeEngine
     {
         public override string EngineId
         {
@@ -91,8 +92,6 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private ObservableCollection<AspNetMvcEntitySetting> _entities;
 
 
-
-        private string _adminRole;
         public string AdminRole
         {
             get { return _adminRole; }
@@ -103,42 +102,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 onAdminRoleChanged(oldValue);
             }
         }
-        public virtual void onAdminRoleChanging(string newValue)
-        {
-            _adminRole = newValue.ToPascalCase().ToLowerInvariant();
-        }
-        public virtual void onAdminRoleChanged(string oldValue)
-        {
-            RaisePropertyChanged("AdminRole");
-            if (string.IsNullOrEmpty(oldValue))
-                return;
-
-            if (SecurityRoles.Contains(oldValue))
-            {
-                SecurityRoles.Remove(oldValue);
-                SecurityRoles.Insert(0, AdminRole);
-            }
-
-            if (!string.IsNullOrEmpty(RolesCanCreate))
-                RolesCanCreate = RolesCanCreate.Replace(oldValue, AdminRole);
-            if (!string.IsNullOrEmpty(RolesCanEdit))
-                RolesCanEdit = RolesCanEdit.Replace(oldValue, AdminRole);
-            if (!string.IsNullOrEmpty(RolesCanDelete))
-                RolesCanDelete = RolesCanDelete.Replace(oldValue, AdminRole);
-            if (!string.IsNullOrEmpty(RolesCanView))
-                RolesCanView = RolesCanView.Replace(oldValue, AdminRole);
-            foreach (var entity in Entities)
-            {
-                if (!string.IsNullOrEmpty(entity.RolesCanCreate))
-                    entity.RolesCanCreate = entity.RolesCanCreate.Replace(oldValue, AdminRole);
-                if (!string.IsNullOrEmpty(entity.RolesCanEdit))
-                    entity.RolesCanEdit = entity.RolesCanEdit.Replace(oldValue, AdminRole);
-                if (!string.IsNullOrEmpty(entity.RolesCanDelete))
-                    entity.RolesCanDelete = entity.RolesCanDelete.Replace(oldValue, AdminRole);
-                if (!string.IsNullOrEmpty(entity.RolesCanView))
-                    entity.RolesCanView = entity.RolesCanView.Replace(oldValue, AdminRole);
-            }
-        }
+        private string _adminRole;
 
 
         public ObservableCollection<string> SecurityRoles
@@ -156,62 +120,6 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
         }
         private ObservableCollection<string> _securityRoles;
-
-        public void RefreshSecurityRoles()
-        {
-            if (string.IsNullOrEmpty(AdminRole))
-                AdminRole = "admin";
-
-            AppendSecurityRoles(AdminRole);
-
-            if (!string.IsNullOrEmpty(RolesCanCreate))
-                AppendSecurityRoles(RolesCanCreate.Split(','));
-            if (!string.IsNullOrEmpty(RolesCanEdit))
-                AppendSecurityRoles(RolesCanEdit.Split(','));
-            if (!string.IsNullOrEmpty(RolesCanDelete))
-                AppendSecurityRoles(RolesCanDelete.Split(','));
-            if (!string.IsNullOrEmpty(RolesCanView))
-                AppendSecurityRoles(RolesCanView.Split(','));
-
-            if (Entities != null)
-            {
-                foreach (var entity in Entities)
-                {
-                    AppendSecurityRoles(entity.RolesCanCreateToArray());
-                    AppendSecurityRoles(entity.RolesCanEditToArray());
-                    AppendSecurityRoles(entity.RolesCanDeleteToArray());
-                    AppendSecurityRoles(entity.RolesCanViewToArray());
-                }
-            }
-
-            SecurityRoles = new ObservableCollection<string>(SecurityRoles.OrderBy(x => x));
-        }
-
-        private void AppendSecurityRoles(params string[] roles)
-        {
-            if (roles == null)
-                return;
-
-            foreach (var role in roles)
-            {
-                AddSecurityRole(role);
-            }
-        }
-
-        public void AddSecurityRole(string role)
-        {
-            string s = FormatRole(role);
-            if (!SecurityRoles.Contains(s) && !rolesMeanDifferent.Contains(s))
-            {
-                SecurityRoles.Add(s);
-            }
-        }
-
-        private string FormatRole(string role)
-        {
-            return role.ToLowerInvariant().Trim();
-        }
-        string[] rolesMeanDifferent = { "users", "everyone" };
 
         protected override void OnEntitySettingsChanged()
         {
@@ -576,11 +484,9 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
         }
 
-        protected override void OnTargetDirectoryChanged()
+        protected override void Project_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            base.OnTargetDirectoryChanged();
-            RaisePropertyChanged("TargetControllersDir");
-            RaisePropertyChanged("TargetViewsDir");
+            base.Project_PropertyChanged(sender, e);
         }
 
         public string ControllersNamespace
@@ -589,17 +495,22 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 if (string.IsNullOrEmpty(_controllersNamespace) && Project != null)
                 {
-                    _controllersNamespace = Project.NamespaceName + "." + "Controllers";
+                    _controllersNamespace = GetDefaultControllersNamespace(Project.NamespaceName);
                 }
                 return _controllersNamespace;
             }
             set
             {
-                _controllersNamespace = value.ToPascalCase();
+                _controllersNamespace = value != null ? value.ToPascalCase() : string.Empty;
                 RaisePropertyChanged("ControllersNamespace");
             }
         }
         private string _controllersNamespace;
+
+        protected string GetDefaultControllersNamespace(string projectNamespaceName)
+        {
+            return projectNamespaceName + "." + "Controllers";
+        }
 
         public string ModelsNamespace
         {
@@ -607,17 +518,22 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 if (string.IsNullOrEmpty(_modelsNamespace) && Project != null)
                 {
-                    _modelsNamespace = Project.NamespaceName + "." + "Models";
+                    _modelsNamespace = GetDefaultModelsNamespace(Project.NamespaceName);
                 }
                 return _modelsNamespace;
             }
             set
             {
-                _modelsNamespace = value.ToPascalCase();
+                _modelsNamespace = value != null ? value.ToPascalCase() : string.Empty;
                 RaisePropertyChanged("ModelsNamespace");
             }
         }
         private string _modelsNamespace;
+
+        protected string GetDefaultModelsNamespace(string projectNamespaceName)
+        {
+            return projectNamespaceName + "." + "Models";
+        }
 
         public string DataModelsNamespace
         {
@@ -625,17 +541,21 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 if (string.IsNullOrEmpty(_dataModelsNamespace) && Project != null)
                 {
-                    _dataModelsNamespace = Project.NamespaceName + "." + "Models";
+                    _dataModelsNamespace = GetDefaultDataModelsNamespace(Project.NamespaceName);
                 }
                 return _dataModelsNamespace;
             }
             set
             {
-                _dataModelsNamespace = value.ToPascalCase();
+                _dataModelsNamespace = value != null ? value.ToPascalCase() : string.Empty;
                 RaisePropertyChanged("DataModelsNamespace");
             }
         }
         private string _dataModelsNamespace;
+        protected string GetDefaultDataModelsNamespace(string projectNamespaceName)
+        {
+            return projectNamespaceName + "." + "Models";
+        }
 
         public string ViewModelsNamespace
         {
@@ -643,17 +563,22 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 if (string.IsNullOrEmpty(_viewModelsNamespace) && Project != null)
                 {
-                    _viewModelsNamespace = Project.NamespaceName + "." + "ViewModels";
+                    _viewModelsNamespace = GetDefaultViewModelsNamespace(Project.NamespaceName);
                 }
                 return _viewModelsNamespace;
             }
             set
             {
-                _viewModelsNamespace = value.ToPascalCase();
+                _viewModelsNamespace = value != null ? value.ToPascalCase() : string.Empty;
                 RaisePropertyChanged("ViewModelsNamespace");
             }
         }
         private string _viewModelsNamespace;
+
+        protected string GetDefaultViewModelsNamespace(string projectNamespaceName)
+        {
+            return projectNamespaceName + "." + "ViewModels";
+        }
 
         public string ViewsNamespace
         {
@@ -661,17 +586,22 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 if (string.IsNullOrEmpty(_viewsNamespace) && Project != null)
                 {
-                    _viewsNamespace = Project.NamespaceName + "." + "Views";
+                    _viewsNamespace = GetDefaultViewsNamespace(Project.NamespaceName);
                 }
                 return _viewsNamespace;
             }
             set
             {
-                _viewsNamespace = value.ToPascalCase();
+                _viewsNamespace = value != null ? value.ToPascalCase() : string.Empty;
                 RaisePropertyChanged("ViewsNamespace");
             }
         }
         private string _viewsNamespace;
+
+        protected string GetDefaultViewsNamespace(string projectNamespaceName)
+        {
+            return projectNamespaceName + "." + "Views";
+        }
 
         /// <summary>
         /// Default base class for MVC Controller
@@ -721,7 +651,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
             set
             {
-                _baseOfBaseController = value.ToPascalCase();
+                _baseOfBaseController = value != null ? value.ToPascalCase() : string.Empty;
                 RaisePropertyChanged("BaseOfBaseController");
             }
         }
@@ -736,7 +666,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 if (string.IsNullOrEmpty(_dataContextClass))
                 {
-                    _dataContextClass = string.Format("{0}Context", Project.Name.ToPascalCase());
+                    _dataContextClass = GetDefaultDataContextClass(Project.Name);
                 }
                 return _dataContextClass;
             }
@@ -760,6 +690,11 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
         }
         private string _dataContextClass;
+
+        protected virtual string GetDefaultDataContextClass(string projectName)
+        {
+            return string.Format("{0}Context", projectName.ToPascalCase());
+        }
 
         /// <summary>
         /// Default instance name for controllers' DataContext or Repository
@@ -830,7 +765,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canView; }
             set
             {
-                _canView = value.ToLowerInvariant();
+                _canView = value != null ? value.ToLowerInvariant() : string.Empty;
                 RaisePropertyChanged("RolesCanView");
             }
         }
@@ -841,7 +776,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canEdit; }
             set
             {
-                _canEdit = value.ToLowerInvariant();
+                _canEdit = value != null ? value.ToLowerInvariant() : string.Empty;
                 RaisePropertyChanged("RolesCanEdit");
             }
         }
@@ -852,7 +787,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canCreate; }
             set
             {
-                _canCreate = value.ToLowerInvariant();
+                _canCreate = value != null ? value.ToLowerInvariant() : string.Empty;
                 RaisePropertyChanged("RolesCanCreate");
             }
         }
@@ -863,7 +798,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return _canDelete; }
             set
             {
-                _canDelete = value.ToLowerInvariant();
+                _canDelete = value != null ? value.ToLowerInvariant() : string.Empty;
                 RaisePropertyChanged("RolesCanDelete");
             }
         }
@@ -964,7 +899,6 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
 
             return result;
         }
-
 
         public void SetSaveParameterToControllers()
         {

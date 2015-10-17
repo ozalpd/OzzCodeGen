@@ -10,7 +10,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 
         public override string GetDefaultFileName()
         {
-            return CodeEngine.BaseControllerName + ".gen.cs";
+            return CodeEngine.BaseControllerName + ".g.cs";
         }
 
         public string GetDefaultFilePath()

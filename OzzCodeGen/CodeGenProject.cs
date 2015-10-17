@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -25,19 +24,72 @@ namespace OzzCodeGen
             _codeEngines = new List<BaseCodeEngine>();
         }
 
-        public string Name { get; set; }
+
+        public string Name
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_name))
+                    _name = "New Project";
+                return _name;
+            }
+            set
+            {
+                if (_namespaceName == value)
+                    return;
+                string oldValue = _name;
+                onNameChanging(value);
+                onNameChanged(oldValue);
+            }
+        }
+        protected virtual void onNameChanging(string newValue)
+        {
+            foreach (var item in this._codeEngines)
+            {
+                item.OnProjectNameChanging(newValue);
+            }
+            _name = newValue;
+        }
+        protected virtual void onNameChanged(string oldValue)
+        {
+            RaisePropertyChanged("Name");
+            foreach (var item in this._codeEngines)
+            {
+                item.OnProjectNameChanged(oldValue);
+            }
+        }
+        private string _name;
 
         public string NamespaceName
         {
             get { return _namespaceName; }
             set
             {
-                if (_namespaceName == value) return;
-                _namespaceName = value;
-                RaisePropertyChanged("NamespaceName");
+                if (_namespaceName == value)
+                    return;
+                string oldValue = _namespaceName;
+                onNamespaceNameChanging(value);
+                onNamespaceNameChanged(oldValue);
+            }
+        }
+        protected virtual void onNamespaceNameChanging(string newValue)
+        {
+            foreach (var item in this._codeEngines)
+            {
+                item.OnProjectNamespaceChanging(newValue);
+            }
+            _namespaceName = newValue;
+        }
+        protected virtual void onNamespaceNameChanged(string oldValue)
+        {
+            RaisePropertyChanged("NamespaceName");
+            foreach (var item in this._codeEngines)
+            {
+                item.OnProjectNamespaceChanged(oldValue);
             }
         }
         private string _namespaceName;
+
 
         public string ModelProviderId
         {

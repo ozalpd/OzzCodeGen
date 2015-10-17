@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -46,6 +45,21 @@ namespace OzzCodeGen.CodeEngines
             }
         }
 
+        public virtual void OnProjectNameChanging(string newValue) { }
+        public virtual void OnProjectNameChanged(string oldValue) { }
+
+        public virtual void OnProjectNamespaceChanging(string newValue)
+        {
+            isNamespaceDefault = NamespaceName.Equals(GetDefaultNamespace());
+        }
+        public virtual void OnProjectNamespaceChanged(string oldValue)
+        {
+            if (isNamespaceDefault)
+            {
+                NamespaceName = GetDefaultNamespace();
+            }
+        }
+        bool isNamespaceDefault;
 
         /// <summary>
         /// Name of the entity

@@ -70,6 +70,7 @@
       <DependentUpon>SqliteHelper.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\Android\Templates\SqliteHelper.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\AspNetMvcEngine.Helpers.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\AbstractMvcController.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcBaseController.cs">
       <AutoGen>True</AutoGen>
