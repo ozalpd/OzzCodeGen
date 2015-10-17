@@ -8,7 +8,7 @@
 var fkeyProperties = Entity.GetInheritedIncludedProperties().Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
 WriteUsingNamespaces(); #>
 
-            <!-- Menu Snippet for <#= Entity.ControllerName #>Controller -->
+            <!-- Bootstrap navbar nav menu code for <#= Entity.ControllerName #> -->
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     @<#= EntityResource #>.<#= Entity.Name.Pluralize() #><b class="caret"></b>

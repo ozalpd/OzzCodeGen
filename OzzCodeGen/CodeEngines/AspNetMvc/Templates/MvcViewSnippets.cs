@@ -37,15 +37,15 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write("\r\n            <!-- Menu Snippet for ");
+            this.Write("\r\n            <!-- Bootstrap navbar nav menu code for ");
             
             #line 11 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ControllerName));
             
             #line default
             #line hidden
-            this.Write("Controller -->\r\n            <li class=\"dropdown\">\r\n                <a href=\"#\" cl" +
-                    "ass=\"dropdown-toggle\" data-toggle=\"dropdown\">\r\n                    @");
+            this.Write(" -->\r\n            <li class=\"dropdown\">\r\n                <a href=\"#\" class=\"dropd" +
+                    "own-toggle\" data-toggle=\"dropdown\">\r\n                    @");
             
             #line 14 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
