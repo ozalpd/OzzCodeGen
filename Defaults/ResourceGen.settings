@@ -280,6 +280,12 @@
       <LocalizeEntityName>false</LocalizeEntityName>
       <Properties>
         <LocalizationPropertySetting>
+          <Name>Admin</Name>
+          <Exclude>false</Exclude>
+          <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
+          <LocalizeValidationMsg>false</LocalizeValidationMsg>
+        </LocalizationPropertySetting>
+        <LocalizationPropertySetting>
           <Name>Home</Name>
           <Exclude>false</Exclude>
           <LocalizeRequiredMsg>false</LocalizeRequiredMsg>

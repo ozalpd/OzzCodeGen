@@ -939,12 +939,12 @@
     </BaseEntitySetting>
   </EntitySettings>
   <RenderAllEntities>false</RenderAllEntities>
-  <AdminRole>admin</AdminRole>
   <SecurityRoles>
     <string>admin</string>
     <string>clerk</string>
     <string>supervisor</string>
   </SecurityRoles>
+  <AdminRole>admin</AdminRole>
   <TargetViewsFolder>Views</TargetViewsFolder>
   <TargetModelsFolder>Models</TargetModelsFolder>
   <SnippetsFolder>MVC-CodeSnippets</SnippetsFolder>

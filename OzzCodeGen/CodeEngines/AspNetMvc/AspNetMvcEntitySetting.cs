@@ -50,24 +50,34 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private string _dataSetName;
 
-        /// <summary>
-        /// DataContext class for MVC Controller
-        /// </summary>
-        public string DataContextClass
+
+        public string ForeignKeyForCreate
+        {
+            get { return _foreignKeyForCreate; }
+            set
+            {
+                _foreignKeyForCreate = value;
+                RaisePropertyChanged("ForeignKeyForCreate");
+                RaisePropertyChanged("ForeignEntityForCreate");
+            }
+        }
+        private string _foreignKeyForCreate;
+
+        [XmlIgnore]
+        public AspNetMvcEntitySetting ForeignEntityForCreate
         {
             get
             {
-                if (string.IsNullOrEmpty(_dataContextClass))
-                    _dataContextClass = CodeEngine.DataContextClass;
-                return _dataContextClass;
-            }
-            set
-            {
-                _dataContextClass = value;
-                RaisePropertyChanged("DataContextClass");
+                if (string.IsNullOrEmpty(ForeignKeyForCreate))
+                    return null;
+
+                var property = Properties.FirstOrDefault(p => p.Name.Equals(ForeignKeyForCreate));
+                if (property == null)
+                    return null;
+
+                return CodeEngine.GetForeignKeyEntity(property);
             }
         }
-        private string _dataContextClass;
 
         /// <summary>
         /// Parameter for Save and SaveAsync methods of data context

@@ -1,6 +1,7 @@
 ﻿using OzzCodeGen.CodeEngines.AspNetMvc.Templates;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 //Render related methods here
 namespace OzzCodeGen.CodeEngines.AspNetMvc
@@ -12,11 +13,10 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             bool rendered = true;
             if (RenderAllEntities)
             {
-                foreach (var item in Entities)
+                foreach (var entity in Entities.Where(e => !e.Exclude))
                 {
-                    rendered = RenderTemplate(item, templateName, true) & rendered;
+                    rendered = RenderTemplate(entity, templateName, true) & rendered;
                 }
-
             }
             else if (CurrentEntitySetting == null)
             {

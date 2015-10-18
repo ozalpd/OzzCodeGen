@@ -18,7 +18,7 @@ namespace OzzCodeGen.CodeEngines
             set
             {
                 if (_name == value) return;
-                _name = value;
+                _name = value != null ? value.Replace(" ", "") : string.Empty;
                 RaisePropertyChanged("Name");
             }
         }

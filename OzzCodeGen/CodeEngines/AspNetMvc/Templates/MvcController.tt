@@ -43,12 +43,6 @@ if (CustomFile)
 <# }
 else 
 { #>
-        private async Task<<#= Entity.Name #>> FindAsync<#= Entity.Name #>(int id)
-        {
-            return await <#= dataContextIntance #>
-                            .Get<#= Entity.Name #>Query()
-                            .FirstOrDefaultAsync(x => x.<#= pKey #> == id);
-        }
         partial void SetViewBags(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
         partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
 
@@ -246,35 +240,6 @@ else
             return _canUserDelete.Value;
         }
         bool? _canUserDelete;
-<#  if (CodeEngine.GenerateDataContext)
-    { #>
-        
-        protected <#= Entity.DataContextClass #> <#= dataContextIntance #>
-        {
-            get
-            {
-                if (_<#= dataContextIntance.ToCamelCase() #> == null)
-                {
-                    _<#= dataContextIntance.ToCamelCase() #> = new <#= Entity.DataContextClass #>();
-                }
-                return _<#= dataContextIntance.ToCamelCase() #>;
-            }
-        }
-        private <#= Entity.DataContextClass #> _<#= dataContextIntance.ToCamelCase() #>;
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (_<#= dataContextIntance.ToCamelCase() #> != null)
-                {
-                    _<#= dataContextIntance.ToCamelCase() #>.Dispose();
-                    _<#= dataContextIntance.ToCamelCase() #> = null;
-                }
-            }
-            base.Dispose(disposing);
-        }
-<#   } #>
 <# } #>
     }
 }

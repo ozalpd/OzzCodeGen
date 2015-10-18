@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen.Definitions
@@ -29,7 +24,7 @@ namespace OzzCodeGen.Definitions
             set
             {
                 if (name == value) return;
-                name = value;
+                name = value != null ? value.Replace(" ", "") : string.Empty;
                 RaisePropertyChanged("Name");
             }
         }

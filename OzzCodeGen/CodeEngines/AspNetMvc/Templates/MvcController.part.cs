@@ -26,12 +26,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             var namespaces = base.DefaultUsingNamespaceList();
             namespaces.AddUnique(
                         "System.Net",
-                        "System.Web.Mvc",
-                        "System.Data",
-                        "System.Data.Entity");
-            namespaces.AddUnique(CodeEngine.ModelsNamespace);
-            namespaces.AddUnique(CodeEngine.DataModelsNamespace);
-            namespaces.AddUnique(CodeEngine.ViewModelsNamespace);
+                        "System.Web.Mvc");
             return namespaces;
         }
 

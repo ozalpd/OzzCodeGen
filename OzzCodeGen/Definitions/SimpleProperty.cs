@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace OzzCodeGen.Definitions
 {
@@ -55,20 +51,6 @@ namespace OzzCodeGen.Definitions
                             select p;
 
             return dependent.FirstOrDefault();
-        }
-
-        public override bool ApplySetting(PropertyDefaultSetting setting)
-        {
-            this.IsNullable = setting.IsNullable;
-            return base.ApplySetting(setting);
-        }
-
-        public override PropertyDefaultSetting GetDefaultSetting()
-        {
-            var defaultProp = base.GetDefaultSetting();
-            defaultProp.IsNullable = IsNullable;
-
-            return defaultProp;
         }
 
         public override bool IsTypeNullable()

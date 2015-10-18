@@ -49,7 +49,6 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 RolesCanDelete = RolesCanDelete,
                 RolesCanCreate = RolesCanCreate,
                 SaveParameter = SaveParameter,
-                DataContextClass = DataContextClass,
                 BaseControllerName = BaseControllerName
             };
 
@@ -497,10 +496,6 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         protected virtual void onDataContextClassChanged(string oldValue)
         {
             RaisePropertyChanged("DataContextClass");
-            foreach (var item in Entities)
-            {
-                item.DataContextClass = DataContextClass;
-            }
         }
         private string _dataContextClass;
 

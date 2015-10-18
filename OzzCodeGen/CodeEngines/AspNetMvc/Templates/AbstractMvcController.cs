@@ -1,10 +1,7 @@
 ﻿using OzzCodeGen.Templates.Cs;
 using OzzUtils;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
@@ -48,7 +45,12 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         public override List<string> DefaultUsingNamespaceList()
         {
             var namespaces = base.DefaultUsingNamespaceList();
-            namespaces.AddUnique("System.Threading.Tasks");
+            namespaces.AddUnique(
+                                "System.Data",
+                                "System.Data.Entity",
+                                "System.Threading.Tasks");
+            namespaces.AddUnique(CodeEngine.DataModelsNamespace);
+            namespaces.AddUnique(CodeEngine.ViewModelsNamespace);
             namespaces.AddUnique(CodeEngine.ModelsNamespace);
             return namespaces;
         }

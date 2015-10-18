@@ -333,8 +333,6 @@
     <Compile Include="CodeEngines\DataLayer\DataLayerEngine.cs" />
     <Compile Include="CodeEngines\TargetLanguage.cs" />
     <Compile Include="CodeEngines\EngineTypes.cs" />
-    <Compile Include="PropertyDefaultSetting.cs" />
-    <Compile Include="PropertyDefaultSettingList.cs" />
     <Compile Include="Providers\SourceCode\BaseCodeParser.cs" />
     <Compile Include="Providers\SourceCode\CodeFile.cs" />
     <Compile Include="Providers\SourceCode\SourceCodeBlock.cs" />

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using OzzUtils;
 using System.ComponentModel;
 using System.Xml.Serialization;
@@ -29,7 +26,7 @@ namespace OzzCodeGen.Definitions
             set
             {
                 if (name == value) return;
-                name = value;
+                name = value != null ? value.Replace(" ", "") : string.Empty;
                 if (string.IsNullOrEmpty(DisplayName))
                 {
                     DisplayName = name.PascalCaseToTitleCase();
@@ -231,30 +228,6 @@ namespace OzzCodeGen.Definitions
 
         #region Utility Methods
         public abstract List<string> GetUsableTypeNames();
-
-        public virtual bool ApplySetting(PropertyDefaultSetting setting)
-        {
-            this.Editable = setting.Editable;
-            this.DisplayOrder = setting.DisplayOrder;
-            this.DisplayName = setting.DisplayName;
-            this.UiVisible = setting.UiVisible;
-            this.IsStoreGenerated = setting.IsStoreGenerated;
-
-            return true;
-        }
-
-        public virtual PropertyDefaultSetting GetDefaultSetting()
-        {
-            var defaultProp = new PropertyDefaultSetting()
-            {
-                Name = Name,
-                DisplayName = DisplayName,
-                Editable = Editable,
-                DisplayOrder = DisplayOrder,
-                IsStoreGenerated = IsStoreGenerated
-            };
-            return defaultProp;
-        }
 
         public abstract bool IsTypeNullable();
 

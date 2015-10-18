@@ -416,8 +416,8 @@
                             <TextBlock Text="Dataset Name" ToolTip="Dataset for entity"/>
                             <TextBox Text="{Binding DataSetName}" ToolTip="Dataset for entity"/>
 
-                            <TextBlock Text="DataContext Class" ToolTip="DataContext class for entity"/>
-                            <TextBox Text="{Binding DataContextClass}" ToolTip="DataContext class for entity"/>
+                            <TextBlock Text="ForeignKey for Create" ToolTip="ForeignKey may be used in Create action"/>
+                            <TextBox Text="{Binding ForeignKeyForCreate}" ToolTip="ForeignKey may be used in Create action"/>
 
                             <TextBlock Text="Save Parameter">
                                 <TextBlock.ToolTip>

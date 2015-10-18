@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using OzzUtils;
 using System.ComponentModel;
 using System.Xml.Serialization;
@@ -29,11 +27,9 @@ namespace OzzCodeGen.Definitions
         {
             set
             {
-                if (name == value)
-                    return;
-
+                if (name == value) return;
                 bool isDefaultDisplayName = DisplayName.Equals(name.PascalCaseToTitleCase());
-                name = value;
+                name = value != null ? value.Replace(" ", "") : string.Empty;
                 if (isDefaultDisplayName)
                     DisplayName = name.PascalCaseToTitleCase();
 
