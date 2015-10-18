@@ -26,26 +26,16 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         /// <returns></returns>
         public AspNetMvcEntitySetting GetForeignKeyEntity(AspNetMvcPropertySetting property)
         {
-            if (!property.IsForeignKey())
-            {
+            if (property == null)
                 return null;
-            }
 
             var entity = (AspNetMvcEntitySetting)property.EntitySetting;
-            var complexProp = entity.GetInheritedComplexProperties()
-                                .FirstOrDefault(p => ((ComplexProperty)p.PropertyDefinition).DependentPropertyName == property.Name);
+            var complexProp = entity.GetForeignDependentProperty(property);
+            if (complexProp == null)
+                return null;
 
-            AspNetMvcEntitySetting result = null;
-
-            if (complexProp != null)
-            {
-                result = Entities
-                        .FirstOrDefault(e => e.EntityDefinition.Name.Equals(complexProp.PropertyDefinition.TypeName));
-            }
-            var pkey = result.GetPrimeryKey();
-            string s = result.EntityDefinition.DisplayMember;
-
-            return result;
+            return Entities
+                    .FirstOrDefault(e => e.EntityDefinition.Name.Equals(complexProp.PropertyDefinition.TypeName));
         }
 
         #region Helpers for Athorization

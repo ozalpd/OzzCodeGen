@@ -79,6 +79,12 @@
       <DependentUpon>MvcBaseController.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcBaseController.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcDisplayTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.part.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialDetailFormButtons.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -592,6 +598,10 @@
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcBaseController.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MvcBaseController.cs</LastGenOutput>
+    </Content>
+    <Content Include="CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcDisplayTemplate.cs</LastGenOutput>
     </Content>
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcPartialDetailFormButtons.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

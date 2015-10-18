@@ -66,6 +66,10 @@ namespace OzzCodeGen.CodeEngines
                     .OrderBy(c => c.PropertyDefinition.DisplayOrder);
         }
 
+        /// <summary>
+        /// Returns InheritedProperties those Exclude is false
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<T> GetInheritedIncludedProperties()
         {
             return GetInheritedProperties()
@@ -77,6 +81,20 @@ namespace OzzCodeGen.CodeEngines
         {
             return GetInheritedSimpleProperties()
                     .FirstOrDefault(p => ((SimpleProperty)p.PropertyDefinition).IsKey);
+        }
+
+        /// <summary>
+        /// Returns instance of property's DependentProperty instance from this or ancestors of this entity
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public T GetForeignDependentProperty(T property)
+        {
+            if (property == null || !property.IsForeignKey())
+                return null;
+            
+            return GetInheritedComplexProperties()
+                                .FirstOrDefault(p => ((ComplexProperty)p.PropertyDefinition).DependentPropertyName == property.Name);
         }
     }
 }

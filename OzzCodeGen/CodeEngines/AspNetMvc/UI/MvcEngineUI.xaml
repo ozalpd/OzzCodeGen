@@ -387,6 +387,15 @@
                                 <CheckBox IsChecked="{Binding DetailsView}" Content="Details View" />
                                 <CheckBox IsChecked="{Binding CreateView}" Content="Create View"/>
                                 <CheckBox IsChecked="{Binding EditView}" Content="Edit View"/>
+                                <TextBlock Text="Create Redirect"
+                                           ToolTip="Where to redirect CreateAction"
+                                           TextAlignment="Center" Background="#D0FFFFFF"/>
+                                <RadioButton Content="Index View"
+                                             ToolTip="Create Action redirects to Index View at the end"
+                                             IsChecked="{Binding CreateToDetails, Converter={StaticResource boolInverter}}"/>
+                                <RadioButton Content="Details View"
+                                             ToolTip="Create Action redirects to Details View at the end"
+                                             IsChecked="{Binding CreateToDetails}"/>
                             </StackPanel>
                         </Border>
                         <Border Width="140">
@@ -416,8 +425,8 @@
                             <TextBlock Text="Dataset Name" ToolTip="Dataset for entity"/>
                             <TextBox Text="{Binding DataSetName}" ToolTip="Dataset for entity"/>
 
-                            <TextBlock Text="ForeignKey for Create" ToolTip="ForeignKey may be used in Create action"/>
-                            <TextBox Text="{Binding ForeignKeyForCreate}" ToolTip="ForeignKey may be used in Create action"/>
+                            <TextBlock Text="Strong Depended ForeignKey" ToolTip="ForeignKey may be used in Create action"/>
+                            <TextBox Text="{Binding StrongDependedForeignKey}" ToolTip="ForeignKey may be used in Create action"/>
 
                             <TextBlock Text="Save Parameter">
                                 <TextBlock.ToolTip>

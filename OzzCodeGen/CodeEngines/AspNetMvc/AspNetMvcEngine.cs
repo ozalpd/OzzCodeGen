@@ -8,7 +8,6 @@ using OzzCodeGen.Definitions;
 using System.Collections.ObjectModel;
 using OzzUtils;
 using OzzCodeGen.CodeEngines.Storage;
-using System.ComponentModel;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc
 {

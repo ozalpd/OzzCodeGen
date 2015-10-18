@@ -51,32 +51,66 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private string _dataSetName;
 
 
-        public string ForeignKeyForCreate
+        public string StrongDependedForeignKey
         {
-            get { return _foreignKeyForCreate; }
+            get { return _strongDependedForeignKey; }
             set
             {
-                _foreignKeyForCreate = value;
-                RaisePropertyChanged("ForeignKeyForCreate");
-                RaisePropertyChanged("ForeignEntityForCreate");
+                _strongDependedForeignKey = value;
+                RaisePropertyChanged("StrongDependedForeignKey");
+                RaisePropertyChanged("StrongForeignKeyProperty");
+                RaisePropertyChanged("StrongForeignEntity");
             }
         }
-        private string _foreignKeyForCreate;
+        private string _strongDependedForeignKey;
 
         [XmlIgnore]
-        public AspNetMvcEntitySetting ForeignEntityForCreate
+        public AspNetMvcPropertySetting StrongForeignKeyProperty
         {
             get
             {
-                if (string.IsNullOrEmpty(ForeignKeyForCreate))
+                if (string.IsNullOrEmpty(StrongDependedForeignKey))
                     return null;
 
-                var property = Properties.FirstOrDefault(p => p.Name.Equals(ForeignKeyForCreate));
-                if (property == null)
-                    return null;
-
-                return CodeEngine.GetForeignKeyEntity(property);
+                return Properties.FirstOrDefault(p => p.Name.Equals(StrongDependedForeignKey));
             }
+        }
+
+        [XmlIgnore]
+        public AspNetMvcEntitySetting StrongForeignEntity
+        {
+            get
+            {
+                return CodeEngine.GetForeignKeyEntity(StrongForeignKeyProperty);
+            }
+        }
+
+        /// <summary>
+        /// Retuns entity list those are set ForeignEntityForCreate = this instance 
+        /// </summary>
+        /// <returns></returns>
+        public ICollection<AspNetMvcEntitySetting> GetEntitiesStrongForThis()
+        {
+            var entities = new List<AspNetMvcEntitySetting>();
+            foreach (var item in CodeEngine.Entities)
+            {
+                if (!entities.Contains(item) && IsThisStrongForeign(item))
+                    entities.Add(item);
+            }
+            return entities;
+        }
+
+        /// <summary>
+        /// Returns true if this instance or any decendant is ForeignEntityForCreate of entity
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public bool IsThisStrongForeign(AspNetMvcEntitySetting entity)
+        {
+            if (entity.StrongForeignEntity == this)
+                return true;
+            var baseEntity = (AspNetMvcEntitySetting)this.GetBaseEntitySetting();
+            return baseEntity == null ? false : baseEntity.IsThisStrongForeign(entity);
         }
 
         /// <summary>
@@ -302,6 +336,19 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private bool? _editView;
 
+        /// <summary>
+        /// If true CreateAction redirects to Details View, otherwise redirects to Index View
+        /// </summary>
+        public bool CreateToDetails
+        {
+            get { return _createToDetails; }
+            set
+            {
+                _createToDetails = value;
+                RaisePropertyChanged("CreateToDetails");
+            }
+        }
+        private bool _createToDetails;
 
         /// <summary>
         /// Base controller class for MVC Controller

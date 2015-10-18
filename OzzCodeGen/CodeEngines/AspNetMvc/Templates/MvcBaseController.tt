@@ -21,6 +21,46 @@ namespace <#= CodeEngine.ControllersNamespace #>
 {
     public partial class <#= CodeEngine.BaseControllerName #><# if (!CustomFile){ #> : <#= CodeEngine.BaseOfBaseController #><# } #> 
     {
+        public partial class QueryParameters
+        {
+            public string SearchString { get; set; }
+            public int PageNr { get; set; } = 1;
+            public int PageSize { get; set; } = 10;
+            public int PageCount
+            {
+                get
+                {
+                    return TotalCount > 0 ? (int)Math.Ceiling(TotalCount / (double)PageSize) : 0;
+                }
+            }
+
+            public int Skip
+            {
+                get { return (PageNr - 1) * PageSize; }
+            }
+
+            public int TotalCount
+            {
+                get { return _totalCount; }
+                set
+                {
+                    _totalCount = value;
+                    if (PageNr < 1) PageNr = 1;
+                    if (PageNr > PageCount) PageNr = PageCount;
+                    int skip = (PageNr - 1) * PageSize;
+                }
+            }
+            int _totalCount;
+        }
+
+        protected virtual void SetPagerParameters(QueryParameters qParams)
+        {
+            ViewBag.pageNr = qParams.PageNr;
+            ViewBag.totalCount = qParams.TotalCount;
+            ViewBag.pageSize = qParams.PageSize;
+            ViewBag.pageCount = qParams.PageCount;
+        }
+
         protected virtual async Task<bool> IsUserAdminAsync()
         {
             if (!_isUserAdmin.HasValue)

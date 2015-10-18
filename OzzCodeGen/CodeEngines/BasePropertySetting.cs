@@ -64,6 +64,29 @@ namespace OzzCodeGen.CodeEngines
             }
         }
 
+        [XmlIgnore]
+        public bool IsSimple
+        {
+            get
+            {
+                return PropertyDefinition is SimpleProperty;
+            }
+        }
+
+        [XmlIgnore]
+        public bool IsString
+        {
+            get
+            {
+                return PropertyDefinition is StringProperty;
+            }
+        }
+
+        public string GetNullableTypeName()
+        {
+            return PropertyDefinition.GetNullableTypeName();
+        }
+
         public bool IsForeignKey()
         {
             return PropertyDefinition is SimpleProperty && 

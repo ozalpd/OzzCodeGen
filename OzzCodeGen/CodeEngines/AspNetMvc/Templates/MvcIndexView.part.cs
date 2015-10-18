@@ -48,6 +48,9 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             var snippetTempl = new MvcViewSnippets(Entity);
             snippetTempl.WriteToFile(snippetTempl.GetDefaultFilePath(), true);
 
+            var displayTempl = new MvcDisplayTemplate(Entity);
+            displayTempl.WriteToFile(displayTempl.GetDefaultFilePath(), false);
+
             return base.WriteToFile(FilePath, overwriteExisting);
         }
     }

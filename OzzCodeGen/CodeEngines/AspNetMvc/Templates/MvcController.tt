@@ -13,6 +13,9 @@ var searchProperties = Entity.DisplayColumns.Where(e => e.UseInSearch);
 var pkeyProperty = Entity.GetPrimeryKey();
 string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
 
+var strongForeignEntity = Entity.StrongForeignEntity;
+var strongProperty = Entity.StrongForeignKeyProperty;
+var foreignDependentProperty = Entity.GetForeignDependentProperty(strongProperty);
 string[] createRoles = Entity.RolesCanCreateToArray();
 string[] editRoles = Entity.RolesCanEditToArray();
 string[] deleteRoles = Entity.RolesCanDeleteToArray();
@@ -38,6 +41,12 @@ if (CustomFile)
         }
 
 <#  } #>
+
+        //public new class QueryParameters : BaseController.QueryParameters
+        //{
+
+        //}
+
         //Purpose: To set default property values for newly created <#= Entity.ModelForEdit #> entity
         //partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>) { }
 <# }
@@ -45,54 +54,40 @@ else
 { #>
         partial void SetViewBags(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
         partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
-
         
         <#= CanViewAttrib #>
-<#  if(searchProperties.Any())
-    { #>
-        public async Task<ActionResult> Index(string searchString, int pageNr = 1, int pageSize = 10)
-<#  } else { #>
-        public async Task<ActionResult> Index(int pageNr = 1, int pageSize = 10)
-<#  } #>
+        public async Task<ActionResult> Index(QueryParameters qParams)
         {
             var query = <#= dataContextIntance #>.Get<#= Entity.Name #>Query();
 <#  if(searchProperties.Any())
     { 
     int k = 0;#>
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(qParams.SearchString))
             {
                 query = from a in query
                         where
 <#        foreach (var item in searchProperties)
           {
             k++;#>
-                            a.<#= item.Name #>.Contains(searchString)<# if (k < searchProperties.Count()){ #> |<# } #> 
+                            a.<#= item.Name #>.Contains(qParams.SearchString)<# if (k < searchProperties.Count()){ #> |<# } #> 
 <#        } #>
                         select a;
             }
 <#  } #>
-            int totalCount = await query.CountAsync();
-            int pageCount = totalCount > 0 ? (int)Math.Ceiling(totalCount / (double)pageSize) : 0;
-            if (pageNr < 1) pageNr = 1;
-            if (pageNr > pageCount) pageNr = pageCount;
-            int skip = (pageNr - 1) * pageSize;
-
-            ViewBag.pageNr = pageNr;
-            ViewBag.totalCount = totalCount;
-            ViewBag.pageSize = pageSize;
-            ViewBag.pageCount = pageCount;
+            qParams.TotalCount = await query.CountAsync();
+            SetPagerParameters(qParams);
 
             ViewBag.canUserEdit = await CanUserEdit();
             ViewBag.canUserCreate = await CanUserCreate();
             ViewBag.canUserDelete = await CanUserDelete();
 
-            if (totalCount > 0)
+            if (qParams.TotalCount > 0)
             {
-                return View(await query.Skip(skip).Take(pageSize).ToListAsync());
+                return View(await query.Skip(qParams.Skip).Take(qParams.PageSize).ToListAsync());
             }
             else
             {
-                return View(new List<<#= Entity.Name #>>());
+                return View(new List<<#= Entity.Name #>>());   //there isn't any record, so no need to run a query
             }
         }
 
@@ -113,38 +108,67 @@ else
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
 
+        [HttpGet]
         <#= CanEditAttrib #>
+<#  if (strongForeignEntity != null)
+    {    //TODO: Improve Route attirbute logic for fkey string types
+ #>
+        [Route("<#= Entity.ControllerName #>/Create/{<#= strongProperty.Name.ToCamelCase() #>:<#= strongProperty.GetNullableTypeName() #>}")]
+        public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>)  //GET: /<#= Entity.ControllerName #>/Create
+<#  } else { #>
         public ActionResult Create()  //GET: /<#= Entity.ControllerName #>/Create
+<#  } #>
         {
             var <#= Entity.Name.ToCamelCase() #> = new <#= Entity.ModelForEdit #>();
+<#  if (strongForeignEntity != null)
+    { 
+        bool isString = strongProperty.IsString;#>
+            if (<# if(isString) { #>!string.IsNullOrEmpty(<# } #><#= strongProperty.Name.ToCamelCase() #><# if(isString) { #>)<# } else { #> != null<# } #>)
+            {
+                var <#= foreignDependentProperty.Name.ToCamelCase() #> = await FindAsync<#= strongForeignEntity.Name #>(<#= strongProperty.Name.ToCamelCase() #><# if(strongProperty.IsSimple) { #>.Value<# } #>);
+                if (<#= foreignDependentProperty.Name.ToCamelCase() #> == null)
+                    return HttpNotFound();
+                <#= Entity.Name.ToCamelCase() #>.<#= foreignDependentProperty #> = <#= foreignDependentProperty.Name.ToCamelCase() #>;
+            }
+<#  } #>
             SetDefaults(<#= Entity.Name.ToCamelCase() #>);
             SetViewBags(null);
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
 
-        <#= CanEditAttrib #>
         [HttpPost]
+        <#= CanEditAttrib #>
         [ValidateAntiForgeryToken]
+<#  if (strongForeignEntity != null)
+    {    //TODO: Improve Route attirbute logic for fkey string types
+ #>
+        [Route("<#= Entity.ControllerName #>/Create/{<#= strongProperty.Name.ToCamelCase() #>:<#= strongProperty.GetNullableTypeName() #>}")]
+        public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>, <#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
+<#  } else { #>
         public async Task<ActionResult> Create(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
+<#  } #>
         {
             <#= dataContextIntance #>.SetInsertDefaults(<#= Entity.Name.ToCamelCase() #>, this);
 
             if (ModelState.IsValid)
             {
-<#  if(Entity.ModelForEdit == Entity.Name)
-    {#> 
+<#  if(Entity.ModelForEdit == Entity.Name) {#> 
                 <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(<#= Entity.Name.ToCamelCase() #>);
 <#  } else { #>
                 <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(<#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>());
 <#  } #>
                 await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
+<#  if (Entity.CreateToDetails) {  #>
+                return RedirectToAction("Details", new { Id = <#= Entity.Name.ToCamelCase() #>.<#= pKey #> });
+<#  } else { #>
                 return RedirectToAction("Index");
+<#  } #>
             }
 
             SetViewBags(<#= Entity.Name.ToCamelCase() #>);
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
-		
+        
         protected virtual async Task<bool> CanUserCreate()
         {
             if (!_canUserCreate.HasValue)
@@ -230,7 +254,7 @@ else
 
             return RedirectToAction("Index");
         }
-		
+        
         protected virtual async Task<bool> CanUserDelete()
         {
             if (!_canUserDelete.HasValue)

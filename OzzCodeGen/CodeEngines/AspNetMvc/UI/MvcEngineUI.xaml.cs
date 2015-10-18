@@ -24,11 +24,15 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.UI
             //HiddenColumns.Add("CreateView");
             //HiddenColumns.Add("EditView");
             HiddenColumns.Add("OverwriteExisting");
+            HiddenColumns.Add("StrongForeignKeyProperty");
+            HiddenColumns.Add("StrongForeignEntity");
 
             ColumnWidths["Name"] = 120;
             ColumnWidths.Add("BaseType", 120);
             ColumnWidths.Add("GenerateController", 90);
+            ColumnWidths.Add("CreateToDetails", 90);
             ColumnWidths.Add("IndexView", 40);
+            ColumnWidths.Add("SaveParameter", 60);
             ColumnWidths.Add("DetailsView", 40);
             ColumnWidths.Add("CreateView", 40);
             ColumnWidths.Add("EditView", 40);

@@ -11,6 +11,8 @@
 bool searchable = Entity.DisplayColumns.Where(e => e.UseInSearch).Any();
 var properties = Entity.DisplayColumns.Where(e => e.InIndexView);
 var collectionProperties = Entity.GetInheritedCollectionProperties();
+var entitiesThisForCreate = Entity.GetEntitiesStrongForThis();
+
 WriteUsingNamespaces(); #>
 @model IEnumerable<<#= Entity.Name #>>
 @{
@@ -115,13 +117,22 @@ if (collectionProperties.Any())
                             @if (canUserDelete)
                             {
                                 <li>
-                                    <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('<b>@(item.Title)</b>', @item.Id);">
+                                    <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('<b>@(item.<#= DisplayMember #>)</b>', @item.Id);">
                                     @ActionStrings.Delete
                                 </a>
                                 </li>
                             }
+<# } #>
 <#
-} #>
+if (entitiesThisForCreate.Any()) 
+{
+#>
+                            <li class="divider"></li>
+<#    foreach (var entity in entitiesThisForCreate)
+    {#>
+                                <li>@Html.ActionLink(<#= EntityResource #>.Create<#= entity.Name #>, "Create", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id }, null)</li>
+<#  } #>
+<# } #>
                         </ul>
                     </div>
                 </td>
