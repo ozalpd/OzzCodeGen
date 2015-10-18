@@ -153,57 +153,49 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
 
         public string[] RolesCanViewToArray()
         {
-            if (string.IsNullOrEmpty(RolesCanView) ||
-                RolesCanView.Equals("everyone", StringComparison.InvariantCultureIgnoreCase)
-                || RolesCanView.Equals("users", StringComparison.InvariantCultureIgnoreCase))
+            if (string.IsNullOrEmpty(RolesCanView))
             {
                 return null;
             }
             else
             {
-                return RolesCanView.Split(',');
+                return RolesCanView.Replace(" ", "").Split(',');
             }
         }
 
         public string[] RolesCanCreateToArray()
         {
-            if (string.IsNullOrEmpty(RolesCanCreate) ||
-                RolesCanCreate.Equals("everyone", StringComparison.InvariantCultureIgnoreCase)
-                || RolesCanCreate.Equals("users", StringComparison.InvariantCultureIgnoreCase))
+            if (string.IsNullOrEmpty(RolesCanCreate))
             {
                 return null;
             }
             else
             {
-                return RolesCanCreate.Split(',');
+                return RolesCanCreate.Replace(" ", "").Split(',');
             }
         }
 
         public string[] RolesCanEditToArray()
         {
-            if (string.IsNullOrEmpty(RolesCanEdit) ||
-                RolesCanEdit.Equals("everyone", StringComparison.InvariantCultureIgnoreCase)
-                || RolesCanEdit.Equals("users", StringComparison.InvariantCultureIgnoreCase))
+            if (string.IsNullOrEmpty(RolesCanEdit))
             {
                 return null;
             }
             else
             {
-                return RolesCanEdit.Split(',');
+                return RolesCanEdit.Replace(" ", "").Split(',');
             }
         }
 
         public string[] RolesCanDeleteToArray()
         {
-            if (string.IsNullOrEmpty(RolesCanDelete) ||
-                RolesCanDelete.Equals("everyone", StringComparison.InvariantCultureIgnoreCase)
-                || RolesCanDelete.Equals("users", StringComparison.InvariantCultureIgnoreCase))
+            if (string.IsNullOrEmpty(RolesCanDelete))
             {
                 return null;
             }
             else
             {
-                return RolesCanDelete.Split(',');
+                return RolesCanDelete.Replace(" ", "").Split(',');
             }
         }
 

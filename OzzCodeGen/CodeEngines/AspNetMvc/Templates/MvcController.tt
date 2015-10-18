@@ -36,47 +36,10 @@ if (CustomFile)
              WriteViewBagSelectList(item); 
          } #>
         }
-        
-        //Purpose: To set default property values for newly created <#= Entity.ModelForEdit #> entity
-        //partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>) { }
-
 
 <#  } #>
-        protected virtual async Task<bool> CanUserEdit()
-        {
-            if (!_canUserEdit.HasValue)
-            {
-                _canUserEdit = Request.IsAuthenticated<# if(editRoles==null){ #>;<# }
-             else
-             { foreach(var role in editRoles){ #> && await <#= IsUserInRoleMethods[role.Trim()] #>Async()<# }} #>;
-            }
-            return _canUserEdit.Value;
-        }
-        bool? _canUserEdit;
-
-        protected virtual async Task<bool> CanUserCreate()
-        {
-            if (!_canUserCreate.HasValue)
-            {
-                _canUserCreate = Request.IsAuthenticated<# if(createRoles==null){ #>;<# }
-             else
-             { foreach(var role in createRoles){ #> && await <#= IsUserInRoleMethods[role.Trim()] #>Async()<# }} #>;
-            }
-            return _canUserCreate.Value;
-        }
-        bool? _canUserCreate;
-
-        protected virtual async Task<bool> CanUserDelete()
-        {
-            if (!_canUserDelete.HasValue)
-            {
-                _canUserDelete = Request.IsAuthenticated<# if(deleteRoles==null){ #>;<# }
-             else
-             { foreach(var role in deleteRoles){ #> && await <#= IsUserInRoleMethods[role.Trim()] #>Async()<# }} #>;
-            }
-            return _canUserDelete.Value;
-        }
-        bool? _canUserDelete;
+        //Purpose: To set default property values for newly created <#= Entity.ModelForEdit #> entity
+        //partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>) { }
 <# }
 else 
 { #>
@@ -187,6 +150,16 @@ else
             SetViewBags(<#= Entity.Name.ToCamelCase() #>);
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
+		
+        protected virtual async Task<bool> CanUserCreate()
+        {
+            if (!_canUserCreate.HasValue)
+            {
+                _canUserCreate = <#= CodeEngine.MergeIsUserMethods(createRoles) #>;
+            }
+            return _canUserCreate.Value;
+        }
+        bool? _canUserCreate;
 
         <#= CanEditAttrib #>
         public async Task<ActionResult> Edit(int? id)  //GET: /<#= Entity.ControllerName #>/Edit/5
@@ -234,6 +207,16 @@ else
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
 
+        protected virtual async Task<bool> CanUserEdit()
+        {
+            if (!_canUserEdit.HasValue)
+            {
+                _canUserEdit = <#= CodeEngine.MergeIsUserMethods(editRoles) #>;
+            }
+            return _canUserEdit.Value;
+        }
+        bool? _canUserEdit;
+
         <#= CanDeleteAttrib #>
         public async Task<ActionResult> Delete(int? id)  //GET: /<#= Entity.ControllerName #>/Delete/5
         {
@@ -253,6 +236,16 @@ else
 
             return RedirectToAction("Index");
         }
+		
+        protected virtual async Task<bool> CanUserDelete()
+        {
+            if (!_canUserDelete.HasValue)
+            {
+                _canUserDelete = <#= CodeEngine.MergeIsUserMethods(deleteRoles) #>;
+            }
+            return _canUserDelete.Value;
+        }
+        bool? _canUserDelete;
 <#  if (CodeEngine.GenerateDataContext)
     { #>
         

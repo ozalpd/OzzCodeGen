@@ -36,14 +36,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             {
                 if (_isUserInRoleMethods == null)
                 {
-                    _isUserInRoleMethods = new Dictionary<string, string>();
-                    _isUserInRoleMethods.Add(CodeEngine.AdminRole, "IsUser" + CodeEngine.AdminRole.ToPascalCase());
-                    var roles = CodeEngine.SecurityRoles.Where(r => !r.Equals(CodeEngine.AdminRole));
-                    foreach (var role in roles)
-                    {
-                        _isUserInRoleMethods.Add(role.Trim(), "IsUser" + role.ToPascalCase());
-                    }
-
+                    _isUserInRoleMethods = CodeEngine.IsUserInRoleMethods;
                 }
                 return _isUserInRoleMethods;
             }
