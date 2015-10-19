@@ -17,15 +17,13 @@ WriteUsingNamespaces(); #>
 @model <#= Entity.ModelForEdit #>
 @{
 <#  if(CreateForm)
-	{ #>
+    { #>
     ViewBag.Title = <#= EntityResource #>.Create<#= Entity.Name #>;
 <#  } else { #>
     ViewBag.Title = <#= EntityResource #>.Edit<#= Entity.Name #>;
 <#  } #>
 }
-
 <h2>@<#= EntityResource #>.<#= Entity.Name #></h2>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -65,16 +63,15 @@ foreach (var property in properties)
 <#      if (property.HasValidation)
         { #>
                 @Html.ValidationMessageFor(m => m.<#= property.Name #>, "", new { @class = "text-danger" })
-            </div>
 <#      } #>
+            </div>
         </div>
 <#  } #>
 <#
 } #>
-    @Html.Partial("<#= MvcPartialSaveButtons.ViewName #>")
-</div>
+        @Html.Partial("<#= MvcPartialSaveButtons.ViewName #>")
+    </div>
 }
-
 @section Scripts
 {
     @Scripts.Render("~/bundles/jqueryval")

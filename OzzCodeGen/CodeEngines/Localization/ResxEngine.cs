@@ -407,6 +407,8 @@ namespace OzzCodeGen.CodeEngines.Localization
                 ((LocalizationEntitySetting)e).LocalizeEntityName))
             {
                 entityNames.Add(entity.Name);
+                entityNames.Add(string.Format("Add{0}", entity.Name));
+                entityNames.Add(string.Format("AddNew{0}", entity.Name));
                 entityNames.Add(string.Format("Create{0}", entity.Name));
                 entityNames.Add(string.Format("Edit{0}", entity.Name));
                 entityNames.Add(string.Format("Delete{0}", entity.Name));

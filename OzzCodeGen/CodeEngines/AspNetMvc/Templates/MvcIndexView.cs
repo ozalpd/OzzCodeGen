@@ -358,7 +358,7 @@ if (entitiesThisForCreate.Any())
             
             #line default
             #line hidden
-            this.Write(".Create");
+            this.Write(".Add");
             
             #line 133 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));

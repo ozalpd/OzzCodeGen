@@ -23,7 +23,6 @@
       </Properties>
       <ControllerName>IPrimaryKeys</ControllerName>
       <DataSetName>IPrimaryKeys</DataSetName>
-      <DataContextClass>PurchaseOrderTemplateContext</DataContextClass>
       <ModelForEdit>IPrimaryKey</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -34,6 +33,7 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
+      <CreateToDetails>false</CreateToDetails>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -77,7 +77,6 @@
       </Properties>
       <ControllerName>ICreateds</ControllerName>
       <DataSetName>ICreateds</DataSetName>
-      <DataContextClass>PurchaseOrderTemplateContext</DataContextClass>
       <ModelForEdit>ICreated</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -88,6 +87,7 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
+      <CreateToDetails>false</CreateToDetails>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -142,7 +142,6 @@
       </Properties>
       <ControllerName>IModifieds</ControllerName>
       <DataSetName>IModifieds</DataSetName>
-      <DataContextClass>PurchaseOrderTemplateContext</DataContextClass>
       <ModelForEdit>IModified</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -153,6 +152,7 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
+      <CreateToDetails>false</CreateToDetails>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -207,7 +207,6 @@
       </Properties>
       <ControllerName>IApprovals</ControllerName>
       <DataSetName>IApprovals</DataSetName>
-      <DataContextClass>PurchaseOrderTemplateContext</DataContextClass>
       <ModelForEdit>IApproval</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -218,6 +217,7 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
+      <CreateToDetails>false</CreateToDetails>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -261,7 +261,6 @@
       </Properties>
       <ControllerName>IDescriptions</ControllerName>
       <DataSetName>IDescriptions</DataSetName>
-      <DataContextClass>PurchaseOrderTemplateContext</DataContextClass>
       <ModelForEdit>IDescription</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -272,6 +271,7 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
+      <CreateToDetails>false</CreateToDetails>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -414,7 +414,6 @@
       </Properties>
       <ControllerName>Companies</ControllerName>
       <DataSetName>Companies</DataSetName>
-      <DataContextClass>PurchaseOrderTemplateContext</DataContextClass>
       <ModelForEdit>Company</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -425,6 +424,7 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
+      <CreateToDetails>false</CreateToDetails>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -446,7 +446,6 @@
       </Properties>
       <ControllerName>Suppliers</ControllerName>
       <DataSetName>Suppliers</DataSetName>
-      <DataContextClass>PurchaseOrderTemplateContext</DataContextClass>
       <ModelForEdit>Supplier</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -457,6 +456,7 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
+      <CreateToDetails>false</CreateToDetails>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -489,7 +489,6 @@
       </Properties>
       <ControllerName>Customers</ControllerName>
       <DataSetName>Customers</DataSetName>
-      <DataContextClass>PurchaseOrderTemplateContext</DataContextClass>
       <ModelForEdit>Customer</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -500,6 +499,7 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
+      <CreateToDetails>false</CreateToDetails>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -620,7 +620,6 @@
       </Properties>
       <ControllerName>Contacts</ControllerName>
       <DataSetName>Contacts</DataSetName>
-      <DataContextClass>PurchaseOrderTemplateContext</DataContextClass>
       <ModelForEdit>Contact</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -631,6 +630,7 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
+      <CreateToDetails>false</CreateToDetails>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -685,7 +685,6 @@
       </Properties>
       <ControllerName>ProductCategories</ControllerName>
       <DataSetName>ProductCategories</DataSetName>
-      <DataContextClass>PurchaseOrderTemplateContext</DataContextClass>
       <ModelForEdit>ProductCategory</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -696,6 +695,7 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
+      <CreateToDetails>false</CreateToDetails>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -728,7 +728,6 @@
       </Properties>
       <ControllerName>Products</ControllerName>
       <DataSetName>Products</DataSetName>
-      <DataContextClass>PurchaseOrderTemplateContext</DataContextClass>
       <ModelForEdit>Product</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -739,6 +738,7 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
+      <CreateToDetails>false</CreateToDetails>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -837,7 +837,6 @@
       </Properties>
       <ControllerName>PuchaseOrders</ControllerName>
       <DataSetName>PuchaseOrders</DataSetName>
-      <DataContextClass>PurchaseOrderTemplateContext</DataContextClass>
       <ModelForEdit>PuchaseOrder</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -848,6 +847,7 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
+      <CreateToDetails>false</CreateToDetails>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -924,7 +924,6 @@
       </Properties>
       <ControllerName>OrderItems</ControllerName>
       <DataSetName>OrderItems</DataSetName>
-      <DataContextClass>PurchaseOrderTemplateContext</DataContextClass>
       <ModelForEdit>OrderItem</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -935,6 +934,7 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
+      <CreateToDetails>false</CreateToDetails>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
   </EntitySettings>

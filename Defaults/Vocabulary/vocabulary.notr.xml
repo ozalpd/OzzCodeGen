@@ -9,8 +9,68 @@
     <Translation>Add</Translation>
   </Vocab>
   <Vocab>
+    <Name>AddCompany</Name>
+    <Translation>Add Company</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddContact</Name>
+    <Translation>Add Contact</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddCustomer</Name>
+    <Translation>Add Customer</Translation>
+  </Vocab>
+  <Vocab>
     <Name>AddNew</Name>
     <Translation>Add New</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddNewCompany</Name>
+    <Translation>Add New Company</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddNewContact</Name>
+    <Translation>Add New Contact</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddNewCustomer</Name>
+    <Translation>Add New Customer</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddNewOrderItem</Name>
+    <Translation>Add New Order Item</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddNewProduct</Name>
+    <Translation>Add New Product</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddNewProductCategory</Name>
+    <Translation>Add New Product Category</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddNewPuchaseOrder</Name>
+    <Translation>Add New Puchase Order</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddNewSupplier</Name>
+    <Translation>Add New Supplier</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddOrderItem</Name>
+    <Translation>Add Order Item</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddProduct</Name>
+    <Translation>Add Product</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddProductCategory</Name>
+    <Translation>Add Product Category</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddPuchaseOrder</Name>
+    <Translation>Add Puchase Order</Translation>
   </Vocab>
   <Vocab>
     <Name>Address</Name>
@@ -23,6 +83,14 @@
   <Vocab>
     <Name>Address2</Name>
     <Translation>Address Line 2</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddSupplier</Name>
+    <Translation>Add Supplier</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Admin</Name>
+    <Translation>Admin</Translation>
   </Vocab>
   <Vocab>
     <Name>Always</Name>
@@ -683,6 +751,10 @@
   <Vocab>
     <Name>Register</Name>
     <Translation>Register</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Remove</Name>
+    <Translation>Remove</Translation>
   </Vocab>
   <Vocab>
     <Name>Save</Name>

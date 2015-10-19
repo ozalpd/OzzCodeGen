@@ -130,7 +130,7 @@ if (entitiesThisForCreate.Any())
                             <li class="divider"></li>
 <#    foreach (var entity in entitiesThisForCreate)
     {#>
-                                <li>@Html.ActionLink(<#= EntityResource #>.Create<#= entity.Name #>, "Create", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id }, null)</li>
+                                <li>@Html.ActionLink(<#= EntityResource #>.Add<#= entity.Name #>, "Create", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id }, null)</li>
 <#  } #>
 <# } #>
                         </ul>
