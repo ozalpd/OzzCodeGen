@@ -158,7 +158,7 @@ else
                 <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(<#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>());
 <#  } #>
                 await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
-<#  if (Entity.CreateToDetails) {  #>
+<#  if (Entity.AfterSaveRedirectToDetails) {  #>
                 return RedirectToAction("Details", new { Id = <#= Entity.Name.ToCamelCase() #>.<#= pKey #> });
 <#  } else { #>
                 return RedirectToAction("Index");
@@ -218,7 +218,11 @@ else
                 <#= dataContextIntance #>.Entry(<#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>()).State = EntityState.Modified;
 <#  } #>
                 await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
+<#  if (Entity.AfterSaveRedirectToDetails) {  #>
+                return RedirectToAction("Details", new { Id = <#= Entity.Name.ToCamelCase() #>.<#= pKey #> });
+<#  } else { #>
                 return RedirectToAction("Index");
+<#  } #>
             }
 
             SetViewBags(<#= Entity.Name.ToCamelCase() #>);

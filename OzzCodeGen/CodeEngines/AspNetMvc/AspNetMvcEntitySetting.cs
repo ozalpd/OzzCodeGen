@@ -337,18 +337,18 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private bool? _editView;
 
         /// <summary>
-        /// If true CreateAction redirects to Details View, otherwise redirects to Index View
+        /// After Saving in Edit & Create Actions redirects to Details View if true, otherwise redirects to Index View
         /// </summary>
-        public bool CreateToDetails
+        public bool AfterSaveRedirectToDetails
         {
-            get { return _createToDetails; }
+            get { return _redirectToDetails; }
             set
             {
-                _createToDetails = value;
-                RaisePropertyChanged("CreateToDetails");
+                _redirectToDetails = value;
+                RaisePropertyChanged("AfterSaveRedirectToDetails");
             }
         }
-        private bool _createToDetails;
+        private bool _redirectToDetails;
 
         /// <summary>
         /// Base controller class for MVC Controller

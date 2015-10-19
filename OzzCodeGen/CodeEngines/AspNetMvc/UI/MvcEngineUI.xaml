@@ -384,18 +384,18 @@
                                     <CheckBox IsChecked="{Binding DetailsView}" Content="Details View" />
                                     <CheckBox IsChecked="{Binding CreateView}" Content="Create View"/>
                                     <CheckBox IsChecked="{Binding EditView}" Content="Edit View"/>
-                                    <TextBlock Text="Create Act. Redirect"
-                                               ToolTip="Where to redirect CreateAction"
+                                    <TextBlock Text="After SaveRedirect"
+                                               ToolTip="Where to redirect Edit &amp; CreateAction"
                                                TextAlignment="Center" Background="#D0FFFFFF"/>
                                     <!--
                                     If RadioButton with BoolInverter is in first place,
-                                    CreateToDetails changes to false -->
+                                    AfterSaveRedirectToDetails changes to false -->
                                     <RadioButton Content="Details View"
                                                  ToolTip="Create Action redirects to Details View at the end"
-                                                 IsChecked="{Binding CreateToDetails}"/>
+                                                 IsChecked="{Binding AfterSaveRedirectToDetails}"/>
                                     <RadioButton Content="Index View"
                                                  ToolTip="Create Action redirects to Index View at the end"
-                                                 IsChecked="{Binding CreateToDetails, Converter={StaticResource boolInverter}}"/>
+                                                 IsChecked="{Binding AfterSaveRedirectToDetails, Converter={StaticResource boolInverter}}"/>
                                 </StackPanel>
                             </Border>
                             <Border Width="160">
