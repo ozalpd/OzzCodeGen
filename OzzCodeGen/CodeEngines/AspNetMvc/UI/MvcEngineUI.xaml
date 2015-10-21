@@ -379,23 +379,17 @@
                                               ToolTip="Overwrite existing file"/>
                                     </StackPanel>
                                     <TextBlock Text="Generate" TextAlignment="Center" Background="#D0FFFFFF"/>
-                                    <CheckBox IsChecked="{Binding GenerateController}" Content="Controllers"/>
+                                    <CheckBox IsChecked="{Binding GenerateController}" Content="Controller"/>
+                                    <CheckBox IsChecked="{Binding GenerateIndexAction}" Content="Index Action" />
+                                    <CheckBox IsChecked="{Binding GenerateDetailsAction}" Content="Details Action" />
+                                    <CheckBox IsChecked="{Binding GenerateCreateAction}" Content="Create Action"/>
+                                    <CheckBox IsChecked="{Binding GenerateEditAction}" Content="Edit Action"/>
+                                    <CheckBox IsChecked="{Binding GenerateDeleteAction}" Content="Delete Action" />
+<TextBlock Height="2" Margin="2"/>
                                     <CheckBox IsChecked="{Binding IndexView}" Content="Index View" />
                                     <CheckBox IsChecked="{Binding DetailsView}" Content="Details View" />
                                     <CheckBox IsChecked="{Binding CreateView}" Content="Create View"/>
                                     <CheckBox IsChecked="{Binding EditView}" Content="Edit View"/>
-                                    <TextBlock Text="After SaveRedirect"
-                                               ToolTip="Where to redirect Edit &amp; CreateAction"
-                                               TextAlignment="Center" Background="#D0FFFFFF"/>
-                                    <!--
-                                    If RadioButton with BoolInverter is in first place,
-                                    AfterSaveRedirectToDetails changes to false -->
-                                    <RadioButton Content="Details View"
-                                                 ToolTip="Create Action redirects to Details View at the end"
-                                                 IsChecked="{Binding AfterSaveRedirectToDetails}"/>
-                                    <RadioButton Content="Index View"
-                                                 ToolTip="Create Action redirects to Index View at the end"
-                                                 IsChecked="{Binding AfterSaveRedirectToDetails, Converter={StaticResource boolInverter}}"/>
                                 </StackPanel>
                             </Border>
                             <Border Width="160">
@@ -408,6 +402,9 @@
                                     <TextBox Text="{Binding RolesCanEdit}"/>
                                     <TextBlock Text="Roles Can Delete"/>
                                     <TextBox Text="{Binding RolesCanDelete}"/>
+                                    <TextBlock Text="After SaveRedirect"
+                                               ToolTip="Where to redirect Edit &amp; CreateAction"/>
+                                    <TextBox Text="{Binding AfterSaveRedirect}"/>
                                 </StackPanel>
                             </Border>
                             <Border>

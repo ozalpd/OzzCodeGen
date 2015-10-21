@@ -13,6 +13,8 @@ var searchProperties = Entity.DisplayColumns.Where(e => e.UseInSearch);
 var pkeyProperty = Entity.GetPrimeryKey();
 string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
 
+var fkeyProperties = Entity.DisplayColumns.Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
+
 var strongForeignEntity = Entity.StrongForeignEntity;
 var strongProperty = Entity.StrongForeignKeyProperty;
 var foreignDependentProperty = Entity.GetForeignDependentProperty(strongProperty);
@@ -29,12 +31,11 @@ namespace <#= CodeEngine.ControllersNamespace #>
 <#
 if (CustomFile)
 { 
-    var vbagProperties = Entity.DisplayColumns.Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
-    if (vbagProperties.Any())
+    if (fkeyProperties.Any())
     { #>
         partial void SetViewBags(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>)
         {
-<#      foreach (var item in vbagProperties)
+<#      foreach (var item in fkeyProperties)
         { 
              WriteViewBagSelectList(item); 
          } #>
@@ -52,8 +53,7 @@ if (CustomFile)
 <# }
 else 
 { #>
-        partial void SetViewBags(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
-        partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
+<# if (Entity.GenerateIndexAction){ #>
         
         <#= CanViewAttrib #>
         public async Task<ActionResult> Index(QueryParameters qParams)
@@ -74,6 +74,13 @@ else
                         select a;
             }
 <#  } #>
+<#  foreach (var item in fkeyProperties)
+    {  #>
+            if (qParams.<#= item.Name #> != null)
+            {
+                query = query.Where(x => x.<#= item.Name #> == qParams.<#= item.Name #>);
+            }
+<#  } #>
             qParams.TotalCount = await query.CountAsync();
             SetPagerParameters(qParams);
 
@@ -90,6 +97,39 @@ else
                 return View(new List<<#= Entity.Name #>>());   //there isn't any record, so no need to run a query
             }
         }
+        
+        protected virtual async Task<bool> CanUserCreate()
+        {
+            if (!_canUserCreate.HasValue)
+            {
+                _canUserCreate = <#= CodeEngine.MergeIsUserMethods(createRoles) #>;
+            }
+            return _canUserCreate.Value;
+        }
+        bool? _canUserCreate;
+
+        protected virtual async Task<bool> CanUserEdit()
+        {
+            if (!_canUserEdit.HasValue)
+            {
+                _canUserEdit = <#= CodeEngine.MergeIsUserMethods(editRoles) #>;
+            }
+            return _canUserEdit.Value;
+        }
+        bool? _canUserEdit;
+        
+        protected virtual async Task<bool> CanUserDelete()
+        {
+            if (!_canUserDelete.HasValue)
+            {
+                _canUserDelete = <#= CodeEngine.MergeIsUserMethods(deleteRoles) #>;
+            }
+            return _canUserDelete.Value;
+        }
+        bool? _canUserDelete;
+<#  } #>
+<# if (Entity.GenerateDetailsAction){ #>
+
 
         <#= CanViewAttrib #>
         public async Task<ActionResult> Details(int? id)  //GET: /<#= Entity.ControllerName #>/Details/5
@@ -107,6 +147,9 @@ else
 
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
+<#  } #>
+<# if (Entity.GenerateCreateAction){ #>
+
 
         [HttpGet]
         <#= CanEditAttrib #>
@@ -152,32 +195,28 @@ else
 
             if (ModelState.IsValid)
             {
+                OnCreateSaving(<#= Entity.Name.ToCamelCase() #>);
 <#  if(Entity.ModelForEdit == Entity.Name) {#> 
                 <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(<#= Entity.Name.ToCamelCase() #>);
 <#  } else { #>
-                <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(<#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>());
+                var entity = <#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>();
+                <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(entity);
 <#  } #>
                 await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
-<#  if (Entity.AfterSaveRedirectToDetails) {  #>
-                return RedirectToAction("Details", new { Id = <#= Entity.Name.ToCamelCase() #>.<#= pKey #> });
+<#  if(Entity.ModelForEdit == Entity.Name) {#> 
+                OnCreateSaved(<#= Entity.Name.ToCamelCase() #>);
 <#  } else { #>
-                return RedirectToAction("Index");
+                OnCreateSaved(entity);
 <#  } #>
+                return RedirectToAction(<#= Entity.AfterSaveRedirect #>);
             }
 
             SetViewBags(<#= Entity.Name.ToCamelCase() #>);
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
-        
-        protected virtual async Task<bool> CanUserCreate()
-        {
-            if (!_canUserCreate.HasValue)
-            {
-                _canUserCreate = <#= CodeEngine.MergeIsUserMethods(createRoles) #>;
-            }
-            return _canUserCreate.Value;
-        }
-        bool? _canUserCreate;
+<#  } #>
+<# if (Entity.GenerateEditAction){ #>
+
 
         <#= CanEditAttrib #>
         public async Task<ActionResult> Edit(int? id)  //GET: /<#= Entity.ControllerName #>/Edit/5
@@ -211,33 +250,29 @@ else
 
             if (ModelState.IsValid)
             {
+                OnEditSaving(<#= Entity.Name.ToCamelCase() #>);
 <#  if(Entity.ModelForEdit == Entity.Name)
     {#> 
                 <#= dataContextIntance #>.Entry(<#= Entity.Name.ToCamelCase() #>).State = EntityState.Modified;
 <#  } else { #>
-                <#= dataContextIntance #>.Entry(<#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>()).State = EntityState.Modified;
+                var entity = <#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>();
+                <#= dataContextIntance #>.Entry(entity).State = EntityState.Modified;
 <#  } #>
                 await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
-<#  if (Entity.AfterSaveRedirectToDetails) {  #>
-                return RedirectToAction("Details", new { Id = <#= Entity.Name.ToCamelCase() #>.<#= pKey #> });
+<#  if(Entity.ModelForEdit == Entity.Name) {#> 
+                OnEditSaved(<#= Entity.Name.ToCamelCase() #>);
 <#  } else { #>
-                return RedirectToAction("Index");
+                OnEditSaved(entity);
 <#  } #>
+                return RedirectToAction(<#= Entity.AfterSaveRedirect #>);
             }
 
             SetViewBags(<#= Entity.Name.ToCamelCase() #>);
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
+<#  } #>
+<# if (Entity.GenerateDeleteAction){ #>
 
-        protected virtual async Task<bool> CanUserEdit()
-        {
-            if (!_canUserEdit.HasValue)
-            {
-                _canUserEdit = <#= CodeEngine.MergeIsUserMethods(editRoles) #>;
-            }
-            return _canUserEdit.Value;
-        }
-        bool? _canUserEdit;
 
         <#= CanDeleteAttrib #>
         public async Task<ActionResult> Delete(int? id)  //GET: /<#= Entity.ControllerName #>/Delete/5
@@ -258,16 +293,26 @@ else
 
             return RedirectToAction("Index");
         }
-        
-        protected virtual async Task<bool> CanUserDelete()
+<#  } #>
+
+<#    if (fkeyProperties.Any())
+    { #>
+        public new partial class QueryParameters : <#= CodeEngine.BaseControllerName #>.QueryParameters
         {
-            if (!_canUserDelete.HasValue)
-            {
-                _canUserDelete = <#= CodeEngine.MergeIsUserMethods(deleteRoles) #>;
-            }
-            return _canUserDelete.Value;
+<#      foreach (var item in fkeyProperties)
+        {  #>
+            public <#= item.GetNullableTypeName() #> <#= item.Name #> { get; set; }
+<#       } #>
         }
-        bool? _canUserDelete;
+<#  } #>
+
+        //Partial methods
+        partial void OnCreateSaving(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
+        partial void OnCreateSaved(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
+        partial void OnEditSaving(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
+        partial void OnEditSaved(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
+        partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
+        partial void SetViewBags(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
 <# } #>
     }
 }

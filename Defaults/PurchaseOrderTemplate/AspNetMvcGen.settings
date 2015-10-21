@@ -33,7 +33,7 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
-      <CreateToDetails>false</CreateToDetails>
+      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -87,7 +87,7 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
-      <CreateToDetails>false</CreateToDetails>
+      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -152,7 +152,7 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
-      <CreateToDetails>false</CreateToDetails>
+      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -217,7 +217,7 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
-      <CreateToDetails>false</CreateToDetails>
+      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -271,7 +271,7 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
-      <CreateToDetails>false</CreateToDetails>
+      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -424,7 +424,7 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
-      <CreateToDetails>false</CreateToDetails>
+      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -456,7 +456,7 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
-      <CreateToDetails>false</CreateToDetails>
+      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -499,7 +499,7 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
-      <CreateToDetails>false</CreateToDetails>
+      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -620,6 +620,7 @@
       </Properties>
       <ControllerName>Contacts</ControllerName>
       <DataSetName>Contacts</DataSetName>
+      <StrongDependedForeignKey>CompanyId</StrongDependedForeignKey>
       <ModelForEdit>Contact</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -630,7 +631,7 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
-      <CreateToDetails>false</CreateToDetails>
+      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -695,7 +696,7 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
-      <CreateToDetails>false</CreateToDetails>
+      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -728,6 +729,7 @@
       </Properties>
       <ControllerName>Products</ControllerName>
       <DataSetName>Products</DataSetName>
+      <StrongDependedForeignKey>CategoryId</StrongDependedForeignKey>
       <ModelForEdit>Product</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -738,7 +740,7 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
-      <CreateToDetails>false</CreateToDetails>
+      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -837,6 +839,7 @@
       </Properties>
       <ControllerName>PuchaseOrders</ControllerName>
       <DataSetName>PuchaseOrders</DataSetName>
+      <StrongDependedForeignKey>CustomerId</StrongDependedForeignKey>
       <ModelForEdit>PuchaseOrder</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -847,7 +850,7 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
-      <CreateToDetails>false</CreateToDetails>
+      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -924,6 +927,7 @@
       </Properties>
       <ControllerName>OrderItems</ControllerName>
       <DataSetName>OrderItems</DataSetName>
+      <StrongDependedForeignKey>PuchaseOrderId</StrongDependedForeignKey>
       <ModelForEdit>OrderItem</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -934,7 +938,7 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
-      <CreateToDetails>false</CreateToDetails>
+      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
   </EntitySettings>

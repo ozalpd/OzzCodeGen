@@ -260,6 +260,86 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private bool? _generateController;
 
+        public bool GenerateIndexAction
+        {
+            get
+            {
+                if (_generateIndexAction == null)
+                    _generateIndexAction = true;
+                return _generateIndexAction.Value;
+            }
+            set
+            {
+                _generateIndexAction = value;
+                RaisePropertyChanged("GenerateIndexAction");
+            }
+        }
+        private bool? _generateIndexAction;
+
+        public bool GenerateCreateAction
+        {
+            get
+            {
+                if (_generateCreateAction == null)
+                    _generateCreateAction = true;
+                return _generateCreateAction.Value;
+            }
+            set
+            {
+                _generateCreateAction = value;
+                RaisePropertyChanged("GenerateCreateAction");
+            }
+        }
+        private bool? _generateCreateAction;
+
+        public bool GenerateDeleteAction
+        {
+            get
+            {
+                if (_generateDeleteAction == null)
+                    _generateDeleteAction = true;
+                return _generateDeleteAction.Value;
+            }
+            set
+            {
+                _generateDeleteAction = value;
+                RaisePropertyChanged("GenerateDeleteAction");
+            }
+        }
+        private bool? _generateDeleteAction;
+
+        public bool GenerateEditAction
+        {
+            get
+            {
+                if (_generateEditAction == null)
+                    _generateEditAction = true;
+                return _generateEditAction.Value;
+            }
+            set
+            {
+                _generateEditAction = value;
+                RaisePropertyChanged("GenerateEditAction");
+            }
+        }
+        private bool? _generateEditAction;
+
+        public bool GenerateDetailsAction
+        {
+            get
+            {
+                if (_generateDetailsAction == null)
+                    _generateDetailsAction = true;
+                return _generateDetailsAction.Value;
+            }
+            set
+            {
+                _generateDetailsAction = value;
+                RaisePropertyChanged("GenerateDetailsAction");
+            }
+        }
+        private bool? _generateDetailsAction;
+
         /// <summary>
         /// Generate IndexView
         /// </summary>
@@ -337,18 +417,30 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private bool? _editView;
 
         /// <summary>
-        /// After Saving in Edit & Create Actions redirects to Details View if true, otherwise redirects to Index View
+        /// After Saving in Edit & Create Actions RedirectToAction method parameter
         /// </summary>
-        public bool AfterSaveRedirectToDetails
+        public string AfterSaveRedirect
         {
-            get { return _redirectToDetails; }
+            get
+            {
+                if (string.IsNullOrEmpty(_afterSaveRedirect))
+                    SetAfterSaveRedirect();
+                return _afterSaveRedirect;
+            }
             set
             {
-                _redirectToDetails = value;
-                RaisePropertyChanged("AfterSaveRedirectToDetails");
+                _afterSaveRedirect = value;
+                RaisePropertyChanged("AfterSaveRedirect");
             }
         }
-        private bool _redirectToDetails;
+        private string _afterSaveRedirect;
+
+        private void SetAfterSaveRedirect()
+        {
+            _afterSaveRedirect = "\"Index\"";
+        }
+
+
 
         /// <summary>
         /// Base controller class for MVC Controller
