@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using OzzCodeGen.Definitions;
 using OzzUtils;
 
@@ -20,9 +8,9 @@ namespace OzzCodeGen.Wpf.Dialogs
     /// <summary>
     /// Interaction logic for NewProperty.xaml
     /// </summary>
-    public partial class NewProperty : Window, INotifyPropertyChanged
+    public partial class NewPropertyDialog : Window, INotifyPropertyChanged
     {
-        public NewProperty()
+        public NewPropertyDialog()
         {
             InitializeComponent();
             DependentProperty = BaseProperty.CreatePropertyDefinition("int");
@@ -157,6 +145,12 @@ namespace OzzCodeGen.Wpf.Dialogs
             {
                 PropertyDefinition.Name = PropertyDefinition.TypeName;
             }
+        }
+
+        private void window_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtPropertyName.Focus();
+            txtPropertyName.SelectAll();
         }
     }
 }

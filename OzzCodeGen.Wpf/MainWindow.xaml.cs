@@ -446,9 +446,9 @@ namespace OzzCodeGen.Wpf
             }
         }
 
-        private NewEntity GetNewEntityDialog()
+        private NewEntityDialog GetNewEntityDialog()
         {
-            var dlg = new NewEntity();
+            var dlg = new NewEntityDialog();
             dlg.EntityDefinition = new EntityDefinition()
             {
                 Name = "Untitled",
@@ -462,7 +462,7 @@ namespace OzzCodeGen.Wpf
 
         void NewEntityDialog_Closed(object sender, EventArgs e)
         {
-            var dlg = (NewEntity)sender;
+            var dlg = (NewEntityDialog)sender;
             if (dlg.DialogResult ?? false)
             {
                 DataModel.Add(dlg.EntityDefinition);
@@ -553,7 +553,7 @@ namespace OzzCodeGen.Wpf
 
         public void AddProperty(DefinitionType propertyType, EntityDefinition entity)
         {
-            var dlg = new NewProperty();
+            var dlg = new NewPropertyDialog();
             var p = BaseProperty.CreatePropertyDefinition(propertyType, "UntitledProperty");
             p.EntityDefinition = entity;
             dlg.PropertyDefinition = p;
@@ -566,7 +566,7 @@ namespace OzzCodeGen.Wpf
 
         void NewPropertyDialog_Closed(object sender, EventArgs e)
         {
-            var dlg = (NewProperty)sender;
+            var dlg = (NewPropertyDialog)sender;
             if (dlg.DialogResult ?? false)
             {
                 int i = grdEntities.SelectedIndex;

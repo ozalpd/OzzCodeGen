@@ -64,7 +64,7 @@
         <StorageColumnSetting>
           <Name>ModifierId</Name>
           <Exclude>false</Exclude>
-          <DataType>nVarChar</DataType>
+          <DataType>VarChar</DataType>
           <Lenght>48</Lenght>
           <PrimaryKey>false</PrimaryKey>
           <Indexed>false</Indexed>
@@ -74,7 +74,7 @@
         <StorageColumnSetting>
           <Name>ModifierIp</Name>
           <Exclude>false</Exclude>
-          <DataType>nVarChar</DataType>
+          <DataType>VarChar</DataType>
           <Lenght>48</Lenght>
           <PrimaryKey>false</PrimaryKey>
           <Indexed>false</Indexed>
@@ -109,7 +109,7 @@
         <StorageColumnSetting>
           <Name>CreatorId</Name>
           <Exclude>false</Exclude>
-          <DataType>nVarChar</DataType>
+          <DataType>VarChar</DataType>
           <Lenght>48</Lenght>
           <PrimaryKey>false</PrimaryKey>
           <Indexed>false</Indexed>
@@ -119,7 +119,7 @@
         <StorageColumnSetting>
           <Name>CreatorIp</Name>
           <Exclude>false</Exclude>
-          <DataType>nVarChar</DataType>
+          <DataType>VarChar</DataType>
           <Lenght>48</Lenght>
           <PrimaryKey>false</PrimaryKey>
           <Indexed>false</Indexed>
@@ -164,7 +164,7 @@
           <Name>Notes</Name>
           <Exclude>false</Exclude>
           <DataType>nVarChar</DataType>
-          <Lenght>256</Lenght>
+          <Lenght>0</Lenght>
           <PrimaryKey>false</PrimaryKey>
           <Indexed>false</Indexed>
           <SortDesc>false</SortDesc>
@@ -458,4 +458,5 @@
   <PluralizeTableNames>true</PluralizeTableNames>
   <DatabaseName>AddressBookTemplate</DatabaseName>
   <DatabaseServer>.\SqlExpress</DatabaseServer>
+  <SchemaName>dbo</SchemaName>
 </TSqlScriptsEngine>

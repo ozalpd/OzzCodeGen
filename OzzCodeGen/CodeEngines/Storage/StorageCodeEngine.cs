@@ -90,6 +90,38 @@ namespace OzzCodeGen.CodeEngines.Storage
         }
         private string _lastScripts;
 
+
+        public string SchemaName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_schemaName))
+                    _schemaName = "dbo";
+                return _schemaName;
+            }
+            set
+            {
+                string oldValue = _schemaName;
+                onSchemaNameChanging(value);
+                onSchemaNameChanged(oldValue);
+            }
+        }
+        public virtual void onSchemaNameChanging(string newValue)
+        {
+            _schemaName = newValue;
+        }
+        public virtual void onSchemaNameChanged(string oldValue)
+        {
+            RaisePropertyChanged("SchemaName");
+            foreach (var item in Entities)
+            {
+                if (item.SchemaName.Equals(oldValue))
+                    item.SchemaName = SchemaName;
+            }
+        }
+        private string _schemaName;
+
+
         [XmlIgnore]
         public List<StorageEntitySetting> Entities
         {
@@ -123,15 +155,23 @@ namespace OzzCodeGen.CodeEngines.Storage
                 return string.Empty;
 
             string s;
-            if (Project.Name.EndsWith("DAL"))
+            if (Project.Name.ToLowerInvariant().EndsWith("dal"))
             {
                 s = Project.Name.Substring(0, Project.Name.Length - 3);
+            }
+            else if (Project.Name.ToLowerInvariant().EndsWith("db"))
+            {
+                s = Project.Name.Substring(0, Project.Name.Length - 2);
+            }
+            else if (Project.Name.ToLowerInvariant().EndsWith("data"))
+            {
+                s = Project.Name.Substring(0, Project.Name.Length - 4);
             }
             else
             {
                 s = Project.Name;
             }
-            return s + "DB";
+            return s.Replace(".", "").ToPascalCase() + "DB";
         }
 
         [XmlIgnore]

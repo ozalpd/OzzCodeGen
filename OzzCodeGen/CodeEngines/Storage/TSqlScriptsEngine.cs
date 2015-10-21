@@ -41,6 +41,11 @@ namespace OzzCodeGen.CodeEngines.Storage
         protected override void FixColumnType(StorageColumnSetting column)
         {
             int colLen = 255;
+            column.DataType = column.DataType.Trim();
+            if (column.DataType.ToLowerInvariant().StartsWith("nullable<"))
+                column.DataType = column.DataType.Remove(0, "nullable<".Length).Replace(">", "");
+            column.DataType.Replace("?", "");
+
             switch (column.DataType.ToLowerInvariant())
             {
                 case "string":
@@ -48,7 +53,7 @@ namespace OzzCodeGen.CodeEngines.Storage
                     if (column.PropertyDefinition.DefinitionType == DefinitionType.String)
                     {
                         var strProperty = (StringProperty)column.PropertyDefinition;
-                        colLen = strProperty.MaxLenght > 0 ? strProperty.MaxLenght : 255;
+                        colLen = strProperty.MaxLenght;// > 0 ? strProperty.MaxLenght : 2048;
                     }
                     column.Lenght = colLen;
                     break;
@@ -61,9 +66,18 @@ namespace OzzCodeGen.CodeEngines.Storage
                     column.DataType = "tinyint";
                     break;
 
+                case "byte[]":
+                    column.DataType = "varbinary";
+                    break;
+
+                case "decimal":
+                    column.DataType = "[decimal](18, 4)";
+                    break;
+
                 default:
                     break;
             }
+
         }
 
         /// <summary>
@@ -113,16 +127,21 @@ namespace OzzCodeGen.CodeEngines.Storage
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append('[');
+            if (!column.DataType.Contains("["))
+                sb.Append('[');
             sb.Append(column.DataType);
-            sb.Append(']');
+            if (!column.DataType.Contains("]"))
+                sb.Append(']');
 
             string dataType = column.DataType.ToLowerInvariant();
             if (dataType.Equals("nvarchar") || dataType.Equals("varchar") ||
-                dataType.Equals("nchar") || dataType.Equals("char"))
+                dataType.Equals("nchar") || dataType.Equals("char") || dataType.Equals("varbinary"))
             {
                 sb.Append('(');
-                sb.Append(column.Lenght);
+                if (column.Lenght > 0)
+                    sb.Append(column.Lenght);
+                else
+                    sb.Append("max");
                 sb.Append(')');
             }
 

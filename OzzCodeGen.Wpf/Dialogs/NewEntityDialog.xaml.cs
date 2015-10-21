@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using OzzCodeGen.Definitions;
 
 namespace OzzCodeGen.Wpf.Dialogs
@@ -19,9 +8,9 @@ namespace OzzCodeGen.Wpf.Dialogs
     /// <summary>
     /// Interaction logic for NewEntity.xaml
     /// </summary>
-    public partial class NewEntity : Window, INotifyPropertyChanged
+    public partial class NewEntityDialog : Window, INotifyPropertyChanged
     {
-        public NewEntity()
+        public NewEntityDialog()
         {
             InitializeComponent();
         }
@@ -55,8 +44,13 @@ namespace OzzCodeGen.Wpf.Dialogs
 
         private void window_Activated(object sender, EventArgs e)
         {
-            txtName.Focus();
+            //txtEntityName.Focus();
         }
-        
+
+        private void window_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtEntityName.Focus();
+            txtEntityName.SelectAll();
+        }
     }
 }

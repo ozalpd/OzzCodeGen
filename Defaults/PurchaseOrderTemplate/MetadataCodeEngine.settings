@@ -25,7 +25,7 @@
         <MetadataPropertySetting>
           <Name>CreateDate</Name>
           <Exclude>true</Exclude>
-          <DataType />
+          <DataType>Date</DataType>
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
@@ -56,7 +56,7 @@
         <MetadataPropertySetting>
           <Name>ModifyDate</Name>
           <Exclude>true</Exclude>
-          <DataType />
+          <DataType>Date</DataType>
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
@@ -87,7 +87,7 @@
         <MetadataPropertySetting>
           <Name>ApproveDate</Name>
           <Exclude>false</Exclude>
-          <DataType />
+          <DataType>Date</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
@@ -375,13 +375,13 @@
         <MetadataPropertySetting>
           <Name>OrderDate</Name>
           <Exclude>false</Exclude>
-          <DataType />
+          <DataType>Date</DataType>
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>DueDate</Name>
           <Exclude>false</Exclude>
-          <DataType />
+          <DataType>Date</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>

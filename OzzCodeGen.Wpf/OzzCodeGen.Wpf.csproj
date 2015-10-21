@@ -70,11 +70,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\NewEntity.xaml">
+    <Page Include="Dialogs\NewEntityDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\NewProperty.xaml">
+    <Page Include="Dialogs\NewPropertyDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -101,11 +101,11 @@
     <Compile Include="Dialogs\GenerateModel.xaml.cs">
       <DependentUpon>GenerateModel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\NewEntity.xaml.cs">
-      <DependentUpon>NewEntity.xaml</DependentUpon>
+    <Compile Include="Dialogs\NewEntityDialog.xaml.cs">
+      <DependentUpon>NewEntityDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\NewProperty.xaml.cs">
-      <DependentUpon>NewProperty.xaml</DependentUpon>
+    <Compile Include="Dialogs\NewPropertyDialog.xaml.cs">
+      <DependentUpon>NewPropertyDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SelectEngine.xaml.cs">
       <DependentUpon>SelectEngine.xaml</DependentUpon>

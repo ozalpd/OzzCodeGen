@@ -1,7 +1,7 @@
-﻿<Window x:Class="OzzCodeGen.Wpf.Dialogs.NewProperty" Name="window"
+﻿<Window x:Class="OzzCodeGen.Wpf.Dialogs.NewPropertyDialog" Name="window"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="New Property" Height="400" Width="460" ShowInTaskbar="False">
+        Title="New Property" Height="400" Width="460" ShowInTaskbar="False" Loaded="window_Loaded">
     <Grid DataContext="{Binding ElementName=window, Mode=OneWay}">
         <Grid.RowDefinitions>
             <RowDefinition Height="9"/>
@@ -29,8 +29,9 @@
                 <RowDefinition Height="52"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Name="txtName" Grid.Row="0" Grid.Column="0" Text="Property Name:" Margin="5"/>
-            <TextBox Text="{Binding Name}" 
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Property Name:" Margin="5"/>
+            <TextBox Name="txtPropertyName"
+                     Text="{Binding Name}" 
                      Margin="1" Grid.Row="0" Grid.Column="1" 
                      Grid.ColumnSpan="3"
                      HorizontalAlignment="Stretch" 

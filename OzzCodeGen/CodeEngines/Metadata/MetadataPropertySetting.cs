@@ -1,9 +1,6 @@
 ﻿using OzzCodeGen.Definitions;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.Metadata
@@ -65,37 +62,27 @@ namespace OzzCodeGen.CodeEngines.Metadata
         {
             var lowerName = Name.ToLowerInvariant();
             if (lowerName.Contains("phone"))
-            {
                 return DataTypes.PhoneNumber;
-            }
-            if (lowerName.Contains("email") || lowerName.Contains("e-mail"))
-            {
+            else if (lowerName.Contains("email") || lowerName.Contains("e-mail"))
                 return DataTypes.EmailAddress;
-            }
-            if (lowerName.Contains("postalcode") || lowerName.Contains("zip"))
-            {
+            else if (lowerName.Contains("postalcode") || lowerName.Contains("zip"))
                 return DataTypes.PostalCode;
-            }
-            if (lowerName.Equals("description") || lowerName.Contains("notes"))
-            {
+            else if (lowerName.Equals("description") || lowerName.Contains("notes"))
                 return DataTypes.MultilineText;
-            }
-            if (lowerName.Equals("price") || lowerName.Contains("cost"))
-            {
+            else if (lowerName.Equals("price") || lowerName.Contains("cost"))
                 return DataTypes.Currency;
-            }
-            if (lowerName.Equals("password"))
-            {
+            else if (lowerName.Equals("password"))
                 return DataTypes.Password;
-            }
-            if (lowerName.Contains("imageurl"))
-            {
+            else if (lowerName.Contains("imageurl"))
                 return DataTypes.ImageUrl;
-            }
-            if (lowerName.EndsWith("url"))
-            {
+            else if (lowerName.EndsWith("url"))
                 return DataTypes.Url;
-            }
+            else if (lowerName.EndsWith("date"))
+                return DataTypes.Date;
+            else if (lowerName.Contains("datetime"))
+                return DataTypes.DateTime;
+            else if (lowerName.Contains("date"))
+                return DataTypes.Date;
 
             return string.Empty;
         }

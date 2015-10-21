@@ -22,7 +22,7 @@
         <BaseProperty xsi:type="SimpleProperty">
           <Name>Id</Name>
           <Comment>PrimaryKey field</Comment>
-          <DisplayOrder>1</DisplayOrder>
+          <DisplayOrder>201</DisplayOrder>
           <DisplayName>Id</DisplayName>
           <Editable>false</Editable>
           <TypeName>int</TypeName>
@@ -51,7 +51,7 @@
         <BaseProperty xsi:type="SimpleProperty">
           <Name>ModifyNr</Name>
           <Comment>Database record's modify number</Comment>
-          <DisplayOrder>10101</DisplayOrder>
+          <DisplayOrder>10301</DisplayOrder>
           <DisplayName>Modify Nr</DisplayName>
           <Editable>false</Editable>
           <TypeName>int</TypeName>
@@ -66,7 +66,7 @@
         <BaseProperty xsi:type="SimpleProperty">
           <Name>ModifyDate</Name>
           <Comment>Database record's modify date</Comment>
-          <DisplayOrder>10102</DisplayOrder>
+          <DisplayOrder>10401</DisplayOrder>
           <DisplayName>Modify Date</DisplayName>
           <Editable>false</Editable>
           <TypeName>DateTime</TypeName>
@@ -80,7 +80,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>ModifierId</Name>
-          <DisplayOrder>10103</DisplayOrder>
+          <DisplayOrder>10501</DisplayOrder>
           <DisplayName>Modified User</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -95,7 +95,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>ModifierIp</Name>
-          <DisplayOrder>10104</DisplayOrder>
+          <DisplayOrder>10601</DisplayOrder>
           <DisplayName>Modifier Ip</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -124,7 +124,7 @@
       <Properties>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>CreateDate</Name>
-          <DisplayOrder>10111</DisplayOrder>
+          <DisplayOrder>10311</DisplayOrder>
           <DisplayName>Create Date</DisplayName>
           <Editable>false</Editable>
           <TypeName>DateTime</TypeName>
@@ -138,7 +138,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>CreatorId</Name>
-          <DisplayOrder>10112</DisplayOrder>
+          <DisplayOrder>10411</DisplayOrder>
           <DisplayName>Created User</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -153,7 +153,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>CreatorIp</Name>
-          <DisplayOrder>10113</DisplayOrder>
+          <DisplayOrder>10511</DisplayOrder>
           <DisplayName>Creator Ip</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -181,7 +181,7 @@
       <Properties>
         <BaseProperty xsi:type="StringProperty">
           <Name>CompanyName</Name>
-          <DisplayOrder>101</DisplayOrder>
+          <DisplayOrder>301</DisplayOrder>
           <DisplayName>Company Name</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -196,7 +196,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>Code</Name>
-          <DisplayOrder>102</DisplayOrder>
+          <DisplayOrder>401</DisplayOrder>
           <DisplayName>Code</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -211,7 +211,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>Notes</Name>
-          <DisplayOrder>103</DisplayOrder>
+          <DisplayOrder>501</DisplayOrder>
           <DisplayName>Notes</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -222,11 +222,11 @@
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
           <IsNullable>true</IsNullable>
-          <MaxLenght>256</MaxLenght>
+          <MaxLenght>0</MaxLenght>
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>TaxNr</Name>
-          <DisplayOrder>111</DisplayOrder>
+          <DisplayOrder>601</DisplayOrder>
           <DisplayName>Tax Nr</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -241,7 +241,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>TaxOffice</Name>
-          <DisplayOrder>112</DisplayOrder>
+          <DisplayOrder>701</DisplayOrder>
           <DisplayName>Tax Office</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -257,7 +257,7 @@
         <BaseProperty xsi:type="StringProperty">
           <Name>Address1</Name>
           <Comment>Address Line 1</Comment>
-          <DisplayOrder>121</DisplayOrder>
+          <DisplayOrder>801</DisplayOrder>
           <DisplayName>Address1</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -273,7 +273,7 @@
         <BaseProperty xsi:type="StringProperty">
           <Name>Address2</Name>
           <Comment>Address Line 2</Comment>
-          <DisplayOrder>122</DisplayOrder>
+          <DisplayOrder>901</DisplayOrder>
           <DisplayName>Address2</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -288,7 +288,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>TownshipId</Name>
-          <DisplayOrder>125</DisplayOrder>
+          <DisplayOrder>1001</DisplayOrder>
           <DisplayName>Township Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
@@ -302,7 +302,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>Township</Name>
-          <DisplayOrder>126</DisplayOrder>
+          <DisplayOrder>1101</DisplayOrder>
           <DisplayName>Township</DisplayName>
           <Editable>true</Editable>
           <TypeName>Township</TypeName>
@@ -315,7 +315,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>DistrictId</Name>
-          <DisplayOrder>128</DisplayOrder>
+          <DisplayOrder>1201</DisplayOrder>
           <DisplayName>District Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
@@ -329,7 +329,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>District</Name>
-          <DisplayOrder>129</DisplayOrder>
+          <DisplayOrder>1301</DisplayOrder>
           <DisplayName>District</DisplayName>
           <Editable>true</Editable>
           <TypeName>District</TypeName>
@@ -355,7 +355,7 @@
       <Properties>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>CompanyId</Name>
-          <DisplayOrder>110</DisplayOrder>
+          <DisplayOrder>310</DisplayOrder>
           <DisplayName>Company Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
@@ -369,7 +369,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>Company</Name>
-          <DisplayOrder>111</DisplayOrder>
+          <DisplayOrder>410</DisplayOrder>
           <DisplayName>Company</DisplayName>
           <Editable>true</Editable>
           <TypeName>Company</TypeName>
@@ -382,7 +382,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>FirstName</Name>
-          <DisplayOrder>121</DisplayOrder>
+          <DisplayOrder>510</DisplayOrder>
           <DisplayName>First Name</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -397,7 +397,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>LastName</Name>
-          <DisplayOrder>122</DisplayOrder>
+          <DisplayOrder>610</DisplayOrder>
           <DisplayName>Last Name</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -412,7 +412,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>Phone</Name>
-          <DisplayOrder>131</DisplayOrder>
+          <DisplayOrder>710</DisplayOrder>
           <DisplayName>Phone</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -440,7 +440,7 @@
       <Properties>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>ContactId</Name>
-          <DisplayOrder>111</DisplayOrder>
+          <DisplayOrder>311</DisplayOrder>
           <DisplayName>Contact Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
@@ -454,7 +454,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>Contact</Name>
-          <DisplayOrder>112</DisplayOrder>
+          <DisplayOrder>411</DisplayOrder>
           <DisplayName>Contact</DisplayName>
           <Editable>true</Editable>
           <TypeName>Contact</TypeName>
@@ -468,7 +468,7 @@
         <BaseProperty xsi:type="StringProperty">
           <Name>Address1</Name>
           <Comment>Address Line 1</Comment>
-          <DisplayOrder>121</DisplayOrder>
+          <DisplayOrder>511</DisplayOrder>
           <DisplayName>Address1</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -484,7 +484,7 @@
         <BaseProperty xsi:type="StringProperty">
           <Name>Address2</Name>
           <Comment>Address Line 2</Comment>
-          <DisplayOrder>122</DisplayOrder>
+          <DisplayOrder>611</DisplayOrder>
           <DisplayName>Address2</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -499,7 +499,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>TownshipId</Name>
-          <DisplayOrder>125</DisplayOrder>
+          <DisplayOrder>711</DisplayOrder>
           <DisplayName>Township Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
@@ -513,7 +513,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>Township</Name>
-          <DisplayOrder>126</DisplayOrder>
+          <DisplayOrder>811</DisplayOrder>
           <DisplayName>Township</DisplayName>
           <Editable>true</Editable>
           <TypeName>Township</TypeName>
@@ -526,7 +526,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>DistrictId</Name>
-          <DisplayOrder>128</DisplayOrder>
+          <DisplayOrder>911</DisplayOrder>
           <DisplayName>District Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
@@ -540,7 +540,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>District</Name>
-          <DisplayOrder>129</DisplayOrder>
+          <DisplayOrder>1011</DisplayOrder>
           <DisplayName>District</DisplayName>
           <Editable>true</Editable>
           <TypeName>District</TypeName>
@@ -566,7 +566,7 @@
       <Properties>
         <BaseProperty xsi:type="StringProperty">
           <Name>CityName</Name>
-          <DisplayOrder>110</DisplayOrder>
+          <DisplayOrder>310</DisplayOrder>
           <DisplayName>Name</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -594,7 +594,7 @@
       <Properties>
         <BaseProperty xsi:type="StringProperty">
           <Name>TownshipName</Name>
-          <DisplayOrder>101</DisplayOrder>
+          <DisplayOrder>301</DisplayOrder>
           <DisplayName>Name</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -609,7 +609,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>CityId</Name>
-          <DisplayOrder>111</DisplayOrder>
+          <DisplayOrder>401</DisplayOrder>
           <DisplayName>City Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
@@ -623,7 +623,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>City</Name>
-          <DisplayOrder>112</DisplayOrder>
+          <DisplayOrder>501</DisplayOrder>
           <DisplayName>City</DisplayName>
           <Editable>true</Editable>
           <TypeName>City</TypeName>
@@ -650,7 +650,7 @@
       <Properties>
         <BaseProperty xsi:type="StringProperty">
           <Name>DistrictName</Name>
-          <DisplayOrder>101</DisplayOrder>
+          <DisplayOrder>301</DisplayOrder>
           <DisplayName>Name</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -665,7 +665,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>TownshipId</Name>
-          <DisplayOrder>111</DisplayOrder>
+          <DisplayOrder>401</DisplayOrder>
           <DisplayName>Township Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
@@ -679,7 +679,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>Township</Name>
-          <DisplayOrder>112</DisplayOrder>
+          <DisplayOrder>501</DisplayOrder>
           <DisplayName>Township</DisplayName>
           <Editable>true</Editable>
           <TypeName>Township</TypeName>

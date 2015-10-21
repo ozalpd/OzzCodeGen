@@ -70,8 +70,8 @@ namespace OzzCodeGen.CodeEngines.Storage
         {
             get
             {
-                if (string.IsNullOrEmpty(_schemaName))
-                    _schemaName = "dbo";
+                if (string.IsNullOrEmpty(_schemaName) && CodeEngine != null)
+                    _schemaName = CodeEngine.SchemaName;
                 return _schemaName;
             }
             set
