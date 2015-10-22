@@ -22,10 +22,10 @@ foreach (var property in properties)
 {
 #>
 <div class="row">
-    <label class="control-label col-md-2">
+    <label class="control-label col-md-2 col-sm-3">
         @Html.DisplayNameFor(model => model.<#= property.Name #>)
     </label>
-    <div class="col-md-10">
+    <div class="col-md-10 col-sm-9">
         @Html.DisplayFor(m => m.<#= property.Name #>)
     </div>
 </div>

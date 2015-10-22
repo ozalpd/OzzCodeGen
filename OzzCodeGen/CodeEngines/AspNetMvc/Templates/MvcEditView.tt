@@ -44,8 +44,8 @@ foreach (var property in properties)
     else 
     { #>
         <div class="form-group">
-            @Html.LabelFor(model => model.<#= property.Name #>, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.<#= property.Name #>, htmlAttributes: new { @class = "control-label col-md-2 col-sm-3" })
+            <div class="col-md-10 col-sm-9">
 <#      if (property.UseForEdit == "DropDownList")
         { #>
                 @Html.DropDownList("<#= property.Name #>", null, ActionStrings.SelectPlease, htmlAttributes: new { @class = "form-control" })

@@ -115,6 +115,12 @@
       <DependentUpon>MvcPartialSaveButtons.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialSaveButtons.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialSearchBox.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcPartialSearchBox.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialSearchBox.part.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcSecurityRoles.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -622,6 +628,10 @@
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcPartialSaveButtons.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MvcPartialSaveButtons.cs</LastGenOutput>
+    </Content>
+    <Content Include="CodeEngines\AspNetMvc\Templates\MvcPartialSearchBox.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcPartialSearchBox.cs</LastGenOutput>
     </Content>
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcSecurityRoles.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

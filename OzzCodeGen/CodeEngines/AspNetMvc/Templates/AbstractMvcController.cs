@@ -1,4 +1,5 @@
-﻿using OzzCodeGen.Templates.Cs;
+﻿using OzzCodeGen.CodeEngines.Localization;
+using OzzCodeGen.Templates.Cs;
 using OzzUtils;
 using System.Collections.Generic;
 using System.IO;
@@ -23,6 +24,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         public AspNetMvcEntitySetting Entity { get; private set; }
         public AspNetMvcEngine CodeEngine { get; private set; }
         public bool CustomFile { get; private set; }
+        public ResxEngine Resx { get { return CodeEngine.ResxEngine; } }
 
         /// <summary>
         /// Returns roleName, methodName dictionary
@@ -45,13 +47,19 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         public override List<string> DefaultUsingNamespaceList()
         {
             var namespaces = base.DefaultUsingNamespaceList();
-            namespaces.AddUnique(
+            namespaces.AddUnique("System.Text",
+                                "System.Net",
+                                "System.Web.Mvc",
                                 "System.Data",
                                 "System.Data.Entity",
                                 "System.Threading.Tasks");
             namespaces.AddUnique(CodeEngine.DataModelsNamespace);
             namespaces.AddUnique(CodeEngine.ViewModelsNamespace);
             namespaces.AddUnique(CodeEngine.ModelsNamespace);
+            if (Resx != null)
+            {
+                namespaces.AddUnique(Resx.NamespaceName);
+            }
             return namespaces;
         }
 

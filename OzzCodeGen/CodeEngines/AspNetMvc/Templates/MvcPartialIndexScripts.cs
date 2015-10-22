@@ -35,35 +35,28 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write(@"@model string
-<script>
-    function setPager(pageNr) {
-        $('#pageNr').val(pageNr);
-        $('#searchForm').submit();
-    }
-    function setDelete(item, id) {
-        $('#deleteText').html('@MessageStrings.YouAreAboutToDelete ' + item + '.<br/>@MessageStrings.AreYouSure?');
-        $('#deleteButton').attr('href', '/@Model/Delete/' + id);
-    }
-    function showMessageBox(title, text, cancelButton) {
-        if (cancelButton) {
-            $('#messageBoxCancelButton').show();
-        }
-        else {
-            $('#messageBoxCancelButton').hide();
-        }
-        $('#messageBoxTitle').html(title);
-        $('#messageBoxText').html(text);
-        $('#messageBox').modal('show');
-    }
-    function hideMessageBox() {
-        $('#messageBox').modal('hide');
-    }
-    function showCannotDelete(item, relatedRecords) {
-        var msgText = '@MessageStrings.CanNotDelete ' + item + '.<br/>@MessageStrings.BecauseOfRelatedRecords.<br/>' + relatedRecords;
-        showMessageBox('@MessageStrings.UnableToDelete!', msgText, true);
-    }
-</script>");
+            this.Write("@model string\r\n<script>\r\n    function setPager(pageNr) {\r\n        $(\'#pageNr\').va" +
+                    "l(pageNr);\r\n        $(\'#searchForm\').submit();\r\n    }\r\n    function setDelete(it" +
+                    "em, id) {\r\n        $(\'#deleteText\').html(\'@MessageStrings.YouAreAboutToDelete \' " +
+                    "+ item + \'.<br/>@MessageStrings.AreYouSure?\');\r\n        @*$(\'#deleteButton\').att" +
+                    "r(\'href\', \'/@Model/Delete/\' + id);*@\r\n        $(\'#ajxDelete\').attr(\'onclick\', \'a" +
+                    "jaxDelete(\' + id + \')\');\r\n    }\r\n    function ajaxDelete(id) {\r\n        var requ" +
+                    "estUrl = \'/@Model/Delete/\' + id;\r\n        $(\'#deleteConfirm\').modal(\'hide\');\r\n\r\n" +
+                    "        var request = $.get(requestUrl, function (data) {\r\n        }).done(funct" +
+                    "ion () {\r\n            $(\'#searchForm\').submit();\r\n        });\r\n        showMessa" +
+                    "geBox(\'@MessageStrings.Deleting...\', \'@MessageStrings.PleaseWait.\', false);\r\n\r\n " +
+                    "       request.error(function (jqXHR, textStatus, errorThrown) {\r\n            va" +
+                    "r msgboxMsg = jqXHR.responseText;\r\n            showMessageBox(errorThrown, msgbo" +
+                    "xMsg, true);\r\n        });\r\n    }\r\n    function showMessageBox(title, text, cance" +
+                    "lButton) {\r\n        if (cancelButton) {\r\n            $(\'#messageBoxCancelButton\'" +
+                    ").show();\r\n        }\r\n        else {\r\n            $(\'#messageBoxCancelButton\').h" +
+                    "ide();\r\n        }\r\n        $(\'#messageBoxTitle\').html(title);\r\n        $(\'#messa" +
+                    "geBoxText\').html(text);\r\n        $(\'#messageBox\').modal(\'show\');\r\n    }\r\n    fun" +
+                    "ction hideMessageBox() {\r\n        $(\'#messageBox\').modal(\'hide\');\r\n    }\r\n    fu" +
+                    "nction showCannotDelete(item, relatedRecords) {\r\n        var msgText = \'@Message" +
+                    "Strings.CanNotDelete \' + item + \'.<br/>@MessageStrings.BecauseOfRelatedRecords.<" +
+                    "br/>\' + relatedRecords;\r\n        showMessageBox(\'@MessageStrings.UnableToDelete!" +
+                    "\', msgText, true);\r\n    }\r\n</script>");
             return this.GenerationEnvironment.ToString();
         }
     }

@@ -85,15 +85,16 @@ foreach (var property in properties)
             
             #line default
             #line hidden
-            this.Write("<div class=\"row\">\r\n    <label class=\"control-label col-md-2\">\r\n        @Html.Disp" +
-                    "layNameFor(model => model.");
+            this.Write("<div class=\"row\">\r\n    <label class=\"control-label col-md-2 col-sm-3\">\r\n        @" +
+                    "Html.DisplayNameFor(model => model.");
             
             #line 26 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
-            this.Write(")\r\n    </label>\r\n    <div class=\"col-md-10\">\r\n        @Html.DisplayFor(m => m.");
+            this.Write(")\r\n    </label>\r\n    <div class=\"col-md-10 col-sm-9\">\r\n        @Html.DisplayFor(m" +
+                    " => m.");
             
             #line 29 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));

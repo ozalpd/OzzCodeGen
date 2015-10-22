@@ -13,7 +13,23 @@ WriteUsingNamespaces(); #>
     }
     function setDelete(item, id) {
         $('#deleteText').html('@MessageStrings.YouAreAboutToDelete ' + item + '.<br/>@MessageStrings.AreYouSure?');
-        $('#deleteButton').attr('href', '/@Model/Delete/' + id);
+        @*$('#deleteButton').attr('href', '/@Model/Delete/' + id);*@
+        $('#ajxDelete').attr('onclick', 'ajaxDelete(' + id + ')');
+    }
+    function ajaxDelete(id) {
+        var requestUrl = '/@Model/Delete/' + id;
+        $('#deleteConfirm').modal('hide');
+
+        var request = $.get(requestUrl, function (data) {
+        }).done(function () {
+            $('#searchForm').submit();
+        });
+        showMessageBox('@MessageStrings.Deleting...', '@MessageStrings.PleaseWait.', false);
+
+        request.error(function (jqXHR, textStatus, errorThrown) {
+            var msgboxMsg = jqXHR.responseText;
+            showMessageBox(errorThrown, msgboxMsg, true);
+        });
     }
     function showMessageBox(title, text, cancelButton) {
         if (cancelButton) {

@@ -30,7 +30,7 @@ WriteUsingNamespaces(); #>
     int pageCount = ViewBag.pageCount;
 }
 <div class="row well">
-    <div class="col-md-8">
+    <div class="col-md-8 col-sm-7">
         <h4>@<#= EntityResource #>.<#= Entity.Name.Pluralize() #></h4>
     </div>
 <#  if(searchable)
@@ -38,15 +38,8 @@ WriteUsingNamespaces(); #>
     @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "searchForm" }))
     {
         @Html.Hidden("pageNr", pageNr)
-        <div class="col-md-4">
-            <div class="input-group">
-                @Html.TextBox("SearchString", null, new { @class = "form-control" })
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" onclick="setPager(1)">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </span>
-            </div>
+        <div class="col-md-4 col-sm-5">
+            @Html.Partial("_SearchBoxPartial")
         </div>
     }
 <#  } #>
@@ -66,19 +59,6 @@ foreach (var property in properties)
         </tr>
     @foreach (var item in Model)
     {
-<#
-foreach (var property in collectionProperties) 
-{
-#>
-            int <#= property.Name.ToCamelCase() #>Count = item.<#= property.Name #>.Count;
-<#
-}
-if (collectionProperties.Any()) 
-{
-#>
-            bool canDelete = canUserDelete && (<# foreach (var property in collectionProperties){ #><#= property.Name.ToCamelCase() #>Count + <# } #>0) == 0;
-<#
-} #>
             <tr>
                 <td>
                     <div class="btn-group">
@@ -96,19 +76,10 @@ if (collectionProperties.Any())
 {
     int collNr = 0;
 #>
-                            @if (canDelete)
+                            @if (canUserDelete)
                             {
                                 <li>
                                     <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('<b>@(item.<#= DisplayMember #>)</b>', @item.Id);">
-                                        @ActionStrings.Delete
-                                    </a>
-                                </li>
-                            }
-                            else if (canUserDelete)
-                            {
-                                string cannotDelete = string.Format("<# foreach (var property in collectionProperties){ #><#= property.Name #>: {<#= collNr #>}<br/><# collNr++; } #>"<# foreach (var property in collectionProperties){ #>, <#= property.Name.ToCamelCase() #>Count <# } #>);
-                                <li>
-                                    <a onclick="showCannotDelete('<b>@(item.<#= DisplayMember #>)</b>', '@cannotDelete');">
                                         @ActionStrings.Delete
                                     </a>
                                 </li>
@@ -142,7 +113,7 @@ foreach (var property in properties)
     if(property.PropertyDefinition is CollectionProperty)
     {
 #>
-                <td>@<#= property.Name.ToCamelCase() #>Count</td>
+                <td>@item.<#= property.Name #>.Count</td>
 <#  } else { #>
                 <td>@Html.DisplayFor(modelItem => item.<#= property.Name #>)</td>
 <#  }
@@ -151,7 +122,10 @@ foreach (var property in properties)
     }
     </table>
     @Html.Partial("<#= MvcPartialPager.ViewName #>")
-    @Html.Partial("<#= MvcPartialModalDialog.ViewName #>")
+    if (canUserDelete)
+    {
+        @Html.Partial("_MessageBoxPartial")
+    }
 }
 else
 {

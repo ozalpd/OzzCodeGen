@@ -53,9 +53,9 @@ WriteUsingNamespaces();
                     " class=\"modal-body\">\r\n                <p id=\"deleteText\"></p>\r\n            </div" +
                     ">\r\n            <div class=\"modal-footer\">\r\n                <button type=\"button\"" +
                     " class=\"btn btn-default\" data-dismiss=\"modal\">@ActionStrings.Cancel</button>\r\n  " +
-                    "              <a id=\"deleteButton\" style=\"width:70px;\" class=\"btn btn-danger\">@A" +
-                    "ctionStrings.Delete</a>\r\n            </div>\r\n        </div>@* /.modal-content *@" +
-                    "\r\n    </div>@* /.modal-dialog *@\r\n</div>@* /.modal *@");
+                    "              <a id=\"ajxDelete\" style=\"width:70px\" class=\"btn btn-danger\" onclic" +
+                    "k=\"deleteEntity(0);\">@ActionStrings.Delete</a>\r\n            </div>\r\n        </di" +
+                    "v>@* /.modal-content *@\r\n    </div>@* /.modal-dialog *@\r\n</div>@* /.modal *@");
             return this.GenerationEnvironment.ToString();
         }
     }

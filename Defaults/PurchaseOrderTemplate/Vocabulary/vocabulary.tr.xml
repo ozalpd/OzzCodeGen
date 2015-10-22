@@ -62,11 +62,11 @@
   </Vocab>
   <Vocab>
     <Name>AddProduct</Name>
-    <Translation>Add Product</Translation>
+    <Translation>Ürün Ekle</Translation>
   </Vocab>
   <Vocab>
     <Name>AddProductCategory</Name>
-    <Translation>Add Product Category</Translation>
+    <Translation>Ürün Kategorisi Ekle</Translation>
   </Vocab>
   <Vocab>
     <Name>AddPuchaseOrder</Name>
@@ -86,7 +86,7 @@
   </Vocab>
   <Vocab>
     <Name>AddSupplier</Name>
-    <Translation>Add Supplier</Translation>
+    <Translation>Tedarikçi Ekle</Translation>
   </Vocab>
   <Vocab>
     <Name>Admin</Name>
@@ -437,6 +437,10 @@
     <Translation>E-Posta İş</Translation>
   </Vocab>
   <Vocab>
+    <Name>EnterKeywordHere</Name>
+    <Translation>Arama kelimenizi girin</Translation>
+  </Vocab>
+  <Vocab>
     <Name>ExpireDate</Name>
     <Translation>Yayın Sonlama Tarihi</Translation>
   </Vocab>
@@ -681,6 +685,10 @@
     <Translation>İş Telefonu 2</Translation>
   </Vocab>
   <Vocab>
+    <Name>PleaseWait</Name>
+    <Translation>Lütfen Bekleyiniz</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Print</Name>
     <Translation>Yazdır</Translation>
   </Vocab>
@@ -754,7 +762,7 @@
   </Vocab>
   <Vocab>
     <Name>Remove</Name>
-    <Translation>Remove</Translation>
+    <Translation>Çıkar</Translation>
   </Vocab>
   <Vocab>
     <Name>Save</Name>
@@ -851,6 +859,10 @@
   <Vocab>
     <Name>UnableToDelete</Name>
     <Translation>Silinemez</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>UnexpectedError</Name>
+    <Translation>Beklenmedik Hata</Translation>
   </Vocab>
   <Vocab>
     <Name>Unit</Name>

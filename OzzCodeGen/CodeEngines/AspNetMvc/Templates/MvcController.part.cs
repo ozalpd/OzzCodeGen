@@ -1,6 +1,8 @@
-﻿using OzzUtils;
+﻿using OzzCodeGen.CodeEngines.Localization;
+using OzzUtils;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
@@ -21,13 +23,35 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             }
         }
 
-        public override List<string> DefaultUsingNamespaceList()
+        public LocalizationEntitySetting ResxEntity
         {
-            var namespaces = base.DefaultUsingNamespaceList();
-            namespaces.AddUnique(
-                        "System.Net",
-                        "System.Web.Mvc");
-            return namespaces;
+            get
+            {
+                if (Resx != null && _resxEntity == null)
+                {
+                    _resxEntity = Resx
+                                    .Entities
+                                    .FirstOrDefault(e => e.Name.Equals(Entity.Name));
+                }
+                return _resxEntity;
+            }
+        }
+        LocalizationEntitySetting _resxEntity;
+
+        public string EntityResource
+        {
+            get
+            {
+                if (Resx != null)
+                {
+                    return Resx.SingleResx ? Resx.SingleResxFilename :
+                        ResxEntity != null ? Resx.GetDefaultTargetFile(ResxEntity) : string.Empty;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
         }
 
         public override bool WriteToFile(string filePath, bool overwriteExisting)

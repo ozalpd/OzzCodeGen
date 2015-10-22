@@ -1,0 +1,15 @@
+﻿<#@ template language="C#" inherits="AbstractMvcView" debug="true" hostspecific="false" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<# 
+WriteUsingNamespaces(); #>
+<div class="input-group">
+    @Html.TextBox("SearchString", null, new { @class = "form-control", placeholder = MessageStrings.EnterKeywordHere })
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-default" onclick="setPager(1)">
+            <span class="glyphicon glyphicon-search"></span>
+        </button>
+    </span>
+</div>

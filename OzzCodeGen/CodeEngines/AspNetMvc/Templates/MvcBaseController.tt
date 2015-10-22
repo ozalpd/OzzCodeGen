@@ -108,6 +108,41 @@ namespace <#= CodeEngine.ControllersNamespace #>
 <#  if (CodeEngine.GenerateDataContext)
     { #>
         
+        protected void AppendExceptionMsg(Exception ex, StringBuilder sb)
+        {
+            if (ex == null)
+                return;
+            if (HttpContext.IsDebuggingEnabled)
+            {
+                sb.Append(ex.Message);
+                sb.Append("<br/>");
+                AppendExceptionMsg(ex.InnerException, sb);
+            }
+        }
+
+        protected virtual ActionResult GetErrorResult(StringBuilder sb, HttpStatusCode statusCode)
+        {
+            Response.StatusCode = (int)statusCode;
+            if (HttpContext.IsDebuggingEnabled)
+            {
+                sb.Append("<br/><b>RouteData.Values</b><br/>");
+                foreach (var item in RouteData.Values)
+                {
+                    sb.Append(item.Key);
+                    sb.Append(" : ");
+                    sb.Append(item.Value);
+                    sb.Append("<br/>");
+                }
+            }
+            Response.StatusCode = (int)statusCode;
+            return new ContentResult
+            {
+                ContentType = "text/plain",
+                Content = sb.ToString(),
+                ContentEncoding = Encoding.UTF8
+            };
+        }
+        
         protected <#= CodeEngine.DataContextClass #> <#= dataContextIntance #>
         {
             get

@@ -36,7 +36,7 @@ WriteUsingNamespaces(); #>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">@ActionStrings.Cancel</button>
-                <a id="deleteButton" style="width:70px;" class="btn btn-danger">@ActionStrings.Delete</a>
+                <a id="ajxDelete" style="width:70px" class="btn btn-danger" onclick="deleteEntity(0);">@ActionStrings.Delete</a>
             </div>
         </div>@* /.modal-content *@
     </div>@* /.modal-dialog *@

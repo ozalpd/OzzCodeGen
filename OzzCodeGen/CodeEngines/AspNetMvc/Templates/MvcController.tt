@@ -10,6 +10,8 @@
 <#
 string dataContextIntance = CodeEngine.DataContextInstance;
 var searchProperties = Entity.DisplayColumns.Where(e => e.UseInSearch);
+var collectionProperties = Entity.GetInheritedCollectionProperties();
+
 var pkeyProperty = Entity.GetPrimeryKey();
 string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
 
@@ -43,18 +45,12 @@ if (CustomFile)
 
 <#  } #>
 
-        //public new class QueryParameters : BaseController.QueryParameters
-        //{
-
-        //}
-
         //Purpose: To set default property values for newly created <#= Entity.ModelForEdit #> entity
         //partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>) { }
 <# }
 else 
 { #>
 <# if (Entity.GenerateIndexAction){ #>
-        
         <#= CanViewAttrib #>
         public async Task<ActionResult> Index(QueryParameters qParams)
         {
@@ -287,11 +283,56 @@ else
             {
                 return HttpNotFound();
             }
-            
-            <#= dataContextIntance #>.<#= Entity.DataSetName #>.Remove(<#= Entity.Name.ToCamelCase() #>);
-            await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
 
-            return RedirectToAction("Index");
+<#  if (collectionProperties.Any()) 
+    { #>
+<#      foreach (var property in collectionProperties) 
+        { #>
+            int <#= property.Name.ToCamelCase() #>Count = <#= Entity.Name.ToCamelCase() #>.<#= property.Name #>.Count;
+<#      } #>
+            if ((<# int i = 0; foreach (var property in collectionProperties){ #><# if(i>0){ #> + <# } i++; #><#= property.Name.ToCamelCase() #>Count<# } #>) > 0)
+            {
+                var sb = new StringBuilder();
+
+                sb.Append(MessageStrings.CanNotDelete);
+                sb.Append(" <b>");
+                sb.Append(<#= Entity.Name.ToCamelCase() #>.<#= Entity.EntityDefinition.DisplayMember #>);
+                sb.Append("</b>.<br/>");
+                sb.Append(MessageStrings.BecauseOfRelatedRecords);
+                sb.Append(".<br/>");
+
+<#      foreach (var property in collectionProperties) 
+        { #>
+                if (<#= property.Name.ToCamelCase() #>Count > 0)
+                {
+                    sb.Append(<#= EntityResource #>.<#= property.Name #>);
+                    sb.Append(": ");
+                    sb.Append(<#= property.Name.ToCamelCase() #>Count);
+                    sb.Append("<br/>");
+                }
+
+<#      } #>
+                return GetErrorResult(sb, HttpStatusCode.BadRequest);
+            }
+
+<#  } #>
+            <#= dataContextIntance #>.<#= Entity.DataSetName #>.Remove(<#= Entity.Name.ToCamelCase() #>);
+            try
+            {
+                await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
+            }
+            catch (Exception ex)
+            {
+                var sb = new StringBuilder();
+                sb.Append(MessageStrings.CanNotDelete);
+                sb.Append(<#= Entity.Name.ToCamelCase() #>.<#= Entity.EntityDefinition.DisplayMember #>);
+                sb.Append("<br/>");
+                AppendExceptionMsg(ex, sb);
+
+                return GetErrorResult(sb, HttpStatusCode.InternalServerError);
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 <#  } #>
 

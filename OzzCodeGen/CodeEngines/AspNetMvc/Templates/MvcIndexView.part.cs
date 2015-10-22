@@ -45,6 +45,13 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
                 scriptTemplate.WriteToFile(scriptFilePath, false);
             }
 
+            string searchboxPath = Path.Combine(sharedViewsDir, MvcPartialSearchBox.DefaultFileName);
+            if (!File.Exists(searchboxPath))
+            {
+                var searchboxTempl = new MvcPartialSearchBox(Entity);
+                searchboxTempl.WriteToFile(searchboxPath, false);
+            }
+
             var snippetTempl = new MvcViewSnippets(Entity);
             snippetTempl.WriteToFile(snippetTempl.GetDefaultFilePath(), true);
 

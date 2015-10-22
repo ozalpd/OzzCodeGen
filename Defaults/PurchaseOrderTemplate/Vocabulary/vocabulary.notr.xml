@@ -437,6 +437,10 @@
     <Translation>Email Work</Translation>
   </Vocab>
   <Vocab>
+    <Name>EnterKeywordHere</Name>
+    <Translation>Enter Keyword Here</Translation>
+  </Vocab>
+  <Vocab>
     <Name>ExpireDate</Name>
     <Translation>Expire Date</Translation>
   </Vocab>
@@ -681,6 +685,10 @@
     <Translation>Phone Work2</Translation>
   </Vocab>
   <Vocab>
+    <Name>PleaseWait</Name>
+    <Translation>Please Wait</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Print</Name>
     <Translation>Print</Translation>
   </Vocab>
@@ -851,6 +859,10 @@
   <Vocab>
     <Name>UnableToDelete</Name>
     <Translation>Unable to Delete</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>UnexpectedError</Name>
+    <Translation>Unexpected Error</Translation>
   </Vocab>
   <Vocab>
     <Name>Unit</Name>

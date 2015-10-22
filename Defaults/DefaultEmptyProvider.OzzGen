@@ -22,7 +22,7 @@
         <BaseProperty xsi:type="SimpleProperty">
           <Name>Id</Name>
           <Comment>PrimaryKey field</Comment>
-          <DisplayOrder>101</DisplayOrder>
+          <DisplayOrder>201</DisplayOrder>
           <DisplayName>Id</DisplayName>
           <Editable>false</Editable>
           <TypeName>int</TypeName>
@@ -50,7 +50,7 @@
       <Properties>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>CreateDate</Name>
-          <DisplayOrder>10010210</DisplayOrder>
+          <DisplayOrder>10010310</DisplayOrder>
           <DisplayName>Create Date</DisplayName>
           <Editable>false</Editable>
           <TypeName>DateTime</TypeName>
@@ -64,7 +64,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>CreatorId</Name>
-          <DisplayOrder>10010310</DisplayOrder>
+          <DisplayOrder>10010410</DisplayOrder>
           <DisplayName>Created User</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -79,7 +79,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>CreatorIp</Name>
-          <DisplayOrder>10010410</DisplayOrder>
+          <DisplayOrder>10010510</DisplayOrder>
           <DisplayName>Creator Ip</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -109,7 +109,7 @@
         <BaseProperty xsi:type="SimpleProperty">
           <Name>ModifyNr</Name>
           <Comment>Database record's modify number</Comment>
-          <DisplayOrder>10010110</DisplayOrder>
+          <DisplayOrder>10010210</DisplayOrder>
           <DisplayName>Modify Nr</DisplayName>
           <Editable>false</Editable>
           <TypeName>int</TypeName>
@@ -124,7 +124,7 @@
         <BaseProperty xsi:type="SimpleProperty">
           <Name>ModifyDate</Name>
           <Comment>Database record's modify date</Comment>
-          <DisplayOrder>10010210</DisplayOrder>
+          <DisplayOrder>10010310</DisplayOrder>
           <DisplayName>Modify Date</DisplayName>
           <Editable>false</Editable>
           <TypeName>DateTime</TypeName>
@@ -138,7 +138,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>ModifierId</Name>
-          <DisplayOrder>10010310</DisplayOrder>
+          <DisplayOrder>10010410</DisplayOrder>
           <DisplayName>Modified User</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -153,7 +153,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>ModifierIp</Name>
-          <DisplayOrder>10010410</DisplayOrder>
+          <DisplayOrder>10010510</DisplayOrder>
           <DisplayName>Modifier Ip</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
@@ -181,7 +181,7 @@
       <Properties>
         <BaseProperty xsi:type="StringProperty">
           <Name>Title</Name>
-          <DisplayOrder>1000200</DisplayOrder>
+          <DisplayOrder>1000300</DisplayOrder>
           <DisplayName>Title</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -196,7 +196,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>Code</Name>
-          <DisplayOrder>1000300</DisplayOrder>
+          <DisplayOrder>1000400</DisplayOrder>
           <DisplayName>Code</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -211,7 +211,7 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>Description</Name>
-          <DisplayOrder>1000400</DisplayOrder>
+          <DisplayOrder>1000500</DisplayOrder>
           <DisplayName>Description</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
@@ -230,7 +230,7 @@
   <StripSourcePrefixes>false</StripSourcePrefixes>
   <SourceClassPrefix />
   <CodeEngineList>
-    <string>Metadata_Class_Generator</string>
     <string>Localization_Resource_Generator</string>
+    <string>Metadata_Class_Generator</string>
   </CodeEngineList>
 </CodeGenProject>
