@@ -35,7 +35,7 @@ if (CustomFile)
 { 
     if (fkeyProperties.Any())
     { #>
-        partial void SetViewBags(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>)
+        partial void SetViewBags(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>)
         {
 <#      foreach (var item in fkeyProperties)
         { 
@@ -45,8 +45,8 @@ if (CustomFile)
 
 <#  } #>
 
-        //Purpose: To set default property values for newly created <#= Entity.ModelForEdit #> entity
-        //partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>) { }
+        //Purpose: To set default property values for newly created <#= Entity.Name #> entity
+        //partial void SetDefaults(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>) { }
 <# }
 else 
 { #>
@@ -158,7 +158,7 @@ else
         public ActionResult Create()  //GET: /<#= Entity.ControllerName #>/Create
 <#  } #>
         {
-            var <#= Entity.Name.ToCamelCase() #> = new <#= Entity.ModelForEdit #>();
+            var <#= Entity.Name.ToCamelCase() #> = new <#= Entity.ModelForCreate #>();
 <#  if (strongForeignEntity != null)
     { 
         bool isString = strongProperty.IsString;#>
@@ -182,9 +182,9 @@ else
     {    //TODO: Improve Route attirbute logic for fkey string types
  #>
         [Route("<#= Entity.ControllerName #>/Create/{<#= strongProperty.Name.ToCamelCase() #>:<#= strongProperty.GetNullableTypeName() #>}")]
-        public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>, <#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
+        public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>, <#= Entity.ModelForCreate #> <#= Entity.Name.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
 <#  } else { #>
-        public async Task<ActionResult> Create(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
+        public async Task<ActionResult> Create(<#= Entity.ModelForCreate #> <#= Entity.Name.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
 <#  } #>
         {
             <#= dataContextIntance #>.SetInsertDefaults(<#= Entity.Name.ToCamelCase() #>, this);
@@ -192,14 +192,14 @@ else
             if (ModelState.IsValid)
             {
                 OnCreateSaving(<#= Entity.Name.ToCamelCase() #>);
-<#  if(Entity.ModelForEdit == Entity.Name) {#> 
+<#  if(Entity.ModelForCreate == Entity.Name) {#> 
                 <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(<#= Entity.Name.ToCamelCase() #>);
 <#  } else { #>
                 var entity = <#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>();
                 <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(entity);
 <#  } #>
                 await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
-<#  if(Entity.ModelForEdit == Entity.Name) {#> 
+<#  if(Entity.ModelForCreate == Entity.Name) {#> 
                 OnCreateSaved(<#= Entity.Name.ToCamelCase() #>);
 <#  } else { #>
                 OnCreateSaved(entity);
@@ -348,12 +348,12 @@ else
 <#  } #>
 
         //Partial methods
-        partial void OnCreateSaving(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
+        partial void OnCreateSaving(<#= Entity.ModelForCreate #> <#= Entity.Name.ToCamelCase() #>);
         partial void OnCreateSaved(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
         partial void OnEditSaving(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
         partial void OnEditSaved(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
-        partial void SetDefaults(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
-        partial void SetViewBags(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
+        partial void SetDefaults(<#= Entity.ModelForCreate #> <#= Entity.Name.ToCamelCase() #>);
+        partial void SetViewBags(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
 <# } #>
     }
 }

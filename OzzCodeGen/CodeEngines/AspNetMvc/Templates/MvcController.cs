@@ -103,7 +103,7 @@ if (CustomFile)
             this.Write("        partial void SetViewBags(");
             
             #line 38 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
@@ -134,14 +134,14 @@ if (CustomFile)
             this.Write("\r\n        //Purpose: To set default property values for newly created ");
             
             #line 48 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write(" entity\r\n        //partial void SetDefaults(");
             
             #line 49 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
@@ -515,7 +515,7 @@ else
             this.Write(" = new ");
             
             #line 161 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate));
             
             #line default
             #line hidden
@@ -705,7 +705,7 @@ else
             this.Write(", ");
             
             #line 185 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate));
             
             #line default
             #line hidden
@@ -733,7 +733,7 @@ else
             this.Write("        public async Task<ActionResult> Create(");
             
             #line 187 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate));
             
             #line default
             #line hidden
@@ -783,7 +783,7 @@ else
             this.Write(");\r\n");
             
             #line 195 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-  if(Entity.ModelForEdit == Entity.Name) {
+  if(Entity.ModelForCreate == Entity.Name) {
             
             #line default
             #line hidden
@@ -867,7 +867,7 @@ else
             this.Write(");\r\n");
             
             #line 202 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-  if(Entity.ModelForEdit == Entity.Name) {
+  if(Entity.ModelForCreate == Entity.Name) {
             
             #line default
             #line hidden
@@ -1516,7 +1516,7 @@ else
             this.Write("\r\n        //Partial methods\r\n        partial void OnCreateSaving(");
             
             #line 351 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate));
             
             #line default
             #line hidden
@@ -1572,7 +1572,7 @@ else
             this.Write(");\r\n        partial void SetDefaults(");
             
             #line 355 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate));
             
             #line default
             #line hidden
@@ -1586,7 +1586,7 @@ else
             this.Write(");\r\n        partial void SetViewBags(");
             
             #line 356 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden

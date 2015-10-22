@@ -128,7 +128,28 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private string _saveParameter;
 
         /// <summary>
-        /// Model or ViewModel class name for Create/Edit methods
+        /// Model or ViewModel class name for Create action
+        /// </summary>
+        public string ModelForCreate
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_modelForCreate))
+                {
+                    _modelForCreate = Name;
+                }
+                return _modelForCreate;
+            }
+            set
+            {
+                _modelForCreate = value != null ? value.ToPascalCase() : string.Empty;
+                RaisePropertyChanged("ModelForCreate");
+            }
+        }
+        private string _modelForCreate;
+
+        /// <summary>
+        /// Model or ViewModel class name for Edit action
         /// </summary>
         public string ModelForEdit
         {
