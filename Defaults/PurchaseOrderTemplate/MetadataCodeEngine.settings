@@ -351,7 +351,7 @@
       </Properties>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="MetadataEntitySetting">
-      <Name>PuchaseOrder</Name>
+      <Name>PurchaseOrder</Name>
       <Exclude>false</Exclude>
       <OverwriteExisting>false</OverwriteExisting>
       <Properties>
@@ -410,13 +410,13 @@
       <OverwriteExisting>false</OverwriteExisting>
       <Properties>
         <MetadataPropertySetting>
-          <Name>PuchaseOrderId</Name>
+          <Name>PurchaseOrderId</Name>
           <Exclude>false</Exclude>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
-          <Name>PuchaseOrder</Name>
+          <Name>PurchaseOrder</Name>
           <Exclude>false</Exclude>
           <Required />
         </MetadataPropertySetting>

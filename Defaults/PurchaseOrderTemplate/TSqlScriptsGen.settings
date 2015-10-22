@@ -554,13 +554,13 @@
       </Properties>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="StorageEntitySetting">
-      <Name>PuchaseOrder</Name>
+      <Name>PurchaseOrder</Name>
       <Exclude>false</Exclude>
       <OverwriteExisting>false</OverwriteExisting>
       <InheritedEntity>IDescription</InheritedEntity>
       <UseInheritance>false</UseInheritance>
       <SchemaName>dbo</SchemaName>
-      <TableName>PuchaseOrders</TableName>
+      <TableName>PurchaseOrders</TableName>
       <ModifyTrack>false</ModifyTrack>
       <StoredProcs>false</StoredProcs>
       <CustomStoredProcs>false</CustomStoredProcs>
@@ -651,7 +651,7 @@
       <CustomStoredProcs>false</CustomStoredProcs>
       <Properties>
         <StorageColumnSetting>
-          <Name>PuchaseOrderId</Name>
+          <Name>PurchaseOrderId</Name>
           <Exclude>false</Exclude>
           <DataType>int</DataType>
           <Lenght>0</Lenght>
@@ -659,7 +659,7 @@
           <Indexed>true</Indexed>
           <SortDesc>false</SortDesc>
           <Nullable>false</Nullable>
-          <ForeignKeyTable>PuchaseOrders</ForeignKeyTable>
+          <ForeignKeyTable>PurchaseOrders</ForeignKeyTable>
         </StorageColumnSetting>
         <StorageColumnSetting>
           <Name>ProductId</Name>

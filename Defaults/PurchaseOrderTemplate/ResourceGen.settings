@@ -369,7 +369,7 @@
       </Properties>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="LocalizationEntitySetting">
-      <Name>PuchaseOrder</Name>
+      <Name>PurchaseOrder</Name>
       <Exclude>false</Exclude>
       <OverwriteExisting>false</OverwriteExisting>
       <LocalizeEntityName>true</LocalizeEntityName>
@@ -431,13 +431,13 @@
       <LocalizeEntityName>true</LocalizeEntityName>
       <Properties>
         <LocalizationPropertySetting>
-          <Name>PuchaseOrderId</Name>
+          <Name>PurchaseOrderId</Name>
           <Exclude>false</Exclude>
           <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
           <LocalizeValidationMsg>false</LocalizeValidationMsg>
         </LocalizationPropertySetting>
         <LocalizationPropertySetting>
-          <Name>PuchaseOrder</Name>
+          <Name>PurchaseOrder</Name>
           <Exclude>false</Exclude>
           <LocalizeRequiredMsg>false</LocalizeRequiredMsg>
           <LocalizeValidationMsg>false</LocalizeValidationMsg>

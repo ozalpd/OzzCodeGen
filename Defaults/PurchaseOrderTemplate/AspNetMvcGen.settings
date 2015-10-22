@@ -799,7 +799,7 @@
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
-      <Name>PuchaseOrder</Name>
+      <Name>PurchaseOrder</Name>
       <Exclude>false</Exclude>
       <OverwriteExisting>false</OverwriteExisting>
       <Properties>
@@ -892,10 +892,10 @@
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
       </Properties>
-      <ControllerName>PuchaseOrders</ControllerName>
-      <DataSetName>PuchaseOrders</DataSetName>
+      <ControllerName>PurchaseOrders</ControllerName>
+      <DataSetName>PurchaseOrders</DataSetName>
       <StrongDependedForeignKey>CustomerId</StrongDependedForeignKey>
-      <ModelForEdit>PuchaseOrder</ModelForEdit>
+      <ModelForEdit>PurchaseOrder</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
       <RolesCanEdit>admin, supervisor, clerk</RolesCanEdit>
@@ -919,7 +919,7 @@
       <OverwriteExisting>false</OverwriteExisting>
       <Properties>
         <AspNetMvcPropertySetting>
-          <Name>PuchaseOrderId</Name>
+          <Name>PurchaseOrderId</Name>
           <Exclude>false</Exclude>
           <UseInSearch>false</UseInSearch>
           <InIndexView>false</InIndexView>
@@ -930,7 +930,7 @@
           <UseForEdit>DropDownList</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
-          <Name>PuchaseOrder</Name>
+          <Name>PurchaseOrder</Name>
           <Exclude>false</Exclude>
           <UseInSearch>false</UseInSearch>
           <InIndexView>true</InIndexView>
@@ -987,7 +987,7 @@
       </Properties>
       <ControllerName>OrderItems</ControllerName>
       <DataSetName>OrderItems</DataSetName>
-      <StrongDependedForeignKey>PuchaseOrderId</StrongDependedForeignKey>
+      <StrongDependedForeignKey>PurchaseOrderId</StrongDependedForeignKey>
       <ModelForEdit>OrderItem</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>

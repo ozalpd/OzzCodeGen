@@ -49,7 +49,7 @@
     <Translation>Yeni Ürün Kategorisi Ekle</Translation>
   </Vocab>
   <Vocab>
-    <Name>AddNewPuchaseOrder</Name>
+    <Name>AddNewPurchaseOrder</Name>
     <Translation>Yeni Sipariş Ekle</Translation>
   </Vocab>
   <Vocab>
@@ -69,8 +69,8 @@
     <Translation>Ürün Kategorisi Ekle</Translation>
   </Vocab>
   <Vocab>
-    <Name>AddPuchaseOrder</Name>
-    <Translation>Add Puchase Order</Translation>
+    <Name>AddPurchaseOrder</Name>
+    <Translation>Add Purchase Order</Translation>
   </Vocab>
   <Vocab>
     <Name>Address</Name>
@@ -261,7 +261,7 @@
     <Translation>Ürün Kategorisi Oluştur</Translation>
   </Vocab>
   <Vocab>
-    <Name>CreatePuchaseOrder</Name>
+    <Name>CreatePurchaseOrder</Name>
     <Translation>Sipariş Oluştur</Translation>
   </Vocab>
   <Vocab>
@@ -333,7 +333,7 @@
     <Translation>Ürün Kategorisini Sil</Translation>
   </Vocab>
   <Vocab>
-    <Name>DeletePuchaseOrder</Name>
+    <Name>DeletePurchaseOrder</Name>
     <Translation>Siparişi Sil</Translation>
   </Vocab>
   <Vocab>
@@ -417,7 +417,7 @@
     <Translation>Ürün Kategorisini Düzenle</Translation>
   </Vocab>
   <Vocab>
-    <Name>EditPuchaseOrder</Name>
+    <Name>EditPurchaseOrder</Name>
     <Translation>Siparişi Düzenle</Translation>
   </Vocab>
   <Vocab>
@@ -729,19 +729,19 @@
     <Translation>Yayın Tarihi</Translation>
   </Vocab>
   <Vocab>
-    <Name>PuchaseOrder</Name>
+    <Name>PurchaseOrder</Name>
     <Translation>Sipariş</Translation>
   </Vocab>
   <Vocab>
-    <Name>PuchaseOrderId</Name>
+    <Name>PurchaseOrderId</Name>
     <Translation>Sipariş No</Translation>
   </Vocab>
   <Vocab>
-    <Name>PuchaseOrders</Name>
+    <Name>PurchaseOrders</Name>
     <Translation>Siparişler</Translation>
   </Vocab>
   <Vocab>
-    <Name>PuchaseOrdersList</Name>
+    <Name>PurchaseOrdersList</Name>
     <Translation>Sipariş Listesi</Translation>
   </Vocab>
   <Vocab>

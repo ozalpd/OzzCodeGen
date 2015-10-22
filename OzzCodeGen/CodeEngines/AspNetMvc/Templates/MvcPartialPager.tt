@@ -7,12 +7,12 @@
 WriteUsingNamespaces(); #>
 @{
     Layout = null;
-    int pageNr = ViewBag.pageNr;
+    int page = ViewBag.page;
     int totalCount = ViewBag.totalCount;
     int pageSize = ViewBag.pageSize;
     int pageCount = ViewBag.pageCount;
     int pagers = pageCount > 10 ? 10 : pageCount;
-    int pagerStart = pageNr > 5 ? pageNr - (pagers / 2) : 1;
+    int pagerStart = page > 5 ? page - (pagers / 2) : 1;
     if ((pagerStart + pagers) > pageCount)
     {
         pagerStart = pageCount - pagers + 1;
@@ -22,7 +22,7 @@ WriteUsingNamespaces(); #>
 {
 <nav>
     <ul class="pagination">
-        @if (pageNr == 1)
+        @if (page == 1)
         {
             <li class="disabled">
                 <a aria-label="Previous">
@@ -43,14 +43,14 @@ WriteUsingNamespaces(); #>
                 </a>
             </li>
             <li>
-                <a href="#" aria-label="Previous" onclick="setPager(@(pageNr - 1))">
+                <a href="#" aria-label="Previous" onclick="setPager(@(page - 1))">
                     <span aria-hidden="true">&lsaquo;</span>
                 </a>
             </li>
         }
         @for (int i = pagerStart; i < (pagerStart + pagers); i++)
         {
-            if (pageNr == i)
+            if (page == i)
             {
                 <li class="active"><a>@i <span class="sr-only">(current)</span></a></li>
             }
@@ -59,10 +59,10 @@ WriteUsingNamespaces(); #>
                 <li><a href="#" onclick="setPager(@i)">@i</a></li>
             }
         }
-        @if (pageNr < pageCount)
+        @if (page < pageCount)
         {
             <li>
-                <a href="#" aria-label="Next" onclick="setPager(@(pageNr + 1))">
+                <a href="#" aria-label="Next" onclick="setPager(@(page + 1))">
                     <span aria-hidden="true">&rsaquo;</span>
                 </a>
             </li>

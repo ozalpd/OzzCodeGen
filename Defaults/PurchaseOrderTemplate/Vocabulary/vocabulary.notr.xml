@@ -49,8 +49,8 @@
     <Translation>Add New Product Category</Translation>
   </Vocab>
   <Vocab>
-    <Name>AddNewPuchaseOrder</Name>
-    <Translation>Add New Puchase Order</Translation>
+    <Name>AddNewPurchaseOrder</Name>
+    <Translation>Add New Purchase Order</Translation>
   </Vocab>
   <Vocab>
     <Name>AddNewSupplier</Name>
@@ -69,8 +69,8 @@
     <Translation>Add Product Category</Translation>
   </Vocab>
   <Vocab>
-    <Name>AddPuchaseOrder</Name>
-    <Translation>Add Puchase Order</Translation>
+    <Name>AddPurchaseOrder</Name>
+    <Translation>Add Purchase Order</Translation>
   </Vocab>
   <Vocab>
     <Name>Address</Name>
@@ -261,8 +261,8 @@
     <Translation>Create Product Category</Translation>
   </Vocab>
   <Vocab>
-    <Name>CreatePuchaseOrder</Name>
-    <Translation>Create Puchase Order</Translation>
+    <Name>CreatePurchaseOrder</Name>
+    <Translation>Create Purchase Order</Translation>
   </Vocab>
   <Vocab>
     <Name>CreateSupplier</Name>
@@ -333,8 +333,8 @@
     <Translation>Delete Product Category</Translation>
   </Vocab>
   <Vocab>
-    <Name>DeletePuchaseOrder</Name>
-    <Translation>Delete Puchase Order</Translation>
+    <Name>DeletePurchaseOrder</Name>
+    <Translation>Delete Purchase Order</Translation>
   </Vocab>
   <Vocab>
     <Name>DeleteSupplier</Name>
@@ -417,8 +417,8 @@
     <Translation>Edit Product Category</Translation>
   </Vocab>
   <Vocab>
-    <Name>EditPuchaseOrder</Name>
-    <Translation>Edit Puchase Order</Translation>
+    <Name>EditPurchaseOrder</Name>
+    <Translation>Edit Purchase Order</Translation>
   </Vocab>
   <Vocab>
     <Name>EditSupplier</Name>
@@ -729,20 +729,20 @@
     <Translation>Publish Date</Translation>
   </Vocab>
   <Vocab>
-    <Name>PuchaseOrder</Name>
-    <Translation>Puchase Order</Translation>
+    <Name>PurchaseOrder</Name>
+    <Translation>Purchase Order</Translation>
   </Vocab>
   <Vocab>
-    <Name>PuchaseOrderId</Name>
-    <Translation>Puchase Order Id</Translation>
+    <Name>PurchaseOrderId</Name>
+    <Translation>Purchase Order Id</Translation>
   </Vocab>
   <Vocab>
-    <Name>PuchaseOrders</Name>
-    <Translation>Puchase Orders</Translation>
+    <Name>PurchaseOrders</Name>
+    <Translation>Purchase Orders</Translation>
   </Vocab>
   <Vocab>
-    <Name>PuchaseOrdersList</Name>
-    <Translation>Puchase Orders List</Translation>
+    <Name>PurchaseOrdersList</Name>
+    <Translation>Purchase Orders List</Translation>
   </Vocab>
   <Vocab>
     <Name>Quantity</Name>

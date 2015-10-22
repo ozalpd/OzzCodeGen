@@ -24,7 +24,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
         public partial class QueryParameters
         {
             public string SearchString { get; set; }
-            public int PageNr { get; set; } = 1;
+            public int Page { get; set; } = 1;
             public int PageSize { get; set; } = 10;
             public int PageCount
             {
@@ -36,7 +36,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
 
             public int Skip
             {
-                get { return (PageNr - 1) * PageSize; }
+                get { return (Page - 1) * PageSize; }
             }
 
             public int TotalCount
@@ -45,9 +45,9 @@ namespace <#= CodeEngine.ControllersNamespace #>
                 set
                 {
                     _totalCount = value;
-                    if (PageNr < 1) PageNr = 1;
-                    if (PageNr > PageCount) PageNr = PageCount;
-                    int skip = (PageNr - 1) * PageSize;
+                    if (Page < 1) Page = 1;
+                    if (Page > PageCount) Page = PageCount;
+                    int skip = (Page - 1) * PageSize;
                 }
             }
             int _totalCount;
@@ -55,7 +55,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
 
         protected virtual void SetPagerParameters(QueryParameters qParams)
         {
-            ViewBag.pageNr = qParams.PageNr;
+            ViewBag.page = qParams.Page;
             ViewBag.totalCount = qParams.TotalCount;
             ViewBag.pageSize = qParams.PageSize;
             ViewBag.pageCount = qParams.PageCount;

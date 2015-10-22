@@ -7,8 +7,8 @@
 WriteUsingNamespaces(); #>
 @model string
 <script>
-    function setPager(pageNr) {
-        $('#pageNr').val(pageNr);
+    function setPager(page) {
+        $('#page').val(page);
         $('#searchForm').submit();
     }
     function setDelete(item, id) {

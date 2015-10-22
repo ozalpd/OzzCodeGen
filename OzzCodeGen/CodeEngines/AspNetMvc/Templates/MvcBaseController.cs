@@ -20,7 +20,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+    #line 1 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
     public partial class MvcBaseController : AbstractMvcController
     {
@@ -31,7 +31,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         public override string TransformText()
         {
             
-            #line 8 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 8 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
  
 var roles = CodeEngine.SecurityRoles.Where(r => !r.Equals(CodeEngine.AdminRole));
 string dataContextIntance = CodeEngine.DataContextInstance;
@@ -49,60 +49,60 @@ WriteUsingNamespaces();
 
 namespace ");
             
-            #line 20 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 20 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.ControllersNamespace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    public partial class ");
             
-            #line 22 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 22 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.BaseControllerName));
             
             #line default
             #line hidden
             
-            #line 22 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 22 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
  if (!CustomFile){ 
             
             #line default
             #line hidden
             this.Write(" : ");
             
-            #line 22 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 22 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.BaseOfBaseController));
             
             #line default
             #line hidden
             
-            #line 22 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 22 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
  } 
             
             #line default
             #line hidden
             this.Write(" \r\n    {\r\n        public partial class QueryParameters\r\n        {\r\n            pu" +
-                    "blic string SearchString { get; set; }\r\n            public int PageNr { get; set" +
-                    "; } = 1;\r\n            public int PageSize { get; set; } = 10;\r\n            publi" +
-                    "c int PageCount\r\n            {\r\n                get\r\n                {\r\n        " +
-                    "            return TotalCount > 0 ? (int)Math.Ceiling(TotalCount / (double)PageS" +
-                    "ize) : 0;\r\n                }\r\n            }\r\n\r\n            public int Skip\r\n    " +
-                    "        {\r\n                get { return (PageNr - 1) * PageSize; }\r\n            " +
-                    "}\r\n\r\n            public int TotalCount\r\n            {\r\n                get { ret" +
-                    "urn _totalCount; }\r\n                set\r\n                {\r\n                    " +
-                    "_totalCount = value;\r\n                    if (PageNr < 1) PageNr = 1;\r\n         " +
-                    "           if (PageNr > PageCount) PageNr = PageCount;\r\n                    int " +
-                    "skip = (PageNr - 1) * PageSize;\r\n                }\r\n            }\r\n            i" +
-                    "nt _totalCount;\r\n        }\r\n\r\n        protected virtual void SetPagerParameters(" +
-                    "QueryParameters qParams)\r\n        {\r\n            ViewBag.pageNr = qParams.PageNr" +
-                    ";\r\n            ViewBag.totalCount = qParams.TotalCount;\r\n            ViewBag.pag" +
-                    "eSize = qParams.PageSize;\r\n            ViewBag.pageCount = qParams.PageCount;\r\n " +
-                    "       }\r\n\r\n        protected virtual async Task<bool> IsUserAdminAsync()\r\n     " +
-                    "   {\r\n            if (!_isUserAdmin.HasValue)\r\n            {\r\n                _i" +
-                    "sUserAdmin = Request.IsAuthenticated && \r\n                                await " +
-                    "UserManager.IsInRoleAsync(UserID, SecurityRoles.Admin);\r\n            }\r\n        " +
-                    "    return _isUserAdmin.Value;\r\n        }\r\n        bool? _isUserAdmin;\r\n\r\n");
+                    "blic string SearchString { get; set; }\r\n            public int Page { get; set; " +
+                    "} = 1;\r\n            public int PageSize { get; set; } = 10;\r\n            public " +
+                    "int PageCount\r\n            {\r\n                get\r\n                {\r\n          " +
+                    "          return TotalCount > 0 ? (int)Math.Ceiling(TotalCount / (double)PageSiz" +
+                    "e) : 0;\r\n                }\r\n            }\r\n\r\n            public int Skip\r\n      " +
+                    "      {\r\n                get { return (Page - 1) * PageSize; }\r\n            }\r\n\r" +
+                    "\n            public int TotalCount\r\n            {\r\n                get { return " +
+                    "_totalCount; }\r\n                set\r\n                {\r\n                    _tot" +
+                    "alCount = value;\r\n                    if (Page < 1) Page = 1;\r\n                 " +
+                    "   if (Page > PageCount) Page = PageCount;\r\n                    int skip = (Page" +
+                    " - 1) * PageSize;\r\n                }\r\n            }\r\n            int _totalCount" +
+                    ";\r\n        }\r\n\r\n        protected virtual void SetPagerParameters(QueryParameter" +
+                    "s qParams)\r\n        {\r\n            ViewBag.page = qParams.Page;\r\n            Vie" +
+                    "wBag.totalCount = qParams.TotalCount;\r\n            ViewBag.pageSize = qParams.Pa" +
+                    "geSize;\r\n            ViewBag.pageCount = qParams.PageCount;\r\n        }\r\n\r\n      " +
+                    "  protected virtual async Task<bool> IsUserAdminAsync()\r\n        {\r\n            " +
+                    "if (!_isUserAdmin.HasValue)\r\n            {\r\n                _isUserAdmin = Reque" +
+                    "st.IsAuthenticated && \r\n                                await UserManager.IsInRo" +
+                    "leAsync(UserID, SecurityRoles.Admin);\r\n            }\r\n            return _isUser" +
+                    "Admin.Value;\r\n        }\r\n        bool? _isUserAdmin;\r\n\r\n");
             
-            #line 75 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 75 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
   foreach (var role in roles)
         { 
         string varName = "_" + IsUserInRoleMethods[role.Trim()].ToCamelCase();
@@ -112,21 +112,21 @@ namespace ");
             #line hidden
             this.Write("\r\n\r\n        protected virtual async Task<bool> ");
             
-            #line 81 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 81 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(IsUserInRoleMethods[role.Trim()]));
             
             #line default
             #line hidden
             this.Write("Async()\r\n        {\r\n            if (!");
             
-            #line 83 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 83 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(varName));
             
             #line default
             #line hidden
             this.Write(".HasValue)\r\n            {\r\n                ");
             
-            #line 85 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 85 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(varName));
             
             #line default
@@ -134,35 +134,35 @@ namespace ");
             this.Write(" = Request.IsAuthenticated && \r\n                                    await UserMan" +
                     "ager.IsInRoleAsync(UserID, SecurityRoles.");
             
-            #line 86 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 86 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(role.ToPascalCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n            }\r\n            return ");
             
-            #line 88 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 88 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(varName));
             
             #line default
             #line hidden
             this.Write(".Value;\r\n        }\r\n        bool? ");
             
-            #line 90 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 90 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(varName));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 91 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 91 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
   } 
             
             #line default
             #line hidden
             this.Write("\r\n        #region Find Methods for Entities\r\n");
             
-            #line 94 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 94 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
   foreach (var entity in CodeEngine.Entities.Where(e => !e.EntityDefinition.Abstract))
     {
 		var pkeyProperty = entity.GetPrimeryKey();
@@ -173,49 +173,49 @@ namespace ");
             #line hidden
             this.Write("\r\n        protected virtual async Task<");
             
-            #line 100 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 100 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("> FindAsync");
             
-            #line 100 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 100 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("(int id)\r\n        {\r\n            return await ");
             
-            #line 102 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 102 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance));
             
             #line default
             #line hidden
             this.Write("\r\n                            .Get");
             
-            #line 103 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("Query()\r\n                            .FirstOrDefaultAsync(x => x.");
             
-            #line 104 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 104 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pKey));
             
             #line default
             #line hidden
             this.Write(" == id);\r\n        }\r\n");
             
-            #line 106 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 106 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
   } 
             
             #line default
             #line hidden
             this.Write("        #endregion\r\n");
             
-            #line 108 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 108 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
   if (CodeEngine.GenerateDataContext)
     { 
             
@@ -259,56 +259,56 @@ namespace ");
         
         protected ");
             
-            #line 146 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 146 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.DataContextClass));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 146 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 146 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance));
             
             #line default
             #line hidden
             this.Write("\r\n        {\r\n            get\r\n            {\r\n                if (_");
             
-            #line 150 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 150 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" == null)\r\n                {\r\n                    _");
             
-            #line 152 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 152 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" = new ");
             
-            #line 152 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 152 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.DataContextClass));
             
             #line default
             #line hidden
             this.Write("();\r\n                }\r\n                return _");
             
-            #line 154 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 154 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(";\r\n            }\r\n        }\r\n        private ");
             
-            #line 157 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 157 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.DataContextClass));
             
             #line default
             #line hidden
             this.Write(" _");
             
-            #line 157 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 157 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance.ToCamelCase()));
             
             #line default
@@ -316,21 +316,21 @@ namespace ");
             this.Write(";\r\n\r\n        protected override void Dispose(bool disposing)\r\n        {\r\n        " +
                     "    if (disposing)\r\n            {\r\n                if (_");
             
-            #line 163 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 163 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" != null)\r\n                {\r\n                    _");
             
-            #line 165 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 165 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".Dispose();\r\n                    _");
             
-            #line 166 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 166 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance.ToCamelCase()));
             
             #line default
@@ -338,7 +338,7 @@ namespace ");
             this.Write(" = null;\r\n                }\r\n            }\r\n            base.Dispose(disposing);\r" +
                     "\n        }\r\n");
             
-            #line 171 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            #line 171 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
    } 
             
             #line default
