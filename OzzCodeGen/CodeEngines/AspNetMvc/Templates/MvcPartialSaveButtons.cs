@@ -18,7 +18,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialSaveButtons.tt"
+    #line 1 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialSaveButtons.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
     public partial class MvcPartialSaveButtons : AbstractMvcView
     {
@@ -29,18 +29,18 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         public override string TransformText()
         {
             
-            #line 6 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialSaveButtons.tt"
+            #line 6 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialSaveButtons.tt"
  
 WriteUsingNamespaces(); 
             
             #line default
             #line hidden
             this.Write(@"<div class=""form-group"">
-    <div class=""col-md-offset-2 col-md-2"">
-        @Html.ActionLink(@ActionStrings.BackToIndex, ""Index"", null, new { @class = ""btn btn-default"" })
+    <div class=""col-lg-offset-2 col-md-offset-3 col-sm-offset-3 col-lg-3 col-md-3 col-sm-4 col-xs-4"">
+        <input type=""submit"" value='@ActionStrings.Save' class=""btn btn-lg btn-primary"" />
     </div>
-    <div class=""col-md-2"">
-        <input type=""submit"" value='@ActionStrings.Save' class=""btn btn-default"" />
+    <div class=""col-lg-2 col-md-3 col-sm-3 col-xs-4"">
+        @Html.ActionLink(@ActionStrings.BackToIndex, ""Index"", null, new { @class = ""btn btn-lg btn-info pull-right"" })
     </div>
 </div>");
             return this.GenerationEnvironment.ToString();

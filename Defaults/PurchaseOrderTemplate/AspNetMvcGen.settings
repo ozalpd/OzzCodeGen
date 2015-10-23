@@ -23,6 +23,7 @@
       </Properties>
       <ControllerName>IPrimaryKeys</ControllerName>
       <DataSetName>IPrimaryKeys</DataSetName>
+      <ModelForCreate>IPrimaryKey</ModelForCreate>
       <ModelForEdit>IPrimaryKey</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -82,6 +83,7 @@
       </Properties>
       <ControllerName>ICreateds</ControllerName>
       <DataSetName>ICreateds</DataSetName>
+      <ModelForCreate>ICreated</ModelForCreate>
       <ModelForEdit>ICreated</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -152,6 +154,7 @@
       </Properties>
       <ControllerName>IModifieds</ControllerName>
       <DataSetName>IModifieds</DataSetName>
+      <ModelForCreate>IModified</ModelForCreate>
       <ModelForEdit>IModified</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -222,6 +225,7 @@
       </Properties>
       <ControllerName>IApprovals</ControllerName>
       <DataSetName>IApprovals</DataSetName>
+      <ModelForCreate>IApproval</ModelForCreate>
       <ModelForEdit>IApproval</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -281,6 +285,7 @@
       </Properties>
       <ControllerName>IDescriptions</ControllerName>
       <DataSetName>IDescriptions</DataSetName>
+      <ModelForCreate>IDescription</ModelForCreate>
       <ModelForEdit>IDescription</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -439,6 +444,7 @@
       </Properties>
       <ControllerName>Companies</ControllerName>
       <DataSetName>Companies</DataSetName>
+      <ModelForCreate>Company</ModelForCreate>
       <ModelForEdit>Company</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -476,6 +482,7 @@
       </Properties>
       <ControllerName>Suppliers</ControllerName>
       <DataSetName>Suppliers</DataSetName>
+      <ModelForCreate>Supplier</ModelForCreate>
       <ModelForEdit>Supplier</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -524,6 +531,7 @@
       </Properties>
       <ControllerName>Customers</ControllerName>
       <DataSetName>Customers</DataSetName>
+      <ModelForCreate>Customer</ModelForCreate>
       <ModelForEdit>Customer</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -661,6 +669,7 @@
       <ControllerName>Contacts</ControllerName>
       <DataSetName>Contacts</DataSetName>
       <StrongDependedForeignKey>CompanyId</StrongDependedForeignKey>
+      <ModelForCreate>Contact</ModelForCreate>
       <ModelForEdit>Contact</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -731,6 +740,7 @@
       </Properties>
       <ControllerName>ProductCategories</ControllerName>
       <DataSetName>ProductCategories</DataSetName>
+      <ModelForCreate>ProductCategory</ModelForCreate>
       <ModelForEdit>ProductCategory</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -780,6 +790,7 @@
       <ControllerName>Products</ControllerName>
       <DataSetName>Products</DataSetName>
       <StrongDependedForeignKey>CategoryId</StrongDependedForeignKey>
+      <ModelForCreate>Product</ModelForCreate>
       <ModelForEdit>Product</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -895,6 +906,7 @@
       <ControllerName>PurchaseOrders</ControllerName>
       <DataSetName>PurchaseOrders</DataSetName>
       <StrongDependedForeignKey>CustomerId</StrongDependedForeignKey>
+      <ModelForCreate>PurchaseOrder</ModelForCreate>
       <ModelForEdit>PurchaseOrder</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
@@ -988,6 +1000,7 @@
       <ControllerName>OrderItems</ControllerName>
       <DataSetName>OrderItems</DataSetName>
       <StrongDependedForeignKey>PurchaseOrderId</StrongDependedForeignKey>
+      <ModelForCreate>OrderItem</ModelForCreate>
       <ModelForEdit>OrderItem</ModelForEdit>
       <RolesCanView>everyone</RolesCanView>
       <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>

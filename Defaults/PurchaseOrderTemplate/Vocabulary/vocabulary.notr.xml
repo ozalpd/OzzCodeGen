@@ -114,11 +114,11 @@
   </Vocab>
   <Vocab>
     <Name>BackToIndex</Name>
-    <Translation>Back to List</Translation>
+    <Translation>Go to List</Translation>
   </Vocab>
   <Vocab>
     <Name>BecauseOfRelatedRecords</Name>
-    <Translation>Because of related records</Translation>
+    <Translation>This record has some relations.</Translation>
   </Vocab>
   <Vocab>
     <Name>Cancel</Name>
@@ -441,6 +441,10 @@
     <Translation>Enter Keyword Here</Translation>
   </Vocab>
   <Vocab>
+    <Name>Erase</Name>
+    <Translation>Erase</Translation>
+  </Vocab>
+  <Vocab>
     <Name>ExpireDate</Name>
     <Translation>Expire Date</Translation>
   </Vocab>
@@ -759,6 +763,10 @@
   <Vocab>
     <Name>Register</Name>
     <Translation>Register</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>RelatedRecordsExist</Name>
+    <Translation>This record has {0} related {1}.</Translation>
   </Vocab>
   <Vocab>
     <Name>Remove</Name>

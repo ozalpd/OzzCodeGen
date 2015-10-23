@@ -298,16 +298,16 @@ else
                 sb.Append(" <b>");
                 sb.Append(<#= Entity.Name.ToCamelCase() #>.<#= Entity.EntityDefinition.DisplayMember #>);
                 sb.Append("</b>.<br/>");
+<# if(false){ #>
                 sb.Append(MessageStrings.BecauseOfRelatedRecords);
                 sb.Append(".<br/>");
+<#  } #>
 
 <#      foreach (var property in collectionProperties) 
         { #>
                 if (<#= property.Name.ToCamelCase() #>Count > 0)
                 {
-                    sb.Append(<#= EntityResource #>.<#= property.Name #>);
-                    sb.Append(": ");
-                    sb.Append(<#= property.Name.ToCamelCase() #>Count);
+                    sb.Append(string.Format(MessageStrings.RelatedRecordsExist, <#= property.Name.ToCamelCase() #>Count, <#= EntityResource #>.<#= property.Name #>));
                     sb.Append("<br/>");
                 }
 

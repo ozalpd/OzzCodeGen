@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace OzzCodeGen.Definitions
 {
@@ -23,12 +19,21 @@ namespace OzzCodeGen.Definitions
             return clone;
         }
 
+        public string GetObjectTypeName()
+        {
+            if (TypeName.StartsWith("ICollection<"))
+            {
+                return TypeName.Remove(TypeName.Length - 1, 1).Remove(0, "ICollection<".Length);
+            }
+            return TypeName;
+        }
+
         public override List<string> GetUsableTypeNames()
         {
             var typeNames = new List<string>();
-            foreach (var item in this.EntityDefinition.DataModel)
+            foreach (var entity in this.EntityDefinition.DataModel)
             {
-                typeNames.Add(string.Format("ICollection<{0}>", item.Name));
+                typeNames.Add(string.Format("ICollection<{0}>", entity.Name));
             }
 
             return typeNames;

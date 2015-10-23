@@ -6,10 +6,10 @@
 <# 
 WriteUsingNamespaces(); #>
 <div class="form-group">
-    <div class="col-md-offset-2 col-md-2">
-        @Html.ActionLink(@ActionStrings.BackToIndex, "Index", null, new { @class = "btn btn-default" })
+    <div class="col-lg-offset-2 col-md-offset-3 col-sm-offset-3 col-lg-3 col-md-3 col-sm-4 col-xs-4">
+        <input type="submit" value='@ActionStrings.Save' class="btn btn-lg btn-primary" />
     </div>
-    <div class="col-md-2">
-        <input type="submit" value='@ActionStrings.Save' class="btn btn-default" />
+    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4">
+        @Html.ActionLink(@ActionStrings.BackToIndex, "Index", null, new { @class = "btn btn-lg btn-info pull-right" })
     </div>
 </div>
