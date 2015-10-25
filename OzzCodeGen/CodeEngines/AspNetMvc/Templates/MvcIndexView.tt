@@ -28,10 +28,12 @@ WriteUsingNamespaces(); #>
     int totalCount = ViewBag.totalCount;
     int pageSize = ViewBag.pageSize;
     int pageCount = ViewBag.pageCount;
+
+	var title = <#= EntityResource #>.<#= Entity.Name.Pluralize() #>;
 }
 <div class="row well">
     <div class="col-md-8 col-sm-7">
-        <h4>@<#= EntityResource #>.<#= Entity.Name.Pluralize() #></h4>
+        <h4>@title</h4>
     </div>
 <#  if(searchable)
     { #>

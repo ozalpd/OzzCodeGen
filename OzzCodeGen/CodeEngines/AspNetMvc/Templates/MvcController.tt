@@ -35,7 +35,7 @@ if (CustomFile)
 { 
     if (fkeyProperties.Any())
     { #>
-        partial void SetViewBags(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>)
+        partial void SetSelectLists(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>)
         {
 <#      foreach (var item in fkeyProperties)
         { 
@@ -46,7 +46,7 @@ if (CustomFile)
 <#  } #>
 
         //Purpose: To set default property values for newly created <#= Entity.Name #> entity
-        //partial void SetDefaults(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>) { }
+        //protected override void Set<#= Entity.Name #>Defaults(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>) { }
 <# }
 else 
 { #>
@@ -78,11 +78,8 @@ else
             }
 <#  } #>
             qParams.TotalCount = await query.CountAsync();
-            SetPagerParameters(qParams);
-
-            ViewBag.canUserEdit = await CanUserEdit();
-            ViewBag.canUserCreate = await CanUserCreate();
-            ViewBag.canUserDelete = await CanUserDelete();
+            PutPagerInViewBag(qParams);
+            await PutCanUserInViewBag();
 
             if (qParams.TotalCount > 0)
             {
@@ -94,7 +91,7 @@ else
             }
         }
         
-        protected virtual async Task<bool> CanUserCreate()
+        protected override async Task<bool> CanUserCreate()
         {
             if (!_canUserCreate.HasValue)
             {
@@ -104,7 +101,7 @@ else
         }
         bool? _canUserCreate;
 
-        protected virtual async Task<bool> CanUserEdit()
+        protected override async Task<bool> CanUserEdit()
         {
             if (!_canUserEdit.HasValue)
             {
@@ -114,7 +111,7 @@ else
         }
         bool? _canUserEdit;
         
-        protected virtual async Task<bool> CanUserDelete()
+        protected override async Task<bool> CanUserDelete()
         {
             if (!_canUserDelete.HasValue)
             {
@@ -123,10 +120,9 @@ else
             return _canUserDelete.Value;
         }
         bool? _canUserDelete;
+
 <#  } #>
 <# if (Entity.GenerateDetailsAction){ #>
-
-
         <#= CanViewAttrib #>
         public async Task<ActionResult> Details(int? id)  //GET: /<#= Entity.ControllerName #>/Details/5
         {
@@ -143,14 +139,13 @@ else
 
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
+
 <#  } #>
 <# if (Entity.GenerateCreateAction){ #>
-
-
         [HttpGet]
         <#= CanEditAttrib #>
 <#  if (strongForeignEntity != null)
-    {    //TODO: Improve Route attirbute logic for fkey string types
+    {
  #>
         [Route("<#= Entity.ControllerName #>/Create/{<#= strongProperty.Name.ToCamelCase() #>:<#= strongProperty.GetNullableTypeName() #>}")]
         public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>)  //GET: /<#= Entity.ControllerName #>/Create
@@ -170,8 +165,8 @@ else
                 <#= Entity.Name.ToCamelCase() #>.<#= foreignDependentProperty #> = <#= foreignDependentProperty.Name.ToCamelCase() #>;
             }
 <#  } #>
-            SetDefaults(<#= Entity.Name.ToCamelCase() #>);
-            SetViewBags(null);
+            Set<#= Entity.Name #>Defaults(<#= Entity.Name.ToCamelCase() #>);
+            SetSelectLists(null);
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
 
@@ -207,13 +202,12 @@ else
                 return RedirectToAction(<#= Entity.CreateRedirect #>);
             }
 
-            SetViewBags(<#= Entity.Name.ToCamelCase() #>);
+            SetSelectLists(<#= Entity.Name.ToCamelCase() #>);
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
+
 <#  } #>
 <# if (Entity.GenerateEditAction){ #>
-
-
         <#= CanEditAttrib #>
         public async Task<ActionResult> Edit(int? id)  //GET: /<#= Entity.ControllerName #>/Edit/5
         {
@@ -233,7 +227,7 @@ else
     { #>
             var <#= instanceName #> = new <#= Entity.ModelForEdit #>(<#= Entity.Name.ToCamelCase() #>);
 <#  } #>
-            SetViewBags(<#= instanceName #>);
+            SetSelectLists(<#= instanceName #>);
             return View(<#= instanceName #>);
         }
 
@@ -263,7 +257,7 @@ else
                 return RedirectToAction(<#= Entity.EditRedirect #>);
             }
 
-            SetViewBags(<#= Entity.Name.ToCamelCase() #>);
+            SetSelectLists(<#= Entity.Name.ToCamelCase() #>);
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
 <#  } #>
@@ -345,6 +339,7 @@ else
             public <#= item.GetNullableTypeName() #> <#= item.Name #> { get; set; }
 <#       } #>
         }
+
 <#  } #>
 
         //Partial methods
@@ -352,8 +347,7 @@ else
         partial void OnCreateSaved(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
         partial void OnEditSaving(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
         partial void OnEditSaved(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
-        partial void SetDefaults(<#= Entity.ModelForCreate #> <#= Entity.Name.ToCamelCase() #>);
-        partial void SetViewBags(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
+        partial void SetSelectLists(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
 <# } #>
     }
 }

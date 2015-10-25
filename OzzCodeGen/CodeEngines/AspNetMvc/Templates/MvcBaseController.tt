@@ -19,7 +19,7 @@ WriteUsingNamespaces(); #>
 
 namespace <#= CodeEngine.ControllersNamespace #>
 {
-    public partial class <#= CodeEngine.BaseControllerName #><# if (!CustomFile){ #> : <#= CodeEngine.BaseOfBaseController #><# } #> 
+    public abstract partial class <#= CodeEngine.BaseControllerName #><# if (!CustomFile){ #> : <#= CodeEngine.BaseOfBaseController #><# } #> 
     {
         public partial class QueryParameters
         {
@@ -53,13 +53,24 @@ namespace <#= CodeEngine.ControllersNamespace #>
             int _totalCount;
         }
 
-        protected virtual void SetPagerParameters(QueryParameters qParams)
+        protected virtual void PutPagerInViewBag(QueryParameters qParams)
         {
             ViewBag.page = qParams.Page;
             ViewBag.totalCount = qParams.TotalCount;
             ViewBag.pageSize = qParams.PageSize;
             ViewBag.pageCount = qParams.PageCount;
         }
+
+        protected virtual async Task PutCanUserInViewBag()
+        {
+            ViewBag.canUserEdit = await CanUserEdit();
+            ViewBag.canUserCreate = await CanUserCreate();
+            ViewBag.canUserDelete = await CanUserDelete();
+        }
+		//If we forget to implement override methods, we will keep it secure.
+        protected virtual async Task<bool> CanUserCreate() { return false; }
+        protected virtual async Task<bool> CanUserEdit() { return false; }
+        protected virtual async Task<bool> CanUserDelete() { return false; }
 
         protected virtual async Task<bool> IsUserAdminAsync()
         {
@@ -103,6 +114,8 @@ namespace <#= CodeEngine.ControllersNamespace #>
                             .Get<#= entity.Name #>Query()
                             .FirstOrDefaultAsync(x => x.<#= pKey #> == id);
         }
+
+		protected virtual void Set<#= entity.Name #>Defaults(<#= entity.Name #> <#= entity.Name.ToCamelCase() #>) { }
 <#  } #>
         #endregion
 <#  if (CodeEngine.GenerateDataContext)
