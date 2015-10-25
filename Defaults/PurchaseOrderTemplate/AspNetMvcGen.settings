@@ -18,6 +18,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>false</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
       </Properties>
@@ -39,7 +40,8 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
-      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
+      <CreateRedirect>"Index"</CreateRedirect>
+      <EditRedirect>"Index"</EditRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -56,6 +58,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>false</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -67,6 +70,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>false</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -78,6 +82,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>false</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
       </Properties>
@@ -99,7 +104,8 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
-      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
+      <CreateRedirect>"Index"</CreateRedirect>
+      <EditRedirect>"Index"</EditRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -116,6 +122,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>false</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -127,6 +134,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>false</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -138,6 +146,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>false</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -149,6 +158,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>false</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
       </Properties>
@@ -170,7 +180,8 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
-      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
+      <CreateRedirect>"Index"</CreateRedirect>
+      <EditRedirect>"Index"</EditRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -187,6 +198,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -198,6 +210,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>false</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -209,6 +222,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>false</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -220,6 +234,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>false</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
       </Properties>
@@ -241,7 +256,8 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
-      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
+      <CreateRedirect>"Index"</CreateRedirect>
+      <EditRedirect>"Index"</EditRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -258,6 +274,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -269,6 +286,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -280,6 +298,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
       </Properties>
@@ -301,7 +320,8 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
-      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
+      <CreateRedirect>"Index"</CreateRedirect>
+      <EditRedirect>"Index"</EditRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -318,6 +338,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -329,6 +350,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -340,6 +362,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -351,6 +374,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -362,6 +386,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -373,6 +398,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -384,6 +410,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -395,6 +422,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -406,6 +434,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -417,6 +446,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -428,6 +458,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -439,6 +470,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
       </Properties>
@@ -460,7 +492,8 @@
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
       <EditView>false</EditView>
-      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
+      <CreateRedirect>"Index"</CreateRedirect>
+      <EditRedirect>"Index"</EditRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -477,6 +510,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
       </Properties>
@@ -498,7 +532,8 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
-      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
+      <CreateRedirect>"Index"</CreateRedirect>
+      <EditRedirect>"Index"</EditRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -515,6 +550,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -526,6 +562,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
       </Properties>
@@ -547,7 +584,8 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
-      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
+      <CreateRedirect>"Index"</CreateRedirect>
+      <EditRedirect>"Index"</EditRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -564,6 +602,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -575,6 +614,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -586,6 +626,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -597,6 +638,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -608,6 +650,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -619,6 +662,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -630,6 +674,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -641,6 +686,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -652,6 +698,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>DropDownList</UseForCreate>
           <UseForEdit>DropDownList</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -663,6 +710,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
       </Properties>
@@ -685,7 +733,8 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
-      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
+      <CreateRedirect>"Index"</CreateRedirect>
+      <EditRedirect>"Index"</EditRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -702,6 +751,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>DropDownList</UseForCreate>
           <UseForEdit>DropDownList</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -713,6 +763,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -724,6 +775,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -735,6 +787,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
       </Properties>
@@ -756,7 +809,8 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
-      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
+      <CreateRedirect>"Index"</CreateRedirect>
+      <EditRedirect>"Index"</EditRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -773,6 +827,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>DropDownList</UseForCreate>
           <UseForEdit>DropDownList</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -784,6 +839,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
       </Properties>
@@ -806,7 +862,8 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
-      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
+      <CreateRedirect>"Index"</CreateRedirect>
+      <EditRedirect>"Index"</EditRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -823,6 +880,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -834,6 +892,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>DropDownList</UseForCreate>
           <UseForEdit>DropDownList</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -845,6 +904,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -856,6 +916,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -867,6 +928,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -878,6 +940,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -889,6 +952,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -900,6 +964,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
       </Properties>
@@ -922,7 +987,8 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
-      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
+      <CreateRedirect>"Index"</CreateRedirect>
+      <EditRedirect>"Index"</EditRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
     <BaseEntitySetting xsi:type="AspNetMvcEntitySetting">
@@ -939,6 +1005,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>DropDownList</UseForCreate>
           <UseForEdit>DropDownList</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -950,6 +1017,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -961,6 +1029,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>DropDownList</UseForCreate>
           <UseForEdit>DropDownList</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -972,6 +1041,7 @@
           <InCreateView>false</InCreateView>
           <InEditView>false</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -983,6 +1053,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>Standart</UseForCreate>
           <UseForEdit>Standart</UseForEdit>
         </AspNetMvcPropertySetting>
         <AspNetMvcPropertySetting>
@@ -994,6 +1065,7 @@
           <InCreateView>true</InCreateView>
           <InEditView>true</InEditView>
           <HasValidation>true</HasValidation>
+          <UseForCreate>TextBox</UseForCreate>
           <UseForEdit>TextBox</UseForEdit>
         </AspNetMvcPropertySetting>
       </Properties>
@@ -1016,7 +1088,8 @@
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
       <EditView>true</EditView>
-      <AfterSaveRedirect>"Index"</AfterSaveRedirect>
+      <CreateRedirect>"Index"</CreateRedirect>
+      <EditRedirect>"Index"</EditRedirect>
       <BaseControllerName>AbstractController</BaseControllerName>
     </BaseEntitySetting>
   </EntitySettings>

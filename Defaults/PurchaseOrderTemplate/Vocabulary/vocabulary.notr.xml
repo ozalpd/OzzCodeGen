@@ -17,12 +17,20 @@
     <Translation>Add Contact</Translation>
   </Vocab>
   <Vocab>
+    <Name>AddCountry</Name>
+    <Translation>Add Country</Translation>
+  </Vocab>
+  <Vocab>
     <Name>AddCustomer</Name>
     <Translation>Add Customer</Translation>
   </Vocab>
   <Vocab>
     <Name>AddNew</Name>
     <Translation>Add New</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddNewCity</Name>
+    <Translation>Add New City</Translation>
   </Vocab>
   <Vocab>
     <Name>AddNewCompany</Name>
@@ -33,12 +41,20 @@
     <Translation>Add New Contact</Translation>
   </Vocab>
   <Vocab>
+    <Name>AddNewCountry</Name>
+    <Translation>Add New Country</Translation>
+  </Vocab>
+  <Vocab>
     <Name>AddNewCustomer</Name>
     <Translation>Add New Customer</Translation>
   </Vocab>
   <Vocab>
     <Name>AddNewOrderItem</Name>
     <Translation>Add New Order Item</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddNewPerson</Name>
+    <Translation>Add New Person</Translation>
   </Vocab>
   <Vocab>
     <Name>AddNewProduct</Name>
@@ -53,12 +69,24 @@
     <Translation>Add New Purchase Order</Translation>
   </Vocab>
   <Vocab>
+    <Name>AddNewStore</Name>
+    <Translation>Add New Store</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddNewStoreStaff</Name>
+    <Translation>Add New Store Staff</Translation>
+  </Vocab>
+  <Vocab>
     <Name>AddNewSupplier</Name>
     <Translation>Add New Supplier</Translation>
   </Vocab>
   <Vocab>
     <Name>AddOrderItem</Name>
     <Translation>Add Order Item</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddPerson</Name>
+    <Translation>Add Person</Translation>
   </Vocab>
   <Vocab>
     <Name>AddProduct</Name>
@@ -85,6 +113,14 @@
     <Translation>Address Line 2</Translation>
   </Vocab>
   <Vocab>
+    <Name>AddStore</Name>
+    <Translation>Add Store</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddStoreStaff</Name>
+    <Translation>Add Store Staff</Translation>
+  </Vocab>
+  <Vocab>
     <Name>AddSupplier</Name>
     <Translation>Add Supplier</Translation>
   </Vocab>
@@ -95,6 +131,10 @@
   <Vocab>
     <Name>Always</Name>
     <Translation>Always</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Approve</Name>
+    <Translation>Approve</Translation>
   </Vocab>
   <Vocab>
     <Name>ApproveDate</Name>
@@ -147,6 +187,10 @@
   <Vocab>
     <Name>Cities</Name>
     <Translation>Cities</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CitiesList</Name>
+    <Translation>Cities List</Translation>
   </Vocab>
   <Vocab>
     <Name>City</Name>
@@ -213,8 +257,20 @@
     <Translation>Contacts List</Translation>
   </Vocab>
   <Vocab>
+    <Name>Countries</Name>
+    <Translation>Countries</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CountriesList</Name>
+    <Translation>Countries List</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Country</Name>
     <Translation>Country</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CountryId</Name>
+    <Translation>Country Id</Translation>
   </Vocab>
   <Vocab>
     <Name>CountryName</Name>
@@ -225,6 +281,10 @@
     <Translation>Create</Translation>
   </Vocab>
   <Vocab>
+    <Name>CreateCity</Name>
+    <Translation>Create City</Translation>
+  </Vocab>
+  <Vocab>
     <Name>CreateCompany</Name>
     <Translation>Create Company</Translation>
   </Vocab>
@@ -233,8 +293,16 @@
     <Translation>Create Contact</Translation>
   </Vocab>
   <Vocab>
+    <Name>CreateCountry</Name>
+    <Translation>Create Country</Translation>
+  </Vocab>
+  <Vocab>
     <Name>CreateCustomer</Name>
     <Translation>Create Customer</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CreateCustomerAddress</Name>
+    <Translation>Create Customer Address</Translation>
   </Vocab>
   <Vocab>
     <Name>CreateDate</Name>
@@ -253,6 +321,10 @@
     <Translation>Create Order Item</Translation>
   </Vocab>
   <Vocab>
+    <Name>CreatePerson</Name>
+    <Translation>Create Person</Translation>
+  </Vocab>
+  <Vocab>
     <Name>CreateProduct</Name>
     <Translation>Create Product</Translation>
   </Vocab>
@@ -263,6 +335,14 @@
   <Vocab>
     <Name>CreatePurchaseOrder</Name>
     <Translation>Create Purchase Order</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CreateStore</Name>
+    <Translation>Create Store</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CreateStoreStaff</Name>
+    <Translation>Create Store Staff</Translation>
   </Vocab>
   <Vocab>
     <Name>CreateSupplier</Name>
@@ -279,6 +359,22 @@
   <Vocab>
     <Name>Customer</Name>
     <Translation>Customer</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CustomerAddress</Name>
+    <Translation>Customer Address</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CustomerAddresses</Name>
+    <Translation>Customer Addresses</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CustomerAddressesList</Name>
+    <Translation>Customer Addresses List</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CustomerAddressId</Name>
+    <Translation>Customer Address Id</Translation>
   </Vocab>
   <Vocab>
     <Name>CustomerCode</Name>
@@ -305,6 +401,10 @@
     <Translation>Delete</Translation>
   </Vocab>
   <Vocab>
+    <Name>DeleteCity</Name>
+    <Translation>Delete City</Translation>
+  </Vocab>
+  <Vocab>
     <Name>DeleteCompany</Name>
     <Translation>Delete Company</Translation>
   </Vocab>
@@ -313,8 +413,16 @@
     <Translation>Delete Contact</Translation>
   </Vocab>
   <Vocab>
+    <Name>DeleteCountry</Name>
+    <Translation>Delete Country</Translation>
+  </Vocab>
+  <Vocab>
     <Name>DeleteCustomer</Name>
     <Translation>Delete Customer</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>DeleteCustomerAddress</Name>
+    <Translation>Delete Customer Address</Translation>
   </Vocab>
   <Vocab>
     <Name>DeleteOrder</Name>
@@ -323,6 +431,10 @@
   <Vocab>
     <Name>DeleteOrderItem</Name>
     <Translation>Delete Order Item</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>DeletePerson</Name>
+    <Translation>Delete Person</Translation>
   </Vocab>
   <Vocab>
     <Name>DeleteProduct</Name>
@@ -335,6 +447,14 @@
   <Vocab>
     <Name>DeletePurchaseOrder</Name>
     <Translation>Delete Purchase Order</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>DeleteStore</Name>
+    <Translation>Delete Store</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>DeleteStoreStaff</Name>
+    <Translation>Delete Store Staff</Translation>
   </Vocab>
   <Vocab>
     <Name>DeleteSupplier</Name>
@@ -389,6 +509,10 @@
     <Translation>Edit</Translation>
   </Vocab>
   <Vocab>
+    <Name>EditCity</Name>
+    <Translation>Edit City</Translation>
+  </Vocab>
+  <Vocab>
     <Name>EditCompany</Name>
     <Translation>Edit Company</Translation>
   </Vocab>
@@ -397,8 +521,16 @@
     <Translation>Edit Contact</Translation>
   </Vocab>
   <Vocab>
+    <Name>EditCountry</Name>
+    <Translation>Edit Country</Translation>
+  </Vocab>
+  <Vocab>
     <Name>EditCustomer</Name>
     <Translation>Edit Customer</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>EditCustomerAddress</Name>
+    <Translation>Edit Customer Address</Translation>
   </Vocab>
   <Vocab>
     <Name>EditOrder</Name>
@@ -407,6 +539,10 @@
   <Vocab>
     <Name>EditOrderItem</Name>
     <Translation>Edit Order Item</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>EditPerson</Name>
+    <Translation>Edit Person</Translation>
   </Vocab>
   <Vocab>
     <Name>EditProduct</Name>
@@ -419,6 +555,14 @@
   <Vocab>
     <Name>EditPurchaseOrder</Name>
     <Translation>Edit Purchase Order</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>EditStore</Name>
+    <Translation>Edit Store</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>EditStoreStaff</Name>
+    <Translation>Edit Store Staff</Translation>
   </Vocab>
   <Vocab>
     <Name>EditSupplier</Name>
@@ -597,8 +741,16 @@
     <Translation>Notes</Translation>
   </Vocab>
   <Vocab>
+    <Name>NumericIsoCode</Name>
+    <Translation>Numeric Iso Code</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Often</Name>
     <Translation>Often</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>OK</Name>
+    <Translation>OK</Translation>
   </Vocab>
   <Vocab>
     <Name>Order</Name>
@@ -649,6 +801,18 @@
     <Translation>Password</Translation>
   </Vocab>
   <Vocab>
+    <Name>Person</Name>
+    <Translation>Person</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Persons</Name>
+    <Translation>Persons</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>PersonsList</Name>
+    <Translation>Persons List</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Phone</Name>
     <Translation>Phone</Translation>
   </Vocab>
@@ -691,6 +855,22 @@
   <Vocab>
     <Name>PleaseWait</Name>
     <Translation>Please Wait</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>PositionX</Name>
+    <Translation>Position X</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>PositionY</Name>
+    <Translation>Position Y</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>PositionZ</Name>
+    <Translation>Position Z</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Price</Name>
+    <Translation>Price</Translation>
   </Vocab>
   <Vocab>
     <Name>Print</Name>
@@ -773,6 +953,18 @@
     <Translation>Remove</Translation>
   </Vocab>
   <Vocab>
+    <Name>RotationX</Name>
+    <Translation>Rotation X</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>RotationY</Name>
+    <Translation>Rotation Y</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>RotationZ</Name>
+    <Translation>Rotation Z</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Save</Name>
     <Translation>Save</Translation>
   </Vocab>
@@ -813,12 +1005,44 @@
     <Translation>State</Translation>
   </Vocab>
   <Vocab>
+    <Name>Store</Name>
+    <Translation>Store</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>StoreId</Name>
+    <Translation>Store Id</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Stores</Name>
+    <Translation>Stores</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>StoresList</Name>
+    <Translation>Stores List</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>StoreStaff</Name>
+    <Translation>Store Staff</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>StoreStaffs</Name>
+    <Translation>Store Staffs</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>StoreStaffsList</Name>
+    <Translation>Store Staffs List</Translation>
+  </Vocab>
+  <Vocab>
     <Name>SubCategories</Name>
     <Translation>Sub Categories</Translation>
   </Vocab>
   <Vocab>
     <Name>SubCategory</Name>
     <Translation>Sub Category</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>SubjectToVat</Name>
+    <Translation>Subject To Vat</Translation>
   </Vocab>
   <Vocab>
     <Name>Supplier</Name>
@@ -849,6 +1073,10 @@
     <Translation>Tax Office</Translation>
   </Vocab>
   <Vocab>
+    <Name>ThreeLetterIsoCode</Name>
+    <Translation>Three Letter Iso Code</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Title</Name>
     <Translation>Title</Translation>
   </Vocab>
@@ -863,6 +1091,10 @@
   <Vocab>
     <Name>Townships</Name>
     <Translation>Townships</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>TwoLetterIsoCode</Name>
+    <Translation>Two Letter Iso Code</Translation>
   </Vocab>
   <Vocab>
     <Name>UnableToDelete</Name>
@@ -883,6 +1115,10 @@
   <Vocab>
     <Name>UserName</Name>
     <Translation>UserName</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>VAT</Name>
+    <Translation>VAT</Translation>
   </Vocab>
   <Vocab>
     <Name>Width</Name>

@@ -334,7 +334,7 @@
         <Grid Grid.Row="8" Grid.ColumnSpan="6" Margin="4,2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" MinWidth="420"/>
-                <ColumnDefinition Width="5*" MinWidth="200" MaxWidth="748"/>
+                <ColumnDefinition Width="5*" MinWidth="200" MaxWidth="832"/>
             </Grid.ColumnDefinitions>
             <DataGrid Name="grdEntitySettings" ItemsSource="{Binding Entities, Mode=TwoWay}" 
                       SelectedItem="{Binding CurrentEntitySetting, Mode=TwoWay}"
@@ -377,6 +377,10 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
                         <Border>
                             <StackPanel>
                                 <StackPanel Background="#FFFFB040">
@@ -409,9 +413,6 @@
                                 <TextBox Text="{Binding RolesCanEdit}"/>
                                 <TextBlock Text="Roles Can Delete"/>
                                 <TextBox Text="{Binding RolesCanDelete}"/>
-                                <TextBlock Text="After SaveRedirect"
-                                               ToolTip="Where to redirect Edit &amp; CreateAction"/>
-                                <TextBox Text="{Binding AfterSaveRedirect}"/>
 
                                 <TextBlock Text="Save Parameter">
                                     <TextBlock.ToolTip>
@@ -446,6 +447,14 @@
                                 <TextBox Text="{Binding StrongDependedForeignKey}" ToolTip="ForeignKey may be used in Create action"/>
                             </StackPanel>
                         </Border>
+                        <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2,4,2,0">
+                            <StackPanel>
+                                <TextBlock Text="Create Action Redirect" ToolTip="Where to redirect at the end of CreateAction"/>
+                                <TextBox Text="{Binding CreateRedirect}"/>
+                                <TextBlock Text="Edit Action Redirect" ToolTip="Where to redirect at the end of EditAction"/>
+                                <TextBox Text="{Binding EditRedirect}"/>
+                            </StackPanel>
+                        </Border>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Properties">
@@ -470,6 +479,19 @@
                                 <DataGridCheckBoxColumn Binding="{Binding InDetailsView, Mode=TwoWay}" Header="InDetails" />
                                 <DataGridCheckBoxColumn Binding="{Binding InCreateView, Mode=TwoWay}" Header="InCreate" />
                                 <DataGridCheckBoxColumn Binding="{Binding InEditView, Mode=TwoWay}" Header="InEdit" />
+                                <DataGridTemplateColumn Header="Use for Create" Width="120">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding UseForCreate}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding UseForEditList}" SelectedItem="{Binding UseForCreate}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+
                                 <DataGridTemplateColumn Header="Use for Edit" Width="120">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -514,6 +536,7 @@
                                 <DataGridCheckBoxColumn Binding="{Binding InDetailsView, Mode=TwoWay}" Header="InDetails" />
                                 <DataGridCheckBoxColumn Binding="{Binding InCreateView, Mode=TwoWay}" Header="InCreate" />
                                 <DataGridCheckBoxColumn Binding="{Binding InEditView, Mode=TwoWay}" Header="InEdit" />
+                                <DataGridTextColumn Binding="{Binding UseForCreate, Mode=TwoWay}" Header="Use For Create" />
                                 <DataGridTextColumn Binding="{Binding UseForEdit, Mode=TwoWay}" Header="Use For Edit" />
                             </DataGrid.Columns>
                         </DataGrid>

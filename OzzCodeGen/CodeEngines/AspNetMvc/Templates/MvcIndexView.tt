@@ -38,6 +38,7 @@ WriteUsingNamespaces(); #>
     @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "searchForm" }))
     {
         @Html.Hidden("page", page)
+        @Html.Hidden("pageSize", pageSize)
         <div class="col-md-4 col-sm-5">
             @Html.Partial("_SearchBoxPartial")
         </div>
@@ -89,8 +90,8 @@ if (collectionProperties.Any())
                             {
                                 <li>
                                     <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('<b>@(item.<#= DisplayMember #>)</b>', @item.Id);">
-                                    @ActionStrings.Delete
-                                </a>
+                                        @ActionStrings.Delete
+                                    </a>
                                 </li>
                             }
 <# } #>
@@ -102,6 +103,7 @@ if (entitiesThisForCreate.Any())
 <#    foreach (var entity in entitiesThisForCreate)
     {#>
                                 <li>@Html.ActionLink(<#= EntityResource #>.Add<#= entity.Name #>, "Create", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id }, null)</li>
+                                <li>@Html.ActionLink(<#= EntityResource #>.<#= entity.Name #>, "Index", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id }, null)</li>
 <#  } #>
 <# } #>
                         </ul>

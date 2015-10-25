@@ -204,7 +204,7 @@ else
 <#  } else { #>
                 OnCreateSaved(entity);
 <#  } #>
-                return RedirectToAction(<#= Entity.AfterSaveRedirect #>);
+                return RedirectToAction(<#= Entity.CreateRedirect #>);
             }
 
             SetViewBags(<#= Entity.Name.ToCamelCase() #>);
@@ -260,7 +260,7 @@ else
 <#  } else { #>
                 OnEditSaved(entity);
 <#  } #>
-                return RedirectToAction(<#= Entity.AfterSaveRedirect #>);
+                return RedirectToAction(<#= Entity.EditRedirect #>);
             }
 
             SetViewBags(<#= Entity.Name.ToCamelCase() #>);

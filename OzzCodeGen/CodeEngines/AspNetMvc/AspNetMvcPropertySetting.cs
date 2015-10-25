@@ -130,6 +130,24 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private bool? _hasValidation;
         
 
+        public string UseForCreate
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_useForCreate))
+                {
+                    _useForCreate = GetUseForEdit();
+                }
+                return _useForCreate;
+            }
+            set
+            {
+                _useForCreate = value;
+                RaisePropertyChanged("UseForCreate");
+            }
+        }
+        private string _useForCreate;
+
         public string UseForEdit
         {
             get

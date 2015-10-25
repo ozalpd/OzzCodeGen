@@ -438,28 +438,42 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private bool? _editView;
 
         /// <summary>
-        /// After Saving in Edit & Create Actions RedirectToAction method parameter
+        /// After Saving in Create Actions RedirectToAction method parameter
         /// </summary>
-        public string AfterSaveRedirect
+        public string CreateRedirect
         {
             get
             {
-                if (string.IsNullOrEmpty(_afterSaveRedirect))
-                    SetAfterSaveRedirect();
-                return _afterSaveRedirect;
+                if (string.IsNullOrEmpty(_createRedirect))
+                    _createRedirect = "\"Index\"";
+                return _createRedirect;
             }
             set
             {
-                _afterSaveRedirect = value;
-                RaisePropertyChanged("AfterSaveRedirect");
+                _createRedirect = value;
+                RaisePropertyChanged("CreateRedirect");
             }
         }
-        private string _afterSaveRedirect;
+        private string _createRedirect;
 
-        private void SetAfterSaveRedirect()
+        /// <summary>
+        /// After Saving in Edit Action RedirectToAction method parameter
+        /// </summary>
+        public string EditRedirect
         {
-            _afterSaveRedirect = "\"Index\"";
+            get
+            {
+                if (string.IsNullOrEmpty(_editRedirect))
+                    _editRedirect = "\"Index\"";
+                return _editRedirect;
+            }
+            set
+            {
+                _editRedirect = value;
+                RaisePropertyChanged("EditRedirect");
+            }
         }
+        private string _editRedirect;
 
 
 

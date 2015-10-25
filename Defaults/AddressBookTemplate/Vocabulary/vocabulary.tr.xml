@@ -17,12 +17,20 @@
     <Translation>Kişi Ekle</Translation>
   </Vocab>
   <Vocab>
+    <Name>AddCountry</Name>
+    <Translation>Ülke Ekle</Translation>
+  </Vocab>
+  <Vocab>
     <Name>AddCustomer</Name>
     <Translation>Müşteri Ekle</Translation>
   </Vocab>
   <Vocab>
     <Name>AddNew</Name>
     <Translation>Yeni Ekle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddNewCity</Name>
+    <Translation>Yeni Şehir Ekle</Translation>
   </Vocab>
   <Vocab>
     <Name>AddNewCompany</Name>
@@ -33,12 +41,20 @@
     <Translation>Yeni Kişi Ekle</Translation>
   </Vocab>
   <Vocab>
+    <Name>AddNewCountry</Name>
+    <Translation>Yeni Ülke Ekle</Translation>
+  </Vocab>
+  <Vocab>
     <Name>AddNewCustomer</Name>
     <Translation>Yeni Müşteri Ekle</Translation>
   </Vocab>
   <Vocab>
     <Name>AddNewOrderItem</Name>
     <Translation>Yeni Sipariş Kalemi Ekle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddNewPerson</Name>
+    <Translation>Yeni Şahıs Ekle</Translation>
   </Vocab>
   <Vocab>
     <Name>AddNewProduct</Name>
@@ -53,12 +69,24 @@
     <Translation>Yeni Sipariş Ekle</Translation>
   </Vocab>
   <Vocab>
+    <Name>AddNewStore</Name>
+    <Translation>Yeni Mağaza Ekle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddNewStoreStaff</Name>
+    <Translation>Yeni Mağaza Personeli Ekle</Translation>
+  </Vocab>
+  <Vocab>
     <Name>AddNewSupplier</Name>
     <Translation>Yeni Tedarikçi Ekle</Translation>
   </Vocab>
   <Vocab>
     <Name>AddOrderItem</Name>
     <Translation>Sipariş Kalemi Ekle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddPerson</Name>
+    <Translation>Şahıs Ekle</Translation>
   </Vocab>
   <Vocab>
     <Name>AddProduct</Name>
@@ -83,6 +111,14 @@
   <Vocab>
     <Name>Address2</Name>
     <Translation>Adres Satır 2</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddStore</Name>
+    <Translation>Mağaza Ekle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>AddStoreStaff</Name>
+    <Translation>Mağaza Personeli Ekle</Translation>
   </Vocab>
   <Vocab>
     <Name>AddSupplier</Name>
@@ -149,6 +185,10 @@
     <Translation>Şehirler</Translation>
   </Vocab>
   <Vocab>
+    <Name>CitiesList</Name>
+    <Translation>Şehir Listesi</Translation>
+  </Vocab>
+  <Vocab>
     <Name>City</Name>
     <Translation>Şehir</Translation>
   </Vocab>
@@ -213,7 +253,23 @@
     <Translation>Kişi Listesi</Translation>
   </Vocab>
   <Vocab>
+    <Name>Countries</Name>
+    <Translation>Ülkeler</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CountriesList</Name>
+    <Translation>Ülke Listesi</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Country</Name>
+    <Translation>Ülke</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Country</Name>
+    <Translation>Ülke</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CountryId</Name>
     <Translation>Ülke</Translation>
   </Vocab>
   <Vocab>
@@ -225,6 +281,10 @@
     <Translation>Oluştur</Translation>
   </Vocab>
   <Vocab>
+    <Name>CreateCity</Name>
+    <Translation>Şehir Oluştur</Translation>
+  </Vocab>
+  <Vocab>
     <Name>CreateCompany</Name>
     <Translation>Şirket Oluştur</Translation>
   </Vocab>
@@ -233,8 +293,16 @@
     <Translation>Kişi Oluştur</Translation>
   </Vocab>
   <Vocab>
+    <Name>CreateCountry</Name>
+    <Translation>Ülke Oluştur</Translation>
+  </Vocab>
+  <Vocab>
     <Name>CreateCustomer</Name>
     <Translation>Müşteri Oluştur</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CreateCustomerAddress</Name>
+    <Translation>Müşteri Adresi Oluştur</Translation>
   </Vocab>
   <Vocab>
     <Name>CreateDate</Name>
@@ -253,6 +321,10 @@
     <Translation>Sipariş Kalemi Oluştur</Translation>
   </Vocab>
   <Vocab>
+    <Name>CreatePerson</Name>
+    <Translation>Şahıs Oluştur</Translation>
+  </Vocab>
+  <Vocab>
     <Name>CreateProduct</Name>
     <Translation>Ürün Oluştur</Translation>
   </Vocab>
@@ -263,6 +335,14 @@
   <Vocab>
     <Name>CreatePurchaseOrder</Name>
     <Translation>Sipariş Oluştur</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CreateStore</Name>
+    <Translation>Mağaza Oluştur</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CreateStoreStaff</Name>
+    <Translation>Mağaza Personeli Oluştur</Translation>
   </Vocab>
   <Vocab>
     <Name>CreateSupplier</Name>
@@ -279,6 +359,22 @@
   <Vocab>
     <Name>Customer</Name>
     <Translation>Müşteri</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CustomerAddress</Name>
+    <Translation>Müşteri Adresi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CustomerAddresses</Name>
+    <Translation>Müşteri Adresleri</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CustomerAddressesList</Name>
+    <Translation>Müşteri Adres Listesi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>CustomerAddressId</Name>
+    <Translation>Müşteri Adresi</Translation>
   </Vocab>
   <Vocab>
     <Name>CustomerCode</Name>
@@ -305,6 +401,10 @@
     <Translation>Sil</Translation>
   </Vocab>
   <Vocab>
+    <Name>DeleteCity</Name>
+    <Translation>Şehir Sil</Translation>
+  </Vocab>
+  <Vocab>
     <Name>DeleteCompany</Name>
     <Translation>Şirketi Sil</Translation>
   </Vocab>
@@ -313,8 +413,16 @@
     <Translation>Kişi Sil</Translation>
   </Vocab>
   <Vocab>
+    <Name>DeleteCountry</Name>
+    <Translation>Ülkeyi Sil</Translation>
+  </Vocab>
+  <Vocab>
     <Name>DeleteCustomer</Name>
     <Translation>Müşteri Sil</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>DeleteCustomerAddress</Name>
+    <Translation>Müşteri Adresini Sil</Translation>
   </Vocab>
   <Vocab>
     <Name>DeleteOrder</Name>
@@ -323,6 +431,10 @@
   <Vocab>
     <Name>DeleteOrderItem</Name>
     <Translation>Sipariş Kalemini Sil</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>DeletePerson</Name>
+    <Translation>Şahsı Sil</Translation>
   </Vocab>
   <Vocab>
     <Name>DeleteProduct</Name>
@@ -335,6 +447,14 @@
   <Vocab>
     <Name>DeletePurchaseOrder</Name>
     <Translation>Siparişi Sil</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>DeleteStore</Name>
+    <Translation>Mağazayı Sil</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>DeleteStoreStaff</Name>
+    <Translation>Mağaza Personelini Sil</Translation>
   </Vocab>
   <Vocab>
     <Name>DeleteSupplier</Name>
@@ -389,6 +509,10 @@
     <Translation>Düzenle</Translation>
   </Vocab>
   <Vocab>
+    <Name>EditCity</Name>
+    <Translation>Şehir Düzenle</Translation>
+  </Vocab>
+  <Vocab>
     <Name>EditCompany</Name>
     <Translation>Şirketi Düzenle</Translation>
   </Vocab>
@@ -397,8 +521,20 @@
     <Translation>Kişiyi Düzenle</Translation>
   </Vocab>
   <Vocab>
+    <Name>EditContact</Name>
+    <Translation>Kişiyi Düzenle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>EditCountry</Name>
+    <Translation>Ülkeyi Düzenle</Translation>
+  </Vocab>
+  <Vocab>
     <Name>EditCustomer</Name>
     <Translation>Müşteriyi Düzenle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>EditCustomerAddress</Name>
+    <Translation>Müşteri Adresini Düzenle</Translation>
   </Vocab>
   <Vocab>
     <Name>EditOrder</Name>
@@ -407,6 +543,10 @@
   <Vocab>
     <Name>EditOrderItem</Name>
     <Translation>Sipariş Kalemini Düzenle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>EditPerson</Name>
+    <Translation>Şahsı Düzenle</Translation>
   </Vocab>
   <Vocab>
     <Name>EditProduct</Name>
@@ -419,6 +559,14 @@
   <Vocab>
     <Name>EditPurchaseOrder</Name>
     <Translation>Siparişi Düzenle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>EditStore</Name>
+    <Translation>Mağazayı Düzenle</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>EditStoreStaff</Name>
+    <Translation>Mağaza Personelini Düzenle</Translation>
   </Vocab>
   <Vocab>
     <Name>EditSupplier</Name>
@@ -597,6 +745,10 @@
     <Translation>Notlar</Translation>
   </Vocab>
   <Vocab>
+    <Name>NumericIsoCode</Name>
+    <Translation>Sayısal Iso Kodu</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Often</Name>
     <Translation>Sık sık</Translation>
   </Vocab>
@@ -649,6 +801,18 @@
     <Translation>Parola</Translation>
   </Vocab>
   <Vocab>
+    <Name>Person</Name>
+    <Translation>Şahıs</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Persons</Name>
+    <Translation>Şahıslar</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>PersonsList</Name>
+    <Translation>Şahıs Listesi</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Phone</Name>
     <Translation>Telefon</Translation>
   </Vocab>
@@ -691,6 +855,22 @@
   <Vocab>
     <Name>PleaseWait</Name>
     <Translation>Lütfen Bekleyiniz</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>PositionX</Name>
+    <Translation>X Pozisyonu</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>PositionY</Name>
+    <Translation>Y Pozisyonu</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>PositionZ</Name>
+    <Translation>Z Pozisyonu</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Price</Name>
+    <Translation>Fiyat</Translation>
   </Vocab>
   <Vocab>
     <Name>Print</Name>
@@ -773,6 +953,18 @@
     <Translation>Çıkar</Translation>
   </Vocab>
   <Vocab>
+    <Name>RotationX</Name>
+    <Translation>X Dönüşü</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>RotationY</Name>
+    <Translation>Y Dönüşü</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>RotationZ</Name>
+    <Translation>Z Dönüşü</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Save</Name>
     <Translation>Kaydet</Translation>
   </Vocab>
@@ -813,12 +1005,44 @@
     <Translation>Eyalet</Translation>
   </Vocab>
   <Vocab>
+    <Name>Store</Name>
+    <Translation>Mağaza</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>StoreId</Name>
+    <Translation>Mağaza</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>Stores</Name>
+    <Translation>Mağazalar</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>StoresList</Name>
+    <Translation>Mağaza Listesi</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>StoreStaff</Name>
+    <Translation>Mağaza Personeli</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>StoreStaffs</Name>
+    <Translation>Mağaza Personelleri</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>StoreStaffsList</Name>
+    <Translation>Mağaza Personel Listesi</Translation>
+  </Vocab>
+  <Vocab>
     <Name>SubCategories</Name>
     <Translation>Alt Kategoriler</Translation>
   </Vocab>
   <Vocab>
     <Name>SubCategory</Name>
     <Translation>Alt Kategori</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>SubjectToVat</Name>
+    <Translation>KDV'ye Tabi</Translation>
   </Vocab>
   <Vocab>
     <Name>Supplier</Name>
@@ -849,6 +1073,10 @@
     <Translation>Vergi Dairesi</Translation>
   </Vocab>
   <Vocab>
+    <Name>ThreeLetterIsoCode</Name>
+    <Translation>Üç Harfli Iso Kodu</Translation>
+  </Vocab>
+  <Vocab>
     <Name>Title</Name>
     <Translation>Başlık</Translation>
   </Vocab>
@@ -863,6 +1091,10 @@
   <Vocab>
     <Name>Townships</Name>
     <Translation>İlçeler</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>TwoLetterIsoCode</Name>
+    <Translation>İki Harfli Iso Kodu</Translation>
   </Vocab>
   <Vocab>
     <Name>UnableToDelete</Name>
@@ -887,6 +1119,10 @@
   <Vocab>
     <Name>UserName</Name>
     <Translation>Kullanıcı Adı</Translation>
+  </Vocab>
+  <Vocab>
+    <Name>VAT</Name>
+    <Translation>KDV</Translation>
   </Vocab>
   <Vocab>
     <Name>Width</Name>
