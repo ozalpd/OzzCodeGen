@@ -68,9 +68,9 @@ namespace <#= CodeEngine.ControllersNamespace #>
             ViewBag.canUserDelete = await CanUserDelete();
         }
 		//If we forget to implement override methods, we will keep it secure.
-        protected virtual async Task<bool> CanUserCreate() { return false; }
-        protected virtual async Task<bool> CanUserEdit() { return false; }
-        protected virtual async Task<bool> CanUserDelete() { return false; }
+        protected virtual Task<bool> CanUserCreate() { return Task.FromResult(false); }
+        protected virtual Task<bool> CanUserEdit() { return Task.FromResult(false); }
+        protected virtual Task<bool> CanUserDelete() { return Task.FromResult(false); }
 
         protected virtual async Task<bool> IsUserAdminAsync()
         {
@@ -101,21 +101,33 @@ namespace <#= CodeEngine.ControllersNamespace #>
         bool? <#= varName #>;
 <#  } #>
 
-        #region Find Methods for Entities
+        #region Query Methods for Entity Types
 <#  foreach (var entity in CodeEngine.Entities.Where(e => !e.EntityDefinition.Abstract))
     {
 		var pkeyProperty = entity.GetPrimeryKey();
 		string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
 #>
 
+        /// <summary>
+        /// Finds an <#= entity.Name #> by PrimaryKey value
+        /// </summary>
+        /// <param name="id">Represents PrimaryKey of <#= entity.Name #>.<#= pKey #></param>
+        /// <returns></returns>
         protected virtual async Task<<#= entity.Name #>> FindAsync<#= entity.Name #>(int id)
         {
-            return await <#= dataContextIntance #>
-                            .Get<#= entity.Name #>Query()
+            return await Get<#= entity.Name #>Query()
                             .FirstOrDefaultAsync(x => x.<#= pKey #> == id);
         }
 
-		protected virtual void Set<#= entity.Name #>Defaults(<#= entity.Name #> <#= entity.Name.ToCamelCase() #>) { }
+        protected virtual IQueryable<<#= entity.Name #>> Get<#= entity.Name #>Query()
+		{
+		    return <#= dataContextIntance #>.Get<#= entity.Name #>Query();
+		}
+
+		protected virtual Task Set<#= entity.Name #>Defaults(<#= entity.Name #> <#= entity.Name.ToCamelCase() #>)
+        {
+            return Task.FromResult(default(object));
+        }
 <#  } #>
         #endregion
 <#  if (CodeEngine.GenerateDataContext)

@@ -390,17 +390,22 @@
                                               ToolTip="Overwrite existing file"/>
                                 </StackPanel>
                                 <TextBlock Text="Generate" TextAlignment="Center" Background="#D0FFFFFF"/>
-                                <CheckBox IsChecked="{Binding GenerateController}" Content="Controller"/>
-                                <CheckBox IsChecked="{Binding GenerateIndexAction}" Content="Index Action" />
-                                <CheckBox IsChecked="{Binding GenerateDetailsAction}" Content="Details Action" />
-                                <CheckBox IsChecked="{Binding GenerateCreateAction}" Content="Create Action"/>
-                                <CheckBox IsChecked="{Binding GenerateEditAction}" Content="Edit Action"/>
-                                <CheckBox IsChecked="{Binding GenerateDeleteAction}" Content="Delete Action" />
+                                <CheckBox IsChecked="{Binding GenerateController}" Content="Controller" ToolTip="Generate controller for this entity"/>
+                                <CheckBox IsChecked="{Binding GenerateGetQueryMethod}" Content="GetEntityQuery">
+                                    <CheckBox.ToolTip>
+                                        <TextBlock Text="{Binding Name, StringFormat='Generate Get\{0\}Query(QueryParameters qParams) method in controller'}"/>
+                                    </CheckBox.ToolTip>
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding GenerateIndexAction}" Content="Index Action" ToolTip="Generate Index action in controller"/>
+                                <CheckBox IsChecked="{Binding GenerateDetailsAction}" Content="Details Action" ToolTip="Generate Details action in controller"/>
+                                <CheckBox IsChecked="{Binding GenerateCreateAction}" Content="Create Action" ToolTip="Generate Create action in controller"/>
+                                <CheckBox IsChecked="{Binding GenerateEditAction}" Content="Edit Action" ToolTip="Generate Edit action in controller"/>
+                                <CheckBox IsChecked="{Binding GenerateDeleteAction}" Content="Delete Action" ToolTip="Generate Delete action in controller"/>
                                 <TextBlock Height="2" Margin="2"/>
-                                <CheckBox IsChecked="{Binding IndexView}" Content="Index View" />
-                                <CheckBox IsChecked="{Binding DetailsView}" Content="Details View" />
-                                <CheckBox IsChecked="{Binding CreateView}" Content="Create View"/>
-                                <CheckBox IsChecked="{Binding EditView}" Content="Edit View"/>
+                                <CheckBox IsChecked="{Binding IndexView}" Content="Index View" ToolTip="Generate Index view"/>
+                                <CheckBox IsChecked="{Binding DetailsView}" Content="Details View" ToolTip="Generate Details view"/>
+                                <CheckBox IsChecked="{Binding CreateView}" Content="Create View" ToolTip="Generate Create view"/>
+                                <CheckBox IsChecked="{Binding EditView}" Content="Edit View" ToolTip="Generate Edit view"/>
                             </StackPanel>
                         </Border>
                         <Border Grid.Column="1">
@@ -449,6 +454,8 @@
                         </Border>
                         <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2,4,2,0">
                             <StackPanel>
+                                <TextBlock Text="FillSelectLists Method Name(s)" ToolTip="In Create &amp; Edit actions method or methods for preparing SelectLists"/>
+                                <TextBox Text="{Binding FillSelectListsMethod}"/>
                                 <TextBlock Text="Create Action Redirect" ToolTip="Where to redirect at the end of CreateAction"/>
                                 <TextBox Text="{Binding CreateRedirect}"/>
                                 <TextBlock Text="Edit Action Redirect" ToolTip="Where to redirect at the end of EditAction"/>

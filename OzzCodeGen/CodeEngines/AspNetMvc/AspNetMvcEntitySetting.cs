@@ -281,6 +281,23 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private bool? _generateController;
 
+
+        public bool GenerateGetQueryMethod
+        {
+            get
+            {
+                if (_generateGetQueryMethod == null)
+                    _generateGetQueryMethod = true;
+                return _generateGetQueryMethod.Value;
+            }
+            set
+            {
+                _generateGetQueryMethod = value;
+                RaisePropertyChanged("GenerateGetQueryMethod");
+            }
+        }
+        private bool? _generateGetQueryMethod;
+
         public bool GenerateIndexAction
         {
             get
@@ -476,6 +493,21 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private string _editRedirect;
 
 
+        public string FillSelectListsMethod
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_fillSelectListsMethod))
+                    _fillSelectListsMethod = AspNetMvcEngine.FillSelectListsMethodDefaultName;
+                return _fillSelectListsMethod;
+            }
+            set
+            {
+                _fillSelectListsMethod = value;
+                RaisePropertyChanged("FillSelectListsMethod");
+            }
+        }
+        private string _fillSelectListsMethod;
 
         /// <summary>
         /// Base controller class for MVC Controller
@@ -526,6 +558,30 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             else
             {
                 return DataSetName;
+            }
+        }
+
+        public string[] GetFillSelectListsMethods()
+        {
+            var methods = FillSelectListsMethod.Split(';');
+            return (from m in methods
+                    select m.Trim())
+                   .ToArray();
+        }
+
+        public string GetMethodCall(string methodName)
+        {
+            string method = methodName.Trim();
+            if (string.IsNullOrEmpty(method))
+                return string.Empty;
+
+            if (method.Contains("(") && method.EndsWith(")"))
+            {
+                return method + ";";
+            }
+            else
+            {
+                return string.Format("{0}({1});", method, Name.ToCamelCase());
             }
         }
 

@@ -38,7 +38,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                     .FirstOrDefault(e => e.EntityDefinition.Name.Equals(complexProp.PropertyDefinition.TypeName));
         }
 
-        #region Helpers for Athorization
+        #region Helpers for Authorization
         public void SetRolesToControllers()
         {
             foreach (var item in Entities)

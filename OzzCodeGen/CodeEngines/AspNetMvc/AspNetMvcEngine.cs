@@ -23,6 +23,8 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get { return "ASP.NET MVC Controller & View Generator"; }
         }
 
+        public static string FillSelectListsMethodDefaultName = "SetSelectLists";
+
         [XmlIgnore]
         public static string DefaultFileName { get { return "AspNetMvcGen.settings"; } }
         public override string GetDefaultFileName()
