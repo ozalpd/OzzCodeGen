@@ -5,6 +5,7 @@ using OzzLocalization.Wpf.ViewModels;
 using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace OzzLocalization.Wpf
 {
@@ -17,6 +18,11 @@ namespace OzzLocalization.Wpf
         {
             InitializeComponent();
             Settings.MainWindowPosition.SetWindowPositions(this);
+
+            //var tmrFocus = new DispatcherTimer();
+            //var interval = new TimeSpan(0, 0, 0, 0, 200);
+            //tmrFocus.Interval = interval;
+            //tmrFocus.Start();
         }
 
         private void Window_Activated(object sender, EventArgs e)
@@ -78,6 +84,17 @@ namespace OzzLocalization.Wpf
         private void btnFilter_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.SetSelectedVocabulary();
+        }
+
+        private void txtFilter_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Return)
+            {
+                btnFilter.Focus();
+                ViewModel.SetSelectedVocabulary();
+                txtFilter.Focus();
+                txtFilter.SelectAll();
+            }
         }
     }
 }

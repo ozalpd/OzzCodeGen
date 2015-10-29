@@ -267,7 +267,7 @@ namespace ");
             this.Write("Defaults(");
             
             #line 127 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(entity.ModelForCreate));
             
             #line default
             #line hidden

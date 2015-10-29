@@ -568,8 +568,12 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                     select m.Trim())
                    .ToArray();
         }
-
         public string GetMethodCall(string methodName)
+        {
+            return GetMethodCall(methodName, Name);
+        }
+
+        public string GetMethodCall(string methodName, string viewModelName)
         {
             string method = methodName.Trim();
             if (string.IsNullOrEmpty(method))
@@ -579,9 +583,13 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 return method + ";";
             }
-            else
+            else if(viewModelName.Equals(Name))
             {
                 return string.Format("{0}({1});", method, Name.ToCamelCase());
+            }
+            else
+            {
+                return string.Format("{0}({1}.To{2}());", method, Name.ToCamelCase(), Name);
             }
         }
 

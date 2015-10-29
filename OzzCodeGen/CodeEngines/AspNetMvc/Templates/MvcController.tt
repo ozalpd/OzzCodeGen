@@ -20,6 +20,9 @@ var fkeyProperties = Entity.DisplayColumns.Where(e => (e.InCreateView | e.InEdit
 var strongForeignEntity = Entity.StrongForeignEntity;
 var strongProperty = Entity.StrongForeignKeyProperty;
 var foreignDependentProperty = Entity.GetForeignDependentProperty(strongProperty);
+var strongForeignPKeyProperty = Entity.StrongForeignEntity==null ? null : Entity.StrongForeignEntity.GetPrimeryKey();
+string strongForeignPKey = strongForeignPKeyProperty==null ? "Id" : strongForeignPKeyProperty.Name;  
+
 string[] createRoles = Entity.RolesCanCreateToArray();
 string[] editRoles = Entity.RolesCanEditToArray();
 string[] deleteRoles = Entity.RolesCanDeleteToArray();
@@ -173,13 +176,13 @@ else
                 var <#= foreignDependentProperty.Name.ToCamelCase() #> = await FindAsync<#= strongForeignEntity.Name #>(<#= strongProperty.Name.ToCamelCase() #><# if(strongProperty.IsSimple) { #>.Value<# } #>);
                 if (<#= foreignDependentProperty.Name.ToCamelCase() #> == null)
                     return HttpNotFound();
-                <#= Entity.Name.ToCamelCase() #>.<#= foreignDependentProperty #> = <#= foreignDependentProperty.Name.ToCamelCase() #>;
+                <#= Entity.Name.ToCamelCase() #>.<#= strongProperty #> = <#= foreignDependentProperty.Name.ToCamelCase() #>.<#= strongForeignPKey #>;
             }
 <#  } #>
             await Set<#= Entity.Name #>Defaults(<#= Entity.Name.ToCamelCase() #>);
 <#  foreach (var item in fillSelectListsMethods)
     {  #>
-            <#= Entity.GetMethodCall(item) #>
+            <#= Entity.GetMethodCall(item, Entity.ModelForCreate) #>
 <#  } #>
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
@@ -218,7 +221,7 @@ else
 
 <#  foreach (var item in fillSelectListsMethods)
     {  #>
-            <#= Entity.GetMethodCall(item) #>
+            <#= Entity.GetMethodCall(item, Entity.ModelForCreate) #>
 <#  } #>
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
@@ -246,7 +249,7 @@ else
 <#  } #>
 <#  foreach (var item in fillSelectListsMethods)
     {  #>
-            <#= Entity.GetMethodCall(item) #>
+            <#= Entity.GetMethodCall(item, Entity.ModelForEdit) #>
 <#  } #>
             return View(<#= instanceName #>);
         }
@@ -279,7 +282,7 @@ else
 
 <#  foreach (var item in fillSelectListsMethods)
     {  #>
-            <#= Entity.GetMethodCall(item) #>
+            <#= Entity.GetMethodCall(item, Entity.ModelForEdit) #>
 <#  } #>
             return View(<#= Entity.Name.ToCamelCase() #>);
         }

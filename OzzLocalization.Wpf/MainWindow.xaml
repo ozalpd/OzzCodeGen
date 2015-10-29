@@ -21,12 +21,12 @@
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="320"/>
-            <ColumnDefinition Width="*" MinWidth="320"/>
+            <ColumnDefinition Width="3*" MinWidth="320"/>
+            <ColumnDefinition Width="2*" MinWidth="320"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="32" />
-            <RowDefinition Height="32" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="*" />
             <RowDefinition Height="24" />
         </Grid.RowDefinitions>
@@ -67,7 +67,7 @@
             </ComboBox>
             <Button Name="btnFilter" Content="Filter" Margin="6,4,2,4" Width="60" Click="btnFilter_Click"/>
             <TextBlock Text="By Text:" Margin="6,8,2,6"/>
-            <TextBox Text="{Binding FilterByAnyString}" Margin="6,4,2,4" Width="80"/>
+            <TextBox Name="txtFilter" Text="{Binding FilterByAnyString}" Margin="6,4,2,4" Width="80" KeyDown="txtFilter_KeyDown"/>
             <!--
             <TextBlock Text="By Name:" Margin="6,8,2,6"/>
             <TextBox Text="{Binding FilterByName}" Margin="6,4,2,4" Width="80"/>
@@ -92,7 +92,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Translation" Width="120">
+                <DataGridTemplateColumn Header="Translation" Width="180">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Translation}"

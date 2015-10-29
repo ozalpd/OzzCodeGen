@@ -13,8 +13,9 @@ var properties = CreateForm ?
         Entity.DisplayColumns.Where(e => e.InCreateView) :
         Entity.DisplayColumns.Where(e => e.InEditView);
 
+string modelName = CreateForm ? Entity.ModelForCreate : Entity.ModelForEdit;
 WriteUsingNamespaces(); #>
-@model <#= Entity.ModelForEdit #>
+@model <#= modelName #>
 @{
 <#  if(CreateForm)
     { #>

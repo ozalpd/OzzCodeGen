@@ -124,7 +124,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
 		    return <#= dataContextIntance #>.Get<#= entity.Name #>Query();
 		}
 
-		protected virtual Task Set<#= entity.Name #>Defaults(<#= entity.Name #> <#= entity.Name.ToCamelCase() #>)
+		protected virtual Task Set<#= entity.Name #>Defaults(<#= entity.ModelForCreate #> <#= entity.Name.ToCamelCase() #>)
         {
             return Task.FromResult(default(object));
         }
