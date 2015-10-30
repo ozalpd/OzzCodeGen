@@ -160,8 +160,11 @@ else
         <#= CanEditAttrib #>
 <#  if (strongForeignEntity != null)
     {
+        if (string.IsNullOrEmpty(Entity.Area))
+        {
  #>
         [Route("<#= Entity.ControllerName #>/Create/{<#= strongProperty.Name.ToCamelCase() #>:<#= strongProperty.GetNullableTypeName() #>}")]
+<#      } #>
         public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>)  //GET: /<#= Entity.ControllerName #>/Create
 <#  } else { #>
         public async Task<ActionResult> Create()  //GET: /<#= Entity.ControllerName #>/Create
@@ -191,9 +194,12 @@ else
         <#= CanEditAttrib #>
         [ValidateAntiForgeryToken]
 <#  if (strongForeignEntity != null)
-    {    //TODO: Improve Route attirbute logic for fkey string types
+    {
+        if (string.IsNullOrEmpty(Entity.Area))
+        {
  #>
         [Route("<#= Entity.ControllerName #>/Create/{<#= strongProperty.Name.ToCamelCase() #>:<#= strongProperty.GetNullableTypeName() #>}")]
+<#      } #>
         public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>, <#= Entity.ModelForCreate #> <#= Entity.Name.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
 <#  } else { #>
         public async Task<ActionResult> Create(<#= Entity.ModelForCreate #> <#= Entity.Name.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
