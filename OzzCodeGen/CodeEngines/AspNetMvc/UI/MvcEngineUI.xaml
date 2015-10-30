@@ -369,11 +369,12 @@
                                 <Setter Property="Margin" Value="0,0,1,0"/>
                             </Style>
                             <Style TargetType="CheckBox">
-                                <Setter Property="Margin" Value="2"/>
+                                <Setter Property="Margin" Value="5,2,0,2"/>
                             </Style>
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="128"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
@@ -381,13 +382,17 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Border>
+                        <Border Grid.RowSpan="2">
                             <StackPanel>
                                 <StackPanel Background="#FFFFB040">
-                                    <TextBlock Text="Target File" TextAlignment="Center" Background="#D0FFFFFF" Margin="0"/>
+                                    <TextBlock Text="Target File"
+                                               TextAlignment="Center"
+                                               Padding="2" Margin="0" Height="20"
+                                               Background="#FFFFDA80"/>
                                     <CheckBox IsChecked="{Binding OverwriteExisting}"
                                               Content="Overwrite"
-                                              ToolTip="Overwrite existing file"/>
+                                              ToolTip="Overwrite existing file"
+                                              VerticalAlignment="Center"/>
                                 </StackPanel>
                                 <TextBlock Text="Generate" TextAlignment="Center" Background="#D0FFFFFF"/>
                                 <CheckBox IsChecked="{Binding GenerateController}" Content="Controller" ToolTip="Generate controller for this entity"/>
@@ -410,7 +415,11 @@
                         </Border>
                         <Border Grid.Column="1">
                             <StackPanel>
-                                <TextBlock Text="Roles Can View" Margin="0"/>
+                                <TextBlock Text="Authorization Roles"
+                                           TextAlignment="Center"
+                                           Padding="4, 12" Margin="0" Height="40"
+                                           Background="#FFFFDA80"/>
+                                <TextBlock Text="Roles Can View"/>
                                 <TextBox Text="{Binding RolesCanView}"/>
                                 <TextBlock Text="Roles Can Create"/>
                                 <TextBox Text="{Binding RolesCanCreate}"/>
@@ -418,43 +427,52 @@
                                 <TextBox Text="{Binding RolesCanEdit}"/>
                                 <TextBlock Text="Roles Can Delete"/>
                                 <TextBox Text="{Binding RolesCanDelete}"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="2">
+                            <StackPanel>
+                                <TextBlock Text="Area" ToolTip="Area of views &amp; controllers" Margin="0"/>
+                                <TextBox Text="{Binding Area}" ToolTip="Area of views &amp; controllers"/>
+
+                                <TextBlock Text="Controller Name"/>
+                                <TextBox Text="{Binding ControllerName}"/>
+
+                                <TextBlock Text="Controller Base" ToolTip="Base class for controller to generated."/>
+                                <TextBox Text="{Binding BaseControllerName}" ToolTip="Base class for controller to generated."/>
+
+                                <TextBlock Text="Edit Model Class" ToolTip="Model class for Edit action."/>
+                                <TextBox Text="{Binding ModelForEdit}" ToolTip="Model class or ViewModel for Edit action."/>
+
+                                <TextBlock Text="Create Model Class" ToolTip="Model class for Create action."/>
+                                <TextBox Text="{Binding ModelForCreate}" ToolTip="Model class or ViewModel for Create action."/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="3">
+                            <StackPanel>
+                                <TextBlock Text="Dataset Name" ToolTip="Dataset for entity" Margin="0"/>
+                                <TextBox Text="{Binding DataSetName}" ToolTip="Dataset for entity"/>
 
                                 <TextBlock Text="Save Parameter">
                                     <TextBlock.ToolTip>
                                         <TextBlock Text="{Binding CodeEngine.DataContextInstance, StringFormat='Parameter for Save and SaveAsync methods of \{0\} property'}"/>
                                     </TextBlock.ToolTip>
-                                    </TextBlock>
+                                            </TextBlock>
                                 <TextBox Text="{Binding SaveParameter}">
                                     <TextBox.ToolTip>
                                         <TextBlock Text="{Binding CodeEngine.DataContextInstance, StringFormat='Parameter for Save and SaveAsync methods of \{0\} property'}"/>
                                     </TextBox.ToolTip>
                                 </TextBox>
-                            </StackPanel>
-                        </Border>
-                        <Border Grid.Column="2">
-                            <StackPanel>
-                                <TextBlock Text="Edit Model Class" ToolTip="Model class for Edit action." Margin="0"/>
-                                <TextBox Text="{Binding ModelForEdit}" ToolTip="Model class or ViewModel for Edit action."/>
-
-                                <TextBlock Text="Create Model Class" ToolTip="Model class for Create action." Margin="0"/>
-                                <TextBox Text="{Binding ModelForCreate}" ToolTip="Model class or ViewModel for Create action."/>
-
-                                <TextBlock Text="Controller Base" ToolTip="Base class for controller to generated."/>
-                                <TextBox Text="{Binding BaseControllerName}" ToolTip="Base class for controller to generated."/>
-
-                                <TextBlock Text="Controller Name"/>
-                                <TextBox Text="{Binding ControllerName}"/>
-
-                                <TextBlock Text="Dataset Name" ToolTip="Dataset for entity"/>
-                                <TextBox Text="{Binding DataSetName}" ToolTip="Dataset for entity"/>
 
                                 <TextBlock Text="Strong Depended ForeignKey" ToolTip="ForeignKey may be used in Create action"/>
                                 <TextBox Text="{Binding StrongDependedForeignKey}" ToolTip="ForeignKey may be used in Create action"/>
                             </StackPanel>
                         </Border>
-                        <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2,4,2,0">
+                        <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="2,4,2,0">
                             <StackPanel>
-                                <TextBlock Text="FillSelectLists Method Name(s)" ToolTip="In Create &amp; Edit actions method or methods for preparing SelectLists"/>
+                                <TextBlock Text="FillSelectLists Method Name(s)"
+                                           ToolTip="In Create &amp; Edit actions method or methods for preparing SelectLists"
+                                           Margin="0"/>
                                 <TextBox Text="{Binding FillSelectListsMethod}"/>
                                 <TextBlock Text="Create Action Redirect" ToolTip="Where to redirect at the end of CreateAction"/>
                                 <TextBox Text="{Binding CreateRedirect}"/>

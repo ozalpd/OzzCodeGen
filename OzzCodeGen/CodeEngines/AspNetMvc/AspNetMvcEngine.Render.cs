@@ -63,7 +63,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             string fileName;
             if (template is MvcController)
             {
-                fileName = Path.Combine(TargetControllersDir, template.GetDefaultFileName());
+                fileName = ((MvcController)template).GetDefaultFilePath();
             }
             else if (template is AbstractMvcView)
             {

@@ -12,10 +12,10 @@ namespace <#= CodeEngine.ModelsNamespace #>
 {
     public static partial class SecurityRoles
     {
-        public static string Admin = "<#= CodeEngine.AdminRole #>";
+        public const string Admin = "<#= CodeEngine.AdminRole #>";
 <#  foreach (var role in roles)
         { #>
-        public static string <#= role.ToPascalCase() #> = "<#= role #>";
+        public const string <#= role.ToPascalCase() #> = "<#= role #>";
 <#  } #>
     }
 }

@@ -455,6 +455,40 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private bool? _editView;
 
         /// <summary>
+        /// Base controller class for MVC Controller
+        /// </summary>
+        public string BaseControllerName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_baseControllerName))
+                {
+                    _baseControllerName = CodeEngine.BaseControllerName;
+                }
+                return _baseControllerName;
+            }
+            set
+            {
+                _baseControllerName = value != null ? value.ToPascalCase() : string.Empty;
+                RaisePropertyChanged("BaseControllerName");
+            }
+        }
+        private string _baseControllerName;
+
+
+        public string Area
+        {
+            set
+            {
+                _area = value != null ? value.ToPascalCase() : string.Empty;
+                RaisePropertyChanged("Area");
+            }
+            get { return _area; }
+        }
+        private string _area;
+
+
+        /// <summary>
         /// After Saving in Create Actions RedirectToAction method parameter
         /// </summary>
         public string CreateRedirect
@@ -508,27 +542,6 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
         }
         private string _fillSelectListsMethod;
-
-        /// <summary>
-        /// Base controller class for MVC Controller
-        /// </summary>
-        public string BaseControllerName
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_baseControllerName))
-                {
-                    _baseControllerName = CodeEngine.BaseControllerName;
-                }
-                return _baseControllerName;
-            }
-            set
-            {
-                _baseControllerName = value != null ? value.ToPascalCase() : string.Empty;
-                RaisePropertyChanged("BaseControllerName");
-            }
-        }
-        private string _baseControllerName;
 
 
         private string GetDataSetName()

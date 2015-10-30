@@ -45,8 +45,8 @@ var roles = CodeEngine.SecurityRoles.Where(r => !r.Equals(CodeEngine.AdminRole))
             
             #line default
             #line hidden
-            this.Write("\r\n{\r\n    public static partial class SecurityRoles\r\n    {\r\n        public static " +
-                    "string Admin = \"");
+            this.Write("\r\n{\r\n    public static partial class SecurityRoles\r\n    {\r\n        public const s" +
+                    "tring Admin = \"");
             
             #line 15 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcSecurityRoles.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.AdminRole));
@@ -61,7 +61,7 @@ var roles = CodeEngine.SecurityRoles.Where(r => !r.Equals(CodeEngine.AdminRole))
             
             #line default
             #line hidden
-            this.Write("        public static string ");
+            this.Write("        public const string ");
             
             #line 18 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcSecurityRoles.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(role.ToPascalCase()));

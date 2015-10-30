@@ -31,7 +31,7 @@ string [] fillSelectListsMethods = Entity.GetFillSelectListsMethods();
 
 WriteUsingNamespaces(); #>
 
-namespace <#= CodeEngine.ControllersNamespace #>
+namespace <#= NamespaceName #>
 {
     public partial class <#= Entity.ControllerName #>Controller<# if (!CustomFile){ #> : <#= Entity.BaseControllerName #><# } #> 
     {

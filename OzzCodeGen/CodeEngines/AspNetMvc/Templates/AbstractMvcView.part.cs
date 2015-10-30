@@ -84,7 +84,19 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 
         public virtual string GetDefaultFilePath()
         {
-            return Path.Combine(Entity.CodeEngine.TargetViewsDir, Entity.ControllerName, GetDefaultFileName());
+            if (string.IsNullOrEmpty(Entity?.Area))
+            {
+                return Path.Combine(Entity.CodeEngine.TargetViewsDir, Entity.ControllerName, GetDefaultFileName());
+            }
+            else
+            {
+                return Path.Combine(Entity.CodeEngine.TargetDirectory,
+                                    "Areas",
+                                    Entity.Area,
+                                    Entity.CodeEngine.TargetViewsFolder,
+                                    Entity.ControllerName,
+                                    GetDefaultFileName());
+            }
         }
     }
 }
