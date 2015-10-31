@@ -588,6 +588,11 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
 
         public string GetMethodCall(string methodName, string viewModelName)
         {
+            return GetMethodCall(methodName, viewModelName, string.Empty);
+        }
+
+        public string GetMethodCall(string methodName, string viewModelName, string instanceName)
+        {
             string method = methodName.Trim();
             if (string.IsNullOrEmpty(method))
                 return string.Empty;
@@ -596,13 +601,20 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 return method + ";";
             }
-            else if(viewModelName.Equals(Name))
-            {
-                return string.Format("{0}({1});", method, Name.ToCamelCase());
-            }
             else
             {
-                return string.Format("{0}({1}.To{2}());", method, Name.ToCamelCase(), Name);
+                string instance;
+                if (viewModelName.Equals(Name))
+                {
+                    instance = string.IsNullOrEmpty(instanceName) ? Name.ToCamelCase() : instanceName;
+                }
+                else
+                {
+                    instance = string.IsNullOrEmpty(instanceName) ?
+                                string.Format("{0}.To{1}()", viewModelName.ToCamelCase(), Name) :
+                                instanceName;
+                }
+                return string.Format("{0}({1});", method, instance);
             }
         }
 

@@ -473,7 +473,7 @@ else
             this.Write("        [HttpGet]\r\n        ");
             
             #line 160 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CanEditAttrib));
+            this.Write(this.ToStringHelper.ToStringWithCulture(CanCreateAttrib));
             
             #line default
             #line hidden
@@ -561,7 +561,7 @@ else
             this.Write("        {\r\n            var ");
             
             #line 173 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate.ToCamelCase()));
             
             #line default
             #line hidden
@@ -665,7 +665,7 @@ else
             this.Write(" == null)\r\n                    return HttpNotFound();\r\n                ");
             
             #line 182 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate.ToCamelCase()));
             
             #line default
             #line hidden
@@ -707,7 +707,7 @@ else
             this.Write("Defaults(");
             
             #line 185 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate.ToCamelCase()));
             
             #line default
             #line hidden
@@ -736,14 +736,14 @@ else
             this.Write("            return View(");
             
             #line 190 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n        }\r\n\r\n        [HttpPost]\r\n        ");
             
             #line 194 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CanEditAttrib));
+            this.Write(this.ToStringHelper.ToStringWithCulture(CanCreateAttrib));
             
             #line default
             #line hidden
@@ -810,7 +810,7 @@ else
             this.Write(" ");
             
             #line 203 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate.ToCamelCase()));
             
             #line default
             #line hidden
@@ -838,7 +838,7 @@ else
             this.Write(" ");
             
             #line 205 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate.ToCamelCase()));
             
             #line default
             #line hidden
@@ -866,7 +866,7 @@ else
             this.Write(".SetInsertDefaults(");
             
             #line 208 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate.ToCamelCase()));
             
             #line default
             #line hidden
@@ -874,7 +874,7 @@ else
                     "nCreateSaving(");
             
             #line 212 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate.ToCamelCase()));
             
             #line default
             #line hidden
@@ -902,7 +902,7 @@ else
             this.Write(".Add(");
             
             #line 214 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate.ToCamelCase()));
             
             #line default
             #line hidden
@@ -916,7 +916,7 @@ else
             this.Write("                var entity = ");
             
             #line 216 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate.ToCamelCase()));
             
             #line default
             #line hidden
@@ -972,7 +972,7 @@ else
             this.Write(" \r\n                OnCreateSaved(");
             
             #line 221 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate.ToCamelCase()));
             
             #line default
             #line hidden
@@ -1022,7 +1022,7 @@ else
             this.Write("            return View(");
             
             #line 232 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate.ToCamelCase()));
             
             #line default
             #line hidden
@@ -1131,7 +1131,7 @@ else
             this.Write("            ");
             
             #line 258 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.GetMethodCall(item, Entity.ModelForEdit)));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.GetMethodCall(item, Entity.ModelForEdit, Entity.Name.ToCamelCase())));
             
             #line default
             #line hidden
@@ -1167,7 +1167,7 @@ else
             this.Write(" ");
             
             #line 266 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit.ToCamelCase()));
             
             #line default
             #line hidden
@@ -1188,7 +1188,7 @@ else
             this.Write(".SetInsertDefaults(");
             
             #line 268 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit.ToCamelCase()));
             
             #line default
             #line hidden
@@ -1196,7 +1196,7 @@ else
                     "nEditSaving(");
             
             #line 272 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit.ToCamelCase()));
             
             #line default
             #line hidden
@@ -1232,7 +1232,7 @@ else
             this.Write("                var entity = ");
             
             #line 277 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit.ToCamelCase()));
             
             #line default
             #line hidden
@@ -1331,7 +1331,7 @@ else
             this.Write("            return View(");
             
             #line 293 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit.ToCamelCase()));
             
             #line default
             #line hidden

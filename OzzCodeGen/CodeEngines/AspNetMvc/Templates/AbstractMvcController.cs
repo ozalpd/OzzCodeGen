@@ -63,6 +63,14 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             return namespaces;
         }
 
+        public string CanCreateAttrib
+        {
+            get
+            {
+                return CodeEngine.GetAuthorizeAttrib(Entity.RolesCanCreate);
+            }
+        }
+
         public string CanEditAttrib
         {
             get

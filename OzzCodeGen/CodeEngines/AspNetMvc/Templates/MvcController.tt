@@ -157,7 +157,7 @@ else
 <#  } #>
 <# if (Entity.GenerateCreateAction){ #>
         [HttpGet]
-        <#= CanEditAttrib #>
+        <#= CanCreateAttrib #>
 <#  if (strongForeignEntity != null)
     {
         if (string.IsNullOrEmpty(Entity.Area))
@@ -170,7 +170,7 @@ else
         public async Task<ActionResult> Create()  //GET: /<#= Entity.ControllerName #>/Create
 <#  } #>
         {
-            var <#= Entity.Name.ToCamelCase() #> = new <#= Entity.ModelForCreate #>();
+            var <#= Entity.ModelForCreate.ToCamelCase() #> = new <#= Entity.ModelForCreate #>();
 <#  if (strongForeignEntity != null)
     { 
         bool isString = strongProperty.IsString;#>
@@ -179,19 +179,19 @@ else
                 var <#= foreignDependentProperty.Name.ToCamelCase() #> = await FindAsync<#= strongForeignEntity.Name #>(<#= strongProperty.Name.ToCamelCase() #><# if(strongProperty.IsSimple) { #>.Value<# } #>);
                 if (<#= foreignDependentProperty.Name.ToCamelCase() #> == null)
                     return HttpNotFound();
-                <#= Entity.Name.ToCamelCase() #>.<#= strongProperty #> = <#= foreignDependentProperty.Name.ToCamelCase() #>.<#= strongForeignPKey #>;
+                <#= Entity.ModelForCreate.ToCamelCase() #>.<#= strongProperty #> = <#= foreignDependentProperty.Name.ToCamelCase() #>.<#= strongForeignPKey #>;
             }
 <#  } #>
-            await Set<#= Entity.Name #>Defaults(<#= Entity.Name.ToCamelCase() #>);
+            await Set<#= Entity.Name #>Defaults(<#= Entity.ModelForCreate.ToCamelCase() #>);
 <#  foreach (var item in fillSelectListsMethods)
     {  #>
             <#= Entity.GetMethodCall(item, Entity.ModelForCreate) #>
 <#  } #>
-            return View(<#= Entity.Name.ToCamelCase() #>);
+            return View(<#= Entity.ModelForCreate.ToCamelCase() #>);
         }
 
         [HttpPost]
-        <#= CanEditAttrib #>
+        <#= CanCreateAttrib #>
         [ValidateAntiForgeryToken]
 <#  if (strongForeignEntity != null)
     {
@@ -200,25 +200,25 @@ else
  #>
         [Route("<#= Entity.ControllerName #>/Create/{<#= strongProperty.Name.ToCamelCase() #>:<#= strongProperty.GetNullableTypeName() #>}")]
 <#      } #>
-        public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>, <#= Entity.ModelForCreate #> <#= Entity.Name.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
+        public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>, <#= Entity.ModelForCreate #> <#= Entity.ModelForCreate.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
 <#  } else { #>
-        public async Task<ActionResult> Create(<#= Entity.ModelForCreate #> <#= Entity.Name.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
+        public async Task<ActionResult> Create(<#= Entity.ModelForCreate #> <#= Entity.ModelForCreate.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
 <#  } #>
         {
-            <#= dataContextIntance #>.SetInsertDefaults(<#= Entity.Name.ToCamelCase() #>, this);
+            <#= dataContextIntance #>.SetInsertDefaults(<#= Entity.ModelForCreate.ToCamelCase() #>, this);
 
             if (ModelState.IsValid)
             {
-                OnCreateSaving(<#= Entity.Name.ToCamelCase() #>);
+                OnCreateSaving(<#= Entity.ModelForCreate.ToCamelCase() #>);
 <#  if(Entity.ModelForCreate == Entity.Name) {#> 
-                <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(<#= Entity.Name.ToCamelCase() #>);
+                <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(<#= Entity.ModelForCreate.ToCamelCase() #>);
 <#  } else { #>
-                var entity = <#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>();
+                var entity = <#= Entity.ModelForCreate.ToCamelCase() #>.To<#= Entity.Name #>();
                 <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(entity);
 <#  } #>
                 await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
 <#  if(Entity.ModelForCreate == Entity.Name) {#> 
-                OnCreateSaved(<#= Entity.Name.ToCamelCase() #>);
+                OnCreateSaved(<#= Entity.ModelForCreate.ToCamelCase() #>);
 <#  } else { #>
                 OnCreateSaved(entity);
 <#  } #>
@@ -229,7 +229,7 @@ else
     {  #>
             <#= Entity.GetMethodCall(item, Entity.ModelForCreate) #>
 <#  } #>
-            return View(<#= Entity.Name.ToCamelCase() #>);
+            return View(<#= Entity.ModelForCreate.ToCamelCase() #>);
         }
 
 <#  } #>
@@ -255,7 +255,7 @@ else
 <#  } #>
 <#  foreach (var item in fillSelectListsMethods)
     {  #>
-            <#= Entity.GetMethodCall(item, Entity.ModelForEdit) #>
+            <#= Entity.GetMethodCall(item, Entity.ModelForEdit, Entity.Name.ToCamelCase()) #>
 <#  } #>
             return View(<#= instanceName #>);
         }
@@ -263,18 +263,18 @@ else
         <#= CanEditAttrib #>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Edit/5
+        public async Task<ActionResult> Edit(<#= Entity.ModelForEdit #> <#= Entity.ModelForEdit.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Edit/5
         {
-            <#= dataContextIntance #>.SetInsertDefaults(<#= Entity.Name.ToCamelCase() #>, this);
+            <#= dataContextIntance #>.SetInsertDefaults(<#= Entity.ModelForEdit.ToCamelCase() #>, this);
 
             if (ModelState.IsValid)
             {
-                OnEditSaving(<#= Entity.Name.ToCamelCase() #>);
+                OnEditSaving(<#= Entity.ModelForEdit.ToCamelCase() #>);
 <#  if(Entity.ModelForEdit == Entity.Name)
     {#> 
                 <#= dataContextIntance #>.Entry(<#= Entity.Name.ToCamelCase() #>).State = EntityState.Modified;
 <#  } else { #>
-                var entity = <#= Entity.Name.ToCamelCase() #>.To<#= Entity.Name #>();
+                var entity = <#= Entity.ModelForEdit.ToCamelCase() #>.To<#= Entity.Name #>();
                 <#= dataContextIntance #>.Entry(entity).State = EntityState.Modified;
 <#  } #>
                 await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
@@ -290,7 +290,7 @@ else
     {  #>
             <#= Entity.GetMethodCall(item, Entity.ModelForEdit) #>
 <#  } #>
-            return View(<#= Entity.Name.ToCamelCase() #>);
+            return View(<#= Entity.ModelForEdit.ToCamelCase() #>);
         }
 <#  } #>
 <# if (Entity.GenerateDeleteAction){ #>
