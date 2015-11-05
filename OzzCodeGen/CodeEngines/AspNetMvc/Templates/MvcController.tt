@@ -151,6 +151,7 @@ else
                 return HttpNotFound();
             }
 
+            await PutCanUserInViewBag();
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
 
@@ -373,12 +374,14 @@ else
         }
 
 <#  } #>
-
-        //Partial methods
+<# if (Entity.GenerateCreateAction){ #>
         partial void OnCreateSaving(<#= Entity.ModelForCreate #> <#= Entity.Name.ToCamelCase() #>);
         partial void OnCreateSaved(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
+<#  } #>
+<# if (Entity.GenerateEditAction){ #>
         partial void OnEditSaving(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
         partial void OnEditSaved(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
+<#  } #>
 <#
     if(fillSelectListsMethods.Any(s=>s.Equals(AspNetMvcEngine.FillSelectListsMethodDefaultName)))
     { #>
