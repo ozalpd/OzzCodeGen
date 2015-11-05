@@ -17,6 +17,7 @@
     </Window.DataContext>
     <Window.Resources>
         <Converters:BoolToColor x:Key="IsTranslatedConverter" ColorForFalseValue="#FFFFDFDA" />
+        <Converters:BoolToColor x:Key="IsTranslatedConverterHeader" ColorForFalseValue="#700" ColorForTrueValue="#050" />
         <Converters:BoolToColor x:Key="FileExistsConverter" ColorForFalseValue="#FFD00000" ColorForTrueValue="#FF00C000" />
     </Window.Resources>
     <Grid>
@@ -80,8 +81,10 @@
 
         <!-- Left side -->
         <DataGrid ItemsSource="{Binding SelectedVocabulary}"
-                  SelectedItem="{Binding SelectedVocab}"
-                  AutoGenerateColumns="False" Grid.Row="2">
+                  SelectedItem="{Binding SelectedVocab, Mode=TwoWay}"
+                  AutoGenerateColumns="False" Grid.Row="2"
+                  SelectionMode="Single"
+                  SelectionChanged="DataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Name (Clause)" Width="120">
                     <DataGridTemplateColumn.CellTemplate>
@@ -114,22 +117,53 @@
             </DataGrid.Columns>
         </DataGrid>
         
-        
-        
-        <GridSplitter Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" ResizeDirection="Columns" Width="4" />
+        <GridSplitter Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" ResizeDirection="Columns" Width="6" />
         <!-- Right side-->
-        <Grid Grid.Column="1"  Grid.Row="2">
-            <!-- TODO: Edit Selected vocab here -->
-            <!-- TODO: Edit & See Other culture vocab here -->
-        </Grid>
+        <Border BorderBrush="#046" BorderThickness="2"
+                Grid.Column="1"  Grid.Row="2" Margin="6,0">
+            <Grid DataContext="{Binding SelectedVocab}">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="VerticalAlignment" Value="Stretch"/>
+                        <Setter Property="TextAlignment" Value="Center"/>
+                        <Setter Property="Padding" Value="7"/>
+                        <Setter Property="Margin" Value="0,2,0,0"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Background" Value="#FF0080E0"/>
+                        <Setter Property="Foreground" Value="#FFF"/>
+                    </Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Margin" Value="1,2"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MaxWidth="132"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="38"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Clause" Grid.ColumnSpan="2" Margin="0,0,0,4" Padding="3" FontSize="20"/>
+                <TextBlock Text="{Binding Name}"
+                           Grid.ColumnSpan="3"
+                           Background="{Binding IsTranslated, Converter={StaticResource IsTranslatedConverterHeader}}"
+                           Padding="2" Margin="0,0,0,4"
+                           FontSize="20"/>
+
+                <TextBlock Text="Translation" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
+                <TextBox Name="txtTranslation" Text="{Binding Translation}"
+                         Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                         KeyUp="txtTranslation_KeyUp" GotFocus="txtTranslation_GotFocus"/>
+            </Grid>
+        </Border>
         <!-- Bottom -->
         <StatusBar Grid.Row="3" Grid.ColumnSpan="2">
-            <TextBlock Text="{Binding SelectedVocabulary.Count, Mode=OneWay, StringFormat=Vocabs: \{0\}}"
-                       Width="64"
-                       Margin="4,0"/>
-            <TextBlock Text="{Binding SelectedVocab.Name, Mode=OneWay}"
-                       Width="64"
-                       Margin="4,0"/>
+            <TextBlock Text="{Binding SelectedProject, Mode=OneWay, StringFormat=Project: \{0\}, TargetNullValue='Project: None opened!'}" Margin="4,0"/>
+            <TextBlock Text="{Binding SelectedCultureCode, Mode=OneWay, StringFormat=Culture: \{0\}, TargetNullValue=''}" Margin="4,0" Width="80"/>
+            <TextBlock Text="{Binding SelectedVocabulary.Count, Mode=OneWay, StringFormat=Displaying: \{0\}}" Margin="4,0"/>
         </StatusBar>
     </Grid>
 </Window>

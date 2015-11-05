@@ -408,6 +408,8 @@ namespace OzzCodeGen.CodeEngines.Localization
             {
                 entityNames.Add(entity.Name);
                 entityNames.Add(string.Format("Add{0}", entity.Name));
+                entityNames.Add(string.Format("AddRemove{0}", entity.Name));
+                entityNames.Add(string.Format("Remove{0}", entity.Name));
                 entityNames.Add(string.Format("AddNew{0}", entity.Name));
                 entityNames.Add(string.Format("Create{0}", entity.Name));
                 entityNames.Add(string.Format("Edit{0}", entity.Name));

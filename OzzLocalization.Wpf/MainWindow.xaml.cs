@@ -4,7 +4,10 @@ using OzzLocalization.Wpf.Models;
 using OzzLocalization.Wpf.ViewModels;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
 
 namespace OzzLocalization.Wpf
@@ -84,6 +87,7 @@ namespace OzzLocalization.Wpf
         private void btnFilter_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.SetSelectedVocabulary();
+            txtTranslation.Focus();
         }
 
         private void txtFilter_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -92,8 +96,46 @@ namespace OzzLocalization.Wpf
             {
                 btnFilter.Focus();
                 ViewModel.SetSelectedVocabulary();
+                txtTranslation.Focus();
+            }
+        }
+
+        private void txtTranslation_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (ViewModel.SelectedVocabulary == null || ViewModel.SelectedVocabulary.Count == 0)
+                return;
+
+            if (e.Key == System.Windows.Input.Key.Return ||
+                e.Key == System.Windows.Input.Key.Down || e.Key == System.Windows.Input.Key.Up)
+            {
+                int i = txtTranslation.SelectionStart;
                 txtFilter.Focus();
-                txtFilter.SelectAll();
+
+                if (e.Key == System.Windows.Input.Key.Return || e.Key == System.Windows.Input.Key.Down)
+                    ViewModel.MoveNextVocab();
+                if (e.Key == System.Windows.Input.Key.Up)
+                    ViewModel.MovePreviousVocab();
+
+                txtTranslation.Focus();
+                txtTranslation.SelectionStart = i;
+            }
+        }
+
+        private void txtTranslation_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.SelectedVocabulary == null || ViewModel.SelectedVocabulary.Count == 0)
+                return;
+            if (ViewModel.SelectedVocab == null)
+                ViewModel.SelectedVocab = ViewModel.SelectedVocabulary.FirstOrDefault();
+        }
+
+        private void DataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            Selector selector = sender as Selector;
+            DataGrid dataGrid = selector as DataGrid;
+            if (dataGrid != null && selector.SelectedItem != null && dataGrid.SelectedIndex >= 0)
+            {
+                dataGrid.ScrollIntoView(selector.SelectedItem);
             }
         }
     }

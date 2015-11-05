@@ -80,6 +80,46 @@ namespace OzzLocalization.Wpf.ViewModels
         }
         private Vocab _selectedVocab;
 
+        public void MoveNextVocab()
+        {
+            if (SelectedVocabulary == null)
+                return;
+            if (SelectedVocab == null)
+                SelectedVocab = SelectedVocabulary.FirstOrDefault();
+
+            bool vocabFound = false;
+            foreach (var item in SelectedVocabulary)
+            {
+                if (vocabFound)
+                {
+                    SelectedVocab = item;
+                    vocabFound = false;
+                    break;
+                }
+                vocabFound = item == SelectedVocab;
+            }
+            if (vocabFound)
+                SelectedVocab = SelectedVocabulary.FirstOrDefault();
+        }
+
+        public void MovePreviousVocab()
+        {
+            if (SelectedVocabulary == null)
+                return;
+            if (SelectedVocab == null)
+                SelectedVocab = SelectedVocabulary.LastOrDefault();
+
+            Vocab previousOne = null;
+            foreach (var item in SelectedVocabulary)
+            {
+                if(item == SelectedVocab)
+                {
+                    SelectedVocab = previousOne == null ? SelectedVocabulary.LastOrDefault() : previousOne;
+                    break;
+                }
+                previousOne = item;
+            }
+        }
 
         public void SetSelectedVocabulary()
         {
