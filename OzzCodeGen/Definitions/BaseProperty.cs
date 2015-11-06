@@ -302,6 +302,12 @@ namespace OzzCodeGen.Definitions
             return typeName.ToLowerInvariant().Contains("string");
         }
 
+        public static bool IsTypeCollection(string typeName)
+        {
+            //TODO: detect for more collection types
+            return typeName.StartsWith("ICollection<");
+        }
+
 
         public abstract bool IsTypeGuid();
 
@@ -316,7 +322,8 @@ namespace OzzCodeGen.Definitions
 
         public virtual BaseProperty Clone()
         {
-            var clone = BaseProperty.CreatePropertyDefinition(TypeName, Name, IsStoreGenerated);
+            var clone = BaseProperty.CreatePropertyDefinition(DefinitionType, Name);
+            clone.IsStoreGenerated = IsStoreGenerated;
             clone.Comment = this.Comment;
             clone.DisplayName = this.DisplayName;
             clone.DisplayOrder = this.DisplayOrder;
@@ -342,6 +349,10 @@ namespace OzzCodeGen.Definitions
                 {
                     property = new SimpleProperty();
                 }
+            }
+            else if (IsTypeCollection(typeName))
+            {
+                property = new CollectionProperty();
             }
             else
             {

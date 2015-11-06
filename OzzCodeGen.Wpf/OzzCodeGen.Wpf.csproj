@@ -110,7 +110,14 @@
     <Compile Include="Dialogs\SelectEngine.xaml.cs">
       <DependentUpon>SelectEngine.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.commands.cs" />
+    <Compile Include="MainWindow.cmds.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.prop.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -166,10 +173,6 @@
     <ProjectReference Include="..\OzzCodeGen.Ef\OzzCodeGen.Providers.Ef.csproj">
       <Project>{5b84eda9-e2b7-4227-8287-c15b27d8c9b5}</Project>
       <Name>OzzCodeGen.Providers.Ef</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OzzCodeGen.Providers.SourceCode.XCode\OzzCodeGen.Providers.SourceCode.XCode.csproj">
-      <Project>{2c94bf6c-958d-4cd0-a71c-3b2b0be7e250}</Project>
-      <Name>OzzCodeGen.Providers.SourceCode.XCode</Name>
     </ProjectReference>
     <ProjectReference Include="..\OzzCodeGen\OzzCodeGen.csproj">
       <Project>{794c935f-7fc8-4d07-ab2f-bd37008f67cc}</Project>

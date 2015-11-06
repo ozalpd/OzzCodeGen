@@ -12,6 +12,7 @@
     <Window.InputBindings>
         <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NewProjectCommand, ElementName=window, Mode=OneWay}"/>
         <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding OpenProjectCommand, ElementName=window, Mode=OneWay}"/>
+        <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding OpenMostRecentProjectCommand, ElementName=window, Mode=OneWay}"/>
         <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding SaveProjectCommand, ElementName=window, Mode=OneWay}"/>
         <KeyBinding Key="Q" Modifiers="Ctrl" Command="{Binding CloseCommand, ElementName=window, Mode=OneWay}"/>
     </Window.InputBindings>
@@ -47,6 +48,9 @@
                                     <Image Source="{StaticResource uriOpen}"/>
                                 </MenuItem.Icon>
                             </MenuItem>
+                            <MenuItem Header="{Binding MostRecentProjectFile.Name,StringFormat='Open \{0\}'}"
+                                      Command="{Binding OpenMostRecentProjectCommand}"
+                                      InputGestureText="Ctrl+R"/>
                             <MenuItem Header="_Save" Command="{Binding SaveProjectCommand}" InputGestureText="Ctrl+S">
                                 <MenuItem.Icon>
                                     <Image Source="{StaticResource uriSave}"/>
@@ -122,7 +126,9 @@
             </Grid>
         </StackPanel>
 
-        <TabControl x:Name="MainContainer" Grid.Row="2" Grid.Column="0">
+        <TabControl x:Name="MainContainer"
+                    SelectedItem="{Binding SelectedTabItem}"
+                    Grid.Row="2" Grid.Column="0">
             <TabItem x:Name="EntityTab" Header="Entities">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -144,35 +150,30 @@
                                 </Button.ContextMenu>
                                 <Image Source="Assets\add.png" Stretch="None"/>
                             </Button>
-
                             <Button x:Name="btnRemoveEntity" 
 								ToolTip="Remove Entity" 
 								Style="{StaticResource sidebarButtons}" 
 								Click="btnRemoveEntity_Click">
                                 <Image Source="Assets\minus_red.png" Stretch="None"/>
                             </Button>
-
                             <Button x:Name="btnMoveEntityTop" 
 								ToolTip="Move Entity Top" 
 								Style="{StaticResource sidebarButtons}" 
 								Click="btnMoveEntityTop_Click">
                                 <Image Source="Assets\arrow_top.png" Stretch="None"/>
                             </Button>
-
                             <Button x:Name="btnMoveEntityUp" 
 								ToolTip="Move Entity Up" 
 								Style="{StaticResource sidebarButtons}" 
 								Click="btnMoveEntityUp_Click">
                                 <Image Source="Assets\arrow_up.png" Stretch="None"/>
                             </Button>
-
                             <Button x:Name="btnMoveEntityDown" 
 								ToolTip="Move Entity Down" 
 								Style="{StaticResource sidebarButtons}" 
 								Click="btnMoveEntityDown_Click">
                                 <Image Source="Assets\arrow_down.png" Stretch="None"/>
                             </Button>
-
                             <Button x:Name="btnMoveEntityBottom" 
 								ToolTip="Move Entity Bottom" 
 								Style="{StaticResource sidebarButtons}" 
@@ -181,11 +182,10 @@
                             </Button>
                         </StackPanel>
                         <!-- Entities Datagrid -->
-                        <DataGrid x:Name="grdEntities" 
-							ItemsSource="{Binding DataModel}"
-							AutoGenerateColumns="False" 
-							CanUserAddRows="False"
-							SelectedIndex="0">
+                        <DataGrid x:Name="grdEntities"
+                                  ItemsSource="{Binding DataModel}"
+                                  SelectedItem="{Binding SelectedEntity}"
+                                  AutoGenerateColumns="False" CanUserAddRows="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Name}" Header="Entity Name" Width="120"/>
                                 <DataGridTextColumn Binding="{Binding BaseTypeName}" Header="Base Type" Width="100"/>
@@ -204,7 +204,7 @@
                             </DataGrid.ContextMenu>
                         </DataGrid>
                     </StackPanel>
-                    <Grid DataContext="{Binding SelectedItem, ElementName=grdEntities}" Grid.Row="1" Grid.Column="1" Margin="9,0,0,0">
+                    <Grid Grid.Row="1" Grid.Column="1" Margin="9,0,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" MinWidth="130" MaxWidth="660" />
                             <ColumnDefinition Width="*" MinWidth="130" />
@@ -268,9 +268,12 @@
                                 </Button>
 
                             </StackPanel>
-                            <DataGrid x:Name="grdProperties" AutoGenerateColumns="False" 
-								ItemsSource="{Binding Properties}" 
-								IsSynchronizedWithCurrentItem="True" CanUserAddRows="False" >
+                            <DataGrid x:Name="grdProperties"
+                                      ItemsSource="{Binding SelectedEntity.Properties}"
+                                      SelectedItem="{Binding SelectedProperty}"
+                                      AutoGenerateColumns="False"
+                                      IsSynchronizedWithCurrentItem="True"
+                                      CanUserAddRows="False" >
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding Name}" Header="Property Name" Width="100"/>
                                     <DataGridTextColumn Binding="{Binding DisplayName}" Header="Display Name" Width="100"/>
@@ -549,5 +552,17 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <Border Name="BusyView" Background="#8000" Grid.RowSpan="3" Visibility="Hidden">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <ProgressBar Value="{Binding ProgressValue}"
+                             Minimum="0" Maximum="100"
+                             VerticalAlignment="Center" Height="18" Grid.Column="1" />
+            </Grid>
+        </Border>
     </Grid>
 </Window>

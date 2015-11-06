@@ -12,7 +12,6 @@ using System.IO;
 using OzzCodeGen.CodeEngines;
 using OzzCodeGen.Providers;
 using System.Windows.Threading;
-using System.Media;
 
 namespace OzzCodeGen.Wpf
 {
@@ -47,7 +46,15 @@ namespace OzzCodeGen.Wpf
             StringPropertyGrid.Visibility = Visibility.Collapsed;
             ClassPropertyGrid.Visibility = Visibility.Collapsed;
             CollectionPropertyGrid.Visibility = Visibility.Collapsed;
+
+            tmrProgressValue = new DispatcherTimer();
+            tmrProgressValue.Interval = new TimeSpan(1000000);
+            tmrProgressValue.Tick += (object sender, EventArgs e) =>
+            {
+                ProgressValue = (ProgressValue + 5) % 100;
+            };
         }
+        DispatcherTimer tmrProgressValue;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -146,34 +153,9 @@ namespace OzzCodeGen.Wpf
             }
         }
 
-        public void NewProject()
-        {
-            GenerateModel modelGenDlg = new GenerateModel();
-            modelGenDlg.ModelProviders = GetModelProviders();
-            modelGenDlg.Owner = this;
-            modelGenDlg.DefaultsFolder = GetDefaultsFolder();
-            if (modelGenDlg.ShowDialog() ?? false)
-            {
-                Project = modelGenDlg.Project;
-            }
-        }
-
-        public void OpenProject()
-        {
-            OpenFileDialog openDlg = new OpenFileDialog();
-            openDlg.Filter = "Code Generator Model Files|*" + fileExtension;
-            if (openDlg.ShowDialog(this) ?? false)
-            {
-                OpenProject(openDlg.FileName);
-            }
-        }
-
-
-
         private string GetDefaultsFolder()
         {
-            if (string.IsNullOrEmpty(Settings.DefaultsFolder)
-                || !Directory.Exists(Settings.DefaultsFolder))
+            if (string.IsNullOrEmpty(Settings.DefaultsFolder) || !Directory.Exists(Settings.DefaultsFolder))
             {
                 var openDlg = new OpenFileDialog();
                 openDlg.Filter = "DefaultEmptyProvider project file|" + EmptyModel.ProjectTemplateFile;
@@ -190,80 +172,18 @@ namespace OzzCodeGen.Wpf
         {
             var modelProviders = new List<IModelProvider>();
             modelProviders.Add(new EmptyModel());
-            modelProviders.Add(new OzzCodeGen.Providers.Ef.Ef5());
-            modelProviders.Add(new OzzCodeGen.Providers.SourceCode.ObjectiveC());
+            modelProviders.Add(new Providers.Ef.Ef5());
 
             return modelProviders;
         }
 
-        private void OpenProject(string fileName)
-        {
-            if (!File.Exists(fileName))
-            {
-                throw new FileNotFoundException(string.Format("File \"{0}\" not found!", fileName));
-            }
-            CodeGenProject project = CodeGenProject.OpenFile(fileName);
-            Settings.AddToRecentFiles(fileName);
-            Project = project;
-            Project.HasProjectChanges = false;
-
-            Project.ModelProvider = GetModelProviders().First(m => m.ProviderId == Project.ModelProviderId);
-            btnRefresh.IsEnabled = Project.ModelProvider.CanRefresh;
-        }
-
         const string fileExtension = ".OzzGen";
-
-        private void btnSave_Click(object sender, RoutedEventArgs e)
-        {
-            SaveProject();
-        }
-
-        public void SaveProject()
-        {
-            if (Project == null)
-                return;
-
-            if (string.IsNullOrEmpty(Project.SavedFileName) ||
-                !System.IO.File.Exists(Project.SavedFileName))
-            {
-                SaveModelAs();
-            }
-            else
-            {
-                Project.SaveToFile();
-            }
-            SystemSounds.Beep.Play();
-        }
-
-        private void SaveModelAs()
-        {
-            SaveFileDialog saveDlg = new SaveFileDialog();
-
-            saveDlg.Filter = "Code Generator Model Files|*" + fileExtension;
-            if ((saveDlg.ShowDialog(this) ?? false) &&
-                !string.IsNullOrEmpty(saveDlg.FileName))
-            {
-                string fileName;
-                if (System.IO.Path.GetExtension(saveDlg.FileName).Equals(fileExtension))
-                {
-                    fileName = saveDlg.FileName;
-                }
-                else
-                {
-                    fileName = saveDlg.FileName + fileExtension;
-                }
-                Project.SaveToFile(fileName);
-                Settings.AddToRecentFiles(fileName);
-                Settings.SaveToFile(settingsFile);
-            }
-        }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             if (!Project.ModelProvider.CanRefresh) return;
 
             Project.RefreshDataModel(true);
-            RefreshEntitiesGrid();
         }
 
         private Visibility BoolToVisibility(bool b)
@@ -318,20 +238,6 @@ namespace OzzCodeGen.Wpf
                 timer.Start();
             }
         }
-        
-        public AppSettings Settings
-        {
-            get { return _settings; }
-            set
-            {
-                if (_settings == value) return;
-                _settings = value;
-                RaisePropertyChanged("Settings");
-            }
-        }
-        AppSettings _settings;
-        string settingsFile;
-         
 
         public CodeGenProject Project
         {
@@ -340,7 +246,7 @@ namespace OzzCodeGen.Wpf
             {
                 if (_project == value) return;
                 _project = value;
-                DataModel = _project.DataModel;
+                DataModel = Project.DataModel;
                 grdEntities.ItemsSource = DataModel;
                 cboCodeEngines.ItemsSource = null;
                 cboCodeEngines.ItemsSource = Project.CodeEngineList;
@@ -365,28 +271,9 @@ namespace OzzCodeGen.Wpf
                 SetTargetProjectUI();
             }
         }
+        private CodeGenProject _project;
 
         public List<string> CodeEngineList { get { return Project.CodeEngineList; } }
-
-        public EntityDefinition SelectedEntity
-        {
-            get
-            {
-                if (grdEntities.SelectedItem == null)
-                    return null;
-                return (EntityDefinition)grdEntities.SelectedItem;
-            }
-        }
-
-        public BaseProperty SelectedProperty
-        {
-            get
-            {
-                if (grdProperties.SelectedItem == null)
-                    return null;
-                return (BaseProperty)grdProperties.SelectedItem;
-            }
-        }
 
         private void SetTargetProjectUI()
         {
@@ -394,61 +281,23 @@ namespace OzzCodeGen.Wpf
 
             if (engineUI != null) engineUI.Visibility = Visibility.Collapsed;
             engineUI = Project.CurrentCodeEngine.UiControl;
-            if (this.TargetGrid.Children.Contains(engineUI))
+            if (TargetGrid.Children.Contains(engineUI))
             {
                 engineUI.Visibility = Visibility.Visible;
             }
             else
             {
-                this.TargetGrid.Children.Add(engineUI);
+                TargetGrid.Children.Add(engineUI);
                 Grid.SetColumn(engineUI, 0);
                 Grid.SetRow(engineUI, 1);
             }
         }
-        private CodeGenProject _project;
         private UserControl engineUI;
-
-        public DataModel DataModel
-        {
-            get { return _dataModel; }
-            set
-            {
-                if (_dataModel == value) return;
-                _dataModel = value;
-                RaisePropertyChanged("DataModel");
-            }
-        }
-        DataModel _dataModel;
-
-        public DataModel EnumDefinitions
-        {
-            get { return _enumDefinitions; }
-            set
-            {
-                if (_enumDefinitions == value) return;
-                _enumDefinitions = value;
-                RaisePropertyChanged("EnumDefinitions");
-            }
-        }
-        DataModel _enumDefinitions;
 
         private void window_Closing(object sender, CancelEventArgs e)
         {
             Settings.MainWindowPosition.GetWindowPositions(this);
             Settings.SaveToFile(settingsFile);
-        }
-
-        private BaseProperty GetSelectedProperty()
-        {
-            if (grdProperties.SelectedItem is BaseProperty)
-            {
-                return (BaseProperty)grdProperties.SelectedItem;
-            }
-            else
-            {
-                MessageBox.Show("No selected property found!", "No Settings!", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return null;
-            }
         }
 
         private NewEntityDialog GetNewEntityDialog()
@@ -472,7 +321,6 @@ namespace OzzCodeGen.Wpf
             {
                 DataModel.Add(dlg.EntityDefinition);
                 dlg.EntityDefinition.DisplayName = string.Empty;
-                RefreshEntitiesGrid();
                 grdEntities.SelectedIndex = grdEntities.Items.Count - 1;
             }
             dlg.Closed-=NewEntityDialog_Closed;
@@ -510,7 +358,6 @@ namespace OzzCodeGen.Wpf
                 return;
 
             Project.RemoveEntity(SelectedEntity);
-            RefreshEntitiesGrid();
         }
 
 
@@ -519,7 +366,6 @@ namespace OzzCodeGen.Wpf
             if (SelectedEntity != null)
             {
                 DataModel.MoveTop(SelectedEntity);
-                RefreshEntitiesGrid();
                 SetEnumMemberGridIndex(0, grdEntities);
             }
         }
@@ -530,7 +376,6 @@ namespace OzzCodeGen.Wpf
             {
                 int i = grdEntities.SelectedIndex - 1;
                 DataModel.MoveUp(SelectedEntity);
-                RefreshEntitiesGrid();
                 SetEnumMemberGridIndex(i, grdEntities);
             }
         }
@@ -541,7 +386,6 @@ namespace OzzCodeGen.Wpf
             {
                 int i = grdEntities.SelectedIndex + 1;
                 DataModel.MoveDown(SelectedEntity);
-                RefreshEntitiesGrid();
                 SetEnumMemberGridIndex(i, grdEntities);
             }
         }
@@ -551,50 +395,8 @@ namespace OzzCodeGen.Wpf
             if (SelectedEntity != null)
             {
                 DataModel.MoveBottom(SelectedEntity);
-                RefreshEntitiesGrid();
                 SetEnumMemberGridIndex(grdEntities.Items.Count - 1, grdEntities);
             }
-        }
-
-        public void AddProperty(DefinitionType propertyType, EntityDefinition entity)
-        {
-            var dlg = new NewPropertyDialog();
-            var p = BaseProperty.CreatePropertyDefinition(propertyType, "UntitledProperty");
-            p.EntityDefinition = entity;
-            dlg.PropertyDefinition = p;
-
-            dlg.Closed += NewPropertyDialog_Closed;
-            dlg.PropertyDefinition.TypeName = dlg.PropertyDefinition.UsableTypeNames.FirstOrDefault();
-            dlg.Owner = this;
-            dlg.ShowDialog();
-        }
-
-        void NewPropertyDialog_Closed(object sender, EventArgs e)
-        {
-            var dlg = (NewPropertyDialog)sender;
-            if (dlg.DialogResult ?? false)
-            {
-                int i = grdEntities.SelectedIndex;
-                var property = dlg.PropertyDefinition;
-                var entity = property.EntityDefinition;
-
-                if (property.DefinitionType == DefinitionType.Complex && dlg.CreateDependecy)
-                {
-                    entity.Properties.Add(dlg.DependentProperty, true);
-                    dlg.DependentProperty.DisplayName = string.Empty;
-                    ((BaseClassProperty)property).DependentPropertyName = dlg.DependentProperty.Name;
-                    ((BaseClassProperty)property).DependentPropertyType = dlg.DependentProperty.TypeName;
-                }
-                entity.Properties.Add(property, true);
-                property.DisplayName = string.Empty;
-
-                grdEntities.SelectedIndex = -1;
-                grdEntities.SelectedIndex = i;
-                int j = grdProperties.Items.Count - 1;
-                grdProperties.SelectedIndex = j;
-            }
-
-            dlg.Closed -= NewPropertyDialog_Closed;
         }
 
         private void btnAddProperty_Click(object sender, RoutedEventArgs e)
@@ -697,12 +499,6 @@ namespace OzzCodeGen.Wpf
                 RefreshPropertiesGrid();
                 SetEnumMemberGridIndex(grdProperties.Items.Count - 1, grdProperties);
             }
-        }
-
-        private void RefreshEntitiesGrid()
-        {
-            grdEntities.ItemsSource = null;
-            grdEntities.ItemsSource = DataModel;
         }
 
         private void RefreshPropertiesGrid()

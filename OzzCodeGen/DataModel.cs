@@ -1,11 +1,12 @@
 ﻿using OzzCodeGen.Definitions;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen
 {
-    public class DataModel : List<EntityDefinition>
+    public class DataModel : ObservableCollection<EntityDefinition>
     {
         public new void Add(EntityDefinition entity)
         {
