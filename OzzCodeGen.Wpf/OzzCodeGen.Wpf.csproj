@@ -110,6 +110,7 @@
     <Compile Include="Dialogs\SelectEngine.xaml.cs">
       <DependentUpon>SelectEngine.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindow.commands.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -118,6 +119,7 @@
   <ItemGroup>
     <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\FileDefinition.cs" />
+    <Compile Include="Models\MainWindowCommands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -9,46 +9,95 @@
         Title="Ozz Code Generator"
         Loaded="Window_Loaded" Closing="window_Closing"
         Icon="Assets/App-software.ico">
+    <Window.InputBindings>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NewProjectCommand, ElementName=window, Mode=OneWay}"/>
+        <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding OpenProjectCommand, ElementName=window, Mode=OneWay}"/>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding SaveProjectCommand, ElementName=window, Mode=OneWay}"/>
+        <KeyBinding Key="Q" Modifiers="Ctrl" Command="{Binding CloseCommand, ElementName=window, Mode=OneWay}"/>
+    </Window.InputBindings>
     <Window.Resources>
         <Converters:BoolToColor x:Key="FileExistsConverter" ColorForFalseValue="#FFD00000" ColorForTrueValue="#FF00C000" />
+        <BitmapImage x:Key="uriNew" UriSource="Assets\NewDocumentHS.png"/>
+        <BitmapImage x:Key="uriOpen" UriSource="Assets\openHS.png"/>
+        <BitmapImage x:Key="uriSave" UriSource="Assets\saveHS.png"/>
+        <BitmapImage x:Key="uriRefresh" UriSource="Assets\refresh_24.png"/>
+        <Image x:Key="imgNew" Source="{StaticResource uriNew}" Stretch="Uniform"/>
+        <Image x:Key="imgOpen" Source="{StaticResource uriOpen}" Stretch="Uniform"/>
+        <Image x:Key="imgSave" Source="{StaticResource uriSave}" Stretch="Uniform"/>
+        <Image x:Key="imgRefresh" Source="{StaticResource uriRefresh}" Stretch="Uniform"/>
     </Window.Resources>
     <Grid DataContext="{Binding ElementName=window, Mode=OneWay}">
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,2,0,0">
-            <!-- New, Open, Save etc. -->
-            <StackPanel x:Name="FileMenuStackPanel" Orientation="Vertical">
+            <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="btnNewProject" ToolTip="New Project" Click="btnNewProject_Click" Style="{StaticResource toolbarButtons}">
-                        <Image Source="Assets\NewDocumentHS.png" Stretch="None"/>
-                    </Button>
-                    <Button x:Name="btnOpen" Click="btnOpen_Click" ToolTip="Open Project" Style="{StaticResource toolbarButtons}" >
-                        <Image Source="Assets\openHS.png" Stretch="None" />
-                    </Button>
-                    <Button x:Name="btnSave" ToolTip="Save Project" Click="btnSave_Click" Style="{StaticResource toolbarButtons}"  >
-                        <Image Source="Assets\saveHS.png" Stretch="None"/>
-                    </Button>
-                    <Button x:Name="btnRefresh" ToolTip="Refresh"
-						Click="btnRefresh_Click"
-						Style="{StaticResource toolbarButtons}">
-                        <Image Source="Assets\refresh_16.png" Stretch="None" />
-                    </Button>
+                    <Menu Height="28" VerticalAlignment="Top" Width="72">
+                        <MenuItem Header="_File" Height="28">
+                            <MenuItem Header="_New" Command="{Binding NewProjectCommand}" InputGestureText="Ctrl+N">
+                                <MenuItem.Icon>
+                                    <Image Source="{StaticResource uriNew}"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="_Open" Command="{Binding OpenProjectCommand}" InputGestureText="Ctrl+O">
+                                <MenuItem.Icon>
+                                    <Image Source="{StaticResource uriOpen}"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="_Save" Command="{Binding SaveProjectCommand}" InputGestureText="Ctrl+S">
+                                <MenuItem.Icon>
+                                    <Image Source="{StaticResource uriSave}"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="_Quit" Command="{Binding CloseCommand, Mode=OneWay}" InputGestureText="Ctrl+Q"/>
+                        </MenuItem>
+                        <MenuItem Header="_Edit" Height="28">
+                            <MenuItem Header="_Cut" InputGestureText="Ctrl+X" IsEnabled="False"/>
+                            <MenuItem Header="_Copy" InputGestureText="Ctrl+C" IsEnabled="False"/>
+                            <MenuItem Header="_Paste" InputGestureText="Ctrl+V" IsEnabled="False"/>
+                        </MenuItem>
+                    </Menu>
+                    <Button x:Name="btnNewProject"
+                            ToolTip="New Project"
+                            Command="{Binding NewProjectCommand}"
+                            Content="{Binding Mode=OneWay, Source={StaticResource imgNew}}"
+                            Style="{StaticResource toolbarButtons}"/>
+                    <Button x:Name="btnOpen"
+                            Command="{Binding OpenProjectCommand}"
+                            ToolTip="Open Project"
+                            Content="{Binding Mode=OneWay, Source={StaticResource imgOpen}}"
+                            Style="{StaticResource toolbarButtons}"/>
+                    <Button x:Name="btnSave"
+                            ToolTip="Save Project"
+                            Command="{Binding SaveProjectCommand}"
+                            Content="{Binding Mode=OneTime, Source={StaticResource imgSave}}"
+                            Style="{StaticResource toolbarButtons}"/>
+                    <Button x:Name="btnRefresh"
+                            ToolTip="Refresh"
+                            Click="btnRefresh_Click"
+                            Content="{Binding Mode=OneWay, Source={StaticResource imgRefresh}}"
+                            Style="{StaticResource toolbarButtons}"/>
                 </StackPanel>
-                <ComboBox x:Name="cboRecentProjects" Width="150" Margin="4" HorizontalAlignment="Left" 
-					SelectedItem="{Binding SelectedProjectFile}" 
-					ItemsSource="{Binding Settings.RecentProjectFiles}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Ellipse Fill="{Binding FileExists, Converter={StaticResource FileExistsConverter}}"
-                                         Width="6" Height="6" Margin="0,0,2,0" />
-                                <TextBlock Text="{Binding Path=Name}" ToolTip="{Binding Path=FullPath}" MinWidth="142"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Recent Files:" VerticalAlignment="Center" Width="72" Margin="4,0,0,0"/>
+                    <ComboBox x:Name="cboRecentProjects" Width="150" Margin="0,4" HorizontalAlignment="Left" 
+					    SelectedItem="{Binding SelectedProjectFile}" 
+					    ItemsSource="{Binding Settings.RecentProjectFiles}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Fill="{Binding FileExists, Converter={StaticResource FileExistsConverter}}"
+                                             Width="6" Height="6" Margin="0,0,2,0" />
+                                    <TextBlock Text="{Binding Path=Name}" ToolTip="{Binding Path=FullPath}" MinWidth="142"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
             </StackPanel>
             <Grid DataContext="{Binding Project}" Width="640">
                 <Grid.ColumnDefinitions>
@@ -73,7 +122,7 @@
             </Grid>
         </StackPanel>
 
-        <TabControl x:Name="MainContainer" Grid.Row="1" Grid.Column="0">
+        <TabControl x:Name="MainContainer" Grid.Row="2" Grid.Column="0">
             <TabItem x:Name="EntityTab" Header="Entities">
                 <Grid>
                     <Grid.ColumnDefinitions>

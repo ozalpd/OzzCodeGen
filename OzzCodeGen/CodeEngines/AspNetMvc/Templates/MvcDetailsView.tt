@@ -13,6 +13,11 @@ WriteUsingNamespaces(); #>
 @model <#= Entity.Name #>
 @{
     ViewBag.Title = <#= EntityResource #>.<#= Entity.Name #>;
+
+    //Authorization Flags
+    bool canUserEdit = ViewBag.canUserEdit;
+    bool canUserCreate = ViewBag.canUserCreate;
+    bool canUserDelete = ViewBag.canUserDelete;
 }
 
 <h2>@<#= EntityResource #>.<#= Entity.Name #> @ActionStrings.Details</h2>

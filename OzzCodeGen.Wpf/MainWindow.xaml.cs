@@ -12,6 +12,7 @@ using System.IO;
 using OzzCodeGen.CodeEngines;
 using OzzCodeGen.Providers;
 using System.Windows.Threading;
+using System.Media;
 
 namespace OzzCodeGen.Wpf
 {
@@ -145,7 +146,7 @@ namespace OzzCodeGen.Wpf
             }
         }
 
-        private void btnNewProject_Click(object sender, RoutedEventArgs e)
+        public void NewProject()
         {
             GenerateModel modelGenDlg = new GenerateModel();
             modelGenDlg.ModelProviders = GetModelProviders();
@@ -157,7 +158,7 @@ namespace OzzCodeGen.Wpf
             }
         }
 
-        private void btnOpen_Click(object sender, RoutedEventArgs e)
+        public void OpenProject()
         {
             OpenFileDialog openDlg = new OpenFileDialog();
             openDlg.Filter = "Code Generator Model Files|*" + fileExtension;
@@ -217,8 +218,11 @@ namespace OzzCodeGen.Wpf
             SaveProject();
         }
 
-        private void SaveProject()
+        public void SaveProject()
         {
+            if (Project == null)
+                return;
+
             if (string.IsNullOrEmpty(Project.SavedFileName) ||
                 !System.IO.File.Exists(Project.SavedFileName))
             {
@@ -228,6 +232,7 @@ namespace OzzCodeGen.Wpf
             {
                 Project.SaveToFile();
             }
+            SystemSounds.Beep.Play();
         }
 
         private void SaveModelAs()
