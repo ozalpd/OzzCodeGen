@@ -17,5 +17,19 @@ namespace <#= CodeEngine.ModelsNamespace #>
         { #>
         public const string <#= role.ToPascalCase() #> = "<#= role #>";
 <#  } #>
+
+        public static string[] ApplicationRoles
+        {
+            get
+            {
+                return new string[] {
+                    Admin,
+<#  foreach (var role in roles)
+        { #>
+                    <#= role.ToPascalCase() #>,
+<#  } #>
+                };
+            }
+        }
     }
 }

@@ -82,7 +82,31 @@ var roles = CodeEngine.SecurityRoles.Where(r => !r.Equals(CodeEngine.AdminRole))
             
             #line default
             #line hidden
-            this.Write("    }\r\n}");
+            this.Write("\r\n        public static string[] ApplicationRoles\r\n        {\r\n            get\r\n  " +
+                    "          {\r\n                return new string[] {\r\n                    Admin,\r\n" +
+                    "");
+            
+            #line 27 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcSecurityRoles.tt"
+  foreach (var role in roles)
+        { 
+            
+            #line default
+            #line hidden
+            this.Write("                    ");
+            
+            #line 29 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcSecurityRoles.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(role.ToPascalCase()));
+            
+            #line default
+            #line hidden
+            this.Write(",\r\n");
+            
+            #line 30 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcSecurityRoles.tt"
+  } 
+            
+            #line default
+            #line hidden
+            this.Write("                };\r\n            }\r\n        }\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }
