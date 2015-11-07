@@ -3,6 +3,7 @@ using System.Windows;
 using OzzCodeGen.UI;
 using OzzLocalization;
 using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace OzzCodeGen.CodeEngines.Localization.UI
 {
@@ -58,9 +59,36 @@ namespace OzzCodeGen.CodeEngines.Localization.UI
             foreach (var dict in vocabularies)
             {
                 var vocabulary = dict.Value;
-                foreach (var item in combinedVocabulary)
+                var translated = new List<Vocab>();
+                var notTranslated = new List<Vocab>();
+
+                foreach (var item in vocabulary)
                 {
-                    vocabulary.AddUnique(new Vocab() { Name = item.Name });
+                    if (item.IsTranslated)
+                    {
+                        translated.Add(item);
+                    }
+                    else
+                    {
+                        notTranslated.Add(item);
+                    }
+                }
+
+                vocabulary.Clear();
+
+                foreach (var vocab in translated)
+                {
+                    vocabulary.AddUnique(vocab);
+                }
+
+                foreach (var vocab in notTranslated)
+                {
+                    vocabulary.AddUnique(vocab);
+                }
+
+                foreach (var vocab in combinedVocabulary)
+                {
+                    vocabulary.AddUnique(new Vocab() { Name = vocab.Name });
                 }
 
                 vocabulary.OrderByName();
