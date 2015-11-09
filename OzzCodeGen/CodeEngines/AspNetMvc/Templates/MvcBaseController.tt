@@ -106,6 +106,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
     {
 		var pkeyProperty = entity.GetPrimeryKey();
 		string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
+		string pKeyType = pkeyProperty == null ? "int" : pkeyProperty.PropertyDefinition.TypeName;
 #>
 
         /// <summary>
@@ -113,7 +114,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
         /// </summary>
         /// <param name="id">Represents PrimaryKey of <#= entity.Name #>.<#= pKey #></param>
         /// <returns></returns>
-        protected virtual async Task<<#= entity.Name #>> FindAsync<#= entity.Name #>(int id)
+        protected virtual async Task<<#= entity.Name #>> FindAsync<#= entity.Name #>(<#= pKeyType #> id)
         {
             return await Get<#= entity.Name #>Query()
                             .FirstOrDefaultAsync(x => x.<#= pKey #> == id);
