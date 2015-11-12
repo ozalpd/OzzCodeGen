@@ -180,7 +180,7 @@ else
                 var <#= foreignDependentProperty.Name.ToCamelCase() #> = await FindAsync<#= strongForeignEntity.Name #>(<#= strongProperty.Name.ToCamelCase() #><# if(strongProperty.IsSimple) { #>.Value<# } #>);
                 if (<#= foreignDependentProperty.Name.ToCamelCase() #> == null)
                     return HttpNotFound();
-                <#= Entity.ModelForCreate.ToCamelCase() #>.<#= strongProperty #> = <#= foreignDependentProperty.Name.ToCamelCase() #>.<#= strongForeignPKey #>;
+                <#= Entity.ModelForCreate.ToCamelCase() #>.<#= foreignDependentProperty #> = <#= foreignDependentProperty.Name.ToCamelCase() #>;
             }
 <#  } #>
             await Set<#= Entity.Name #>Defaults(<#= Entity.ModelForCreate.ToCamelCase() #>);
