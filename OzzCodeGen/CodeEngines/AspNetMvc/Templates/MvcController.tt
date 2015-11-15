@@ -56,7 +56,7 @@ if (CustomFile)
 else 
 { #>
 <# if (Entity.GenerateGetQueryMethod){ #>
-        protected virtual IQueryable<<#= Entity.Name #>> Get<#= Entity.Name #>Query(QueryParameters qParams)
+        protected virtual async Task<IQueryable<<#= Entity.Name #>>> Get<#= Entity.Name #>Query(QueryParameters qParams)
         {
             var query = Get<#= Entity.Name #>Query();
 <#  if(searchProperties.Any())
@@ -82,7 +82,8 @@ else
             }
 <#  } #>
 
-            return query;
+            qParams.TotalCount = await query.CountAsync();
+            return query.Skip(qParams.Skip).Take(qParams.PageSize);
         }
 
 <#  } #>
@@ -90,14 +91,13 @@ else
         <#= CanViewAttrib #>
         public async Task<ActionResult> Index(QueryParameters qParams)
         {
-            var query = Get<#= Entity.Name #>Query(qParams);
-            qParams.TotalCount = await query.CountAsync();
+            var query = await Get<#= Entity.Name #>Query(qParams);
             PutPagerInViewBag(qParams);
             await PutCanUserInViewBag();
 
             if (qParams.TotalCount > 0)
             {
-                return View(await query.Skip(qParams.Skip).Take(qParams.PageSize).ToListAsync());
+                return View(await query.ToListAsync());
             }
             else
             {
