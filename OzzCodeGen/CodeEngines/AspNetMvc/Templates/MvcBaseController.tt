@@ -23,6 +23,20 @@ namespace <#= CodeEngine.ControllersNamespace #>
     {
         public partial class QueryParameters
         {
+            public QueryParameters() { }
+            public QueryParameters(QueryParameters parameters)
+            {
+                Constructing(parameters);
+            }
+
+            protected virtual void Constructing(QueryParameters parameters)
+            {
+                Page = parameters.Page;
+                PageSize = parameters.PageSize;
+                SearchString = parameters.SearchString;
+                TotalCount = parameters.TotalCount;
+            }
+
             public string SearchString { get; set; }
             public int Page { get; set; } = 1;
             public int PageSize { get; set; } = 10;
@@ -67,7 +81,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
             ViewBag.canUserCreate = await CanUserCreate();
             ViewBag.canUserDelete = await CanUserDelete();
         }
-		//If we forget to implement override methods, we will keep it secure.
+        //If we forget to implement override methods, we will keep it secure.
         protected virtual Task<bool> CanUserCreate() { return Task.FromResult(false); }
         protected virtual Task<bool> CanUserEdit() { return Task.FromResult(false); }
         protected virtual Task<bool> CanUserDelete() { return Task.FromResult(false); }
@@ -104,9 +118,9 @@ namespace <#= CodeEngine.ControllersNamespace #>
         #region Query Methods for Entity Types
 <#  foreach (var entity in CodeEngine.Entities.Where(e => !e.EntityDefinition.Abstract))
     {
-		var pkeyProperty = entity.GetPrimeryKey();
-		string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
-		string pKeyType = pkeyProperty == null ? "int" : pkeyProperty.PropertyDefinition.TypeName;
+        var pkeyProperty = entity.GetPrimeryKey();
+        string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
+        string pKeyType = pkeyProperty == null ? "int" : pkeyProperty.PropertyDefinition.TypeName;
 #>
 
         /// <summary>
@@ -121,11 +135,11 @@ namespace <#= CodeEngine.ControllersNamespace #>
         }
 
         protected virtual IQueryable<<#= entity.Name #>> Get<#= entity.Name #>Query()
-		{
-		    return <#= dataContextIntance #>.Get<#= entity.Name #>Query();
-		}
+        {
+            return <#= dataContextIntance #>.Get<#= entity.Name #>Query();
+        }
 
-		protected virtual Task Set<#= entity.Name #>Defaults(<#= entity.ModelForCreate #> <#= entity.Name.ToCamelCase() #>)
+        protected virtual Task Set<#= entity.Name #>Defaults(<#= entity.ModelForCreate #> <#= entity.Name.ToCamelCase() #>)
         {
             return Task.FromResult(default(object));
         }

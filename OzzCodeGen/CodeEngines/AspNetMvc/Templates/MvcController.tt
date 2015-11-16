@@ -87,22 +87,38 @@ else
         }
 
 <#  } #>
+<# if (Entity.GenerateGetDtoQueryMethod){ #>
+<#  string queryResult = Entity.Name.Equals(Entity.ModelForJson) ? "result" : "list"; #>
+        protected virtual async Task<List<<#= Entity.ModelForJson #>>> Get<#= Entity.Name #>DtoList(QueryParameters qParams)
+        {
+            var query = await Get<#= Entity.Name #>Query(qParams);
+            var <#= queryResult #> = qParams.TotalCount > 0 ? await query.ToListAsync() : new List<<#= Entity.Name #>>();
+<#        if (!Entity.Name.Equals(Entity.ModelForJson)) { #>
+            var result = new List<<#= Entity.ModelForJson #>>();
+            foreach (var item in list)
+            {
+                result.Add(new <#= Entity.ModelForJson #>(item));
+            }
+<#        } #>
+
+            return result;
+        }
+
+<#  } #>
 <# if (Entity.GenerateIndexAction){ #>
         <#= CanViewAttrib #>
         public async Task<ActionResult> Index(QueryParameters qParams)
         {
             var query = await Get<#= Entity.Name #>Query(qParams);
-            PutPagerInViewBag(qParams);
             await PutCanUserInViewBag();
-
+			var result = new PagedList<<#= Entity.Name #>>(qParams);
             if (qParams.TotalCount > 0)
             {
-                return View(await query.ToListAsync());
+                result.Items = await query.ToListAsync();
             }
-            else
-            {
-                return View(new List<<#= Entity.Name #>>());   //there isn't any record, so no need to run a query
-            }
+
+            PutPagerInViewBag(result);
+            return View(result.Items);
         }
         
         protected override async Task<bool> CanUserCreate()
@@ -136,6 +152,24 @@ else
         bool? _canUserDelete;
 
 <#  } #>
+<#  if (Entity.GenerateGetEntityListAction)
+    { #>
+        <#= CanViewAttrib #>
+        public async Task<ActionResult> Get<#= Entity.Name #>List(QueryParameters qParams)
+        {
+            var result = await Get<#= Entity.Name #>DtoList(qParams);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        <#= CanViewAttrib #>
+        public async Task<ActionResult> Get<#= Entity.Name #>PagedList(QueryParameters qParams)
+        {
+            var result = new PagedList<<#= Entity.ModelForJson #>>(qParams);
+            result.Items = await Get<#= Entity.Name #>DtoList(qParams);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+<#  } #>
 <# if (Entity.GenerateDetailsAction){ #>
         <#= CanViewAttrib #>
         public async Task<ActionResult> Details(int? id)  //GET: /<#= Entity.ControllerName #>/Details/5
@@ -153,6 +187,29 @@ else
 
             await PutCanUserInViewBag();
             return View(<#= Entity.Name.ToCamelCase() #>);
+        }
+
+<#  } #>
+<# if (Entity.GenerateGetEntityAction){ #>
+        <#= CanViewAttrib #>
+        public async Task<ActionResult> Get<#= Entity.Name #>(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = await FindAsync<#= Entity.Name #>(id.Value);
+
+            if (<#= Entity.Name.ToCamelCase() #> == null)
+            {
+                return HttpNotFound();
+            }
+
+<#        if (Entity.Name.Equals(Entity.ModelForJson)) { #>
+            return Json(<#= Entity.Name.ToCamelCase() #>, JsonRequestBehavior.AllowGet);
+<#            } else { #>
+            return Json(new <#= Entity.ModelForJson #>(<#= Entity.Name.ToCamelCase() #>), JsonRequestBehavior.AllowGet);
+<#            } #>
         }
 
 <#  } #>
@@ -363,17 +420,41 @@ else
         }
 <#  } #>
 
-<#    if (fkeyProperties.Any())
-    { #>
         public new partial class QueryParameters : <#= CodeEngine.BaseControllerName #>.QueryParameters
         {
+            public QueryParameters() { }
+            public QueryParameters(QueryParameters parameters) : base(parameters)
+            {
+<#      foreach (var item in fkeyProperties)
+        {  #>
+                <#= item.Name #> = parameters.<#= item.Name #>;
+<#       } #>
+            }
 <#      foreach (var item in fkeyProperties)
         {  #>
             public <#= item.GetNullableTypeName() #> <#= item.Name #> { get; set; }
 <#       } #>
         }
 
-<#  } #>
+        public partial class PagedList<T> : QueryParameters
+        {
+            public PagedList() { }
+            public PagedList(QueryParameters parameters) : base(parameters) { }
+
+            public IEnumerable<T> Items
+            {
+                set { _items = value; }
+                get
+                {
+                    if (_items == null)
+                    {
+                        _items = new List<T>();
+                    }
+                    return _items;
+                }
+            }
+            IEnumerable<T> _items;
+        }
 <# if (Entity.GenerateCreateAction){ #>
         partial void OnCreateSaving(<#= Entity.ModelForCreate #> <#= Entity.Name.ToCamelCase() #>);
         partial void OnCreateSaved(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
@@ -19,6 +20,14 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             }
         }
 
+        protected override List<string> DefaultUsingNamespaceList()
+        {
+            var list = base.DefaultUsingNamespaceList();
+            //if we need controller's namespace
+            //var controller = new MvcController(Entity);
+            //list.Add(controller.NamespaceName);
+            return list;
+        }
 
         public override bool WriteToFile(string FilePath, bool overwriteExisting)
         {

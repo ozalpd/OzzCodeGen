@@ -181,7 +181,7 @@ namespace OzzCodeGen.Wpf
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            if (!Project.ModelProvider.CanRefresh) return;
+            if (!Project?.ModelProvider.CanRefresh ?? false) return;
 
             Project.RefreshDataModel(true);
         }

@@ -7,7 +7,7 @@
                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                         xmlns:Converters="clr-namespace:OzzUtils.Wpf.Converters;assembly=OzzUtils.Wpf"
-                        mc:Ignorable="d" d:DesignHeight="720" d:DesignWidth="900">
+                        mc:Ignorable="d" d:DesignHeight="720" d:DesignWidth="1024">
     <UserControl.Resources>
         <ObjectDataProvider x:Key="mvcViewTypes" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -333,8 +333,8 @@
         <!-- Grid of data grids -->
         <Grid Grid.Row="8" Grid.ColumnSpan="6" Margin="4,2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" MinWidth="420"/>
-                <ColumnDefinition Width="5*" MinWidth="200" MaxWidth="832"/>
+                <ColumnDefinition Width="2*" MinWidth="420"/>
+                <ColumnDefinition Width="3*" MinWidth="420"/>
             </Grid.ColumnDefinitions>
             <DataGrid Name="grdEntitySettings" ItemsSource="{Binding Entities, Mode=TwoWay}" 
                       SelectedItem="{Binding CurrentEntitySetting, Mode=TwoWay}"
@@ -373,7 +373,7 @@
                             </Style>
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="128"/>
+                            <ColumnDefinition Width="136"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -401,6 +401,13 @@
                                         <TextBlock Text="{Binding Name, StringFormat='Generate Get\{0\}Query(QueryParameters qParams) method in controller'}"/>
                                     </CheckBox.ToolTip>
                                 </CheckBox>
+                                <CheckBox IsChecked="{Binding GenerateGetDtoQueryMethod}" Content="GetEntityDtoQuery">
+                                    <CheckBox.ToolTip>
+                                        <TextBlock Text="{Binding Name, StringFormat='Generate Get\{0\}DtoQuery(QueryParameters qParams) method in controller'}"/>
+                                    </CheckBox.ToolTip>
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding GenerateGetEntityAction}" Content="GetEntity Action" ToolTip="Generate GetEntity action in controller"/>
+                                <CheckBox IsChecked="{Binding GenerateGetEntityListAction}" Content="GetEntityList Action" ToolTip="Generate GetEntityList action in controller"/>
                                 <CheckBox IsChecked="{Binding GenerateIndexAction}" Content="Index Action" ToolTip="Generate Index action in controller"/>
                                 <CheckBox IsChecked="{Binding GenerateDetailsAction}" Content="Details Action" ToolTip="Generate Details action in controller"/>
                                 <CheckBox IsChecked="{Binding GenerateCreateAction}" Content="Create Action" ToolTip="Generate Create action in controller"/>
@@ -414,11 +421,10 @@
                             </StackPanel>
                         </Border>
                         <Border Grid.Column="1">
-                            <StackPanel>
+                            <StackPanel Background="#FFFFD080">
                                 <TextBlock Text="Authorization Roles"
                                            TextAlignment="Center"
-                                           Padding="4, 12" Margin="0" Height="40"
-                                           Background="#FFFFDA80"/>
+                                           Padding="4, 12" Margin="0" Height="40"/>
                                 <TextBlock Text="Roles Can View"/>
                                 <TextBox Text="{Binding RolesCanView}"/>
                                 <TextBlock Text="Roles Can Create"/>
@@ -430,28 +436,37 @@
                             </StackPanel>
                         </Border>
                         <Border Grid.Column="2">
-                            <StackPanel>
-                                <TextBlock Text="Area" ToolTip="Area of views &amp; controllers" Margin="0"/>
-                                <TextBox Text="{Binding Area}" ToolTip="Area of views &amp; controllers"/>
-
-                                <TextBlock Text="Controller Name"/>
+                            <StackPanel Background="#FF90E070">
+                                <TextBlock Text="Controller Name" Margin="0"/>
                                 <TextBox Text="{Binding ControllerName}"/>
 
-                                <TextBlock Text="Controller Base" ToolTip="Base class for controller to generated."/>
-                                <TextBox Text="{Binding BaseControllerName}" ToolTip="Base class for controller to generated."/>
+                                <TextBlock Text="Index Model Class" ToolTip="Model class for Index action."/>
+                                <TextBox Text="{Binding ModelForIndex}" ToolTip="Model class or ViewModel for Index action."/>
 
-                                <TextBlock Text="Edit Model Class" ToolTip="Model class for Edit action."/>
-                                <TextBox Text="{Binding ModelForEdit}" ToolTip="Model class or ViewModel for Edit action."/>
+                                <TextBlock Text="JSON Model Class" ToolTip="ViewModel class for JSON Result actions."/>
+                                <TextBox Text="{Binding ModelForJson}" ToolTip="Model or ViewModel class for JSON Result actions."/>
 
                                 <TextBlock Text="Create Model Class" ToolTip="Model class for Create action."/>
                                 <TextBox Text="{Binding ModelForCreate}" ToolTip="Model class or ViewModel for Create action."/>
+
+                                <TextBlock Text="Edit Model Class" ToolTip="Model class for Edit action."/>
+                                <TextBox Text="{Binding ModelForEdit}" ToolTip="Model class or ViewModel for Edit action."/>
                             </StackPanel>
                         </Border>
 
                         <Border Grid.Column="3">
-                            <StackPanel>
-                                <TextBlock Text="Dataset Name" ToolTip="Dataset for entity" Margin="0"/>
+                            <StackPanel Background="#FF80D0D0">
+                                <TextBlock Text="Controller Base Class" ToolTip="Base class for controller to generated." Margin="0"/>
+                                <TextBox Text="{Binding BaseControllerName}" ToolTip="Base class for controller to generated."/>
+                                
+                                <TextBlock Text="Area" ToolTip="Area of views &amp; controllers"/>
+                                <TextBox Text="{Binding Area}" ToolTip="Area of views &amp; controllers"/>
+
+                                <TextBlock Text="Dataset Name" ToolTip="Dataset for entity"/>
                                 <TextBox Text="{Binding DataSetName}" ToolTip="Dataset for entity"/>
+
+                                <TextBlock Text="Strong Depended ForeignKey" ToolTip="ForeignKey may be used in Create action"/>
+                                <TextBox Text="{Binding StrongDependedForeignKey}" ToolTip="ForeignKey may be used in Create action"/>
 
                                 <TextBlock Text="Save Parameter">
                                     <TextBlock.ToolTip>
@@ -463,9 +478,6 @@
                                         <TextBlock Text="{Binding CodeEngine.DataContextInstance, StringFormat='Parameter for Save and SaveAsync methods of \{0\} property'}"/>
                                     </TextBox.ToolTip>
                                 </TextBox>
-
-                                <TextBlock Text="Strong Depended ForeignKey" ToolTip="ForeignKey may be used in Create action"/>
-                                <TextBox Text="{Binding StrongDependedForeignKey}" ToolTip="ForeignKey may be used in Create action"/>
                             </StackPanel>
                         </Border>
                         <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="2,4,2,0">

@@ -128,6 +128,48 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private string _saveParameter;
 
         /// <summary>
+        /// Model or ViewModel class name for List action
+        /// </summary>
+        public string ModelForIndex
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_modelForIndex))
+                {
+                    _modelForIndex = Name;
+                }
+                return _modelForIndex;
+            }
+            set
+            {
+                _modelForIndex = value != null ? value.ToPascalCase() : string.Empty;
+                RaisePropertyChanged("ModelForIndex");
+            }
+        }
+        private string _modelForIndex;
+
+        /// <summary>
+        /// Model or ViewModel class name for List action
+        /// </summary>
+        public string ModelForJson
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_modelForJson))
+                {
+                    _modelForJson = Name + "DTO";
+                }
+                return _modelForJson;
+            }
+            set
+            {
+                _modelForJson = value != null ? value.ToPascalCase() : string.Empty;
+                RaisePropertyChanged("ModelForJson");
+            }
+        }
+        private string _modelForJson;
+
+        /// <summary>
         /// Model or ViewModel class name for Create action
         /// </summary>
         public string ModelForCreate
@@ -298,6 +340,22 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private bool? _generateGetQueryMethod;
 
+        public bool GenerateGetDtoQueryMethod
+        {
+            get
+            {
+                if (_generateGetDtoQueryMethod == null)
+                    _generateGetDtoQueryMethod = true;
+                return _generateGetDtoQueryMethod.Value;
+            }
+            set
+            {
+                _generateGetDtoQueryMethod = value;
+                RaisePropertyChanged("GenerateGetDtoQueryMethod");
+            }
+        }
+        private bool? _generateGetDtoQueryMethod;
+
         public bool GenerateIndexAction
         {
             get
@@ -313,6 +371,38 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
         }
         private bool? _generateIndexAction;
+
+        public bool GenerateGetEntityAction
+        {
+            get
+            {
+                if (_generateGetEntityAction == null)
+                    _generateGetEntityAction = true;
+                return _generateGetEntityAction.Value;
+            }
+            set
+            {
+                _generateGetEntityAction = value;
+                RaisePropertyChanged("GenerateGetEntityAction");
+            }
+        }
+        private bool? _generateGetEntityAction;
+
+        public bool GenerateGetEntityListAction
+        {
+            get
+            {
+                if (_generateGetEntityListAction == null)
+                    _generateGetEntityListAction = true;
+                return _generateGetEntityListAction.Value;
+            }
+            set
+            {
+                _generateGetEntityListAction = value;
+                RaisePropertyChanged("GenerateGetEntityListAction");
+            }
+        }
+        private bool? _generateGetEntityListAction;
 
         public bool GenerateCreateAction
         {
