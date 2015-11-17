@@ -164,8 +164,8 @@ else
         <#= CanViewAttrib #>
         public async Task<ActionResult> Get<#= Entity.Name #>PagedList(QueryParameters qParams)
         {
-            var result = new PagedList<<#= Entity.ModelForJson #>>(qParams);
-            result.Items = await Get<#= Entity.Name #>DtoList(qParams);
+            var items = await Get<#= Entity.Name #>DtoList(qParams);
+            var result = new PagedList<<#= Entity.ModelForJson #>>(qParams, items);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -440,6 +440,10 @@ else
         {
             public PagedList() { }
             public PagedList(QueryParameters parameters) : base(parameters) { }
+            public PagedList(QueryParameters parameters, IEnumerable<T> items) : this(parameters)
+            {
+                Items = items;
+            }
 
             public IEnumerable<T> Items
             {
