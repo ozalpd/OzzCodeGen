@@ -464,10 +464,7 @@
 
                                 <TextBlock Text="Dataset Name" ToolTip="Dataset for entity"/>
                                 <TextBox Text="{Binding DataSetName}" ToolTip="Dataset for entity"/>
-
-                                <TextBlock Text="Strong Depended ForeignKey" ToolTip="ForeignKey may be used in Create action"/>
-                                <TextBox Text="{Binding StrongDependedForeignKey}" ToolTip="ForeignKey may be used in Create action"/>
-
+                                
                                 <TextBlock Text="Save Parameter">
                                     <TextBlock.ToolTip>
                                         <TextBlock Text="{Binding CodeEngine.DataContextInstance, StringFormat='Parameter for Save and SaveAsync methods of \{0\} property'}"/>
@@ -478,6 +475,9 @@
                                         <TextBlock Text="{Binding CodeEngine.DataContextInstance, StringFormat='Parameter for Save and SaveAsync methods of \{0\} property'}"/>
                                     </TextBox.ToolTip>
                                 </TextBox>
+
+                                <TextBlock Text="Strong Depended ForeignKey" ToolTip="ForeignKey may be used in Create action"/>
+                                <TextBox Text="{Binding StrongDependedForeignKey}" ToolTip="ForeignKey may be used in Create action"/>
                             </StackPanel>
                         </Border>
                         <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="2,4,2,0">
