@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace OzzCodeGen.Definitions
 {
+    //TODO: Add EnumPropertyType 
     public class SimpleProperty : BaseProperty
     {
         public bool IsKey
@@ -16,7 +17,7 @@ namespace OzzCodeGen.Definitions
             }
         }
         private bool isKey;
-        
+
 
         public bool IsForeignKey
         {
@@ -29,7 +30,7 @@ namespace OzzCodeGen.Definitions
             }
         }
         private bool isForeignKey;
-        
+
 
         public bool IsNullable
         {
@@ -62,7 +63,7 @@ namespace OzzCodeGen.Definitions
         {
             return IsTypeNumeric(TypeName);
         }
-        
+
         public override bool IsTypeDateTime()
         {
             return IsTypeDateTime(TypeName);
