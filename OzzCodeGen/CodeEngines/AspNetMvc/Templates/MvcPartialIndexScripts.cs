@@ -18,7 +18,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialIndexScripts.tt"
+    #line 1 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialIndexScripts.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
     public partial class MvcPartialIndexScripts : AbstractMvcView
     {
@@ -29,34 +29,33 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         public override string TransformText()
         {
             
-            #line 6 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialIndexScripts.tt"
+            #line 6 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialIndexScripts.tt"
  
 WriteUsingNamespaces(); 
             
             #line default
             #line hidden
-            this.Write("@model string\r\n<script>\r\n    function setPager(page) {\r\n        $(\'#page\').val(pa" +
-                    "ge);\r\n        $(\'#searchForm\').submit();\r\n    }\r\n    function setDelete(item, id" +
-                    ") {\r\n        $(\'#deleteText\').html(\'@MessageStrings.YouAreAboutToDelete \' + item" +
-                    " + \'.<br/>@MessageStrings.AreYouSure?\');\r\n        @*$(\'#deleteButton\').attr(\'hre" +
-                    "f\', \'/@Model/Delete/\' + id);*@\r\n        $(\'#ajxDelete\').attr(\'onclick\', \'ajaxDel" +
-                    "ete(\' + id + \')\');\r\n    }\r\n    function ajaxDelete(id) {\r\n        var requestUrl" +
-                    " = \'/@Model/Delete/\' + id;\r\n        $(\'#deleteConfirm\').modal(\'hide\');\r\n\r\n      " +
-                    "  var request = $.get(requestUrl, function (data) {\r\n        }).done(function ()" +
-                    " {\r\n            $(\'#searchForm\').submit();\r\n        });\r\n        showMessageBox(" +
-                    "\'@MessageStrings.Deleting...\', \'@MessageStrings.PleaseWait.\', false);\r\n\r\n       " +
-                    " request.error(function (jqXHR, textStatus, errorThrown) {\r\n            var msgb" +
-                    "oxMsg = jqXHR.responseText;\r\n            showMessageBox(errorThrown, msgboxMsg, " +
-                    "true);\r\n        });\r\n    }\r\n    function showMessageBox(title, text, cancelButto" +
-                    "n) {\r\n        if (cancelButton) {\r\n            $(\'#messageBoxCancelButton\').show" +
-                    "();\r\n        }\r\n        else {\r\n            $(\'#messageBoxCancelButton\').hide();" +
-                    "\r\n        }\r\n        $(\'#messageBoxTitle\').html(title);\r\n        $(\'#messageBoxT" +
-                    "ext\').html(text);\r\n        $(\'#messageBox\').modal(\'show\');\r\n    }\r\n    function " +
-                    "hideMessageBox() {\r\n        $(\'#messageBox\').modal(\'hide\');\r\n    }\r\n    function" +
-                    " showCannotDelete(item, relatedRecords) {\r\n        var msgText = \'@MessageString" +
-                    "s.CanNotDelete \' + item + \'.<br/>@MessageStrings.BecauseOfRelatedRecords.<br/>\' " +
-                    "+ relatedRecords;\r\n        showMessageBox(\'@MessageStrings.UnableToDelete!\', msg" +
-                    "Text, true);\r\n    }\r\n</script>");
+            this.Write("@model string\r\n<script type=\"text/javascript\">\r\n    function setDelete(item, id) " +
+                    "{\r\n        $(\'#deleteText\').html(\'@MessageStrings.YouAreAboutToDelete \' + item +" +
+                    " \'.<br/>@MessageStrings.AreYouSure?\');\r\n        @*$(\'#deleteButton\').attr(\'href\'" +
+                    ", \'/@Model/Delete/\' + id);*@\r\n        $(\'#ajxDelete\').attr(\'onclick\', \'ajaxDelet" +
+                    "e(\' + id + \')\');\r\n    }\r\n    function ajaxDelete(id) {\r\n        var requestUrl =" +
+                    " \'/@Model/Delete/\' + id;\r\n        $(\'#deleteConfirm\').modal(\'hide\');\r\n\r\n        " +
+                    "var request = $.get(requestUrl, function (data) {\r\n        }).done(function () {" +
+                    "\r\n            refreshData();\r\n        });\r\n        showMessageBox(\'@MessageStrin" +
+                    "gs.Deleting...\', \'@MessageStrings.PleaseWait.\', false);\r\n\r\n        request.error" +
+                    "(function (jqXHR, textStatus, errorThrown) {\r\n            var msgboxMsg = jqXHR." +
+                    "responseText;\r\n            showMessageBox(errorThrown, msgboxMsg, true);\r\n      " +
+                    "  });\r\n    }\r\n    function showMessageBox(title, text, cancelButton) {\r\n        " +
+                    "if (cancelButton) {\r\n            $(\'#messageBoxCancelButton\').show();\r\n        }" +
+                    "\r\n        else {\r\n            $(\'#messageBoxCancelButton\').hide();\r\n        }\r\n " +
+                    "       $(\'#messageBoxTitle\').html(title);\r\n        $(\'#messageBoxText\').html(tex" +
+                    "t);\r\n        $(\'#messageBox\').modal(\'show\');\r\n    }\r\n    function hideMessageBox" +
+                    "() {\r\n        $(\'#messageBox\').modal(\'hide\');\r\n    }\r\n    function showCannotDel" +
+                    "ete(item, relatedRecords) {\r\n        var msgText = \'@MessageStrings.CanNotDelete" +
+                    " \' + item + \'.<br/>@MessageStrings.BecauseOfRelatedRecords.<br/>\' + relatedRecor" +
+                    "ds;\r\n        showMessageBox(\'@MessageStrings.UnableToDelete!\', msgText, true);\r\n" +
+                    "    }\r\n</script>");
             return this.GenerationEnvironment.ToString();
         }
     }

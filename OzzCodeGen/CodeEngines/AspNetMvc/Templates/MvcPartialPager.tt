@@ -38,12 +38,12 @@ WriteUsingNamespaces(); #>
         else
         {
             <li>
-                <a href="#" aria-label="FirstPage" onclick="setPager(1)">
+                <a href="#" aria-label="FirstPage" onclick="getPagedData(1)">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li>
-                <a href="#" aria-label="Previous" onclick="setPager(@(page - 1))">
+                <a href="#" aria-label="Previous" onclick="getPagedData(@(page - 1))">
                     <span aria-hidden="true">&lsaquo;</span>
                 </a>
             </li>
@@ -56,18 +56,18 @@ WriteUsingNamespaces(); #>
             }
             else
             {
-                <li><a href="#" onclick="setPager(@i)">@i</a></li>
+                <li><a href="#" onclick="getPagedData(@i)">@i</a></li>
             }
         }
         @if (page < pageCount)
         {
             <li>
-                <a href="#" aria-label="Next" onclick="setPager(@(page + 1))">
+                <a href="#" aria-label="Next" onclick="getPagedData(@(page + 1))">
                     <span aria-hidden="true">&rsaquo;</span>
                 </a>
             </li>
             <li>
-                <a href="#" aria-label="Next" onclick="setPager(@(pageCount))">
+                <a href="#" aria-label="Next" onclick="getPagedData(@(pageCount))">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
@@ -88,3 +88,12 @@ WriteUsingNamespaces(); #>
     </ul>
 </nav>
 }
+<script type="text/javascript">
+    function getPagedData(page) {
+        $('#page').val(page);
+        $('#searchForm').submit();
+    }
+    function refreshData() {
+        $('#searchForm').submit();
+    }
+</script>

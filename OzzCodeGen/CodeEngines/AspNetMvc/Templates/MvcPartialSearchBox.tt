@@ -8,7 +8,7 @@ WriteUsingNamespaces(); #>
 <div class="input-group">
     @Html.TextBox("SearchString", null, new { @class = "form-control", placeholder = MessageStrings.EnterKeywordHere })
     <span class="input-group-btn">
-        <button type="button" class="btn btn-default" onclick="setPager(1)">
+        <button type="button" class="btn btn-default" onclick="getPagedData(1)">
             <span class="glyphicon glyphicon-search"></span>
         </button>
     </span>

@@ -6,11 +6,7 @@
 <# 
 WriteUsingNamespaces(); #>
 @model string
-<script>
-    function setPager(page) {
-        $('#page').val(page);
-        $('#searchForm').submit();
-    }
+<script type="text/javascript">
     function setDelete(item, id) {
         $('#deleteText').html('@MessageStrings.YouAreAboutToDelete ' + item + '.<br/>@MessageStrings.AreYouSure?');
         @*$('#deleteButton').attr('href', '/@Model/Delete/' + id);*@
@@ -22,7 +18,7 @@ WriteUsingNamespaces(); #>
 
         var request = $.get(requestUrl, function (data) {
         }).done(function () {
-            $('#searchForm').submit();
+            refreshData();
         });
         showMessageBox('@MessageStrings.Deleting...', '@MessageStrings.PleaseWait.', false);
 
