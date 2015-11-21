@@ -12,6 +12,7 @@ bool searchable = Entity.DisplayColumns.Where(e => e.UseInSearch).Any();
 var properties = Entity.DisplayColumns.Where(e => e.InIndexView);
 var collectionProperties = Entity.GetInheritedCollectionProperties();
 var entitiesThisForCreate = Entity.GetEntitiesStrongForThis();
+var gridId = Entity.Name.ToCamelCase() + "Grid";
 
 WriteUsingNamespaces(); #>
 @model IEnumerable<<#= Entity.Name #>>
@@ -49,23 +50,24 @@ WriteUsingNamespaces(); #>
 </div>
 @if (totalCount > 0)
 {
-    <table class="table table-hover">
-        <tr>
-            <th>@ActionStrings.Action</th>
+	<div id="<#= gridId #>Parent" class="table-responsive">
+		<table id="<#= gridId #>" class="table table-striped table-bordered table-hover">
+			<tr>
+				<th>@ActionStrings.Action</th>
 <#
 foreach (var property in properties) 
 {
 #>
-            <th>@Html.DisplayNameFor(model => model.<#= property.Name #>)</th>
+				<th>@Html.DisplayNameFor(model => model.<#= property.Name #>)</th>
 <#
 } #>
-        </tr>
+			</tr>
     @foreach (var item in Model)
     {
             <tr>
                 <td>
                     <div class="btn-group">
-                        <button type="button" title="@ActionStrings.Action" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                        <button type="button" title="@ActionStrings.Action" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" onclick="onActionMenuClick(this);">
                             <span class="glyphicon glyphicon-tasks"></span> <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
@@ -123,18 +125,32 @@ foreach (var property in properties)
 <#  }
 } #>
             </tr>
-    }
-    </table>
-    @Html.Partial("<#= MvcPartialPager.ViewName #>")
-    if (canUserDelete)
-    {
-        @Html.Partial("_MessageBoxPartial")
-    }
+	}
+		</table>
+    </div>
+	@Html.Partial("<#= MvcPartialPager.ViewName #>")
+	@Html.Partial("_MessageBoxPartial")
+	@section scripts{
+		@Html.Partial("<#= MvcPartialIndexScripts.ViewName #>", "<#= Entity.ControllerName #>") @* Controller's name *@
+        <script type="text/javascript">
+            function onActionMenuClick(menuBtn) {
+                setTimeout(function () {
+                    var menuHeight = 160;
+                    var rectMenu = menuBtn.getBoundingClientRect();
+                    var rectGrid = document.getElementById("<#= gridId #>").getBoundingClientRect();
+                    var diffY = rectGrid.bottom - rectMenu.bottom - menuHeight;
+
+                    if (diffY < 0) {
+                        var viewport = $('#<#= gridId #>Parent');
+                        var viewportScroll = viewport.scrollTop();
+                        viewport.scrollTop((diffY * -1) + viewportScroll);
+                    }
+                }, 250);
+            }
+        </script>
+	}
 }
 else
 {
     <h4>@MessageStrings.NoResults!</h4>
-}
-@section scripts{
-    @Html.Partial("<#= MvcPartialIndexScripts.ViewName #>", "<#= Entity.ControllerName #>")
 }
