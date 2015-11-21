@@ -413,8 +413,12 @@ namespace OzzCodeGen.Wpf
                 return;
             
             var properties = SelectedProperty.EntityDefinition.Properties;
+            int i = properties.IndexOf(SelectedProperty);
             properties.Remove(SelectedProperty);
+            SelectedProperty = null;
             RefreshPropertiesGrid();
+            i = i < properties.Count ? i : properties.Count - 1;
+            SelectedProperty = properties.ElementAt(i);
         }
 
         private void mnuAddProperty_Click(object sender, RoutedEventArgs e)
