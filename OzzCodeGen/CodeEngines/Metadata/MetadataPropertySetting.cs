@@ -19,6 +19,18 @@ namespace OzzCodeGen.CodeEngines.Metadata
             get { return MetadataEntitySetting.CodeEngine; }
         }
 
+        public bool DTOExclusion
+        {
+            get { return _dtoExclusion; }
+            set
+            {
+                if (_dtoExclusion == value) return;
+                _dtoExclusion = value;
+                RaisePropertyChanged("DTOExclusion");
+            }
+        }
+        private bool _dtoExclusion;
+
         /// <summary>
         /// UIHint of the Property
         /// </summary>
@@ -49,10 +61,7 @@ namespace OzzCodeGen.CodeEngines.Metadata
             }
             set
             {
-                if (_dataType == value || !IsSimpleOrString)
-                    return;
-                _dataType = string.IsNullOrEmpty(GetDefaultDataType()) && value.Equals(DataTypes.NotSpecial) ?
-                            string.Empty : value;
+                _dataType = value;
                 RaisePropertyChanged("DataType");
             }
         }
@@ -60,17 +69,20 @@ namespace OzzCodeGen.CodeEngines.Metadata
 
         private string GetDefaultDataType()
         {
+            if (EntitySetting?.DataModel == null)
+                return string.Empty;
+
             var lowerName = Name.ToLowerInvariant();
             if (lowerName.Contains("phone"))
                 return DataTypes.PhoneNumber;
             else if (lowerName.Contains("email") || lowerName.Contains("e-mail"))
                 return DataTypes.EmailAddress;
-            else if (lowerName.Contains("postalcode") || lowerName.Contains("zip"))
+            else if (lowerName.Equals("postalcode") || lowerName.Equals("zip") || lowerName.Equals("zipcode"))
                 return DataTypes.PostalCode;
             else if (lowerName.Equals("description") || lowerName.Contains("notes"))
                 return DataTypes.MultilineText;
-            else if (lowerName.Equals("price") || lowerName.Contains("cost"))
-                return DataTypes.Currency;
+            //else if (lowerName.Equals("price") || lowerName.Contains("cost"))
+            //    return DataTypes.Currency;
             else if (lowerName.Equals("password"))
                 return DataTypes.Password;
             else if (lowerName.Contains("imageurl"))

@@ -16,7 +16,10 @@ namespace OzzCodeGen.CodeEngines.Metadata.UI
             ColumnWidths.Add("Range", 120);
             ColumnWidths.Add("RegularExpression", 120);
             ColumnWidths["Name"] = 120;
+            ColumnWidths.Add("DTOExclusion", 60);
 
+            HiddenColumns.Add("IsSimple");
+            HiddenColumns.Add("IsString");
             HiddenColumns.Add("Properties");
             HiddenColumns.Add("DataType");
             HiddenColumns.Add("CodeEngine");

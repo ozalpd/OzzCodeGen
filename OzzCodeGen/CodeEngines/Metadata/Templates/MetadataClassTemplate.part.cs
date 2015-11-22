@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace OzzCodeGen.CodeEngines.Metadata.Templates
 {
@@ -123,7 +122,9 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
         {
             if (MetadataForDTO)
             {
-                return EntitySetting.GetInheritedIncludedProperties().Where(p => p.IsSimpleOrString);
+                return EntitySetting
+                            .GetInheritedIncludedProperties()
+                            .Where(p => p.IsSimpleOrString && !p.DTOExclusion);
             }
             else
             {
