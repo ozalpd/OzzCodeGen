@@ -14,6 +14,11 @@
                 <x:Type TypeName="AspNetMvc:MvcFilterType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider x:Key="indexViewGeneration" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="AspNetMvc:IndexViewGeneration" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
         <Converters:BoolInverter x:Key="boolInverter"/>
         <Style x:Key="topbarButtons" TargetType="{x:Type Button}">
             <Setter Property="Height" Value="Auto" />
@@ -352,36 +357,20 @@
             <TabControl Grid.Column="1" Margin="9,0,0,0" Background="#FFB0C4DE">
                 <TabItem Header="Details">
                     <Grid DataContext="{Binding SelectedItem, ElementName=grdEntitySettings}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
                         <Grid.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="BorderBrush" Value="#FF206080"/>
                                 <Setter Property="BorderThickness" Value="1"/>
                                 <Setter Property="Margin" Value="2,0"/>
                             </Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Height" Value="19"/>
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                <Setter Property="Background" Value="#A0FFFFFF"/>
-                                <Setter Property="Margin" Value="0,4,1,0"/>
-                                <Setter Property="Padding" Value="4,1"/>
-                            </Style>
-                            <Style TargetType="TextBox">
-                                <Setter Property="Margin" Value="0,0,1,0"/>
-                            </Style>
                             <Style TargetType="CheckBox">
-                                <Setter Property="Margin" Value="5,2,0,2"/>
+                                <Setter Property="Margin" Value="4,2,0,1"/>
                             </Style>
                         </Grid.Resources>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="136"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
                         <Border Grid.RowSpan="2">
                             <StackPanel>
                                 <StackPanel Background="#FFFFB040">
@@ -415,12 +404,38 @@
                                 <CheckBox IsChecked="{Binding GenerateDeleteAction}" Content="Delete Action" ToolTip="Generate Delete action in controller"/>
                                 <TextBlock Height="2" Margin="2"/>
                                 <CheckBox IsChecked="{Binding IndexView}" Content="Index View" ToolTip="Generate Index view"/>
+                                <ComboBox ItemsSource="{Binding Source={StaticResource indexViewGeneration}}"
+                                          SelectedItem="{Binding IndexViewGeneration}"
+                                          FontSize="11" />
+                                <TextBlock Height="2" Margin="2"/>
                                 <CheckBox IsChecked="{Binding DetailsView}" Content="Details View" ToolTip="Generate Details view"/>
                                 <CheckBox IsChecked="{Binding CreateView}" Content="Create View" ToolTip="Generate Create view"/>
                                 <CheckBox IsChecked="{Binding EditView}" Content="Edit View" ToolTip="Generate Edit view"/>
                             </StackPanel>
                         </Border>
-                        <Border Grid.Column="1">
+                        <Grid Grid.Column="1">
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Height" Value="19"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Background" Value="#A0FFFFFF"/>
+                                <Setter Property="Margin" Value="0,4,1,0"/>
+                                <Setter Property="Padding" Value="4,1"/>
+                            </Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="Margin" Value="0,0,1,0"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Column="0">
                             <StackPanel Background="#FFFFD080">
                                 <TextBlock Text="Authorization Roles"
                                            TextAlignment="Center"
@@ -435,7 +450,7 @@
                                 <TextBox Text="{Binding RolesCanDelete}"/>
                             </StackPanel>
                         </Border>
-                        <Border Grid.Column="2">
+                        <Border Grid.Column="1">
                             <StackPanel Background="#FF90E070">
                                 <TextBlock Text="Controller Name" Margin="0"/>
                                 <TextBox Text="{Binding ControllerName}"/>
@@ -454,7 +469,7 @@
                             </StackPanel>
                         </Border>
 
-                        <Border Grid.Column="3">
+                        <Border Grid.Column="2">
                             <StackPanel Background="#FF80D0D0">
                                 <TextBlock Text="Controller Base Class" ToolTip="Base class for controller to generated." Margin="0"/>
                                 <TextBox Text="{Binding BaseControllerName}" ToolTip="Base class for controller to generated."/>
@@ -480,7 +495,7 @@
                                 <TextBox Text="{Binding StrongDependedForeignKey}" ToolTip="ForeignKey may be used in Create action"/>
                             </StackPanel>
                         </Border>
-                        <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="2,4,2,0">
+                        <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Margin="2,4,2,0">
                             <StackPanel>
                                 <TextBlock Text="FillSelectLists Method Name(s)"
                                            ToolTip="In Create &amp; Edit actions method or methods for preparing SelectLists"
@@ -492,6 +507,8 @@
                                 <TextBox Text="{Binding EditRedirect}"/>
                             </StackPanel>
                         </Border>
+                    </Grid>
+                
                     </Grid>
                 </TabItem>
                 <TabItem Header="Properties">

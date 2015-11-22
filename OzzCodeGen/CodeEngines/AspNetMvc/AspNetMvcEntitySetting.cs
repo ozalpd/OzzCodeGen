@@ -468,6 +468,26 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private bool? _generateDetailsAction;
 
+
+        public IndexViewGeneration IndexViewGeneration
+        {
+            get
+            {
+                if (_indexViewGeneration == 0)
+                    _indexViewGeneration = IndexViewGeneration.HtmlTableWithButtonsAction;
+                return _indexViewGeneration;
+            }
+            set
+            {
+                if (_indexViewGeneration == value)
+                    return;
+                _indexViewGeneration = value;
+                RaisePropertyChanged("IndexViewGeneration");
+            }
+        }
+        private IndexViewGeneration _indexViewGeneration;
+
+
         /// <summary>
         /// Generate IndexView
         /// </summary>
