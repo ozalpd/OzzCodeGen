@@ -72,47 +72,47 @@ foreach (var property in properties)
 			</tr>
     @foreach (var item in Model)
     {
-            <tr>
+                <tr>
 <#  if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) { #>
-                <td>
-                    <div class="btn-group">
-                        <button type="button" title="@ActionStrings.Action" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" onclick="onActionMenuClick(this);">
-                            <span class="glyphicon glyphicon-tasks"></span> <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>@Html.ActionLink(ActionStrings.Details, "Details", new { id = item.Id })</li>
-                            @if (canUserEdit)
-                            {
-                                <li>@Html.ActionLink(ActionStrings.Edit, "Edit", new { id = item.Id })</li>
-                            }
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" title="@ActionStrings.Action" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" onclick="onActionMenuClick(this);">
+                                <span class="glyphicon glyphicon-tasks"></span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink(ActionStrings.Details, "Details", new { id = item.Id })</li>
+                                @if (canUserEdit)
+                                {
+                                    <li>@Html.ActionLink(ActionStrings.Edit, "Edit", new { id = item.Id })</li>
+                                }
 <#
 if (collectionProperties.Any()) 
 {
     int collNr = 0;
 #>
-                            @if (canUserDelete)
-                            {
-                                <li>
-                                    <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('<b>@(item.<#= DisplayMember #>)</b>', @item.<#= pKey #>);">
-                                        @ActionStrings.Delete
-                                    </a>
-                                </li>
-                            }
+                                @if (canUserDelete)
+                                {
+                                    <li>
+                                        <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('<b>@(item.<#= DisplayMember #>)</b>', @item.<#= pKey #>);">
+                                            @ActionStrings.Delete
+                                        </a>
+                                    </li>
+                                }
 <# } else { #>
-                            @if (canUserDelete)
-                            {
-                                <li>
-                                    <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('<b>@(item.<#= DisplayMember #>)</b>', @item.<#= pKey #>);">
-                                        @ActionStrings.Delete
-                                    </a>
-                                </li>
-                            }
+                                @if (canUserDelete)
+                                {
+                                    <li>
+                                        <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('<b>@(item.<#= DisplayMember #>)</b>', @item.<#= pKey #>);">
+                                            @ActionStrings.Delete
+                                        </a>
+                                    </li>
+                                }
 <# } #>
 <#
 if (entitiesThisForCreate.Any()) 
 {
 #>
-                            <li class="divider"></li>
+                                <li class="divider"></li>
 <#    foreach (var entity in entitiesThisForCreate)
     {#>
                                 <li>@Html.ActionLink(<#= EntityResource #>.Add<#= entity.Name #>, "Create", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id }, null)</li>

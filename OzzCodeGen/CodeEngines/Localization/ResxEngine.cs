@@ -391,6 +391,33 @@ namespace OzzCodeGen.CodeEngines.Localization
                 Properties = new ObservableCollection<LocalizationPropertySetting>()
             };
 
+            //Put EnumDefinitions
+            foreach (var enumDef in Project.EnumDefinitions)
+            {
+                if (!combinedEntity.Properties.Where(lp => lp.Name == enumDef.Name).Any())
+                {
+                    combinedEntity.Properties.Add(new LocalizationPropertySetting()
+                    {
+                        Name = enumDef.Name,
+                        LocalizeRequiredMsg = false,
+                        LocalizeValidationMsg = false
+                    });
+                }
+                foreach (var e in enumDef.Members)
+                    {
+                    if (!combinedEntity.Properties.Where(lp => lp.Name == e.Name).Any())
+                    {
+                        combinedEntity.Properties.Add(new LocalizationPropertySetting()
+                        {
+                            Name = e.Name,
+                            LocalizeRequiredMsg = false,
+                            LocalizeValidationMsg = false
+                        });
+                    }
+                }
+            }
+
+            //Put EntitySettings
             foreach (LocalizationEntitySetting entity in EntitySettings.Where(e => e.Exclude == false))
             {
                 foreach (LocalizationPropertySetting p in entity.Properties)
