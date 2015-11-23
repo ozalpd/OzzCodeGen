@@ -42,6 +42,7 @@
       <GenerateDeleteAction>true</GenerateDeleteAction>
       <GenerateEditAction>true</GenerateEditAction>
       <GenerateDetailsAction>true</GenerateDetailsAction>
+      <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>false</IndexView>
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
@@ -113,6 +114,7 @@
       <GenerateDeleteAction>true</GenerateDeleteAction>
       <GenerateEditAction>true</GenerateEditAction>
       <GenerateDetailsAction>true</GenerateDetailsAction>
+      <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>false</IndexView>
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
@@ -196,6 +198,7 @@
       <GenerateDeleteAction>true</GenerateDeleteAction>
       <GenerateEditAction>true</GenerateEditAction>
       <GenerateDetailsAction>true</GenerateDetailsAction>
+      <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>false</IndexView>
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
@@ -279,6 +282,7 @@
       <GenerateDeleteAction>true</GenerateDeleteAction>
       <GenerateEditAction>true</GenerateEditAction>
       <GenerateDetailsAction>true</GenerateDetailsAction>
+      <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>false</IndexView>
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
@@ -350,6 +354,7 @@
       <GenerateDeleteAction>true</GenerateDeleteAction>
       <GenerateEditAction>true</GenerateEditAction>
       <GenerateDetailsAction>true</GenerateDetailsAction>
+      <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>false</IndexView>
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
@@ -529,6 +534,7 @@
       <GenerateDeleteAction>true</GenerateDeleteAction>
       <GenerateEditAction>true</GenerateEditAction>
       <GenerateDetailsAction>true</GenerateDetailsAction>
+      <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>false</IndexView>
       <DetailsView>false</DetailsView>
       <CreateView>false</CreateView>
@@ -576,6 +582,7 @@
       <GenerateDeleteAction>true</GenerateDeleteAction>
       <GenerateEditAction>true</GenerateEditAction>
       <GenerateDetailsAction>true</GenerateDetailsAction>
+      <IndexViewGeneration>HtmlTableWithMenuAction</IndexViewGeneration>
       <IndexView>true</IndexView>
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
@@ -635,6 +642,7 @@
       <GenerateDeleteAction>true</GenerateDeleteAction>
       <GenerateEditAction>true</GenerateEditAction>
       <GenerateDetailsAction>true</GenerateDetailsAction>
+      <IndexViewGeneration>HtmlTableWithMenuAction</IndexViewGeneration>
       <IndexView>true</IndexView>
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
@@ -791,6 +799,7 @@
       <GenerateDeleteAction>true</GenerateDeleteAction>
       <GenerateEditAction>true</GenerateEditAction>
       <GenerateDetailsAction>true</GenerateDetailsAction>
+      <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>true</IndexView>
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
@@ -874,6 +883,7 @@
       <GenerateDeleteAction>true</GenerateDeleteAction>
       <GenerateEditAction>true</GenerateEditAction>
       <GenerateDetailsAction>true</GenerateDetailsAction>
+      <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>true</IndexView>
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
@@ -934,6 +944,7 @@
       <GenerateDeleteAction>true</GenerateDeleteAction>
       <GenerateEditAction>true</GenerateEditAction>
       <GenerateDetailsAction>true</GenerateDetailsAction>
+      <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>true</IndexView>
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
@@ -1066,6 +1077,7 @@
       <GenerateDeleteAction>true</GenerateDeleteAction>
       <GenerateEditAction>true</GenerateEditAction>
       <GenerateDetailsAction>true</GenerateDetailsAction>
+      <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>true</IndexView>
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>
@@ -1174,6 +1186,7 @@
       <GenerateDeleteAction>true</GenerateDeleteAction>
       <GenerateEditAction>true</GenerateEditAction>
       <GenerateDetailsAction>true</GenerateDetailsAction>
+      <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>true</IndexView>
       <DetailsView>true</DetailsView>
       <CreateView>true</CreateView>

@@ -133,10 +133,6 @@
     <Translation>Always</Translation>
   </Vocab>
   <Vocab>
-    <Name>Approve</Name>
-    <Translation>Approve</Translation>
-  </Vocab>
-  <Vocab>
     <Name>ApproveDate</Name>
     <Translation>Approve Date</Translation>
   </Vocab>
@@ -662,7 +658,7 @@
   </Vocab>
   <Vocab>
     <Name>Loading</Name>
-    <Translation>Loading...</Translation>
+    <Translation>Loading</Translation>
   </Vocab>
   <Vocab>
     <Name>Location</Name>
@@ -747,10 +743,6 @@
   <Vocab>
     <Name>Often</Name>
     <Translation>Often</Translation>
-  </Vocab>
-  <Vocab>
-    <Name>OK</Name>
-    <Translation>OK</Translation>
   </Vocab>
   <Vocab>
     <Name>Order</Name>

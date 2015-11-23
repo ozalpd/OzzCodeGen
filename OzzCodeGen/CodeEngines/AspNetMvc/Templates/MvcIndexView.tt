@@ -157,6 +157,7 @@ foreach (var property in properties)
 	@Html.Partial("_MessageBoxPartial")
 	@section scripts{
 		@Html.Partial("<#= MvcPartialIndexScripts.ViewName #>", "<#= Entity.ControllerName #>") @* Controller's name *@
+<#  if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) { #>
         <script type="text/javascript">
             function onActionMenuClick(menuBtn) {
                 setTimeout(function () {
@@ -173,6 +174,7 @@ foreach (var property in properties)
                 }, 250);
             }
         </script>
+<#  } #>
 	}
 }
 else

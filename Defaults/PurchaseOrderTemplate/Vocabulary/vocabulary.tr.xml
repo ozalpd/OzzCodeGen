@@ -133,10 +133,6 @@
     <Translation>Her zaman</Translation>
   </Vocab>
   <Vocab>
-    <Name>Approve</Name>
-    <Translation>Onayla</Translation>
-  </Vocab>
-  <Vocab>
     <Name>ApproveDate</Name>
     <Translation>Onay Tarihi</Translation>
   </Vocab>
@@ -670,7 +666,7 @@
   </Vocab>
   <Vocab>
     <Name>Loading</Name>
-    <Translation>Yükleniyor...</Translation>
+    <Translation>Yükleniyor</Translation>
   </Vocab>
   <Vocab>
     <Name>Location</Name>
@@ -755,10 +751,6 @@
   <Vocab>
     <Name>Often</Name>
     <Translation>Sık sık</Translation>
-  </Vocab>
-  <Vocab>
-    <Name>OK</Name>
-    <Translation>Tamam</Translation>
   </Vocab>
   <Vocab>
     <Name>Order</Name>

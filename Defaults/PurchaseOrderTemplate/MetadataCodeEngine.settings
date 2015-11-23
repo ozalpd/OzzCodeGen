@@ -12,6 +12,7 @@
         <MetadataPropertySetting>
           <Name>Id</Name>
           <Exclude>true</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required />
         </MetadataPropertySetting>
@@ -25,18 +26,21 @@
         <MetadataPropertySetting>
           <Name>CreateDate</Name>
           <Exclude>true</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>Date</DataType>
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>CreatorId</Name>
           <Exclude>true</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>CreatorIp</Name>
           <Exclude>true</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
@@ -50,24 +54,28 @@
         <MetadataPropertySetting>
           <Name>ModifyNr</Name>
           <Exclude>true</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>ModifyDate</Name>
           <Exclude>true</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>Date</DataType>
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>ModifierId</Name>
           <Exclude>true</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>ModifierIp</Name>
           <Exclude>true</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
@@ -81,24 +89,28 @@
         <MetadataPropertySetting>
           <Name>IsApproved</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>ApproveDate</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>Date</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>ApprovedUserId</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>ApprovedUserIp</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required />
         </MetadataPropertySetting>
@@ -112,18 +124,21 @@
         <MetadataPropertySetting>
           <Name>Title</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Code</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Description</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>MultilineText</DataType>
           <Required />
         </MetadataPropertySetting>
@@ -137,72 +152,84 @@
         <MetadataPropertySetting>
           <Name>CompanyName</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Phone1</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>PhoneNumber</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Phone2</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>PhoneNumber</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Phone3</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>PhoneNumber</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Address1</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Address2</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>City</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>State</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>ZipCode</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>PostalCode</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Country</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Notes</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>MultilineText</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Contacts</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <Required />
         </MetadataPropertySetting>
       </Properties>
@@ -215,6 +242,7 @@
         <MetadataPropertySetting>
           <Name>SupplierCode</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
@@ -228,12 +256,14 @@
         <MetadataPropertySetting>
           <Name>CustomerCode</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Orders</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <Required />
         </MetadataPropertySetting>
       </Properties>
@@ -246,60 +276,70 @@
         <MetadataPropertySetting>
           <Name>FirstName</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>LastName</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>EmailWork</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>EmailAddress</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>EmailHome</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>EmailAddress</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>PhoneMobile</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>PhoneNumber</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>PhoneWork1</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>PhoneNumber</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>PhoneWork2</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>PhoneNumber</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Notes</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>MultilineText</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>CompanyId</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Company</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <Required />
         </MetadataPropertySetting>
       </Properties>
@@ -312,22 +352,26 @@
         <MetadataPropertySetting>
           <Name>ParentCategoryId</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>ParentCategory</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>SubCategories</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Products</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <Required />
         </MetadataPropertySetting>
       </Properties>
@@ -340,12 +384,14 @@
         <MetadataPropertySetting>
           <Name>CategoryId</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Category</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <Required />
         </MetadataPropertySetting>
       </Properties>
@@ -358,47 +404,55 @@
         <MetadataPropertySetting>
           <Name>Title</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>CustomerId</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Customer</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>OrderDate</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>Date</DataType>
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>DueDate</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>Date</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Code</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Description</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>MultilineText</DataType>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Notes</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>MultilineText</DataType>
           <Required />
         </MetadataPropertySetting>
@@ -412,34 +466,40 @@
         <MetadataPropertySetting>
           <Name>PurchaseOrderId</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>PurchaseOrder</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>ProductId</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(PurchaseOrderTemplate.Resources.ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Product</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <Required />
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Quantity</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType />
           <Required>ErrorMessageResourceType = typeof(ErrorStrings), ErrorMessageResourceName = "Required"</Required>
         </MetadataPropertySetting>
         <MetadataPropertySetting>
           <Name>Notes</Name>
           <Exclude>false</Exclude>
+          <DTOExclusion>false</DTOExclusion>
           <DataType>MultilineText</DataType>
           <Required />
         </MetadataPropertySetting>
