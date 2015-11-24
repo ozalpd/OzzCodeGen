@@ -179,7 +179,7 @@ namespace ");
             #line 119 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
   foreach (var entity in CodeEngine.Entities.Where(e => !e.EntityDefinition.Abstract))
     {
-        var pkeyProperty = entity.GetPrimeryKey();
+        var pkeyProperty = entity.GetPrimaryKey();
         string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
         string pKeyType = pkeyProperty == null ? "int" : pkeyProperty.PropertyDefinition.TypeName;
 

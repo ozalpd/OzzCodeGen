@@ -77,7 +77,7 @@ namespace OzzCodeGen.CodeEngines
                     .OrderBy(c => c.PropertyDefinition.DisplayOrder);
         }
 
-        public T GetPrimeryKey()
+        public T GetPrimaryKey()
         {
             return GetInheritedSimpleProperties()
                     .FirstOrDefault(p => ((SimpleProperty)p.PropertyDefinition).IsKey);

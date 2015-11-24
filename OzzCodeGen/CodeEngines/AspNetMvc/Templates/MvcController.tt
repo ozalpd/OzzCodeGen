@@ -12,7 +12,7 @@ string dataContextIntance = CodeEngine.DataContextInstance;
 var searchProperties = Entity.DisplayColumns.Where(e => e.UseInSearch);
 var collectionProperties = Entity.GetInheritedCollectionProperties();
 
-var pkeyProperty = Entity.GetPrimeryKey();
+var pkeyProperty = Entity.GetPrimaryKey();
 string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
 
 var fkeyProperties = Entity.DisplayColumns.Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
@@ -20,7 +20,7 @@ var fkeyProperties = Entity.DisplayColumns.Where(e => (e.InCreateView | e.InEdit
 var strongForeignEntity = Entity.StrongForeignEntity;
 var strongProperty = Entity.StrongForeignKeyProperty;
 var foreignDependentProperty = Entity.GetForeignDependentProperty(strongProperty);
-var strongForeignPKeyProperty = Entity.StrongForeignEntity==null ? null : Entity.StrongForeignEntity.GetPrimeryKey();
+var strongForeignPKeyProperty = Entity.StrongForeignEntity==null ? null : Entity.StrongForeignEntity.GetPrimaryKey();
 string strongForeignPKey = strongForeignPKeyProperty==null ? "Id" : strongForeignPKeyProperty.Name;  
 
 string[] createRoles = Entity.RolesCanCreateToArray();
@@ -497,7 +497,7 @@ protected void WriteViewBagSelectList(AspNetMvcPropertySetting propertySetting)
     else
     {
         string comment = propertySetting.UseForEdit != "DropDownList" ? "//" : string.Empty;
-        var pkey = foreign.GetPrimeryKey();
+        var pkey = foreign.GetPrimaryKey();
         string pkeyName = pkey == null ? "Id" : pkey.Name;
                  #>
             //TODO: Optimize query

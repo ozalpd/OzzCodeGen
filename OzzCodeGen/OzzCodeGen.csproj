@@ -86,6 +86,12 @@
       <DependentUpon>MvcDisplayTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcJQuerySelectList.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.part.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialDetailFormButtons.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -609,6 +615,10 @@
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MvcDisplayTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcJQuerySelectList.cs</LastGenOutput>
     </Content>
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcPartialDetailFormButtons.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

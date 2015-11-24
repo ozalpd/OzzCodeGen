@@ -1,0 +1,48 @@
+﻿<#@ template language="C#" inherits="AbstractMvcView" debug="true" hostspecific="false" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzUtils" #>
+<# 
+var fkeyProperties = Entity.GetInheritedIncludedProperties().Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
+var pkeyProperty = Entity.GetPrimaryKey();
+string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
+
+WriteUsingNamespaces(); #>
+@model <#= RelatedEntity == null ? "IHas" + Entity.Name + "  @* <= PUT HERE, type or interface for related entities *@" : RelatedEntity.Name #>
+@{
+    Layout = null;
+}
+
+<div class="form-group">
+    @Html.Label(EntityStrings.<#= Entity.Name #>, htmlAttributes: new { @class = "control-label col-lg-2 col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-5">
+        @Html.DropDownList("<#= FKeyProperty.Name #>", null, ActionStrings.SelectPlease, htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-7">
+        @Html.DropDownList("<#= GetRelatedEntityFKeyName() #>", null, ActionStrings.SelectPlease, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.<#= GetRelatedEntityFKeyName() #>, "", new { @class = "text-danger" })
+    </div>
+</div>
+<script type="text/javascript">
+    $('#<#= FKeyProperty.Name #>').change(function () {
+        var selectedId = $(this).val();
+        if (selectedId != null && selectedId != '') {
+            $.getJSON('/<#= Entity.ControllerName #>/Get<#= Entity.Name #>List', { <#= FKeyProperty.Name.ToCamelCase() #>: selectedId, pageSize: 100 }, function (<#= Entity.Name.Pluralize().ToCamelCase() #>) {
+                var targetSelect = $('#<#= GetRelatedEntityFKeyName() #>');
+                targetSelect.empty();
+                targetSelect.append($('<option/>', {
+                    value: '',
+                    text: '@ActionStrings.SelectPlease'
+                }));
+                $.each(<#= Entity.Name.Pluralize().ToCamelCase() #>, function (index, <#= Entity.Name.ToCamelCase() #>) {
+                    targetSelect.append($('<option/>', {
+                        value: <#= Entity.Name.ToCamelCase() #>.<#= pKey #>,
+                        text: <#= Entity.Name.ToCamelCase() #>.<#= DisplayMember #>
+                    }));
+                });
+            });
+        }
+    });
+</script>

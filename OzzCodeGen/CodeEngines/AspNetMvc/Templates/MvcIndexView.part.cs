@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
@@ -63,6 +64,28 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 
             var snippetTempl = new MvcViewSnippets(Entity);
             snippetTempl.WriteToFile(snippetTempl.GetDefaultFilePath(), true);
+
+            var fkeys = Entity
+                        .GetInheritedIncludedProperties()
+                        .Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
+            foreach (var fkey in fkeys)
+            {
+                var relateds = Entity.CodeEngine
+                                .Entities
+                                .Where(e => e.Properties.Any(p => p.PropertyDefinition.TypeName.Equals(Entity.Name)));
+                foreach (var item in relateds)
+                {
+                    var selectTempl = new MvcJQuerySelectList(Entity, fkey);
+                    selectTempl.RelatedEntity = item;
+                    selectTempl.WriteToFile(selectTempl.GetDefaultFilePath(), true);
+                }
+
+                if (relateds.Count() == 0)
+                {
+                    var selectTempl = new MvcJQuerySelectList(Entity, fkey);
+                    selectTempl.WriteToFile(selectTempl.GetDefaultFilePath(), true);
+                }
+            }
 
             var displayTempl = new MvcDisplayTemplate(Entity);
             displayTempl.WriteToFile(displayTempl.GetDefaultFilePath(), false);

@@ -14,7 +14,7 @@ var collectionProperties = Entity.GetInheritedCollectionProperties();
 var entitiesThisForCreate = Entity.GetEntitiesStrongForThis();
 var gridId = Entity.Name.ToCamelCase() + "Grid";
 
-var pkeyProperty = Entity.GetPrimeryKey();
+var pkeyProperty = Entity.GetPrimaryKey();
 string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
 
 WriteUsingNamespaces(); #>
