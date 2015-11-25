@@ -34,7 +34,7 @@ WriteUsingNamespaces(); #>
                 targetSelect.empty();
                 targetSelect.append($('<option/>', {
                     value: '',
-                    text: '@ActionStrings.SelectPlease'
+                    text: '@Html.Raw(ActionStrings.SelectPlease)'
                 }));
                 $.each(<#= Entity.Name.Pluralize().ToCamelCase() #>, function (index, <#= Entity.Name.ToCamelCase() #>) {
                     targetSelect.append($('<option/>', {

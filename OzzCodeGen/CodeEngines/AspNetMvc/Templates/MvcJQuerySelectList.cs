@@ -19,7 +19,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+    #line 1 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
     public partial class MvcJQuerySelectList : AbstractMvcView
     {
@@ -30,7 +30,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         public override string TransformText()
         {
             
-            #line 7 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 7 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
  
 var fkeyProperties = Entity.GetInheritedIncludedProperties().Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
 var pkeyProperty = Entity.GetPrimaryKey();
@@ -42,7 +42,7 @@ WriteUsingNamespaces();
             #line hidden
             this.Write("@model ");
             
-            #line 13 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 13 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(RelatedEntity == null ? "IHas" + Entity.Name + "  @* <= PUT HERE, type or interface for related entities *@" : RelatedEntity.Name));
             
             #line default
@@ -50,7 +50,7 @@ WriteUsingNamespaces();
             this.Write("\r\n@{\r\n    Layout = null;\r\n}\r\n\r\n<div class=\"form-group\">\r\n    @Html.Label(EntitySt" +
                     "rings.");
             
-            #line 19 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 19 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
@@ -59,7 +59,7 @@ WriteUsingNamespaces();
                     "-12\" })\r\n    <div class=\"col-lg-2 col-md-3 col-sm-3 col-xs-5\">\r\n        @Html.Dr" +
                     "opDownList(\"");
             
-            #line 21 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 21 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FKeyProperty.Name));
             
             #line default
@@ -68,7 +68,7 @@ WriteUsingNamespaces();
                     "\" })\r\n    </div>\r\n    <div class=\"col-lg-3 col-md-3 col-sm-4 col-xs-7\">\r\n       " +
                     " @Html.DropDownList(\"");
             
-            #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 24 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetRelatedEntityFKeyName()));
             
             #line default
@@ -76,7 +76,7 @@ WriteUsingNamespaces();
             this.Write("\", null, ActionStrings.SelectPlease, htmlAttributes: new { @class = \"form-control" +
                     "\" })\r\n        @Html.ValidationMessageFor(m => m.");
             
-            #line 25 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 25 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetRelatedEntityFKeyName()));
             
             #line default
@@ -84,7 +84,7 @@ WriteUsingNamespaces();
             this.Write(", \"\", new { @class = \"text-danger\" })\r\n    </div>\r\n</div>\r\n<script type=\"text/jav" +
                     "ascript\">\r\n    $(\'#");
             
-            #line 29 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 29 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FKeyProperty.Name));
             
             #line default
@@ -92,51 +92,52 @@ WriteUsingNamespaces();
             this.Write("\').change(function () {\r\n        var selectedId = $(this).val();\r\n        if (sel" +
                     "ectedId != null && selectedId != \'\') {\r\n            $.getJSON(\'/");
             
-            #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 32 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ControllerName));
             
             #line default
             #line hidden
             this.Write("/Get");
             
-            #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 32 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write("List\', { ");
             
-            #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 32 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FKeyProperty.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(": selectedId, pageSize: 100 }, function (");
             
-            #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 32 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.Pluralize().ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(") {\r\n                var targetSelect = $(\'#");
             
-            #line 33 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 33 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetRelatedEntityFKeyName()));
             
             #line default
             #line hidden
             this.Write("\');\r\n                targetSelect.empty();\r\n                targetSelect.append($" +
-                    "(\'<option/>\', {\r\n                    value: \'\',\r\n                    text: \'@Act" +
-                    "ionStrings.SelectPlease\'\r\n                }));\r\n                $.each(");
+                    "(\'<option/>\', {\r\n                    value: \'\',\r\n                    text: \'@Htm" +
+                    "l.Raw(ActionStrings.SelectPlease)\'\r\n                }));\r\n                $.each" +
+                    "(");
             
-            #line 39 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 39 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.Pluralize().ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(", function (index, ");
             
-            #line 39 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 39 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
             
             #line default
@@ -144,28 +145,28 @@ WriteUsingNamespaces();
             this.Write(") {\r\n                    targetSelect.append($(\'<option/>\', {\r\n                  " +
                     "      value: ");
             
-            #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 41 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 41 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pKey));
             
             #line default
             #line hidden
             this.Write(",\r\n                        text: ");
             
-            #line 42 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 42 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 42 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
+            #line 42 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(DisplayMember));
             
             #line default
