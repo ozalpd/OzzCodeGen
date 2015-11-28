@@ -613,6 +613,18 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private string _canDelete;
 
+        public string RolesCanSeeRestricted
+        {
+            get { return _canSeeRestricted; }
+            set
+            {
+                _canSeeRestricted = value != null ? value.ToLowerInvariant() : string.Empty;
+                RaisePropertyChanged("RolesCanSeeRestricted");
+            }
+        }
+        private string _canSeeRestricted;
+
+
         [XmlIgnore]
         public ResxEngine ResxEngine
         {

@@ -23,10 +23,6 @@ var foreignDependentProperty = Entity.GetForeignDependentProperty(strongProperty
 var strongForeignPKeyProperty = Entity.StrongForeignEntity==null ? null : Entity.StrongForeignEntity.GetPrimaryKey();
 string strongForeignPKey = strongForeignPKeyProperty==null ? "Id" : strongForeignPKeyProperty.Name;  
 
-string[] createRoles = Entity.RolesCanCreateToArray();
-string[] editRoles = Entity.RolesCanEditToArray();
-string[] deleteRoles = Entity.RolesCanDeleteToArray();
-
 string [] fillSelectListsMethods = Entity.GetFillSelectListsMethods();
 
 WriteUsingNamespaces(); #>
@@ -105,7 +101,13 @@ else
         }
 
 <#  } #>
-<# if (Entity.GenerateIndexAction){ #>
+<#  if (Entity.GenerateIndexAction)
+	{
+		string createRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanCreateToArray());
+		string editRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanEditToArray());
+		string deleteRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanDeleteToArray());
+		string confidentRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanSeeRestrictedToArray());
+		 #>
         <#= CanViewAttrib #>
         public async Task<ActionResult> Index(QueryParameters qParams)
         {
@@ -120,36 +122,62 @@ else
             PutPagerInViewBag(result);
             return View(result.Items);
         }
-        
+
+<# if(createRoles.Equals("true") || createRoles.Equals("false")) { #>        
+        protected override Task<bool> CanUserCreate() { return Task.FromResult(<#= createRoles #>); }
+<#  } else { #>
         protected override async Task<bool> CanUserCreate()
         {
             if (!_canUserCreate.HasValue)
             {
-                _canUserCreate = <#= CodeEngine.MergeIsUserMethods(createRoles) #>;
+                _canUserCreate = <#= createRoles #>;
             }
             return _canUserCreate.Value;
         }
         bool? _canUserCreate;
+<#  } #>
 
+<# if(editRoles.Equals("true") || editRoles.Equals("false")) { #>        
+        protected override Task<bool> CanUserEdit() { return Task.FromResult(<#= editRoles #>); }
+<#  } else { #>
         protected override async Task<bool> CanUserEdit()
         {
             if (!_canUserEdit.HasValue)
             {
-                _canUserEdit = <#= CodeEngine.MergeIsUserMethods(editRoles) #>;
+                _canUserEdit = <#= editRoles #>;
             }
             return _canUserEdit.Value;
         }
         bool? _canUserEdit;
+<#  } #>
         
+<# if(deleteRoles.Equals("true") || deleteRoles.Equals("false")) { #>        
+        protected override Task<bool> CanUserDelete() { return Task.FromResult(<#= deleteRoles #>); }
+<#  } else { #>
         protected override async Task<bool> CanUserDelete()
         {
             if (!_canUserDelete.HasValue)
             {
-                _canUserDelete = <#= CodeEngine.MergeIsUserMethods(deleteRoles) #>;
+                _canUserDelete = <#= deleteRoles #>;
             }
             return _canUserDelete.Value;
         }
         bool? _canUserDelete;
+<#  } #>
+
+<# if(confidentRoles.Equals("true") || confidentRoles.Equals("false")) { #>        
+        protected override Task<bool> CanUserSeeRestricted() { return Task.FromResult(<#= confidentRoles #>); }
+<#  } else { #>
+        protected override async Task<bool> CanUserSeeRestricted()
+        {
+            if (!_canSeeRestricted.HasValue)
+            {
+                _canSeeRestricted = <#= confidentRoles #>;
+            }
+            return _canSeeRestricted.Value;
+        }
+        bool? _canSeeRestricted;
+<#  } #>
 
 <#  } #>
 <#  if (Entity.GenerateGetEntityListAction)

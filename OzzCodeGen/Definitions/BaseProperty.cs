@@ -174,6 +174,34 @@ namespace OzzCodeGen.Definitions
         }
         private bool isStoreGenerated;
 
+        public bool RestrictedData
+        {
+            get
+            {
+                if (_restrictedData == null)
+                    _restrictedData = GetIsRestricted();
+                return _restrictedData.Value;
+            }
+            set
+            {
+                if (_restrictedData == value)
+                    return;
+                _restrictedData = value;
+                RaisePropertyChanged("RestrictedData");
+            }
+        }
+        private bool? _restrictedData;
+
+        private bool GetIsRestricted()
+        {
+            string lowerName = Name.ToLowerInvariant();
+            return lowerName.Contains("user") ||
+                lowerName.Contains("create") ||
+                lowerName.Contains("creator") ||
+                lowerName.Contains("modifier") ||
+                lowerName.EndsWith("ip");
+        }
+
         public bool UiVisible
         {
             get { return _uiVisible; }

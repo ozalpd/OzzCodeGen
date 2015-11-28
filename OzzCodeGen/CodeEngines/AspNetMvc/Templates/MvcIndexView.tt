@@ -26,6 +26,7 @@ WriteUsingNamespaces(); #>
     bool canUserEdit = ViewBag.canUserEdit;
     bool canUserCreate = ViewBag.canUserCreate;
     bool canUserDelete = ViewBag.canUserDelete;
+    bool canSeeRestricted = ViewBag.canSeeRestricted;
 
     //Records & Pager
     int page = ViewBag.page;

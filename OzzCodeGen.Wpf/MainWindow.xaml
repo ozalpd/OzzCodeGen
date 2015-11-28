@@ -18,6 +18,7 @@
     </Window.InputBindings>
     <Window.Resources>
         <Converters:BoolToColor x:Key="FileExistsConverter" ColorForFalseValue="#FFD00000" ColorForTrueValue="#FF00C000" />
+        <Converters:BoolToColor x:Key="invertTrueToPinkBG" ColorForFalseValue="White" ColorForTrueValue="#FFFFCFCF" />
         <BitmapImage x:Key="uriNew" UriSource="Assets\NewDocumentHS.png"/>
         <BitmapImage x:Key="uriOpen" UriSource="Assets\openHS.png"/>
         <BitmapImage x:Key="uriSave" UriSource="Assets\saveHS.png"/>
@@ -282,7 +283,21 @@
                                                         Header="Display Order" Width="80" CellStyle="{StaticResource CellRightAlign}"/>
                                     <DataGridCheckBoxColumn Binding="{Binding UiVisible}" Header="UI Visible" Width="40"/>
                                     <DataGridCheckBoxColumn Binding="{Binding Editable}" Header="Editable" Width="40"/>
-                                    <!--<DataGridCheckBoxColumn Binding="{Binding Transient}" Header="Transient" Width="40"/>-->
+                                    <DataGridTemplateColumn Header="Restricted Data" Width="48">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel HorizontalAlignment="Stretch"
+                                                            ToolTip="Restricted data column" Background="{Binding RestrictedData, Converter={StaticResource invertTrueToPinkBG}}">
+                                                    <CheckBox IsChecked="{Binding RestrictedData}" Margin="6,1" IsEnabled="False" Foreground="Black"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate>
+                                                <CheckBox IsChecked="{Binding RestrictedData}" ToolTip="Restricted data column" Margin="6,1"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
                                     <DataGridCheckBoxColumn Binding="{Binding IsClientComputed}" Header="Client Computed" Width="40"/>
                                     <DataGridCheckBoxColumn Binding="{Binding IsServerComputed}" Header="Server Computed" Width="40"/>
                                     <DataGridCheckBoxColumn Binding="{Binding IsStoreGenerated}" Header="Store Generated" Width="40"/>
@@ -322,6 +337,7 @@
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <TextBlock Text="Store Generated:" 
@@ -344,6 +360,15 @@
                                         <CheckBox IsChecked="{Binding IsClientComputed, Mode=TwoWay}" 
 											ToolTip="Client generated value"
 											Grid.Row="4" Grid.Column="1" />
+
+                                        <TextBlock Text="Restricted Data:" 
+                                                   ToolTip="Restricted data column"
+                                                   Grid.Row="5" Grid.Column="0"/>
+                                        <StackPanel HorizontalAlignment="Stretch"
+                                                    Grid.Row="5" Grid.Column="1"
+                                                    Background="{Binding RestrictedData, Converter={StaticResource invertTrueToPinkBG}}">
+                                            <CheckBox IsChecked="{Binding RestrictedData, Mode=TwoWay}" ToolTip="Restricted data column" />
+                                        </StackPanel>
 
                                         <TextBlock Grid.Row="7" Grid.Column="0" Text="Comment:" />
                                         <TextBox Text="{Binding Comment}" 

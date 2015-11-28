@@ -47,6 +47,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 item.RolesCanEdit = RolesCanEdit;
                 item.RolesCanView = RolesCanView;
                 item.RolesCanCreate = RolesCanCreate;
+                item.RolesCanSeeRestricted = RolesCanSeeRestricted;
             }
 
             RefreshSecurityRoles();

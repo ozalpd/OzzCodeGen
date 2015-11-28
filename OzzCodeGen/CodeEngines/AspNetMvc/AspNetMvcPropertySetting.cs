@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using OzzCodeGen.Definitions;
+using System.ComponentModel;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc
 {
     public class AspNetMvcPropertySetting : BasePropertySetting
     {
-
         public bool UseInSearch
         {
             get
@@ -30,6 +30,9 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private bool? _useInSearch;
 
+        /// <summary>
+        /// Is visible in IndexView
+        /// </summary>
         public bool InIndexView
         {
             get
@@ -47,10 +50,15 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 _inIndexView = value;
                 RaisePropertyChanged("InIndexView");
+                if (MvcEntity != null)
+                    MvcEntity.FilterViewType = MvcEntity.FilterViewType;
             }
         }
         private bool? _inIndexView;
 
+        /// <summary>
+        /// Is visible in DetailsView
+        /// </summary>
         public bool InDetailsView
         {
             get
@@ -65,10 +73,15 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 _inDetailsView = value;
                 RaisePropertyChanged("InDetailsView");
+                if (MvcEntity != null)
+                    MvcEntity.FilterViewType = MvcEntity.FilterViewType;
             }
         }
         private bool? _inDetailsView;
 
+        /// <summary>
+        /// Is visible in CreateView
+        /// </summary>
         public bool InCreateView
         {
             get
@@ -86,10 +99,15 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 _inCreateView = value;
                 RaisePropertyChanged("InCreateView");
+                if (MvcEntity != null)
+                    MvcEntity.FilterViewType = MvcEntity.FilterViewType;
             }
         }
         private bool? _inCreateView;
 
+        /// <summary>
+        /// Is visible in EditView
+        /// </summary>
         public bool InEditView
         {
             get
@@ -107,6 +125,8 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 _inEditView = value;
                 RaisePropertyChanged("InEditView");
+                if (MvcEntity != null)
+                    MvcEntity.FilterViewType = MvcEntity.FilterViewType;
             }
         }
         private bool? _inEditView;
@@ -165,6 +185,21 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
         }
         private string _useForEdit;
+
+        [XmlIgnore]
+        public bool IsSensitiveData
+        {
+            get
+            {
+                return PropertyDefinition?.RestrictedData ?? false;
+            }
+        }
+
+        [XmlIgnore]
+        public AspNetMvcEntitySetting MvcEntity
+        {
+            get { return (AspNetMvcEntitySetting)EntitySetting; }
+        }
 
         private string GetUseForEdit()
         {

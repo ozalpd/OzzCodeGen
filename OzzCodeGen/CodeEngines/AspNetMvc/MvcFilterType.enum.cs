@@ -5,14 +5,16 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
     public enum MvcFilterType
     {
         [Description("All Properties")]
-        AllProperties,
+        AllProperties = -1,
         [Description("Index View Properties")]
-        IndexViewProperties,
+        IndexViewProperties = 0,
         [Description("Details View Properties")]
-        DetailsViewProperties,
+        DetailsViewProperties = 1,
         [Description("Create View Properties")]
-        CreateViewProperties,
+        CreateViewProperties = 2,
         [Description("Edit View Properties")]
-        EditViewProperties
+        EditViewProperties = 3,
+        [Description("Search Properties")]
+        SearchProperties = 4
     }
 }

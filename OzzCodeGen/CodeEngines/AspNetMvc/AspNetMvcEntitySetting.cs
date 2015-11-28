@@ -256,6 +256,17 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private string _canDelete;
 
+        public string RolesCanSeeRestricted
+        {
+            get { return _canSeeRestricted; }
+            set
+            {
+                _canSeeRestricted = value != null ? value.ToLowerInvariant() : string.Empty;
+                RaisePropertyChanged("RolesCanSeeRestricted");
+            }
+        }
+        private string _canSeeRestricted;
+
 
 
         public string[] RolesCanViewToArray()
@@ -303,6 +314,18 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             else
             {
                 return RolesCanDelete.Replace(" ", "").Split(',');
+            }
+        }
+
+        public string[] RolesCanSeeRestrictedToArray()
+        {
+            if (string.IsNullOrEmpty(RolesCanSeeRestricted))
+            {
+                return null;
+            }
+            else
+            {
+                return RolesCanSeeRestricted.Replace(" ", "").Split(',');
             }
         }
 
@@ -769,6 +792,8 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                         return GetInheritedIncludedProperties().Where(c => c.InCreateView);
                     case MvcFilterType.EditViewProperties:
                         return GetInheritedIncludedProperties().Where(c => c.InEditView);
+                    case MvcFilterType.SearchProperties:
+                        return GetInheritedIncludedProperties().Where(c => c.UseInSearch);
                     default:
                         return GetInheritedIncludedProperties();
                 }

@@ -45,15 +45,20 @@ namespace OzzCodeGen.CodeEngines
             {
                 if (_propertyDefinition == null && EntitySetting != null)
                 {
-                    _propertyDefinition = EntitySetting
-                                        .EntityDefinition
-                                        .Properties
-                                        .FirstOrDefault(e => e.Name == Name);
+                    SetPropertyDefinition();
                 }
                 return _propertyDefinition;
             }
         }
         BaseProperty _propertyDefinition = null;
+
+        protected virtual void SetPropertyDefinition()
+        {
+            _propertyDefinition = EntitySetting
+                                        .EntityDefinition
+                                        .Properties
+                                        .FirstOrDefault(e => e.Name == Name);
+        }
 
         [XmlIgnore]
         public bool IsSimpleOrString
