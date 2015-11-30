@@ -1,0 +1,145 @@
+﻿<#@ template inherits="AbstracMvcIndexView" debug="true" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzCodeGen.Templates" #>
+<#@ import namespace="OzzCodeGen.Templates.Cs" #>
+<#@ import namespace="OzzCodeGen.Definitions" #>
+<#@ import namespace="OzzUtils" #>
+<# 
+bool searchable = Entity.DisplayColumns.Where(e => e.UseInSearch).Any();
+var properties = Entity.DisplayColumns.Where(e => e.InIndexView);
+var collectionProperties = Entity.GetInheritedCollectionProperties();
+var entitiesThisForCreate = Entity.GetEntitiesStrongForThis();
+var gridId = Entity.Name.ToCamelCase() + "Grid";
+
+var pkeyProperty = Entity.GetPrimaryKey();
+string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
+
+WriteUsingNamespaces(); #>
+@model IEnumerable<<#= Entity.Name #>>
+
+@{
+    ViewBag.Title = @<#= EntityResource #>.<#= Entity.Name.Pluralize() #>;
+
+    //Authorization Flags
+    bool canUserEdit = ViewBag.canUserEdit;
+    bool canUserCreate = ViewBag.canUserCreate;
+    bool canUserDelete = ViewBag.canUserDelete;
+    bool canSeeRestricted = ViewBag.canSeeRestricted;
+
+	var title = <#= EntityResource #>.<#= Entity.Name.Pluralize() #>;
+}
+<div class="row well">
+    <div class="col-md-8 col-sm-7">
+        <h4>@title</h4>
+    </div>
+<#  if(searchable)
+    { #>
+        <div class="col-md-4 col-sm-5">
+            @Html.Partial("_SearchBoxPartial")
+        </div>
+<#  } #>
+</div>
+<div id="mainGrid" class="ag-style ag-basic" style="width:100%;height:400px;"></div>
+<div class="row pl15" style="margin-top:-64px;z-index:500;position:absolute;">
+    <nav><ul id="pagerUl" class="pagination"></ul></nav>
+</div>
+@Html.Partial("_MessageBoxPartial")
+@section scripts{
+    @Scripts.Render("~/js/ag-grid")
+    @Html.Partial("_IndexScriptsPartial", "<#= Entity.ControllerName #>") @* Controller's name *@
+    @Html.Partial("_agGridScriptsPartial", "/<#= Entity.ControllerName #>/Get<#= Entity.Name #>PagedList") @* Service url *@
+    <script type="text/javascript">
+        var result = @Html.Raw(ViewBag.result);
+        var gridOptions;
+
+        var initPage = function() {
+            var init = this;
+            init.columnDefs = columnDefs();
+            init.gridOptions = {
+                columnDefs: init.columnDefs,
+                rowHeight: 26,
+                pageSize: result.pageSize,
+                headerHeight: 32,
+                rowData: result.Items,
+                overlayNoRowsTemplate: '<span class="fontSize150pc">@MessageStrings.NoResults</span>'
+            };
+
+            function columnDefs(){
+                return[
+                     { headerName: '@ActionStrings.Action', field: "<#= pKey #>", width: 64, cellRenderer: actionCellRenderer},
+<# foreach (var property in properties) { #>
+                     { headerName: '@Html.DisplayNameFor(m => m.<#= property.Name #>)', field: "<#= property.Name #>", width: 180 },
+<# } #>
+                ];
+            }
+
+            function actionCellRenderer(params) {
+                var actions = '<div class="btn-group" style="margin-top:-3px;">' +
+                    '<button type="button" title="@ActionStrings.Action" class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" onclick="onActionMenuClick(this)">' +
+                    '<span class="glyphicon glyphicon-tasks"></span> <span class="caret"></span>' +
+                    '</button>' +
+                    '<ul class="dropdown-menu mb15" role="menu">' +
+                    '<li><a href="@Url.Action("Details")/' + params.value + '">@ActionStrings.Details</a></li>' +
+                @if (canUserEdit)
+                {
+                    @:'<li><a href="@Url.Action("Edit")/' + params.value + '">@ActionStrings.Edit</a></li>' +
+                }
+                @if(canUserDelete)
+                {
+                    @:'<li><a href="#deleteConfirm" data-toggle="modal" onclick="setDelete(getObjectById(result.Items,' + params.value + ').<#= DisplayMember #>, ' + params.value + ');">@ActionStrings.Delete</a></li>' +
+                }
+<#  if (entitiesThisForCreate.Any()) 
+	{ #>
+                    '<li class="divider"></li>' +
+<#		foreach (var entity in entitiesThisForCreate)
+		{#>
+                @if (canUserCreate)
+                {
+                    @:'<li><a href="/<#= entity.ControllerName #>/Create/?<#= entity.StrongDependedForeignKey.ToCamelCase() #>=' + params.value + '">@<#= EntityResource #>.Add<#= entity.Name #></a></li>' +
+                }
+                    '<li><a href="/<#= entity.ControllerName #>/Index/?<#= entity.StrongDependedForeignKey.ToCamelCase() #>=' + params.value + '">@<#= EntityResource #>.<#= entity.Name.Pluralize() #></a></li>' +
+<#		} #>
+<#  } #>
+                    '</ul></div>';
+
+                return actions;
+            }
+
+            function boolCellRenderer(params) {
+                if(params.value){
+                    return '<span style="font-size:16px;" class="glyphicon glyphicon-check text-success"></span>';
+                }
+                else{
+                    return '<span style="font-size:16px;" class="glyphicon glyphicon-unchecked text-danger"></span>';
+                }
+            }
+
+            $.ajaxSetup({ cache: false });
+            gridOptions = init.gridOptions;
+            // angularGrid is a global function
+            agGridGlobalFunc('#mainGrid', gridOptions);
+
+            setPagerButtons($('#pagerUl'), result.Page, result.PageCount);
+            displayRecordStats(result.Items.length, result.TotalCount);
+        }
+
+        function onActionMenuClick(menuBtn){
+            setTimeout(function(){
+                var menuHeight = 220;
+                var rectMenu = menuBtn.getBoundingClientRect();
+                var rectGrid = document.getElementById("mainGrid").getBoundingClientRect();
+
+                var diffY = rectGrid.bottom - rectMenu.bottom - menuHeight;
+                if (diffY < 0) {
+                    var viewport = $('#mainGrid .ag-body-viewport');
+                    var viewportScroll = viewport.scrollTop();
+                    viewport.scrollTop((diffY * -1) + viewportScroll);
+                }
+            },250);
+        }
+        document.addEventListener("DOMContentLoaded", initPage());
+    </script>
+}

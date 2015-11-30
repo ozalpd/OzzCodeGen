@@ -28,10 +28,6 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
                     _foreignProperties = from p in RelatedEntity.Properties
                                          where p.PropertyDefinition.TypeName.Equals(Entity.Name) && p.PropertyDefinition is ComplexProperty
                                          select p.PropertyDefinition as ComplexProperty;
-
-                            //.Properties
-                            //.Where(p => p.PropertyDefinition.TypeName.Equals(Entity.Name) &&
-                            //        p.PropertyDefinition is ComplexProperty);
                 }
                 return _foreignProperties;
             }
@@ -46,7 +42,6 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             }
             else
             {
-                //TODO: Process other foreign keys
                 return ForeignProperties.FirstOrDefault().DependentPropertyName;
             }
         }

@@ -1,0 +1,40 @@
+﻿<#@ template language="C#" inherits="AbstractMvcView" debug="true" hostspecific="false" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<# 
+WriteUsingNamespaces(); #>
+@model string
+<script type="text/javascript">
+    function refreshData() {
+        getPagedData(result.Page);
+    }
+
+    function getPagedData(page) {
+        var searchString = $('#SearchString').val();
+        var url = '@Model';
+        showMessageBox('Loading...',
+            '<div style="width:100%;padding:32px;text-align:center;">' +
+            '<img src="/images/busy.gif" alt="Loading..." width="96" height="96" align="middle"/>' +
+            '</div>');
+        $.getJSON(url, {
+            pageSize: result.PageSize,
+            page: page,
+            searchString: searchString,
+            cache: false
+        },
+            function (suppliers) {
+                result = suppliers;
+                hideMessageBox();
+                gridOptions.api.setRowData(result.Items);
+                setPagerButtons($('#pagerUl'), result.Page, result.PageCount);
+                displayRecordStats(result.Items.length, result.TotalCount);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                var msgboxMsg = jqXHR.responseText;
+                showMessageBox(textStatus, msgboxMsg, true);
+            }).always(function (jqXHR) {
+
+            });
+    }
+</script>

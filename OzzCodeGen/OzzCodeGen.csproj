@@ -74,6 +74,12 @@
     <Compile Include="CodeEngines\AspNetMvc\AspNetMvcEngine.Render.cs" />
     <Compile Include="CodeEngines\AspNetMvc\MvcView.Enums.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\AbstractMvcController.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcAgGridIndexView.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.part.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcBaseController.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -86,12 +92,19 @@
       <DependentUpon>MvcDisplayTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcIndexView.part.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MvcJQuerySelectList.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialAgGridScripts.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcPartialAgGridScripts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialAgGridScripts.part.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialDetailFormButtons.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -182,7 +195,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MvcIndexView.tt</DependentUpon>
     </Compile>
-    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcIndexView.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\AbstracMvcIndexView.part.cs" />
     <Compile Include="CodeEngines\AspNetMvc\UI\MvcEngineSettingsUI.xaml.cs">
       <DependentUpon>MvcEngineSettingsUI.xaml</DependentUpon>
     </Compile>
@@ -608,6 +621,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcAgGridIndexView.cs</LastGenOutput>
+    </Content>
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcBaseController.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MvcBaseController.cs</LastGenOutput>
@@ -619,6 +636,10 @@
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MvcJQuerySelectList.cs</LastGenOutput>
+    </Content>
+    <Content Include="CodeEngines\AspNetMvc\Templates\MvcPartialAgGridScripts.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcPartialAgGridScripts.cs</LastGenOutput>
     </Content>
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcPartialDetailFormButtons.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
