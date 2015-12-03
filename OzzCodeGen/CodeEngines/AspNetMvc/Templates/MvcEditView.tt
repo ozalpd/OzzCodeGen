@@ -49,7 +49,7 @@ foreach (var property in properties)
             <div class="<#= editDivClass #>">
 <#      if (useFor == "DropDownList")
         { #>
-                @Html.DropDownList("<#= property.Name #>", null, ActionStrings.SelectPlease, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.<#= property.Name #>, null, ActionStrings.SelectPlease, htmlAttributes: new { @class = "form-control" })
 <#      } else if (useFor == "ReadOnlyDisplay") { #>
                 @Html.DisplayFor(m => m.<#= property.Name #>)
 <#      } else if (useFor == "ImageUpload") { #>

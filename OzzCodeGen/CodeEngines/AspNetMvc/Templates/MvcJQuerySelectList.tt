@@ -21,7 +21,7 @@ WriteUsingNamespaces(); #>
         @Html.DropDownList("<#= FKeyProperty.Name #>", null, ActionStrings.SelectPlease, htmlAttributes: new { @class = "form-control" })
     </div>
     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-7">
-        @Html.DropDownList("<#= GetRelatedEntityFKeyName() #>", null, ActionStrings.SelectPlease, htmlAttributes: new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.<#= GetRelatedEntityFKeyName() #>, null, ActionStrings.SelectPlease, htmlAttributes: new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.<#= GetRelatedEntityFKeyName() #>, "", new { @class = "text-danger" })
     </div>
 </div>

@@ -66,15 +66,15 @@ WriteUsingNamespaces();
             #line hidden
             this.Write("\", null, ActionStrings.SelectPlease, htmlAttributes: new { @class = \"form-control" +
                     "\" })\r\n    </div>\r\n    <div class=\"col-lg-3 col-md-3 col-sm-4 col-xs-7\">\r\n       " +
-                    " @Html.DropDownList(\"");
+                    " @Html.DropDownListFor(m => m.");
             
             #line 24 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetRelatedEntityFKeyName()));
             
             #line default
             #line hidden
-            this.Write("\", null, ActionStrings.SelectPlease, htmlAttributes: new { @class = \"form-control" +
-                    "\" })\r\n        @Html.ValidationMessageFor(m => m.");
+            this.Write(", null, ActionStrings.SelectPlease, htmlAttributes: new { @class = \"form-control\"" +
+                    " })\r\n        @Html.ValidationMessageFor(m => m.");
             
             #line 25 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetRelatedEntityFKeyName()));
