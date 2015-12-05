@@ -44,6 +44,15 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 
 
 
+        public string DisplayMember
+        {
+            get
+            {
+                return Entity?.EntityDefinition == null ?
+                            "Entity is null!" : Entity.EntityDefinition.DisplayMember;
+            }
+        }
+
         public override List<string> DefaultUsingNamespaceList()
         {
             var namespaces = base.DefaultUsingNamespaceList();

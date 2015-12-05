@@ -198,6 +198,25 @@ else
         }
 
 <#  } #>
+<# if (Entity.GenerateActionForAutoComplete){ #>
+        <#= CanViewAttrib #>
+        public async Task<JsonResult> Get<#= Entity.Name.Pluralize() #>ForAutoComplete(QueryParameters qParam)
+        {
+            var query = Get<#= Entity.Name #>Query()
+                        .Where(x => x.<#= DisplayMember #>.Contains(qParam.SearchString))
+                        .Take(qParam.PageSize);
+            var list = from x in query
+                       select new
+                       {
+                           id = x.<#= pKey #>,
+                           value = x.<#= DisplayMember #>,
+                           label = x.<#= DisplayMember #> //can be extended as x.Category.CategoryName + "/" + x.<#= DisplayMember #>,
+                       };
+
+            return Json(await list.ToListAsync(), JsonRequestBehavior.AllowGet);
+        }
+
+<#  } #>
 <# if (Entity.GenerateDetailsAction){ #>
         <#= CanViewAttrib #>
         public async Task<ActionResult> Details(int? id)  //GET: /<#= Entity.ControllerName #>/Details/5

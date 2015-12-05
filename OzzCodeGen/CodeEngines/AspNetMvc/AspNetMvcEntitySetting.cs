@@ -347,6 +347,22 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private bool? _generateController;
 
 
+        public bool GenerateActionForAutoComplete
+        {
+            get
+            {
+                if (_generateActionForAutoComplete == null)
+                    _generateActionForAutoComplete = true;
+                return _generateActionForAutoComplete.Value;
+            }
+            set
+            {
+                _generateActionForAutoComplete = value;
+                RaisePropertyChanged("GenerateActionForAutoComplete");
+            }
+        }
+        private bool? _generateActionForAutoComplete;
+
         public bool GenerateGetQueryMethod
         {
             get

@@ -362,7 +362,7 @@
                 <TabItem Header="Details">
                     <Grid DataContext="{Binding SelectedItem, ElementName=grdEntitySettings}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="170"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.Resources>
@@ -401,6 +401,7 @@
                                 </CheckBox>
                                 <CheckBox IsChecked="{Binding GenerateGetEntityAction}" Content="GetEntity Action" ToolTip="Generate GetEntity action in controller"/>
                                 <CheckBox IsChecked="{Binding GenerateGetEntityListAction}" Content="GetEntityList Action" ToolTip="Generate GetEntityList action in controller"/>
+                                <CheckBox IsChecked="{Binding GenerateActionForAutoComplete}" Content="Action For AutoComplete" ToolTip="Generate GetEntitiesForAutoComplete action in controller"/>
                                 <CheckBox IsChecked="{Binding GenerateIndexAction}" Content="Index Action" ToolTip="Generate Index action in controller"/>
                                 <CheckBox IsChecked="{Binding GenerateDetailsAction}" Content="Details Action" ToolTip="Generate Details action in controller"/>
                                 <CheckBox IsChecked="{Binding GenerateCreateAction}" Content="Create Action" ToolTip="Generate Create action in controller"/>
