@@ -1,0 +1,75 @@
+﻿<#@ template language="C#" inherits="AbstractMvcPartialSelect" debug="true" hostspecific="false" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzUtils" #>
+<# 
+var fkeyProperties = Entity.GetInheritedIncludedProperties().Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
+var pkeyProperty = Entity.GetPrimaryKey();
+string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
+
+var properties = Entity.GetInheritedSimpleProperties().Where(p => !p.Exclude && p.Name != pKey);
+
+WriteUsingNamespaces(); #>
+@model <#= RelatedEntity == null ? "IHas" + Entity.Name + "  @* <= PUT HERE, type or interface for related entities *@" : RelatedEntity.Name + "  @*TODO: <= This should be a ViewModel *@" #>
+@{
+    Layout = null;
+}
+
+@Html.HiddenFor(m => m.<#= FKeyProperty #>)
+<div class="form-group">
+    @Html.Label(EntityStrings.<#= Entity.EntityDefinition.DisplayMember #>, htmlAttributes: new { @class = "control-label col-lg-2 col-md-3 col-sm-3" })
+@*    @Html.LabelFor(m => m.<#= Entity.EntityDefinition.DisplayMember #>, htmlAttributes: new { @class = "control-label col-lg-2 col-md-3 col-sm-3" }) *@
+    <div class="col-lg-5 col-md-6 col-sm-7">
+        @Html.EditorFor(m => m.<#= Entity.EntityDefinition.DisplayMember #>, new
+    {
+        htmlAttributes = new
+        {
+            @class = "form-control ui-autocomplete-input",
+            autocomplete = "off",
+            data_url = Url.Action("Get<#= Entity.Name.Pluralize() #>ForAutoComplete", "<#= Entity.ControllerName #>")
+        }
+    })
+        @Html.ValidationMessageFor(m => m.<#= Entity.EntityDefinition.DisplayMember #>, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m.<#= FKeyProperty #>, "", new { @class = "text-danger" })
+    </div>
+</div>
+<script type="text/javascript">
+    $('#<#= Entity.EntityDefinition.DisplayMember #>').autocomplete({
+        minLenght: 1,
+        delay: 500,
+        source: function (request, response) {
+            var url = $(this.element).data('url');
+            $.getJSON(url, { searchString: request.term, pageSize: 25 }, function (data) {
+                response(data);
+            });
+        },
+        select: function (event, ui) {
+            var itemId = ui.item.id;
+            $('#<#= FKeyProperty.Name #>').val(itemId);
+<# foreach (var property in properties) { #>
+<# if (property.PropertyDefinition.TypeName=="decimal") { #>
+            //$('#<#= property.Name #>').val(fixDecimalVal(ui.item.<#= property.Name #>));
+<# } else if (property.IsForeignKey()) { #>
+            //setSelectListID('#<#= property.Name #> > option', ui.item.<#= property.Name #>);
+<# } else { #>
+            //$('#<#= property.Name #>').val(ui.item.<#= property.Name #>);
+<#	} #>
+<#	} #>
+        },
+        change: function (event, ui) {
+            if (ui.item == null) {
+                $(event.target).val('');
+                $('#<#= FKeyProperty.Name #>').val('');
+            }
+        },
+        open: function (event, ui) {
+            var boxWidth = $('#<#= Entity.EntityDefinition.DisplayMember #>').outerWidth();
+            var minWidth = 300;
+            $(this).autocomplete("widget")
+                .css({ "width": (boxWidth > minWidth ? boxWidth : minWidth) })
+                .addClass('fontSize80pc');
+        }
+    });
+</script>

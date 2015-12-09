@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using OzzCodeGen.Definitions;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -73,6 +74,19 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             var fkeys = Entity
                         .GetInheritedIncludedProperties()
                         .Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
+
+            foreach (var item in Entity.GetInheritedComplexProperties())
+            {
+                var complex = (ComplexProperty)item.PropertyDefinition;
+                var fkey = fkeys.FirstOrDefault(f => f.Name.Equals(complex.DependentPropertyName));
+                var fEntity = Entity.CodeEngine.Entities.FirstOrDefault(e => e.Name.Equals(complex.TypeName));
+                if(fEntity!=null && fkey != null)
+                {
+                    var autocompl = new MvcJQueryAutoComplete(fEntity, fkey);
+                    autocompl.RelatedEntity = Entity;
+                    autocompl.WriteToFile(autocompl.GetDefaultFilePath(), true);
+                }
+            }
             foreach (var fkey in fkeys)
             {
                 var relateds = Entity.CodeEngine

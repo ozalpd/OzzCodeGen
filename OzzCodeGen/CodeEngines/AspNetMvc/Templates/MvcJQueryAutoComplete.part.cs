@@ -1,19 +1,21 @@
-﻿using OzzCodeGen.Definitions;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
-    public partial class MvcJQuerySelectList
+    public partial class MvcJQueryAutoComplete
     {
-        public MvcJQuerySelectList(AspNetMvcEntitySetting entity, AspNetMvcPropertySetting fKeyProperty)
+        public MvcJQueryAutoComplete(AspNetMvcEntitySetting entity, AspNetMvcPropertySetting fKeyProperty)
             : base(entity, fKeyProperty)
         { }
 
         public override string GetDefaultFileName()
         {
-            return "_Select" + Entity.Name + "By" + FKeyProperty.Name + ".cshtml";
+            return "_AutoComplete" + Entity.Name + ".cshtml";
         }
 
         public override string GetDefaultFilePath()

@@ -74,6 +74,7 @@
     <Compile Include="CodeEngines\AspNetMvc\AspNetMvcEngine.Render.cs" />
     <Compile Include="CodeEngines\AspNetMvc\MvcView.Enums.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\AbstractMvcController.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\AbstractMvcPartialSelect.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -93,12 +94,18 @@
     </Compile>
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.part.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcIndexView.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MvcJQueryAutoComplete.tt</DependentUpon>
+    </Compile>
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MvcJQuerySelectList.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.part.cs" />
+    <Compile Include="CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.part.cs" />
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcPartialAgGridScripts.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -632,6 +639,10 @@
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MvcDisplayTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MvcJQueryAutoComplete.cs</LastGenOutput>
     </Content>
     <Content Include="CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
