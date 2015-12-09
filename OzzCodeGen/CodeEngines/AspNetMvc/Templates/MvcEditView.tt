@@ -51,7 +51,7 @@ foreach (var property in properties)
         { #>
                 @Html.DropDownListFor(m => m.<#= property.Name #>, null, ActionStrings.SelectPlease, htmlAttributes: new { @class = "form-control" })
 <#      } else if (useFor == "ReadOnlyDisplay") { #>
-                @Html.DisplayFor(m => m.<#= property.Name #>)
+                @Html.EditorFor(m => m.<#= property.Name #>, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
 <#      } else if (useFor == "ImageUpload") { #>
                 @Html.Partial("_ImageUpload", new ImageUploadViewModel("<#= property.Name #>", Model.<#= property.Name #>))
 <#      } else if (useFor == "TextBox") { #>
@@ -59,7 +59,7 @@ foreach (var property in properties)
 <#      } else if (useFor == "TextArea") { #>
                 @Html.TextAreaFor(m => m.<#= property.Name #>, 4, 1, new { @class = "form-control", autocomplete = "off" })
 <#      } else { #>
-                @Html.EditorFor(m => m.<#= property.Name #>, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(m => m.<#= property.Name #>, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
 <#      } #>
 <#      if (property.HasValidation)
         { #>
