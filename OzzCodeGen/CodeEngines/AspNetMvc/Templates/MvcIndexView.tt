@@ -132,6 +132,8 @@ foreach (var property in properties)
     {
 #>
                 <td>@item.<#= property.Name #>.Count</td>
+<#  } else if(property.PropertyDefinition.IsTypeNumeric() || property.PropertyDefinition.IsTypeDateTime()) { #>
+                <td align="right">@Html.DisplayFor(modelItem => item.<#= property.Name #>)</td>
 <#  } else { #>
                 <td>@Html.DisplayFor(modelItem => item.<#= property.Name #>)</td>
 <#  }
