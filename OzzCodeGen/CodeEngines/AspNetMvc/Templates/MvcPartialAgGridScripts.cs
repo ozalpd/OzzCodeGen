@@ -54,8 +54,8 @@ WriteUsingNamespaces();
             searchString: searchString,
             cache: false
         },
-            function (suppliers) {
-                result = suppliers;
+            function (data) {
+                result = data;
                 hideMessageBox();
                 gridOptions.api.setRowData(result.Items);
                 setPagerButtons($('#pagerUl'), result.Page, result.PageCount);
