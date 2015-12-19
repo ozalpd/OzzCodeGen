@@ -87,6 +87,26 @@ namespace OzzCodeGen.CodeEngines
             }
         }
 
+        [XmlIgnore]
+        public bool IsBoolean
+        {
+            get
+            {
+                return PropertyDefinition is SimpleProperty &&
+                    ((SimpleProperty)PropertyDefinition).IsTypeBoolean();
+            }
+        }
+
+        [XmlIgnore]
+        public bool IsDateTime
+        {
+            get
+            {
+                return PropertyDefinition is SimpleProperty &&
+                    ((SimpleProperty)PropertyDefinition).IsTypeDateTime();
+            }
+        }
+
         public string GetNullableTypeName()
         {
             return PropertyDefinition.GetNullableTypeName();

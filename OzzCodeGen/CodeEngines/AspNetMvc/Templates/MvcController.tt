@@ -62,7 +62,7 @@ else
             {
                 query = from a in query
                         where
-<#        foreach (var item in searchProperties)
+<#        foreach (var item in searchProperties.Where(p => p.IsString))
           {
             k++;#>
                             a.<#= item.Name #>.Contains(qParams.SearchString)<# if (k < searchProperties.Count()){ #> |<# } #> 
@@ -77,6 +77,24 @@ else
                 query = query.Where(x => x.<#= item.Name #> == qParams.<#= item.Name #>);
             }
 <#  } #>
+<#      foreach (var item in searchProperties.Where(p => p.IsBoolean))
+        { #>
+            if (qParams.<#= item.Name #> != null)
+            {
+                query = query.Where(x => x.<#= item.Name #> == qParams.<#= item.Name #>.Value);
+            }
+<#      } #>
+<#      foreach (var item in searchProperties.Where(p => p.IsDateTime))
+        { #>
+            if (qParams.<#= item.Name #>Min != null)
+            {
+                query = query.Where(x => x.<#= item.Name #> >= qParams.<#= item.Name #>Min.Value);
+            }
+            if (qParams.<#= item.Name #>Max != null)
+            {
+                query = query.Where(x => x.<#= item.Name #> <= qParams.<#= item.Name #>Max.Value);
+            }
+<#      } #>
 
             qParams.TotalCount = await query.CountAsync();
             return query.Skip(qParams.Skip).Take(qParams.PageSize);
@@ -475,12 +493,21 @@ else
 <#      foreach (var item in fkeyProperties)
         {  #>
                 <#= item.Name #> = parameters.<#= item.Name #>;
-<#       } #>
+<#      } #>
             }
 <#      foreach (var item in fkeyProperties)
         {  #>
             public <#= item.GetNullableTypeName() #> <#= item.Name #> { get; set; }
-<#       } #>
+<#      } #>
+<#      foreach (var item in searchProperties.Where(p => p.IsBoolean))
+        { #>
+            public <#= item.GetNullableTypeName() #> <#= item.Name #> { get; set; }
+<#      } #>
+<#      foreach (var item in searchProperties.Where(p => p.IsDateTime))
+        { #>
+            public <#= item.GetNullableTypeName() #> <#= item.Name #>Min { get; set; }
+            public <#= item.GetNullableTypeName() #> <#= item.Name #>Max { get; set; }
+<#      } #>
         }
 
         public partial class PagedList<T> : QueryParameters
