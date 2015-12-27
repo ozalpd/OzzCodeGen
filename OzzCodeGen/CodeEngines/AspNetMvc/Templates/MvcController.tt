@@ -261,13 +261,13 @@ else
         {
             if (id == null)
             {
-                return AjaxBadRequest();
+                return BadRequestTextResult();
             }
             <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = await FindAsync<#= Entity.Name #>(id.Value);
 
             if (<#= Entity.Name.ToCamelCase() #> == null)
             {
-                return AjaxNotFound();
+                return NotFoundTextResult();
             }
 
 <#        if (Entity.Name.Equals(Entity.ModelForJson)) { #>
@@ -424,13 +424,13 @@ else
         {
             if (id == null)
             {
-                return AjaxBadRequest();
+                return BadRequestTextResult();
             }
             <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = await FindAsync<#= Entity.Name #>(id.Value);
 
             if (<#= Entity.Name.ToCamelCase() #> == null)
             {
-                return AjaxNotFound();
+                return NotFoundTextResult();
             }
 
 <#  if (collectionProperties.Any()) 
@@ -461,7 +461,7 @@ else
                 }
 
 <#      } #>
-                return GetAjaxStatusCode(sb, HttpStatusCode.BadRequest);
+                return StatusCodeTextResult(sb, HttpStatusCode.BadRequest);
             }
 
 <#  } #>
@@ -478,7 +478,7 @@ else
                 sb.Append("<br/>");
                 AppendExceptionMsg(ex, sb);
 
-                return GetAjaxStatusCode(sb, HttpStatusCode.InternalServerError);
+                return StatusCodeTextResult(sb, HttpStatusCode.InternalServerError);
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);

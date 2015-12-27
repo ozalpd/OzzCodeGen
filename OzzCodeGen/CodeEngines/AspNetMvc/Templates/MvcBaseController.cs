@@ -316,26 +316,26 @@ namespace ");
                     " if (HttpContext.IsDebuggingEnabled)\r\n            {\r\n                sb.Append(e" +
                     "x.Message);\r\n                sb.Append(\"<br/>\");\r\n                AppendExceptio" +
                     "nMsg(ex.InnerException, sb);\r\n            }\r\n        }\r\n\r\n        protected virt" +
-                    "ual ActionResult AjaxBadRequest()\r\n        {\r\n            return GetAjaxStatusCo" +
-                    "de(\"HTTP Error 400.0 - Bad Request\", HttpStatusCode.BadRequest);\r\n        }\r\n\r\n " +
-                    "       protected virtual ActionResult AjaxNotFound()\r\n        {\r\n            ret" +
-                    "urn GetAjaxStatusCode(\"HTTP Error 404.0 - Not Found\", HttpStatusCode.NotFound);\r" +
-                    "\n        }\r\n\r\n        protected virtual ActionResult GetAjaxStatusCode(string co" +
-                    "ntent, HttpStatusCode statusCode)\r\n        {\r\n            Response.StatusCode = " +
-                    "(int)statusCode;\r\n            return new ContentResult\r\n            {\r\n         " +
-                    "       ContentType = \"text/plain\",\r\n                Content = content,\r\n        " +
-                    "        ContentEncoding = Encoding.UTF8\r\n            };\r\n        }\r\n\r\n        pr" +
-                    "otected virtual ActionResult GetAjaxStatusCode(StringBuilder sb, HttpStatusCode " +
-                    "statusCode)\r\n        {\r\n            if (HttpContext.IsDebuggingEnabled)\r\n       " +
-                    "     {\r\n                sb.Append(\"<br/><b>RouteData.Values</b><br/>\");\r\n       " +
-                    "         foreach (var item in RouteData.Values)\r\n                {\r\n            " +
-                    "        sb.Append(item.Key);\r\n                    sb.Append(\" : \");\r\n           " +
-                    "         sb.Append(item.Value);\r\n                    sb.Append(\"<br/>\");\r\n      " +
-                    "          }\r\n            }\r\n            Response.StatusCode = (int)statusCode;\r\n" +
-                    "            return new ContentResult\r\n            {\r\n                ContentType" +
-                    " = \"text/plain\",\r\n                Content = sb.ToString(),\r\n                Cont" +
-                    "entEncoding = Encoding.UTF8\r\n            };\r\n        }\r\n        \r\n        protec" +
-                    "ted ");
+                    "ual ActionResult BadRequestTextResult()\r\n        {\r\n            return StatusCod" +
+                    "eTextResult(\"HTTP Error 400.0 - Bad Request\", HttpStatusCode.BadRequest);\r\n     " +
+                    "   }\r\n\r\n        protected virtual ActionResult NotFoundTextResult()\r\n        {\r\n" +
+                    "            return StatusCodeTextResult(\"HTTP Error 404.0 - Not Found\", HttpStat" +
+                    "usCode.NotFound);\r\n        }\r\n\r\n        protected virtual ActionResult StatusCod" +
+                    "eTextResult(string content, HttpStatusCode statusCode)\r\n        {\r\n            R" +
+                    "esponse.StatusCode = (int)statusCode;\r\n            return new ContentResult\r\n   " +
+                    "         {\r\n                ContentType = \"text/plain\",\r\n                Content" +
+                    " = content,\r\n                ContentEncoding = Encoding.UTF8\r\n            };\r\n  " +
+                    "      }\r\n\r\n        protected virtual ActionResult StatusCodeTextResult(StringBui" +
+                    "lder sb, HttpStatusCode statusCode)\r\n        {\r\n            if (HttpContext.IsDe" +
+                    "buggingEnabled)\r\n            {\r\n                sb.Append(\"<br/><b>RouteData.Val" +
+                    "ues</b><br/>\");\r\n                foreach (var item in RouteData.Values)\r\n       " +
+                    "         {\r\n                    sb.Append(item.Key);\r\n                    sb.App" +
+                    "end(\" : \");\r\n                    sb.Append(item.Value);\r\n                    sb." +
+                    "Append(\"<br/>\");\r\n                }\r\n            }\r\n            Response.StatusC" +
+                    "ode = (int)statusCode;\r\n            return new ContentResult\r\n            {\r\n   " +
+                    "             ContentType = \"text/plain\",\r\n                Content = sb.ToString(" +
+                    "),\r\n                ContentEncoding = Encoding.UTF8\r\n            };\r\n        }\r\n" +
+                    "        \r\n        protected ");
             
             #line 213 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.DataContextClass));

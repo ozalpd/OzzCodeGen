@@ -889,7 +889,7 @@ else
             #line default
             #line hidden
             this.Write("(int? id)\r\n        {\r\n            if (id == null)\r\n            {\r\n               " +
-                    " return AjaxBadRequest();\r\n            }\r\n            ");
+                    " return BadRequestTextResult();\r\n            }\r\n            ");
             
             #line 266 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
@@ -917,8 +917,8 @@ else
             
             #line default
             #line hidden
-            this.Write(" == null)\r\n            {\r\n                return AjaxNotFound();\r\n            }\r\n" +
-                    "\r\n");
+            this.Write(" == null)\r\n            {\r\n                return NotFoundTextResult();\r\n         " +
+                    "   }\r\n\r\n");
             
             #line 273 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
         if (Entity.Name.Equals(Entity.ModelForJson)) { 
@@ -1859,7 +1859,7 @@ else
             #line default
             #line hidden
             this.Write("/Delete/5\r\n        {\r\n            if (id == null)\r\n            {\r\n               " +
-                    " return AjaxBadRequest();\r\n            }\r\n            ");
+                    " return BadRequestTextResult();\r\n            }\r\n            ");
             
             #line 429 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
@@ -1887,8 +1887,8 @@ else
             
             #line default
             #line hidden
-            this.Write(" == null)\r\n            {\r\n                return AjaxNotFound();\r\n            }\r\n" +
-                    "\r\n");
+            this.Write(" == null)\r\n            {\r\n                return NotFoundTextResult();\r\n         " +
+                    "   }\r\n\r\n");
             
             #line 436 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   if (collectionProperties.Any()) 
@@ -2039,8 +2039,8 @@ else
             
             #line default
             #line hidden
-            this.Write("                return GetAjaxStatusCode(sb, HttpStatusCode.BadRequest);\r\n       " +
-                    "     }\r\n\r\n");
+            this.Write("                return StatusCodeTextResult(sb, HttpStatusCode.BadRequest);\r\n    " +
+                    "        }\r\n\r\n");
             
             #line 467 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } 
@@ -2102,7 +2102,7 @@ else
                 sb.Append(""<br/>"");
                 AppendExceptionMsg(ex, sb);
 
-                return GetAjaxStatusCode(sb, HttpStatusCode.InternalServerError);
+                return StatusCodeTextResult(sb, HttpStatusCode.InternalServerError);
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
