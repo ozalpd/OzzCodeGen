@@ -232,7 +232,7 @@ else
             this.Write(".Contains(qParams.SearchString)");
             
             #line 68 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
- if (k < searchProperties.Count()){ 
+ if (k < searchProperties.Where(p => p.IsString).Count()){ 
             
             #line default
             #line hidden
@@ -795,15 +795,8 @@ else
             
             #line default
             #line hidden
-            this.Write(" //can be extended as x.Category.CategoryName + \"/\" + x.");
-            
-            #line 231 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(DisplayMember));
-            
-            #line default
-            #line hidden
-            this.Write(",\r\n                       };\r\n\r\n            return Json(await list.ToListAsync()," +
-                    " JsonRequestBehavior.AllowGet);\r\n        }\r\n\r\n");
+            this.Write("\r\n                       };\r\n\r\n            return Json(await list.ToListAsync(), " +
+                    "JsonRequestBehavior.AllowGet);\r\n        }\r\n\r\n");
             
             #line 237 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } 
@@ -896,8 +889,7 @@ else
             #line default
             #line hidden
             this.Write("(int? id)\r\n        {\r\n            if (id == null)\r\n            {\r\n               " +
-                    " return new HttpStatusCodeResult(HttpStatusCode.BadRequest);\r\n            }\r\n   " +
-                    "         ");
+                    " return AjaxBadRequest();\r\n            }\r\n            ");
             
             #line 266 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
@@ -925,7 +917,7 @@ else
             
             #line default
             #line hidden
-            this.Write(" == null)\r\n            {\r\n                return HttpNotFound();\r\n            }\r\n" +
+            this.Write(" == null)\r\n            {\r\n                return AjaxNotFound();\r\n            }\r\n" +
                     "\r\n");
             
             #line 273 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
@@ -1867,8 +1859,7 @@ else
             #line default
             #line hidden
             this.Write("/Delete/5\r\n        {\r\n            if (id == null)\r\n            {\r\n               " +
-                    " return new HttpStatusCodeResult(HttpStatusCode.BadRequest);\r\n            }\r\n   " +
-                    "         ");
+                    " return AjaxBadRequest();\r\n            }\r\n            ");
             
             #line 429 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
@@ -1896,7 +1887,7 @@ else
             
             #line default
             #line hidden
-            this.Write(" == null)\r\n            {\r\n                return HttpNotFound();\r\n            }\r\n" +
+            this.Write(" == null)\r\n            {\r\n                return AjaxNotFound();\r\n            }\r\n" +
                     "\r\n");
             
             #line 436 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
@@ -2048,8 +2039,8 @@ else
             
             #line default
             #line hidden
-            this.Write("                return GetErrorResult(sb, HttpStatusCode.BadRequest);\r\n          " +
-                    "  }\r\n\r\n");
+            this.Write("                return GetAjaxStatusCode(sb, HttpStatusCode.BadRequest);\r\n       " +
+                    "     }\r\n\r\n");
             
             #line 467 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } 
@@ -2111,7 +2102,7 @@ else
                 sb.Append(""<br/>"");
                 AppendExceptionMsg(ex, sb);
 
-                return GetErrorResult(sb, HttpStatusCode.InternalServerError);
+                return GetAjaxStatusCode(sb, HttpStatusCode.InternalServerError);
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);

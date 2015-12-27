@@ -65,7 +65,7 @@ else
 <#        foreach (var item in searchProperties.Where(p => p.IsString))
           {
             k++;#>
-                            a.<#= item.Name #>.Contains(qParams.SearchString)<# if (k < searchProperties.Count()){ #> |<# } #> 
+                            a.<#= item.Name #>.Contains(qParams.SearchString)<# if (k < searchProperties.Where(p => p.IsString).Count()){ #> |<# } #> 
 <#        } #>
                         select a;
             }
@@ -228,7 +228,7 @@ else
                        {
                            id = x.<#= pKey #>,
                            value = x.<#= DisplayMember #>,
-                           label = x.<#= DisplayMember #> //can be extended as x.Category.CategoryName + "/" + x.<#= DisplayMember #>,
+                           label = x.<#= DisplayMember #>
                        };
 
             return Json(await list.ToListAsync(), JsonRequestBehavior.AllowGet);
@@ -261,13 +261,13 @@ else
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return AjaxBadRequest();
             }
             <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = await FindAsync<#= Entity.Name #>(id.Value);
 
             if (<#= Entity.Name.ToCamelCase() #> == null)
             {
-                return HttpNotFound();
+                return AjaxNotFound();
             }
 
 <#        if (Entity.Name.Equals(Entity.ModelForJson)) { #>
@@ -424,13 +424,13 @@ else
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return AjaxBadRequest();
             }
             <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = await FindAsync<#= Entity.Name #>(id.Value);
 
             if (<#= Entity.Name.ToCamelCase() #> == null)
             {
-                return HttpNotFound();
+                return AjaxNotFound();
             }
 
 <#  if (collectionProperties.Any()) 
@@ -461,7 +461,7 @@ else
                 }
 
 <#      } #>
-                return GetErrorResult(sb, HttpStatusCode.BadRequest);
+                return GetAjaxStatusCode(sb, HttpStatusCode.BadRequest);
             }
 
 <#  } #>
@@ -478,7 +478,7 @@ else
                 sb.Append("<br/>");
                 AppendExceptionMsg(ex, sb);
 
-                return GetErrorResult(sb, HttpStatusCode.InternalServerError);
+                return GetAjaxStatusCode(sb, HttpStatusCode.InternalServerError);
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
