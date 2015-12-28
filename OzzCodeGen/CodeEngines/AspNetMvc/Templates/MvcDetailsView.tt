@@ -26,11 +26,11 @@ WriteUsingNamespaces(); #>
 foreach (var property in properties) 
 {
 #>
-<div class="row">
-    <label class="control-label col-md-2 col-sm-3">
+<div class="row mb5">
+    <div class="col-md-2 col-sm-3 text-right fontWeigthBold">
         @Html.DisplayNameFor(model => model.<#= property.Name #>)
-    </label>
-    <div class="col-md-10 col-sm-9">
+    </div>
+    <div class="col-lg-8 col-md-9 col-sm-9">
         @Html.DisplayFor(m => m.<#= property.Name #>)
     </div>
 </div>

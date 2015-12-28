@@ -22,7 +22,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+    #line 1 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
     public partial class MvcDetailsView : AbstractMvcView
     {
@@ -33,7 +33,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         public override string TransformText()
         {
             
-            #line 10 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 10 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
  
 var properties = Entity.DisplayColumns.Where(e => e.InDetailsView);
 WriteUsingNamespaces(); 
@@ -42,21 +42,21 @@ WriteUsingNamespaces();
             #line hidden
             this.Write("@model ");
             
-            #line 13 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 13 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write("\r\n@{\r\n    ViewBag.Title = ");
             
-            #line 15 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 15 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 15 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 15 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
@@ -65,21 +65,21 @@ WriteUsingNamespaces();
                     "bool canUserCreate = ViewBag.canUserCreate;\r\n    bool canUserDelete = ViewBag.ca" +
                     "nUserDelete;\r\n}\r\n\r\n<h2>@");
             
-            #line 23 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 23 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 23 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 23 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write(" @ActionStrings.Details</h2>\r\n\r\n");
             
-            #line 25 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 25 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
 
 foreach (var property in properties) 
 {
@@ -87,25 +87,25 @@ foreach (var property in properties)
             
             #line default
             #line hidden
-            this.Write("<div class=\"row\">\r\n    <label class=\"control-label col-md-2 col-sm-3\">\r\n        @" +
-                    "Html.DisplayNameFor(model => model.");
+            this.Write("<div class=\"row mb5\">\r\n    <div class=\"col-md-2 col-sm-3 text-right fontWeigthBol" +
+                    "d\">\r\n        @Html.DisplayNameFor(model => model.");
             
-            #line 31 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 31 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
-            this.Write(")\r\n    </label>\r\n    <div class=\"col-md-10 col-sm-9\">\r\n        @Html.DisplayFor(m" +
-                    " => m.");
+            this.Write(")\r\n    </div>\r\n    <div class=\"col-lg-8 col-md-9 col-sm-9\">\r\n        @Html.Displa" +
+                    "yFor(m => m.");
             
-            #line 34 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 34 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(")\r\n    </div>\r\n</div>\r\n");
             
-            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 37 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
 
 } 
             
@@ -113,7 +113,7 @@ foreach (var property in properties)
             #line hidden
             this.Write("@Html.Partial(\"");
             
-            #line 39 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 39 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(MvcPartialDetailFormButtons.ViewName));
             
             #line default
