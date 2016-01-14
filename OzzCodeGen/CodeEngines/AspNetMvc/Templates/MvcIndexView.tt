@@ -157,31 +157,31 @@ foreach (var property in properties)
 	}
 		</table>
     </div>
-	@Html.Partial("<#= MvcPartialPager.ViewName #>")
 	@Html.Partial("_MessageBoxPartial")
-	@section scripts{
-		@Html.Partial("<#= MvcPartialIndexScripts.ViewName #>", "<#= Entity.ControllerName #>") @* Controller's name *@
-<#  if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) { #>
-        <script type="text/javascript">
-            function onActionMenuClick(menuBtn) {
-                setTimeout(function () {
-                    var menuHeight = 160;
-                    var rectMenu = menuBtn.getBoundingClientRect();
-                    var rectGrid = document.getElementById("<#= gridId #>").getBoundingClientRect();
-                    var diffY = rectGrid.bottom - rectMenu.bottom - menuHeight;
-
-                    if (diffY < 0) {
-                        var viewport = $('#<#= gridId #>Parent');
-                        var viewportScroll = viewport.scrollTop();
-                        viewport.scrollTop((diffY * -1) + viewportScroll);
-                    }
-                }, 250);
-            }
-        </script>
-<#  } #>
-	}
 }
 else
 {
     <h4>@MessageStrings.NoResults!</h4>
+}
+@Html.Partial("<#= MvcPartialPager.ViewName #>")
+@section scripts{
+	@Html.Partial("<#= MvcPartialIndexScripts.ViewName #>", "<#= Entity.ControllerName #>") @* Controller's name *@
+<#  if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) { #>
+    <script type="text/javascript">
+        function onActionMenuClick(menuBtn) {
+            setTimeout(function () {
+                var menuHeight = 160;
+                var rectMenu = menuBtn.getBoundingClientRect();
+                var rectGrid = document.getElementById("<#= gridId #>").getBoundingClientRect();
+                var diffY = rectGrid.bottom - rectMenu.bottom - menuHeight;
+
+                if (diffY < 0) {
+                    var viewport = $('#<#= gridId #>Parent');
+                    var viewportScroll = viewport.scrollTop();
+                    viewport.scrollTop((diffY * -1) + viewportScroll);
+                }
+            }, 250);
+        }
+    </script>
+<#  } #>
 }
