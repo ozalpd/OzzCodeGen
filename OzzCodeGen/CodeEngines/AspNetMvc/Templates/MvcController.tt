@@ -303,6 +303,7 @@ else
                 if (<#= foreignDependentProperty.Name.ToCamelCase() #> == null)
                     return HttpNotFound();
                 <#= Entity.ModelForCreate.ToCamelCase() #>.<#= foreignDependentProperty #> = <#= foreignDependentProperty.Name.ToCamelCase() #>;
+                <#= Entity.ModelForCreate.ToCamelCase() #>.<#= strongProperty.Name #> = <#= strongProperty.Name.ToCamelCase() #><# if(strongProperty.IsSimple) { #>.Value<# } #>;
             }
 <#  } #>
             await Set<#= Entity.Name #>Defaults(<#= Entity.ModelForCreate.ToCamelCase() #>);
@@ -328,8 +329,6 @@ else
         public async Task<ActionResult> Create(<#= Entity.ModelForCreate #> <#= Entity.ModelForCreate.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
 <#  } #>
         {
-            <#= dataContextIntance #>.SetInsertDefaults(<#= Entity.ModelForCreate.ToCamelCase() #>, this);
-
             if (ModelState.IsValid)
             {
                 OnCreateSaving(<#= Entity.ModelForCreate.ToCamelCase() #>);
@@ -388,8 +387,6 @@ else
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(<#= Entity.ModelForEdit #> <#= Entity.ModelForEdit.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Edit/5
         {
-            <#= dataContextIntance #>.SetInsertDefaults(<#= Entity.ModelForEdit.ToCamelCase() #>, this);
-
             if (ModelState.IsValid)
             {
                 OnEditSaving(<#= Entity.ModelForEdit.ToCamelCase() #>);

@@ -77,7 +77,7 @@ foreach (var property in properties)
 <#  if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) { #>
                     <td>
                         <div class="btn-group">
-                            <button type="button" title="@ActionStrings.Action" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" onclick="onActionMenuClick(this);">
+                            <button type="button" title="@ActionStrings.Action" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" onclick='onActionMenuClick(this)'>
                                 <span class="glyphicon glyphicon-tasks"></span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
@@ -94,7 +94,7 @@ if (collectionProperties.Any())
                                 @if (canUserDelete)
                                 {
                                     <li>
-                                        <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('<b>@(item.<#= DisplayMember #>)</b>', @item.<#= pKey #>);">
+                                        <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('<b>@Html.Encode(item.<#= DisplayMember #>)</b>', @item.<#= pKey #>);">
                                             @ActionStrings.Delete
                                         </a>
                                     </li>
@@ -103,7 +103,7 @@ if (collectionProperties.Any())
                                 @if (canUserDelete)
                                 {
                                     <li>
-                                        <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('<b>@(item.<#= DisplayMember #>)</b>', @item.<#= pKey #>);">
+                                        <a href="#deleteConfirm" data-toggle="modal" onclick="setDelete('<b>@Html.Encode(item.<#= DisplayMember #>)</b>', @item.<#= pKey #>);">
                                             @ActionStrings.Delete
                                         </a>
                                     </li>
@@ -147,7 +147,7 @@ foreach (var property in properties)
                         }
                         @if (canUserDelete)
                         {
-                            <a href="#deleteConfirm" data-toggle="modal" title="@ActionStrings.Delete" onclick="setDelete('<b>@(item.<#= DisplayMember #>)</b>', @item.<#= pKey #>);" >
+                            <a href="#deleteConfirm" data-toggle="modal" title="@ActionStrings.Delete" onclick="setDelete('<b>@Html.Encode(item.<#= DisplayMember #>)</b>', @item.<#= pKey #>);" >
                                 <span class="glyphicon glyphicon-trash ml5"></span>
                                 </a>
                         }

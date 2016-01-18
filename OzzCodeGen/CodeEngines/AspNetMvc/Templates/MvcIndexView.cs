@@ -195,7 +195,7 @@ foreach (var property in properties)
             #line hidden
             this.Write(@"                    <td>
                         <div class=""btn-group"">
-                            <button type=""button"" title=""@ActionStrings.Action"" class=""btn btn-xs btn-default dropdown-toggle"" data-toggle=""dropdown"" onclick=""onActionMenuClick(this);"">
+                            <button type=""button"" title=""@ActionStrings.Action"" class=""btn btn-xs btn-default dropdown-toggle"" data-toggle=""dropdown"" onclick='onActionMenuClick(this)'>
                                 <span class=""glyphicon glyphicon-tasks""></span> <span class=""caret""></span>
                             </button>
                             <ul class=""dropdown-menu"" role=""menu"">
@@ -215,10 +215,10 @@ if (collectionProperties.Any())
             
             #line default
             #line hidden
-            this.Write("                                @if (canUserDelete)\r\n                            " +
-                    "    {\r\n                                    <li>\r\n                               " +
-                    "         <a href=\"#deleteConfirm\" data-toggle=\"modal\" onclick=\"setDelete(\'<b>@(i" +
-                    "tem.");
+            this.Write(@"                                @if (canUserDelete)
+                                {
+                                    <li>
+                                        <a href=""#deleteConfirm"" data-toggle=""modal"" onclick=""setDelete('<b>@Html.Encode(item.");
             
             #line 97 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(DisplayMember));
@@ -241,10 +241,10 @@ if (collectionProperties.Any())
             
             #line default
             #line hidden
-            this.Write("                                @if (canUserDelete)\r\n                            " +
-                    "    {\r\n                                    <li>\r\n                               " +
-                    "         <a href=\"#deleteConfirm\" data-toggle=\"modal\" onclick=\"setDelete(\'<b>@(i" +
-                    "tem.");
+            this.Write(@"                                @if (canUserDelete)
+                                {
+                                    <li>
+                                        <a href=""#deleteConfirm"" data-toggle=""modal"" onclick=""setDelete('<b>@Html.Encode(item.");
             
             #line 106 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(DisplayMember));
@@ -429,7 +429,7 @@ foreach (var property in properties)
                         }
                         @if (canUserDelete)
                         {
-                            <a href=""#deleteConfirm"" data-toggle=""modal"" title=""@ActionStrings.Delete"" onclick=""setDelete('<b>@(item.");
+                            <a href=""#deleteConfirm"" data-toggle=""modal"" title=""@ActionStrings.Delete"" onclick=""setDelete('<b>@Html.Encode(item.");
             
             #line 150 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(DisplayMember));
