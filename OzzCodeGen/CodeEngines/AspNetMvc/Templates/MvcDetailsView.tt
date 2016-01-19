@@ -18,22 +18,28 @@ WriteUsingNamespaces(); #>
     bool canUserEdit = ViewBag.canUserEdit;
     bool canUserCreate = ViewBag.canUserCreate;
     bool canUserDelete = ViewBag.canUserDelete;
+    bool canSeeRestricted = ViewBag.canSeeRestricted;
 }
 
 <h2>@<#= EntityResource #>.<#= Entity.Name #> @ActionStrings.Details</h2>
 
-<#
-foreach (var property in properties) 
-{
-#>
-<div class="row mb5">
-    <div class="col-md-2 col-sm-3 text-right fontWeigthBold">
-        @Html.DisplayNameFor(model => model.<#= property.Name #>)
+<div class="form-horizontal">
+<# foreach (var property in properties) { #>
+<# if (property.PropertyDefinition.RestrictedData) { #>
+    @if (canSeeRestricted)
+    {
+<# } #>
+    <div class="row mb5">
+        <label class="control-label col-md-2 col-sm-3 mb5">
+            @Html.DisplayNameFor(model => model.<#= property.Name #>)
+        </label>
+        <div class="col-lg-8 col-md-9 col-sm-9 mt10">
+            @Html.DisplayFor(m => m.<#= property.Name #>)
+        </div>
     </div>
-    <div class="col-lg-8 col-md-9 col-sm-9">
-        @Html.DisplayFor(m => m.<#= property.Name #>)
-    </div>
-</div>
-<#
-} #>
+<# if (property.PropertyDefinition.RestrictedData) { #>
+    }
+<# } #>
+<# } #>
 @Html.Partial("<#= MvcPartialDetailFormButtons.ViewName #>")
+</div>
