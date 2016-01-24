@@ -97,8 +97,8 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write(";\r\n}\r\n<div class=\"row well\">\r\n    <div class=\"col-md-8 col-sm-7\">\r\n        <h4>@t" +
-                    "itle</h4>\r\n    </div>\r\n");
+            this.Write(";\r\n}\r\n<div class=\"row well hidden-print\">\r\n    <div class=\"col-md-8 col-sm-7\">\r\n " +
+                    "       <h4>@title</h4>\r\n    </div>\r\n");
             
             #line 43 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(searchable)
@@ -142,7 +142,7 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t<th>@ActionStrings.Action</th>\r\n");
+            this.Write("\t\t\t\t<th class=\"hidden-print\" width=\"20px\">@ActionStrings.Action</th>\r\n");
             
             #line 62 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
@@ -179,7 +179,7 @@ foreach (var property in properties)
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t<th>@ActionStrings.Actions</th>\r\n");
+            this.Write("\t\t\t\t<th class=\"hidden-print\">@ActionStrings.Actions</th>\r\n");
             
             #line 72 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
@@ -193,7 +193,7 @@ foreach (var property in properties)
             
             #line default
             #line hidden
-            this.Write(@"                    <td>
+            this.Write(@"                    <td class=""hidden-print"">
                         <div class=""btn-group"">
                             <button type=""button"" title=""@ActionStrings.Action"" class=""btn btn-xs btn-default dropdown-toggle"" data-toggle=""dropdown"" onclick='onActionMenuClick(this)'>
                                 <span class=""glyphicon glyphicon-tasks""></span> <span class=""caret""></span>
@@ -421,7 +421,7 @@ foreach (var property in properties)
             
             #line default
             #line hidden
-            this.Write(@"                    <td>
+            this.Write(@"                    <td class=""hidden-print"">
                         <a href='@Url.Action(""Details"", new { id = item.Id })' title=""@ActionStrings.Details""><span class=""glyphicon glyphicon-new-window ml5""></span></a>
                         @if (canUserEdit)
                         {
