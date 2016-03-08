@@ -173,6 +173,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             }
         }
         private bool _storedProcs;
+
         public bool CustomStoredProcs
         {
             get

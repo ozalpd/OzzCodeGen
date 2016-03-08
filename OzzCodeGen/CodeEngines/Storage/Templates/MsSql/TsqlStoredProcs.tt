@@ -116,6 +116,55 @@ Begin
 <# WriteSelectStatement(pkeyVal); #>
 End
 Go
+
+-- --------------------------------------------------------------------
+-- Stored Procedure: [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_InsertOrUpdate]
+-- --------------------------------------------------------------------
+<# if(false){ #>
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_InsertOrUpdate]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_InsertOrUpdate]
+GO
+CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_InsertOrUpdate]
+	<#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>,
+<#		
+	colNr = 0;
+	foreach (var column in colDeclaresUpd)
+	{ 
+			colNr++;#>
+	@<#= column.Name #> <#= GetColumnType(column) #>,
+<#	} #>
+	@Result int OUTPUT
+As
+Begin
+	Set @Result = 0
+	If Not Exists (Select * from [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>] Where <#= firstBase.PrimaryKeyColumn.Name #> = <#= pkeyVal #>)
+	Begin
+		Exec [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Insert]
+<#		
+	colNr = 0;
+	foreach (var column in colDeclaresIns)
+	{ 
+			colNr++;#>
+			@<#= column.Name #> = @<#= column.Name #><# if(colNr < colDeclaresUpd.Count()) {#>,<#  } #> 
+<#	} #>
+		Set @Result = 1
+	End
+	Else
+	Begin
+		Exec [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Update]
+			<#= pkeyVal #> = <#= pkeyVal #>,
+<#		
+	colNr = 0;
+	foreach (var column in colDeclaresUpd)
+	{ 
+			colNr++;#>
+			@<#= column.Name #> = @<#= column.Name #><# if(colNr < colDeclaresUpd.Count()) {#>,<#  } #> 
+<#	} #>
+		Set @Result = -1
+	End
+End
+Go
+<#	} #>
 <#+ 
 protected void WriteDeleteStatement(StorageEntitySetting table, StorageEntitySetting baseTable,string pkeyValue)
 { #>

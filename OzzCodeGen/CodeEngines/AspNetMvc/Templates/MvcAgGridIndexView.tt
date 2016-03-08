@@ -31,7 +31,7 @@ WriteUsingNamespaces(); #>
 
 	var title = <#= EntityResource #>.<#= Entity.Name.Pluralize() #>;
 }
-<div class="row well">
+<div class="row well hidden-print">
     <div class="col-md-8 col-sm-7">
         <h4>@title</h4>
     </div>

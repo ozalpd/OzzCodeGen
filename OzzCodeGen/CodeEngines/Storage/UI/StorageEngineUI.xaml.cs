@@ -23,6 +23,8 @@ namespace OzzCodeGen.CodeEngines.Storage.UI
 
             HiddenColumns.Add("IsSimple");
             HiddenColumns.Add("IsString");
+            HiddenColumns.Add("IsBoolean");
+            HiddenColumns.Add("IsDateTime");
             HiddenColumns.Add("PrimaryKeyColumn");
             //HiddenColumns.Add("SchemaName");
             HiddenColumns.Add("ModifyTrack");
