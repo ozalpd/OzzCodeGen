@@ -28,7 +28,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
             protected virtual void Constructing()
             {
                 Page = 1;
-                PageSize = 10;
+                PageSize = 20;
             }
 
             public QueryParameters(QueryParameters parameters)
