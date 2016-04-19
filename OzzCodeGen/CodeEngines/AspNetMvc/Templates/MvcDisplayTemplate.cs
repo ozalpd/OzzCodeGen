@@ -45,28 +45,35 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write("\r\n@{\r\n    Layout = null;\r\n}\r\n@if (Model != null)\r\n{\r\n    <div><a href=\'/");
+            this.Write("\r\n@{\r\n    Layout = null;\r\n}\r\n@if (Model != null)\r\n{\r\n    <div>\r\n        @Model.");
             
-            #line 17 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.tt"
+            #line 18 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(DisplayMember));
+            
+            #line default
+            #line hidden
+            this.Write(" @* <a href=\'/");
+            
+            #line 18 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ControllerName));
             
             #line default
             #line hidden
             this.Write("/Details/@Model.");
             
-            #line 17 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.tt"
+            #line 18 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pKey));
             
             #line default
             #line hidden
             this.Write("\'>@Model.");
             
-            #line 17 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.tt"
+            #line 18 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(DisplayMember));
             
             #line default
             #line hidden
-            this.Write("</a></div>\r\n}");
+            this.Write("</a> *@\r\n\t</div>\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

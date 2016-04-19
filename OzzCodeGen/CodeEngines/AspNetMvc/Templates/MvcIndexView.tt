@@ -17,6 +17,8 @@ var gridId = Entity.Name.ToCamelCase() + "Grid";
 var pkeyProperty = Entity.GetPrimaryKey();
 string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
 
+bool hasScript = (Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) || Entity.EditPartialView || Entity.CreatePartialView;
+
 WriteUsingNamespaces(); #>
 @model IEnumerable<<#= Entity.Name #>>
 @{
@@ -81,10 +83,10 @@ foreach (var property in properties)
                                 <span class="glyphicon glyphicon-tasks"></span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink(ActionStrings.Details, "Details", new { id = item.Id })</li>
+                                <li>@Html.ActionLink(ActionStrings.Details, "Details", new { id = item.Id }<#  if(Entity.DetailsPartialView) { #>, new { input_modal = ActionStrings.Details }<# } #>)</li>
                                 @if (canUserEdit)
                                 {
-                                    <li>@Html.ActionLink(ActionStrings.Edit, "Edit", new { id = item.Id })</li>
+                                    <li>@Html.ActionLink(ActionStrings.Edit, "Edit", new { id = item.Id }<#  if(Entity.EditPartialView) { #>, new { input_modal = EntityStrings.Edit<#= Entity.Name #> }<# } #>)</li>
                                 }
 <#
 if (collectionProperties.Any()) 
@@ -140,10 +142,10 @@ foreach (var property in properties)
 } #>
 <#  if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithButtonsAction) { #>
                     <td class="hidden-print">
-                        <a href='@Url.Action("Details", new { id = item.Id })' title="@ActionStrings.Details"><span class="glyphicon glyphicon-new-window ml5"></span></a>
+                        <a href='@Url.Action("Details", new { id = item.Id })'<#  if(Entity.DetailsPartialView) { #> input-modal='@ActionStrings.Details' <# } #> title="@ActionStrings.Details"><span class="glyphicon glyphicon-new-window ml5"></span></a>
                         @if (canUserEdit)
                         {
-                            <a href='@Url.Action("Edit", new { id = item.Id })' title="@ActionStrings.Edit"><span class="glyphicon glyphicon-edit ml5"></span></a>
+                            <a href='@Url.Action("Edit", new { id = item.Id })'<#  if(Entity.EditPartialView) { #> input-modal='@EntityStrings.Edit<#= Entity.Name #>' <# } #> title="@ActionStrings.Edit"><span class="glyphicon glyphicon-edit ml5"></span></a>
                         }
                         @if (canUserDelete)
                         {
@@ -165,9 +167,30 @@ else
 @Html.Partial("<#= MvcPartialPager.ViewName #>")
 @Html.Partial("_MessageBoxPartial")
 @section scripts{
+<#  if(Entity.EditPartialView || Entity.CreatePartialView) { #>
+    @Scripts.Render("~/bundles/jqueryval")
+<#  } #>
     @Html.Partial("<#= MvcPartialIndexScripts.ViewName #>", "<#= Entity.ControllerName #>") @* Controller's name *@
-<#  if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) { #>
+<#  if(hasScript) { #>
     <script type="text/javascript">
+<#  } #>
+<#  if(Entity.EditPartialView || Entity.CreatePartialView) { #>
+        (function () {
+            $('a[input-modal]').on('click', function () {
+                showMessageBox('@MessageStrings.Loading...', '@MessageStrings.PleaseWait.', false);
+                var title = $(this).attr("input-modal");
+                $('#dataInputBody').load(this.href, function () {
+                    hideMessageBox();
+                    if (title != null || title != '') {
+                        $('#dataInputTitle').html(title);
+                    }
+                    $('#dataInputModal').modal('show');
+                });
+                return false;
+            });
+        }());
+<#  } #>
+<#  if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) { #>
         function onActionMenuClick(menuBtn) {
             setTimeout(function () {
                 var menuHeight = 160;
@@ -182,6 +205,8 @@ else
                 }
             }, 250);
         }
+<#  } #>
+<#  if(hasScript) { #>
     </script>
 <#  } #>
 }

@@ -46,16 +46,32 @@ WriteUsingNamespaces();
                     "gs.Deleting...\', \'@MessageStrings.PleaseWait.\', false);\r\n\r\n        request.error" +
                     "(function (jqXHR, textStatus, errorThrown) {\r\n            var msgboxMsg = jqXHR." +
                     "responseText;\r\n            showMessageBox(errorThrown, msgboxMsg, true);\r\n      " +
-                    "  });\r\n    }\r\n    function showMessageBox(title, text, cancelButton) {\r\n        " +
-                    "if (cancelButton) {\r\n            $(\'#messageBoxCancelButton\').show();\r\n        }" +
-                    "\r\n        else {\r\n            $(\'#messageBoxCancelButton\').hide();\r\n        }\r\n " +
-                    "       $(\'#messageBoxTitle\').html(title);\r\n        $(\'#messageBoxText\').html(tex" +
-                    "t);\r\n        $(\'#messageBox\').modal(\'show\');\r\n    }\r\n    function hideMessageBox" +
-                    "() {\r\n        $(\'#messageBox\').modal(\'hide\');\r\n    }\r\n    function showCannotDel" +
-                    "ete(item, relatedRecords) {\r\n        var msgText = \'@MessageStrings.CanNotDelete" +
-                    " \' + item + \'.<br/>@MessageStrings.BecauseOfRelatedRecords.<br/>\' + relatedRecor" +
-                    "ds;\r\n        showMessageBox(\'@MessageStrings.UnableToDelete!\', msgText, true);\r\n" +
-                    "    }\r\n</script>");
+                    "  });\r\n    }\r\n    function showImage(title, imgUrl, cancelButton) {\r\n        var" +
+                    " innerHtml = \"<img src=\'\" + imgUrl + \"\' class=\'img-responsive center-block\' />\";" +
+                    "\r\n        showMessageBox(title, innerHtml, cancelButton);\r\n    }\r\n    function s" +
+                    "howMessageBox(title, text, cancelButton) {\r\n        if (cancelButton) {\r\n       " +
+                    "     $(\'#messageBoxCancelButton\').show();\r\n        }\r\n        else {\r\n          " +
+                    "  $(\'#messageBoxCancelButton\').hide();\r\n        }\r\n        $(\'#messageBoxTitle\')" +
+                    ".html(title);\r\n        $(\'#messageBoxText\').html(text);\r\n        $(\'#messageBox\'" +
+                    ").modal(\'show\');\r\n    }\r\n    function hideMessageBox() {\r\n        $(\'#messageBox" +
+                    "\').modal(\'hide\');\r\n    }\r\n    function showCannotDelete(item, relatedRecords) {\r" +
+                    "\n        var msgText = \'@MessageStrings.CanNotDelete \' + item + \'.<br/>@MessageS" +
+                    "trings.BecauseOfRelatedRecords.<br/>\' + relatedRecords;\r\n        showMessageBox(" +
+                    "\'@MessageStrings.UnableToDelete!\', msgText, true);\r\n    }\r\n    function toogleAc" +
+                    "cordionSign() {\r\n        if ($(\'#filterPanel\').hasClass(\'in\')) {\r\n            $(" +
+                    "\'#filterPanelSign\').removeClass(\'glyphicon-minus\').addClass(\'glyphicon-plus\');\r\n" +
+                    "            console.log(\'collapsed\');\r\n        }\r\n        else {\r\n            $(" +
+                    "\'#filterPanelSign\').removeClass(\'glyphicon-plus\').addClass(\'glyphicon-minus\');\r\n" +
+                    "            console.log(\'expanded\');\r\n        }\r\n    }\r\n    function submitDataI" +
+                    "nputForm() {\r\n        var inputForm = $(\'#dataInputForm\');\r\n        if ($(inputF" +
+                    "orm).valid()) {\r\n            $.ajax({\r\n                url: $(inputForm).attr(\'a" +
+                    "ction\'),\r\n                type: $(inputForm).attr(\'method\'),\r\n                da" +
+                    "ta: $(inputForm).serialize(),\r\n                success: function (result) {\r\n   " +
+                    "                 refreshData();\r\n                },\r\n                error: func" +
+                    "tion (jqXHR, textStatus, errorThrown) {\r\n                    $(\'#dataInputModal\'" +
+                    ").modal(\'hide\');\r\n                    var msgboxMsg = jqXHR.responseText;\r\n     " +
+                    "               showMessageBox(errorThrown, msgboxMsg, true);\r\n                }\r" +
+                    "\n            });\r\n        }\r\n    }\r\n</script>");
             return this.GenerationEnvironment.ToString();
         }
     }

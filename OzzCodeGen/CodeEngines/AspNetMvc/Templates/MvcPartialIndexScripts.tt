@@ -27,6 +27,10 @@ WriteUsingNamespaces(); #>
             showMessageBox(errorThrown, msgboxMsg, true);
         });
     }
+    function showImage(title, imgUrl, cancelButton) {
+        var innerHtml = "<img src='" + imgUrl + "' class='img-responsive center-block' />";
+        showMessageBox(title, innerHtml, cancelButton);
+    }
     function showMessageBox(title, text, cancelButton) {
         if (cancelButton) {
             $('#messageBoxCancelButton').show();
@@ -44,5 +48,33 @@ WriteUsingNamespaces(); #>
     function showCannotDelete(item, relatedRecords) {
         var msgText = '@MessageStrings.CanNotDelete ' + item + '.<br/>@MessageStrings.BecauseOfRelatedRecords.<br/>' + relatedRecords;
         showMessageBox('@MessageStrings.UnableToDelete!', msgText, true);
+    }
+    function toogleAccordionSign() {
+        if ($('#filterPanel').hasClass('in')) {
+            $('#filterPanelSign').removeClass('glyphicon-minus').addClass('glyphicon-plus');
+            console.log('collapsed');
+        }
+        else {
+            $('#filterPanelSign').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+            console.log('expanded');
+        }
+    }
+    function submitDataInputForm() {
+        var inputForm = $('#dataInputForm');
+        if ($(inputForm).valid()) {
+            $.ajax({
+                url: $(inputForm).attr('action'),
+                type: $(inputForm).attr('method'),
+                data: $(inputForm).serialize(),
+                success: function (result) {
+                    refreshData();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('#dataInputModal').modal('hide');
+                    var msgboxMsg = jqXHR.responseText;
+                    showMessageBox(errorThrown, msgboxMsg, true);
+                }
+            });
+        }
     }
 </script>

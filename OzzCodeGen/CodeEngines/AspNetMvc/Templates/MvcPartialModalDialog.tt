@@ -24,7 +24,7 @@ WriteUsingNamespaces(); #>
     </div>@* /.modal-dialog *@
 </div>@* /.modal *@
 
-<div class="modal fade" id="deleteConfirm"> @* Delete Confirm Dialog *@
+<div class="modal fade" id="deleteConfirm"> @* Delete Confirm Modal *@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -37,6 +37,22 @@ WriteUsingNamespaces(); #>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">@ActionStrings.Cancel</button>
                 <a id="ajxDelete" style="width:70px" class="btn btn-danger" onclick="deleteEntity(0);">@ActionStrings.Delete</a>
+            </div>
+        </div>@* /.modal-content *@
+    </div>@* /.modal-dialog *@
+</div>@* /.modal *@
+
+<div class="modal fade" id="dataInputModal"> @* Data Input Modal *@
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 id="dataInputTitle" class="modal-title">@ActionStrings.Edit</h2>
+            </div>
+            <div id="dataInputBody" class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@ActionStrings.Cancel</button>
+                <a id="dataInputSubmit" style="width:70px" class="btn btn-primary" onclick="submitDataInputForm();">@ActionStrings.Submit</a>
             </div>
         </div>@* /.modal-content *@
     </div>@* /.modal-dialog *@

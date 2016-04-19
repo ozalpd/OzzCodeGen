@@ -45,17 +45,28 @@ WriteUsingNamespaces();
                     " type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">\r\n                  " +
                     "  @ActionStrings.Cancel\r\n                </button>\r\n            </div>\r\n        " +
                     "</div>@* /.modal-content *@\r\n    </div>@* /.modal-dialog *@\r\n</div>@* /.modal *@" +
-                    "\r\n\r\n<div class=\"modal fade\" id=\"deleteConfirm\"> @* Delete Confirm Dialog *@\r\n   " +
-                    " <div class=\"modal-dialog\">\r\n        <div class=\"modal-content\">\r\n            <d" +
+                    "\r\n\r\n<div class=\"modal fade\" id=\"deleteConfirm\"> @* Delete Confirm Modal *@\r\n    " +
+                    "<div class=\"modal-dialog\">\r\n        <div class=\"modal-content\">\r\n            <di" +
+                    "v class=\"modal-header\">\r\n                <button type=\"button\" class=\"close\" dat" +
+                    "a-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\r\n                <h2 class" +
+                    "=\"modal-title\">@ActionStrings.Delete</h2>\r\n            </div>\r\n            <div " +
+                    "class=\"modal-body\">\r\n                <p id=\"deleteText\"></p>\r\n            </div>" +
+                    "\r\n            <div class=\"modal-footer\">\r\n                <button type=\"button\" " +
+                    "class=\"btn btn-default\" data-dismiss=\"modal\">@ActionStrings.Cancel</button>\r\n   " +
+                    "             <a id=\"ajxDelete\" style=\"width:70px\" class=\"btn btn-danger\" onclick" +
+                    "=\"deleteEntity(0);\">@ActionStrings.Delete</a>\r\n            </div>\r\n        </div" +
+                    ">@* /.modal-content *@\r\n    </div>@* /.modal-dialog *@\r\n</div>@* /.modal *@\r\n\r\n<" +
+                    "div class=\"modal fade\" id=\"dataInputModal\"> @* Data Input Modal *@\r\n    <div cla" +
+                    "ss=\"modal-dialog modal-lg\">\r\n        <div class=\"modal-content\">\r\n            <d" +
                     "iv class=\"modal-header\">\r\n                <button type=\"button\" class=\"close\" da" +
-                    "ta-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\r\n                <h2 clas" +
-                    "s=\"modal-title\">@ActionStrings.Delete</h2>\r\n            </div>\r\n            <div" +
-                    " class=\"modal-body\">\r\n                <p id=\"deleteText\"></p>\r\n            </div" +
-                    ">\r\n            <div class=\"modal-footer\">\r\n                <button type=\"button\"" +
-                    " class=\"btn btn-default\" data-dismiss=\"modal\">@ActionStrings.Cancel</button>\r\n  " +
-                    "              <a id=\"ajxDelete\" style=\"width:70px\" class=\"btn btn-danger\" onclic" +
-                    "k=\"deleteEntity(0);\">@ActionStrings.Delete</a>\r\n            </div>\r\n        </di" +
-                    "v>@* /.modal-content *@\r\n    </div>@* /.modal-dialog *@\r\n</div>@* /.modal *@");
+                    "ta-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\r\n                <h2 id=\"" +
+                    "dataInputTitle\" class=\"modal-title\">@ActionStrings.Edit</h2>\r\n            </div>" +
+                    "\r\n            <div id=\"dataInputBody\" class=\"modal-body\"></div>\r\n            <di" +
+                    "v class=\"modal-footer\">\r\n                <button type=\"button\" class=\"btn btn-de" +
+                    "fault\" data-dismiss=\"modal\">@ActionStrings.Cancel</button>\r\n                <a i" +
+                    "d=\"dataInputSubmit\" style=\"width:70px\" class=\"btn btn-primary\" onclick=\"submitDa" +
+                    "taInputForm();\">@ActionStrings.Submit</a>\r\n            </div>\r\n        </div>@* " +
+                    "/.modal-content *@\r\n    </div>@* /.modal-dialog *@\r\n</div>@* /.modal *@");
             return this.GenerationEnvironment.ToString();
         }
     }

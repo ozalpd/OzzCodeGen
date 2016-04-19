@@ -407,15 +407,18 @@
                                 <CheckBox IsChecked="{Binding GenerateCreateAction}" Content="Create Action" ToolTip="Generate Create action in controller"/>
                                 <CheckBox IsChecked="{Binding GenerateEditAction}" Content="Edit Action" ToolTip="Generate Edit action in controller"/>
                                 <CheckBox IsChecked="{Binding GenerateDeleteAction}" Content="Delete Action" ToolTip="Generate Delete action in controller"/>
-                                <TextBlock Height="2" Margin="2"/>
+                                <TextBlock Height="2" Margin="1"/>
                                 <CheckBox IsChecked="{Binding IndexView}" Content="Index View" ToolTip="Generate Index view"/>
                                 <ComboBox ItemsSource="{Binding Source={StaticResource indexViewGeneration}}"
                                           SelectedItem="{Binding IndexViewGeneration}"
                                           FontSize="11" />
-                                <TextBlock Height="2" Margin="2"/>
+                                <TextBlock Height="2" Margin="1"/>
                                 <CheckBox IsChecked="{Binding DetailsView}" Content="Details View" ToolTip="Generate Details view"/>
+                                <CheckBox IsChecked="{Binding DetailsPartialView}" Content="Partial Details View" ToolTip="Generate Details view with a partial _Details"/>
                                 <CheckBox IsChecked="{Binding CreateView}" Content="Create View" ToolTip="Generate Create view"/>
+                                <CheckBox IsChecked="{Binding CreatePartialView}" Content="Partial Create View" ToolTip="Generate Create view with a partial _Create"/>
                                 <CheckBox IsChecked="{Binding EditView}" Content="Edit View" ToolTip="Generate Edit view"/>
+                                <CheckBox IsChecked="{Binding EditPartialView}" Content="Partial Edit View " ToolTip="Generate Edit view with a partial _Edit"/>
                             </StackPanel>
                         </Border>
                         <Grid Grid.Column="1">

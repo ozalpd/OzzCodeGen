@@ -6,6 +6,7 @@
 <#@ import namespace="OzzUtils" #>
 <# 
 var fkeyProperties = Entity.GetInheritedIncludedProperties().Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
+var searchProperties = Entity.DisplayColumns.Where(e => e.UseInSearch);
 WriteUsingNamespaces(); #>
 
             <!-- Bootstrap navbar nav menu code for <#= Entity.ControllerName #> -->
@@ -27,3 +28,54 @@ WriteUsingNamespaces(); #>
 	} #>
                 </ul>
             </li>
+
+<#  foreach (var item in searchProperties.Where(p => p.IsDateTime))
+    { #>
+	
+@* <#= item.Name #> Filter Markup with Default Date is Today *@
+@{
+    DateTime <#= item.Name.ToCamelCase() #>Min = ViewBag.<#= item.Name #>Min ?? DateTime.Now.Date;
+    DateTime <#= item.Name.ToCamelCase() #>Max = ViewBag.<#= item.Name #>Max ?? DateTime.Now.Date;
+}
+        <div class="col-md-2 col-sm-3">
+            <input type="text" id="<#= item.Name #>Min" name="<#= item.Name #>Min" class="form-control" value='@<#= item.Name.ToCamelCase() #>Min.ToString("yyyy.MM.dd")'>
+        </div>
+        <div class="col-md-2 col-sm-3">
+            <input type="text" id="<#= item.Name #>Max" name="<#= item.Name #>Max" class="form-control" value='@<#= item.Name.ToCamelCase() #>Max.ToString("yyyy.MM.dd")'>
+        </div>
+<#  } #>
+
+<#  foreach (var item in searchProperties.Where(p => p.IsDateTime))
+    { #>
+	
+@* <#= item.Name #> Filter Markup *@
+
+        <div class="col-md-2 col-sm-3">
+            <input type="text" id="<#= item.Name #>Min" name="<#= item.Name #>Min" class="form-control" value="">
+        </div>
+        <div class="col-md-2 col-sm-3">
+            <input type="text" id="<#= item.Name #>Max" name="<#= item.Name #>Max" class="form-control" value="">
+        </div>
+<#  } #>
+
+    <script type="text/javascript">
+        (function () {
+<#  foreach (var item in searchProperties.Where(p => p.IsDateTime))
+    { #>
+            //Initiliaze <#= item.Name #> Filter
+			$("#<#= item.Name #>Min").datepicker({ dateFormat: "yy.mm.dd", numberOfMonths: 2 });
+            $("#<#= item.Name #>Max").datepicker({ dateFormat: "yy.mm.dd", numberOfMonths: 2 });
+            $("#<#= item.Name #>Min").datepicker("option", "onClose", function (selectedDate) {
+                if (selectedDate) {
+                    $("#<#= item.Name #>Max").datepicker("option", "minDate", selectedDate);
+                }
+            });
+            $("#<#= item.Name #>Max").datepicker("option", "onClose", function (selectedDate) {
+                if (selectedDate) {
+                    $("#<#= item.Name #>Min").datepicker("option", "maxDate", selectedDate);
+                }
+            });
+<#  } #>
+        }());
+    </script>
+

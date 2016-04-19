@@ -566,6 +566,25 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private bool? _detailsView;
 
         /// <summary>
+        /// Generate DetailsPartialView
+        /// </summary>
+        public bool DetailsPartialView
+        {
+            get
+            {
+                if (!_detailsPartialView.HasValue) _detailsPartialView = true;
+                return _detailsPartialView.Value;
+            }
+            set
+            {
+                if (_detailsPartialView == value) return;
+                _detailsPartialView = value;
+                RaisePropertyChanged("DetailsPartialView");
+            }
+        }
+        private bool? _detailsPartialView;
+
+        /// <summary>
         /// Generate IndexView
         /// </summary>
         public bool CreateView
@@ -585,6 +604,25 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private bool? _createView;
 
         /// <summary>
+        /// Generate IndexPartialView
+        /// </summary>
+        public bool CreatePartialView
+        {
+            get
+            {
+                if (!_createPartialView.HasValue) _createPartialView = true;
+                return _createPartialView.Value;
+            }
+            set
+            {
+                if (_createPartialView == value) return;
+                _createPartialView = value;
+                RaisePropertyChanged("CreatePartialView");
+            }
+        }
+        private bool? _createPartialView;
+
+        /// <summary>
         /// Generate IndexView
         /// </summary>
         public bool EditView
@@ -602,6 +640,25 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
         }
         private bool? _editView;
+
+        /// <summary>
+        /// Generate IndexPartialView
+        /// </summary>
+        public bool EditPartialView
+        {
+            get
+            {
+                if (!_editPartialView.HasValue) _editPartialView = true;
+                return _editPartialView.Value;
+            }
+            set
+            {
+                if (_editPartialView == value) return;
+                _editPartialView = value;
+                RaisePropertyChanged("EditPartialView");
+            }
+        }
+        private bool? _editPartialView;
 
         /// <summary>
         /// Base controller class for MVC Controller

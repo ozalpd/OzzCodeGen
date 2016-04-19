@@ -92,7 +92,8 @@ else
             }
             if (qParams.<#= item.Name #>Max != null)
             {
-                query = query.Where(x => x.<#= item.Name #> <= qParams.<#= item.Name #>Max.Value);
+                var maxDate = qParams.<#= item.Name #>Max.AddDays(1);
+                query = query.Where(x => x.<#= item.Name #> < maxDate);
             }
 <#      } #>
 
