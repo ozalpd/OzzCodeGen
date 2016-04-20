@@ -62,12 +62,21 @@ WriteUsingNamespaces(); #>
     function submitDataInputForm() {
         var inputForm = $('#dataInputForm');
         if ($(inputForm).valid()) {
+            var url = $(inputForm).attr('action');
+            url += (url.indexOf('?') == -1) ? '?' : '&';
+            url += 'part=true';
             $.ajax({
-                url: $(inputForm).attr('action'),
+                url: url,
                 type: $(inputForm).attr('method'),
                 data: $(inputForm).serialize(),
+				cache: false,
                 success: function (result) {
-                    refreshData();
+                    if (result.saved) {
+                        refreshData();
+                    }
+                    else {
+                        $('#dataInputBody').html(result);
+                    }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     $('#dataInputModal').modal('hide');

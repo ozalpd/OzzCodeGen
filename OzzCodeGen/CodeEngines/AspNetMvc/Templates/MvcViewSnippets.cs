@@ -61,7 +61,7 @@ WriteUsingNamespaces();
             #line default
             #line hidden
             this.Write("<b class=\"caret\"></b>\r\n                </a>\r\n                <ul class=\"dropdown-" +
-                    "menu\">\r\n                    <li>@Html.ActionLink(@");
+                    "menu\">\r\n                    <li>@Html.ActionLink(");
             
             #line 18 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
@@ -82,7 +82,7 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write("\")</li>\r\n                    <li>@Html.ActionLink(@");
+            this.Write("\")</li>\r\n                    <li>@Html.ActionLink(");
             
             #line 19 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
@@ -114,7 +114,7 @@ WriteUsingNamespaces();
             #line default
             #line hidden
             this.Write("                    <li class=\"divider\"></li>\r\n                    <li>@Html.Acti" +
-                    "onLink(@");
+                    "onLink(");
             
             #line 25 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
@@ -135,7 +135,7 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write("\")</li>\r\n                    <li>@Html.ActionLink(@");
+            this.Write("\")</li>\r\n                    <li>@Html.ActionLink(");
             
             #line 26 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
@@ -258,9 +258,8 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write("\r\n");
             
-            #line 48 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            #line 47 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
   foreach (var item in searchProperties.Where(p => p.IsDateTime))
     { 
             
@@ -268,49 +267,105 @@ WriteUsingNamespaces();
             #line hidden
             this.Write("\t\r\n@* ");
             
-            #line 51 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            #line 50 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
             #line hidden
-            this.Write(" Filter Markup *@\r\n\r\n        <div class=\"col-md-2 col-sm-3\">\r\n            <input " +
-                    "type=\"text\" id=\"");
+            this.Write(" Filter Markup passing value via ViewBag *@\r\n@{\r\n    string ");
             
-            #line 54 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            #line 52 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write("Min = ViewBag.");
+            
+            #line 52 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            
+            #line default
+            #line hidden
+            this.Write("Min == null ? string.Empty : ((DateTime)ViewBag.");
+            
+            #line 52 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            
+            #line default
+            #line hidden
+            this.Write("Min).ToString(\"yyyy.MM.dd\");\r\n    string ");
+            
+            #line 53 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write("Max = ViewBag.");
+            
+            #line 53 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            
+            #line default
+            #line hidden
+            this.Write("Max == null ? string.Empty : ((DateTime)ViewBag.");
+            
+            #line 53 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            
+            #line default
+            #line hidden
+            this.Write("Max).ToString(\"yyyy.MM.dd\");\r\n}\r\n        <div class=\"col-md-2 col-sm-3\">\r\n       " +
+                    "     <input type=\"text\" id=\"");
+            
+            #line 56 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
             #line hidden
             this.Write("Min\" name=\"");
             
-            #line 54 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            #line 56 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
             #line hidden
-            this.Write("Min\" class=\"form-control\" value=\"\">\r\n        </div>\r\n        <div class=\"col-md-2" +
-                    " col-sm-3\">\r\n            <input type=\"text\" id=\"");
+            this.Write("Min\" class=\"form-control\" value=\'@");
             
-            #line 57 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            #line 56 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write("Min\'>\r\n        </div>\r\n        <div class=\"col-md-2 col-sm-3\">\r\n            <inpu" +
+                    "t type=\"text\" id=\"");
+            
+            #line 59 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
             #line hidden
             this.Write("Max\" name=\"");
             
-            #line 57 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            #line 59 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
             #line hidden
-            this.Write("Max\" class=\"form-control\" value=\"\">\r\n        </div>\r\n");
+            this.Write("Max\" class=\"form-control\" value=\'@");
             
             #line 59 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write("Max\'>\r\n        </div>\r\n");
+            
+            #line 61 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
   } 
             
             #line default
             #line hidden
-            this.Write("\r\n    <script type=\"text/javascript\">\r\n        (function () {\r\n");
+            this.Write("\r\n");
             
             #line 63 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
   foreach (var item in searchProperties.Where(p => p.IsDateTime))
@@ -318,16 +373,68 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
+            this.Write("\t\r\n@* ");
+            
+            #line 66 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" Filter Markup *@\r\n\r\n        <div class=\"col-md-2 col-sm-3\">\r\n            <input " +
+                    "type=\"text\" id=\"");
+            
+            #line 69 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            
+            #line default
+            #line hidden
+            this.Write("Min\" name=\"");
+            
+            #line 69 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            
+            #line default
+            #line hidden
+            this.Write("Min\" class=\"form-control\" value=\"\">\r\n        </div>\r\n        <div class=\"col-md-2" +
+                    " col-sm-3\">\r\n            <input type=\"text\" id=\"");
+            
+            #line 72 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            
+            #line default
+            #line hidden
+            this.Write("Max\" name=\"");
+            
+            #line 72 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            
+            #line default
+            #line hidden
+            this.Write("Max\" class=\"form-control\" value=\"\">\r\n        </div>\r\n");
+            
+            #line 74 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+  } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n    <script type=\"text/javascript\">\r\n        (function () {\r\n");
+            
+            #line 78 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+  foreach (var item in searchProperties.Where(p => p.IsDateTime))
+    { 
+            
+            #line default
+            #line hidden
             this.Write("            //Initiliaze ");
             
-            #line 65 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            #line 80 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
             #line hidden
             this.Write(" Filter\r\n\t\t\t$(\"#");
             
-            #line 66 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            #line 81 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
@@ -335,7 +442,7 @@ WriteUsingNamespaces();
             this.Write("Min\").datepicker({ dateFormat: \"yy.mm.dd\", numberOfMonths: 2 });\r\n            $(\"" +
                     "#");
             
-            #line 67 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            #line 82 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
@@ -343,7 +450,7 @@ WriteUsingNamespaces();
             this.Write("Max\").datepicker({ dateFormat: \"yy.mm.dd\", numberOfMonths: 2 });\r\n            $(\"" +
                     "#");
             
-            #line 68 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            #line 83 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
@@ -351,7 +458,7 @@ WriteUsingNamespaces();
             this.Write("Min\").datepicker(\"option\", \"onClose\", function (selectedDate) {\r\n                " +
                     "if (selectedDate) {\r\n                    $(\"#");
             
-            #line 70 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            #line 85 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
@@ -359,7 +466,7 @@ WriteUsingNamespaces();
             this.Write("Max\").datepicker(\"option\", \"minDate\", selectedDate);\r\n                }\r\n        " +
                     "    });\r\n            $(\"#");
             
-            #line 73 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            #line 88 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
@@ -367,7 +474,7 @@ WriteUsingNamespaces();
             this.Write("Max\").datepicker(\"option\", \"onClose\", function (selectedDate) {\r\n                " +
                     "if (selectedDate) {\r\n                    $(\"#");
             
-            #line 75 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            #line 90 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
@@ -375,7 +482,7 @@ WriteUsingNamespaces();
             this.Write("Min\").datepicker(\"option\", \"maxDate\", selectedDate);\r\n                }\r\n        " +
                     "    });\r\n");
             
-            #line 78 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
+            #line 93 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
   } 
             
             #line default

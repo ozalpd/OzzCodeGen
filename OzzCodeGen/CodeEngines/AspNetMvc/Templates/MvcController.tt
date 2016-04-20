@@ -92,7 +92,7 @@ else
             }
             if (qParams.<#= item.Name #>Max != null)
             {
-                var maxDate = qParams.<#= item.Name #>Max.AddDays(1);
+                var maxDate = qParams.<#= item.Name #>Max.Value.AddDays(1);
                 query = query.Where(x => x.<#= item.Name #> < maxDate);
             }
 <#      } #>
@@ -121,18 +121,18 @@ else
 
 <#  } #>
 <#  if (Entity.GenerateIndexAction)
-	{
-		string createRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanCreateToArray());
-		string editRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanEditToArray());
-		string deleteRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanDeleteToArray());
-		string confidentRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanSeeRestrictedToArray());
-		 #>
+    {
+        string createRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanCreateToArray());
+        string editRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanEditToArray());
+        string deleteRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanDeleteToArray());
+        string confidentRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanSeeRestrictedToArray());
+         #>
         <#= CanViewAttrib #>
         public async Task<ActionResult> Index(QueryParameters qParams)
         {
             var query = await Get<#= Entity.Name #>Query(qParams);
             await PutCanUserInViewBag();
-			var result = new PagedList<<#= Entity.Name #>>(qParams);
+            var result = new PagedList<<#= Entity.Name #>>(qParams);
             if (qParams.TotalCount > 0)
             {
                 result.Items = await query.ToListAsync();
@@ -238,7 +238,7 @@ else
 <#  } #>
 <# if (Entity.GenerateDetailsAction){ #>
         <#= CanViewAttrib #>
-        public async Task<ActionResult> Details(int? id)  //GET: /<#= Entity.ControllerName #>/Details/5
+        public async Task<ActionResult> Details(int? id, bool? part)  //GET: /<#= Entity.ControllerName #>
         {
             if (id == null)
             {
@@ -252,6 +252,10 @@ else
             }
 
             await PutCanUserInViewBag();
+            if (part ?? false)
+            {
+                return PartialView("_Details", <#= Entity.Name.ToCamelCase() #>);
+            }
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
 
@@ -289,9 +293,9 @@ else
  #>
         [Route("<#= Entity.ControllerName #>/Create/{<#= strongProperty.Name.ToCamelCase() #>:<#= strongProperty.GetNullableTypeName() #>}")]
 <#      } #>
-        public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>)  //GET: /<#= Entity.ControllerName #>/Create
+        public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>, bool? part)
 <#  } else { #>
-        public async Task<ActionResult> Create()  //GET: /<#= Entity.ControllerName #>/Create
+        public async Task<ActionResult> Create(bool? part)
 <#  } #>
         {
             var <#= Entity.ModelForCreate.ToCamelCase() #> = new <#= Entity.ModelForCreate #>();
@@ -312,6 +316,11 @@ else
     {  #>
             <#= Entity.GetMethodCall(item, Entity.ModelForCreate) #>
 <#  } #>
+            if (part ?? false)
+            {
+                ViewBag.Partial = true;
+                return PartialView("_Create", <#= Entity.ModelForCreate.ToCamelCase() #>);
+            }
             return View(<#= Entity.ModelForCreate.ToCamelCase() #>);
         }
 
@@ -325,9 +334,9 @@ else
  #>
         [Route("<#= Entity.ControllerName #>/Create/{<#= strongProperty.Name.ToCamelCase() #>:<#= strongProperty.GetNullableTypeName() #>}")]
 <#      } #>
-        public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>, <#= Entity.ModelForCreate #> <#= Entity.ModelForCreate.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
+        public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>, <#= Entity.ModelForCreate #> <#= Entity.ModelForCreate.ToCamelCase() #>, bool? part)
 <#  } else { #>
-        public async Task<ActionResult> Create(<#= Entity.ModelForCreate #> <#= Entity.ModelForCreate.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Create
+        public async Task<ActionResult> Create(<#= Entity.ModelForCreate #> <#= Entity.ModelForCreate.ToCamelCase() #>, bool? part)
 <#  } #>
         {
             if (ModelState.IsValid)
@@ -345,6 +354,10 @@ else
 <#  } else { #>
                 OnCreateSaved(entity);
 <#  } #>
+                if (part ?? false)
+                {
+                    return Json(new { saved = true });
+                }
                 return RedirectToAction(<#= Entity.CreateRedirect #>);
             }
 
@@ -352,13 +365,18 @@ else
     {  #>
             <#= Entity.GetMethodCall(item, Entity.ModelForCreate) #>
 <#  } #>
+            if (part ?? false)
+            {
+                ViewBag.Partial = true;
+                return PartialView("_Create", <#= Entity.ModelForCreate.ToCamelCase() #>);
+            }
             return View(<#= Entity.ModelForCreate.ToCamelCase() #>);
         }
 
 <#  } #>
 <# if (Entity.GenerateEditAction){ #>
         <#= CanEditAttrib #>
-        public async Task<ActionResult> Edit(int? id)  //GET: /<#= Entity.ControllerName #>/Edit/5
+        public async Task<ActionResult> Edit(int? id, bool? part)
         {
             if (id == null)
             {
@@ -380,13 +398,18 @@ else
     {  #>
             <#= Entity.GetMethodCall(item, Entity.ModelForEdit, Entity.Name.ToCamelCase()) #>
 <#  } #>
+            if (part ?? false)
+            {
+                ViewBag.Partial = true;
+                return PartialView("_Edit", <#= instanceName #>);
+            }
             return View(<#= instanceName #>);
         }
 
         <#= CanEditAttrib #>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(<#= Entity.ModelForEdit #> <#= Entity.ModelForEdit.ToCamelCase() #>)  //POST: /<#= Entity.ControllerName #>/Edit/5
+        public async Task<ActionResult> Edit(<#= Entity.ModelForEdit #> <#= Entity.ModelForEdit.ToCamelCase() #>, bool? part)
         {
             if (ModelState.IsValid)
             {
@@ -404,6 +427,10 @@ else
 <#  } else { #>
                 OnEditSaved(entity);
 <#  } #>
+                if (part ?? false)
+                {
+                    return Json(new { saved = true });
+                }
                 return RedirectToAction(<#= Entity.EditRedirect #>);
             }
 
@@ -411,6 +438,11 @@ else
     {  #>
             <#= Entity.GetMethodCall(item, Entity.ModelForEdit) #>
 <#  } #>
+            if (part ?? false)
+            {
+                ViewBag.Partial = true;
+                return PartialView("_Edit", <#= Entity.ModelForEdit.ToCamelCase() #>);
+            }
             return View(<#= Entity.ModelForEdit.ToCamelCase() #>);
         }
 <#  } #>
@@ -418,7 +450,7 @@ else
 
 
         <#= CanDeleteAttrib #>
-        public async Task<ActionResult> Delete(int? id)  //GET: /<#= Entity.ControllerName #>/Delete/5
+        public async Task<ActionResult> Delete(int? id)  //GET: /<#= Entity.ControllerName #>
         {
             if (id == null)
             {

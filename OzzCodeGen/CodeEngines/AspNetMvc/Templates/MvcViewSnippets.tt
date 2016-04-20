@@ -15,15 +15,15 @@ WriteUsingNamespaces(); #>
                     @<#= EntityResource #>.<#= Entity.Name.Pluralize() #><b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li>@Html.ActionLink(@<#= EntityResource #>.<#= Entity.Name.Pluralize() #>, "Index", "<#= Entity.ControllerName #>")</li>
-                    <li>@Html.ActionLink(@<#= EntityResource #>.Create<#= Entity.Name #>, "Create", "<#= Entity.ControllerName #>")</li>
+                    <li>@Html.ActionLink(<#= EntityResource #>.<#= Entity.Name.Pluralize() #>, "Index", "<#= Entity.ControllerName #>")</li>
+                    <li>@Html.ActionLink(<#= EntityResource #>.Create<#= Entity.Name #>, "Create", "<#= Entity.ControllerName #>")</li>
 <#  foreach (var property in fkeyProperties)
     { 
 		var foreignEntity = CodeEngine.GetForeignKeyEntity(property);
 		if (foreignEntity!=null && foreignEntity!=Entity ){#>
                     <li class="divider"></li>
-                    <li>@Html.ActionLink(@<#= EntityResource #>.<#= foreignEntity.Name.Pluralize() #>, "Index", "<#= foreignEntity.ControllerName #>")</li>
-                    <li>@Html.ActionLink(@<#= EntityResource #>.Create<#= foreignEntity.Name #>, "Create", "<#= foreignEntity.ControllerName #>")</li>
+                    <li>@Html.ActionLink(<#= EntityResource #>.<#= foreignEntity.Name.Pluralize() #>, "Index", "<#= foreignEntity.ControllerName #>")</li>
+                    <li>@Html.ActionLink(<#= EntityResource #>.Create<#= foreignEntity.Name #>, "Create", "<#= foreignEntity.ControllerName #>")</li>
 <#		}
 	} #>
                 </ul>
@@ -42,6 +42,21 @@ WriteUsingNamespaces(); #>
         </div>
         <div class="col-md-2 col-sm-3">
             <input type="text" id="<#= item.Name #>Max" name="<#= item.Name #>Max" class="form-control" value='@<#= item.Name.ToCamelCase() #>Max.ToString("yyyy.MM.dd")'>
+        </div>
+<#  } #>
+<#  foreach (var item in searchProperties.Where(p => p.IsDateTime))
+    { #>
+	
+@* <#= item.Name #> Filter Markup passing value via ViewBag *@
+@{
+    string <#= item.Name.ToCamelCase() #>Min = ViewBag.<#= item.Name #>Min == null ? string.Empty : ((DateTime)ViewBag.<#= item.Name #>Min).ToString("yyyy.MM.dd");
+    string <#= item.Name.ToCamelCase() #>Max = ViewBag.<#= item.Name #>Max == null ? string.Empty : ((DateTime)ViewBag.<#= item.Name #>Max).ToString("yyyy.MM.dd");
+}
+        <div class="col-md-2 col-sm-3">
+            <input type="text" id="<#= item.Name #>Min" name="<#= item.Name #>Min" class="form-control" value='@<#= item.Name.ToCamelCase() #>Min'>
+        </div>
+        <div class="col-md-2 col-sm-3">
+            <input type="text" id="<#= item.Name #>Max" name="<#= item.Name #>Max" class="form-control" value='@<#= item.Name.ToCamelCase() #>Max'>
         </div>
 <#  } #>
 

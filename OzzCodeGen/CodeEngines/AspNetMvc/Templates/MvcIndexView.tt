@@ -18,6 +18,9 @@ var pkeyProperty = Entity.GetPrimaryKey();
 string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
 
 bool hasScript = (Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) || Entity.EditPartialView || Entity.CreatePartialView;
+string createPart = Entity.CreatePartialView ? ", part = true" : string.Empty;
+string editPart = Entity.EditPartialView ? ", part = true" : string.Empty;
+string detailsPart = Entity.DetailsPartialView ? ", part = true" : string.Empty;
 
 WriteUsingNamespaces(); #>
 @model IEnumerable<<#= Entity.Name #>>
@@ -83,10 +86,10 @@ foreach (var property in properties)
                                 <span class="glyphicon glyphicon-tasks"></span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink(ActionStrings.Details, "Details", new { id = item.Id }<#  if(Entity.DetailsPartialView) { #>, new { input_modal = ActionStrings.Details }<# } #>)</li>
+                                <li>@Html.ActionLink(ActionStrings.Details, "Details", new { id = item.Id<#= detailsPart #> }<#  if(Entity.DetailsPartialView) { #>, new { input_modal = ActionStrings.Details }<# } #>)</li>
                                 @if (canUserEdit)
                                 {
-                                    <li>@Html.ActionLink(ActionStrings.Edit, "Edit", new { id = item.Id }<#  if(Entity.EditPartialView) { #>, new { input_modal = EntityStrings.Edit<#= Entity.Name #> }<# } #>)</li>
+                                    <li>@Html.ActionLink(ActionStrings.Edit, "Edit", new { id = item.Id<#= editPart #> }<#  if(Entity.EditPartialView) { #>, new { input_modal = <#= EntityResource #>.Edit<#= Entity.Name #> }<# } #>)</li>
                                 }
 <#
 if (collectionProperties.Any()) 
@@ -118,8 +121,8 @@ if (collectionProperties.Any())
                                 <li class="divider"></li>
 <#    foreach (var entity in entitiesThisForCreate)
         {#>
-                                <li>@Html.ActionLink(<#= EntityResource #>.Add<#= entity.Name #>, "Create", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id }, null)</li>
-                                <li>@Html.ActionLink(<#= EntityResource #>.<#= entity.Name #>, "Index", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id }, null)</li>
+                                <li>@Html.ActionLink(<#= EntityResource #>.Add<#= entity.Name #>, "Create", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id<#= createPart #> }, <#  if(Entity.CreatePartialView) { #>new { input_modal = <#= EntityResource #>.Add<#= entity.Name #> }<# } else { #>null<# } #>)</li>
+                                <li>@Html.ActionLink(<#= EntityResource #>.<#= entity.Name #>, "Index", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id<#=  createPart#> }, null)</li>
 <#        } #>
                                 }
 <#  } #>
@@ -142,10 +145,10 @@ foreach (var property in properties)
 } #>
 <#  if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithButtonsAction) { #>
                     <td class="hidden-print">
-                        <a href='@Url.Action("Details", new { id = item.Id })'<#  if(Entity.DetailsPartialView) { #> input-modal='@ActionStrings.Details' <# } #> title="@ActionStrings.Details"><span class="glyphicon glyphicon-new-window ml5"></span></a>
+                        <a href='@Url.Action("Details", new { id = item.Id<#= detailsPart #> })'<#  if(Entity.DetailsPartialView) { #> input-modal='@ActionStrings.Details' <# } #> title="@ActionStrings.Details"><span class="glyphicon glyphicon-new-window ml5"></span></a>
                         @if (canUserEdit)
                         {
-                            <a href='@Url.Action("Edit", new { id = item.Id })'<#  if(Entity.EditPartialView) { #> input-modal='@EntityStrings.Edit<#= Entity.Name #>' <# } #> title="@ActionStrings.Edit"><span class="glyphicon glyphicon-edit ml5"></span></a>
+                            <a href='@Url.Action("Edit", new { id = item.Id<#= editPart #> })'<#  if(Entity.EditPartialView) { #> input-modal='@<#= EntityResource #>.Edit<#= Entity.Name #>' <# } #> title="@ActionStrings.Edit"><span class="glyphicon glyphicon-edit ml5"></span></a>
                         }
                         @if (canUserDelete)
                         {
@@ -183,6 +186,13 @@ else
                     hideMessageBox();
                     if (title != null || title != '') {
                         $('#dataInputTitle').html(title);
+                    }
+                    var inputForm = document.getElementById('dataInputForm');
+                    if (isNaN(inputForm)) {
+                        $('#dataInputSubmit').show();
+                    }
+                    else {
+                        $('#dataInputSubmit').hide();
                     }
                     $('#dataInputModal').modal('show');
                 });
