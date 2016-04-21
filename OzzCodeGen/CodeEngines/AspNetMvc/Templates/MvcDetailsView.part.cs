@@ -4,10 +4,18 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
     public partial class MvcDetailsView : AbstractMvcView
     {
-        public MvcDetailsView(AspNetMvcEntitySetting entity) : base(entity) { }
+        public MvcDetailsView(AspNetMvcEntitySetting entity, bool partialContainer = false)
+            : base(entity, partialContainer)
+        {
+            PartialView = !partialContainer && entity.DetailsPartialView;
+        }
 
         public override string GetDefaultFileName()
         {
+            if (PartialView)
+            {
+                return "_Details.cshtml";
+            }
             return "Details.cshtml";
         }
 
@@ -21,7 +29,11 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
                 var buttonsTemplate = new MvcPartialDetailFormButtons(Entity);
                 buttonsTemplate.WriteToFile(buttonsViewPath, false);
             }
-
+            if (PartialView)
+            {
+                var container = new MvcDetailsView(Entity, true);
+                container.WriteToFile(container.GetDefaultFilePath(), overwriteExisting);
+            }
             return base.WriteToFile(FilePath, overwriteExisting);
         }
     }

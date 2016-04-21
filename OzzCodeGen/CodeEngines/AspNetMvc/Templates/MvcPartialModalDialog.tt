@@ -50,7 +50,7 @@ WriteUsingNamespaces(); #>
                 <h2 id="dataInputTitle" class="modal-title">@ActionStrings.Edit</h2>
             </div>
             <div id="dataInputBody" class="modal-body"></div>
-            <div class="modal-footer">
+            <div id="dataInputFooter" class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">@ActionStrings.Cancel</button>
                 <a id="dataInputSubmit" style="width:70px" class="btn btn-primary" onclick="submitDataInputForm();">@ActionStrings.Submit</a>
             </div>

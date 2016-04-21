@@ -64,7 +64,7 @@ WriteUsingNamespaces(); #>
         if ($(inputForm).valid()) {
             var url = $(inputForm).attr('action');
             url += (url.indexOf('?') == -1) ? '?' : '&';
-            url += 'part=true';
+            url += 'modal=true';
             $.ajax({
                 url: url,
                 type: $(inputForm).attr('method'),

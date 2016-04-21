@@ -18,7 +18,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialIndexScripts.tt"
+    #line 1 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialIndexScripts.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
     public partial class MvcPartialIndexScripts : AbstractMvcView
     {
@@ -29,7 +29,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         public override string TransformText()
         {
             
-            #line 6 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialIndexScripts.tt"
+            #line 6 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialIndexScripts.tt"
  
 WriteUsingNamespaces(); 
             
@@ -65,17 +65,17 @@ WriteUsingNamespaces();
                     "            console.log(\'expanded\');\r\n        }\r\n    }\r\n    function submitDataI" +
                     "nputForm() {\r\n        var inputForm = $(\'#dataInputForm\');\r\n        if ($(inputF" +
                     "orm).valid()) {\r\n            var url = $(inputForm).attr(\'action\');\r\n           " +
-                    " url += (url.indexOf(\'?\') == -1) ? \'?\' : \'&\';\r\n            url += \'part=true\';\r\n" +
-                    "            $.ajax({\r\n                url: url,\r\n                type: $(inputFo" +
-                    "rm).attr(\'method\'),\r\n                data: $(inputForm).serialize(),\r\n\t\t\t\tcache:" +
-                    " false,\r\n                success: function (result) {\r\n                    if (r" +
-                    "esult.saved) {\r\n                        refreshData();\r\n                    }\r\n " +
-                    "                   else {\r\n                        $(\'#dataInputBody\').html(resu" +
-                    "lt);\r\n                    }\r\n                },\r\n                error: function" +
-                    " (jqXHR, textStatus, errorThrown) {\r\n                    $(\'#dataInputModal\').mo" +
-                    "dal(\'hide\');\r\n                    var msgboxMsg = jqXHR.responseText;\r\n         " +
-                    "           showMessageBox(errorThrown, msgboxMsg, true);\r\n                }\r\n   " +
-                    "         });\r\n        }\r\n    }\r\n</script>");
+                    " url += (url.indexOf(\'?\') == -1) ? \'?\' : \'&\';\r\n            url += \'modal=true\';\r" +
+                    "\n            $.ajax({\r\n                url: url,\r\n                type: $(inputF" +
+                    "orm).attr(\'method\'),\r\n                data: $(inputForm).serialize(),\r\n\t\t\t\tcache" +
+                    ": false,\r\n                success: function (result) {\r\n                    if (" +
+                    "result.saved) {\r\n                        refreshData();\r\n                    }\r\n" +
+                    "                    else {\r\n                        $(\'#dataInputBody\').html(res" +
+                    "ult);\r\n                    }\r\n                },\r\n                error: functio" +
+                    "n (jqXHR, textStatus, errorThrown) {\r\n                    $(\'#dataInputModal\').m" +
+                    "odal(\'hide\');\r\n                    var msgboxMsg = jqXHR.responseText;\r\n        " +
+                    "            showMessageBox(errorThrown, msgboxMsg, true);\r\n                }\r\n  " +
+                    "          });\r\n        }\r\n    }\r\n</script>");
             return this.GenerationEnvironment.ToString();
         }
     }

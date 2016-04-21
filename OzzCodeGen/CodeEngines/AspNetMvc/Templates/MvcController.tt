@@ -238,7 +238,7 @@ else
 <#  } #>
 <# if (Entity.GenerateDetailsAction){ #>
         <#= CanViewAttrib #>
-        public async Task<ActionResult> Details(int? id, bool? part)  //GET: /<#= Entity.ControllerName #>
+        public async Task<ActionResult> Details(int? id, bool? modal)
         {
             if (id == null)
             {
@@ -252,7 +252,7 @@ else
             }
 
             await PutCanUserInViewBag();
-            if (part ?? false)
+            if (modal ?? false)
             {
                 return PartialView("_Details", <#= Entity.Name.ToCamelCase() #>);
             }
@@ -293,9 +293,9 @@ else
  #>
         [Route("<#= Entity.ControllerName #>/Create/{<#= strongProperty.Name.ToCamelCase() #>:<#= strongProperty.GetNullableTypeName() #>}")]
 <#      } #>
-        public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>, bool? part)
+        public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>, bool? modal)
 <#  } else { #>
-        public async Task<ActionResult> Create(bool? part)
+        public async Task<ActionResult> Create(bool? modal)
 <#  } #>
         {
             var <#= Entity.ModelForCreate.ToCamelCase() #> = new <#= Entity.ModelForCreate #>();
@@ -316,9 +316,9 @@ else
     {  #>
             <#= Entity.GetMethodCall(item, Entity.ModelForCreate) #>
 <#  } #>
-            if (part ?? false)
+            if (modal ?? false)
             {
-                ViewBag.Partial = true;
+                ViewBag.Modal = true;
                 return PartialView("_Create", <#= Entity.ModelForCreate.ToCamelCase() #>);
             }
             return View(<#= Entity.ModelForCreate.ToCamelCase() #>);
@@ -334,9 +334,9 @@ else
  #>
         [Route("<#= Entity.ControllerName #>/Create/{<#= strongProperty.Name.ToCamelCase() #>:<#= strongProperty.GetNullableTypeName() #>}")]
 <#      } #>
-        public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>, <#= Entity.ModelForCreate #> <#= Entity.ModelForCreate.ToCamelCase() #>, bool? part)
+        public async Task<ActionResult> Create(<#= strongProperty.GetNullableTypeName() #> <#= strongProperty.Name.ToCamelCase() #>, <#= Entity.ModelForCreate #> <#= Entity.ModelForCreate.ToCamelCase() #>, bool? modal)
 <#  } else { #>
-        public async Task<ActionResult> Create(<#= Entity.ModelForCreate #> <#= Entity.ModelForCreate.ToCamelCase() #>, bool? part)
+        public async Task<ActionResult> Create(<#= Entity.ModelForCreate #> <#= Entity.ModelForCreate.ToCamelCase() #>, bool? modal)
 <#  } #>
         {
             if (ModelState.IsValid)
@@ -354,7 +354,7 @@ else
 <#  } else { #>
                 OnCreateSaved(entity);
 <#  } #>
-                if (part ?? false)
+                if (modal ?? false)
                 {
                     return Json(new { saved = true });
                 }
@@ -365,9 +365,9 @@ else
     {  #>
             <#= Entity.GetMethodCall(item, Entity.ModelForCreate) #>
 <#  } #>
-            if (part ?? false)
+            if (modal ?? false)
             {
-                ViewBag.Partial = true;
+                ViewBag.Modal = true;
                 return PartialView("_Create", <#= Entity.ModelForCreate.ToCamelCase() #>);
             }
             return View(<#= Entity.ModelForCreate.ToCamelCase() #>);
@@ -376,7 +376,7 @@ else
 <#  } #>
 <# if (Entity.GenerateEditAction){ #>
         <#= CanEditAttrib #>
-        public async Task<ActionResult> Edit(int? id, bool? part)
+        public async Task<ActionResult> Edit(int? id, bool? modal)
         {
             if (id == null)
             {
@@ -398,9 +398,9 @@ else
     {  #>
             <#= Entity.GetMethodCall(item, Entity.ModelForEdit, Entity.Name.ToCamelCase()) #>
 <#  } #>
-            if (part ?? false)
+            if (modal ?? false)
             {
-                ViewBag.Partial = true;
+                ViewBag.Modal = true;
                 return PartialView("_Edit", <#= instanceName #>);
             }
             return View(<#= instanceName #>);
@@ -409,7 +409,7 @@ else
         <#= CanEditAttrib #>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(<#= Entity.ModelForEdit #> <#= Entity.ModelForEdit.ToCamelCase() #>, bool? part)
+        public async Task<ActionResult> Edit(<#= Entity.ModelForEdit #> <#= Entity.ModelForEdit.ToCamelCase() #>, bool? modal)
         {
             if (ModelState.IsValid)
             {
@@ -427,7 +427,7 @@ else
 <#  } else { #>
                 OnEditSaved(entity);
 <#  } #>
-                if (part ?? false)
+                if (modal ?? false)
                 {
                     return Json(new { saved = true });
                 }
@@ -438,9 +438,9 @@ else
     {  #>
             <#= Entity.GetMethodCall(item, Entity.ModelForEdit) #>
 <#  } #>
-            if (part ?? false)
+            if (modal ?? false)
             {
-                ViewBag.Partial = true;
+                ViewBag.Modal = true;
                 return PartialView("_Edit", <#= Entity.ModelForEdit.ToCamelCase() #>);
             }
             return View(<#= Entity.ModelForEdit.ToCamelCase() #>);

@@ -4,18 +4,38 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
     public partial class MvcEditView : AbstractMvcView
     {
-        public MvcEditView(AspNetMvcEntitySetting entity) : base(entity) { }
-        public MvcEditView(AspNetMvcEntitySetting entity, bool createForm)
-            : base(entity)
+        public MvcEditView(AspNetMvcEntitySetting entity, bool createForm = false, bool partialContainer = false)
+            : base(entity, partialContainer)
         {
             CreateForm = createForm;
+            if (createForm)
+            {
+                PartialView = entity.CreatePartialView;
+            }
+            else
+            {
+                PartialView = entity.EditPartialView;
+            }
+            PartialView = partialContainer ? false : PartialView;
         }
 
         public bool CreateForm { get; private set; }
 
+        public string PartialViewName
+        {
+            get
+            {
+                return CreateForm ? "_Create" : "_Edit";
+            }
+        }
+
         public override string GetDefaultFileName()
         {
-            if (CreateForm)
+            if (PartialView)
+            {
+                return PartialViewName + ".cshtml";
+            }
+            else if (CreateForm)
             {
                 return "Create.cshtml";
             }
@@ -25,10 +45,10 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             }
         }
 
-        public override bool WriteToFile(string FilePath, bool overwriteExisting)
+        public override bool WriteToFile(string filePath, bool overwriteExisting)
         {
-            string sharedViewsDir = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(FilePath)), "Shared");
-
+            string folderPath = Path.GetDirectoryName(filePath);
+            string sharedViewsDir = Path.Combine(Path.GetDirectoryName(folderPath), "Shared");
             string buttonsViewPath = Path.Combine(sharedViewsDir, MvcPartialSaveButtons.DefaultFileName);
             if (!File.Exists(buttonsViewPath))
             {
@@ -36,7 +56,13 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
                 buttonsTemplate.WriteToFile(buttonsViewPath, false);
             }
 
-            return base.WriteToFile(FilePath, overwriteExisting);
+            if (PartialView)
+            {
+                var container = new MvcEditView(Entity, CreateForm, true);
+                container.WriteToFile(container.GetDefaultFilePath(), overwriteExisting);
+            }
+
+            return base.WriteToFile(filePath, overwriteExisting);
         }
     }
 }

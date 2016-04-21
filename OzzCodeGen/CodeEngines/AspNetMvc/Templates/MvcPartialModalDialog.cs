@@ -18,7 +18,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialModalDialog.tt"
+    #line 1 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialModalDialog.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
     public partial class MvcPartialModalDialog : AbstractMvcView
     {
@@ -29,7 +29,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         public override string TransformText()
         {
             
-            #line 6 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialModalDialog.tt"
+            #line 6 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcPartialModalDialog.tt"
  
 WriteUsingNamespaces(); 
             
@@ -62,11 +62,12 @@ WriteUsingNamespaces();
                     "ta-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\r\n                <h2 id=\"" +
                     "dataInputTitle\" class=\"modal-title\">@ActionStrings.Edit</h2>\r\n            </div>" +
                     "\r\n            <div id=\"dataInputBody\" class=\"modal-body\"></div>\r\n            <di" +
-                    "v class=\"modal-footer\">\r\n                <button type=\"button\" class=\"btn btn-de" +
-                    "fault\" data-dismiss=\"modal\">@ActionStrings.Cancel</button>\r\n                <a i" +
-                    "d=\"dataInputSubmit\" style=\"width:70px\" class=\"btn btn-primary\" onclick=\"submitDa" +
-                    "taInputForm();\">@ActionStrings.Submit</a>\r\n            </div>\r\n        </div>@* " +
-                    "/.modal-content *@\r\n    </div>@* /.modal-dialog *@\r\n</div>@* /.modal *@");
+                    "v id=\"dataInputFooter\" class=\"modal-footer\">\r\n                <button type=\"butt" +
+                    "on\" class=\"btn btn-default\" data-dismiss=\"modal\">@ActionStrings.Cancel</button>\r" +
+                    "\n                <a id=\"dataInputSubmit\" style=\"width:70px\" class=\"btn btn-prima" +
+                    "ry\" onclick=\"submitDataInputForm();\">@ActionStrings.Submit</a>\r\n            </di" +
+                    "v>\r\n        </div>@* /.modal-content *@\r\n    </div>@* /.modal-dialog *@\r\n</div>@" +
+                    "* /.modal *@");
             return this.GenerationEnvironment.ToString();
         }
     }

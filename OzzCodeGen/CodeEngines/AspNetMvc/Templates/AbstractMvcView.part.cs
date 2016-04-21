@@ -8,12 +8,15 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
     public abstract partial class AbstractMvcView : AbstractTemplate
     {
-        public AbstractMvcView(AspNetMvcEntitySetting entity)
+        public AbstractMvcView(AspNetMvcEntitySetting entity, bool partialContainer = false)
         {
             Entity = entity;
+            PartialContainer = partialContainer;
         }
 
         public AspNetMvcEntitySetting Entity { get; private set; }
+        public bool PartialView { get; protected set; }
+        public bool PartialContainer { get; protected set; }
 
         public ResxEngine Resx { get { return Entity.CodeEngine.ResxEngine; } }
         public LocalizationEntitySetting ResxEntity

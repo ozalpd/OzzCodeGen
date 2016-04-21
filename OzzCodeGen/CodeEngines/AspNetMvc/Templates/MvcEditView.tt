@@ -14,18 +14,24 @@ var properties = CreateForm ?
         Entity.DisplayColumns.Where(e => e.InEditView);
 
 string modelName = CreateForm ? Entity.ModelForCreate : Entity.ModelForEdit;
+string formTypeName = CreateForm ? "Create" : "Edit";
+
 WriteUsingNamespaces(); #>
 @model <#= modelName #>
 @{
-<#  if(CreateForm)
-    { #>
-    ViewBag.Title = <#= EntityResource #>.Create<#= Entity.Name #>;
-<#  } else { #>
-    ViewBag.Title = <#= EntityResource #>.Edit<#= Entity.Name #>;
+<#  if(!PartialView || PartialContainer) { #>
+    ViewBag.Title = <#= EntityResource #>.<#= formTypeName #><#= Entity.Name #>;
+<#  } else if (PartialView){ #>
+    bool modal = ViewBag.Modal ?? false;
 <#  } #>
 }
+<#  if(!PartialView || PartialContainer) { #>
 <h2 class="col-lg-offset-2 col-md-offset-3 col-sm-offset-3">@ViewBag.Title</h2>
-@using (Html.BeginForm())
+<#  } #>
+<#  if (PartialContainer){ #>
+@Html.Partial("<#= PartialViewName #>")
+<#  } else { #>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "dataInputForm" }))
 {
     @Html.AntiForgeryToken()
     
@@ -70,9 +76,22 @@ foreach (var property in properties)
 <#  } #>
 <#
 } #>
+<#  if(PartialView) { #>
+        @if (modal)
+        {
+            <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+        }
+        else
+        {
+            @Html.Partial("_SaveButtonsPartial")
+        }
+<#  } else { #>
         @Html.Partial("<#= MvcPartialSaveButtons.ViewName #>")
+<#  } #>
     </div>
 }
+<#  } #>
+<#  if(!PartialView || PartialContainer) { #>
 @section Scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
@@ -87,4 +106,5 @@ foreach (var property in properties)
 @section styles{
     <link href="~/Content/fileupload.css" rel="stylesheet" />
 }
+<#  } #>
 <#  } #>

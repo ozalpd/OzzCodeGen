@@ -12,17 +12,27 @@ var properties = Entity.DisplayColumns.Where(e => e.InDetailsView);
 WriteUsingNamespaces(); #>
 @model <#= Entity.Name #>
 @{
+<#  if(!PartialView || PartialContainer) { #>
     ViewBag.Title = <#= EntityResource #>.<#= Entity.Name #>;
+<#  } else if (PartialView){ #>
+    bool modal = ViewBag.Modal ?? false;
+<# } #>
 
     //Authorization Flags
-    bool canUserEdit = ViewBag.canUserEdit;
-    bool canUserCreate = ViewBag.canUserCreate;
-    bool canUserDelete = ViewBag.canUserDelete;
-    bool canSeeRestricted = ViewBag.canSeeRestricted;
+    bool canUserEdit = ViewBag.canUserEdit ?? false;
+    bool canUserCreate = ViewBag.canUserCreate ?? false;
+    bool canUserDelete = ViewBag.canUserDelete ?? false;
+    bool canSeeRestricted = ViewBag.canSeeRestricted ?? false;
 }
-
+<#  if(!PartialView || PartialContainer) { #>
 <h2>@<#= EntityResource #>.<#= Entity.Name #> @ActionStrings.Details</h2>
-
+<# } #>
+<#  if (PartialContainer){ #>
+@Html.Partial("_Details")
+<div class="form-horizontal">
+@Html.Partial("<#= MvcPartialDetailFormButtons.ViewName #>")
+</div>
+<#  } else { #>
 <div class="form-horizontal">
 <# foreach (var property in properties) { #>
 <# if (property.PropertyDefinition.RestrictedData) { #>
@@ -33,7 +43,7 @@ WriteUsingNamespaces(); #>
         <label class="control-label col-md-2 col-sm-3 mb5">
             @Html.DisplayNameFor(model => model.<#= property.Name #>)
         </label>
-        <div class="col-lg-8 col-md-9 col-sm-9 mt10">
+        <div class="col-lg-8 col-md-9 col-sm-9 mt7">
             @Html.DisplayFor(m => m.<#= property.Name #>)
         </div>
     </div>
@@ -41,5 +51,8 @@ WriteUsingNamespaces(); #>
     }
 <# } #>
 <# } #>
+<#  if(!PartialView) { #>
 @Html.Partial("<#= MvcPartialDetailFormButtons.ViewName #>")
+<# } #>
 </div>
+<# } #>
