@@ -29,20 +29,22 @@ WriteUsingNamespaces(); #>
     bool canUserDelete = ViewBag.canUserDelete;
     bool canSeeRestricted = ViewBag.canSeeRestricted;
 
-	var title = <#= EntityResource #>.<#= Entity.Name.Pluralize() #>;
+    var title = <#= EntityResource #>.<#= Entity.Name.Pluralize() #>;
 }
-<div class="row well hidden-print">
-    <div class="col-md-8 col-sm-7">
-        <h4>@title</h4>
-    </div>
+<div class="well hidden-print">
+    <div class="row">
+        <div class="col-md-8 col-sm-7">
+            <h4>@title</h4>
+        </div>
 <#  if(searchable)
     { #>
-        <div class="col-md-4 col-sm-5">
-            @Html.Partial("_SearchBoxPartial")
-        </div>
+            <div class="col-md-4 col-sm-5">
+                @Html.Partial("_SearchBoxPartial")
+            </div>
 <#  } #>
+    </div>
 </div>
-<div id="mainGrid" class="ag-style ag-basic" style="width:100%;height:400px;"></div>
+<div id="mainGrid" class="ag-style ag-basic" style="width:100%;height:580px;"></div>
 <nav><ul id="pagerUl" class="pagination"></ul></nav>
 @Html.Partial("_MessageBoxPartial")
 @section scripts{
@@ -90,16 +92,16 @@ WriteUsingNamespaces(); #>
                     @:'<li><a href="#deleteConfirm" data-toggle="modal" onclick="setDelete(getObjectById(result.Items,' + params.value + ').<#= DisplayMember #>, ' + params.value + ');">@ActionStrings.Delete</a></li>' +
                 }
 <#  if (entitiesThisForCreate.Any()) 
-	{ #>
+    { #>
                     '<li class="divider"></li>' +
-<#		foreach (var entity in entitiesThisForCreate)
-		{#>
+<#        foreach (var entity in entitiesThisForCreate)
+        {#>
                 @if (canUserCreate)
                 {
                     @:'<li><a href="/<#= entity.ControllerName #>/Create/?<#= entity.StrongDependedForeignKey.ToCamelCase() #>=' + params.value + '">@<#= EntityResource #>.Add<#= entity.Name #></a></li>' +
                 }
                     '<li><a href="/<#= entity.ControllerName #>/Index/?<#= entity.StrongDependedForeignKey.ToCamelCase() #>=' + params.value + '">@<#= EntityResource #>.<#= entity.Name.Pluralize() #></a></li>' +
-<#		} #>
+<#        } #>
 <#  } #>
                     '</ul></div>';
 

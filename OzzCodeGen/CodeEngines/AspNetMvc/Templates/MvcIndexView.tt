@@ -38,26 +38,28 @@ WriteUsingNamespaces(); #>
 
     var title = <#= EntityResource #>.<#= Entity.Name.Pluralize() #>;
 }
-<div class="row well hidden-print">
-    <div class="col-md-7 col-sm-6">
-        <h4>@title</h4>
-    </div>
+<div class="well hidden-print">
+    <div class="row">
+        <div class="col-md-6 col-sm-5">
+            <h4>@title</h4>
+        </div>
 <#  if(Entity.CreatePartialView) { #>
-    <div class="col-sm-1">
-        @Html.ActionLink(ActionStrings.AddNew, "Create", null, new { @class = "btn btn-primary", input_modal = <#= EntityResource #>.AddNew<#= Entity.Name #> })
-    </div>
+        <div class="col-sm-2">
+            @Html.ActionLink(ActionStrings.AddNew, "Create", null, new { @class = "btn btn-primary", input_modal = <#= EntityResource #>.AddNew<#= Entity.Name #> })
+        </div>
 <#  } #>
 <#  if(searchable)
     { #>
-    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "searchForm" }))
-    {
-        @Html.Hidden("page", page)
-        @Html.Hidden("pageSize", pageSize)
-        <div class="col-md-4 col-sm-5">
-            @Html.Partial("_SearchBoxPartial")
-        </div>
-    }
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "searchForm" }))
+        {
+            @Html.Hidden("page", page)
+            @Html.Hidden("pageSize", pageSize)
+            <div class="col-md-4 col-sm-5">
+                @Html.Partial("_SearchBoxPartial")
+            </div>
+        }
 <#  } #>
+    </div>
 </div>
 @if (totalCount > 0)
 {
@@ -78,8 +80,8 @@ foreach (var property in properties)
                 <th class="hidden-print">@ActionStrings.Actions</th>
 <#  } #>
             </tr>
-    @foreach (var item in Model)
-    {
+            @foreach (var item in Model)
+            {
                 <tr>
 <#  if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) { #>
                     <td class="hidden-print">
@@ -120,17 +122,17 @@ if (collectionProperties.Any())
     { #>
                                 @if (canUserCreate)
                                 {
-                                <li class="divider"></li>
+                                    <li class="divider"></li>
 <#    foreach (var entity in entitiesThisForCreate)
         {#>
-                                <li>@Html.ActionLink(<#= EntityResource #>.Add<#= entity.Name #>, "Create", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id }, <#  if(Entity.CreatePartialView) { #>new { input_modal = <#= EntityResource #>.Add<#= entity.Name #> }<# } else { #>null<# } #>)</li>
-                                <li>@Html.ActionLink(<#= EntityResource #>.<#= entity.Name #>, "Index", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id }, null)</li>
+                                    <li>@Html.ActionLink(<#= EntityResource #>.Add<#= entity.Name #>, "Create", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id }, <#  if(Entity.CreatePartialView) { #>new { input_modal = <#= EntityResource #>.Add<#= entity.Name #> }<# } else { #>null<# } #>)</li>
+                                    <li>@Html.ActionLink(<#= EntityResource #>.<#= entity.Name #>, "Index", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id }, null)</li>
 <#        } #>
                                 }
 <#  } #>
-                        </ul>
-                    </div>
-                </td>
+                            </ul>
+                        </div>
+                    </td>
 <#  } #>
 <#
 foreach (var property in properties) 
@@ -138,11 +140,11 @@ foreach (var property in properties)
     if(property.PropertyDefinition is CollectionProperty)
     {
 #>
-                <td>@item.<#= property.Name #>.Count</td>
+                    <td>@item.<#= property.Name #>.Count</td>
 <#  } else if(property.PropertyDefinition.IsTypeNumeric() || property.PropertyDefinition.IsTypeDateTime()) { #>
-                <td align="right">@Html.DisplayFor(modelItem => item.<#= property.Name #>)</td>
+                    <td align="right">@Html.DisplayFor(modelItem => item.<#= property.Name #>)</td>
 <#  } else { #>
-                <td>@Html.DisplayFor(modelItem => item.<#= property.Name #>)</td>
+                    <td>@Html.DisplayFor(modelItem => item.<#= property.Name #>)</td>
 <#  }
 } #>
 <#  if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithButtonsAction) { #>
@@ -160,8 +162,8 @@ foreach (var property in properties)
                         }
                     </td>
 <#  } #>
-            </tr>
-    }
+                </tr>
+            }
         </table>
     </div>
 }
