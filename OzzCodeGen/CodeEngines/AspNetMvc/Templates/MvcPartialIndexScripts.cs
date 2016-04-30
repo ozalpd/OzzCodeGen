@@ -69,13 +69,14 @@ WriteUsingNamespaces();
                     "\n            $.ajax({\r\n                url: url,\r\n                type: $(inputF" +
                     "orm).attr(\'method\'),\r\n                data: $(inputForm).serialize(),\r\n\t\t\t\tcache" +
                     ": false,\r\n                success: function (result) {\r\n                    if (" +
-                    "result.saved) {\r\n                        refreshData();\r\n                    }\r\n" +
-                    "                    else {\r\n                        $(\'#dataInputBody\').html(res" +
-                    "ult);\r\n                    }\r\n                },\r\n                error: functio" +
-                    "n (jqXHR, textStatus, errorThrown) {\r\n                    $(\'#dataInputModal\').m" +
-                    "odal(\'hide\');\r\n                    var msgboxMsg = jqXHR.responseText;\r\n        " +
-                    "            showMessageBox(errorThrown, msgboxMsg, true);\r\n                }\r\n  " +
-                    "          });\r\n        }\r\n    }\r\n</script>");
+                    "result.saved) {\r\n                        refreshData();\r\n                       " +
+                    " $(\'#dataInputModal\').modal(\'hide\');\r\n                    }\r\n                   " +
+                    " else {\r\n                        $(\'#dataInputBody\').html(result);\r\n            " +
+                    "        }\r\n                },\r\n                error: function (jqXHR, textStatu" +
+                    "s, errorThrown) {\r\n                    $(\'#dataInputModal\').modal(\'hide\');\r\n    " +
+                    "                var msgboxMsg = jqXHR.responseText;\r\n                    showMes" +
+                    "sageBox(errorThrown, msgboxMsg, true);\r\n                }\r\n            });\r\n    " +
+                    "    }\r\n    }\r\n</script>");
             return this.GenerationEnvironment.ToString();
         }
     }

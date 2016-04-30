@@ -130,8 +130,15 @@ else
         <#= CanViewAttrib #>
         public async Task<ActionResult> Index(QueryParameters qParams)
         {
-            var query = await Get<#= Entity.Name #>Query(qParams);
             await PutCanUserInViewBag();
+<# if(HasViewJsonResult) { #>
+            var result = new PagedList<<#= Entity.ModelForJson #>>(qParams);
+			result.Items = await Get<#= Entity.Name #>DtoList(qParams);
+            ViewBag.result = ConvertToJson(result);
+            
+            return View();
+<#  } else { #>
+            var query = await Get<#= Entity.Name #>Query(qParams);
             var result = new PagedList<<#= Entity.Name #>>(qParams);
             if (qParams.TotalCount > 0)
             {
@@ -140,9 +147,10 @@ else
 
             PutPagerInViewBag(result);
             return View(result.Items);
+<#  } #>
         }
 
-<# if(createRoles.Equals("true") || createRoles.Equals("false")) { #>        
+<# if(createRoles.Equals("true") || createRoles.Equals("false")) { #>
         protected override Task<bool> CanUserCreate() { return Task.FromResult(<#= createRoles #>); }
 <#  } else { #>
         protected override async Task<bool> CanUserCreate()

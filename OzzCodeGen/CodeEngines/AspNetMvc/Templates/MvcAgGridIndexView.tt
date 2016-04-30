@@ -33,9 +33,14 @@ WriteUsingNamespaces(); #>
 }
 <div class="well hidden-print">
     <div class="row">
-        <div class="col-md-8 col-sm-7">
+        <div class="col-md-6 col-sm-5">
             <h4>@title</h4>
         </div>
+<#  if(Entity.CreatePartialView) { #>
+        <div class="col-sm-2">
+            @Html.ActionLink(ActionStrings.AddNew, "Create", null, new { @class = "btn btn-primary", input_modal = <#= EntityResource #>.AddNew<#= Entity.Name #> })
+        </div>
+<#  } #>
 <#  if(searchable)
     { #>
             <div class="col-md-4 col-sm-5">
@@ -48,9 +53,11 @@ WriteUsingNamespaces(); #>
 <nav><ul id="pagerUl" class="pagination"></ul></nav>
 @Html.Partial("_MessageBoxPartial")
 @section scripts{
+<#  if(HasModalInputForm) { #>
+    @Scripts.Render("~/bundles/jqueryval")
+<#  } #>
     @Scripts.Render("~/js/ag-grid")
     @Html.Partial("_IndexScriptsPartial", "<#= Entity.ControllerName #>") @* Controller's name *@
-    @Html.Partial("_agGridScriptsPartial", "/<#= Entity.ControllerName #>/Get<#= Entity.Name #>PagedList") @* Service url *@
     <script type="text/javascript">
         var result = @Html.Raw(ViewBag.result);
         var gridOptions;
@@ -82,10 +89,10 @@ WriteUsingNamespaces(); #>
                     '<span class="glyphicon glyphicon-tasks"></span> <span class="caret"></span>' +
                     '</button>' +
                     '<ul class="dropdown-menu mb15" role="menu">' +
-                    '<li><a href="@Url.Action("Details")/' + params.value + '">@ActionStrings.Details</a></li>' +
+                    '<li><a href="@Url.Action("Details")/' + params.value + '"<#  if(Entity.DetailsPartialView) { #> input-modal="@ActionStrings.Details" <# } #>>@ActionStrings.Details</a></li>' +
                 @if (canUserEdit)
                 {
-                    @:'<li><a href="@Url.Action("Edit")/' + params.value + '">@ActionStrings.Edit</a></li>' +
+                    @:'<li><a href="@Url.Action("Edit")/' + params.value + '"<#  if(Entity.EditPartialView) { #> input-modal="@ActionStrings.Edit" <# } #>>@ActionStrings.Edit</a></li>' +
                 }
                 @if(canUserDelete)
                 {
@@ -98,7 +105,7 @@ WriteUsingNamespaces(); #>
         {#>
                 @if (canUserCreate)
                 {
-                    @:'<li><a href="/<#= entity.ControllerName #>/Create/?<#= entity.StrongDependedForeignKey.ToCamelCase() #>=' + params.value + '">@<#= EntityResource #>.Add<#= entity.Name #></a></li>' +
+                    @:'<li><a href="/<#= entity.ControllerName #>/Create/?<#= entity.StrongDependedForeignKey.ToCamelCase() #>=' + params.value + '"<#  if(Entity.CreatePartialView) { #> input-modal="@<#= EntityResource #>.Add<#= entity.Name #>" <# } #>>@<#= EntityResource #>.Add<#= entity.Name #></a></li>' +
                 }
                     '<li><a href="/<#= entity.ControllerName #>/Index/?<#= entity.StrongDependedForeignKey.ToCamelCase() #>=' + params.value + '">@<#= EntityResource #>.<#= entity.Name.Pluralize() #></a></li>' +
 <#        } #>
@@ -124,7 +131,73 @@ WriteUsingNamespaces(); #>
 
             setPagerButtons($('#pagerUl'), result.Page, result.PageCount);
             displayRecordStats(result.Items.length, result.TotalCount);
+<#  if(HasModalPartialForm) { #>
+            setActionLinks();
+<# } #>
         }
+
+        function refreshData() {
+            getPagedData(result.Page);
+        }
+
+        function getPagedData(page) {
+            var searchString = $('#SearchString').val();
+            var url = "/<#= Entity.ControllerName #>/Get<#= Entity.Name #>PagedList";
+            showMessageBox('Loading...',
+                '<div style="width:100%;padding:32px;text-align:center;">' +
+                '<img src="/images/busy.gif" alt="Loading..." width="96" height="96" align="middle"/>' +
+                '</div>');
+            $.getJSON(url, {
+                pageSize: result.PageSize,
+                page: page,
+                searchString: searchString,
+                cache: false
+            },
+                function (data) {
+                    result = data;
+                    hideMessageBox();
+                    gridOptions.api.setRowData(result.Items);
+                    setPagerButtons($('#pagerUl'), result.Page, result.PageCount);
+                    displayRecordStats(result.Items.length, result.TotalCount);
+<#  if(HasModalPartialForm) { #>
+                    setActionLinks();
+<# } #>
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    var msgboxMsg = jqXHR.responseText;
+                    showMessageBox(textStatus, msgboxMsg, true);
+                }).always(function (jqXHR) {
+
+                });
+        }
+<#  if(HasModalPartialForm) { #>
+		function setActionLinks(){
+            $('a[input-modal]').on('click', function (params) {
+                if (params.ctrlKey || params.metaKey || params.altKey) {
+                    return true;
+                }
+                showMessageBox('@MessageStrings.Loading...', '@MessageStrings.PleaseWait.', false);
+                var title = $(this).attr("input-modal");
+                var url = this.href;
+                url += (url.indexOf('?') == -1) ? '?' : '&';
+                url += 'modal=true';
+                $('#dataInputBody').load(url, function () {
+                    hideMessageBox();
+                    if (title != null || title != '') {
+                        $('#dataInputTitle').html(title);
+                    }
+                    var inputForm = document.getElementById('dataInputForm');
+                    if (isNaN(inputForm)) {
+                        $('#dataInputFooter').show();
+                    }
+                    else {
+                        $('#dataInputFooter').hide();
+                    }
+                    $('#dataInputModal').modal('show');
+                });
+                return false;
+            });
+        }
+<# } #>
 
         function onActionMenuClick(menuBtn){
             setTimeout(function(){

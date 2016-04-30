@@ -168,6 +168,19 @@ namespace <#= CodeEngine.ControllersNamespace #>
             }
         }
 		
+        protected virtual string ConvertToJson(object obj, bool includeNull = true, bool camelCase = false)
+        {
+            var settings = new JsonSerializerSettings
+            {
+                Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.StringEnumConverter() },
+                NullValueHandling = includeNull ? NullValueHandling.Include : NullValueHandling.Ignore
+            };
+            if (camelCase)
+                settings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
+
+            return JsonConvert.SerializeObject(obj, settings);
+        }
+
         protected virtual ActionResult BadRequestWithModelStateErrors()
         {
             var errorList = (from item in ModelState.Values

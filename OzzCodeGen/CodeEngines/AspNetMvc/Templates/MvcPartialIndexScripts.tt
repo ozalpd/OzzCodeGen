@@ -73,6 +73,7 @@ WriteUsingNamespaces(); #>
                 success: function (result) {
                     if (result.saved) {
                         refreshData();
+                        $('#dataInputModal').modal('hide');
                     }
                     else {
                         $('#dataInputBody').html(result);

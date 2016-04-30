@@ -31,6 +31,16 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             return list;
         }
 
+        public bool HasModalInputForm
+        {
+            get { return Entity.CreatePartialView || Entity.EditPartialView; }
+        }
+
+        public bool HasModalPartialForm
+        {
+            get { return Entity.DetailsPartialView || HasModalInputForm; }
+        }
+
         protected string GetSharedViewsDir(string filePath)
         {
             return Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(filePath)), "Shared");

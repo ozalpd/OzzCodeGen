@@ -174,19 +174,25 @@ else
 @Html.Partial("<#= MvcPartialPager.ViewName #>")
 @Html.Partial("_MessageBoxPartial")
 @section scripts{
-<#  if(Entity.EditPartialView || Entity.CreatePartialView) { #>
+<#  if(HasModalInputForm) { #>
     @Scripts.Render("~/bundles/jqueryval")
 <#  } #>
     @Html.Partial("<#= MvcPartialIndexScripts.ViewName #>", "<#= Entity.ControllerName #>") @* Controller's name *@
 <#  if(hasScript) { #>
     <script type="text/javascript">
 <#  } #>
-<#  if(Entity.EditPartialView || Entity.CreatePartialView) { #>
+<#  if(HasModalPartialForm) { #>
         (function () {
             $.ajaxSetup({
                 cache: false
             });
-            $('a[input-modal]').on('click', function () {
+            setActionLinks();
+        }());
+        function setActionLinks() {
+            $('a[input-modal]').on('click', function (params) {
+                if (params.ctrlKey || params.metaKey || params.altKey) {
+                    return true;
+                }
                 showMessageBox('@MessageStrings.Loading...', '@MessageStrings.PleaseWait.', false);
                 var title = $(this).attr("input-modal");
                 var url = this.href;
@@ -208,7 +214,7 @@ else
                 });
                 return false;
             });
-        }());
+        }
 <#  } #>
 <#  if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) { #>
         function onActionMenuClick(menuBtn) {

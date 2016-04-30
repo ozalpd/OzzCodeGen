@@ -12,31 +12,12 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         public MvcController(AspNetMvcEntitySetting entity, bool customFile = false)
             : base(entity, customFile) { }
 
-        public override string GetDefaultFileName()
+        public bool HasViewJsonResult
         {
-            if (CustomFile)
+            get
             {
-                return Entity.ControllerName + "Controller.part.cs";
-            }
-            else
-            {
-                return Entity.ControllerName + "Controller.g.cs";
-            }
-        }
-
-        public virtual string GetDefaultFilePath()
-        {
-            if (string.IsNullOrEmpty(Entity?.Area))
-            {
-                return Path.Combine(Entity.CodeEngine.TargetControllersDir, GetDefaultFileName());
-            }
-            else
-            {
-                return Path.Combine(Entity.CodeEngine.TargetDirectory,
-                                    "Areas",
-                                    Entity.Area,
-                                    Entity.CodeEngine.TargetControllersFolder,
-                                    GetDefaultFileName());
+                return !(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction ||
+                    Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithButtonsAction);
             }
         }
 
@@ -117,6 +98,35 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
                 {
                     return string.Empty;
                 }
+            }
+        }
+
+
+        public override string GetDefaultFileName()
+        {
+            if (CustomFile)
+            {
+                return Entity.ControllerName + "Controller.part.cs";
+            }
+            else
+            {
+                return Entity.ControllerName + "Controller.g.cs";
+            }
+        }
+
+        public virtual string GetDefaultFilePath()
+        {
+            if (string.IsNullOrEmpty(Entity?.Area))
+            {
+                return Path.Combine(Entity.CodeEngine.TargetControllersDir, GetDefaultFileName());
+            }
+            else
+            {
+                return Path.Combine(Entity.CodeEngine.TargetDirectory,
+                                    "Areas",
+                                    Entity.Area,
+                                    Entity.CodeEngine.TargetControllersFolder,
+                                    GetDefaultFileName());
             }
         }
 
