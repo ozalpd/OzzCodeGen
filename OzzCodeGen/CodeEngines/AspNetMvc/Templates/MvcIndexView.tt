@@ -45,7 +45,10 @@ WriteUsingNamespaces(); #>
         </div>
 <#  if(Entity.CreatePartialView) { #>
         <div class="col-sm-2">
-            @Html.ActionLink(ActionStrings.AddNew, "Create", null, new { @class = "btn btn-primary", input_modal = <#= EntityResource #>.AddNew<#= Entity.Name #> })
+            @if (canUserCreate)
+            {
+                @Html.ActionLink(ActionStrings.AddNew, "Create", null, new { @class = "btn btn-primary", input_modal = <#= EntityResource #>.AddNew<#= Entity.Name #> })
+            }
         </div>
 <#  } #>
 <#  if(searchable)
