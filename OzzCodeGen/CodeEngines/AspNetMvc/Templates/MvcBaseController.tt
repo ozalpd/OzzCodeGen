@@ -94,6 +94,15 @@ namespace <#= CodeEngine.ControllersNamespace #>
         protected virtual Task<bool> CanUserDelete() { return Task.FromResult(false); }
         protected virtual Task<bool> CanUserSeeRestricted() { return Task.FromResult(false); }
 
+        protected virtual bool IsUserAdmin()
+        {
+            if (!_isUserAdmin.HasValue)
+            {
+                _isUserAdmin = Request.IsAuthenticated && User.IsInRole(SecurityRoles.Admin);
+            }
+            return _isUserAdmin.Value;
+        }
+
         protected virtual async Task<bool> IsUserAdminAsync()
         {
             if (!_isUserAdmin.HasValue)
@@ -110,6 +119,15 @@ namespace <#= CodeEngine.ControllersNamespace #>
         string varName = "_" + IsUserInRoleMethods[role.Trim()].ToCamelCase();
  #>
 
+
+        protected virtual bool <#= IsUserInRoleMethods[role.Trim()] #>()
+        {
+            if (!<#= varName #>.HasValue)
+            {
+                <#= varName #> = Request.IsAuthenticated && User.IsInRole(SecurityRoles.<#= role.ToPascalCase() #>);
+            }
+            return <#= varName #>.Value;
+        }
 
         protected virtual async Task<bool> <#= IsUserInRoleMethods[role.Trim()] #>Async()
         {
