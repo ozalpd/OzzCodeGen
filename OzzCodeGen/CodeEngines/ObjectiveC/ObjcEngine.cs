@@ -161,10 +161,28 @@ namespace OzzCodeGen.CodeEngines.ObjectiveC
             return DefaultFileName;
         }
 
+        protected override void OnSearchStringChanged()
+        {
+            RaisePropertyChanged("Entities");
+        }
+
         [XmlIgnore]
         public List<ObjcEntitySetting> Entities
         {
-            get { return _entities; }
+            get
+            {
+                if (Project == null || string.IsNullOrEmpty(Project.SearchString))
+                {
+                    return _entities;
+                }
+                else
+                {
+                    var result = _entities
+                        .Where(e => e.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase) ||
+                            e.Properties.Where(p => p.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase)).Any());
+                    return result.ToList();
+                }
+            }
             set
             {
                 if (_entities == value) return;
@@ -436,6 +454,11 @@ namespace OzzCodeGen.CodeEngines.ObjectiveC
 
         public override bool RenderSelectedTemplate()
         {
+            if (!string.IsNullOrEmpty(Project.SearchString))
+            {
+                Project.SearchString = string.Empty;
+            }
+
             bool result = true;
             if (RenderAllEntities)
             {
@@ -467,6 +490,11 @@ namespace OzzCodeGen.CodeEngines.ObjectiveC
 
         public override bool RenderAllTemplates()
         {
+            if (!string.IsNullOrEmpty(Project.SearchString))
+            {
+                Project.SearchString = string.Empty;
+            }
+
             if (RenderConst)
             {
                 RenderConstHeader();

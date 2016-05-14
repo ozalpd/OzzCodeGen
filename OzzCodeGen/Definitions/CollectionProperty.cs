@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace OzzCodeGen.Definitions
 {
@@ -31,7 +32,7 @@ namespace OzzCodeGen.Definitions
         public override List<string> GetUsableTypeNames()
         {
             var typeNames = new List<string>();
-            foreach (var entity in this.EntityDefinition.DataModel)
+            foreach (var entity in this.EntityDefinition.DataModel.OrderBy(p => p.Name))
             {
                 typeNames.Add(string.Format("ICollection<{0}>", entity.Name));
             }

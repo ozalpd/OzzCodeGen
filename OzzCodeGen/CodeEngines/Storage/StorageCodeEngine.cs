@@ -8,6 +8,7 @@ using OzzCodeGen.CodeEngines.Storage.Templates;
 using OzzCodeGen.CodeEngines.Storage.UI;
 using OzzCodeGen.Definitions;
 using OzzUtils;
+using System.Collections.ObjectModel;
 
 namespace OzzCodeGen.CodeEngines.Storage
 {
@@ -122,18 +123,36 @@ namespace OzzCodeGen.CodeEngines.Storage
         private string _schemaName;
 
 
-        [XmlIgnore]
-        public List<StorageEntitySetting> Entities
+        protected override void OnSearchStringChanged()
         {
-            get { return _entitySettings; }
+            RaisePropertyChanged("Entities");
+        }
+
+        [XmlIgnore]
+        public ObservableCollection<StorageEntitySetting> Entities
+        {
+            get
+            {
+                if (Project == null || string.IsNullOrEmpty(Project.SearchString))
+                {
+                    return _entities;
+                }
+                else
+                {
+                    var result = _entities
+                        .Where(e => e.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase) ||
+                            e.Properties.Where(p => p.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase)).Any());
+                    return new ObservableCollection<StorageEntitySetting>(result);
+                }
+            }
             set
             {
-                if (_entitySettings == value) return;
-                _entitySettings = value;
+                if (_entities == value) return;
+                _entities = value;
                 RaisePropertyChanged("Entities");
             }
         }
-        private List<StorageEntitySetting> _entitySettings;
+        private ObservableCollection<StorageEntitySetting> _entities;
 
         public override void OnProjectNameChanged(string oldValue)
         {
@@ -190,7 +209,7 @@ namespace OzzCodeGen.CodeEngines.Storage
 
         protected override void OnEntitySettingsChanged()
         {
-            var entities = new List<StorageEntitySetting>();
+            var entities = new ObservableCollection<StorageEntitySetting>();
             if (EntitySettings != null)
             {
                 foreach (StorageEntitySetting item in EntitySettings)
@@ -449,6 +468,11 @@ namespace OzzCodeGen.CodeEngines.Storage
         {
             if (string.IsNullOrEmpty(TargetDirectory))
                 return false;
+
+            if (!string.IsNullOrEmpty(Project.SearchString))
+            {
+                Project.SearchString = string.Empty;
+            }
 
             if (RenderAllEntities)
             {

@@ -195,6 +195,18 @@ namespace OzzCodeGen
         }
         EnumDefinitionList _enumDefinitions;
 
+        [XmlIgnore]
+        public string SearchString
+        {
+            get { return _searchString;  }
+            set
+            {
+                _searchString = value;
+                RaisePropertyChanged("SearchString");
+            }
+        }
+        string _searchString;
+
         public DataModel DataModel
         {
             get { return _dataModel; }

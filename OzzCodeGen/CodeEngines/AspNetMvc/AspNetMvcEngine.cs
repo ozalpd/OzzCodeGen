@@ -76,10 +76,28 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             return ps;
         }
 
+        protected override void OnSearchStringChanged()
+        {
+            RaisePropertyChanged("Entities");
+        }
+
         [XmlIgnore]
         public ObservableCollection<AspNetMvcEntitySetting> Entities
         {
-            get { return _entities; }
+            get
+            {
+                if (Project == null || string.IsNullOrEmpty(Project.SearchString))
+                {
+                    return _entities;
+                }
+                else
+                {
+                    var result = _entities
+                        .Where(e => e.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase) ||
+                            e.Properties.Where(p => p.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase)).Any());
+                    return new ObservableCollection<AspNetMvcEntitySetting>(result);
+                }
+            }
             set
             {
                 if (_entities == value) return;

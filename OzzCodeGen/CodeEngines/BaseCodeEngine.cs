@@ -43,7 +43,13 @@ namespace OzzCodeGen.CodeEngines
             {
                 OnTargetDirectoryChanged();
             }
+            else if (e.PropertyName.Equals("SearchString"))
+            {
+                OnSearchStringChanged();
+            }
         }
+
+        protected virtual void OnSearchStringChanged() { }
 
         public virtual void OnProjectNameChanging(string newValue) { }
         public virtual void OnProjectNameChanged(string oldValue) { }

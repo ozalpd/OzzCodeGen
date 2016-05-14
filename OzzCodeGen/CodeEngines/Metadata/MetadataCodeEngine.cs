@@ -117,6 +117,11 @@ namespace OzzCodeGen.CodeEngines.Metadata
 
         public override bool RenderSelectedTemplate()
         {
+            if (!string.IsNullOrEmpty(Project.SearchString))
+            {
+                Project.SearchString = string.Empty;
+            }
+
             if (RenderAllEntities)
             {
                 bool allWritten = true;
@@ -139,6 +144,10 @@ namespace OzzCodeGen.CodeEngines.Metadata
         public override bool RenderAllTemplates()
         {
             throw new NotImplementedException("There is only one template in MetadataCodeEngine!");
+            if (!string.IsNullOrEmpty(Project.SearchString))
+            {
+                Project.SearchString = string.Empty;
+            }
         }
 
         protected override UserControl GetUiControl()
@@ -238,10 +247,28 @@ namespace OzzCodeGen.CodeEngines.Metadata
         }
 
 
+        protected override void OnSearchStringChanged()
+        {
+            RaisePropertyChanged("Entities");
+        }
+
         [XmlIgnore]
         public List<MetadataEntitySetting> Entities
         {
-            get { return _entities; }
+            get
+            {
+                if (Project == null || string.IsNullOrEmpty(Project.SearchString))
+                {
+                    return _entities;
+                }
+                else
+                {
+                    var result = _entities
+                        .Where(e => e.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase) ||
+                            e.Properties.Where(p => p.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase)).Any());
+                    return result.ToList();
+                }
+            }
             set
             {
                 if (_entities == value) return;

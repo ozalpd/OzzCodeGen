@@ -79,6 +79,11 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
 
         public override bool RenderSelectedTemplate()
         {
+            if (!string.IsNullOrEmpty(Project.SearchString))
+            {
+                Project.SearchString = string.Empty;
+            }
+
             if (SelectedTemplate.Equals(mvcAllViews))
             {
                 var templates = GetViewTemplates();
@@ -92,6 +97,11 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
 
         public override bool RenderAllTemplates()
         {
+            if (!string.IsNullOrEmpty(Project.SearchString))
+            {
+                Project.SearchString = string.Empty;
+            }
+
             var templates = GetViewTemplates();
             templates.Add(controllerClass);
 

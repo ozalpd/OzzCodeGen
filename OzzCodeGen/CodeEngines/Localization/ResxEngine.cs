@@ -170,10 +170,28 @@ namespace OzzCodeGen.CodeEngines.Localization
             }
         }
 
+        protected override void OnSearchStringChanged()
+        {
+            RaisePropertyChanged("Entities");
+        }
+
         [XmlIgnore]
         public ObservableCollection<LocalizationEntitySetting> Entities
         {
-            get { return _entities; }
+            get
+            {
+                if (Project == null || string.IsNullOrEmpty(Project.SearchString))
+                {
+                    return _entities;
+                }
+                else
+                {
+                    var result = _entities
+                        .Where(e => e.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase) ||
+                            e.Properties.Where(p => p.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase)).Any());
+                    return new ObservableCollection<LocalizationEntitySetting>(result);
+                }
+            }
             set
             {           //This should only be changed inside of the engine
                 return; //WPF binding cause an error when set is private in .NET 4.6
@@ -466,6 +484,11 @@ namespace OzzCodeGen.CodeEngines.Localization
 
         public override bool RenderSelectedTemplate()
         {
+            if (!string.IsNullOrEmpty(Project.SearchString))
+            {
+                Project.SearchString = string.Empty;
+            }
+
             OpenVocabularies();
             bool allWritten = true;
             if (RenderAllEntities || SingleResx)
@@ -501,6 +524,10 @@ namespace OzzCodeGen.CodeEngines.Localization
         public override bool RenderAllTemplates()
         {
             throw new NotImplementedException();
+            if (!string.IsNullOrEmpty(Project.SearchString))
+            {
+                Project.SearchString = string.Empty;
+            }
         }
 
         public override void SaveToFile()

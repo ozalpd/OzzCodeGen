@@ -24,7 +24,7 @@ namespace OzzCodeGen.Wpf
         {
             InitializeComponent();
 
-            Title = string.Format("Ozz Code Generator - {0}", BuildInfo.Date);
+            Title = DefaultTitle;
             MainContainer.IsEnabled = false;
             settingsFile = Path.Combine(
                             Path.GetDirectoryName(
@@ -55,6 +55,13 @@ namespace OzzCodeGen.Wpf
             };
         }
         DispatcherTimer tmrProgressValue;
+
+        protected string DefaultTitle
+        {
+            get { return string.Format("Ozz Code Generator | Version {0}", BuildInfo.Date); }
+        }
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -253,6 +260,7 @@ namespace OzzCodeGen.Wpf
 
                 grdEnums.ItemsSource = null;
                 grdEnums.ItemsSource = Project.EnumDefinitions;
+                Title = _project != null ?  _project.Name + " | " + DefaultTitle : DefaultTitle;
 
                 _project.PropertyChanged += (o, e) =>
                 {
@@ -298,6 +306,52 @@ namespace OzzCodeGen.Wpf
         {
             Settings.MainWindowPosition.GetWindowPositions(this);
             Settings.SaveToFile(settingsFile);
+        }
+
+        private void txtFilter_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Return)
+            {
+                if(sender == txtFilterEntities)
+                {
+                    Project.SearchString = txtFilterEntities.Text;
+                    FilterEntities();
+                }
+            }
+        }
+
+        private void btnFilter_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender == btnFilterEntities)
+            {
+                Project.SearchString = txtFilterEntities.Text;
+                FilterEntities();
+            }
+        }
+
+        private void FilterEntities()
+        {
+            if (string.IsNullOrEmpty(Project.SearchString))
+            {
+                grdEntities.ItemsSource = DataModel;
+            }
+            else
+            {
+                string searchString = Project.SearchString;
+                var ent = DataModel
+                    .Where(e => e.Name.StartsWith(searchString, StringComparison.InvariantCultureIgnoreCase) ||
+                        e.Properties.Where(p => p.Name.StartsWith(searchString, StringComparison.InvariantCultureIgnoreCase)).Any());
+                grdEntities.ItemsSource = ent;
+                var closestOne = ent.FirstOrDefault(e => e.Name.StartsWith(searchString, StringComparison.InvariantCultureIgnoreCase));
+                if (closestOne != null)
+                {
+                    grdEntities.SelectedItem = closestOne;
+                }
+                else if (ent != null && ent.Count() > 0 && !ent.Contains(grdEntities.SelectedItem))
+                {
+                    grdEntities.SelectedItem = ent.FirstOrDefault();
+                }
+            }
         }
 
         private NewEntityDialog GetNewEntityDialog()

@@ -35,6 +35,11 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,2,0,0">
+            <StackPanel.Resources>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="2"/>
+                </Style>
+            </StackPanel.Resources>
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
                     <Menu Height="28" VerticalAlignment="Top" Width="72">
@@ -80,12 +85,18 @@
                             ToolTip="Save Project"
                             Command="{Binding SaveProjectCommand}"
                             Content="{Binding Mode=OneTime, Source={StaticResource imgSave}}"
+                            IsEnabled="{Binding ElementName=MainContainer,Path=IsEnabled}"
                             Style="{StaticResource toolbarButtons}"/>
                     <Button x:Name="btnRefresh"
                             ToolTip="Refresh"
                             Click="btnRefresh_Click"
                             Content="{Binding Mode=OneWay, Source={StaticResource imgRefresh}}"
+                            IsEnabled="{Binding ElementName=MainContainer,Path=IsEnabled}"
                             Style="{StaticResource toolbarButtons}"/>
+                    <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=MainContainer,Path=IsEnabled}" Margin="14,1,0,1">
+                        <Button Name="btnFilterEntities" Content="Find" Margin="2" Padding="5,0" Click="btnFilter_Click"/>
+                        <TextBox Name="txtFilterEntities" Width="120" KeyDown="txtFilter_KeyDown"/>
+                    </StackPanel>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Recent Files:" VerticalAlignment="Center" Width="72" Margin="4,0,0,0"/>
@@ -104,7 +115,8 @@
                     </ComboBox>
                 </StackPanel>
             </StackPanel>
-            <Grid DataContext="{Binding Project}" Width="640">
+            <Grid DataContext="{Binding Project}" Width="640"
+                  IsEnabled="{Binding ElementName=MainContainer,Path=IsEnabled}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="124"/>
                     <ColumnDefinition Width="*"/>
@@ -116,14 +128,14 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Project Name:" Margin="5"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Margin="1" HorizontalAlignment="Stretch" ToolTip="Project Name"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Stretch" ToolTip="Project Name"/>
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Project Namespace:" Margin="5"/>
-                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NamespaceName}" Margin="1" HorizontalAlignment="Stretch" ToolTip="Project Namespace"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NamespaceName}" HorizontalAlignment="Stretch" ToolTip="Project Namespace"/>
 
                 <TextBlock Grid.Row="0" Grid.Column="2" Text="Entity Track Enum:" Margin="5" VerticalAlignment="Center" ToolTip="Enum Name for Entity Tracking"/>
-                <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding EntityTrackEnum}" Margin="1" HorizontalAlignment="Stretch" ToolTip="Enum Name for Entity Tracking"/>
+                <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding EntityTrackEnum}" HorizontalAlignment="Stretch" ToolTip="Enum Name for Entity Tracking"/>
                 <TextBlock Grid.Row="1" Grid.Column="2" Text="Target Folder:" Margin="5" VerticalAlignment="Center" ToolTip="Solution Directory for Generated Target"/>
-                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding TargetFolder}" Margin="1" HorizontalAlignment="Stretch" ToolTip="Solution Directory for Generated Target"/>
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding TargetFolder}" HorizontalAlignment="Stretch" ToolTip="Solution Directory for Generated Target"/>
             </Grid>
         </StackPanel>
 
@@ -136,8 +148,15 @@
                         <ColumnDefinition Width="*" MinWidth="140" MaxWidth="640" />
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
-
+                    <!--
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="28"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    -->
                     <StackPanel Orientation="Horizontal">
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1">
                         <StackPanel Orientation="Vertical" Margin="0,24,4,0">
                             <Button x:Name="btnAddEntity" 
 								ToolTip="Add Entity" 

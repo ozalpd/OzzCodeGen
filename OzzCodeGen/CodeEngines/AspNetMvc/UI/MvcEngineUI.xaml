@@ -402,23 +402,26 @@
                                 <CheckBox IsChecked="{Binding GenerateGetEntityAction}" Content="GetEntity Action" ToolTip="Generate GetEntity action in controller"/>
                                 <CheckBox IsChecked="{Binding GenerateGetEntityListAction}" Content="GetEntityList Action" ToolTip="Generate GetEntityList action in controller"/>
                                 <CheckBox IsChecked="{Binding GenerateActionForAutoComplete}" Content="Action For AutoComplete" ToolTip="Generate GetEntitiesForAutoComplete action in controller"/>
-                                <CheckBox IsChecked="{Binding GenerateIndexAction}" Content="Index Action" ToolTip="Generate Index action in controller"/>
-                                <CheckBox IsChecked="{Binding GenerateDetailsAction}" Content="Details Action" ToolTip="Generate Details action in controller"/>
-                                <CheckBox IsChecked="{Binding GenerateCreateAction}" Content="Create Action" ToolTip="Generate Create action in controller"/>
-                                <CheckBox IsChecked="{Binding GenerateEditAction}" Content="Edit Action" ToolTip="Generate Edit action in controller"/>
-                                <CheckBox IsChecked="{Binding GenerateDeleteAction}" Content="Delete Action" ToolTip="Generate Delete action in controller"/>
-                                <TextBlock Height="2" Margin="1"/>
-                                <CheckBox IsChecked="{Binding IndexView}" Content="Index View" ToolTip="Generate Index view"/>
-                                <ComboBox ItemsSource="{Binding Source={StaticResource indexViewGeneration}}"
-                                          SelectedItem="{Binding IndexViewGeneration}"
-                                          FontSize="11" />
-                                <TextBlock Height="2" Margin="1"/>
-                                <CheckBox IsChecked="{Binding DetailsView}" Content="Details View" ToolTip="Generate Details view"/>
-                                <CheckBox IsChecked="{Binding DetailsPartialView}" Content="Partial Details View" ToolTip="Generate Details view with a partial _Details"/>
-                                <CheckBox IsChecked="{Binding CreateView}" Content="Create View" ToolTip="Generate Create view"/>
-                                <CheckBox IsChecked="{Binding CreatePartialView}" Content="Partial Create View" ToolTip="Generate Create view with a partial _Create"/>
-                                <CheckBox IsChecked="{Binding EditView}" Content="Edit View" ToolTip="Generate Edit view"/>
-                                <CheckBox IsChecked="{Binding EditPartialView}" Content="Partial Edit View " ToolTip="Generate Edit view with a partial _Edit"/>
+                                <StackPanel Background="#FFD0E4FE" Margin="0,2,0,0">
+                                    <CheckBox IsChecked="{Binding GenerateIndexAction}" Content="Index Action" ToolTip="Generate Index action in controller"/>
+                                    <CheckBox IsChecked="{Binding GenerateDetailsAction}" Content="Details Action" ToolTip="Generate Details action in controller"/>
+                                    <CheckBox IsChecked="{Binding GenerateCreateAction}" Content="Create Action" ToolTip="Generate Create action in controller"/>
+                                    <CheckBox IsChecked="{Binding GenerateEditAction}" Content="Edit Action" ToolTip="Generate Edit action in controller"/>
+                                    <CheckBox IsChecked="{Binding GenerateDeleteAction}" Content="Delete Action" ToolTip="Generate Delete action in controller"/>
+                                </StackPanel>
+                                <StackPanel Background="#FFD8F0F8" Margin="0,2,0,0">
+                                    <CheckBox IsChecked="{Binding IndexView}" Content="Index View" ToolTip="Generate Index view"/>
+                                    <ComboBox ItemsSource="{Binding Source={StaticResource indexViewGeneration}}"
+                                              SelectedItem="{Binding IndexViewGeneration}"
+                                              FontSize="11" />
+                                    <TextBlock Height="2" Margin="1"/>
+                                    <CheckBox IsChecked="{Binding DetailsView}" Content="Details View" ToolTip="Generate Details view"/>
+                                    <CheckBox IsChecked="{Binding DetailsPartialView}" Content="Partial Details View" ToolTip="Generate Details view with a partial _Details"/>
+                                    <CheckBox IsChecked="{Binding CreateView}" Content="Create View" ToolTip="Generate Create view"/>
+                                    <CheckBox IsChecked="{Binding CreatePartialView}" Content="Partial Create View" ToolTip="Generate Create view with a partial _Create"/>
+                                    <CheckBox IsChecked="{Binding EditView}" Content="Edit View" ToolTip="Generate Edit view"/>
+                                    <CheckBox IsChecked="{Binding EditPartialView}" Content="Partial Edit View " ToolTip="Generate Edit view with a partial _Edit"/>
+                                </StackPanel>
                             </StackPanel>
                         </Border>
                         <Grid Grid.Column="1">

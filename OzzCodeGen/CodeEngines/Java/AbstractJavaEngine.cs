@@ -11,7 +11,20 @@ namespace OzzCodeGen.CodeEngines.Java
         [XmlIgnore]
         public List<JavaEntitySetting> Entities
         {
-            get { return _entities; }
+            get
+            {
+                if (Project == null || string.IsNullOrEmpty(Project.SearchString))
+                {
+                    return _entities;
+                }
+                else
+                {
+                    var result = _entities
+                        .Where(e => e.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase) ||
+                            e.Properties.Where(p => p.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase)).Any());
+                    return result.ToList();
+                }
+            }
             set
             {
                 if (_entities == value) return;
@@ -20,6 +33,11 @@ namespace OzzCodeGen.CodeEngines.Java
             }
         }
         private List<JavaEntitySetting> _entities;
+
+        protected override void OnSearchStringChanged()
+        {
+            RaisePropertyChanged("Entities");
+        }
 
 
         [XmlIgnore]

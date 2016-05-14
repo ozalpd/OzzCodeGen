@@ -299,6 +299,11 @@ namespace OzzCodeGen.CodeEngines.Android
 
         public override bool RenderSelectedTemplate()
         {
+            if (!string.IsNullOrEmpty(Project.SearchString))
+            {
+                Project.SearchString = string.Empty;
+            }
+
             bool result = true;
             if (RenderAllEntities)
             {

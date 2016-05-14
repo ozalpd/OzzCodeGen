@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OzzCodeGen.Definitions
 {
@@ -16,7 +13,7 @@ namespace OzzCodeGen.Definitions
         public override List<string> GetUsableTypeNames()
         {
             var typeNames = new List<string>();
-            foreach (var item in this.EntityDefinition.DataModel)
+            foreach (var item in this.EntityDefinition.DataModel.OrderBy(p => p.Name))
             {
                 typeNames.Add(item.Name);
             }
