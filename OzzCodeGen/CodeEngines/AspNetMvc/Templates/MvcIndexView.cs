@@ -662,6 +662,9 @@ foreach (var property in properties)
                 cache: false
             });
             setActionLinks();
+            $('#dataInputModal').on('shown.bs.modal', function() {
+                $(this).find('[autofocus]').focus();
+            });
         }());
         function setActionLinks() {
             $('a[input-modal]').on('click', function (params) {
@@ -692,13 +695,13 @@ foreach (var property in properties)
         }
 ");
             
-            #line 221 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 224 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 222 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 225 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) { 
             
             #line default
@@ -708,7 +711,7 @@ foreach (var property in properties)
                     "n.getBoundingClientRect();\r\n                var rectGrid = document.getElementBy" +
                     "Id(\"");
             
-            #line 227 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 230 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(gridId));
             
             #line default
@@ -717,7 +720,7 @@ foreach (var property in properties)
                     "nu.bottom - menuHeight;\r\n\r\n                if (diffY < 0) {\r\n                   " +
                     " var viewport = $(\'#");
             
-            #line 231 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 234 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(gridId));
             
             #line default
@@ -726,20 +729,20 @@ foreach (var property in properties)
                     "              viewport.scrollTop((diffY * -1) + viewportScroll);\r\n              " +
                     "  }\r\n            }, 250);\r\n        }\r\n");
             
-            #line 237 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 240 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 238 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 241 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(hasScript) { 
             
             #line default
             #line hidden
             this.Write("    </script>\r\n");
             
-            #line 240 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 243 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
             
             #line default

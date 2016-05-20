@@ -190,6 +190,9 @@ else
                 cache: false
             });
             setActionLinks();
+            $('#dataInputModal').on('shown.bs.modal', function() {
+                $(this).find('[autofocus]').focus();
+            });
         }());
         function setActionLinks() {
             $('a[input-modal]').on('click', function (params) {
