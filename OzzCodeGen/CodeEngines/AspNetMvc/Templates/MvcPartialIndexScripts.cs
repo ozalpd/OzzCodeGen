@@ -64,19 +64,20 @@ WriteUsingNamespaces();
                     "\'#filterPanelSign\').removeClass(\'glyphicon-plus\').addClass(\'glyphicon-minus\');\r\n" +
                     "            console.log(\'expanded\');\r\n        }\r\n    }\r\n    function submitDataI" +
                     "nputForm() {\r\n        var inputForm = $(\'#dataInputForm\');\r\n        if ($(inputF" +
-                    "orm).valid()) {\r\n            var url = $(inputForm).attr(\'action\');\r\n           " +
-                    " url += (url.indexOf(\'?\') == -1) ? \'?\' : \'&\';\r\n            url += \'modal=true\';\r" +
-                    "\n            $.ajax({\r\n                url: url,\r\n                type: $(inputF" +
-                    "orm).attr(\'method\'),\r\n                data: $(inputForm).serialize(),\r\n\t\t\t\tcache" +
-                    ": false,\r\n                success: function (result) {\r\n                    if (" +
-                    "result.saved) {\r\n                        refreshData();\r\n                       " +
-                    " $(\'#dataInputModal\').modal(\'hide\');\r\n                    }\r\n                   " +
-                    " else {\r\n                        $(\'#dataInputBody\').html(result);\r\n            " +
-                    "        }\r\n                },\r\n                error: function (jqXHR, textStatu" +
-                    "s, errorThrown) {\r\n                    $(\'#dataInputModal\').modal(\'hide\');\r\n    " +
-                    "                var msgboxMsg = jqXHR.responseText;\r\n                    showMes" +
-                    "sageBox(errorThrown, msgboxMsg, true);\r\n                }\r\n            });\r\n    " +
-                    "    }\r\n    }\r\n</script>");
+                    "orm).valid()) {\r\n            $(\'#busyAnima\').show();\r\n            var url = $(in" +
+                    "putForm).attr(\'action\');\r\n            url += (url.indexOf(\'?\') == -1) ? \'?\' : \'&" +
+                    "\';\r\n            url += \'modal=true\';\r\n            $.ajax({\r\n                url:" +
+                    " url,\r\n                type: $(inputForm).attr(\'method\'),\r\n                data:" +
+                    " $(inputForm).serialize(),\r\n\t\t\t\tcache: false,\r\n                success: function" +
+                    " (result) {\r\n                    if (result.saved) {\r\n                        re" +
+                    "freshData();\r\n                        $(\'#dataInputModal\').modal(\'hide\');\r\n     " +
+                    "               }\r\n                    else {\r\n                        $(\'#dataIn" +
+                    "putBody\').html(result);\r\n                    }\r\n                    $(\'#busyAnim" +
+                    "a\').hide();\r\n                },\r\n                error: function (jqXHR, textSta" +
+                    "tus, errorThrown) {\r\n                    $(\'#dataInputModal\').modal(\'hide\');\r\n  " +
+                    "                  var msgboxMsg = jqXHR.responseText;\r\n                    showM" +
+                    "essageBox(errorThrown, msgboxMsg, true);\r\n                    $(\'#busyAnima\').hi" +
+                    "de();\r\n                }\r\n            });\r\n        }\r\n    }\r\n</script>");
             return this.GenerationEnvironment.ToString();
         }
     }

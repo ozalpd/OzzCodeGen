@@ -55,19 +55,22 @@ WriteUsingNamespaces();
                     "class=\"btn btn-default\" data-dismiss=\"modal\">@ActionStrings.Cancel</button>\r\n   " +
                     "             <a id=\"ajxDelete\" style=\"width:70px\" class=\"btn btn-danger\" onclick" +
                     "=\"deleteEntity(0);\">@ActionStrings.Delete</a>\r\n            </div>\r\n        </div" +
-                    ">@* /.modal-content *@\r\n    </div>@* /.modal-dialog *@\r\n</div>@* /.modal *@\r\n\r\n<" +
-                    "div class=\"modal fade\" id=\"dataInputModal\"> @* Data Input Modal *@\r\n    <div cla" +
-                    "ss=\"modal-dialog modal-lg\">\r\n        <div class=\"modal-content\">\r\n            <d" +
-                    "iv class=\"modal-header\">\r\n                <button type=\"button\" class=\"close\" da" +
-                    "ta-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\r\n                <h2 id=\"" +
-                    "dataInputTitle\" class=\"modal-title\">@ActionStrings.Edit</h2>\r\n            </div>" +
-                    "\r\n            <div id=\"dataInputBody\" class=\"modal-body\"></div>\r\n            <di" +
-                    "v id=\"dataInputFooter\" class=\"modal-footer\">\r\n                <button type=\"butt" +
-                    "on\" class=\"btn btn-default\" data-dismiss=\"modal\">@ActionStrings.Cancel</button>\r" +
-                    "\n                <a id=\"dataInputSubmit\" style=\"width:70px\" class=\"btn btn-prima" +
-                    "ry\" onclick=\"submitDataInputForm();\">@ActionStrings.Submit</a>\r\n            </di" +
-                    "v>\r\n        </div>@* /.modal-content *@\r\n    </div>@* /.modal-dialog *@\r\n</div>@" +
-                    "* /.modal *@");
+                    ">@* /.modal-content *@\r\n    </div>@* /.modal-dialog *@\r\n</div>@* /.modal *@\r\n<di" +
+                    "v id=\"busyAnima\" class=\"modal\" style=\"z-index:55000;background-color:#808080;opa" +
+                    "city:0.75;\">\r\n    <div style=\"opacity:1.0;position:relative;top:50%;transform:tr" +
+                    "anslateY(-50%);width:100%;\">\r\n        <img src=\"~/images/busy.gif\" alt=\"@Message" +
+                    "Strings.PleaseWait\" class=\"center-block\" />\r\n    </div>\r\n</div>\r\n<div class=\"mod" +
+                    "al fade\" id=\"dataInputModal\"> @* Data Input Modal *@\r\n    <div class=\"modal-dial" +
+                    "og modal-lg\">\r\n        <div class=\"modal-content\">\r\n            <div class=\"moda" +
+                    "l-header\">\r\n                <button type=\"button\" class=\"close\" data-dismiss=\"mo" +
+                    "dal\" aria-hidden=\"true\">&times;</button>\r\n                <h2 id=\"dataInputTitle" +
+                    "\" class=\"modal-title\">@ActionStrings.Edit</h2>\r\n            </div>\r\n            " +
+                    "<div id=\"dataInputBody\" class=\"modal-body\"></div>\r\n            <div id=\"dataInpu" +
+                    "tFooter\" class=\"modal-footer\">\r\n                <button type=\"button\" class=\"btn" +
+                    " btn-default\" data-dismiss=\"modal\">@ActionStrings.Cancel</button>\r\n             " +
+                    "   <a id=\"dataInputSubmit\" style=\"width:70px\" class=\"btn btn-primary\" onclick=\"s" +
+                    "ubmitDataInputForm();\">@ActionStrings.Submit</a>\r\n            </div>\r\n        </" +
+                    "div>@* /.modal-content *@\r\n    </div>@* /.modal-dialog *@\r\n</div>@* /.modal *@");
             return this.GenerationEnvironment.ToString();
         }
     }
