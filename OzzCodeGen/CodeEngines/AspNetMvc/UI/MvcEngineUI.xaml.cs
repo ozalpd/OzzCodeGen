@@ -104,5 +104,10 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.UI
         {
             Engine.RenderSecurityRoles();
         }
+
+        private void lstSecurityRoles_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            txtAddRole.Text = lstSecurityRoles.SelectedItem.ToString();
+        }
     }
 }

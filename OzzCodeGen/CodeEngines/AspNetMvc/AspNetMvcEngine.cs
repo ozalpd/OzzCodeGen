@@ -642,6 +642,16 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private string _canSeeRestricted;
 
+        public bool AreCanUserMethodsPublic
+        {
+            get { return _areCanUserMethodsPublic; }
+            set
+            {
+                _areCanUserMethodsPublic = value;
+                RaisePropertyChanged("AreCanUserMethodsPublic");
+            }
+        }
+        bool _areCanUserMethodsPublic;
 
         [XmlIgnore]
         public ResxEngine ResxEngine

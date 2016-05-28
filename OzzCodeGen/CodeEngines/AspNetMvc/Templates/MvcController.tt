@@ -121,12 +121,7 @@ else
 
 <#  } #>
 <#  if (Entity.GenerateIndexAction)
-    {
-        string createRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanCreateToArray());
-        string editRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanEditToArray());
-        string deleteRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanDeleteToArray());
-        string confidentRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanSeeRestrictedToArray());
-         #>
+    { #>
         <#= CanViewAttrib #>
         public async Task<ActionResult> Index(QueryParameters qParams)
         {
@@ -149,62 +144,6 @@ else
             return View(result.Items);
 <#  } #>
         }
-
-<# if(createRoles.Equals("true") || createRoles.Equals("false")) { #>
-        protected override Task<bool> CanUserCreate() { return Task.FromResult(<#= createRoles #>); }
-<#  } else { #>
-        protected override async Task<bool> CanUserCreate()
-        {
-            if (!_canUserCreate.HasValue)
-            {
-                _canUserCreate = <#= createRoles #>;
-            }
-            return _canUserCreate.Value;
-        }
-        bool? _canUserCreate;
-<#  } #>
-
-<# if(editRoles.Equals("true") || editRoles.Equals("false")) { #>        
-        protected override Task<bool> CanUserEdit() { return Task.FromResult(<#= editRoles #>); }
-<#  } else { #>
-        protected override async Task<bool> CanUserEdit()
-        {
-            if (!_canUserEdit.HasValue)
-            {
-                _canUserEdit = <#= editRoles #>;
-            }
-            return _canUserEdit.Value;
-        }
-        bool? _canUserEdit;
-<#  } #>
-        
-<# if(deleteRoles.Equals("true") || deleteRoles.Equals("false")) { #>        
-        protected override Task<bool> CanUserDelete() { return Task.FromResult(<#= deleteRoles #>); }
-<#  } else { #>
-        protected override async Task<bool> CanUserDelete()
-        {
-            if (!_canUserDelete.HasValue)
-            {
-                _canUserDelete = <#= deleteRoles #>;
-            }
-            return _canUserDelete.Value;
-        }
-        bool? _canUserDelete;
-<#  } #>
-
-<# if(confidentRoles.Equals("true") || confidentRoles.Equals("false")) { #>        
-        protected override Task<bool> CanUserSeeRestricted() { return Task.FromResult(<#= confidentRoles #>); }
-<#  } else { #>
-        protected override async Task<bool> CanUserSeeRestricted()
-        {
-            if (!_canSeeRestricted.HasValue)
-            {
-                _canSeeRestricted = <#= confidentRoles #>;
-            }
-            return _canSeeRestricted.Value;
-        }
-        bool? _canSeeRestricted;
-<#  } #>
 
 <#  } #>
 <#  if (Entity.GenerateGetEntityListAction)
@@ -522,6 +461,109 @@ else
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 <#  } #>
+
+<#  string createRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanCreateToArray(), false);
+    string editRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanEditToArray(), false);
+    string deleteRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanDeleteToArray(), false);
+    string confidentRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanSeeRestrictedToArray(), false);
+    string createRolesAsync = CodeEngine.MergeIsUserMethods(Entity.RolesCanCreateToArray());
+    string editRolesAsync = CodeEngine.MergeIsUserMethods(Entity.RolesCanEditToArray());
+    string deleteRolesAsync = CodeEngine.MergeIsUserMethods(Entity.RolesCanDeleteToArray());
+    string confidentRolesAsync = CodeEngine.MergeIsUserMethods(Entity.RolesCanSeeRestrictedToArray());
+	string accessCanUserMethods = CodeEngine.AreCanUserMethodsPublic ? "public" : "protected";
+	if(createRoles.Equals("true") || createRoles.Equals("false")) { #>
+        <#= accessCanUserMethods #> override bool CanUserCreate() { return <#= createRoles #>; }
+        <#= accessCanUserMethods #> override Task<bool> CanUserCreateAsync() { return Task.FromResult(<#= createRoles #>); }
+<#  } else { #>
+        <#= accessCanUserMethods #> override bool CanUserCreate()
+        {
+            if (!_canUserCreate.HasValue)
+            {
+                _canUserCreate = <#= createRoles #>;
+            }
+            return _canUserCreate.Value;
+        }
+        <#= accessCanUserMethods #> override async Task<bool> CanUserCreateAsync()
+        {
+            if (!_canUserCreate.HasValue)
+            {
+                _canUserCreate = <#= createRolesAsync #>;
+            }
+            return _canUserCreate.Value;
+        }
+        bool? _canUserCreate;
+<#  } #>
+
+<# if(editRoles.Equals("true") || editRoles.Equals("false")) { #>        
+        <#= accessCanUserMethods #> override bool CanUserEdit() { return <#= editRoles #>; }
+        <#= accessCanUserMethods #> override Task<bool> CanUserEditAsync() { return Task.FromResult(<#= editRoles #>); }
+<#  } else { #>
+        <#= accessCanUserMethods #> override bool CanUserEdit()
+        {
+            if (!_canUserEdit.HasValue)
+            {
+                _canUserEdit = <#= editRoles #>;
+            }
+            return _canUserEdit.Value;
+        }
+        <#= accessCanUserMethods #> override async Task<bool> CanUserEditAsync()
+        {
+            if (!_canUserEdit.HasValue)
+            {
+                _canUserEdit = <#= editRolesAsync #>;
+            }
+            return _canUserEdit.Value;
+        }
+        bool? _canUserEdit;
+<#  } #>
+        
+<# if(deleteRoles.Equals("true") || deleteRoles.Equals("false")) { #>        
+        <#= accessCanUserMethods #> override bool CanUserDelete() { return <#= deleteRoles #>; }
+        <#= accessCanUserMethods #> override Task<bool> CanUserDeleteAsync() { return Task.FromResult(<#= deleteRoles #>); }
+<#  } else { #>
+        <#= accessCanUserMethods #> override bool CanUserDelete()
+        {
+            if (!_canUserDelete.HasValue)
+            {
+                _canUserDelete = <#= deleteRoles #>;
+            }
+            return _canUserDelete.Value;
+        }
+        <#= accessCanUserMethods #> override async Task<bool> CanUserDeleteAsync()
+        {
+            if (!_canUserDelete.HasValue)
+            {
+                _canUserDelete = <#= deleteRolesAsync #>;
+            }
+            return _canUserDelete.Value;
+        }
+        bool? _canUserDelete;
+<#  } #>
+
+<# if(confidentRoles.Equals("true") || confidentRoles.Equals("false")) { #>        
+        <#= accessCanUserMethods #> override bool CanUserSeeRestricted() { return <#= confidentRoles #>; }
+        <#= accessCanUserMethods #> override Task<bool> CanUserSeeRestrictedAsync() { return Task.FromResult(<#= confidentRoles #>); }
+<#  } else { #>
+        <#= accessCanUserMethods #> override bool CanUserSeeRestricted()
+        {
+            if (!_canSeeRestricted.HasValue)
+            {
+                _canSeeRestricted = <#= confidentRoles #>;
+            }
+            return _canSeeRestricted.Value;
+        }
+        <#= accessCanUserMethods #> override async Task<bool> CanUserSeeRestrictedAsync()
+        {
+            if (!_canSeeRestricted.HasValue)
+            {
+                _canSeeRestricted = <#= confidentRolesAsync #>;
+            }
+            return _canSeeRestricted.Value;
+        }
+        bool? _canSeeRestricted;
+
+<#  } #>
+
 
         public new partial class QueryParameters : <#= CodeEngine.BaseControllerName #>.QueryParameters
         {

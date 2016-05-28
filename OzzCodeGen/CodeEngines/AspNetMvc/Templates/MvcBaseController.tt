@@ -8,6 +8,7 @@
 <# 
 var roles = CodeEngine.SecurityRoles.Where(r => !r.Equals(CodeEngine.AdminRole));
 string dataContextIntance = CodeEngine.DataContextInstance;
+string accessCanUserMethods = CodeEngine.AreCanUserMethodsPublic ? "public" : "protected";
 WriteUsingNamespaces(); #>
 using Newtonsoft.Json;
 //------------------------------------------------------------------------------
@@ -83,16 +84,20 @@ namespace <#= CodeEngine.ControllersNamespace #>
 
         protected virtual async Task PutCanUserInViewBag()
         {
-            ViewBag.canUserEdit = await CanUserEdit();
-            ViewBag.canUserCreate = await CanUserCreate();
-            ViewBag.canUserDelete = await CanUserDelete();
-            ViewBag.canSeeRestricted = await CanUserSeeRestricted();
+            ViewBag.canUserEdit = await CanUserEditAsync();
+            ViewBag.canUserCreate = await CanUserCreateAsync();
+            ViewBag.canUserDelete = await CanUserDeleteAsync();
+            ViewBag.canSeeRestricted = await CanUserSeeRestrictedAsync();
         }
         //If we forget to implement override methods, we will keep it secure.
-        protected virtual Task<bool> CanUserCreate() { return Task.FromResult(false); }
-        protected virtual Task<bool> CanUserEdit() { return Task.FromResult(false); }
-        protected virtual Task<bool> CanUserDelete() { return Task.FromResult(false); }
-        protected virtual Task<bool> CanUserSeeRestricted() { return Task.FromResult(false); }
+        <#= accessCanUserMethods #> virtual bool CanUserCreate() { return false; }
+        <#= accessCanUserMethods #> virtual bool CanUserEdit() { return false; }
+        <#= accessCanUserMethods #> virtual bool CanUserDelete() { return false; }
+        <#= accessCanUserMethods #> virtual bool CanUserSeeRestricted() { return false; }
+        <#= accessCanUserMethods #> virtual Task<bool> CanUserCreateAsync() { return Task.FromResult(false); }
+        <#= accessCanUserMethods #> virtual Task<bool> CanUserEditAsync() { return Task.FromResult(false); }
+        <#= accessCanUserMethods #> virtual Task<bool> CanUserDeleteAsync() { return Task.FromResult(false); }
+        <#= accessCanUserMethods #> virtual Task<bool> CanUserSeeRestrictedAsync() { return Task.FromResult(false); }
 
         protected virtual bool IsUserAdmin()
         {
