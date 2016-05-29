@@ -11,6 +11,7 @@ WriteUsingNamespaces(); #>
     int totalCount = ViewBag.totalCount;
     int pageSize = ViewBag.pageSize;
     int pageCount = ViewBag.pageCount;
+    int listedCount = page < pageCount ? pageSize : totalCount - ((page - 1) * pageSize);
     int pagers = pageCount > 10 ? 10 : pageCount;
     int pagerStart = page > 5 ? page - (pagers / 2) : 1;
     if ((pagerStart + pagers) > pageCount)
@@ -18,76 +19,79 @@ WriteUsingNamespaces(); #>
         pagerStart = pageCount - pagers + 1;
     }
 }
-@if (pageCount > 1)
-{
 <nav>
     <ul class="pagination">
-        @if (page == 1)
+        <li class="active">
+            <span id="recordsStats" style="margin:0 0 0 2px;min-width:92px;text-align:center;">@listedCount / @totalCount</span>
+        </li>
+        @if (pageCount > 1)
         {
-            <li class="disabled">
-                <a aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="disabled">
-                <a aria-label="Previous">
-                    <span aria-hidden="true">&lsaquo;</span>
-                </a>
-            </li>
-        }
-        else
-        {
-            <li>
-                <a href="#" aria-label="FirstPage" onclick="getPagedData(1)">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" aria-label="Previous" onclick="getPagedData(@(page - 1))">
-                    <span aria-hidden="true">&lsaquo;</span>
-                </a>
-            </li>
-        }
-        @for (int i = pagerStart; i < (pagerStart + pagers); i++)
-        {
-            if (page == i)
+            if (page == 1)
             {
-                <li class="active"><a>@i <span class="sr-only">(current)</span></a></li>
+                <li class="disabled">
+                    <a aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a aria-label="Previous">
+                        <span aria-hidden="true">&lsaquo;</span>
+                    </a>
+                </li>
             }
             else
             {
-                <li><a href="#" onclick="getPagedData(@i)">@i</a></li>
+                <li>
+                    <a href="javascript:;" aria-label="FirstPage" onclick="getPagedData(1)">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" aria-label="Previous" onclick="getPagedData(@(page - 1))">
+                        <span aria-hidden="true">&lsaquo;</span>
+                    </a>
+                </li>
             }
-        }
-        @if (page < pageCount)
-        {
-            <li>
-                <a href="#" aria-label="Next" onclick="getPagedData(@(page + 1))">
-                    <span aria-hidden="true">&rsaquo;</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" aria-label="Next" onclick="getPagedData(@(pageCount))">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        }
-        else
-        {
-            <li class="disabled">
-                <a aria-label="Next">
-                    <span aria-hidden="true">&rsaquo;</span>
-                </a>
-            </li>
-            <li class="disabled">
-                <a aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
+            for (int i = pagerStart; i < (pagerStart + pagers); i++)
+            {
+                if (page == i)
+                {
+                    <li class="active"><a>@i <span class="sr-only">(current)</span></a></li>
+                }
+                else
+                {
+                    <li><a href="javascript:;" onclick="getPagedData(@i)">@i</a></li>
+                }
+            }
+            if (page < pageCount)
+            {
+                <li>
+                    <a href="javascript:;" aria-label="Next" onclick="getPagedData(@(page + 1))">
+                        <span aria-hidden="true">&rsaquo;</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" aria-label="Next" onclick="getPagedData(@(pageCount))">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="disabled">
+                    <a aria-label="Next">
+                        <span aria-hidden="true">&rsaquo;</span>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
         }
     </ul>
 </nav>
-}
 <script type="text/javascript">
     function getPagedData(page) {
         $('#page').val(page);
