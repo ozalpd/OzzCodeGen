@@ -99,7 +99,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
         <#= accessCanUserMethods #> virtual Task<bool> CanUserDeleteAsync() { return Task.FromResult(false); }
         <#= accessCanUserMethods #> virtual Task<bool> CanUserSeeRestrictedAsync() { return Task.FromResult(false); }
 
-        protected virtual bool IsUserAdmin()
+        <#= accessCanUserMethods #> virtual bool IsUserAdmin()
         {
             if (!_isUserAdmin.HasValue)
             {
@@ -108,7 +108,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
             return _isUserAdmin.Value;
         }
 
-        protected virtual async Task<bool> IsUserAdminAsync()
+        <#= accessCanUserMethods #> virtual async Task<bool> IsUserAdminAsync()
         {
             if (!_isUserAdmin.HasValue)
             {
@@ -125,7 +125,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
  #>
 
 
-        protected virtual bool <#= IsUserInRoleMethods[role.Trim()] #>()
+        <#= accessCanUserMethods #> virtual bool <#= IsUserInRoleMethods[role.Trim()] #>()
         {
             if (!<#= varName #>.HasValue)
             {
@@ -134,7 +134,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
             return <#= varName #>.Value;
         }
 
-        protected virtual async Task<bool> <#= IsUserInRoleMethods[role.Trim()] #>Async()
+        <#= accessCanUserMethods #> virtual async Task<bool> <#= IsUserInRoleMethods[role.Trim()] #>Async()
         {
             if (!<#= varName #>.HasValue)
             {

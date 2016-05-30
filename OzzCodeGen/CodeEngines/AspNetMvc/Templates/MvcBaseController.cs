@@ -170,9 +170,15 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write(@" virtual Task<bool> CanUserSeeRestrictedAsync() { return Task.FromResult(false); }
-
-        protected virtual bool IsUserAdmin()
+            this.Write(" virtual Task<bool> CanUserSeeRestrictedAsync() { return Task.FromResult(false); " +
+                    "}\r\n\r\n        ");
+            
+            #line 102 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
+            
+            #line default
+            #line hidden
+            this.Write(@" virtual bool IsUserAdmin()
         {
             if (!_isUserAdmin.HasValue)
             {
@@ -181,7 +187,14 @@ namespace ");
             return _isUserAdmin.Value;
         }
 
-        protected virtual async Task<bool> IsUserAdminAsync()
+        ");
+            
+            #line 111 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
+            
+            #line default
+            #line hidden
+            this.Write(@" virtual async Task<bool> IsUserAdminAsync()
         {
             if (!_isUserAdmin.HasValue)
             {
@@ -202,7 +215,14 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n        protected virtual bool ");
+            this.Write("\r\n\r\n        ");
+            
+            #line 128 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
+            
+            #line default
+            #line hidden
+            this.Write(" virtual bool ");
             
             #line 128 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(IsUserInRoleMethods[role.Trim()]));
@@ -237,7 +257,14 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write(".Value;\r\n        }\r\n\r\n        protected virtual async Task<bool> ");
+            this.Write(".Value;\r\n        }\r\n\r\n        ");
+            
+            #line 137 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
+            
+            #line default
+            #line hidden
+            this.Write(" virtual async Task<bool> ");
             
             #line 137 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(IsUserInRoleMethods[role.Trim()]));
