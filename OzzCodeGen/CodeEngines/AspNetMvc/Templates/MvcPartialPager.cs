@@ -37,46 +37,47 @@ WriteUsingNamespaces();
             #line hidden
             this.Write("@{\r\n    Layout = null;\r\n    int page = ViewBag.page;\r\n    int totalCount = ViewBa" +
                     "g.totalCount;\r\n    int pageSize = ViewBag.pageSize;\r\n    int pageCount = ViewBag" +
-                    ".pageCount;\r\n    int listedCount = page < pageCount ? pageSize : totalCount - ((" +
-                    "page - 1) * pageSize);\r\n    int pagers = pageCount > 10 ? 10 : pageCount;\r\n    i" +
-                    "nt pagerStart = page > 5 ? page - (pagers / 2) : 1;\r\n    if ((pagerStart + pager" +
-                    "s) > pageCount)\r\n    {\r\n        pagerStart = pageCount - pagers + 1;\r\n    }\r\n}\r\n" +
-                    "<nav>\r\n    <ul class=\"pagination\">\r\n        <li class=\"active\">\r\n            <sp" +
-                    "an id=\"recordsStats\" style=\"margin:0 0 0 2px;min-width:92px;text-align:center;\">" +
-                    "@listedCount / @totalCount</span>\r\n        </li>\r\n        @if (pageCount > 1)\r\n " +
-                    "       {\r\n            if (page == 1)\r\n            {\r\n                <li class=\"" +
-                    "disabled\">\r\n                    <a aria-label=\"Previous\">\r\n                     " +
-                    "   <span aria-hidden=\"true\">&laquo;</span>\r\n                    </a>\r\n          " +
-                    "      </li>\r\n                <li class=\"disabled\">\r\n                    <a aria-" +
-                    "label=\"Previous\">\r\n                        <span aria-hidden=\"true\">&lsaquo;</sp" +
-                    "an>\r\n                    </a>\r\n                </li>\r\n            }\r\n           " +
-                    " else\r\n            {\r\n                <li>\r\n                    <a href=\"javascr" +
-                    "ipt:;\" aria-label=\"FirstPage\" onclick=\"getPagedData(1)\">\r\n                      " +
-                    "  <span aria-hidden=\"true\">&laquo;</span>\r\n                    </a>\r\n           " +
-                    "     </li>\r\n                <li>\r\n                    <a href=\"javascript:;\" ari" +
-                    "a-label=\"Previous\" onclick=\"getPagedData(@(page - 1))\">\r\n                       " +
-                    " <span aria-hidden=\"true\">&lsaquo;</span>\r\n                    </a>\r\n           " +
-                    "     </li>\r\n            }\r\n            for (int i = pagerStart; i < (pagerStart " +
-                    "+ pagers); i++)\r\n            {\r\n                if (page == i)\r\n                " +
-                    "{\r\n                    <li class=\"active\"><a>@i <span class=\"sr-only\">(current)<" +
-                    "/span></a></li>\r\n                }\r\n                else\r\n                {\r\n   " +
-                    "                 <li><a href=\"javascript:;\" onclick=\"getPagedData(@i)\">@i</a></l" +
-                    "i>\r\n                }\r\n            }\r\n            if (page < pageCount)\r\n       " +
-                    "     {\r\n                <li>\r\n                    <a href=\"javascript:;\" aria-la" +
-                    "bel=\"Next\" onclick=\"getPagedData(@(page + 1))\">\r\n                        <span a" +
-                    "ria-hidden=\"true\">&rsaquo;</span>\r\n                    </a>\r\n                </l" +
-                    "i>\r\n                <li>\r\n                    <a href=\"javascript:;\" aria-label=" +
-                    "\"Next\" onclick=\"getPagedData(@(pageCount))\">\r\n                        <span aria" +
-                    "-hidden=\"true\">&raquo;</span>\r\n                    </a>\r\n                </li>\r\n" +
-                    "            }\r\n            else\r\n            {\r\n                <li class=\"disab" +
-                    "led\">\r\n                    <a aria-label=\"Next\">\r\n                        <span " +
-                    "aria-hidden=\"true\">&rsaquo;</span>\r\n                    </a>\r\n                </" +
-                    "li>\r\n                <li class=\"disabled\">\r\n                    <a aria-label=\"N" +
-                    "ext\">\r\n                        <span aria-hidden=\"true\">&raquo;</span>\r\n        " +
-                    "            </a>\r\n                </li>\r\n            }\r\n        }\r\n    </ul>\r\n</" +
-                    "nav>\r\n<script type=\"text/javascript\">\r\n    function getPagedData(page) {\r\n      " +
-                    "  $(\'#page\').val(page);\r\n        $(\'#searchForm\').submit();\r\n    }\r\n    function" +
-                    " refreshData() {\r\n        $(\'#searchForm\').submit();\r\n    }\r\n</script>");
+                    ".pageCount;\r\n    int listedCount = totalCount == 0 ? 0 : page < pageCount ? page" +
+                    "Size : totalCount - ((page - 1) * pageSize);\r\n    int pagers = pageCount > 10 ? " +
+                    "10 : pageCount;\r\n    int pagerStart = page > 5 ? page - (pagers / 2) : 1;\r\n    i" +
+                    "f ((pagerStart + pagers) > pageCount)\r\n    {\r\n        pagerStart = pageCount - p" +
+                    "agers + 1;\r\n    }\r\n}\r\n<nav>\r\n    <ul class=\"pagination\">\r\n        <li class=\"act" +
+                    "ive\">\r\n            <span id=\"recordsStats\" style=\"margin:0 0 0 2px;min-width:92p" +
+                    "x;text-align:center;\">@listedCount / @totalCount</span>\r\n        </li>\r\n        " +
+                    "@if (pageCount > 1)\r\n        {\r\n            if (page == 1)\r\n            {\r\n     " +
+                    "           <li class=\"disabled\">\r\n                    <a aria-label=\"Previous\">\r" +
+                    "\n                        <span aria-hidden=\"true\">&laquo;</span>\r\n              " +
+                    "      </a>\r\n                </li>\r\n                <li class=\"disabled\">\r\n      " +
+                    "              <a aria-label=\"Previous\">\r\n                        <span aria-hidd" +
+                    "en=\"true\">&lsaquo;</span>\r\n                    </a>\r\n                </li>\r\n    " +
+                    "        }\r\n            else\r\n            {\r\n                <li>\r\n              " +
+                    "      <a href=\"javascript:;\" aria-label=\"FirstPage\" onclick=\"getPagedData(1)\">\r\n" +
+                    "                        <span aria-hidden=\"true\">&laquo;</span>\r\n               " +
+                    "     </a>\r\n                </li>\r\n                <li>\r\n                    <a h" +
+                    "ref=\"javascript:;\" aria-label=\"Previous\" onclick=\"getPagedData(@(page - 1))\">\r\n " +
+                    "                       <span aria-hidden=\"true\">&lsaquo;</span>\r\n               " +
+                    "     </a>\r\n                </li>\r\n            }\r\n            for (int i = pagerS" +
+                    "tart; i < (pagerStart + pagers); i++)\r\n            {\r\n                if (page =" +
+                    "= i)\r\n                {\r\n                    <li class=\"active\"><a>@i <span clas" +
+                    "s=\"sr-only\">(current)</span></a></li>\r\n                }\r\n                else\r\n" +
+                    "                {\r\n                    <li><a href=\"javascript:;\" onclick=\"getPa" +
+                    "gedData(@i)\">@i</a></li>\r\n                }\r\n            }\r\n            if (page" +
+                    " < pageCount)\r\n            {\r\n                <li>\r\n                    <a href=" +
+                    "\"javascript:;\" aria-label=\"Next\" onclick=\"getPagedData(@(page + 1))\">\r\n         " +
+                    "               <span aria-hidden=\"true\">&rsaquo;</span>\r\n                    </a" +
+                    ">\r\n                </li>\r\n                <li>\r\n                    <a href=\"jav" +
+                    "ascript:;\" aria-label=\"Next\" onclick=\"getPagedData(@(pageCount))\">\r\n            " +
+                    "            <span aria-hidden=\"true\">&raquo;</span>\r\n                    </a>\r\n " +
+                    "               </li>\r\n            }\r\n            else\r\n            {\r\n          " +
+                    "      <li class=\"disabled\">\r\n                    <a aria-label=\"Next\">\r\n        " +
+                    "                <span aria-hidden=\"true\">&rsaquo;</span>\r\n                    </" +
+                    "a>\r\n                </li>\r\n                <li class=\"disabled\">\r\n              " +
+                    "      <a aria-label=\"Next\">\r\n                        <span aria-hidden=\"true\">&r" +
+                    "aquo;</span>\r\n                    </a>\r\n                </li>\r\n            }\r\n  " +
+                    "      }\r\n    </ul>\r\n</nav>\r\n<script type=\"text/javascript\">\r\n    function getPag" +
+                    "edData(page) {\r\n        $(\'#page\').val(page);\r\n        $(\'#searchForm\').submit()" +
+                    ";\r\n    }\r\n    function refreshData() {\r\n        $(\'#searchForm\').submit();\r\n    " +
+                    "}\r\n</script>");
             return this.GenerationEnvironment.ToString();
         }
     }

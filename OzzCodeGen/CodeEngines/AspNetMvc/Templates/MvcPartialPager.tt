@@ -11,7 +11,7 @@ WriteUsingNamespaces(); #>
     int totalCount = ViewBag.totalCount;
     int pageSize = ViewBag.pageSize;
     int pageCount = ViewBag.pageCount;
-    int listedCount = page < pageCount ? pageSize : totalCount - ((page - 1) * pageSize);
+    int listedCount = totalCount == 0 ? 0 : page < pageCount ? pageSize : totalCount - ((page - 1) * pageSize);
     int pagers = pageCount > 10 ? 10 : pageCount;
     int pagerStart = page > 5 ? page - (pagers / 2) : 1;
     if ((pagerStart + pagers) > pageCount)
