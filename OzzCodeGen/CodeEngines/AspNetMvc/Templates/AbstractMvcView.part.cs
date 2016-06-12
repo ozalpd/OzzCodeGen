@@ -74,9 +74,19 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         protected virtual List<string> DefaultUsingNamespaceList()
         {
             var namespaces = new List<string>();
+            namespaces.AddUnique(Entity.CodeEngine.ViewModelsNamespace);
+            namespaces.AddUnique(Entity.CodeEngine.ControllersNamespace);
             namespaces.AddUnique(Entity.CodeEngine.ModelsNamespace);
             namespaces.AddUnique(Entity.CodeEngine.DataModelsNamespace);
-            namespaces.AddUnique(Entity.CodeEngine.ViewModelsNamespace);
+            if (!string.IsNullOrEmpty(Entity.CodeEngine.AddtNamespacesForView))
+            {
+                var addt = Entity.CodeEngine.AddtNamespacesForView.Split(';');
+                foreach (var item in addt)
+                {
+                    namespaces.AddUnique(item.Trim());
+                }
+            }
+
             if (Resx != null)
             {
                 namespaces.AddUnique(Resx.NamespaceName);

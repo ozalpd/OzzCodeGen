@@ -338,6 +338,23 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private string _controllersNamespace;
 
+        /// <summary>
+        /// Additional namespaces for views
+        /// </summary>
+        public string AddtNamespacesForView
+        {
+            get
+            {
+                return _addtNamespacesForView;
+            }
+            set
+            {
+                _addtNamespacesForView = value != null ? value.ToPascalCase() : string.Empty;
+                RaisePropertyChanged("AddtNamespacesForView");
+            }
+        }
+        private string _addtNamespacesForView;
+
         protected string GetDefaultControllersNamespace(string projectNamespaceName)
         {
             return projectNamespaceName + "." + "Controllers";

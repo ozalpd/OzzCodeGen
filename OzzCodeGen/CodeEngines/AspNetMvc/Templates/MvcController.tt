@@ -33,7 +33,7 @@ namespace <#= NamespaceName #>
     {
 <#
 if (CustomFile)
-{ 
+{
     if (fkeyProperties.Any() && fillSelectListsMethods.Any(s=>s.Equals(AspNetMvcEngine.FillSelectListsMethodDefaultName)))
     { #>
         partial void <#= AspNetMvcEngine.FillSelectListsMethodDefaultName #>(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>)
@@ -128,20 +128,17 @@ else
             await PutCanUserInViewBag();
 <# if(HasViewJsonResult) { #>
             var result = new PagedList<<#= Entity.ModelForJson #>>(qParams);
-			result.Items = await Get<#= Entity.Name #>DtoList(qParams);
+            result.Items = await Get<#= Entity.Name #>DtoList(qParams);
             ViewBag.result = ConvertToJson(result);
             
             return View();
 <#  } else { #>
             var query = await Get<#= Entity.Name #>Query(qParams);
-            var result = new PagedList<<#= Entity.Name #>>(qParams);
-            if (qParams.TotalCount > 0)
-            {
-                result.Items = await query.ToListAsync();
-            }
-
-            PutPagerInViewBag(result);
-            return View(result.Items);
+            var result =  qParams.TotalCount > 0 ?
+                            new <#= Entity.Name #>ListVM(await query.ToListAsync(), qParams) :
+                            new <#= Entity.Name #>ListVM(qParams);
+            PutPagerInViewBag(qParams);
+            return View(result);
 <#  } #>
         }
 
@@ -470,8 +467,8 @@ else
     string editRolesAsync = CodeEngine.MergeIsUserMethods(Entity.RolesCanEditToArray());
     string deleteRolesAsync = CodeEngine.MergeIsUserMethods(Entity.RolesCanDeleteToArray());
     string confidentRolesAsync = CodeEngine.MergeIsUserMethods(Entity.RolesCanSeeRestrictedToArray());
-	string accessCanUserMethods = CodeEngine.AreCanUserMethodsPublic ? "public" : "protected";
-	if(createRoles.Equals("true") || createRoles.Equals("false")) { #>
+    string accessCanUserMethods = CodeEngine.AreCanUserMethodsPublic ? "public" : "protected";
+    if(createRoles.Equals("true") || createRoles.Equals("false")) { #>
         <#= accessCanUserMethods #> override bool CanUserCreate() { return <#= createRoles #>; }
         <#= accessCanUserMethods #> override Task<bool> CanUserCreateAsync() { return Task.FromResult(<#= createRoles #>); }
 <#  } else { #>
@@ -588,6 +585,26 @@ else
             public <#= item.GetNullableTypeName() #> <#= item.Name #>Min { get; set; }
             public <#= item.GetNullableTypeName() #> <#= item.Name #>Max { get; set; }
 <#      } #>
+        }
+
+<#      var listName = Entity.Name.Pluralize().ToCamelCase(); #>        
+        public partial class <#= Entity.Name #>ListVM : List<<#= Entity.Name #>>
+        {
+            public <#= Entity.Name #>ListVM() { }
+            public <#= Entity.Name #>ListVM(QueryParameters parameters)
+            {
+                QueryParameters = parameters;
+            }
+            public <#= Entity.Name #>ListVM(IEnumerable<<#= Entity.Name #>> <#= listName #>)
+            {
+                AddRange(<#= listName #>);
+            }
+            public <#= Entity.Name #>ListVM(IEnumerable<<#= Entity.Name #>> <#= listName #>, QueryParameters parameters) : this(<#= listName #>)
+            {
+                QueryParameters = parameters;
+            }
+
+            public QueryParameters QueryParameters { get; set; }
         }
 
         public partial class PagedList<T> : QueryParameters

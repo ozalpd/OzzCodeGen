@@ -22,7 +22,8 @@ bool hasScript = (Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWit
 WriteUsingNamespaces(); #>
 @model IEnumerable<<#= Entity.Name #>>
 @{
-    ViewBag.Title = @<#= EntityResource #>.<#= Entity.Name.Pluralize() #>;
+    var title = <#= EntityResource #>.<#= Entity.Name.Pluralize() #>;
+    ViewBag.Title = title;
 
     //Authorization Flags
     bool canUserEdit = ViewBag.canUserEdit;
@@ -31,12 +32,11 @@ WriteUsingNamespaces(); #>
     bool canSeeRestricted = ViewBag.canSeeRestricted;
 
     //Records & Pager
-    int page = ViewBag.page;
-    int totalCount = ViewBag.totalCount;
-    int pageSize = ViewBag.pageSize;
-    int pageCount = ViewBag.pageCount;
-
-    var title = <#= EntityResource #>.<#= Entity.Name.Pluralize() #>;
+    var qParams = ((<#= Entity.ControllerName #>Controller.<#= Entity.Name #>ListVM)Model).QueryParameters;
+    int page = qParams != null ? qParams.Page : ViewBag.page;
+    int totalCount = qParams != null ? qParams.TotalCount : ViewBag.totalCount;
+    int pageSize = qParams != null ? qParams.PageSize : ViewBag.pageSize;
+    int pageCount = qParams != null ? qParams.PageCount : ViewBag.pageCount;
 }
 <div class="well hidden-print">
     <div class="row">

@@ -58,7 +58,7 @@ namespace OzzCodeGen.Wpf
 
         protected string DefaultTitle
         {
-            get { return string.Format("Ozz Code Generator | Version {0}", BuildInfo.Date); }
+            get { return string.Format("Ozz Code Generator | {0}", BuildInfo.Date); }
         }
 
 

@@ -57,7 +57,7 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write(">\r\n@{\r\n    ViewBag.Title = @");
+            this.Write(">\r\n@{\r\n    var title = ");
             
             #line 25 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
@@ -72,6 +72,7 @@ WriteUsingNamespaces();
             #line default
             #line hidden
             this.Write(@";
+    ViewBag.Title = title;
 
     //Authorization Flags
     bool canUserEdit = ViewBag.canUserEdit;
@@ -80,27 +81,32 @@ WriteUsingNamespaces();
     bool canSeeRestricted = ViewBag.canSeeRestricted;
 
     //Records & Pager
-    int page = ViewBag.page;
-    int totalCount = ViewBag.totalCount;
-    int pageSize = ViewBag.pageSize;
-    int pageCount = ViewBag.pageCount;
-
-    var title = ");
+    var qParams = ((");
             
-            #line 39 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
+            #line 35 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ControllerName));
             
             #line default
             #line hidden
-            this.Write(".");
+            this.Write("Controller.");
             
-            #line 39 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.Pluralize()));
+            #line 35 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
-            this.Write(";\r\n}\r\n<div class=\"well hidden-print\">\r\n    <div class=\"row\">\r\n        <div class=" +
-                    "\"col-md-6 col-sm-5\">\r\n            <h4>@title</h4>\r\n        </div>\r\n");
+            this.Write(@"ListVM)Model).QueryParameters;
+    int page = qParams != null ? qParams.Page : ViewBag.page;
+    int totalCount = qParams != null ? qParams.TotalCount : ViewBag.totalCount;
+    int pageSize = qParams != null ? qParams.PageSize : ViewBag.pageSize;
+    int pageCount = qParams != null ? qParams.PageCount : ViewBag.pageCount;
+}
+<div class=""well hidden-print"">
+    <div class=""row"">
+        <div class=""col-md-6 col-sm-5"">
+            <h4>@title</h4>
+        </div>
+");
             
             #line 46 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(Entity.CreatePartialView) { 

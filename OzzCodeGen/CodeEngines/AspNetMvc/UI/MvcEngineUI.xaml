@@ -296,9 +296,9 @@
                 </TabItem.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" MaxWidth="132"/>
+                        <ColumnDefinition Width="*" MaxWidth="160"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*" MaxWidth="132"/>
+                        <ColumnDefinition Width="*" MaxWidth="160"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -307,11 +307,14 @@
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Views Namespace:" ToolTip="Namespace for view classes" Grid.Column="0" Grid.Row="0"/>
+                    <TextBlock Text="Views Namespace:" ToolTip="Namespace of views" Grid.Column="0" Grid.Row="0"/>
                     <TextBox Text="{Binding ViewsNamespace, Mode=TwoWay}" Grid.Column="1" Grid.Row="0"/>
 
-                    <TextBlock Text="ViewModels Namespace:" ToolTip="Namespace for data ViewModel classes" Grid.Column="0" Grid.Row="1"/>
+                    <TextBlock Text="ViewModels Namespace:" ToolTip="Namespace of data ViewModel classes" Grid.Column="0" Grid.Row="1"/>
                     <TextBox Text="{Binding ViewModelsNamespace, Mode=TwoWay}" Grid.Column="1" Grid.Row="1"/>
+
+                    <TextBlock Text="Addt. Namespaces for Views:" ToolTip="Additional namespaces for views (cshtml forms)" Grid.Column="0" Grid.Row="2"/>
+                    <TextBox Text="{Binding AddtNamespacesForView, Mode=TwoWay}" Grid.Column="1" Grid.Row="2"/>
 
                 </Grid>
             </TabItem>
