@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using OzzUtils;
+using System.Text;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
@@ -75,7 +76,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         {
             var namespaces = new List<string>();
             namespaces.AddUnique(Entity.CodeEngine.ViewModelsNamespace);
-            namespaces.AddUnique(Entity.CodeEngine.ControllersNamespace);
+            namespaces.AddUnique(GetControllersNamespace());
             namespaces.AddUnique(Entity.CodeEngine.ModelsNamespace);
             namespaces.AddUnique(Entity.CodeEngine.DataModelsNamespace);
             if (!string.IsNullOrEmpty(Entity.CodeEngine.AddtNamespacesForView))
@@ -93,6 +94,33 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             }
 
             return namespaces;
+        }
+
+        protected virtual string GetControllersNamespace()
+        {
+            if (string.IsNullOrEmpty(Entity?.Area))
+            {
+                return Entity.CodeEngine.ControllersNamespace;
+            }
+            else
+            {
+                string[] parts = Entity.CodeEngine.ControllersNamespace.Split('.');
+                var sb = new StringBuilder();
+                if (parts.Length > 1)
+                {
+                    for (int i = 0; i < parts.Length - 1; i++)
+                    {
+                        sb.Append(parts[i]);
+                        sb.Append('.');
+                    }
+                }
+                sb.Append("Areas");
+                sb.Append('.');
+                sb.Append(Entity.Area);
+                sb.Append('.');
+                sb.Append(parts[parts.Length - 1]);
+                return sb.ToString();
+            }
         }
 
         public virtual string GetDefaultFilePath()
