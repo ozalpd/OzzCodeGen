@@ -176,12 +176,20 @@ namespace OzzCodeGen.CodeEngines.Storage
                 }
             }
 
-            if (!string.IsNullOrEmpty(column.InsertDefault) && !column.InsertDefault.StartsWith("@"))
+            if (!string.IsNullOrEmpty(column.InsertDefault))
             {
-                sb.Append(" Default ");
-                sb.Append(column.InsertDefault);
+                if (!column.InsertDefault.Trim().StartsWith("@") &&
+                    !column.InsertDefault.Trim().Equals("null", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    sb.Append(" Default ");
+                    sb.Append(column.InsertDefault);
+                }
+                if (column.InsertDefault.Trim().Equals("null", System.StringComparison.InvariantCultureIgnoreCase) && !column.Nullable)
+                {
+                    sb.Append(" /* Warning! Column's default is null */");
+                }
             }
-
+            
             return sb.ToString();
         }
 

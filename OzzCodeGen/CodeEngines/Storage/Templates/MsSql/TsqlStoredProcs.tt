@@ -72,18 +72,18 @@ CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableN
 <#	} #>
 As
 Begin
-    Declare @NewKey		<#= TableDefinition.PrimaryKeyColumn.DataType #>
+    Declare @newKey		<#= TableDefinition.PrimaryKeyColumn.DataType #>
 
 <# WriteInsertStatement(firstBase, string.Empty); #>
 
-	Set @NewKey = SCOPE_IDENTITY()
+	Set @newKey = SCOPE_IDENTITY()
 <#  if(TableDefinition.UseInheritance)
 	{ #>
 
-<# WriteInsertStatement(TableDefinition, "@NewKey"); #>
+<# WriteInsertStatement(TableDefinition, "@newKey"); #>
 <#	} #>
 
-<# WriteSelectStatement("@NewKey"); #>
+<# WriteSelectStatement("@newKey"); #>
 End
 Go
 -- --------------------------------------------------------------------
@@ -227,7 +227,7 @@ protected void WriteUpdateStatement(StorageEntitySetting table, string pkeyValue
 <#+ 
 protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue)
 {
-	int varCount = 6;
+	int varCount = 4;
 	var columns = table.UseInheritance ?
 			table.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false) :
 			table.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false);
@@ -235,7 +235,7 @@ protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue
 	Insert Into [<#= table.SchemaName #>].[<#= table.TableName #>](
 <#+ 
 	PushIndent("            ");
-	if(!string.IsNullOrEmpty(pkeyValue)){ #><#= table.PrimaryKeyColumn.Name #>, <#+ } #>
+	if(!string.IsNullOrEmpty(pkeyValue)){ #>[<#= table.PrimaryKeyColumn.Name #>], <#+ } #>
 <#+	
 	int colNr = 0;
 	foreach (var column in columns)
@@ -243,7 +243,7 @@ protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue
 		if(colNr != 0 & (colNr % varCount == 0)) { WriteLine(""); } 
 		colNr++;
 		#>
-<#= column.Name #><#+ if(colNr < columns.Count()) {#>, <#+  } else { #>)<#+  } #>
+[<#= column.Name #>]<#+ if(colNr < columns.Count()) {#>, <#+  } else { #>)<#+  } #>
 <#+	}
     PopIndent();
 	WriteLine("");
