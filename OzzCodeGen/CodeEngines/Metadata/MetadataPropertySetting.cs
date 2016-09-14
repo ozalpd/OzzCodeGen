@@ -197,7 +197,8 @@ namespace OzzCodeGen.CodeEngines.Metadata
 
             if (PropertyDefinition is SimpleProperty)
             {
-                if (((SimpleProperty)PropertyDefinition).IsKey || ((SimpleProperty)PropertyDefinition).IsNullable)
+                var simp = PropertyDefinition as SimpleProperty;
+                if (simp.IsKey || simp.IsNullable || simp.IsServerComputed || simp.IsStoreGenerated)
                 {
                     return string.Empty;
                 }

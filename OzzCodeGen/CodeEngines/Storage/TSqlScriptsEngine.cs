@@ -40,10 +40,19 @@ namespace OzzCodeGen.CodeEngines.Storage
 
         protected override void FixColumnType(StorageColumnSetting column)
         {
+            if (column.IsDateTime)
+            {
+                column.DataType = "DateTime";
+                return;
+            }
+
+
             int colLen = 255;
             column.DataType = column.DataType.Trim();
             if (column.DataType.ToLowerInvariant().StartsWith("nullable<"))
+            {
                 column.DataType = column.DataType.Remove(0, "nullable<".Length).Replace(">", "");
+            }   
             column.DataType.Replace("?", "");
 
             switch (column.DataType.ToLowerInvariant())
@@ -73,6 +82,15 @@ namespace OzzCodeGen.CodeEngines.Storage
                 case "decimal":
                     column.DataType = "[decimal](18, 4)";
                     break;
+
+                case "system.guid":
+                    column.DataType = "UniqueIdentifier";
+                    break;
+
+                case "guid":
+                    column.DataType = "UniqueIdentifier";
+                    break;
+
 
                 default:
                     break;

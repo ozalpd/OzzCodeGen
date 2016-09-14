@@ -102,19 +102,21 @@ namespace OzzCodeGen.Definitions
         public override List<string> GetUsableTypeNames()
         {
             var typeNames = new List<string>();
-            typeNames.Add("int");    //System.Int32
-            typeNames.Add("uint");   //System.UInt32
-            typeNames.Add("bool");   //System.Boolean
+            typeNames.Add("int");       //System.Int32
+            typeNames.Add("uint");      //System.UInt32
+            typeNames.Add("bool");      //System.Boolean
             typeNames.Add("DateTime");
-            typeNames.Add("byte");   //System.Byte
-            typeNames.Add("sbyte");  //System.SByte
-            typeNames.Add("short");  //System.Int16
-            typeNames.Add("ushort"); //System.UInt16
-            typeNames.Add("long");   //System.Int64
-            typeNames.Add("ulong");  //System.UInt64
-            typeNames.Add("decimal");//System.Decimal
-            typeNames.Add("float");  //System.Single
-            typeNames.Add("double"); //System.Double
+            typeNames.Add("decimal");   //System.Decimal
+            typeNames.Add("double");    //System.Double
+            typeNames.Add("float");     //System.Single
+            typeNames.Add("byte");      //System.Byte
+            typeNames.Add("sbyte");     //System.SByte
+            typeNames.Add("short");     //System.Int16
+            typeNames.Add("ushort");    //System.UInt16
+            typeNames.Add("long");      //System.Int64
+            typeNames.Add("ulong");     //System.UInt64
+
+            typeNames.Add("Guid");  //System.Guid this and the DateTime are struct types, not a simple type
 
             return typeNames;
         }
