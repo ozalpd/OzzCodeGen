@@ -127,8 +127,8 @@ else
         {
             await PutCanUserInViewBag();
 <# if(HasViewJsonResult) { #>
-            var result = new PagedList<<#= Entity.ModelForJson #>>(qParams);
-            result.Items = await Get<#= Entity.Name #>DtoList(qParams);
+            var items = await Get<#= Entity.Name #>DtoList(qParams);
+            var result = new PagedList<<#= Entity.ModelForJson #>>(qParams, items);
             ViewBag.result = ConvertToJson(result);
             
             return View();
