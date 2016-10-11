@@ -33,6 +33,7 @@
       <RolesCanEdit>admin, supervisor, clerk</RolesCanEdit>
       <RolesCanDelete>admin, supervisor</RolesCanDelete>
       <GenerateController>false</GenerateController>
+      <GenerateActionForAutoComplete>true</GenerateActionForAutoComplete>
       <GenerateGetQueryMethod>true</GenerateGetQueryMethod>
       <GenerateGetDtoQueryMethod>true</GenerateGetDtoQueryMethod>
       <GenerateIndexAction>true</GenerateIndexAction>
@@ -45,8 +46,11 @@
       <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>false</IndexView>
       <DetailsView>false</DetailsView>
+      <DetailsPartialView>true</DetailsPartialView>
       <CreateView>false</CreateView>
+      <CreatePartialView>true</CreatePartialView>
       <EditView>false</EditView>
+      <EditPartialView>true</EditPartialView>
       <BaseControllerName>AbstractController</BaseControllerName>
       <CreateRedirect>"Index"</CreateRedirect>
       <EditRedirect>"Index"</EditRedirect>
@@ -105,6 +109,7 @@
       <RolesCanEdit>admin, supervisor, clerk</RolesCanEdit>
       <RolesCanDelete>admin, supervisor</RolesCanDelete>
       <GenerateController>false</GenerateController>
+      <GenerateActionForAutoComplete>true</GenerateActionForAutoComplete>
       <GenerateGetQueryMethod>true</GenerateGetQueryMethod>
       <GenerateGetDtoQueryMethod>true</GenerateGetDtoQueryMethod>
       <GenerateIndexAction>true</GenerateIndexAction>
@@ -117,8 +122,11 @@
       <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>false</IndexView>
       <DetailsView>false</DetailsView>
+      <DetailsPartialView>true</DetailsPartialView>
       <CreateView>false</CreateView>
+      <CreatePartialView>true</CreatePartialView>
       <EditView>false</EditView>
+      <EditPartialView>true</EditPartialView>
       <BaseControllerName>AbstractController</BaseControllerName>
       <CreateRedirect>"Index"</CreateRedirect>
       <EditRedirect>"Index"</EditRedirect>
@@ -189,6 +197,7 @@
       <RolesCanEdit>admin, supervisor, clerk</RolesCanEdit>
       <RolesCanDelete>admin, supervisor</RolesCanDelete>
       <GenerateController>false</GenerateController>
+      <GenerateActionForAutoComplete>true</GenerateActionForAutoComplete>
       <GenerateGetQueryMethod>true</GenerateGetQueryMethod>
       <GenerateGetDtoQueryMethod>true</GenerateGetDtoQueryMethod>
       <GenerateIndexAction>true</GenerateIndexAction>
@@ -201,8 +210,11 @@
       <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>false</IndexView>
       <DetailsView>false</DetailsView>
+      <DetailsPartialView>true</DetailsPartialView>
       <CreateView>false</CreateView>
+      <CreatePartialView>true</CreatePartialView>
       <EditView>false</EditView>
+      <EditPartialView>true</EditPartialView>
       <BaseControllerName>AbstractController</BaseControllerName>
       <CreateRedirect>"Index"</CreateRedirect>
       <EditRedirect>"Index"</EditRedirect>
@@ -273,6 +285,7 @@
       <RolesCanEdit>admin, supervisor, clerk</RolesCanEdit>
       <RolesCanDelete>admin, supervisor</RolesCanDelete>
       <GenerateController>false</GenerateController>
+      <GenerateActionForAutoComplete>true</GenerateActionForAutoComplete>
       <GenerateGetQueryMethod>true</GenerateGetQueryMethod>
       <GenerateGetDtoQueryMethod>true</GenerateGetDtoQueryMethod>
       <GenerateIndexAction>true</GenerateIndexAction>
@@ -285,8 +298,11 @@
       <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>false</IndexView>
       <DetailsView>false</DetailsView>
+      <DetailsPartialView>true</DetailsPartialView>
       <CreateView>false</CreateView>
+      <CreatePartialView>true</CreatePartialView>
       <EditView>false</EditView>
+      <EditPartialView>true</EditPartialView>
       <BaseControllerName>AbstractController</BaseControllerName>
       <CreateRedirect>"Index"</CreateRedirect>
       <EditRedirect>"Index"</EditRedirect>
@@ -345,6 +361,7 @@
       <RolesCanEdit>admin, supervisor, clerk</RolesCanEdit>
       <RolesCanDelete>admin, supervisor</RolesCanDelete>
       <GenerateController>false</GenerateController>
+      <GenerateActionForAutoComplete>true</GenerateActionForAutoComplete>
       <GenerateGetQueryMethod>true</GenerateGetQueryMethod>
       <GenerateGetDtoQueryMethod>true</GenerateGetDtoQueryMethod>
       <GenerateIndexAction>true</GenerateIndexAction>
@@ -357,8 +374,11 @@
       <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>false</IndexView>
       <DetailsView>false</DetailsView>
+      <DetailsPartialView>true</DetailsPartialView>
       <CreateView>false</CreateView>
+      <CreatePartialView>true</CreatePartialView>
       <EditView>false</EditView>
+      <EditPartialView>true</EditPartialView>
       <BaseControllerName>AbstractController</BaseControllerName>
       <CreateRedirect>"Index"</CreateRedirect>
       <EditRedirect>"Index"</EditRedirect>
@@ -525,6 +545,7 @@
       <RolesCanEdit>admin, supervisor, clerk</RolesCanEdit>
       <RolesCanDelete>admin, supervisor</RolesCanDelete>
       <GenerateController>false</GenerateController>
+      <GenerateActionForAutoComplete>true</GenerateActionForAutoComplete>
       <GenerateGetQueryMethod>true</GenerateGetQueryMethod>
       <GenerateGetDtoQueryMethod>true</GenerateGetDtoQueryMethod>
       <GenerateIndexAction>true</GenerateIndexAction>
@@ -537,8 +558,11 @@
       <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>false</IndexView>
       <DetailsView>false</DetailsView>
+      <DetailsPartialView>true</DetailsPartialView>
       <CreateView>false</CreateView>
+      <CreatePartialView>true</CreatePartialView>
       <EditView>false</EditView>
+      <EditPartialView>true</EditPartialView>
       <BaseControllerName>AbstractController</BaseControllerName>
       <CreateRedirect>"Index"</CreateRedirect>
       <EditRedirect>"Index"</EditRedirect>
@@ -573,6 +597,7 @@
       <RolesCanEdit>admin, supervisor, clerk</RolesCanEdit>
       <RolesCanDelete>admin, supervisor</RolesCanDelete>
       <GenerateController>true</GenerateController>
+      <GenerateActionForAutoComplete>true</GenerateActionForAutoComplete>
       <GenerateGetQueryMethod>true</GenerateGetQueryMethod>
       <GenerateGetDtoQueryMethod>true</GenerateGetDtoQueryMethod>
       <GenerateIndexAction>true</GenerateIndexAction>
@@ -585,8 +610,11 @@
       <IndexViewGeneration>HtmlTableWithMenuAction</IndexViewGeneration>
       <IndexView>true</IndexView>
       <DetailsView>true</DetailsView>
+      <DetailsPartialView>true</DetailsPartialView>
       <CreateView>true</CreateView>
+      <CreatePartialView>true</CreatePartialView>
       <EditView>true</EditView>
+      <EditPartialView>true</EditPartialView>
       <BaseControllerName>AbstractController</BaseControllerName>
       <CreateRedirect>"Index"</CreateRedirect>
       <EditRedirect>"Index"</EditRedirect>
@@ -633,6 +661,7 @@
       <RolesCanEdit>admin, supervisor, clerk</RolesCanEdit>
       <RolesCanDelete>admin, supervisor</RolesCanDelete>
       <GenerateController>true</GenerateController>
+      <GenerateActionForAutoComplete>true</GenerateActionForAutoComplete>
       <GenerateGetQueryMethod>true</GenerateGetQueryMethod>
       <GenerateGetDtoQueryMethod>true</GenerateGetDtoQueryMethod>
       <GenerateIndexAction>true</GenerateIndexAction>
@@ -645,8 +674,11 @@
       <IndexViewGeneration>HtmlTableWithMenuAction</IndexViewGeneration>
       <IndexView>true</IndexView>
       <DetailsView>true</DetailsView>
+      <DetailsPartialView>true</DetailsPartialView>
       <CreateView>true</CreateView>
+      <CreatePartialView>true</CreatePartialView>
       <EditView>true</EditView>
+      <EditPartialView>true</EditPartialView>
       <BaseControllerName>AbstractController</BaseControllerName>
       <CreateRedirect>"Index"</CreateRedirect>
       <EditRedirect>"Index"</EditRedirect>
@@ -790,6 +822,7 @@
       <RolesCanEdit>admin, supervisor, clerk</RolesCanEdit>
       <RolesCanDelete>admin, supervisor</RolesCanDelete>
       <GenerateController>true</GenerateController>
+      <GenerateActionForAutoComplete>true</GenerateActionForAutoComplete>
       <GenerateGetQueryMethod>true</GenerateGetQueryMethod>
       <GenerateGetDtoQueryMethod>true</GenerateGetDtoQueryMethod>
       <GenerateIndexAction>true</GenerateIndexAction>
@@ -802,8 +835,11 @@
       <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>true</IndexView>
       <DetailsView>true</DetailsView>
+      <DetailsPartialView>true</DetailsPartialView>
       <CreateView>true</CreateView>
+      <CreatePartialView>true</CreatePartialView>
       <EditView>true</EditView>
+      <EditPartialView>true</EditPartialView>
       <BaseControllerName>AbstractController</BaseControllerName>
       <CreateRedirect>"Index"</CreateRedirect>
       <EditRedirect>"Index"</EditRedirect>
@@ -874,6 +910,7 @@
       <RolesCanEdit>admin, supervisor, clerk</RolesCanEdit>
       <RolesCanDelete>admin, supervisor</RolesCanDelete>
       <GenerateController>true</GenerateController>
+      <GenerateActionForAutoComplete>true</GenerateActionForAutoComplete>
       <GenerateGetQueryMethod>true</GenerateGetQueryMethod>
       <GenerateGetDtoQueryMethod>true</GenerateGetDtoQueryMethod>
       <GenerateIndexAction>true</GenerateIndexAction>
@@ -886,8 +923,11 @@
       <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>true</IndexView>
       <DetailsView>true</DetailsView>
+      <DetailsPartialView>true</DetailsPartialView>
       <CreateView>true</CreateView>
+      <CreatePartialView>true</CreatePartialView>
       <EditView>true</EditView>
+      <EditPartialView>true</EditPartialView>
       <BaseControllerName>AbstractController</BaseControllerName>
       <CreateRedirect>"Index"</CreateRedirect>
       <EditRedirect>"Index"</EditRedirect>
@@ -935,6 +975,7 @@
       <RolesCanEdit>admin, supervisor, clerk</RolesCanEdit>
       <RolesCanDelete>admin, supervisor</RolesCanDelete>
       <GenerateController>true</GenerateController>
+      <GenerateActionForAutoComplete>true</GenerateActionForAutoComplete>
       <GenerateGetQueryMethod>true</GenerateGetQueryMethod>
       <GenerateGetDtoQueryMethod>true</GenerateGetDtoQueryMethod>
       <GenerateIndexAction>true</GenerateIndexAction>
@@ -947,8 +988,11 @@
       <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>true</IndexView>
       <DetailsView>true</DetailsView>
+      <DetailsPartialView>true</DetailsPartialView>
       <CreateView>true</CreateView>
+      <CreatePartialView>true</CreatePartialView>
       <EditView>true</EditView>
+      <EditPartialView>true</EditPartialView>
       <BaseControllerName>AbstractController</BaseControllerName>
       <CreateRedirect>"Index"</CreateRedirect>
       <EditRedirect>"Index"</EditRedirect>
@@ -1068,6 +1112,7 @@
       <RolesCanEdit>admin, supervisor, clerk</RolesCanEdit>
       <RolesCanDelete>admin, supervisor</RolesCanDelete>
       <GenerateController>true</GenerateController>
+      <GenerateActionForAutoComplete>true</GenerateActionForAutoComplete>
       <GenerateGetQueryMethod>true</GenerateGetQueryMethod>
       <GenerateGetDtoQueryMethod>true</GenerateGetDtoQueryMethod>
       <GenerateIndexAction>true</GenerateIndexAction>
@@ -1080,8 +1125,11 @@
       <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>true</IndexView>
       <DetailsView>true</DetailsView>
+      <DetailsPartialView>true</DetailsPartialView>
       <CreateView>true</CreateView>
+      <CreatePartialView>true</CreatePartialView>
       <EditView>true</EditView>
+      <EditPartialView>true</EditPartialView>
       <BaseControllerName>AbstractController</BaseControllerName>
       <CreateRedirect>"Index"</CreateRedirect>
       <EditRedirect>"Index"</EditRedirect>
@@ -1177,6 +1225,7 @@
       <RolesCanEdit>admin, supervisor, clerk</RolesCanEdit>
       <RolesCanDelete>admin, supervisor</RolesCanDelete>
       <GenerateController>true</GenerateController>
+      <GenerateActionForAutoComplete>true</GenerateActionForAutoComplete>
       <GenerateGetQueryMethod>true</GenerateGetQueryMethod>
       <GenerateGetDtoQueryMethod>true</GenerateGetDtoQueryMethod>
       <GenerateIndexAction>true</GenerateIndexAction>
@@ -1189,8 +1238,11 @@
       <IndexViewGeneration>HtmlTableWithButtonsAction</IndexViewGeneration>
       <IndexView>true</IndexView>
       <DetailsView>true</DetailsView>
+      <DetailsPartialView>true</DetailsPartialView>
       <CreateView>true</CreateView>
+      <CreatePartialView>true</CreatePartialView>
       <EditView>true</EditView>
+      <EditPartialView>true</EditPartialView>
       <BaseControllerName>AbstractController</BaseControllerName>
       <CreateRedirect>"Index"</CreateRedirect>
       <EditRedirect>"Index"</EditRedirect>
@@ -1223,4 +1275,5 @@
   <RolesCanEdit>admin, supervisor, clerk</RolesCanEdit>
   <RolesCanCreate>admin, supervisor, clerk</RolesCanCreate>
   <RolesCanDelete>admin, supervisor</RolesCanDelete>
+  <AreCanUserMethodsPublic>false</AreCanUserMethodsPublic>
 </AspNetMvcEngine>

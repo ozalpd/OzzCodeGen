@@ -22,13 +22,14 @@
         <BaseProperty xsi:type="SimpleProperty">
           <Name>Id</Name>
           <Comment>PrimaryKey field</Comment>
-          <DisplayOrder>201</DisplayOrder>
+          <DisplayOrder>301</DisplayOrder>
           <DisplayName>Id</DisplayName>
           <Editable>false</Editable>
           <TypeName>int</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>true</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>false</UiVisible>
           <IsKey>true</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -51,13 +52,14 @@
         <BaseProperty xsi:type="SimpleProperty">
           <Name>ModifyNr</Name>
           <Comment>Database record's modify number</Comment>
-          <DisplayOrder>10301</DisplayOrder>
+          <DisplayOrder>10401</DisplayOrder>
           <DisplayName>Modify Nr</DisplayName>
           <Editable>false</Editable>
           <TypeName>int</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>true</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>false</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -66,13 +68,14 @@
         <BaseProperty xsi:type="SimpleProperty">
           <Name>ModifyDate</Name>
           <Comment>Database record's modify date</Comment>
-          <DisplayOrder>10401</DisplayOrder>
+          <DisplayOrder>10501</DisplayOrder>
           <DisplayName>Modify Date</DisplayName>
           <Editable>false</Editable>
           <TypeName>DateTime</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>true</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>false</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -80,13 +83,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>ModifierId</Name>
-          <DisplayOrder>10501</DisplayOrder>
+          <DisplayOrder>10601</DisplayOrder>
           <DisplayName>Modified User</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>true</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>true</RestrictedData>
           <UiVisible>false</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -95,13 +99,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>ModifierIp</Name>
-          <DisplayOrder>10601</DisplayOrder>
+          <DisplayOrder>10701</DisplayOrder>
           <DisplayName>Modifier Ip</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>true</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>true</RestrictedData>
           <UiVisible>false</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -124,13 +129,14 @@
       <Properties>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>CreateDate</Name>
-          <DisplayOrder>10311</DisplayOrder>
+          <DisplayOrder>10411</DisplayOrder>
           <DisplayName>Create Date</DisplayName>
           <Editable>false</Editable>
           <TypeName>DateTime</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>true</IsStoreGenerated>
+          <RestrictedData>true</RestrictedData>
           <UiVisible>false</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -138,13 +144,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>CreatorId</Name>
-          <DisplayOrder>10411</DisplayOrder>
+          <DisplayOrder>10511</DisplayOrder>
           <DisplayName>Created User</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>true</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>true</RestrictedData>
           <UiVisible>false</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -153,13 +160,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>CreatorIp</Name>
-          <DisplayOrder>10511</DisplayOrder>
+          <DisplayOrder>10611</DisplayOrder>
           <DisplayName>Creator Ip</DisplayName>
           <Editable>false</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>true</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>true</RestrictedData>
           <UiVisible>false</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -181,13 +189,14 @@
       <Properties>
         <BaseProperty xsi:type="StringProperty">
           <Name>CompanyName</Name>
-          <DisplayOrder>301</DisplayOrder>
+          <DisplayOrder>401</DisplayOrder>
           <DisplayName>Company Name</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -196,13 +205,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>Code</Name>
-          <DisplayOrder>401</DisplayOrder>
+          <DisplayOrder>501</DisplayOrder>
           <DisplayName>Code</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -211,13 +221,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>Notes</Name>
-          <DisplayOrder>501</DisplayOrder>
+          <DisplayOrder>601</DisplayOrder>
           <DisplayName>Notes</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -226,13 +237,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>TaxNr</Name>
-          <DisplayOrder>601</DisplayOrder>
+          <DisplayOrder>701</DisplayOrder>
           <DisplayName>Tax Nr</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -241,13 +253,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>TaxOffice</Name>
-          <DisplayOrder>701</DisplayOrder>
+          <DisplayOrder>801</DisplayOrder>
           <DisplayName>Tax Office</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -257,13 +270,14 @@
         <BaseProperty xsi:type="StringProperty">
           <Name>Address1</Name>
           <Comment>Address Line 1</Comment>
-          <DisplayOrder>801</DisplayOrder>
+          <DisplayOrder>901</DisplayOrder>
           <DisplayName>Address1</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -273,13 +287,14 @@
         <BaseProperty xsi:type="StringProperty">
           <Name>Address2</Name>
           <Comment>Address Line 2</Comment>
-          <DisplayOrder>901</DisplayOrder>
+          <DisplayOrder>1001</DisplayOrder>
           <DisplayName>Address2</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -288,13 +303,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>TownshipId</Name>
-          <DisplayOrder>1001</DisplayOrder>
+          <DisplayOrder>1101</DisplayOrder>
           <DisplayName>Township Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>true</IsForeignKey>
@@ -302,26 +318,28 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>Township</Name>
-          <DisplayOrder>1101</DisplayOrder>
+          <DisplayOrder>1201</DisplayOrder>
           <DisplayName>Township</DisplayName>
           <Editable>true</Editable>
           <TypeName>Township</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>true</RestrictedData>
           <UiVisible>true</UiVisible>
           <DependentPropertyName>TownshipId</DependentPropertyName>
           <DependentPropertyType>int</DependentPropertyType>
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>DistrictId</Name>
-          <DisplayOrder>1201</DisplayOrder>
+          <DisplayOrder>1301</DisplayOrder>
           <DisplayName>District Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>true</IsForeignKey>
@@ -329,13 +347,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>District</Name>
-          <DisplayOrder>1301</DisplayOrder>
+          <DisplayOrder>1401</DisplayOrder>
           <DisplayName>District</DisplayName>
           <Editable>true</Editable>
           <TypeName>District</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <DependentPropertyName>DistrictId</DependentPropertyName>
           <DependentPropertyType>int</DependentPropertyType>
@@ -355,13 +374,14 @@
       <Properties>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>CompanyId</Name>
-          <DisplayOrder>310</DisplayOrder>
+          <DisplayOrder>410</DisplayOrder>
           <DisplayName>Company Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>true</IsForeignKey>
@@ -369,26 +389,28 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>Company</Name>
-          <DisplayOrder>410</DisplayOrder>
+          <DisplayOrder>510</DisplayOrder>
           <DisplayName>Company</DisplayName>
           <Editable>true</Editable>
           <TypeName>Company</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <DependentPropertyName>CompanyId</DependentPropertyName>
           <DependentPropertyType>int</DependentPropertyType>
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>FirstName</Name>
-          <DisplayOrder>510</DisplayOrder>
+          <DisplayOrder>610</DisplayOrder>
           <DisplayName>First Name</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -397,13 +419,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>LastName</Name>
-          <DisplayOrder>610</DisplayOrder>
+          <DisplayOrder>710</DisplayOrder>
           <DisplayName>Last Name</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -412,13 +435,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="StringProperty">
           <Name>Phone</Name>
-          <DisplayOrder>710</DisplayOrder>
+          <DisplayOrder>810</DisplayOrder>
           <DisplayName>Phone</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -440,13 +464,14 @@
       <Properties>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>ContactId</Name>
-          <DisplayOrder>311</DisplayOrder>
+          <DisplayOrder>411</DisplayOrder>
           <DisplayName>Contact Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>true</IsForeignKey>
@@ -454,13 +479,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>Contact</Name>
-          <DisplayOrder>411</DisplayOrder>
+          <DisplayOrder>511</DisplayOrder>
           <DisplayName>Contact</DisplayName>
           <Editable>true</Editable>
           <TypeName>Contact</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <DependentPropertyName>ContactId</DependentPropertyName>
           <DependentPropertyType>int</DependentPropertyType>
@@ -468,13 +494,14 @@
         <BaseProperty xsi:type="StringProperty">
           <Name>Address1</Name>
           <Comment>Address Line 1</Comment>
-          <DisplayOrder>511</DisplayOrder>
+          <DisplayOrder>611</DisplayOrder>
           <DisplayName>Address1</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -484,13 +511,14 @@
         <BaseProperty xsi:type="StringProperty">
           <Name>Address2</Name>
           <Comment>Address Line 2</Comment>
-          <DisplayOrder>611</DisplayOrder>
+          <DisplayOrder>711</DisplayOrder>
           <DisplayName>Address2</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -499,13 +527,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>TownshipId</Name>
-          <DisplayOrder>711</DisplayOrder>
+          <DisplayOrder>811</DisplayOrder>
           <DisplayName>Township Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>true</IsForeignKey>
@@ -513,26 +542,28 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>Township</Name>
-          <DisplayOrder>811</DisplayOrder>
+          <DisplayOrder>911</DisplayOrder>
           <DisplayName>Township</DisplayName>
           <Editable>true</Editable>
           <TypeName>Township</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>true</RestrictedData>
           <UiVisible>true</UiVisible>
           <DependentPropertyName>TownshipId</DependentPropertyName>
           <DependentPropertyType>int</DependentPropertyType>
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>DistrictId</Name>
-          <DisplayOrder>911</DisplayOrder>
+          <DisplayOrder>1011</DisplayOrder>
           <DisplayName>District Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>true</IsForeignKey>
@@ -540,13 +571,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>District</Name>
-          <DisplayOrder>1011</DisplayOrder>
+          <DisplayOrder>1111</DisplayOrder>
           <DisplayName>District</DisplayName>
           <Editable>true</Editable>
           <TypeName>District</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <DependentPropertyName>DistrictId</DependentPropertyName>
           <DependentPropertyType>int</DependentPropertyType>
@@ -566,13 +598,14 @@
       <Properties>
         <BaseProperty xsi:type="StringProperty">
           <Name>CityName</Name>
-          <DisplayOrder>310</DisplayOrder>
+          <DisplayOrder>410</DisplayOrder>
           <DisplayName>Name</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -594,13 +627,14 @@
       <Properties>
         <BaseProperty xsi:type="StringProperty">
           <Name>TownshipName</Name>
-          <DisplayOrder>301</DisplayOrder>
+          <DisplayOrder>401</DisplayOrder>
           <DisplayName>Name</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -609,13 +643,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>CityId</Name>
-          <DisplayOrder>401</DisplayOrder>
+          <DisplayOrder>501</DisplayOrder>
           <DisplayName>City Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>true</IsForeignKey>
@@ -623,13 +658,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>City</Name>
-          <DisplayOrder>501</DisplayOrder>
+          <DisplayOrder>601</DisplayOrder>
           <DisplayName>City</DisplayName>
           <Editable>true</Editable>
           <TypeName>City</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <DependentPropertyName>CityId</DependentPropertyName>
           <DependentPropertyType>int</DependentPropertyType>
@@ -650,13 +686,14 @@
       <Properties>
         <BaseProperty xsi:type="StringProperty">
           <Name>DistrictName</Name>
-          <DisplayOrder>301</DisplayOrder>
+          <DisplayOrder>401</DisplayOrder>
           <DisplayName>Name</DisplayName>
           <Editable>true</Editable>
           <TypeName>string</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>false</IsForeignKey>
@@ -665,13 +702,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="SimpleProperty">
           <Name>TownshipId</Name>
-          <DisplayOrder>401</DisplayOrder>
+          <DisplayOrder>501</DisplayOrder>
           <DisplayName>Township Id</DisplayName>
           <Editable>true</Editable>
           <TypeName>int</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>false</RestrictedData>
           <UiVisible>true</UiVisible>
           <IsKey>false</IsKey>
           <IsForeignKey>true</IsForeignKey>
@@ -679,13 +717,14 @@
         </BaseProperty>
         <BaseProperty xsi:type="ComplexProperty">
           <Name>Township</Name>
-          <DisplayOrder>501</DisplayOrder>
+          <DisplayOrder>601</DisplayOrder>
           <DisplayName>Township</DisplayName>
           <Editable>true</Editable>
           <TypeName>Township</TypeName>
           <IsClientComputed>false</IsClientComputed>
           <IsServerComputed>false</IsServerComputed>
           <IsStoreGenerated>false</IsStoreGenerated>
+          <RestrictedData>true</RestrictedData>
           <UiVisible>true</UiVisible>
           <DependentPropertyName>TownshipId</DependentPropertyName>
           <DependentPropertyType>int</DependentPropertyType>

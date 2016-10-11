@@ -150,7 +150,7 @@ Begin
 		Set @Result = 1
 	End
 
-	If (Not <#= pkeyVal #> Is Null) And @DegistirKayit < @DegistirilmeTarihi
+	If (Not <#= pkeyVal #> Is Null)
 	Begin
 <# WriteUpdateStatement(TableDefinition, pkeyVal); #>
 <#  if(TableDefinition.UseInheritance)

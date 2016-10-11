@@ -49,6 +49,7 @@
           <SortDesc>false</SortDesc>
           <Nullable>false</Nullable>
           <InsertDefault>1</InsertDefault>
+          <UpdateDefault>([ModifyNr] + 1)</UpdateDefault>
         </StorageColumnSetting>
         <StorageColumnSetting>
           <Name>ModifyDate</Name>
@@ -60,6 +61,7 @@
           <SortDesc>true</SortDesc>
           <Nullable>false</Nullable>
           <InsertDefault>GetDate()</InsertDefault>
+          <UpdateDefault>GetDate()</UpdateDefault>
         </StorageColumnSetting>
         <StorageColumnSetting>
           <Name>ModifierId</Name>
@@ -70,6 +72,7 @@
           <Indexed>false</Indexed>
           <SortDesc>false</SortDesc>
           <Nullable>false</Nullable>
+          <InsertDefault>@CreatorId</InsertDefault>
         </StorageColumnSetting>
         <StorageColumnSetting>
           <Name>ModifierIp</Name>
@@ -80,6 +83,7 @@
           <Indexed>false</Indexed>
           <SortDesc>false</SortDesc>
           <Nullable>false</Nullable>
+          <InsertDefault>@CreatorIp</InsertDefault>
         </StorageColumnSetting>
       </Properties>
     </BaseEntitySetting>
@@ -105,6 +109,7 @@
           <SortDesc>false</SortDesc>
           <Nullable>false</Nullable>
           <InsertDefault>GetDate()</InsertDefault>
+          <UpdateDefault>NeverUpdate</UpdateDefault>
         </StorageColumnSetting>
         <StorageColumnSetting>
           <Name>CreatorId</Name>
@@ -115,6 +120,7 @@
           <Indexed>false</Indexed>
           <SortDesc>false</SortDesc>
           <Nullable>false</Nullable>
+          <UpdateDefault>NeverUpdate</UpdateDefault>
         </StorageColumnSetting>
         <StorageColumnSetting>
           <Name>CreatorIp</Name>
@@ -125,6 +131,7 @@
           <Indexed>false</Indexed>
           <SortDesc>false</SortDesc>
           <Nullable>false</Nullable>
+          <UpdateDefault>NeverUpdate</UpdateDefault>
         </StorageColumnSetting>
       </Properties>
     </BaseEntitySetting>
