@@ -188,6 +188,20 @@ namespace OzzCodeGen.CodeEngines.Storage
         }
         private bool _customStoredProcs;
 
+        public bool StoredProcInsertOrUpdate
+        {
+            get
+            {
+                return _storedProcInsertOrUpdate;
+            }
+            set
+            {
+                _storedProcInsertOrUpdate = value;
+                RaisePropertyChanged("StoredProcInsertOrUpdate");
+            }
+        }
+        private bool _storedProcInsertOrUpdate;
+
         public List<StorageColumnSetting> Properties
         {
             get

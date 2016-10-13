@@ -34,7 +34,7 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
   var firstBase = TableDefinition.GetFirstBase();
 	string pkeyVal = "@" + firstBase.PrimaryKeyColumn.Name;
 	var deleteMarkColumn = firstBase.GetDeleteMarkColumn();
-	bool createInsertOrUpdate = true;
+	bool createInsertOrUpdate = TableDefinition.StoredProcInsertOrUpdate;
 
             
             #line default
@@ -548,30 +548,30 @@ if(deleteMarkColumn != null)
             
             #line default
             #line hidden
-            this.Write("End\r\nGo\r\n\r\n-- -------------------------------------------------------------------" +
-                    "-\r\n-- Stored Procedure: [");
+            this.Write("End\r\nGo\r\n");
             
-            #line 122 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 120 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+ if(createInsertOrUpdate){ 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n-- --------------------------------------------------------------------\r\n-- Sto" +
+                    "red Procedure: [");
+            
+            #line 123 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.SchemaName));
             
             #line default
             #line hidden
             this.Write("].[");
             
-            #line 122 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 123 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.TableName));
             
             #line default
             #line hidden
             this.Write("_InsertOrUpdate]\r\n-- ------------------------------------------------------------" +
-                    "--------\r\n");
-            
-            #line 124 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
- if(createInsertOrUpdate){ 
-            
-            #line default
-            #line hidden
-            this.Write("IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N\'[");
+                    "--------\r\nIF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N\'[");
             
             #line 125 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.SchemaName));

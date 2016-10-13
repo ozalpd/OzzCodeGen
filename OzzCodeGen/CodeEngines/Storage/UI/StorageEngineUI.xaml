@@ -161,8 +161,11 @@
                             <TextBlock Text="Custom StoredProcs:" ToolTip="Do Not Overwrite Custom Stored Procedures" Grid.Row="4" Grid.Column="0"/>
                             <CheckBox IsChecked="{Binding CustomStoredProcs}" ToolTip="Do Not Overwrite Custom Stored Procedures" Grid.Row="4" Grid.Column="1"/>
 
-                            <TextBlock Text="Overwrite Existing:" Grid.Row="5" Grid.Column="0"/>
-                            <CheckBox IsChecked="{Binding OverwriteExisting}" Grid.Row="5" Grid.Column="1"/>
+                            <TextBlock Text="InsertOrUpdate SP:" ToolTip="Stored Procedure for InsertOrUpdate" Grid.Row="5" Grid.Column="0"/>
+                            <CheckBox IsChecked="{Binding StoredProcInsertOrUpdate}" ToolTip="Do Not Overwrite Custom Stored Procedures" Grid.Row="5" Grid.Column="1"/>
+
+                            <TextBlock Text="Overwrite Existing:" Grid.Row="6" Grid.Column="0"/>
+                            <CheckBox IsChecked="{Binding OverwriteExisting}" Grid.Row="6" Grid.Column="1"/>
 
                         </Grid>
                     </Grid>

@@ -12,7 +12,7 @@ GO
 <#  var firstBase = TableDefinition.GetFirstBase();
 	string pkeyVal = "@" + firstBase.PrimaryKeyColumn.Name;
 	var deleteMarkColumn = firstBase.GetDeleteMarkColumn();
-	bool createInsertOrUpdate = true;
+	bool createInsertOrUpdate = TableDefinition.StoredProcInsertOrUpdate;
 #>
 -- --------------------------------------------------------------------
 -- Stored Procedure: [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Delete]
@@ -117,11 +117,11 @@ Begin
 <# WriteSelectStatement(pkeyVal); #>
 End
 Go
+<# if(createInsertOrUpdate){ #>
 
 -- --------------------------------------------------------------------
 -- Stored Procedure: [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_InsertOrUpdate]
 -- --------------------------------------------------------------------
-<# if(createInsertOrUpdate){ #>
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_InsertOrUpdate]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_InsertOrUpdate]
 GO
