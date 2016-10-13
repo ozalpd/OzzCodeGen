@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using OzzCodeGen.CodeEngines.Storage.Templates;
 using OzzCodeGen.CodeEngines.Storage.Templates.MsSql;
 using OzzCodeGen.Definitions;
+using System;
 
 namespace OzzCodeGen.CodeEngines.Storage
 {
@@ -222,6 +223,10 @@ namespace OzzCodeGen.CodeEngines.Storage
 
         private void AppendColumnNullability(StorageColumnSetting column, StringBuilder sb)
         {
+            if (column.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return;
+            }
 
             if (column.Nullable)
             {

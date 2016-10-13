@@ -12,7 +12,7 @@ GO
 <#  var firstBase = TableDefinition.GetFirstBase();
 	string pkeyVal = "@" + firstBase.PrimaryKeyColumn.Name;
 	var deleteMarkColumn = firstBase.GetDeleteMarkColumn();
-	bool createInsertOrUpdate = false;
+	bool createInsertOrUpdate = true;
 #>
 -- --------------------------------------------------------------------
 -- Stored Procedure: [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Delete]
@@ -63,7 +63,7 @@ DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableNam
 GO
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Insert]
 <#		
-	var colDeclaresIns = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false & string.IsNullOrEmpty(c.InsertDefault));
+	var colDeclaresIns = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) && c.Exclude == false & string.IsNullOrEmpty(c.InsertDefault));
 	int colNr = 0;
 	foreach (var column in colDeclaresIns)
 	{ 
@@ -93,7 +93,7 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= TableDe
 DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Update]
 GO
 <# 
-	var colDeclaresUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false & string.IsNullOrEmpty(c.UpdateDefault));
+	var colDeclaresUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & string.IsNullOrEmpty(c.UpdateDefault));
 #>
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Update]
 	<#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>,

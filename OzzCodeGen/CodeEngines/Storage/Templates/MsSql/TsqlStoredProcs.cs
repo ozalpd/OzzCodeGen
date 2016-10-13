@@ -34,7 +34,7 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
   var firstBase = TableDefinition.GetFirstBase();
 	string pkeyVal = "@" + firstBase.PrimaryKeyColumn.Name;
 	var deleteMarkColumn = firstBase.GetDeleteMarkColumn();
-	bool createInsertOrUpdate = false;
+	bool createInsertOrUpdate = true;
 
             
             #line default
@@ -304,7 +304,7 @@ if(deleteMarkColumn != null)
             
             #line 65 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 		
-	var colDeclaresIns = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false & string.IsNullOrEmpty(c.InsertDefault));
+	var colDeclaresIns = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) && c.Exclude == false & string.IsNullOrEmpty(c.InsertDefault));
 	int colNr = 0;
 	foreach (var column in colDeclaresIns)
 	{ 
@@ -436,7 +436,7 @@ if(deleteMarkColumn != null)
             
             #line 95 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  
-	var colDeclaresUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false & string.IsNullOrEmpty(c.UpdateDefault));
+	var colDeclaresUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & string.IsNullOrEmpty(c.UpdateDefault));
 
             
             #line default
