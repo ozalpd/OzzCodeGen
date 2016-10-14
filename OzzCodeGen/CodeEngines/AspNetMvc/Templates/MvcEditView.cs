@@ -39,6 +39,10 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 var properties = CreateForm ? 
         Entity.DisplayColumns.Where(e => e.InCreateView) :
         Entity.DisplayColumns.Where(e => e.InEditView);
+var decimalProperties = properties
+		.Where(p => p.PropertyDefinition.TypeName.Contains("decimal") ||
+				p.PropertyDefinition.TypeName.Contains("float") ||
+				p.PropertyDefinition.TypeName.Contains("double"));
 
 string modelName = CreateForm ? Entity.ModelForCreate : Entity.ModelForEdit;
 string formTypeName = CreateForm ? "Create" : "Edit";
@@ -49,55 +53,55 @@ WriteUsingNamespaces();
             #line hidden
             this.Write("@model ");
             
-            #line 20 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(modelName));
             
             #line default
             #line hidden
             this.Write("\r\n@{\r\n");
             
-            #line 22 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   if(!PartialView || PartialContainer) { 
             
             #line default
             #line hidden
             this.Write("    ViewBag.Title = ");
             
-            #line 23 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 27 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 23 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 27 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(formTypeName));
             
             #line default
             #line hidden
             
-            #line 23 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 27 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 28 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   } else if (PartialView){ 
             
             #line default
             #line hidden
             this.Write("    bool modal = ViewBag.Modal ?? false;\r\n");
             
-            #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   } 
             
             #line default
             #line hidden
             this.Write("}\r\n");
             
-            #line 28 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   if(!PartialView || PartialContainer) { 
             
             #line default
@@ -105,27 +109,27 @@ WriteUsingNamespaces();
             this.Write("<h2 class=\"col-lg-offset-2 col-md-offset-3 col-sm-offset-3\">@ViewBag.Title</h2>\r\n" +
                     "");
             
-            #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 34 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 31 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 35 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   if (PartialContainer){ 
             
             #line default
             #line hidden
             this.Write("@Html.Partial(\"");
             
-            #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(PartialViewName));
             
             #line default
             #line hidden
             this.Write("\")\r\n");
             
-            #line 33 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   } else { 
             
             #line default
@@ -135,7 +139,7 @@ WriteUsingNamespaces();
                     "     @Html.ValidationSummary(true)\r\n        @Html.HiddenFor(model => model.Id)\r\n" +
                     "        \r\n");
             
-            #line 42 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 46 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
 
 foreach (var property in properties) 
 {
@@ -147,14 +151,14 @@ foreach (var property in properties)
             #line hidden
             this.Write("        @Html.HiddenFor(m => m.");
             
-            #line 48 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 52 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(")\r\n");
             
-            #line 49 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   }
     else 
     {
@@ -164,7 +168,7 @@ foreach (var property in properties)
             #line hidden
             this.Write("        <div class=\"form-group\">\r\n            @Html.LabelFor(model => model.");
             
-            #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
@@ -172,14 +176,14 @@ foreach (var property in properties)
             this.Write(", htmlAttributes: new { @class = \"control-label col-lg-2 col-md-3 col-sm-3\" })\r\n " +
                     "           <div class=\"");
             
-            #line 55 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 59 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(editDivClass));
             
             #line default
             #line hidden
             this.Write("\">\r\n");
             
-            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 60 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
       if (useFor == "DropDownList")
         { 
             
@@ -187,7 +191,7 @@ foreach (var property in properties)
             #line hidden
             this.Write("                @Html.DropDownListFor(m => m.");
             
-            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 62 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
@@ -195,14 +199,14 @@ foreach (var property in properties)
             this.Write(", null, ActionStrings.SelectPlease, htmlAttributes: new { @class = \"form-control\"" +
                     " })\r\n");
             
-            #line 59 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
       } else if (useFor == "ReadOnlyDisplay") { 
             
             #line default
             #line hidden
             this.Write("                @Html.EditorFor(m => m.");
             
-            #line 60 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 64 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
@@ -210,63 +214,63 @@ foreach (var property in properties)
             this.Write(", new { htmlAttributes = new { @class = \"form-control\", @readonly = \"readonly\" } " +
                     "})\r\n");
             
-            #line 61 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
       } else if (useFor == "ImageUpload") { 
             
             #line default
             #line hidden
             this.Write("                @Html.Partial(\"_ImageUpload\", new ImageUploadViewModel(\"");
             
-            #line 62 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 66 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write("\", Model.");
             
-            #line 62 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 66 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write("))\r\n");
             
-            #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 67 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
       } else if (useFor == "TextBox") { 
             
             #line default
             #line hidden
             this.Write("                @Html.TextBoxFor(m => m.");
             
-            #line 64 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 68 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(", new { @class = \"form-control\", autocomplete = \"off\" })\r\n");
             
-            #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 69 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
       } else if (useFor == "TextArea") { 
             
             #line default
             #line hidden
             this.Write("                @Html.TextAreaFor(m => m.");
             
-            #line 66 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 70 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(", 4, 1, new { @class = \"form-control\", autocomplete = \"off\" })\r\n");
             
-            #line 67 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 71 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
       } else { 
             
             #line default
             #line hidden
             this.Write("                @Html.EditorFor(m => m.");
             
-            #line 68 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 72 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
@@ -274,13 +278,13 @@ foreach (var property in properties)
             this.Write(", new { htmlAttributes = new { @class = \"form-control\", autocomplete = \"off\" } })" +
                     "\r\n");
             
-            #line 69 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 73 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
       } 
             
             #line default
             #line hidden
             
-            #line 70 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 74 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
       if (property.HasValidation)
         { 
             
@@ -288,34 +292,34 @@ foreach (var property in properties)
             #line hidden
             this.Write("                @Html.ValidationMessageFor(m => m.");
             
-            #line 72 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 76 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(", \"\", new { @class = \"text-danger\" })\r\n");
             
-            #line 73 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 77 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
       } 
             
             #line default
             #line hidden
             this.Write("            </div>\r\n        </div>\r\n");
             
-            #line 76 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 80 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 77 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 81 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
 
 } 
             
             #line default
             #line hidden
             
-            #line 79 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 83 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   if(PartialView) { 
             
             #line default
@@ -324,41 +328,41 @@ foreach (var property in properties)
                     "e.unobtrusive.min.js\"></script>\r\n        }\r\n        else\r\n        {\r\n           " +
                     " @Html.Partial(\"_SaveButtonsPartial\")\r\n        }\r\n");
             
-            #line 88 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 92 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   } else { 
             
             #line default
             #line hidden
             this.Write("        @Html.Partial(\"");
             
-            #line 89 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 93 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(MvcPartialSaveButtons.ViewName));
             
             #line default
             #line hidden
             this.Write("\")\r\n");
             
-            #line 90 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 94 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   } 
             
             #line default
             #line hidden
             this.Write("    </div>\r\n}\r\n");
             
-            #line 93 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 97 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 94 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 98 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   if(!PartialView || PartialContainer) { 
             
             #line default
             #line hidden
             this.Write("@section Scripts\r\n{\r\n    @Scripts.Render(\"~/bundles/jqueryval\")\r\n");
             
-            #line 98 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 102 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   if(properties.Where(p => p.UseForCreate == "ImageUpload" || p.UseForEdit == "ImageUpload").Any())
     { 
             
@@ -367,14 +371,14 @@ foreach (var property in properties)
             this.Write("    @Scripts.Render(\"~/bundles/angular\")\r\n    @Scripts.Render(\"~/bundles/fileUplo" +
                     "ad\")\r\n");
             
-            #line 102 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 106 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   } 
             
             #line default
             #line hidden
             this.Write("}\r\n");
             
-            #line 104 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 108 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   if(properties.Where(p => p.UseForCreate == "ImageUpload" || p.UseForEdit == "ImageUpload").Any())
     { 
             
@@ -383,13 +387,47 @@ foreach (var property in properties)
             this.Write("@section styles{\r\n    <link href=\"~/Content/fileupload.css\" rel=\"stylesheet\" />\r\n" +
                     "}\r\n");
             
-            #line 109 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 113 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 110 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            #line 114 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+  } 
+            
+            #line default
+            #line hidden
+            
+            #line 115 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+ if((PartialView || !PartialContainer) && decimalProperties.Any()) { 
+            
+            #line default
+            #line hidden
+            this.Write("<script>\r\n    setTimeout(function () {\r\n");
+            
+            #line 118 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+ foreach (var property in decimalProperties) { 
+            
+            #line default
+            #line hidden
+            this.Write("        $(\'#");
+            
+            #line 119 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\').rules(\"remove\", \"number\");\r\n");
+            
+            #line 120 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
+     } 
+            
+            #line default
+            #line hidden
+            this.Write("    }, 600);\r\n</script>\r\n");
+            
+            #line 123 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   } 
             
             #line default

@@ -12,6 +12,10 @@
 var properties = CreateForm ? 
         Entity.DisplayColumns.Where(e => e.InCreateView) :
         Entity.DisplayColumns.Where(e => e.InEditView);
+var decimalProperties = properties
+		.Where(p => p.PropertyDefinition.TypeName.Contains("decimal") ||
+				p.PropertyDefinition.TypeName.Contains("float") ||
+				p.PropertyDefinition.TypeName.Contains("double"));
 
 string modelName = CreateForm ? Entity.ModelForCreate : Entity.ModelForEdit;
 string formTypeName = CreateForm ? "Create" : "Edit";
@@ -107,4 +111,13 @@ foreach (var property in properties)
     <link href="~/Content/fileupload.css" rel="stylesheet" />
 }
 <#  } #>
+<#  } #>
+<# if((PartialView || !PartialContainer) && decimalProperties.Any()) { #>
+<script>
+    setTimeout(function () {
+<# foreach (var property in decimalProperties) { #>
+        $('#<#= property.Name #>').rules("remove", "number");
+<#     } #>
+    }, 600);
+</script>
 <#  } #>
