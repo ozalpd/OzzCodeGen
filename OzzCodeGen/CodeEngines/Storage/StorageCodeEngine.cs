@@ -289,6 +289,9 @@ namespace OzzCodeGen.CodeEngines.Storage
             }
 
             ps.EntitySetting = setting;
+            if (ps.PropertyDefinition == null)
+                return null;
+
             SetColumnType(ps);
             if (!setting.Properties.Where(p => p.Name.Equals(ps.Name)).Any())
             {
