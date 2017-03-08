@@ -185,15 +185,12 @@ else
         public async Task<ActionResult> Details(int? id, bool? modal)
         {
             if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+                return (modal ?? false) ? BadRequestTextResult() : new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = await FindAsync<#= Entity.Name #>(id.Value);
 
             if (<#= Entity.Name.ToCamelCase() #> == null)
-            {
-                return HttpNotFound();
-            }
+                return (modal ?? false) ? NotFoundTextResult() : HttpNotFound();
 
             await PutCanUserInViewBag();
             if (modal ?? false)
@@ -250,7 +247,7 @@ else
             {
                 var <#= foreignDependentProperty.Name.ToCamelCase() #> = await FindAsync<#= strongForeignEntity.Name #>(<#= strongProperty.Name.ToCamelCase() #><# if(strongProperty.IsSimple) { #>.Value<# } #>);
                 if (<#= foreignDependentProperty.Name.ToCamelCase() #> == null)
-                    return HttpNotFound();
+                    return (modal ?? false) ? NotFoundTextResult() : HttpNotFound();
                 <#= Entity.ModelForCreate.ToCamelCase() #>.<#= foreignDependentProperty #> = <#= foreignDependentProperty.Name.ToCamelCase() #>;
                 <#= Entity.ModelForCreate.ToCamelCase() #>.<#= strongProperty.Name #> = <#= strongProperty.Name.ToCamelCase() #><# if(strongProperty.IsSimple) { #>.Value<# } #>;
             }
@@ -323,15 +320,12 @@ else
         public async Task<ActionResult> Edit(int? id, bool? modal)
         {
             if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+                return (modal ?? false) ? BadRequestTextResult() : new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             <#= Entity.Name #> <#= Entity.Name.ToCamelCase() #> = await FindAsync<#= Entity.Name #>(id.Value);
 
             if (<#= Entity.Name.ToCamelCase() #> == null)
-            {
-                return HttpNotFound();
-            }
+                return (modal ?? false) ? NotFoundTextResult() : HttpNotFound();
 
 <#  string instanceName = Entity.ModelForEdit == Entity.Name ? Entity.Name.ToCamelCase() : Entity.ModelForEdit.ToCamelCase();
     if(Entity.ModelForEdit != Entity.Name)
