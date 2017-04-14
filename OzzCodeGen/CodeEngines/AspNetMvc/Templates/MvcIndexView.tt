@@ -57,6 +57,7 @@ WriteUsingNamespaces(); #>
         {
             @Html.Hidden("page", page)
             @Html.Hidden("pageSize", pageSize)
+            @Html.Hidden("postBack", true)
             <div class="col-md-4 col-sm-5">
                 @Html.Partial("_SearchBoxPartial")
             </div>

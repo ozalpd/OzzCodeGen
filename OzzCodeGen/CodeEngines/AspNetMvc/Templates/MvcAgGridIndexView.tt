@@ -151,6 +151,7 @@ WriteUsingNamespaces(); #>
                 pageSize: result.PageSize,
                 page: page,
                 searchString: searchString,
+                postBack: true,
                 cache: false
             },
                 function (data) {
