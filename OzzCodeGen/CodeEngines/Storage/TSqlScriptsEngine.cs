@@ -197,8 +197,7 @@ namespace OzzCodeGen.CodeEngines.Storage
 
             if (!string.IsNullOrEmpty(column.InsertDefault))
             {
-                if (!column.InsertDefault.Trim().StartsWith("@") &&
-                    !column.InsertDefault.Trim().Equals("null", System.StringComparison.InvariantCultureIgnoreCase))
+                if (IsValidDefaultForDDL(column.InsertDefault))
                 {
                     sb.Append(" Default ");
                     sb.Append(column.InsertDefault);
@@ -208,8 +207,16 @@ namespace OzzCodeGen.CodeEngines.Storage
                     sb.Append(" /* Warning! Column's default is null */");
                 }
             }
-            
+
             return sb.ToString();
+        }
+
+        protected bool IsValidDefaultForDDL(string defaultDeclaration)
+        {
+            string decl = defaultDeclaration.Trim().ToLowerInvariant();
+            return !decl.Contains("@")
+                && !decl.Contains("select")
+                && !decl.Equals("null");
         }
 
         private void AppendColumnNameType(StorageColumnSetting column, StringBuilder sb)
