@@ -144,10 +144,10 @@ namespace OzzCodeGen.CodeEngines.Metadata
         public override bool RenderAllTemplates()
         {
             throw new NotImplementedException("There is only one template in MetadataCodeEngine!");
-            if (!string.IsNullOrEmpty(Project.SearchString))
-            {
-                Project.SearchString = string.Empty;
-            }
+            //if (!string.IsNullOrEmpty(Project.SearchString))
+            //{
+            //    Project.SearchString = string.Empty;
+            //}
         }
 
         protected override UserControl GetUiControl()

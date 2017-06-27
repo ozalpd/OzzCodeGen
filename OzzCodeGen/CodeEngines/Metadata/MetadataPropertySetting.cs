@@ -19,32 +19,18 @@ namespace OzzCodeGen.CodeEngines.Metadata
             get { return MetadataEntitySetting.CodeEngine; }
         }
 
-        public bool DTOExclusion
-        {
-            get { return _dtoExclusion; }
-            set
-            {
-                if (_dtoExclusion == value) return;
-                _dtoExclusion = value;
-                RaisePropertyChanged("DTOExclusion");
-            }
-        }
-        private bool _dtoExclusion;
 
-        /// <summary>
-        /// UIHint of the Property
-        /// </summary>
-        public string UIHint
+        public string DataFormatString
         {
-            get { return _uiHint; }
+            get { return _dataFormatString; }
             set
             {
-                if (_uiHint == value) return;
-                _uiHint = value;
-                RaisePropertyChanged("UIHint");
+                _dataFormatString = value;
+                RaisePropertyChanged("DataFormatString");
             }
         }
-        private string _uiHint;
+        private string _dataFormatString;
+
 
         /// <summary>
         /// DataType of the Property
@@ -66,6 +52,18 @@ namespace OzzCodeGen.CodeEngines.Metadata
             }
         }
         private string _dataType;
+
+        public bool DTOExclusion
+        {
+            get { return _dtoExclusion; }
+            set
+            {
+                if (_dtoExclusion == value) return;
+                _dtoExclusion = value;
+                RaisePropertyChanged("DTOExclusion");
+            }
+        }
+        private bool _dtoExclusion;
 
         private string GetDefaultDataType()
         {
@@ -99,35 +97,6 @@ namespace OzzCodeGen.CodeEngines.Metadata
             return string.Empty;
         }
 
-        /// <summary>
-        /// Range of the Property
-        /// </summary>
-        public string Range
-        {
-            get { return _range; }
-            set
-            {
-                if (_range == value) return;
-                _range = value;
-                RaisePropertyChanged("Range");
-            }
-        }
-        private string _range;
-
-        /// <summary>
-        /// RegularExpression of the Property
-        /// </summary>
-        public string RegularExpression
-        {
-            get { return _regularExpression; }
-            set
-            {
-                if (_regularExpression == value) return;
-                _regularExpression = value;
-                RaisePropertyChanged("RegularExpression");
-            }
-        }
-        private string _regularExpression;
 
         public string GetDisplayAttrib()
         {
@@ -151,41 +120,6 @@ namespace OzzCodeGen.CodeEngines.Metadata
                 return string.Empty;
             }
         }
-
-        [XmlIgnore]
-        protected string ResourceName
-        {
-            get
-            {
-                if (!CodeEngine.UseResourceFiles)
-                {
-                    return string.Empty;
-                }
-
-                if (string.IsNullOrEmpty(_resourceName))
-                {
-                    var resxEngine = CodeEngine.ResxEngine;
-
-                    if (resxEngine != null && resxEngine.SingleResx)
-                    {
-                        _resourceName = resxEngine.SingleResxFilename; //resxEngine.MergeWithNamespace(resxEngine.SingleResxFilename);
-                    }
-                    else if (resxEngine != null)
-                    {
-                        var resxEntity = resxEngine
-                                        .Entities
-                                        .FirstOrDefault(e => e.Name.Equals(MetadataEntitySetting.Name));
-                        _resourceName = resxEngine.GetDefaultTargetFile(resxEntity); //resxEngine.MergeWithNamespace(resxEngine.GetDefaultTargetFile(resxEntity));
-                    }
-                    else
-                    {
-                        return string.Empty;
-                    }
-                }
-                return _resourceName;
-            }
-        }
-        string _resourceName;
 
 
         protected string GetDefaultRequiredMsg(BaseProperty PropertyDefinition)
@@ -229,6 +163,56 @@ namespace OzzCodeGen.CodeEngines.Metadata
         }
 
 
+
+
+        public bool? HtmlEncode
+        {
+            get
+            {
+                //if (_htmlEncode == null)
+                //    _htmlEncode = true;
+                return _htmlEncode;
+            }
+            set
+            {
+                _htmlEncode = value;
+                RaisePropertyChanged("HtmlEncode");
+            }
+        }
+        private bool? _htmlEncode;
+
+
+        /// <summary>
+        /// Range of the Property
+        /// </summary>
+        public string Range
+        {
+            get { return _range; }
+            set
+            {
+                if (_range == value) return;
+                _range = value;
+                RaisePropertyChanged("Range");
+            }
+        }
+        private string _range;
+
+        /// <summary>
+        /// RegularExpression of the Property
+        /// </summary>
+        public string RegularExpression
+        {
+            get { return _regularExpression; }
+            set
+            {
+                if (_regularExpression == value) return;
+                _regularExpression = value;
+                RaisePropertyChanged("RegularExpression");
+            }
+        }
+        private string _regularExpression;
+
+
         /// <summary>
         /// Required of the Property
         /// </summary>
@@ -251,5 +235,57 @@ namespace OzzCodeGen.CodeEngines.Metadata
             }
         }
         private string _required;
+
+
+        [XmlIgnore]
+        protected string ResourceName
+        {
+            get
+            {
+                if (!CodeEngine.UseResourceFiles)
+                {
+                    return string.Empty;
+                }
+
+                if (string.IsNullOrEmpty(_resourceName))
+                {
+                    var resxEngine = CodeEngine.ResxEngine;
+
+                    if (resxEngine != null && resxEngine.SingleResx)
+                    {
+                        _resourceName = resxEngine.SingleResxFilename; //resxEngine.MergeWithNamespace(resxEngine.SingleResxFilename);
+                    }
+                    else if (resxEngine != null)
+                    {
+                        var resxEntity = resxEngine
+                                        .Entities
+                                        .FirstOrDefault(e => e.Name.Equals(MetadataEntitySetting.Name));
+                        _resourceName = resxEngine.GetDefaultTargetFile(resxEntity); //resxEngine.MergeWithNamespace(resxEngine.GetDefaultTargetFile(resxEntity));
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
+                }
+                return _resourceName;
+            }
+        }
+        string _resourceName;
+
+
+        /// <summary>
+        /// UIHint of the Property
+        /// </summary>
+        public string UIHint
+        {
+            get { return _uiHint; }
+            set
+            {
+                if (_uiHint == value) return;
+                _uiHint = value;
+                RaisePropertyChanged("UIHint");
+            }
+        }
+        private string _uiHint;
     }
 }

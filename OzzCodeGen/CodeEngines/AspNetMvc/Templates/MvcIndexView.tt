@@ -102,7 +102,6 @@ foreach (var property in properties)
 <#
 if (collectionProperties.Any()) 
 {
-    int collNr = 0;
 #>
                                 @if (canUserDelete)
                                 {

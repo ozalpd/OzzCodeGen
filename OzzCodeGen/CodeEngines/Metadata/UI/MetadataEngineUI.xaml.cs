@@ -18,12 +18,13 @@ namespace OzzCodeGen.CodeEngines.Metadata.UI
             ColumnWidths["Name"] = 120;
             ColumnWidths.Add("DTOExclusion", 60);
 
-            HiddenColumns.Add("IsSimple");
-            HiddenColumns.Add("IsString");
-            HiddenColumns.Add("Properties");
             HiddenColumns.Add("DataType");
             HiddenColumns.Add("CodeEngine");
+            HiddenColumns.Add("HtmlEncode");
+            HiddenColumns.Add("IsSimple");
+            HiddenColumns.Add("IsString");
             HiddenColumns.Add("MetadataEntitySetting");
+            HiddenColumns.Add("Properties");
 
             EntitiesDataGrid = grdEntitySettings;
             PropertiesDataGrid = grdPropertySettings;

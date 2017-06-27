@@ -524,10 +524,10 @@ namespace OzzCodeGen.CodeEngines.Localization
         public override bool RenderAllTemplates()
         {
             throw new NotImplementedException();
-            if (!string.IsNullOrEmpty(Project.SearchString))
-            {
-                Project.SearchString = string.Empty;
-            }
+            //if (!string.IsNullOrEmpty(Project.SearchString))
+            //{
+            //    Project.SearchString = string.Empty;
+            //}
         }
 
         public override void SaveToFile()

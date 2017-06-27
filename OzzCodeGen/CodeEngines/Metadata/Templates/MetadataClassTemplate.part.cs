@@ -27,6 +27,7 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
         {
             var attributes = new List<string>();
             AddKeyAttrib(property, attributes);
+            AddDisplayFormat(property, attributes);
             AddMaxLeghtAttrib(property, attributes);
             AddRequiredAttrib(property, attributes);
             AddDataTypeAttrib(property, attributes);
@@ -48,6 +49,40 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
             }
 
             return attributes;
+        }
+
+        private static void AddDisplayFormat(MetadataPropertySetting property, List<string> attributes)
+        {
+            if (property.HtmlEncode == null && string.IsNullOrEmpty(property.DataFormatString))
+                return;
+
+            bool hasAttrib = false;
+            var sb = new StringBuilder();
+            sb.Append("[DisplayFormat(");
+            if (property.HtmlEncode.HasValue)
+            {
+                sb.Append("HtmlEncode = ");
+                sb.Append(property.HtmlEncode.Value.ToString().ToLowerInvariant());
+
+                hasAttrib = true;
+            }
+
+
+            if (!string.IsNullOrEmpty(property.DataFormatString))
+            {
+                if (hasAttrib)
+                    sb.Append(", ");
+
+                sb.Append("DataFormatString = \"{");
+                sb.Append(property.DataFormatString);
+                sb.Append("}\", ApplyFormatInEditMode = true");
+
+                hasAttrib = true;
+            }
+
+            sb.Append(")]");
+
+            attributes.Add(sb.ToString());
         }
 
         private static void AddDataTypeAttrib(MetadataPropertySetting property, List<string> attributes)
@@ -84,7 +119,8 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
 
         private void AddMaxLeghtAttrib(MetadataPropertySetting property, List<string> attributes)
         {
-            if (property.PropertyDefinition is StringProperty && ((StringProperty)property.PropertyDefinition).MaxLenght > 0)
+            if (property.PropertyDefinition is StringProperty
+                && ((StringProperty)property.PropertyDefinition).MaxLenght > 0)
             {
                 StringProperty definition = (StringProperty)property.PropertyDefinition;
                 var resxEngine = EntitySetting.CodeEngine.ResxEngine;

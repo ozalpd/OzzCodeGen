@@ -415,10 +415,6 @@ else
                 sb.Append(" <b>");
                 sb.Append(<#= Entity.Name.ToCamelCase() #>.<#= Entity.EntityDefinition.DisplayMember #>);
                 sb.Append("</b>.<br/>");
-<# if(false){ #>
-                sb.Append(MessageStrings.BecauseOfRelatedRecords);
-                sb.Append(".<br/>");
-<#  } #>
 
 <#      foreach (var property in collectionProperties) 
         { #>
