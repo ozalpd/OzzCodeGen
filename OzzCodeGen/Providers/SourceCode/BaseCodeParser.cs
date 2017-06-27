@@ -77,7 +77,9 @@ namespace OzzCodeGen.Providers.SourceCode
             bool brackectBeforeSemicolon = false;
             char prevChar = ' ';
             bool inComment = false;
+#pragma warning disable CS0219 // Variable is assigned but its value is never used
             bool inInlineComment = false;
+#pragma warning restore CS0219 // Variable is assigned but its value is never used
 
             StringBuilder sb = new StringBuilder();
             foreach (char item in innerChars)

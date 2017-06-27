@@ -60,7 +60,8 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         /// <returns></returns>
         public string GetAuthorizeAttrib(string roleName)
         {
-            if (string.IsNullOrEmpty(roleName) || roleName.Equals(NoAuthorizationRole, StringComparison.InvariantCultureIgnoreCase))
+            if (string.IsNullOrEmpty(roleName)
+                || roleName.Equals(NoAuthorizationRole, StringComparison.InvariantCultureIgnoreCase))
             {
                 return string.Empty;
             }

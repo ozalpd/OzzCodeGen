@@ -93,8 +93,10 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 else
                 {
                     var result = _entities
-                        .Where(e => e.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase) ||
-                            e.Properties.Where(p => p.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase)).Any());
+                        .Where(e => e.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase)
+                            || e.Properties
+                                .Where(p => p.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase))
+                                .Any());
                     return new ObservableCollection<AspNetMvcEntitySetting>(result);
                 }
             }

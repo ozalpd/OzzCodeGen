@@ -28,7 +28,8 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
                 if (_foreignProperties == null && RelatedEntity != null)
                 {
                     _foreignProperties = from p in RelatedEntity.Properties
-                                         where p.PropertyDefinition.TypeName.Equals(Entity.Name) && p.PropertyDefinition is ComplexProperty
+                                         where p.PropertyDefinition.TypeName.Equals(Entity.Name)
+                                            && p.PropertyDefinition is ComplexProperty
                                          select p.PropertyDefinition as ComplexProperty;
                 }
                 return _foreignProperties;

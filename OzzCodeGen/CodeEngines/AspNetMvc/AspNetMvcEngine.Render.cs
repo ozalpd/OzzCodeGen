@@ -170,7 +170,8 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                     break;
 
                 case mvcIndexView:
-                    if (entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithButtonsAction || entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction)
+                    if (entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithButtonsAction
+                        || entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction)
                         tmp = new MvcIndexView(entity);
                     else //if (entity.IndexViewGeneration == IndexViewGeneration.AgGridWithButtonsAction || entity.IndexViewGeneration == IndexViewGeneration.AgGridWithMenuAction)
                         tmp = new MvcAgGridIndexView(entity);

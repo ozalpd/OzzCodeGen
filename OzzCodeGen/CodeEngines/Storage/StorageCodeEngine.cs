@@ -140,8 +140,10 @@ namespace OzzCodeGen.CodeEngines.Storage
                 else
                 {
                     var result = _entities
-                        .Where(e => e.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase) ||
-                            e.Properties.Where(p => p.Name.StartsWith(Project.SearchString, System.StringComparison.InvariantCultureIgnoreCase)).Any());
+                        .Where(e => e.Name.StartsWith(Project.SearchString, StringComparison.InvariantCultureIgnoreCase)
+                        || e.Properties
+                                .Where(p => p.Name.StartsWith(Project.SearchString, StringComparison.InvariantCultureIgnoreCase))
+                                .Any());
                     return new ObservableCollection<StorageEntitySetting>(result);
                 }
             }

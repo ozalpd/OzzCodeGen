@@ -173,5 +173,5 @@ namespace OzzCodeGen.CodeEngines.Storage
         }
         private string _updateDefault;
     }
-	
+    
 }

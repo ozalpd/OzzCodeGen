@@ -197,12 +197,12 @@ namespace OzzCodeGen.CodeEngines.Storage
 
             if (!string.IsNullOrEmpty(column.InsertDefault))
             {
-                if (IsValidDefaultForDDL(column.InsertDefault))
+                if (IsDefaultValidForDDL(column.InsertDefault))
                 {
                     sb.Append(" Default ");
                     sb.Append(column.InsertDefault);
                 }
-                if (column.InsertDefault.Trim().Equals("null", System.StringComparison.InvariantCultureIgnoreCase) && !column.Nullable)
+                if (column.InsertDefault.Trim().Equals("null", StringComparison.InvariantCultureIgnoreCase) && !column.Nullable)
                 {
                     sb.Append(" /* Warning! Column's default is null */");
                 }
@@ -211,7 +211,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             return sb.ToString();
         }
 
-        protected bool IsValidDefaultForDDL(string defaultDeclaration)
+        protected bool IsDefaultValidForDDL(string defaultDeclaration)
         {
             string decl = defaultDeclaration.Trim().ToLowerInvariant();
             return !decl.Contains("@")
