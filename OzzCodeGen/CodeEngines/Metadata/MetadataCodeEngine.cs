@@ -162,8 +162,10 @@ namespace OzzCodeGen.CodeEngines.Metadata
 
         private MetadataEngineUI SetNewUI()
         {
-            var control = new MetadataEngineUI();
-            control.CodeEngine = this;
+            var control = new MetadataEngineUI()
+            {
+                CodeEngine = this
+            };
             MenuItem mnuExclude = UiTools.CreateMenuItem("Exclude", "Exclude selected property");
             MenuItem mnuSetUiHint = UiTools
                 .CreateMenuItem("Set UIHint to Same", "Set UIHint to same named properties in other entities");

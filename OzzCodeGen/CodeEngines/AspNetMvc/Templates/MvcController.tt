@@ -293,7 +293,7 @@ else
 <#  if(Entity.ModelForCreate == Entity.Name) {#> 
                 OnCreateSaved(<#= Entity.ModelForCreate.ToCamelCase() #>);
 <#  } else { #>
-                OnCreateSaved(entity);
+                OnCreateSaved(entity, <#= Entity.ModelForCreate.ToCamelCase() #>);
 <#  } #>
                 if (modal ?? false)
                 {
@@ -363,7 +363,7 @@ else
 <#  if(Entity.ModelForEdit == Entity.Name) {#> 
                 OnEditSaved(<#= Entity.Name.ToCamelCase() #>);
 <#  } else { #>
-                OnEditSaved(entity);
+                OnEditSaved(entity, <#= Entity.ModelForEdit.ToCamelCase() #>);
 <#  } #>
                 if (modal ?? false)
                 {
@@ -622,11 +622,19 @@ else
         }
 <# if (Entity.GenerateCreateAction){ #>
         partial void OnCreateSaving(<#= Entity.ModelForCreate #> <#= Entity.Name.ToCamelCase() #>);
+<# if (Entity.Name.Equals(Entity.ModelForCreate)){ #>
         partial void OnCreateSaved(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
+<#      } else { #>
+        partial void OnCreateSaved(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>, <#= Entity.ModelForCreate #> <#= Entity.ModelForCreate.ToCamelCase() #>);
+<#      } #>
 <#  } #>
 <# if (Entity.GenerateEditAction){ #>
         partial void OnEditSaving(<#= Entity.ModelForEdit #> <#= Entity.Name.ToCamelCase() #>);
+<# if (Entity.Name.Equals(Entity.ModelForEdit)){ #>
         partial void OnEditSaved(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
+<#      } else { #>
+        partial void OnEditSaved(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>, <#= Entity.ModelForEdit #> <#= Entity.ModelForEdit.ToCamelCase() #>);
+<#      } #>
 <#  } #>
 <#
     if(fillSelectListsMethods.Any(s=>s.Equals(AspNetMvcEngine.FillSelectListsMethodDefaultName)))
