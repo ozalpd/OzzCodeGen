@@ -24,10 +24,11 @@ WriteUsingNamespaces(); #>
     ViewBag.Title = @<#= EntityResource #>.<#= Entity.Name.Pluralize() #>;
 
     //Authorization Flags
-    bool canUserEdit = ViewBag.canUserEdit;
-    bool canUserCreate = ViewBag.canUserCreate;
-    bool canUserDelete = ViewBag.canUserDelete;
-    bool canSeeRestricted = ViewBag.canSeeRestricted;
+    bool isUserAdmin = ViewBag.isUserAdmin ?? false;
+    bool canUserEdit = ViewBag.canUserEdit ?? false;
+    bool canUserCreate = ViewBag.canUserCreate ?? false;
+    bool canUserDelete = ViewBag.canUserDelete ?? false;
+    bool canSeeRestricted = ViewBag.canSeeRestricted ?? false;
 
     var title = <#= EntityResource #>.<#= Entity.Name.Pluralize() #>;
 }
@@ -171,7 +172,7 @@ WriteUsingNamespaces(); #>
                 });
         }
 <#  if(HasModalPartialForm) { #>
-		function setActionLinks(){
+        function setActionLinks(){
             $('a[input-modal]').on('click', function (params) {
                 if (params.ctrlKey || params.metaKey || params.altKey) {
                     return true;

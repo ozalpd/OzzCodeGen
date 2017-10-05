@@ -26,10 +26,11 @@ WriteUsingNamespaces(); #>
     ViewBag.Title = title;
 
     //Authorization Flags
-    bool canUserEdit = ViewBag.canUserEdit;
-    bool canUserCreate = ViewBag.canUserCreate;
-    bool canUserDelete = ViewBag.canUserDelete;
-    bool canSeeRestricted = ViewBag.canSeeRestricted;
+    bool isUserAdmin = ViewBag.isUserAdmin ?? false;
+    bool canUserEdit = ViewBag.canUserEdit ?? false;
+    bool canUserCreate = ViewBag.canUserCreate ?? false;
+    bool canUserDelete = ViewBag.canUserDelete ?? false;
+    bool canSeeRestricted = ViewBag.canSeeRestricted ?? false;
 
     //Records & Pager
     var qParams = ((<#= Entity.ControllerName #>Controller.<#= Entity.Name #>ListVM)Model).QueryParameters;

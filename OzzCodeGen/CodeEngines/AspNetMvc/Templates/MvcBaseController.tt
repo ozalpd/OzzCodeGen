@@ -93,6 +93,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
 
         protected virtual async Task PutCanUserInViewBag()
         {
+            ViewBag.isUserAdmin = await IsUserAdminAsync();
             ViewBag.canUserEdit = await CanUserEditAsync();
             ViewBag.canUserCreate = await CanUserCreateAsync();
             ViewBag.canUserDelete = await CanUserDeleteAsync();
@@ -199,7 +200,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
                 AppendExceptionMsg(ex.InnerException, sb);
             }
         }
-		
+        
         protected virtual string ConvertToJson(object obj, bool includeNull = true, bool camelCase = false)
         {
             var settings = new JsonSerializerSettings
