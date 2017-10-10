@@ -689,7 +689,7 @@ foreach (var property in properties)
                         $('#dataInputTitle').html(title);
                     }
                     var inputForm = document.getElementById('dataInputForm');
-                    if (isNaN(inputForm)) {
+                    if (inputForm != null) {
                         $('#dataInputFooter').show();
                     }
                     else {
