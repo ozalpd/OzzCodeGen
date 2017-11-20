@@ -459,6 +459,7 @@ WriteUsingNamespaces();
             #line default
             #line hidden
             this.Write(@"                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    hideBusy();
                     var msgboxMsg = jqXHR.responseText;
                     showMessageBox(textStatus, msgboxMsg, true);
                 }).always(function (jqXHR) {
@@ -467,7 +468,7 @@ WriteUsingNamespaces();
         }
 ");
             
-            #line 174 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 175 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
   if(HasModalPartialForm) { 
             
             #line default
@@ -501,7 +502,7 @@ WriteUsingNamespaces();
         }
 ");
             
-            #line 202 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 203 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
  } 
             
             #line default

@@ -165,6 +165,7 @@ WriteUsingNamespaces(); #>
                     setActionLinks();
 <# } #>
                 }).fail(function (jqXHR, textStatus, errorThrown) {
+                    hideBusy();
                     var msgboxMsg = jqXHR.responseText;
                     showMessageBox(textStatus, msgboxMsg, true);
                 }).always(function (jqXHR) {
