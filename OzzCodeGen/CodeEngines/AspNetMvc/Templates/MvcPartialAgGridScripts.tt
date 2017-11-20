@@ -14,10 +14,7 @@ WriteUsingNamespaces(); #>
     function getPagedData(page) {
         var searchString = $('#SearchString').val();
         var url = '@Model';
-        showMessageBox('Loading...',
-            '<div style="width:100%;padding:32px;text-align:center;">' +
-            '<img src="/images/busy.gif" alt="Loading..." width="96" height="96" align="middle"/>' +
-            '</div>');
+        showBusy();
         $.getJSON(url, {
             pageSize: result.PageSize,
             page: page,
@@ -26,11 +23,12 @@ WriteUsingNamespaces(); #>
         },
             function (data) {
                 result = data;
-                hideMessageBox();
+                hideBusy();
                 gridOptions.api.setRowData(result.Items);
                 setPagerButtons($('#pagerUl'), result.Page, result.PageCount);
                 displayRecordStats(result.Items.length, result.TotalCount);
             }).fail(function (jqXHR, textStatus, errorThrown) {
+                hideBusy();
                 var msgboxMsg = jqXHR.responseText;
                 showMessageBox(textStatus, msgboxMsg, true);
             }).always(function (jqXHR) {

@@ -20,7 +20,7 @@ WriteUsingNamespaces(); #>
         }).done(function () {
             refreshData();
         });
-        showMessageBox('@MessageStrings.Deleting...', '@MessageStrings.PleaseWait.', false);
+        showBusy('@MessageStrings.Deleting... @MessageStrings.PleaseWait...');
 
         request.error(function (jqXHR, textStatus, errorThrown) {
             var msgboxMsg = jqXHR.responseText;
@@ -59,10 +59,25 @@ WriteUsingNamespaces(); #>
             console.log('expanded');
         }
     }
+    function showBusy(message) {
+        //message = message || '@MessageStrings.PleaseWait...';
+        if (message != null) {
+            $('#busyMessage').html(message);
+        }
+        else {
+            $('#busyMessage').html('');
+            $('#busyMessage').hide();
+        }
+        $('#busyAnima').show();
+    }
+    function hideBusy() {
+        $('#busyAnima').hide();
+        $('#busyMessage').html('');
+    }
     function submitDataInputForm() {
         var inputForm = $('#dataInputForm');
         if ($(inputForm).valid()) {
-            $('#busyAnima').show();
+            showBusy();
             var url = $(inputForm).attr('action');
             url += (url.indexOf('?') == -1) ? '?' : '&';
             url += 'modal=true';
@@ -70,7 +85,7 @@ WriteUsingNamespaces(); #>
                 url: url,
                 type: $(inputForm).attr('method'),
                 data: $(inputForm).serialize(),
-				cache: false,
+                cache: false,
                 success: function (result) {
                     if (result.saved) {
                         refreshData();
@@ -79,13 +94,13 @@ WriteUsingNamespaces(); #>
                     else {
                         $('#dataInputBody').html(result);
                     }
-                    $('#busyAnima').hide();
+                    hideBusy();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     $('#dataInputModal').modal('hide');
                     var msgboxMsg = jqXHR.responseText;
                     showMessageBox(errorThrown, msgboxMsg, true);
-                    $('#busyAnima').hide();
+                    hideBusy();
                 }
             });
         }

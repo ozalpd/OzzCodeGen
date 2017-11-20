@@ -100,30 +100,31 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write("        <div class=\"col-sm-2\">\r\n            @Html.ActionLink(ActionStrings.AddNew" +
-                    ", \"Create\", null, new { @class = \"btn btn-primary\", input_modal = ");
+            this.Write("        <div class=\"col-sm-2\">\r\n            @if (canUserCreate)\r\n            {\r\n " +
+                    "               @Html.ActionLink(ActionStrings.AddNew, \"Create\", null, new { @cla" +
+                    "ss = \"btn btn-primary\", input_modal = ");
             
-            #line 42 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 44 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".AddNew");
             
-            #line 42 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 44 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
-            this.Write(" })\r\n        </div>\r\n");
+            this.Write(" })\r\n            }\r\n        </div>\r\n");
             
-            #line 44 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 47 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 45 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 48 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
   if(searchable)
     { 
             
@@ -132,7 +133,7 @@ WriteUsingNamespaces();
             this.Write("            <div class=\"col-md-4 col-sm-5\">\r\n                @Html.Partial(\"_Sear" +
                     "chBoxPartial\")\r\n            </div>\r\n");
             
-            #line 50 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 53 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
   } 
             
             #line default
@@ -141,21 +142,21 @@ WriteUsingNamespaces();
                     "%;height:580px;\"></div>\r\n<nav><ul id=\"pagerUl\" class=\"pagination\"></ul></nav>\r\n@" +
                     "Html.Partial(\"_MessageBoxPartial\")\r\n@section scripts{\r\n");
             
-            #line 57 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 60 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
   if(HasModalInputForm) { 
             
             #line default
             #line hidden
             this.Write("    @Scripts.Render(\"~/bundles/jqueryval\")\r\n");
             
-            #line 59 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 62 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
   } 
             
             #line default
             #line hidden
             this.Write("    @Scripts.Render(\"~/js/ag-grid\")\r\n    @Html.Partial(\"_IndexScriptsPartial\", \"");
             
-            #line 61 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 64 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ControllerName));
             
             #line default
@@ -181,35 +182,35 @@ WriteUsingNamespaces();
                 return[
                      { headerName: '@ActionStrings.Action', field: """);
             
-            #line 80 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 83 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pKey));
             
             #line default
             #line hidden
             this.Write("\", width: 64, cellRenderer: actionCellRenderer},\r\n");
             
-            #line 81 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 84 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
  foreach (var property in properties) { 
             
             #line default
             #line hidden
             this.Write("                     { headerName: \'@Html.DisplayNameFor(m => m.");
             
-            #line 82 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 85 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(")\', field: \"");
             
-            #line 82 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 85 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write("\", width: 180 },\r\n");
             
-            #line 83 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 86 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
  } 
             
             #line default
@@ -225,14 +226,14 @@ WriteUsingNamespaces();
                     '<ul class=""dropdown-menu mb15"" role=""menu"">' +
                     '<li><a href=""@Url.Action(""Details"")/' + params.value + '""");
             
-            #line 93 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 96 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
   if(Entity.DetailsPartialView) { 
             
             #line default
             #line hidden
             this.Write(" input-modal=\"@ActionStrings.Details\" ");
             
-            #line 93 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 96 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
  } 
             
             #line default
@@ -241,14 +242,14 @@ WriteUsingNamespaces();
                     "       {\r\n                    @:\'<li><a href=\"@Url.Action(\"Edit\")/\' + params.val" +
                     "ue + \'\"");
             
-            #line 96 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 99 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
   if(Entity.EditPartialView) { 
             
             #line default
             #line hidden
             this.Write(" input-modal=\"@ActionStrings.Edit\" ");
             
-            #line 96 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 99 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
  } 
             
             #line default
@@ -258,14 +259,14 @@ WriteUsingNamespaces();
                     "ata-toggle=\"modal\" onclick=\"setDelete(getObjectById(result.Items,\' + params.valu" +
                     "e + \').");
             
-            #line 100 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 103 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(DisplayMember));
             
             #line default
             #line hidden
             this.Write(", \' + params.value + \');\">@ActionStrings.Delete</a></li>\' +\r\n                }\r\n");
             
-            #line 102 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 105 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
   if (entitiesThisForCreate.Any()) 
     { 
             
@@ -273,7 +274,7 @@ WriteUsingNamespaces();
             #line hidden
             this.Write("                    \'<li class=\"divider\"></li>\' +\r\n");
             
-            #line 105 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 108 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
         foreach (var entity in entitiesThisForCreate)
         {
             
@@ -282,97 +283,97 @@ WriteUsingNamespaces();
             this.Write("                @if (canUserCreate)\r\n                {\r\n                    @:\'<l" +
                     "i><a href=\"/");
             
-            #line 109 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 112 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.ControllerName));
             
             #line default
             #line hidden
             this.Write("/Create/?");
             
-            #line 109 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 112 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.StrongDependedForeignKey.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("=\' + params.value + \'\"");
             
-            #line 109 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 112 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
   if(Entity.CreatePartialView) { 
             
             #line default
             #line hidden
             this.Write(" input-modal=\"@");
             
-            #line 109 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 112 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".Add");
             
-            #line 109 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 112 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("\" ");
             
-            #line 109 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 112 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
  } 
             
             #line default
             #line hidden
             this.Write(">@");
             
-            #line 109 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 112 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".Add");
             
-            #line 109 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 112 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("</a></li>\' +\r\n                }\r\n                    \'<li><a href=\"/");
             
-            #line 111 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 114 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.ControllerName));
             
             #line default
             #line hidden
             this.Write("/Index/?");
             
-            #line 111 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 114 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.StrongDependedForeignKey.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("=\' + params.value + \'\">@");
             
-            #line 111 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 114 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 111 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 114 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name.Pluralize()));
             
             #line default
             #line hidden
             this.Write("</a></li>\' +\r\n");
             
-            #line 112 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 115 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
         } 
             
             #line default
             #line hidden
             
-            #line 113 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 116 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
   } 
             
             #line default
@@ -400,14 +401,14 @@ WriteUsingNamespaces();
             displayRecordStats(result.Items.length, result.TotalCount);
 ");
             
-            #line 135 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 138 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
   if(HasModalPartialForm) { 
             
             #line default
             #line hidden
             this.Write("            setActionLinks();\r\n");
             
-            #line 137 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 140 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
  } 
             
             #line default
@@ -416,23 +417,20 @@ WriteUsingNamespaces();
                     "ge);\r\n        }\r\n\r\n        function getPagedData(page) {\r\n            var search" +
                     "String = $(\'#SearchString\').val();\r\n            var url = \"/");
             
-            #line 146 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 149 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ControllerName));
             
             #line default
             #line hidden
             this.Write("/Get");
             
-            #line 146 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
+            #line 149 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write(@"PagedList"";
-            showMessageBox('Loading...',
-                '<div style=""width:100%;padding:32px;text-align:center;"">' +
-                '<img src=""/images/busy.gif"" alt=""Loading..."" width=""96"" height=""96"" align=""middle""/>' +
-                '</div>');
+            showBusy();
             $.getJSON(url, {
                 pageSize: result.PageSize,
                 page: page,
@@ -442,7 +440,7 @@ WriteUsingNamespaces();
             },
                 function (data) {
                     result = data;
-                    hideMessageBox();
+                    hideBusy();
                     gridOptions.api.setRowData(result.Items);
                     setPagerButtons($('#pagerUl'), result.Page, result.PageCount);
                     displayRecordStats(result.Items.length, result.TotalCount);
@@ -479,13 +477,13 @@ WriteUsingNamespaces();
                 if (params.ctrlKey || params.metaKey || params.altKey) {
                     return true;
                 }
-                showMessageBox('@MessageStrings.Loading...', '@MessageStrings.PleaseWait.', false);
+                showBusy();
                 var title = $(this).attr(""input-modal"");
                 var url = this.href;
                 url += (url.indexOf('?') == -1) ? '?' : '&';
                 url += 'modal=true';
                 $('#dataInputBody').load(url, function () {
-                    hideMessageBox();
+                    hideBusy();
                     if (title != null || title != '') {
                         $('#dataInputTitle').html(title);
                     }

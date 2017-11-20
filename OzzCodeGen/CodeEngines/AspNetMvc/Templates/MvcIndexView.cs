@@ -678,13 +678,13 @@ foreach (var property in properties)
                 if (params.ctrlKey || params.metaKey || params.altKey) {
                     return true;
                 }
-                showMessageBox('@MessageStrings.Loading...', '@MessageStrings.PleaseWait.', false);
+                showBusy();
                 var title = $(this).attr(""input-modal"");
                 var url = this.href;
                 url += (url.indexOf('?') == -1) ? '?' : '&';
                 url += 'modal=true';
                 $('#dataInputBody').load(url, function () {
-                    hideMessageBox();
+                    hideBusy();
                     if (title != null || title != '') {
                         $('#dataInputTitle').html(title);
                     }
