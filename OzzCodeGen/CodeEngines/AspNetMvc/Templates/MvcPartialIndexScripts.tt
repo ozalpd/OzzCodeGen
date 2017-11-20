@@ -23,6 +23,7 @@ WriteUsingNamespaces(); #>
         showBusy('@MessageStrings.Deleting... @MessageStrings.PleaseWait...');
 
         request.error(function (jqXHR, textStatus, errorThrown) {
+            hideBusy();
             var msgboxMsg = jqXHR.responseText;
             showMessageBox(errorThrown, msgboxMsg, true);
         });

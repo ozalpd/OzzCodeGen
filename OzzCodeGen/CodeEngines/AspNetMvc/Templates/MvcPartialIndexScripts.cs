@@ -44,45 +44,46 @@ WriteUsingNamespaces();
                     "var request = $.get(requestUrl, function (data) {\r\n        }).done(function () {" +
                     "\r\n            refreshData();\r\n        });\r\n        showBusy(\'@MessageStrings.Del" +
                     "eting... @MessageStrings.PleaseWait...\');\r\n\r\n        request.error(function (jqX" +
-                    "HR, textStatus, errorThrown) {\r\n            var msgboxMsg = jqXHR.responseText;\r" +
-                    "\n            showMessageBox(errorThrown, msgboxMsg, true);\r\n        });\r\n    }\r\n" +
-                    "    function showImage(title, imgUrl, cancelButton) {\r\n        var innerHtml = \"" +
-                    "<img src=\'\" + imgUrl + \"\' class=\'img-responsive center-block\' />\";\r\n        show" +
-                    "MessageBox(title, innerHtml, cancelButton);\r\n    }\r\n    function showMessageBox(" +
-                    "title, text, cancelButton) {\r\n        if (cancelButton) {\r\n            $(\'#messa" +
-                    "geBoxCancelButton\').show();\r\n        }\r\n        else {\r\n            $(\'#messageB" +
-                    "oxCancelButton\').hide();\r\n        }\r\n        $(\'#messageBoxTitle\').html(title);\r" +
-                    "\n        $(\'#messageBoxText\').html(text);\r\n        $(\'#messageBox\').modal(\'show\'" +
-                    ");\r\n    }\r\n    function hideMessageBox() {\r\n        $(\'#messageBox\').modal(\'hide" +
-                    "\');\r\n    }\r\n    function showCannotDelete(item, relatedRecords) {\r\n        var m" +
-                    "sgText = \'@MessageStrings.CanNotDelete \' + item + \'.<br/>@MessageStrings.Because" +
-                    "OfRelatedRecords.<br/>\' + relatedRecords;\r\n        showMessageBox(\'@MessageStrin" +
-                    "gs.UnableToDelete!\', msgText, true);\r\n    }\r\n    function toogleAccordionSign() " +
-                    "{\r\n        if ($(\'#filterPanel\').hasClass(\'in\')) {\r\n            $(\'#filterPanelS" +
-                    "ign\').removeClass(\'glyphicon-minus\').addClass(\'glyphicon-plus\');\r\n            co" +
-                    "nsole.log(\'collapsed\');\r\n        }\r\n        else {\r\n            $(\'#filterPanelS" +
-                    "ign\').removeClass(\'glyphicon-plus\').addClass(\'glyphicon-minus\');\r\n            co" +
-                    "nsole.log(\'expanded\');\r\n        }\r\n    }\r\n    function showBusy(message) {\r\n    " +
-                    "    //message = message || \'@MessageStrings.PleaseWait...\';\r\n        if (message" +
-                    " != null) {\r\n            $(\'#busyMessage\').html(message);\r\n        }\r\n        el" +
-                    "se {\r\n            $(\'#busyMessage\').html(\'\');\r\n            $(\'#busyMessage\').hid" +
-                    "e();\r\n        }\r\n        $(\'#busyAnima\').show();\r\n    }\r\n    function hideBusy()" +
-                    " {\r\n        $(\'#busyAnima\').hide();\r\n        $(\'#busyMessage\').html(\'\');\r\n    }\r" +
-                    "\n    function submitDataInputForm() {\r\n        var inputForm = $(\'#dataInputForm" +
-                    "\');\r\n        if ($(inputForm).valid()) {\r\n            showBusy();\r\n            v" +
-                    "ar url = $(inputForm).attr(\'action\');\r\n            url += (url.indexOf(\'?\') == -" +
-                    "1) ? \'?\' : \'&\';\r\n            url += \'modal=true\';\r\n            $.ajax({\r\n       " +
-                    "         url: url,\r\n                type: $(inputForm).attr(\'method\'),\r\n        " +
-                    "        data: $(inputForm).serialize(),\r\n                cache: false,\r\n        " +
-                    "        success: function (result) {\r\n                    if (result.saved) {\r\n " +
-                    "                       refreshData();\r\n                        $(\'#dataInputModa" +
-                    "l\').modal(\'hide\');\r\n                    }\r\n                    else {\r\n         " +
-                    "               $(\'#dataInputBody\').html(result);\r\n                    }\r\n       " +
-                    "             hideBusy();\r\n                },\r\n                error: function (j" +
-                    "qXHR, textStatus, errorThrown) {\r\n                    $(\'#dataInputModal\').modal" +
-                    "(\'hide\');\r\n                    var msgboxMsg = jqXHR.responseText;\r\n            " +
-                    "        showMessageBox(errorThrown, msgboxMsg, true);\r\n                    hideB" +
-                    "usy();\r\n                }\r\n            });\r\n        }\r\n    }\r\n</script>");
+                    "HR, textStatus, errorThrown) {\r\n            hideBusy();\r\n            var msgboxM" +
+                    "sg = jqXHR.responseText;\r\n            showMessageBox(errorThrown, msgboxMsg, tru" +
+                    "e);\r\n        });\r\n    }\r\n    function showImage(title, imgUrl, cancelButton) {\r\n" +
+                    "        var innerHtml = \"<img src=\'\" + imgUrl + \"\' class=\'img-responsive center-" +
+                    "block\' />\";\r\n        showMessageBox(title, innerHtml, cancelButton);\r\n    }\r\n   " +
+                    " function showMessageBox(title, text, cancelButton) {\r\n        if (cancelButton)" +
+                    " {\r\n            $(\'#messageBoxCancelButton\').show();\r\n        }\r\n        else {\r" +
+                    "\n            $(\'#messageBoxCancelButton\').hide();\r\n        }\r\n        $(\'#messag" +
+                    "eBoxTitle\').html(title);\r\n        $(\'#messageBoxText\').html(text);\r\n        $(\'#" +
+                    "messageBox\').modal(\'show\');\r\n    }\r\n    function hideMessageBox() {\r\n        $(\'" +
+                    "#messageBox\').modal(\'hide\');\r\n    }\r\n    function showCannotDelete(item, related" +
+                    "Records) {\r\n        var msgText = \'@MessageStrings.CanNotDelete \' + item + \'.<br" +
+                    "/>@MessageStrings.BecauseOfRelatedRecords.<br/>\' + relatedRecords;\r\n        show" +
+                    "MessageBox(\'@MessageStrings.UnableToDelete!\', msgText, true);\r\n    }\r\n    functi" +
+                    "on toogleAccordionSign() {\r\n        if ($(\'#filterPanel\').hasClass(\'in\')) {\r\n   " +
+                    "         $(\'#filterPanelSign\').removeClass(\'glyphicon-minus\').addClass(\'glyphico" +
+                    "n-plus\');\r\n            console.log(\'collapsed\');\r\n        }\r\n        else {\r\n   " +
+                    "         $(\'#filterPanelSign\').removeClass(\'glyphicon-plus\').addClass(\'glyphicon" +
+                    "-minus\');\r\n            console.log(\'expanded\');\r\n        }\r\n    }\r\n    function " +
+                    "showBusy(message) {\r\n        //message = message || \'@MessageStrings.PleaseWait." +
+                    "..\';\r\n        if (message != null) {\r\n            $(\'#busyMessage\').html(message" +
+                    ");\r\n        }\r\n        else {\r\n            $(\'#busyMessage\').html(\'\');\r\n        " +
+                    "    $(\'#busyMessage\').hide();\r\n        }\r\n        $(\'#busyAnima\').show();\r\n    }" +
+                    "\r\n    function hideBusy() {\r\n        $(\'#busyAnima\').hide();\r\n        $(\'#busyMe" +
+                    "ssage\').html(\'\');\r\n    }\r\n    function submitDataInputForm() {\r\n        var inpu" +
+                    "tForm = $(\'#dataInputForm\');\r\n        if ($(inputForm).valid()) {\r\n            s" +
+                    "howBusy();\r\n            var url = $(inputForm).attr(\'action\');\r\n            url " +
+                    "+= (url.indexOf(\'?\') == -1) ? \'?\' : \'&\';\r\n            url += \'modal=true\';\r\n    " +
+                    "        $.ajax({\r\n                url: url,\r\n                type: $(inputForm)." +
+                    "attr(\'method\'),\r\n                data: $(inputForm).serialize(),\r\n              " +
+                    "  cache: false,\r\n                success: function (result) {\r\n                 " +
+                    "   if (result.saved) {\r\n                        refreshData();\r\n                " +
+                    "        $(\'#dataInputModal\').modal(\'hide\');\r\n                    }\r\n            " +
+                    "        else {\r\n                        $(\'#dataInputBody\').html(result);\r\n     " +
+                    "               }\r\n                    hideBusy();\r\n                },\r\n         " +
+                    "       error: function (jqXHR, textStatus, errorThrown) {\r\n                    $" +
+                    "(\'#dataInputModal\').modal(\'hide\');\r\n                    var msgboxMsg = jqXHR.re" +
+                    "sponseText;\r\n                    showMessageBox(errorThrown, msgboxMsg, true);\r\n" +
+                    "                    hideBusy();\r\n                }\r\n            });\r\n        }\r\n" +
+                    "    }\r\n</script>");
             return this.GenerationEnvironment.ToString();
         }
     }
