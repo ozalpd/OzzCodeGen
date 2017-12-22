@@ -13,9 +13,9 @@ var properties = CreateForm ?
         Entity.DisplayColumns.Where(e => e.InCreateView) :
         Entity.DisplayColumns.Where(e => e.InEditView);
 var decimalProperties = properties
-		.Where(p => p.PropertyDefinition.TypeName.Contains("decimal") ||
-				p.PropertyDefinition.TypeName.Contains("float") ||
-				p.PropertyDefinition.TypeName.Contains("double"));
+        .Where(p => p.PropertyDefinition.TypeName.Contains("decimal") ||
+                p.PropertyDefinition.TypeName.Contains("float") ||
+                p.PropertyDefinition.TypeName.Contains("double"));
 
 string modelName = CreateForm ? Entity.ModelForCreate : Entity.ModelForEdit;
 string formTypeName = CreateForm ? "Create" : "Edit";
@@ -44,32 +44,35 @@ WriteUsingNamespaces(); #>
         @Html.HiddenFor(model => model.Id)
         
 <#
+int visibleFields = 0; //visibleFields
 foreach (var property in properties) 
 {
-	var useFor = CreateForm ? property.UseForCreate : property.UseForEdit;
+    var useFor = CreateForm ? property.UseForCreate : property.UseForEdit;
     if (useFor == "HiddenInput")
     { #>
         @Html.HiddenFor(m => m.<#= property.Name #>)
 <#  }
     else 
     {
-        string editDivClass = useFor == "TextArea" ? "col-lg-7 col-md-8 col-sm-9" : "col-lg-5 col-md-6 col-sm-7"; #>
+        string editDivClass = useFor == "TextArea" ? "col-lg-7 col-md-8 col-sm-9" : "col-lg-5 col-md-6 col-sm-7";
+        string autoFocus = visibleFields>0 ? string.Empty : ", @autofocus = \"autofocus\"";
+        visibleFields++;#>
         <div class="form-group">
             @Html.LabelFor(model => model.<#= property.Name #>, htmlAttributes: new { @class = "control-label col-lg-2 col-md-3 col-sm-3" })
             <div class="<#= editDivClass #>">
 <#      if (useFor == "DropDownList")
         { #>
-                @Html.DropDownListFor(m => m.<#= property.Name #>, null, ActionStrings.SelectPlease, htmlAttributes: new { @class = "form-control" })
-<#      } else if (useFor == "ReadOnlyDisplay") { #>
+                @Html.DropDownListFor(m => m.<#= property.Name #>, null, ActionStrings.SelectPlease, htmlAttributes: new { @class = "form-control"<#= autoFocus #> })
+<#      } else if (useFor == "ReadOnlyDisplay") { visibleFields--; #>
                 @Html.EditorFor(m => m.<#= property.Name #>, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-<#      } else if (useFor == "ImageUpload") { #>
+<#      } else if (useFor == "ImageUpload") { visibleFields--; #>
                 @Html.Partial("_ImageUpload", new ImageUploadViewModel("<#= property.Name #>", Model.<#= property.Name #>))
 <#      } else if (useFor == "TextBox") { #>
-                @Html.TextBoxFor(m => m.<#= property.Name #>, new { @class = "form-control", autocomplete = "off" })
+                @Html.TextBoxFor(m => m.<#= property.Name #>, new { @class = "form-control", autocomplete = "off"<#= autoFocus #> })
 <#      } else if (useFor == "TextArea") { #>
-                @Html.TextAreaFor(m => m.<#= property.Name #>, 4, 1, new { @class = "form-control", autocomplete = "off" })
+                @Html.TextAreaFor(m => m.<#= property.Name #>, 4, 1, new { @class = "form-control", autocomplete = "off"<#= autoFocus #> })
 <#      } else { #>
-                @Html.EditorFor(m => m.<#= property.Name #>, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                @Html.EditorFor(m => m.<#= property.Name #>, new { htmlAttributes = new { @class = "form-control", autocomplete = "off"<#= autoFocus #> } })
 <#      } #>
 <#      if (property.HasValidation)
         { #>
