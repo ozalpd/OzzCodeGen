@@ -123,6 +123,17 @@ namespace OzzCodeGen.CodeEngines.Storage
         private string _schemaName;
 
 
+        public bool PutCommentsIntoScripts
+        {
+            get { return _putCommentsIntoScripts; }
+            set
+            {
+                _putCommentsIntoScripts = value;
+                RaisePropertyChanged("PutCommentsIntoScripts");
+            }
+        }
+        private bool _putCommentsIntoScripts;
+
         protected override void OnSearchStringChanged()
         {
             RaisePropertyChanged("Entities");

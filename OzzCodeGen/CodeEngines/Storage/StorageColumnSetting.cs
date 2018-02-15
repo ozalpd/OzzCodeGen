@@ -123,6 +123,16 @@ namespace OzzCodeGen.CodeEngines.Storage
             }
         }
 
+        public virtual string FormatComment()
+        {
+            var engine = ((StorageEntitySetting)EntitySetting).CodeEngine;
+            
+            if (engine.PutCommentsIntoScripts && !string.IsNullOrEmpty(PropertyDefinition.Comment))
+            {
+                return string.Format(" /* {0} */", PropertyDefinition.Comment);
+            }
+            return string.Empty;
+        }
 
         private void GetIsPKey()
         {

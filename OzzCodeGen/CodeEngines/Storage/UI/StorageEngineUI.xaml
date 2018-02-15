@@ -53,14 +53,19 @@
                     Grid.Row="0" Grid.Column="0"
                     Click="btnRefresh_Click"/>
 
-            <CheckBox IsChecked="{Binding RenderAllEntities}"
-                      ToolTip="Render for every entity in the model."
-                      Content="All Entities"
-                      Grid.Row="1" Grid.Column="1"/>
-
-            <CheckBox IsChecked="{Binding OverwriteExisting}"
-                      Content="Overwrite Existing Files"
-                      Grid.Row="0" Grid.Column="1"/>
+            <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Margin="0,3,0,0">
+                <StackPanel.Resources>
+                    <Style TargetType="CheckBox">
+                        <Setter Property="Margin" Value="4,5,0,0"/>
+                    </Style>
+                </StackPanel.Resources>
+                <CheckBox IsChecked="{Binding PluralizeTableNames}" Content="Pluralize Table Names"/>
+                <CheckBox IsChecked="{Binding RenderAllEntities}" Content="All Entities"
+                          ToolTip="Render for every entity in the model."/>
+                <CheckBox IsChecked="{Binding OverwriteExisting}" Content="Overwrite Existing Files"/>
+                <CheckBox IsChecked="{Binding PutCommentsIntoScripts}" Content="Put Comments"
+                          ToolTip="Put Comments Into Scripts"/>
+            </StackPanel>
 
             <TextBlock Text="Database Server:" Grid.Column="2" Grid.Row="0"/>
             <TextBox Text="{Binding DatabaseServer, Mode=TwoWay}" 
@@ -92,7 +97,6 @@
             <TextBlock Text="Schema Name" Grid.Column="4" Grid.Row="2"/>
             <TextBox Text="{Binding SchemaName}" Grid.Column="5" Grid.Row="2"/>
 
-            <CheckBox IsChecked="{Binding PluralizeTableNames}" Content="Pluralize Table Names" Grid.Column="1" Grid.Row="2"/>
 
 
             <Border Grid.Row="8" Grid.ColumnSpan="6" Margin="-1,0" Background="#FFFFF4D4" BorderBrush="#FFDAA200" BorderThickness="2">

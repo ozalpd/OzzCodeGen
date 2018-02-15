@@ -12,26 +12,26 @@ CREATE TABLE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName 
 <#    if(TableDefinition.PrimaryKeyColumn != null) { #>
     <#= TableDefinition.GetPrimaryKeyDeclaration() #>,
 <#  }
-	else { #>
-	--No Primary Key defined!
+    else { #>
+    --No Primary Key defined!
 <#  } #>
 <#    var columns = TableDefinition.UseInheritance ?
-			TableDefinition.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false) :
-			TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false);
+            TableDefinition.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false) :
+            TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false);
 
       foreach (var column in columns)
       {#>
-    <#= TableDefinition.GetColumnDeclaration(column) #>,
+    <#= TableDefinition.GetColumnDeclaration(column) #>,<#= column.FormatComment() #>
 <#    } #>
 <#    if(TableDefinition.ModifyTrack) 
-	  { 
-		foreach (var column in CodeEngine.GetModifyTrackColumns())
-		{
-			if(columns.Where(c=>c.Name.Equals(column.Name)).Count()==0)
-			{#>
-    <#= TableDefinition.GetColumnDeclaration(column) #>,
+      { 
+        foreach (var column in CodeEngine.GetModifyTrackColumns())
+        {
+            if(columns.Where(c=>c.Name.Equals(column.Name)).Count()==0)
+            {#>
+    <#= TableDefinition.GetColumnDeclaration(column) #>,<#= column.FormatComment() #>
 <#			}
-		}
+        }
       } #>
 <#    if(TableDefinition.PrimaryKeyColumn != null) { #>
   CONSTRAINT [PK_<#= TableDefinition.TableName #>] PRIMARY KEY CLUSTERED ([<#= TableDefinition.PrimaryKeyColumn.Name #>] ASC)
@@ -51,11 +51,11 @@ Go
 <#    if(TableDefinition.Name == "EntityUpdate" && columns.Where(c => c.Name == "UpdateDate").Any()) { #>
 
 CREATE PROCEDURE EntityUpdated
-	@EntityTypeId    int
+    @EntityTypeId    int
 AS
 BEGIN
-	Update [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>] Set [UpdateDate] = GETDATE()
-	Where [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>].[<#= TableDefinition.PrimaryKeyColumn.Name #>] = @EntityTypeId
+    Update [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>] Set [UpdateDate] = GETDATE()
+    Where [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>].[<#= TableDefinition.PrimaryKeyColumn.Name #>] = @EntityTypeId
 END
 Go
 <#  } #>

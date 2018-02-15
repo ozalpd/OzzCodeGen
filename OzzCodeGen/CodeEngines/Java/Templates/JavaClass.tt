@@ -15,7 +15,7 @@ public <# if(Entity.EntityDefinition.Abstract) { #>abstract <# } #>class <#= Cla
 <#  
 foreach(var property in includedProperties)
 {
-	string comment = property.FormatComment("     * "); #>
+    string comment = property.FormatComment("     * "); #>
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * <#= property.Name #> property
@@ -23,21 +23,21 @@ foreach(var property in includedProperties)
     { #>
 <#= comment #>
 <#  } #>
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 <#  if(property.IsArrayType())
-	{ #>
+    { #>
     public boolean add<#= property.Name.Singularize() #>(<#= property.GetEntity() #> <#= property.JavaName.Singularize() #>){
-    	return <#= property.Getter #>().add(<#= property.JavaName.Singularize() #>);
+        return <#= property.Getter #>().add(<#= property.JavaName.Singularize() #>);
     }
-	
+    
     public <#= property.GetEntity() #> <#= property.JavaName.Singularize() #>AtIndex(int index){
-    	return <#= property.Getter #>().get(index);
+        return <#= property.Getter #>().get(index);
     }
 
     public <#= property.JavaType #> <#= property.Getter #>(){
-    	if(this._<#= property.JavaName #> == null){
-    		this._<#= property.JavaName #> = new <#= property.JavaType #>();
-    	}
+        if(this._<#= property.JavaName #> == null){
+            this._<#= property.JavaName #> = new <#= property.JavaType #>();
+        }
         return this._<#= property.JavaName #>;
     }
 <#  } else { #>
@@ -46,7 +46,7 @@ foreach(var property in includedProperties)
     }
 <#  } #>
     
-	public void <#= property.Setter #>(<#= property.JavaType #> <#= property.JavaName #>){
+    public void <#= property.Setter #>(<#= property.JavaType #> <#= property.JavaName #>){
         this._<#= property.JavaName #> = <#= property.JavaName #>;
     }
     private <#= property.JavaType #> _<#= property.JavaName #>;
