@@ -53,6 +53,25 @@ namespace OzzCodeGen.CodeEngines.Metadata
         }
         private string _dataType;
 
+
+        /// <summary>
+        /// DefaultValue of the Property
+        /// </summary>
+        public string DefaultValue
+        {
+            get
+            {
+                return _defaultValue;
+            }
+            set
+            {
+                _defaultValue = value;
+                RaisePropertyChanged("DefaultValue");
+            }
+        }
+        private string _defaultValue;
+
+
         public bool DTOExclusion
         {
             get { return _dtoExclusion; }

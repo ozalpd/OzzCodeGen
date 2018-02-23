@@ -23,9 +23,9 @@ namespace <#= NamespaceName #>
 {
     [MetadataTypeAttribute(typeof(<#= ClassName #>.<#= EntitySetting.Name #>Metadata))]
     public partial class <#= ClassName #>
-	{
+    {
         internal sealed partial class <#= EntitySetting.Name #>Metadata
-		{
+        {
             // This metadata class is not intended to be instantiated.
             private <#= EntitySetting.Name #>Metadata() { }
 
@@ -33,11 +33,11 @@ namespace <#= NamespaceName #>
 var properties = GetInheritedIncludedProperties();
 foreach (var property in properties) 
 {
-	List<string> attributes  = GetPropertyAttributes(property);
-	if(attributes.Any())
-	{
-	    foreach(string attibute in attributes)
-	    {
+    List<string> attributes  = GetPropertyAttributes(property);
+    if(attributes.Any())
+    {
+        foreach(string attibute in attributes)
+        {
 #>
             <#= attibute #>
 <#		} #>
@@ -46,6 +46,6 @@ foreach (var property in properties)
 <#	} #>
 <# 
 } #>
-		}
-	}
+        }
+    }
 }

@@ -41,6 +41,8 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
             if (!string.IsNullOrEmpty(property.Range))
                 attributes.Add("[Range(" + property.Range + ")]");
 
+            if (!string.IsNullOrEmpty(property.DefaultValue))
+                attributes.Add("[DefaultValue(" + property.DefaultValue + ")]");
 
             string displayAttrib = property.GetDisplayAttrib();
             if (!string.IsNullOrEmpty(displayAttrib))
