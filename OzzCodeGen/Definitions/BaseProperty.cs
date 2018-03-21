@@ -2,6 +2,7 @@
 using OzzUtils;
 using System.ComponentModel;
 using System.Xml.Serialization;
+using System.Text.RegularExpressions;
 
 namespace OzzCodeGen.Definitions
 {
@@ -366,19 +367,26 @@ namespace OzzCodeGen.Definitions
 
         public static BaseProperty CreatePropertyDefinition(string typeName)
         {
+            string fixedName = typeName.Replace("?", "").Replace(" ", "");
+            if (fixedName.StartsWith("Nullable<"))
+                fixedName = fixedName.Replace("Nullable<", "").Replace(">", "");
+            if (fixedName.StartsWith("System."))
+                fixedName = fixedName.Replace("System.", "");
+
             BaseProperty property;
-            if (IsTypeSimple(typeName))
+            if (IsTypeSimple(fixedName))
             {
-                if (IsTypeString(typeName))
+                if (IsTypeString(fixedName))
                 {
                     property = new StringProperty();
                 }
                 else
                 {
                     property = new SimpleProperty();
+                    ((SimpleProperty)property).IsNullable = IsTypeNullable(typeName);
                 }
             }
-            else if (IsTypeCollection(typeName))
+            else if (IsTypeCollection(fixedName))
             {
                 property = new CollectionProperty();
             }
@@ -387,7 +395,7 @@ namespace OzzCodeGen.Definitions
                 property = new ComplexProperty();
             }
 
-            property.TypeName = typeName;
+            property.TypeName = fixedName;
             return property;
         }
 

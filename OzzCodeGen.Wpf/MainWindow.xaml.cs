@@ -726,5 +726,18 @@ namespace OzzCodeGen.Wpf
                 SetEnumMemberGridIndex(grdEnumMembers.Items.Count - 1, grdEnumMembers);
             }
         }
+
+        private void btnAddProperties_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedEntity == null)
+                return;
+            var dlg = new AddProperties()
+            {
+                SelectedEntity = SelectedEntity,
+                Owner = this
+            };
+            dlg.Closed += AddPropertyDialog_Closed;
+            dlg.ShowDialog();
+        }
     }
 }

@@ -13,11 +13,14 @@ namespace OzzCodeGen.Definitions
         public override List<string> GetUsableTypeNames()
         {
             var typeNames = new List<string>();
-            foreach (var item in this.EntityDefinition.DataModel.OrderBy(p => p.Name))
+            var dataModel = EntityDefinition?.DataModel;
+            if (dataModel != null)
             {
-                typeNames.Add(item.Name);
+                foreach (var item in dataModel.OrderBy(p => p.Name))
+                {
+                    typeNames.Add(item.Name);
+                }
             }
-
             return typeNames;
         }
 

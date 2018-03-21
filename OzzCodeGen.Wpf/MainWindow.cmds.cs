@@ -28,22 +28,26 @@ namespace OzzCodeGen.Wpf
 
         void AddPropertyDialog_Closed(object sender, EventArgs e)
         {
-            var dlg = (NewPropertyDialog)sender;
+            var dlg = (Window)sender;
             if (dlg.DialogResult ?? false)
             {
                 int i = grdEntities.SelectedIndex;
-                var property = dlg.PropertyDefinition;
-                var entity = property.EntityDefinition;
 
-                if (property.DefinitionType == DefinitionType.Complex && dlg.CreateDependecy)
+                if(sender is NewPropertyDialog)
                 {
-                    entity.Properties.Add(dlg.DependentProperty, true);
-                    dlg.DependentProperty.DisplayName = string.Empty;
-                    ((BaseClassProperty)property).DependentPropertyName = dlg.DependentProperty.Name;
-                    ((BaseClassProperty)property).DependentPropertyType = dlg.DependentProperty.TypeName;
+                    var newProperty = (NewPropertyDialog)sender;
+                    var property = newProperty.PropertyDefinition;
+                    var entity = property.EntityDefinition;
+                    if (property.DefinitionType == DefinitionType.Complex && newProperty.CreateDependecy)
+                    {
+                        entity.Properties.Add(newProperty.DependentProperty, true);
+                        newProperty.DependentProperty.DisplayName = string.Empty;
+                        ((BaseClassProperty)property).DependentPropertyName = newProperty.DependentProperty.Name;
+                        ((BaseClassProperty)property).DependentPropertyType = newProperty.DependentProperty.TypeName;
+                    }
+                    entity.Properties.Add(property, true);
+                    property.DisplayName = string.Empty;
                 }
-                entity.Properties.Add(property, true);
-                property.DisplayName = string.Empty;
 
                 grdEntities.SelectedIndex = -1;
                 grdEntities.SelectedIndex = i;
