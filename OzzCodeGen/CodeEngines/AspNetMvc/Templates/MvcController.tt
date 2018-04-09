@@ -134,7 +134,7 @@ else
             return View();
 <#  } else { #>
             var query = await Get<#= Entity.Name #>Query(qParams);
-            var result =  qParams.TotalCount > 0 ?
+            var result = qParams.TotalCount > 0 ?
                             new <#= Entity.Name #>ListVM(await query.ToListAsync(), qParams) :
                             new <#= Entity.Name #>ListVM(qParams);
             PutPagerInViewBag(qParams);

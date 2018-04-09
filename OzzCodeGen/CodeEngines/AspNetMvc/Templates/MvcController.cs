@@ -525,8 +525,8 @@ else
             
             #line default
             #line hidden
-            this.Write("Query(qParams);\r\n            var result =  qParams.TotalCount > 0 ?\r\n            " +
-                    "                new ");
+            this.Write("Query(qParams);\r\n            var result = qParams.TotalCount > 0 ?\r\n             " +
+                    "               new ");
             
             #line 138 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
