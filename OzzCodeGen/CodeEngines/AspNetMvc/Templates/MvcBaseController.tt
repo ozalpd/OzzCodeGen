@@ -157,7 +157,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
 <#  } #>
 
         #region Query Methods for Entity Types
-<#  foreach (var entity in CodeEngine.Entities.Where(e => !e.EntityDefinition.Abstract))
+<#  foreach (var entity in CodeEngine.Entities.Where(e => !e.EntityDefinition.Abstract && !e.Exclude))
     {
         var pkeyProperty = entity.GetPrimaryKey();
         string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;

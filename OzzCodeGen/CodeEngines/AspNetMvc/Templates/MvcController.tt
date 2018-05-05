@@ -401,6 +401,7 @@ else
                 return NotFoundTextResult();
             }
 
+            OnDeleteChecking(<#= Entity.Name.ToCamelCase() #>);
 <#  if (collectionProperties.Any()) 
     { #>
 <#      foreach (var property in collectionProperties) 
@@ -623,6 +624,7 @@ else
             IEnumerable<T> _items;
         }
 <# if (Entity.GenerateDeleteAction){ #>
+        partial void OnDeleteChecking(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
         partial void OnEntityDeleting(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
         partial void OnEntityDeleted();
 <#  } #>

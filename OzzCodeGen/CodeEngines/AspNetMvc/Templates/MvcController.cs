@@ -1788,16 +1788,23 @@ else
             #line default
             #line hidden
             this.Write(" == null)\r\n            {\r\n                return NotFoundTextResult();\r\n         " +
-                    "   }\r\n\r\n");
+                    "   }\r\n\r\n            OnDeleteChecking(");
             
             #line 404 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n");
+            
+            #line 405 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   if (collectionProperties.Any()) 
     { 
             
             #line default
             #line hidden
             
-            #line 406 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 407 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       foreach (var property in collectionProperties) 
         { 
             
@@ -1805,61 +1812,61 @@ else
             #line hidden
             this.Write("            int ");
             
-            #line 408 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 409 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("Count = ");
             
-            #line 408 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 409 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 408 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 409 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(".Count;\r\n");
             
-            #line 409 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 410 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       } 
             
             #line default
             #line hidden
             this.Write("            if ((");
             
-            #line 410 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 411 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
  int i = 0; foreach (var property in collectionProperties){ 
             
             #line default
             #line hidden
             
-            #line 410 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 411 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
  if(i>0){ 
             
             #line default
             #line hidden
             this.Write(" + ");
             
-            #line 410 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 411 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
  } i++; 
             
             #line default
             #line hidden
             
-            #line 410 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 411 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("Count");
             
-            #line 410 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 411 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
  } 
             
             #line default
@@ -1868,21 +1875,21 @@ else
                     "       sb.Append(MessageStrings.CanNotDelete);\r\n                sb.Append(\" <b>\"" +
                     ");\r\n                sb.Append(");
             
-            #line 416 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 417 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 416 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 417 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.EntityDefinition.DisplayMember));
             
             #line default
             #line hidden
             this.Write(");\r\n                sb.Append(\"</b>.<br/>\");\r\n\r\n");
             
-            #line 419 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 420 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       foreach (var property in collectionProperties) 
         { 
             
@@ -1890,7 +1897,7 @@ else
             #line hidden
             this.Write("                if (");
             
-            #line 421 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 422 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name.ToCamelCase()));
             
             #line default
@@ -1898,28 +1905,28 @@ else
             this.Write("Count > 0)\r\n                {\r\n                    sb.Append(string.Format(Messag" +
                     "eStrings.RelatedRecordsExist, ");
             
-            #line 423 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 424 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("Count, ");
             
-            #line 423 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 424 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 423 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 424 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write("));\r\n                    sb.Append(\"<br/>\");\r\n                }\r\n\r\n");
             
-            #line 427 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 428 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       } 
             
             #line default
@@ -1927,49 +1934,49 @@ else
             this.Write("                return StatusCodeTextResult(sb, HttpStatusCode.BadRequest);\r\n    " +
                     "        }\r\n\r\n");
             
-            #line 431 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 432 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } 
             
             #line default
             #line hidden
             this.Write("            OnEntityDeleting(");
             
-            #line 432 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 433 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n\t\t\t");
             
-            #line 433 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 434 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 433 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 434 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.DataSetName));
             
             #line default
             #line hidden
             this.Write(".Remove(");
             
-            #line 433 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 434 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n            try\r\n            {\r\n                await ");
             
-            #line 436 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 437 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance));
             
             #line default
             #line hidden
             this.Write(".SaveChangesAsync(");
             
-            #line 436 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 437 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.SaveParameter));
             
             #line default
@@ -1978,14 +1985,14 @@ else
                     "        {\r\n                var sb = new StringBuilder();\r\n                sb.App" +
                     "end(MessageStrings.CanNotDelete);\r\n                sb.Append(");
             
-            #line 443 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 444 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 443 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 444 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.EntityDefinition.DisplayMember));
             
             #line default
@@ -2001,14 +2008,14 @@ else
         }
 ");
             
-            #line 452 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 453 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 454 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 455 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   string createRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanCreateToArray(), false);
     string editRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanEditToArray(), false);
     string deleteRoles = CodeEngine.MergeIsUserMethods(Entity.RolesCanDeleteToArray(), false);
@@ -2024,42 +2031,42 @@ else
             #line hidden
             this.Write("        ");
             
-            #line 464 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 465 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
             #line hidden
             this.Write(" override bool CanUserCreate() { return ");
             
-            #line 464 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 465 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(createRoles));
             
             #line default
             #line hidden
             this.Write("; }\r\n        ");
             
-            #line 465 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 466 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
             #line hidden
             this.Write(" override Task<bool> CanUserCreateAsync() { return Task.FromResult(");
             
-            #line 465 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 466 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(createRoles));
             
             #line default
             #line hidden
             this.Write("); }\r\n");
             
-            #line 466 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 467 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } else { 
             
             #line default
             #line hidden
             this.Write("        ");
             
-            #line 467 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 468 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
@@ -2067,14 +2074,14 @@ else
             this.Write(" override bool CanUserCreate()\r\n        {\r\n            if (!_canUserCreate.HasVal" +
                     "ue)\r\n            {\r\n                _canUserCreate = ");
             
-            #line 471 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 472 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(createRoles));
             
             #line default
             #line hidden
             this.Write(";\r\n            }\r\n            return _canUserCreate.Value;\r\n        }\r\n        ");
             
-            #line 475 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 476 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
@@ -2082,7 +2089,7 @@ else
             this.Write(" override async Task<bool> CanUserCreateAsync()\r\n        {\r\n            if (!_can" +
                     "UserCreate.HasValue)\r\n            {\r\n                _canUserCreate = ");
             
-            #line 479 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 480 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(createRolesAsync));
             
             #line default
@@ -2090,56 +2097,56 @@ else
             this.Write(";\r\n            }\r\n            return _canUserCreate.Value;\r\n        }\r\n        bo" +
                     "ol? _canUserCreate;\r\n");
             
-            #line 484 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 485 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 486 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 487 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
  if(editRoles.Equals("true") || editRoles.Equals("false")) { 
             
             #line default
             #line hidden
             this.Write("        \r\n        ");
             
-            #line 487 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 488 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
             #line hidden
             this.Write(" override bool CanUserEdit() { return ");
             
-            #line 487 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 488 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(editRoles));
             
             #line default
             #line hidden
             this.Write("; }\r\n        ");
             
-            #line 488 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 489 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
             #line hidden
             this.Write(" override Task<bool> CanUserEditAsync() { return Task.FromResult(");
             
-            #line 488 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 489 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(editRoles));
             
             #line default
             #line hidden
             this.Write("); }\r\n");
             
-            #line 489 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 490 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } else { 
             
             #line default
             #line hidden
             this.Write("        ");
             
-            #line 490 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 491 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
@@ -2147,14 +2154,14 @@ else
             this.Write(" override bool CanUserEdit()\r\n        {\r\n            if (!_canUserEdit.HasValue)\r" +
                     "\n            {\r\n                _canUserEdit = ");
             
-            #line 494 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 495 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(editRoles));
             
             #line default
             #line hidden
             this.Write(";\r\n            }\r\n            return _canUserEdit.Value;\r\n        }\r\n        ");
             
-            #line 498 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 499 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
@@ -2162,7 +2169,7 @@ else
             this.Write(" override async Task<bool> CanUserEditAsync()\r\n        {\r\n            if (!_canUs" +
                     "erEdit.HasValue)\r\n            {\r\n                _canUserEdit = ");
             
-            #line 502 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 503 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(editRolesAsync));
             
             #line default
@@ -2170,56 +2177,56 @@ else
             this.Write(";\r\n            }\r\n            return _canUserEdit.Value;\r\n        }\r\n        bool" +
                     "? _canUserEdit;\r\n");
             
-            #line 507 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 508 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } 
             
             #line default
             #line hidden
             this.Write("        \r\n");
             
-            #line 509 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 510 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
  if(deleteRoles.Equals("true") || deleteRoles.Equals("false")) { 
             
             #line default
             #line hidden
             this.Write("        \r\n        ");
             
-            #line 510 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 511 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
             #line hidden
             this.Write(" override bool CanUserDelete() { return ");
             
-            #line 510 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 511 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(deleteRoles));
             
             #line default
             #line hidden
             this.Write("; }\r\n        ");
             
-            #line 511 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 512 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
             #line hidden
             this.Write(" override Task<bool> CanUserDeleteAsync() { return Task.FromResult(");
             
-            #line 511 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 512 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(deleteRoles));
             
             #line default
             #line hidden
             this.Write("); }\r\n");
             
-            #line 512 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 513 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } else { 
             
             #line default
             #line hidden
             this.Write("        ");
             
-            #line 513 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 514 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
@@ -2227,14 +2234,14 @@ else
             this.Write(" override bool CanUserDelete()\r\n        {\r\n            if (!_canUserDelete.HasVal" +
                     "ue)\r\n            {\r\n                _canUserDelete = ");
             
-            #line 517 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 518 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(deleteRoles));
             
             #line default
             #line hidden
             this.Write(";\r\n            }\r\n            return _canUserDelete.Value;\r\n        }\r\n        ");
             
-            #line 521 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 522 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
@@ -2242,7 +2249,7 @@ else
             this.Write(" override async Task<bool> CanUserDeleteAsync()\r\n        {\r\n            if (!_can" +
                     "UserDelete.HasValue)\r\n            {\r\n                _canUserDelete = ");
             
-            #line 525 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 526 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(deleteRolesAsync));
             
             #line default
@@ -2250,56 +2257,56 @@ else
             this.Write(";\r\n            }\r\n            return _canUserDelete.Value;\r\n        }\r\n        bo" +
                     "ol? _canUserDelete;\r\n");
             
-            #line 530 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 531 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 532 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 533 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
  if(confidentRoles.Equals("true") || confidentRoles.Equals("false")) { 
             
             #line default
             #line hidden
             this.Write("        \r\n        ");
             
-            #line 533 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 534 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
             #line hidden
             this.Write(" override bool CanUserSeeRestricted() { return ");
             
-            #line 533 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 534 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(confidentRoles));
             
             #line default
             #line hidden
             this.Write("; }\r\n        ");
             
-            #line 534 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 535 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
             #line hidden
             this.Write(" override Task<bool> CanUserSeeRestrictedAsync() { return Task.FromResult(");
             
-            #line 534 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 535 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(confidentRoles));
             
             #line default
             #line hidden
             this.Write("); }\r\n");
             
-            #line 535 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 536 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } else { 
             
             #line default
             #line hidden
             this.Write("        ");
             
-            #line 536 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 537 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
@@ -2307,7 +2314,7 @@ else
             this.Write(" override bool CanUserSeeRestricted()\r\n        {\r\n            if (!_canSeeRestric" +
                     "ted.HasValue)\r\n            {\r\n                _canSeeRestricted = ");
             
-            #line 540 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 541 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(confidentRoles));
             
             #line default
@@ -2315,7 +2322,7 @@ else
             this.Write(";\r\n            }\r\n            return _canSeeRestricted.Value;\r\n        }\r\n       " +
                     " ");
             
-            #line 544 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 545 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
             
             #line default
@@ -2324,7 +2331,7 @@ else
                     " (!_canSeeRestricted.HasValue)\r\n            {\r\n                _canSeeRestricted" +
                     " = ");
             
-            #line 548 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 549 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(confidentRolesAsync));
             
             #line default
@@ -2332,14 +2339,14 @@ else
             this.Write(";\r\n            }\r\n            return _canSeeRestricted.Value;\r\n        }\r\n       " +
                     " bool? _canSeeRestricted;\r\n\r\n");
             
-            #line 554 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 555 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } 
             
             #line default
             #line hidden
             this.Write("\r\n\r\n        public new partial class QueryParameters : ");
             
-            #line 557 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 558 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.BaseControllerName));
             
             #line default
@@ -2348,7 +2355,7 @@ else
                     "  public QueryParameters(QueryParameters parameters) : base(parameters)\r\n       " +
                     "     {\r\n");
             
-            #line 562 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 563 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       foreach (var item in fkeyProperties)
         {  
             
@@ -2356,28 +2363,28 @@ else
             #line hidden
             this.Write("                ");
             
-            #line 564 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 565 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
             #line hidden
             this.Write(" = parameters.");
             
-            #line 564 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 565 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 565 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 566 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       } 
             
             #line default
             #line hidden
             this.Write("            }\r\n");
             
-            #line 567 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 568 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       foreach (var item in fkeyProperties)
         {  
             
@@ -2385,27 +2392,27 @@ else
             #line hidden
             this.Write("            public ");
             
-            #line 569 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 570 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.GetNullableTypeName()));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 569 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 570 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
             #line hidden
             this.Write(" { get; set; }\r\n");
             
-            #line 570 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 571 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       } 
             
             #line default
             #line hidden
             
-            #line 571 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 572 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       foreach (var item in searchProperties.Where(p => p.IsBoolean))
         { 
             
@@ -2413,27 +2420,27 @@ else
             #line hidden
             this.Write("            public ");
             
-            #line 573 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 574 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.GetNullableTypeName()));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 573 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 574 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
             #line hidden
             this.Write(" { get; set; }\r\n");
             
-            #line 574 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 575 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       } 
             
             #line default
             #line hidden
             
-            #line 575 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 576 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       foreach (var item in searchProperties.Where(p => p.IsDateTime))
         { 
             
@@ -2441,70 +2448,70 @@ else
             #line hidden
             this.Write("            public ");
             
-            #line 577 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 578 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.GetNullableTypeName()));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 577 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 578 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
             #line hidden
             this.Write("Min { get; set; }\r\n            public ");
             
-            #line 578 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 579 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.GetNullableTypeName()));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 578 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 579 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
             #line hidden
             this.Write("Max { get; set; }\r\n");
             
-            #line 579 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 580 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       } 
             
             #line default
             #line hidden
             this.Write("        }\r\n\r\n");
             
-            #line 582 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 583 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       var listName = Entity.Name.Pluralize().ToCamelCase(); 
             
             #line default
             #line hidden
             this.Write("        \r\n        public partial class ");
             
-            #line 583 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 584 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write("ListVM : List<");
             
-            #line 583 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 584 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write(">\r\n        {\r\n            public ");
             
-            #line 585 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 586 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write("ListVM() { }\r\n            public ");
             
-            #line 586 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 587 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
@@ -2512,56 +2519,56 @@ else
             this.Write("ListVM(QueryParameters parameters)\r\n            {\r\n                QueryParameter" +
                     "s = parameters;\r\n            }\r\n            public ");
             
-            #line 590 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 591 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write("ListVM(IEnumerable<");
             
-            #line 590 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 591 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write("> ");
             
-            #line 590 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 591 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(listName));
             
             #line default
             #line hidden
             this.Write(")\r\n            {\r\n                AddRange(");
             
-            #line 592 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 593 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(listName));
             
             #line default
             #line hidden
             this.Write(");\r\n            }\r\n            public ");
             
-            #line 594 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 595 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write("ListVM(IEnumerable<");
             
-            #line 594 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 595 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write("> ");
             
-            #line 594 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 595 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(listName));
             
             #line default
             #line hidden
             this.Write(", QueryParameters parameters) : this(");
             
-            #line 594 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 595 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(listName));
             
             #line default
@@ -2599,63 +2606,56 @@ else
         }
 ");
             
-            #line 625 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 626 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
  if (Entity.GenerateDeleteAction){ 
             
             #line default
             #line hidden
-            this.Write("        partial void OnEntityDeleting(");
+            this.Write("        partial void OnDeleteChecking(");
             
-            #line 626 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 627 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 626 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 627 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n        partial void OnEntityDeleting(");
+            
+            #line 628 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 628 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n        partial void OnEntityDeleted();\r\n");
             
-            #line 628 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 630 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 629 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 631 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
  if (Entity.GenerateCreateAction){ 
             
             #line default
             #line hidden
             this.Write("        partial void OnCreateSaving(");
             
-            #line 630 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate));
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 630 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
-            
-            #line default
-            #line hidden
-            this.Write(");\r\n");
-            
-            #line 631 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
- if (Entity.Name.Equals(Entity.ModelForCreate)){ 
-            
-            #line default
-            #line hidden
-            this.Write("        partial void OnCreateSaved(");
-            
             #line 632 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate));
             
             #line default
             #line hidden
@@ -2669,7 +2669,7 @@ else
             this.Write(");\r\n");
             
             #line 633 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-      } else { 
+ if (Entity.Name.Equals(Entity.ModelForCreate)){ 
             
             #line default
             #line hidden
@@ -2687,64 +2687,64 @@ else
             
             #line default
             #line hidden
+            this.Write(");\r\n");
+            
+            #line 635 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+      } else { 
+            
+            #line default
+            #line hidden
+            this.Write("        partial void OnCreateSaved(");
+            
+            #line 636 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 636 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
             this.Write(", ");
             
-            #line 634 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 636 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 634 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 636 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 635 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 637 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       } 
             
             #line default
             #line hidden
             
-            #line 636 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 638 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 637 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 639 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
  if (Entity.GenerateEditAction){ 
             
             #line default
             #line hidden
             this.Write("        partial void OnEditSaving(");
             
-            #line 638 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit));
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 638 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
-            
-            #line default
-            #line hidden
-            this.Write(");\r\n");
-            
-            #line 639 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
- if (Entity.Name.Equals(Entity.ModelForEdit)){ 
-            
-            #line default
-            #line hidden
-            this.Write("        partial void OnEditSaved(");
-            
             #line 640 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit));
             
             #line default
             #line hidden
@@ -2758,7 +2758,7 @@ else
             this.Write(");\r\n");
             
             #line 641 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-      } else { 
+ if (Entity.Name.Equals(Entity.ModelForEdit)){ 
             
             #line default
             #line hidden
@@ -2776,35 +2776,56 @@ else
             
             #line default
             #line hidden
+            this.Write(");\r\n");
+            
+            #line 643 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+      } else { 
+            
+            #line default
+            #line hidden
+            this.Write("        partial void OnEditSaved(");
+            
+            #line 644 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 644 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
             this.Write(", ");
             
-            #line 642 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 644 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 642 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 644 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForEdit.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 643 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 645 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       } 
             
             #line default
             #line hidden
             
-            #line 644 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 646 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 645 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 647 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
 
     if(fillSelectListsMethods.Any(s=>s.Equals(AspNetMvcEngine.FillSelectListsMethodDefaultName)))
     { 
@@ -2813,28 +2834,28 @@ else
             #line hidden
             this.Write("        partial void ");
             
-            #line 648 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 650 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AspNetMvcEngine.FillSelectListsMethodDefaultName));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 648 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 650 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 648 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 650 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 649 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+            #line 651 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   }
 } 
             
@@ -2844,7 +2865,7 @@ else
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 653 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+        #line 655 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
  
 protected void WriteViewBagSelectList(AspNetMvcPropertySetting propertySetting)
 {
@@ -2865,56 +2886,56 @@ protected void WriteViewBagSelectList(AspNetMvcPropertySetting propertySetting)
         #line default
         #line hidden
         
-        #line 668 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+        #line 670 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
 this.Write("            //Can\'t detect forein entity type for ");
 
         
         #line default
         #line hidden
         
-        #line 669 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+        #line 671 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertySetting.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 669 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write("\r\n            //TODO: ViewBag.");
-
-        
-        #line default
-        #line hidden
-        
-        #line 670 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(propertySetting.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 670 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(" = new SelectList(");
-
-        
-        #line default
-        #line hidden
-        
-        #line 670 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance));
-
-        
-        #line default
-        #line hidden
-        
-        #line 670 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(".QueryName, \"Id\", \"Title\", 0);\r\n");
 
         
         #line default
         #line hidden
         
         #line 671 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write("\r\n            //TODO: ViewBag.");
+
+        
+        #line default
+        #line hidden
+        
+        #line 672 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertySetting.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 672 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(" = new SelectList(");
+
+        
+        #line default
+        #line hidden
+        
+        #line 672 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance));
+
+        
+        #line default
+        #line hidden
+        
+        #line 672 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(".QueryName, \"Id\", \"Title\", 0);\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 673 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
     }
     else
     {
@@ -2926,196 +2947,196 @@ this.Write(".QueryName, \"Id\", \"Title\", 0);\r\n");
         #line default
         #line hidden
         
-        #line 677 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+        #line 679 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
 this.Write("            //TODO: Optimize query\r\n            var query");
 
         
         #line default
         #line hidden
         
-        #line 679 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertySetting.Name));
 
         
         #line default
         #line hidden
         
-        #line 679 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
 this.Write(" = ");
 
         
         #line default
         #line hidden
         
-        #line 679 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance));
 
         
         #line default
         #line hidden
         
-        #line 679 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
 this.Write(".");
 
         
         #line default
         #line hidden
         
-        #line 679 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(foreign.GetDataSetQuery()));
 
         
         #line default
         #line hidden
         
-        #line 679 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
 this.Write(";\r\n            ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 680 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(comment));
-
-        
-        #line default
-        #line hidden
-        
-        #line 680 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write("int ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 680 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(propertySetting.Name.ToCamelCase()));
-
-        
-        #line default
-        #line hidden
-        
-        #line 680 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(" = ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 680 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
-
-        
-        #line default
-        #line hidden
-        
-        #line 680 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(" == null ? 0 : ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 680 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(propValue));
-
-        
-        #line default
-        #line hidden
-        
-        #line 680 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(";\r\n            ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(comment));
-
-        
-        #line default
-        #line hidden
-        
-        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write("ViewBag.");
-
-        
-        #line default
-        #line hidden
-        
-        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(propertySetting.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(" = new SelectList(query");
-
-        
-        #line default
-        #line hidden
-        
-        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(propertySetting.Name));
-
-        
-        #line default
-        #line hidden
-        
-        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(", \"");
-
-        
-        #line default
-        #line hidden
-        
-        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(pkeyName));
-
-        
-        #line default
-        #line hidden
-        
-        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write("\", \"");
-
-        
-        #line default
-        #line hidden
-        
-        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(foreign.EntityDefinition.DisplayMember));
-
-        
-        #line default
-        #line hidden
-        
-        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write("\", ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(propertySetting.Name.ToCamelCase()));
-
-        
-        #line default
-        #line hidden
-        
-        #line 681 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-this.Write(");\r\n");
 
         
         #line default
         #line hidden
         
         #line 682 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(comment));
+
+        
+        #line default
+        #line hidden
+        
+        #line 682 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write("int ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 682 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertySetting.Name.ToCamelCase()));
+
+        
+        #line default
+        #line hidden
+        
+        #line 682 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(" = ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 682 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
+
+        
+        #line default
+        #line hidden
+        
+        #line 682 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(" == null ? 0 : ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 682 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propValue));
+
+        
+        #line default
+        #line hidden
+        
+        #line 682 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(";\r\n            ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 683 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(comment));
+
+        
+        #line default
+        #line hidden
+        
+        #line 683 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write("ViewBag.");
+
+        
+        #line default
+        #line hidden
+        
+        #line 683 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertySetting.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 683 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(" = new SelectList(query");
+
+        
+        #line default
+        #line hidden
+        
+        #line 683 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertySetting.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 683 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(", \"");
+
+        
+        #line default
+        #line hidden
+        
+        #line 683 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(pkeyName));
+
+        
+        #line default
+        #line hidden
+        
+        #line 683 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write("\", \"");
+
+        
+        #line default
+        #line hidden
+        
+        #line 683 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(foreign.EntityDefinition.DisplayMember));
+
+        
+        #line default
+        #line hidden
+        
+        #line 683 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write("\", ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 683 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertySetting.Name.ToCamelCase()));
+
+        
+        #line default
+        #line hidden
+        
+        #line 683 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
+this.Write(");\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 684 "C:\Users\Ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             }
 } 
         
