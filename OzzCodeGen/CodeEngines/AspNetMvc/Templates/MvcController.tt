@@ -429,10 +429,12 @@ else
             }
 
 <#  } #>
-            <#= dataContextIntance #>.<#= Entity.DataSetName #>.Remove(<#= Entity.Name.ToCamelCase() #>);
+            OnEntityDeleting(<#= Entity.Name.ToCamelCase() #>);
+			<#= dataContextIntance #>.<#= Entity.DataSetName #>.Remove(<#= Entity.Name.ToCamelCase() #>);
             try
             {
                 await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
+				OnEntityDeleted();
             }
             catch (Exception ex)
             {
@@ -620,6 +622,10 @@ else
             }
             IEnumerable<T> _items;
         }
+<# if (Entity.GenerateDeleteAction){ #>
+        partial void OnEntityDeleting(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>);
+        partial void OnEntityDeleted();
+<#  } #>
 <# if (Entity.GenerateCreateAction){ #>
         partial void OnCreateSaving(<#= Entity.ModelForCreate #> <#= Entity.Name.ToCamelCase() #>);
 <# if (Entity.Name.Equals(Entity.ModelForCreate)){ #>
