@@ -19,19 +19,19 @@ WriteUsingNamespaces(); #>
                     <li>@Html.ActionLink(<#= EntityResource #>.Create<#= Entity.Name #>, "Create", "<#= Entity.ControllerName #>")</li>
 <#  foreach (var property in fkeyProperties)
     { 
-		var foreignEntity = CodeEngine.GetForeignKeyEntity(property);
-		if (foreignEntity!=null && foreignEntity!=Entity ){#>
+        var foreignEntity = CodeEngine.GetForeignKeyEntity(property);
+        if (foreignEntity!=null && foreignEntity!=Entity ){#>
                     <li class="divider"></li>
                     <li>@Html.ActionLink(<#= EntityResource #>.<#= foreignEntity.Name.Pluralize() #>, "Index", "<#= foreignEntity.ControllerName #>")</li>
                     <li>@Html.ActionLink(<#= EntityResource #>.Create<#= foreignEntity.Name #>, "Create", "<#= foreignEntity.ControllerName #>")</li>
 <#		}
-	} #>
+    } #>
                 </ul>
             </li>
 
 <#  foreach (var item in searchProperties.Where(p => p.IsDateTime))
     { #>
-	
+    
 @* <#= item.Name #> Filter Markup with Default Date is Today *@
 @{
     DateTime <#= item.Name.ToCamelCase() #>Min = ViewBag.<#= item.Name #>Min ?? DateTime.Now.Date;
@@ -46,7 +46,7 @@ WriteUsingNamespaces(); #>
 <#  } #>
 <#  foreach (var item in searchProperties.Where(p => p.IsDateTime))
     { #>
-	
+    
 @* <#= item.Name #> Filter Markup passing value via ViewBag *@
 @{
     string <#= item.Name.ToCamelCase() #>Min = ViewBag.<#= item.Name #>Min == null ? string.Empty : ((DateTime)ViewBag.<#= item.Name #>Min).ToString("yyyy.MM.dd");
@@ -62,7 +62,7 @@ WriteUsingNamespaces(); #>
 
 <#  foreach (var item in searchProperties.Where(p => p.IsDateTime))
     { #>
-	
+    
 @* <#= item.Name #> Filter Markup *@
 
         <div class="col-md-2 col-sm-3">
@@ -78,7 +78,7 @@ WriteUsingNamespaces(); #>
 <#  foreach (var item in searchProperties.Where(p => p.IsDateTime))
     { #>
             //Initiliaze <#= item.Name #> Filter
-			$("#<#= item.Name #>Min").datepicker({ dateFormat: "yy.mm.dd", numberOfMonths: 2 });
+            $("#<#= item.Name #>Min").datepicker({ dateFormat: "yy.mm.dd", numberOfMonths: 2 });
             $("#<#= item.Name #>Max").datepicker({ dateFormat: "yy.mm.dd", numberOfMonths: 2 });
             $("#<#= item.Name #>Min").datepicker("option", "onClose", function (selectedDate) {
                 if (selectedDate) {

@@ -14,7 +14,5 @@ WriteUsingNamespaces(); #>
 }
 @if (Model != null)
 {
-    <div>
-        @Model.<#= DisplayMember #> @* <a href='/<#= Entity.ControllerName #>/Details/@Model.<#= pKey #>'>@Model.<#= DisplayMember #></a> *@
-	</div>
+    @Model.<#= DisplayMember #> @* <a href='/<#= Entity.ControllerName #>/Details/@Model.<#= pKey #>'>@Model.<#= DisplayMember #></a> *@
 }

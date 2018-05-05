@@ -431,11 +431,11 @@ else
 
 <#  } #>
             OnEntityDeleting(<#= Entity.Name.ToCamelCase() #>);
-			<#= dataContextIntance #>.<#= Entity.DataSetName #>.Remove(<#= Entity.Name.ToCamelCase() #>);
+            <#= dataContextIntance #>.<#= Entity.DataSetName #>.Remove(<#= Entity.Name.ToCamelCase() #>);
             try
             {
                 await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
-				OnEntityDeleted();
+                OnEntityDeleted();
             }
             catch (Exception ex)
             {
