@@ -75,9 +75,10 @@ WriteUsingNamespaces(); #>
         $('#busyAnima').hide();
         $('#busyMessage').html('');
     }
+    var furtherValid = function () { return true; }
     function submitDataInputForm() {
         var inputForm = $('#dataInputForm');
-        if ($(inputForm).valid()) {
+        if ($(inputForm).valid() && furtherValid()) {
             showBusy();
             var url = $(inputForm).attr('action');
             url += (url.indexOf('?') == -1) ? '?' : '&';

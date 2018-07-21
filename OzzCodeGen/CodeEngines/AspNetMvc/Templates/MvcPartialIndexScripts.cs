@@ -68,22 +68,23 @@ WriteUsingNamespaces();
                     ");\r\n        }\r\n        else {\r\n            $(\'#busyMessage\').html(\'\');\r\n        " +
                     "    $(\'#busyMessage\').hide();\r\n        }\r\n        $(\'#busyAnima\').show();\r\n    }" +
                     "\r\n    function hideBusy() {\r\n        $(\'#busyAnima\').hide();\r\n        $(\'#busyMe" +
-                    "ssage\').html(\'\');\r\n    }\r\n    function submitDataInputForm() {\r\n        var inpu" +
-                    "tForm = $(\'#dataInputForm\');\r\n        if ($(inputForm).valid()) {\r\n            s" +
-                    "howBusy();\r\n            var url = $(inputForm).attr(\'action\');\r\n            url " +
-                    "+= (url.indexOf(\'?\') == -1) ? \'?\' : \'&\';\r\n            url += \'modal=true\';\r\n    " +
-                    "        $.ajax({\r\n                url: url,\r\n                type: $(inputForm)." +
-                    "attr(\'method\'),\r\n                data: $(inputForm).serialize(),\r\n              " +
-                    "  cache: false,\r\n                success: function (result) {\r\n                 " +
-                    "   if (result.saved) {\r\n                        refreshData();\r\n                " +
-                    "        $(\'#dataInputModal\').modal(\'hide\');\r\n                    }\r\n            " +
-                    "        else {\r\n                        $(\'#dataInputBody\').html(result);\r\n     " +
-                    "               }\r\n                    hideBusy();\r\n                },\r\n         " +
-                    "       error: function (jqXHR, textStatus, errorThrown) {\r\n                    $" +
-                    "(\'#dataInputModal\').modal(\'hide\');\r\n                    var msgboxMsg = jqXHR.re" +
-                    "sponseText;\r\n                    showMessageBox(errorThrown, msgboxMsg, true);\r\n" +
-                    "                    hideBusy();\r\n                }\r\n            });\r\n        }\r\n" +
-                    "    }\r\n</script>");
+                    "ssage\').html(\'\');\r\n    }\r\n    var furtherValid = function () { return true; }\r\n " +
+                    "   function submitDataInputForm() {\r\n        var inputForm = $(\'#dataInputForm\')" +
+                    ";\r\n        if ($(inputForm).valid() && furtherValid()) {\r\n            showBusy()" +
+                    ";\r\n            var url = $(inputForm).attr(\'action\');\r\n            url += (url.i" +
+                    "ndexOf(\'?\') == -1) ? \'?\' : \'&\';\r\n            url += \'modal=true\';\r\n            $" +
+                    ".ajax({\r\n                url: url,\r\n                type: $(inputForm).attr(\'met" +
+                    "hod\'),\r\n                data: $(inputForm).serialize(),\r\n                cache: " +
+                    "false,\r\n                success: function (result) {\r\n                    if (re" +
+                    "sult.saved) {\r\n                        refreshData();\r\n                        $" +
+                    "(\'#dataInputModal\').modal(\'hide\');\r\n                    }\r\n                    e" +
+                    "lse {\r\n                        $(\'#dataInputBody\').html(result);\r\n              " +
+                    "      }\r\n                    hideBusy();\r\n                },\r\n                er" +
+                    "ror: function (jqXHR, textStatus, errorThrown) {\r\n                    $(\'#dataIn" +
+                    "putModal\').modal(\'hide\');\r\n                    var msgboxMsg = jqXHR.responseTex" +
+                    "t;\r\n                    showMessageBox(errorThrown, msgboxMsg, true);\r\n         " +
+                    "           hideBusy();\r\n                }\r\n            });\r\n        }\r\n    }\r\n</" +
+                    "script>");
             return this.GenerationEnvironment.ToString();
         }
     }
