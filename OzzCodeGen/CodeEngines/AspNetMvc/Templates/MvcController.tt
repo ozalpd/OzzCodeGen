@@ -481,7 +481,7 @@ else
             }
             return _canUserCreate.Value;
         }
-        bool? _canUserCreate;
+        private bool? _canUserCreate;
 <#  } #>
 
 <# if(editRoles.Equals("true") || editRoles.Equals("false")) { #>        
@@ -504,7 +504,7 @@ else
             }
             return _canUserEdit.Value;
         }
-        bool? _canUserEdit;
+        private bool? _canUserEdit;
 <#  } #>
         
 <# if(deleteRoles.Equals("true") || deleteRoles.Equals("false")) { #>        
@@ -527,7 +527,7 @@ else
             }
             return _canUserDelete.Value;
         }
-        bool? _canUserDelete;
+        private bool? _canUserDelete;
 <#  } #>
 
 <# if(confidentRoles.Equals("true") || confidentRoles.Equals("false")) { #>        
@@ -550,7 +550,7 @@ else
             }
             return _canSeeRestricted.Value;
         }
-        bool? _canSeeRestricted;
+        private bool? _canSeeRestricted;
 
 <#  } #>
 
