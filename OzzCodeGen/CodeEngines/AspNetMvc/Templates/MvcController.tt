@@ -564,6 +564,15 @@ else
         {  #>
                 <#= item.Name #> = parameters.<#= item.Name #>;
 <#      } #>
+<#      foreach (var item in searchProperties.Where(p => p.IsBoolean))
+        { #>
+                <#= item.Name #> = parameters.<#= item.Name #>;
+<#      } #>
+<#      foreach (var item in searchProperties.Where(p => p.IsDateTime))
+        { #>
+                <#= item.Name #>Min = parameters.<#= item.Name #>Min;
+                <#= item.Name #>Max = parameters.<#= item.Name #>Max;
+<#      } #>
             }
 <#      foreach (var item in fkeyProperties)
         {  #>
