@@ -435,7 +435,7 @@ if (collectionProperties.Any())
             this.Write(".");
             
             #line 133 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name.Pluralize()));
             
             #line default
             #line hidden

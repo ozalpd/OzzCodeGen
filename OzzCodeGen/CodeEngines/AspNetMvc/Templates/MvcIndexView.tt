@@ -130,7 +130,7 @@ if (collectionProperties.Any())
 <#    foreach (var entity in entitiesThisForCreate)
         {#>
                                     <li>@Html.ActionLink(<#= EntityResource #>.Add<#= entity.Name #>, "Create", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id }, <#  if(Entity.CreatePartialView) { #>new { input_modal = <#= EntityResource #>.Add<#= entity.Name #> }<# } else { #>null<# } #>)</li>
-                                    <li>@Html.ActionLink(<#= EntityResource #>.<#= entity.Name #>, "Index", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id }, null)</li>
+                                    <li>@Html.ActionLink(<#= EntityResource #>.<#= entity.Name.Pluralize() #>, "Index", "<#= entity.ControllerName #>", new { <#= entity.StrongDependedForeignKey.ToCamelCase() #> = item.Id }, null)</li>
 <#        } #>
                                 }
 <#  } #>
