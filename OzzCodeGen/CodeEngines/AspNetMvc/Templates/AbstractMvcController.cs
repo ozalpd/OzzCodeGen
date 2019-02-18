@@ -3,6 +3,7 @@ using OzzCodeGen.Templates.Cs;
 using OzzUtils;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 {
@@ -52,6 +53,18 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
                             "Entity is null!" : Entity.EntityDefinition.DisplayMember;
             }
         }
+
+        public AspNetMvcPropertySetting DisplayProperty
+        {
+            get
+            {
+                if (_displayProperty == null)
+                    _displayProperty = Entity.Properties
+                                        .FirstOrDefault(p => p.Name.Equals(DisplayMember, System.StringComparison.InvariantCultureIgnoreCase));
+                return _displayProperty;
+            }
+        }
+        AspNetMvcPropertySetting _displayProperty;
 
         public override List<string> DefaultUsingNamespaceList()
         {

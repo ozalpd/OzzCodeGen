@@ -55,7 +55,7 @@ else
         protected virtual async Task<IQueryable<<#= Entity.Name #>>> Get<#= Entity.Name #>Query(QueryParameters qParams)
         {
             var query = Get<#= Entity.Name #>Query();
-<#  if(searchProperties.Any())
+<#  if(searchProperties.Where(p => p.IsString).Any())
     { 
     int k = 0;#>
             if (!string.IsNullOrEmpty(qParams.SearchString))
@@ -161,7 +161,8 @@ else
         }
 
 <#  } #>
-<# if (Entity.GenerateActionForAutoComplete){ #>
+<# if (Entity.GenerateActionForAutoComplete){ 
+        if (DisplayProperty.IsString) {#>
         <#= CanViewAttrib #>
         public async Task<JsonResult> Get<#= Entity.Name.Pluralize() #>ForAutoComplete(QueryParameters qParam)
         {
@@ -178,8 +179,12 @@ else
 
             return Json(await list.ToListAsync(), JsonRequestBehavior.AllowGet);
         }
+<#            } else { #>
+        //property <#= DisplayMember #> is not string type
+        //so method Get<#= Entity.Name.Pluralize() #>ForAutoComplete could not be generated
 
-<#  } #>
+<#		}
+    }#>
 <# if (Entity.GenerateDetailsAction){ #>
         <#= CanViewAttrib #>
         public async Task<ActionResult> Details(int? id, bool? modal)
