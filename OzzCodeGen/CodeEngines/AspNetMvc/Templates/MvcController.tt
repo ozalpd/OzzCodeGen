@@ -200,7 +200,8 @@ else
             await PutCanUserInViewBag();
             if (modal ?? false)
             {
-                return PartialView("_Details", <#= Entity.Name.ToCamelCase() #>);
+                ViewBag.Modal = true;
+				return PartialView("_Details", <#= Entity.Name.ToCamelCase() #>);
             }
             return View(<#= Entity.Name.ToCamelCase() #>);
         }
