@@ -162,7 +162,7 @@ else
 
 <#  } #>
 <# if (Entity.GenerateActionForAutoComplete){ 
-        if (DisplayProperty.IsString) {#>
+        if (DisplayProperty != null && DisplayProperty.IsString) {#>
         <#= CanViewAttrib #>
         public async Task<JsonResult> Get<#= Entity.Name.Pluralize() #>ForAutoComplete(QueryParameters qParam)
         {
@@ -179,6 +179,7 @@ else
 
             return Json(await list.ToListAsync(), JsonRequestBehavior.AllowGet);
         }
+
 <#            } else { #>
         //property <#= DisplayMember #> is not string type
         //so method Get<#= Entity.Name.Pluralize() #>ForAutoComplete could not be generated
@@ -201,7 +202,7 @@ else
             if (modal ?? false)
             {
                 ViewBag.Modal = true;
-				return PartialView("_Details", <#= Entity.Name.ToCamelCase() #>);
+                return PartialView("_Details", <#= Entity.Name.ToCamelCase() #>);
             }
             return View(<#= Entity.Name.ToCamelCase() #>);
         }

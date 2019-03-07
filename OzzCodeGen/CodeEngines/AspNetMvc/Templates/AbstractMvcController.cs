@@ -30,7 +30,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         /// <summary>
         /// Returns roleName, methodName dictionary
         /// </summary>
-        protected Dictionary<string,string> IsUserInRoleMethods
+        protected Dictionary<string, string> IsUserInRoleMethods
         {
             get
             {
@@ -41,7 +41,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
                 return _isUserInRoleMethods;
             }
         }
-        Dictionary<string, string> _isUserInRoleMethods;
+        private Dictionary<string, string> _isUserInRoleMethods;
 
 
 
@@ -59,12 +59,32 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             get
             {
                 if (_displayProperty == null)
-                    _displayProperty = Entity.Properties
-                                        .FirstOrDefault(p => p.Name.Equals(DisplayMember, System.StringComparison.InvariantCultureIgnoreCase));
+                    SetDisplayProperty();
                 return _displayProperty;
             }
         }
-        AspNetMvcPropertySetting _displayProperty;
+
+        private void SetDisplayProperty()
+        {
+            _displayProperty = Entity.Properties
+                                .FirstOrDefault(p => p.Name.Equals(DisplayMember));
+            if (_displayProperty == null)
+            {
+                var parts = DisplayMember.Split('.');
+                if (parts.Length == 2)
+                {
+                    var ent = Entity
+                                .CodeEngine
+                                .Entities
+                                .FirstOrDefault(e => e.Name.Equals(parts[0]));
+                    if (ent != null)
+                        _displayProperty = ent.Properties
+                                            .FirstOrDefault(p => p.Name.Equals(parts[1]));
+                }
+                //TODO: maybe => else if(parts.Length == 3)
+            }
+        }
+        private AspNetMvcPropertySetting _displayProperty;
 
         public override List<string> DefaultUsingNamespaceList()
         {
