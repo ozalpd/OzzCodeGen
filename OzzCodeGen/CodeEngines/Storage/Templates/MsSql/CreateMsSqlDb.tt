@@ -28,6 +28,10 @@ foreach (var table in tables.Where(e => !e.Exclude))
 { 
 	i++;
 	WriteExecutingFile(table.Name + ".sql", i);
+	if(table.StoredProcs)
+	{
+		WriteExecutingFile(table.TableName + "-SP.sql");
+    }
 	if (!string.IsNullOrWhiteSpace(table.FinishingScript))
 	{
 		var finishingScripts = table.FinishingScript.Split(';');
@@ -39,10 +43,6 @@ foreach (var table in tables.Where(e => !e.Exclude))
 			}
 		}
 	}
-	if(table.StoredProcs)
-	{
-		WriteExecutingFile(table.TableName + "-SP.sql");
-    }
 }
 i++;
 WriteExecutingFile("_FinishingSetup.sql", i);
