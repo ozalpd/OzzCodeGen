@@ -23,8 +23,8 @@ namespace OzzCodeGen.Wpf
                 RaisePropertyChanged("MostRecentProjectFile");
             }
         }
-        AppSettings _settings;
-        string settingsFile;
+        private AppSettings _settings;
+        private string settingsFile;
 
         public DataModel DataModel
         {
@@ -36,7 +36,7 @@ namespace OzzCodeGen.Wpf
                 RaisePropertyChanged("DataModel");
             }
         }
-        DataModel _dataModel;
+        private DataModel _dataModel;
 
         public DataModel EnumDefinitions
         {
@@ -48,7 +48,7 @@ namespace OzzCodeGen.Wpf
                 RaisePropertyChanged("EnumDefinitions");
             }
         }
-        DataModel _enumDefinitions;
+        private DataModel _enumDefinitions;
 
         public FileDefinition MostRecentProjectFile
         {

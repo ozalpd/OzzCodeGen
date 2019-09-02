@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using OzzCodeGen.CodeEngines;
+using OzzCodeGen.Definitions;
+using OzzCodeGen.Providers;
+using OzzUtils.Savables;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-using OzzCodeGen.CodeEngines;
-using OzzCodeGen.Definitions;
-using OzzCodeGen.Providers;
-using OzzUtils.Savables;
 
 namespace OzzCodeGen
 {
@@ -114,7 +114,8 @@ namespace OzzCodeGen
                 RaisePropertyChanged("ModelProvider");
             }
         }
-        IModelProvider _modelProvider;
+
+        private IModelProvider _modelProvider;
 
         public string TargetFolder
         {
@@ -133,14 +134,15 @@ namespace OzzCodeGen
                 RaisePropertyChanged("TargetFolder");
             }
         }
-        string _targetFolder;
+
+        private string _targetFolder;
 
         [XmlIgnore]
         public string TargetSolutionDir
         {
             get
             {
-                if(string.IsNullOrEmpty(TargetFolder) || string.IsNullOrEmpty(SavedFileName))
+                if (string.IsNullOrEmpty(TargetFolder) || string.IsNullOrEmpty(SavedFileName))
                 {
                     return string.Empty;
                 }
@@ -183,7 +185,7 @@ namespace OzzCodeGen
             }
         }
         private string _entityTrackEnum;
-        
+
         public EnumDefinitionList EnumDefinitions
         {
             get { return _enumDefinitions; }
@@ -193,19 +195,21 @@ namespace OzzCodeGen
                 RaisePropertyChanged("EnumDefinitions");
             }
         }
-        EnumDefinitionList _enumDefinitions;
+
+        private EnumDefinitionList _enumDefinitions;
 
         [XmlIgnore]
         public string SearchString
         {
-            get { return _searchString;  }
+            get { return _searchString; }
             set
             {
                 _searchString = value;
                 RaisePropertyChanged("SearchString");
             }
         }
-        string _searchString;
+
+        private string _searchString;
 
         public DataModel DataModel
         {
@@ -217,7 +221,8 @@ namespace OzzCodeGen
                 RaisePropertyChanged("DataModel");
             }
         }
-        DataModel _dataModel;
+
+        private DataModel _dataModel;
 
         public bool RemoveEntity(EntityDefinition item)
         {
@@ -250,7 +255,8 @@ namespace OzzCodeGen
                 RaisePropertyChanged("StripSourcePrefixes");
             }
         }
-        bool _stripSourcePrefixes;
+
+        private bool _stripSourcePrefixes;
 
         public string SourceClassPrefix
         {
@@ -262,7 +268,8 @@ namespace OzzCodeGen
                 RaisePropertyChanged("SourceClassPrefix");
             }
         }
-        string _sourceClassPrefix = string.Empty;
+
+        private string _sourceClassPrefix = string.Empty;
 
         [XmlIgnore]
         public bool HasProjectChanges
@@ -277,7 +284,7 @@ namespace OzzCodeGen
         }
         private bool _hasProjectChanges;
 
-        
+
         public List<string> CodeEngineList
         {
             get
@@ -402,15 +409,7 @@ namespace OzzCodeGen
         /// <returns></returns>
         public static CodeGenProject OpenFile(string fileName)
         {
-            //StreamReader reader = new StreamReader(fileName);
-            //XmlSerializer x = new XmlSerializer(typeof(CodeGenProject));
-            //CodeGenProject instance = x.Deserialize(reader) as CodeGenProject;
-            //reader.Close();
-            //instance.SavedFileName = fileName;
-
-            CodeGenProject instance = GetInstanceFromFile(
-                fileName, 
-                typeof(CodeGenProject)) as CodeGenProject;
+            var instance = GetInstanceFromFile(fileName, typeof(CodeGenProject)) as CodeGenProject;
             instance.LoadBoundFiles();
             return instance;
         }
