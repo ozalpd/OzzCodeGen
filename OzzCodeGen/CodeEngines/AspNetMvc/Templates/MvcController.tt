@@ -98,7 +98,7 @@ else
 <#      } #>
 
             qParams.TotalCount = await query.CountAsync();
-            return query.Skip(qParams.Skip).Take(qParams.PageSize);
+            return qParams.TotalCount > qParams.PageSize ? query.Skip(qParams.Skip).Take(qParams.PageSize) : query;
         }
 
 <#  } #>
