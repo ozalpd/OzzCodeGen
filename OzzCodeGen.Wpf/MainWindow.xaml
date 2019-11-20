@@ -226,8 +226,8 @@
                     </StackPanel>
                     <Grid Grid.Row="1" Grid.Column="1" Margin="9,0,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*" MinWidth="130" MaxWidth="660" />
-                            <ColumnDefinition Width="*" MinWidth="130" />
+                            <ColumnDefinition Width="6*" MinWidth="130" MaxWidth="740" />
+                            <ColumnDefinition Width="4*" MinWidth="130" />
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Horizontal">
                             <StackPanel Orientation="Vertical" Margin="0,24,4,0">
