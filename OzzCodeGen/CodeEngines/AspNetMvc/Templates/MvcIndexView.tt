@@ -205,19 +205,25 @@ else
                 var url = this.href;
                 url += (url.indexOf('?') == -1) ? '?' : '&';
                 url += 'modal=true';
-                $('#dataInputBody').load(url, function () {
+                $('#dataInputBody').load(url, function(responseText, textStatus, XMLHttpRequest) {
                     hideBusy();
-                    if (title != null || title != '') {
-                        $('#dataInputTitle').html(title);
-                    }
-                    var inputForm = document.getElementById('dataInputForm');
-                    if (inputForm != null) {
-                        $('#dataInputFooter').show();
+                    if (textStatus == 'success') {
+                        if (title != null || title != '') {
+                            $('#dataInputTitle').html(title);
+                        }
+                        
+                        var inputForm = document.getElementById('dataInputForm');
+                        if (inputForm != null) {
+                            $('#dataInputFooter').show();
+                        }
+                        else {
+                            $('#dataInputFooter').hide();
+                        }
+                        $('#dataInputModal').modal('show');
                     }
                     else {
-                        $('#dataInputFooter').hide();
+                        showMessageBox(XMLHttpRequest.statusText, XMLHttpRequest.responseText, false);
                     }
-                    $('#dataInputModal').modal('show');
                 });
                 return false;
             });

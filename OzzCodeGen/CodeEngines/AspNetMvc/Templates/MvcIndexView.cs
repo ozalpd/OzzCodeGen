@@ -22,7 +22,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+    #line 1 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "15.0.0.0")]
     public partial class MvcIndexView : AbstracMvcIndexView
     {
@@ -33,7 +33,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         public override string TransformText()
         {
             
-            #line 10 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 10 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
  
 bool searchable = Entity.DisplayColumns.Where(e => e.UseInSearch).Any();
 var properties = Entity.DisplayColumns.Where(e => e.InIndexView);
@@ -52,21 +52,21 @@ WriteUsingNamespaces();
             #line hidden
             this.Write("@model IEnumerable<");
             
-            #line 23 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 23 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write(">\r\n@{\r\n    var title = ");
             
-            #line 25 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 25 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 25 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 25 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.Pluralize()));
             
             #line default
@@ -84,14 +84,14 @@ WriteUsingNamespaces();
     //Records & Pager
     var qParams = ((");
             
-            #line 36 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 36 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ControllerName));
             
             #line default
             #line hidden
             this.Write("Controller.");
             
-            #line 36 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 36 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
@@ -109,7 +109,7 @@ WriteUsingNamespaces();
         </div>
 ");
             
-            #line 47 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 47 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(Entity.CreatePartialView) { 
             
             #line default
@@ -118,27 +118,27 @@ WriteUsingNamespaces();
                     "               @Html.ActionLink(ActionStrings.AddNew, \"Create\", null, new { @cla" +
                     "ss = \"btn btn-primary\", input_modal = ");
             
-            #line 51 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 51 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".AddNew");
             
-            #line 51 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 51 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write(" })\r\n            }\r\n        </div>\r\n");
             
-            #line 54 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 54 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 55 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 55 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(searchable)
     { 
             
@@ -155,28 +155,28 @@ WriteUsingNamespaces();
         }
 ");
             
-            #line 66 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 66 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
             
             #line default
             #line hidden
             this.Write("    </div>\r\n</div>\r\n@if (totalCount > 0)\r\n{\r\n    <div id=\"");
             
-            #line 71 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 71 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(gridId));
             
             #line default
             #line hidden
             this.Write("Parent\" class=\"table-responsive\">\r\n        <table id=\"");
             
-            #line 72 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 72 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(gridId));
             
             #line default
             #line hidden
             this.Write("\" class=\"table table-striped table-bordered table-hover\">\r\n            <tr>\r\n");
             
-            #line 74 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 74 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) { 
             
             #line default
@@ -184,13 +184,13 @@ WriteUsingNamespaces();
             this.Write("                <th class=\"hidden-print\" width=\"20px\">@ActionStrings.Action</th>\r" +
                     "\n");
             
-            #line 76 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 76 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 77 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 77 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
 
 foreach (var property in properties) 
 {
@@ -200,28 +200,28 @@ foreach (var property in properties)
             #line hidden
             this.Write("                <th>@Html.DisplayNameFor(model => model.");
             
-            #line 81 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 81 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(")</th>\r\n");
             
-            #line 82 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 82 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
 
 } 
             
             #line default
             #line hidden
             
-            #line 84 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 84 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithButtonsAction) { 
             
             #line default
             #line hidden
             this.Write("                <th class=\"hidden-print\">@ActionStrings.Actions</th>\r\n");
             
-            #line 86 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 86 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
             
             #line default
@@ -229,7 +229,7 @@ foreach (var property in properties)
             this.Write("            </tr>\r\n            @foreach (var item in Model)\r\n            {\r\n     " +
                     "           <tr>\r\n");
             
-            #line 91 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 91 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) { 
             
             #line default
@@ -242,14 +242,14 @@ foreach (var property in properties)
                             <ul class=""dropdown-menu"" role=""menu"">
                                 <li>@Html.ActionLink(ActionStrings.Details, ""Details"", new { id = item.Id }");
             
-            #line 98 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 98 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(Entity.DetailsPartialView) { 
             
             #line default
             #line hidden
             this.Write(", new { input_modal = ActionStrings.Details }");
             
-            #line 98 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 98 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
  } 
             
             #line default
@@ -258,35 +258,35 @@ foreach (var property in properties)
                     "          {\r\n                                    <li>@Html.ActionLink(ActionStri" +
                     "ngs.Edit, \"Edit\", new { id = item.Id }");
             
-            #line 101 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 101 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(Entity.EditPartialView) { 
             
             #line default
             #line hidden
             this.Write(", new { input_modal = ");
             
-            #line 101 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 101 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".Edit");
             
-            #line 101 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 101 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write(" }");
             
-            #line 101 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 101 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
  } 
             
             #line default
             #line hidden
             this.Write(")</li>\r\n                                }\r\n");
             
-            #line 103 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 103 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
 
 if (collectionProperties.Any()) 
 {
@@ -299,14 +299,14 @@ if (collectionProperties.Any())
                                     <li>
                                         <a href=""#deleteConfirm"" data-toggle=""modal"" onclick=""setDelete('<b>@Html.Encode(item.");
             
-            #line 110 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 110 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(DisplayMember));
             
             #line default
             #line hidden
             this.Write(")</b>\', @item.");
             
-            #line 110 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 110 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pKey));
             
             #line default
@@ -315,7 +315,7 @@ if (collectionProperties.Any())
                     "                                </a>\r\n                                    </li>\r" +
                     "\n                                }\r\n");
             
-            #line 115 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 115 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
  } else { 
             
             #line default
@@ -325,14 +325,14 @@ if (collectionProperties.Any())
                                     <li>
                                         <a href=""#deleteConfirm"" data-toggle=""modal"" onclick=""setDelete('<b>@Html.Encode(item.");
             
-            #line 119 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 119 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(DisplayMember));
             
             #line default
             #line hidden
             this.Write(")</b>\', @item.");
             
-            #line 119 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 119 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pKey));
             
             #line default
@@ -341,13 +341,13 @@ if (collectionProperties.Any())
                     "                                </a>\r\n                                    </li>\r" +
                     "\n                                }\r\n");
             
-            #line 124 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 124 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 125 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 125 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if (entitiesThisForCreate.Any()) 
     { 
             
@@ -356,7 +356,7 @@ if (collectionProperties.Any())
             this.Write("                                @if (canUserCreate)\r\n                            " +
                     "    {\r\n                                    <li class=\"divider\"></li>\r\n");
             
-            #line 130 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 130 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
     foreach (var entity in entitiesThisForCreate)
         {
             
@@ -364,105 +364,105 @@ if (collectionProperties.Any())
             #line hidden
             this.Write("                                    <li>@Html.ActionLink(");
             
-            #line 132 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 132 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".Add");
             
-            #line 132 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 132 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write(", \"Create\", \"");
             
-            #line 132 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 132 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.ControllerName));
             
             #line default
             #line hidden
             this.Write("\", new { ");
             
-            #line 132 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 132 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.StrongDependedForeignKey.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" = item.Id }, ");
             
-            #line 132 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 132 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(Entity.CreatePartialView) { 
             
             #line default
             #line hidden
             this.Write("new { input_modal = ");
             
-            #line 132 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 132 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".Add");
             
-            #line 132 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 132 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write(" }");
             
-            #line 132 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 132 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("null");
             
-            #line 132 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 132 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
  } 
             
             #line default
             #line hidden
             this.Write(")</li>\r\n                                    <li>@Html.ActionLink(");
             
-            #line 133 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 133 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 133 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 133 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name.Pluralize()));
             
             #line default
             #line hidden
             this.Write(", \"Index\", \"");
             
-            #line 133 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 133 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.ControllerName));
             
             #line default
             #line hidden
             this.Write("\", new { ");
             
-            #line 133 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 133 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.StrongDependedForeignKey.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" = item.Id }, null)</li>\r\n");
             
-            #line 134 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 134 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
         } 
             
             #line default
             #line hidden
             this.Write("                                }\r\n");
             
-            #line 136 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 136 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
             
             #line default
@@ -470,13 +470,13 @@ if (collectionProperties.Any())
             this.Write("                            </ul>\r\n                        </div>\r\n              " +
                     "      </td>\r\n");
             
-            #line 140 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 140 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 141 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 141 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
 
 foreach (var property in properties) 
 {
@@ -488,49 +488,49 @@ foreach (var property in properties)
             #line hidden
             this.Write("                    <td>@item.");
             
-            #line 147 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 147 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(".Count</td>\r\n");
             
-            #line 148 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 148 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } else if(property.PropertyDefinition.IsTypeNumeric() || property.PropertyDefinition.IsTypeDateTime()) { 
             
             #line default
             #line hidden
             this.Write("                    <td align=\"right\">@Html.DisplayFor(modelItem => item.");
             
-            #line 149 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 149 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(")</td>\r\n");
             
-            #line 150 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 150 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } else { 
             
             #line default
             #line hidden
             this.Write("                    <td>@Html.DisplayFor(modelItem => item.");
             
-            #line 151 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 151 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(")</td>\r\n");
             
-            #line 152 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 152 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   }
 } 
             
             #line default
             #line hidden
             
-            #line 154 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 154 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithButtonsAction) { 
             
             #line default
@@ -538,14 +538,14 @@ foreach (var property in properties)
             this.Write("                    <td class=\"hidden-print\">\r\n                        <a href=\'@" +
                     "Url.Action(\"Details\", new { id = item.Id })\'");
             
-            #line 156 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 156 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(Entity.DetailsPartialView) { 
             
             #line default
             #line hidden
             this.Write(" input-modal=\'@ActionStrings.Details\' ");
             
-            #line 156 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 156 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
  } 
             
             #line default
@@ -555,28 +555,28 @@ foreach (var property in properties)
                     "{\r\n                            <a href=\'@Url.Action(\"Edit\", new { id = item.Id }" +
                     ")\'");
             
-            #line 159 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 159 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(Entity.EditPartialView) { 
             
             #line default
             #line hidden
             this.Write(" input-modal=\'@");
             
-            #line 159 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 159 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".Edit");
             
-            #line 159 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 159 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write("\' ");
             
-            #line 159 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 159 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
  } 
             
             #line default
@@ -587,14 +587,14 @@ foreach (var property in properties)
                         {
                             <a href=""#deleteConfirm"" data-toggle=""modal"" title=""@ActionStrings.Delete"" onclick=""setDelete('<b>@Html.Encode(item.");
             
-            #line 163 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 163 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(DisplayMember));
             
             #line default
             #line hidden
             this.Write(")</b>\', @item.");
             
-            #line 163 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 163 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pKey));
             
             #line default
@@ -603,7 +603,7 @@ foreach (var property in properties)
                     "\"></span>\r\n                                </a>\r\n                        }\r\n    " +
                     "                </td>\r\n");
             
-            #line 168 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 168 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
             
             #line default
@@ -611,104 +611,89 @@ foreach (var property in properties)
             this.Write("                </tr>\r\n            }\r\n        </table>\r\n    </div>\r\n}\r\nelse\r\n{\r\n " +
                     "   <h4>@MessageStrings.NoResults!</h4>\r\n}\r\n@Html.Partial(\"");
             
-            #line 178 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 178 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(MvcPartialPager.ViewName));
             
             #line default
             #line hidden
             this.Write("\")\r\n@Html.Partial(\"_MessageBoxPartial\")\r\n@section scripts{\r\n");
             
-            #line 181 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 181 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(HasModalInputForm) { 
             
             #line default
             #line hidden
             this.Write("    @Scripts.Render(\"~/bundles/jqueryval\")\r\n");
             
-            #line 183 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 183 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
             
             #line default
             #line hidden
             this.Write("    @Html.Partial(\"");
             
-            #line 184 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 184 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(MvcPartialIndexScripts.ViewName));
             
             #line default
             #line hidden
             this.Write("\", \"");
             
-            #line 184 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 184 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ControllerName));
             
             #line default
             #line hidden
             this.Write("\") @* Controller\'s name *@\r\n");
             
-            #line 185 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 185 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(hasScript) { 
             
             #line default
             #line hidden
             this.Write("    <script type=\"text/javascript\">\r\n");
             
-            #line 187 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 187 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 188 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 188 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(HasModalPartialForm) { 
             
             #line default
             #line hidden
-            this.Write(@"        (function () {
-            $.ajaxSetup({
-                cache: false
-            });
-            setActionLinks();
-            $('#dataInputModal').on('shown.bs.modal', function() {
-                $(this).find('[autofocus]').focus();
-            });
-        }());
-        function setActionLinks() {
-            $('a[input-modal]').on('click', function (params) {
-                if (params.ctrlKey || params.metaKey || params.altKey) {
-                    return true;
-                }
-                showBusy();
-                var title = $(this).attr(""input-modal"");
-                var url = this.href;
-                url += (url.indexOf('?') == -1) ? '?' : '&';
-                url += 'modal=true';
-                $('#dataInputBody').load(url, function () {
-                    hideBusy();
-                    if (title != null || title != '') {
-                        $('#dataInputTitle').html(title);
-                    }
-                    var inputForm = document.getElementById('dataInputForm');
-                    if (inputForm != null) {
-                        $('#dataInputFooter').show();
-                    }
-                    else {
-                        $('#dataInputFooter').hide();
-                    }
-                    $('#dataInputModal').modal('show');
-                });
-                return false;
-            });
-        }
-");
+            this.Write("        (function () {\r\n            $.ajaxSetup({\r\n                cache: false\r\n" +
+                    "            });\r\n            setActionLinks();\r\n            $(\'#dataInputModal\')" +
+                    ".on(\'shown.bs.modal\', function() {\r\n                $(this).find(\'[autofocus]\')." +
+                    "focus();\r\n            });\r\n        }());\r\n        function setActionLinks() {\r\n " +
+                    "           $(\'a[input-modal]\').on(\'click\', function (params) {\r\n                " +
+                    "if (params.ctrlKey || params.metaKey || params.altKey) {\r\n                    re" +
+                    "turn true;\r\n                }\r\n                showBusy();\r\n                var " +
+                    "title = $(this).attr(\"input-modal\");\r\n                var url = this.href;\r\n    " +
+                    "            url += (url.indexOf(\'?\') == -1) ? \'?\' : \'&\';\r\n                url +=" +
+                    " \'modal=true\';\r\n                $(\'#dataInputBody\').load(url, function(responseT" +
+                    "ext, textStatus, XMLHttpRequest) {\r\n                    hideBusy();\r\n           " +
+                    "         if (textStatus == \'success\') {\r\n                        if (title != nu" +
+                    "ll || title != \'\') {\r\n                            $(\'#dataInputTitle\').html(titl" +
+                    "e);\r\n                        }\r\n                        \r\n                      " +
+                    "  var inputForm = document.getElementById(\'dataInputForm\');\r\n                   " +
+                    "     if (inputForm != null) {\r\n                            $(\'#dataInputFooter\')" +
+                    ".show();\r\n                        }\r\n                        else {\r\n           " +
+                    "                 $(\'#dataInputFooter\').hide();\r\n                        }\r\n     " +
+                    "                   $(\'#dataInputModal\').modal(\'show\');\r\n                    }\r\n " +
+                    "                   else {\r\n                        showMessageBox(XMLHttpRequest" +
+                    ".statusText, XMLHttpRequest.responseText, false);\r\n                    }\r\n      " +
+                    "          });\r\n                return false;\r\n            });\r\n        }\r\n");
             
-            #line 225 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 231 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 226 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 232 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) { 
             
             #line default
@@ -718,7 +703,7 @@ foreach (var property in properties)
                     "n.getBoundingClientRect();\r\n                var rectGrid = document.getElementBy" +
                     "Id(\"");
             
-            #line 231 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 237 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(gridId));
             
             #line default
@@ -727,7 +712,7 @@ foreach (var property in properties)
                     "nu.bottom - menuHeight;\r\n\r\n                if (diffY < 0) {\r\n                   " +
                     " var viewport = $(\'#");
             
-            #line 235 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 241 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(gridId));
             
             #line default
@@ -736,20 +721,20 @@ foreach (var property in properties)
                     "              viewport.scrollTop((diffY * -1) + viewportScroll);\r\n              " +
                     "  }\r\n            }, 250);\r\n        }\r\n");
             
-            #line 241 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 247 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 242 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 248 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   if(hasScript) { 
             
             #line default
             #line hidden
             this.Write("    </script>\r\n");
             
-            #line 244 "F:\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
+            #line 250 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 
             
             #line default
