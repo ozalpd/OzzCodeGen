@@ -10,9 +10,9 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 <#  var firstBase = TableDefinition.GetFirstBase();
-	string pkeyVal = "@" + firstBase.PrimaryKeyColumn.Name;
-	var deleteMarkColumn = firstBase.GetDeleteMarkColumn();
-	bool createInsertOrUpdate = TableDefinition.StoredProcInsertOrUpdate;
+    string pkeyVal = "@" + firstBase.PrimaryKeyColumn.Name;
+    var deleteMarkColumn = firstBase.GetDeleteMarkColumn();
+    bool createInsertOrUpdate = TableDefinition.StoredProcInsertOrUpdate;
 #>
 -- --------------------------------------------------------------------
 -- Stored Procedure: [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Delete]
@@ -21,7 +21,7 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= TableDe
 DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Delete]
 GO
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Delete]
-	<#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>
+    <#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>
 As
 Begin
 <#
@@ -30,26 +30,26 @@ if(deleteMarkColumn != null)
  #>
     Declare @<#= deleteMarkColumn.Name #> bit
 
-	Select @<#= deleteMarkColumn.Name #> = <#= deleteMarkColumn.Name #>
-		From [<#= TableDefinition.SchemaName #>].[<#= firstBase.TableName #>]
-		Where <#= firstBase.PrimaryKeyColumn #> = <#= pkeyVal #>
+    Select @<#= deleteMarkColumn.Name #> = <#= deleteMarkColumn.Name #>
+        From [<#= TableDefinition.SchemaName #>].[<#= firstBase.TableName #>]
+        Where <#= firstBase.PrimaryKeyColumn #> = <#= pkeyVal #>
 
-	If @<#= deleteMarkColumn.Name #> = 1
-	Begin
-		/* TODO: Check cascaded data from other tables */
+    If @<#= deleteMarkColumn.Name #> = 1
+    Begin
+        /* TODO: Check cascaded data from other tables */
 <#  PushIndent("    ");
-	WriteDeleteStatement(TableDefinition, firstBase, pkeyVal);
-	PopIndent(); #>
-		
-	End
-	Else
-	Begin
-		Update [<#= TableDefinition.SchemaName #>].[<#= firstBase.TableName #>]
-			Set <#= deleteMarkColumn.Name #> = 1
-			Where [<#= firstBase.PrimaryKeyColumn #>] = <#= pkeyVal #>
-	End
-<#	} else { #>
-	/* TODO: Check cascaded data from other tables */
+    WriteDeleteStatement(TableDefinition, firstBase, pkeyVal);
+    PopIndent(); #>
+        
+    End
+    Else
+    Begin
+        Update [<#= TableDefinition.SchemaName #>].[<#= firstBase.TableName #>]
+            Set <#= deleteMarkColumn.Name #> = 1
+            Where [<#= firstBase.PrimaryKeyColumn #>] = <#= pkeyVal #>
+    End
+<#    } else { #>
+    /* TODO: Check cascaded data from other tables */
 <# WriteDeleteStatement(TableDefinition, firstBase, pkeyVal); #>
 <#
 } #>
@@ -62,26 +62,26 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= TableDe
 DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Insert]
 GO
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Insert]
-<#		
-	var colDeclaresIns = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) && c.Exclude == false & string.IsNullOrEmpty(c.InsertDefault));
-	int colNr = 0;
-	foreach (var column in colDeclaresIns)
-	{ 
-			colNr++;#>
-	@<#= column.Name #> <#= GetColumnType(column) #><# if(colNr < colDeclaresIns.Count()) {#>,<#  } #> 
-<#	} #>
+<#        
+    var colDeclaresIns = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) && c.Exclude == false & string.IsNullOrEmpty(c.InsertDefault));
+    int colNr = 0;
+    foreach (var column in colDeclaresIns)
+    { 
+            colNr++;#>
+    @<#= column.Name #> <#= GetColumnType(column) #><# if(colNr < colDeclaresIns.Count()) {#>,<#  } #> 
+<#    } #>
 As
 Begin
-    Declare @newKey		<#= TableDefinition.PrimaryKeyColumn.DataType #>
+    Declare @newKey        <#= TableDefinition.PrimaryKeyColumn.DataType #>
 
 <# WriteInsertStatement(firstBase, string.Empty); #>
 
-	Set @newKey = SCOPE_IDENTITY()
+    Set @newKey = SCOPE_IDENTITY()
 <#  if(TableDefinition.UseInheritance)
-	{ #>
+    { #>
 
 <# WriteInsertStatement(TableDefinition, "@newKey"); #>
-<#	} #>
+<#    } #>
 
 <# WriteSelectStatement("@newKey"); #>
 End
@@ -93,26 +93,26 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= TableDe
 DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Update]
 GO
 <# 
-	var colDeclaresUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & string.IsNullOrEmpty(c.UpdateDefault));
+    var colDeclaresUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & string.IsNullOrEmpty(c.UpdateDefault));
 #>
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Update]
-	<#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>,
-<#		
-	colNr = 0;
-	foreach (var column in colDeclaresUpd)
-	{ 
-			colNr++;#>
-	@<#= column.Name #> <#= GetColumnType(column) #><# if(colNr < colDeclaresUpd.Count()) {#>,<#  } #> 
-<#	} #>
+    <#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>,
+<#        
+    colNr = 0;
+    foreach (var column in colDeclaresUpd)
+    { 
+            colNr++;#>
+    @<#= column.Name #> <#= GetColumnType(column) #><# if(colNr < colDeclaresUpd.Count()) {#>,<#  } #> 
+<#    } #>
 As
 Begin
 
 <# WriteUpdateStatement(TableDefinition, pkeyVal); #>
 <#  if(TableDefinition.UseInheritance)
-	{ #>
+    { #>
 
 <# WriteUpdateStatement(firstBase, pkeyVal); #>
-<#	} #>
+<#    } #>
 
 <# WriteSelectStatement(pkeyVal); #>
 End
@@ -126,41 +126,41 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= TableDe
 DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_InsertOrUpdate]
 GO
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_InsertOrUpdate]
-	--<#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>,
-<#		
-	colNr = 0;
-	foreach (var column in colDeclaresUpd)
-	{ 
-			colNr++;#>
-	@<#= column.Name #> <#= GetColumnType(column) #>,
-<#	} #>
-	@Result int OUTPUT
+    --<#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>,
+<#        
+    colNr = 0;
+    foreach (var column in colDeclaresUpd)
+    { 
+            colNr++;#>
+    @<#= column.Name #> <#= GetColumnType(column) #>,
+<#    } #>
+    @Result int OUTPUT
 As
 Begin
-	Declare <#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>
+    Declare <#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>
 
-	Set @Result = 0
-	Select <#= pkeyVal #> = <#= firstBase.PrimaryKeyColumn.Name #>
-		From [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>]
-		Where <#= firstBase.PrimaryKeyColumn.Name #> = <#= pkeyVal #>
+    Set @Result = 0
+    Select <#= pkeyVal #> = <#= firstBase.PrimaryKeyColumn.Name #>
+        From [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>]
+        Where <#= firstBase.PrimaryKeyColumn.Name #> = <#= pkeyVal #>
 
-	If @Id Is Null
-	Begin
-		<# WriteInsertStatement(firstBase, string.Empty); #>
-		Set @Result = 1
-	End
+    If @Id Is Null
+    Begin
+        <# WriteInsertStatement(firstBase, string.Empty); #>
+        Set @Result = 1
+    End
 
-	If (Not <#= pkeyVal #> Is Null)
-	Begin
+    If (Not <#= pkeyVal #> Is Null)
+    Begin
 <# WriteUpdateStatement(TableDefinition, pkeyVal); #>
 <#  if(TableDefinition.UseInheritance)
-	{ #>
+    { #>
 
 <# WriteUpdateStatement(firstBase, pkeyVal); #>
-<#	} #>
-		Set @Result = -1
-	End
-	Select @Result
+<#    } #>
+        Set @Result = -1
+    End
+    Select @Result
 End
 Go
 /*
@@ -170,133 +170,141 @@ To map in EF
         {
             var result = <#= TableDefinition.TableName #>_InsertOrUpdate(
                 //entity.<#= firstBase.PrimaryKeyColumn #>,
-<#		
-	colNr = 0;
-	foreach (var column in colDeclaresUpd)
-	{ 
-			colNr++;#>
-				entity.<#= column.Name #>,
-<#	} #>
+<#        
+    colNr = 0;
+    foreach (var column in colDeclaresUpd)
+    { 
+            colNr++;#>
+                entity.<#= column.Name #>,
+<#    } #>
                 new ObjectParameter("Result", typeof(int)));
 
             return result.FirstOrDefault() ?? 0;
         }
 
 */
-<#	} #>
+<#    } #>
 <#+ 
 protected void WriteDeleteStatement(StorageEntitySetting table, StorageEntitySetting baseTable,string pkeyValue)
 { #>
-	Delete From [<#= table.SchemaName #>].[<#= table.TableName #>]
-		Where [<#= table.SchemaName #>].[<#= table.TableName #>].[<#= table.PrimaryKeyColumn.Name #>] = <#= pkeyValue #>
+    Delete From [<#= table.SchemaName #>].[<#= table.TableName #>]
+        Where [<#= table.SchemaName #>].[<#= table.TableName #>].[<#= table.PrimaryKeyColumn.Name #>] = <#= pkeyValue #>
 <#+ if(TableDefinition.UseInheritance)
-	{ #>
+    { #>
 
-	Delete From [<#= baseTable.SchemaName #>].[<#= baseTable.TableName #>]
-		Where [<#= baseTable.SchemaName #>].[<#= baseTable.TableName #>].[<#= baseTable.PrimaryKeyColumn.Name #>] = <#= pkeyValue #>
-<#+	} #>
+    Delete From [<#= baseTable.SchemaName #>].[<#= baseTable.TableName #>]
+        Where [<#= baseTable.SchemaName #>].[<#= baseTable.TableName #>].[<#= baseTable.PrimaryKeyColumn.Name #>] = <#= pkeyValue #>
+<#+    } #>
 <#+ 
 } #>
 <#+ 
-protected void WriteUpdateStatement(StorageEntitySetting table, string pkeyValue)
+protected void WriteUpdateStatement(StorageEntitySetting table, string pkeyValue, int maxLineLen = 48)
 {
-	var columns = table.UseInheritance ?
-			table.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false & c.UpdateDefault != "NeverUpdate") :
-			table.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false & c.UpdateDefault != "NeverUpdate");
-	if(columns.Any())
+    var columns = table.UseInheritance ?
+            table.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false & c.UpdateDefault != "NeverUpdate") :
+            table.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false & c.UpdateDefault != "NeverUpdate");
+    if(columns.Any())
     {
  #>
-	Update [<#= table.SchemaName #>].[<#= table.TableName #>]
-		Set <#+	
-	int colNr = 0;
-	PushIndent("            ");
-	foreach (var column in columns)
-	{ 
-		if(colNr != 0 & (colNr % 2 == 0)) { WriteLine(""); } 
-		colNr++;
-		string colValue = string.IsNullOrEmpty(column.UpdateDefault) ? "@" + column.Name : column.UpdateDefault.Replace("{TableName}", table.TableName);
-		#>
+    Update [<#= table.SchemaName #>].[<#= table.TableName #>]
+       Set <#+    
+    int colNr = 0, colLen, lineLen = 0;
+    PushIndent("           ");
+    foreach (var column in columns)
+    { 
+        string colValue = string.IsNullOrEmpty(column.UpdateDefault) ? "@" + column.Name : column.UpdateDefault.Replace("{TableName}", table.TableName);
+        colLen = colValue.Length + 3 + column.Name.Length;
+        lineLen += colLen;
+        if(lineLen > maxLineLen) { WriteLine(""); } 
+        colNr++;
+        #>
 [<#= column.Name #>] = <#= colValue #><#+ if(colNr < columns.Count()) {#>, <#+ } #>
-<#+	}
+<#+    }
     PopIndent();
-	WriteLine("");
+    WriteLine("");
  #>
-	Where [<#= table.SchemaName #>].[<#= table.TableName #>].[<#= table.PrimaryKeyColumn.Name #>] = <#= pkeyValue #>
+     Where [<#= table.SchemaName #>].[<#= table.TableName #>].[<#= table.PrimaryKeyColumn.Name #>] = <#= pkeyValue #>
 <#+ }
 } #>
 <#+ 
-protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue)
+protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue, int maxLineLen = 48)
 {
-	int varCount = 4;
-	var columns = table.UseInheritance ?
-			table.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false) :
-			table.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false);
+    var columns = table.UseInheritance ?
+            table.Properties.Where(c => !c.PrimaryKey & !c.Exclude & c.InsertDefault != "null") :
+            table.GetColumnList().Where(c => !c.PrimaryKey & !c.Exclude & c.InsertDefault != "null");
  #>
-	Insert Into [<#= table.SchemaName #>].[<#= table.TableName #>](
+    Insert Into [<#= table.SchemaName #>].[<#= table.TableName #>](
 <#+ 
-	PushIndent("            ");
-	if(!string.IsNullOrEmpty(pkeyValue)){ #>[<#= table.PrimaryKeyColumn.Name #>], <#+ } #>
-<#+	
-	int colNr = 0;
-	foreach (var column in columns)
-	{ 
-		if(colNr != 0 & (colNr % varCount == 0)) { WriteLine(""); } 
-		colNr++;
-		#>
+    PushIndent("            ");
+    if(!string.IsNullOrEmpty(pkeyValue)){ #>[<#= table.PrimaryKeyColumn.Name #>], <#+ } #>
+<#+    
+    int colNr = 0, colLen, lineLen = 0;
+    string colValue;
+    foreach (var column in columns)
+    {
+        colValue = string.IsNullOrEmpty(column.InsertDefault) ? "@" + column.Name : column.InsertDefault;
+        colLen = colValue.Length > column.Name.Length ? colValue.Length : column.Name.Length;
+        lineLen += colLen;
+        if(lineLen > maxLineLen) { WriteLine(""); lineLen = colValue.Length; } 
+        colNr++;
+        #>
 [<#= column.Name #>]<#+ if(colNr < columns.Count()) {#>, <#+  } else { #>)<#+  } #>
-<#+	}
+<#+    }
     PopIndent();
-	WriteLine("");
+    WriteLine("");
  #>
-	Values (<#+ if(!string.IsNullOrEmpty(pkeyValue)){ #><#= pkeyValue #>, <#+ } #>
-<#+	colNr = 0;
-	PushIndent("            ");
-	foreach (var column in columns)
-	{ 
-		if(colNr != 0 & (colNr % varCount == 0)) { WriteLine(""); } 
-		colNr++;
-		string colValue = string.IsNullOrEmpty(column.InsertDefault) ? "@" + column.Name : column.InsertDefault; #>
+    Values (<#+ if(!string.IsNullOrEmpty(pkeyValue)){ #><#= pkeyValue #>, <#+ } #>
+<#+    colNr = 0;
+    PushIndent("            ");
+    lineLen = 0;
+    foreach (var column in columns)
+    {
+        colValue = string.IsNullOrEmpty(column.InsertDefault) ? "@" + column.Name : column.InsertDefault;
+        colLen = colValue.Length > column.Name.Length ? colValue.Length : column.Name.Length;
+        lineLen += colLen;
+        if(lineLen > maxLineLen) { WriteLine(""); lineLen = colValue.Length;} 
+        colNr++; #>
 <#= colValue #><#+ if(colNr < columns.Count()) {#>, <#+  } else { #>)<#+  } #>
-<#+	}
+<#+ }
     PopIndent();
-	WriteLine("");
+    WriteLine("");
  #>
 <#+ 
 } #>
 <#+ 
 protected void WriteSelectStatement(string keyValue)
 {
-	var firstBase = TableDefinition.GetFirstBase();
+    var firstBase = TableDefinition.GetFirstBase();
  #>
-	Select  [<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>],
+    Select  [<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>],
 <#+ WriteSelectColumns(TableDefinition, TableDefinition.UseInheritance); #>
 <#+ if(TableDefinition.UseInheritance)
-	{
-		//TODO: Handle more than one inherited base
-		WriteSelectColumns(firstBase); 
-	} #>
+    {
+        //TODO: Handle more than one inherited base
+        WriteSelectColumns(firstBase); 
+    } #>
 <#+ //TODO: Handle more than one inherited base
-	if(TableDefinition.UseInheritance)
-	{ #>
-	From  [<#= firstBase.SchemaName #>].[<#= firstBase.TableName #>] Inner Join [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>] On [<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>] = [<#= TableDefinition.TableName #>].[<#= TableDefinition.PrimaryKeyColumn.Name #>]
-<#+	} else { #>
-	From  [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>]
-<#+	} #>
-	Where [<#= firstBase.SchemaName #>].[<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>] = <#= keyValue #>
+    if(TableDefinition.UseInheritance)
+    { #>
+    From  [<#= firstBase.SchemaName #>].[<#= firstBase.TableName #>] Inner Join [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>] On [<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>] = [<#= TableDefinition.TableName #>].[<#= TableDefinition.PrimaryKeyColumn.Name #>]
+<#+    } else { #>
+    From  [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>]
+<#+    } #>
+    Where [<#= firstBase.SchemaName #>].[<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>] = <#= keyValue #>
 <#+ 
 } #>
 <#+
 protected void WriteSelectColumns(StorageEntitySetting table, bool hasMore = false)
-{	
-	var columns = table.UseInheritance ?
-			table.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false) :
-			table.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false);
-	int colNr = 0;
-	foreach (var column in columns)
-	{
-		colNr++; #>
+{    
+    var columns = table.UseInheritance ?
+            table.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false) :
+            table.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false);
+    int colNr = 0;
+    foreach (var column in columns)
+    {
+        colNr++; #>
             [<#= table.TableName #>].[<#= column.Name #>]<#+ if(colNr < columns.Count() | hasMore) {#>,<#+ } #> 
-<#+	}
+<#+    }
 #>
 <#+ 
 } #>
