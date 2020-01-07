@@ -215,7 +215,7 @@ protected void WriteUpdateStatement(StorageEntitySetting table, string pkeyValue
         string colValue = string.IsNullOrEmpty(column.UpdateDefault) ? "@" + column.Name : column.UpdateDefault.Replace("{TableName}", table.TableName);
         colLen = colValue.Length + 3 + column.Name.Length;
         lineLen += colLen;
-        if(lineLen > maxLineLen) { WriteLine(""); } 
+        if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); } 
         colNr++;
         #>
 [<#= column.Name #>] = <#= colValue #><#+ if(colNr < columns.Count()) {#>, <#+ } #>
@@ -245,7 +245,7 @@ protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue
         colValue = string.IsNullOrEmpty(column.InsertDefault) ? "@" + column.Name : column.InsertDefault;
         colLen = colValue.Length > column.Name.Length ? colValue.Length : column.Name.Length;
         lineLen += colLen;
-        if(lineLen > maxLineLen) { WriteLine(""); lineLen = colValue.Length; } 
+        if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); lineLen = colValue.Length; } 
         colNr++;
         #>
 [<#= column.Name #>]<#+ if(colNr < columns.Count()) {#>, <#+  } else { #>)<#+  } #>
@@ -262,7 +262,7 @@ protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue
         colValue = string.IsNullOrEmpty(column.InsertDefault) ? "@" + column.Name : column.InsertDefault;
         colLen = colValue.Length > column.Name.Length ? colValue.Length : column.Name.Length;
         lineLen += colLen;
-        if(lineLen > maxLineLen) { WriteLine(""); lineLen = colValue.Length;} 
+        if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); lineLen = colValue.Length;} 
         colNr++; #>
 <#= colValue #><#+ if(colNr < columns.Count()) {#>, <#+  } else { #>)<#+  } #>
 <#+ }

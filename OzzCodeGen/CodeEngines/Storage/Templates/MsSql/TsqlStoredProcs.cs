@@ -1082,7 +1082,7 @@ this.Write("]\r\n       Set ");
         string colValue = string.IsNullOrEmpty(column.UpdateDefault) ? "@" + column.Name : column.UpdateDefault.Replace("{TableName}", table.TableName);
         colLen = colValue.Length + 3 + column.Name.Length;
         lineLen += colLen;
-        if(lineLen > maxLineLen) { WriteLine(""); } 
+        if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); } 
         colNr++;
         
         
@@ -1306,7 +1306,7 @@ this.Write("], ");
         colValue = string.IsNullOrEmpty(column.InsertDefault) ? "@" + column.Name : column.InsertDefault;
         colLen = colValue.Length > column.Name.Length ? colValue.Length : column.Name.Length;
         lineLen += colLen;
-        if(lineLen > maxLineLen) { WriteLine(""); lineLen = colValue.Length; } 
+        if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); lineLen = colValue.Length; } 
         colNr++;
         
         
@@ -1417,7 +1417,7 @@ this.Write(", ");
         colValue = string.IsNullOrEmpty(column.InsertDefault) ? "@" + column.Name : column.InsertDefault;
         colLen = colValue.Length > column.Name.Length ? colValue.Length : column.Name.Length;
         lineLen += colLen;
-        if(lineLen > maxLineLen) { WriteLine(""); lineLen = colValue.Length;} 
+        if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); lineLen = colValue.Length;} 
         colNr++; 
         
         #line default
