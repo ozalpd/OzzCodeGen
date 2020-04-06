@@ -81,12 +81,12 @@ namespace OzzCodeGen.CodeEngines.Storage
             return null;
         }
 
-        public override string GetPrimaryKeyDeclaration(StorageEntitySetting table)
+        public override string GetPrimaryKeyDeclaration(StorageEntitySetting table, bool forLogTable = false)
         {
             throw new NotImplementedException();
         }
 
-        public override string GetColumnDeclaration(StorageColumnSetting column, StorageEntitySetting table)
+        public override string GetColumnDeclaration(StorageColumnSetting column, StorageEntitySetting table, bool forLogTable = false)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(column.Name);

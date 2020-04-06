@@ -92,6 +92,18 @@ namespace OzzCodeGen.CodeEngines.Storage
         private string _lastScripts;
 
 
+        public string LogSchemaName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_logSchemaName))
+                    _logSchemaName = "log";
+                return _logSchemaName;
+            }
+            set { _logSchemaName = value; }
+        }
+        private string _logSchemaName;
+
         public string SchemaName
         {
             get
@@ -404,8 +416,8 @@ namespace OzzCodeGen.CodeEngines.Storage
         protected abstract AbstractStorageTemplate GetDropDbTemplate();
 
         public abstract string GetColumnType(StorageColumnSetting column);
-        public abstract string GetColumnDeclaration(StorageColumnSetting column, StorageEntitySetting table);
-        public abstract string GetPrimaryKeyDeclaration(StorageEntitySetting table);
+        public abstract string GetColumnDeclaration(StorageColumnSetting column, StorageEntitySetting table, bool forLogTable);
+        public abstract string GetPrimaryKeyDeclaration(StorageEntitySetting table, bool forLogTable);
         public abstract StorageColumnSetting GetDefaultPrimaryKey();
         public abstract List<StorageColumnSetting> GetModifyTrackColumns();
 

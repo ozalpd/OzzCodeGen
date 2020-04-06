@@ -149,6 +149,20 @@ namespace OzzCodeGen.CodeEngines.Storage
             }
         }
 
+        public bool DoNotLog
+        {
+            get
+            {
+                return _doNotLog;
+            }
+            set
+            {
+                _doNotLog = value;
+                RaisePropertyChanged("DoNotLog");
+            }
+        }
+        private bool _doNotLog;
+
         public string ForeignKeyTable
         {
             get { return _fKeyTable; }

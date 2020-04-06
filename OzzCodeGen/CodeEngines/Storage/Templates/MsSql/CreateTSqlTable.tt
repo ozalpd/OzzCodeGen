@@ -5,9 +5,9 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".sql" #>
 SET ANSI_NULLS ON
-GO
+Go
 SET QUOTED_IDENTIFIER ON
-GO
+Go
 CREATE TABLE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>](
 <#    if(TableDefinition.PrimaryKeyColumn != null) { #>
     <#= TableDefinition.GetPrimaryKeyDeclaration() #>,
@@ -57,5 +57,34 @@ BEGIN
     Update [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>] Set [UpdateDate] = GETDATE()
     Where [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>].[<#= TableDefinition.PrimaryKeyColumn.Name #>] = @EntityTypeId
 END
+Go
+<#  } #>
+<#  if(TableDefinition.HasLogTable) { #>
+
+/****** Log table for <#= TableDefinition.TableName #>  ******/
+CREATE TABLE [<#= CodeEngine.LogSchemaName #>].[<#= TableDefinition.LogTableName #>](
+<#      if(TableDefinition.PrimaryKeyColumn != null) { #>
+    <#= TableDefinition.GetPrimaryKeyDeclaration() #>,
+    [<#= TableDefinition.Name #>Id] <#= GetColumnType(TableDefinition.PrimaryKeyColumn) #>,
+<#      }
+        else { #>
+    --No Primary Key defined!
+<#      }
+        columns = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false & c.DoNotLog == false & c.Exclude == false);
+		foreach (var column in columns)
+        {#>
+    <#= TableDefinition.GetColumnDeclaration(column, true) #>,
+<#      } #>
+<#    if(TableDefinition.PrimaryKeyColumn != null) { #>
+    [LogStatus] [int] Not Null,
+    [LogStatusDescription] [nVarChar](100) Not Null,
+  CONSTRAINT [PK_<#= TableDefinition.LogTableName #>] PRIMARY KEY CLUSTERED ([<#= TableDefinition.PrimaryKeyColumn.Name #>] ASC)
+  WITH (PAD_INDEX  = OFF,
+    STATISTICS_NORECOMPUTE  = OFF,
+    IGNORE_DUP_KEY = OFF,
+    ALLOW_ROW_LOCKS  = ON,
+    ALLOW_PAGE_LOCKS  = ON)
+  ON [PRIMARY]) ON [PRIMARY]
+<#  } #>
 Go
 <#  } #>

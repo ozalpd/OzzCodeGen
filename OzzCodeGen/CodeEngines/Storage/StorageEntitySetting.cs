@@ -1,10 +1,10 @@
-﻿using System;
+﻿using OzzUtils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using OzzUtils;
 
 namespace OzzCodeGen.CodeEngines.Storage
 {
@@ -34,7 +34,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             }
         }
         private bool _tableInheritance;
-        
+
 
 
         [XmlIgnore]
@@ -90,7 +90,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             {
                 if (string.IsNullOrEmpty(_tableName))
                 {
-                    if(CodeEngine.PluralizeTableNames)
+                    if (CodeEngine.PluralizeTableNames)
                     {
                         _tableName = Name.Pluralize();
                     }
@@ -106,6 +106,8 @@ namespace OzzCodeGen.CodeEngines.Storage
                 OnTableNameChanging(value);
                 _tableName = value;
                 RaisePropertyChanged("TableName");
+                if (HasLogTable)
+                    RaisePropertyChanged("LogTableName");
             }
         }
         private string _tableName;
@@ -127,38 +129,49 @@ namespace OzzCodeGen.CodeEngines.Storage
                     }
                 }
             }
+            if (HasLogTable && LogTableName.Equals(GetLogTableName()))
+                _logTableName = string.Empty;
         }
 
 
-        public string FinishingScript
-        {
-            get { return _finishingScript; }
-            set
-            {
-                _finishingScript = value;
-                RaisePropertyChanged("FinishingScript");
-            }
-        }
-        private string _finishingScript;
-        
-        public bool ModifyTrack
+        public bool HasLogTable
         {
             get
             {
-                if (!_modifyTrack.HasValue)
-                {
-                    _modifyTrack = Name == "EntityUpdate";
-                }
-                return _modifyTrack.Value;
+                return _hasLogTable;
             }
             set
             {
-                _modifyTrack = value;
-                RaisePropertyChanged("ModifyTrack");
+                _hasLogTable = value;
+                RaisePropertyChanged("HasLogTable");
+                if (HasLogTable)
+                    RaisePropertyChanged("LogTableName");
             }
         }
-        private bool? _modifyTrack;
+        private bool _hasLogTable;
 
+        public string LogTableName
+        {
+            get
+            {
+                if (HasLogTable && string.IsNullOrEmpty(_logTableName))
+                    _logTableName = GetLogTableName();
+                return _logTableName;
+            }
+            set
+            {
+                _logTableName = value;
+                RaisePropertyChanged("LogTableName");
+            }
+        }
+        private string _logTableName;
+
+        protected string GetLogTableName()
+        {
+            if (string.IsNullOrEmpty(TableName))
+                return string.Empty;
+            return TableName + "Log";
+        }
 
         public bool StoredProcs
         {
@@ -201,6 +214,37 @@ namespace OzzCodeGen.CodeEngines.Storage
             }
         }
         private bool _storedProcInsertOrUpdate;
+
+        public bool ModifyTrack
+        {
+            get
+            {
+                if (!_modifyTrack.HasValue)
+                {
+                    _modifyTrack = Name == "EntityUpdate";
+                }
+                return _modifyTrack.Value;
+            }
+            set
+            {
+                _modifyTrack = value;
+                RaisePropertyChanged("ModifyTrack");
+            }
+        }
+        private bool? _modifyTrack;
+
+
+        public string FinishingScript
+        {
+            get { return _finishingScript; }
+            set
+            {
+                _finishingScript = value;
+                RaisePropertyChanged("FinishingScript");
+            }
+        }
+        private string _finishingScript;
+
 
         public List<StorageColumnSetting> Properties
         {
@@ -252,7 +296,8 @@ namespace OzzCodeGen.CodeEngines.Storage
                 return _foreignTables;
             }
         }
-        List<StorageEntitySetting> _foreignTables;
+
+        private List<StorageEntitySetting> _foreignTables;
 
         public StorageEntitySetting GetFirstBase()
         {
@@ -283,12 +328,12 @@ namespace OzzCodeGen.CodeEngines.Storage
 
         public string GetPrimaryKeyDeclaration()
         {
-            return CodeEngine.GetPrimaryKeyDeclaration(this);
+            return CodeEngine.GetPrimaryKeyDeclaration(this, false);
         }
 
-        public string GetColumnDeclaration(StorageColumnSetting column)
+        public string GetColumnDeclaration(StorageColumnSetting column, bool forLogTable = false)
         {
-            return CodeEngine.GetColumnDeclaration(column, this);
+            return CodeEngine.GetColumnDeclaration(column, this, forLogTable);
         }
 
         public List<StorageColumnSetting> GetColumnList()

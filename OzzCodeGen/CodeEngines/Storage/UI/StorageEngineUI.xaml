@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="800">
+             d:DesignHeight="320" d:DesignWidth="800">
     <Border BorderBrush="#FFDAA200" BorderThickness="1" Padding="1,0" Background="#FFFFEBCB">
         <Grid>
             <Grid.Resources>
@@ -38,25 +38,26 @@
                 <RowDefinition Height="32"/>
                 <RowDefinition Height="32"/>
                 <RowDefinition Height="32"/>
+                <RowDefinition Height="32"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+            <Button Name="btnRefresh" Content="Refresh" 
+                    Grid.Row="0" Grid.Column="0"
+                    Click="btnRefresh_Click"/>
             <Button Name="btnRenderTemplate" Content="Render"
                     ToolTip="Render Selected Template"
                     Grid.Column="0" Grid.Row="1"
                     Click="btnRenderTemplate_Click"/>
             <Button Name="btnCreateDB" Content="Create DB"
                     ToolTip="Render all tables and CreateDB batch file"
-                    Grid.Column="0" Grid.Row="2"
+                    Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"
                     Click="btnCreateDB_Click"/>
-            <Button Name="btnRefresh" Content="Refresh" 
-                    Grid.Row="0" Grid.Column="0"
-                    Click="btnRefresh_Click"/>
 
             <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Margin="0,3,0,0">
                 <StackPanel.Resources>
                     <Style TargetType="CheckBox">
-                        <Setter Property="Margin" Value="4,5,0,0"/>
+                        <Setter Property="Margin" Value="4,3,0,3"/>
                     </Style>
                 </StackPanel.Resources>
                 <CheckBox IsChecked="{Binding PluralizeTableNames}" Content="Pluralize Table Names"/>
@@ -94,8 +95,26 @@
                      ToolTip="{Binding TargetDirectory}"
                      Grid.Column="3" Grid.Row="2"/>
 
-            <TextBlock Text="Schema Name" Grid.Column="4" Grid.Row="2"/>
-            <TextBox Text="{Binding SchemaName}" Grid.Column="5" Grid.Row="2"/>
+            <Grid Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MaxWidth="120"/>
+                    <ColumnDefinition Width="*" MaxWidth="90"/>
+                    <ColumnDefinition Width="*" MaxWidth="120"/>
+                    <ColumnDefinition Width="*" MaxWidth="90"/>
+                    <ColumnDefinition Width="*" MaxWidth="120"/>
+                    <ColumnDefinition Width="*" MaxWidth="90" />
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="4,6,0,6"/>
+                    </Style>
+                </Grid.Resources>
+                <TextBlock Text="Schema Name" ToolTip="Default schema name for tables" Grid.Column="0" />
+                <TextBox Text="{Binding SchemaName}" ToolTip="Default schema name for tables" Grid.Column="1" />
+
+                <TextBlock Text="Log Schema" ToolTip="Log Schema Name" Grid.Column="2"/>
+                <TextBox Text="{Binding LogSchemaName}" ToolTip="Log Schema Name" Grid.Column="3"/>
+            </Grid>
 
 
 
@@ -133,8 +152,8 @@
                                 <RowDefinition Height="20"/>
                                 <RowDefinition Height="20"/>
                                 <RowDefinition Height="20"/>
-                                <RowDefinition Height="12"/>
                                 <RowDefinition Height="20"/>
+                                <RowDefinition Height="12"/>
                                 <RowDefinition Height="20"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
@@ -156,8 +175,8 @@
                             <TextBlock Text="{Binding PrimaryKeyColumn, StringFormat=Primary Key: \{0\}}"
                                    Grid.ColumnSpan="2" Grid.Row="1"/>
 
-                            <TextBlock Text="Modify Track:" ToolTip="Is table for modify tracking?" Grid.Row="2" Grid.Column="0"/>
-                            <CheckBox IsChecked="{Binding ModifyTrack}" ToolTip="Is table for modify tracking?" Grid.Row="2" Grid.Column="1"/>
+                            <TextBlock Text="Has Log Table:" ToolTip="Does this table have another log table?" Grid.Row="2" Grid.Column="0"/>
+                            <CheckBox IsChecked="{Binding HasLogTable}" ToolTip="Does this table have another log table?" Grid.Row="2" Grid.Column="1"/>
 
                             <TextBlock Text="Has StoredProcs:" ToolTip="Has Stored Procedures" Grid.Row="3" Grid.Column="0"/>
                             <CheckBox IsChecked="{Binding StoredProcs}" ToolTip="Has Stored Procedures" Grid.Row="3" Grid.Column="1"/>
@@ -168,9 +187,11 @@
                             <TextBlock Text="InsertOrUpdate SP:" ToolTip="Stored Procedure for InsertOrUpdate" Grid.Row="5" Grid.Column="0"/>
                             <CheckBox IsChecked="{Binding StoredProcInsertOrUpdate}" ToolTip="Do Not Overwrite Custom Stored Procedures" Grid.Row="5" Grid.Column="1"/>
 
-                            <TextBlock Text="Overwrite Existing:" Grid.Row="6" Grid.Column="0"/>
-                            <CheckBox IsChecked="{Binding OverwriteExisting}" Grid.Row="6" Grid.Column="1"/>
+                            <TextBlock Text="Modify Track:" ToolTip="Is table for modify tracking?" Grid.Row="6" Grid.Column="0"/>
+                            <CheckBox IsChecked="{Binding ModifyTrack}" ToolTip="Is table for modify tracking?" Grid.Row="6" Grid.Column="1"/>
 
+                            <TextBlock Text="Overwrite Existing:" Grid.Row="7" Grid.Column="0"/>
+                            <CheckBox IsChecked="{Binding OverwriteExisting}" Grid.Row="7" Grid.Column="1"/>
                         </Grid>
                     </Grid>
                     <GridSplitter Grid.Column="1" Grid.RowSpan="4" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8"  ResizeDirection="Columns"/>

@@ -119,7 +119,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             return new CreateTSqlTable(tableDefinition);
         }
 
-        public override string GetPrimaryKeyDeclaration(StorageEntitySetting table)
+        public override string GetPrimaryKeyDeclaration(StorageEntitySetting table, bool forLogTable = false)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -136,7 +136,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             if (table.UseInheritance)
             {
                 sb.Append(' ');
-                sb.Append(this.GetForeignKeyReferences(table.PrimaryKeyColumn, table, false, table.GetBaseTable()));
+                sb.Append(this.GetForeignKeyReferences(table.PrimaryKeyColumn, table, false, forLogTable, table.GetBaseTable()));
             }
 
             return sb.ToString();
@@ -167,7 +167,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             return sb.ToString();
         }
 
-        public override string GetColumnDeclaration(StorageColumnSetting column, StorageEntitySetting table)
+        public override string GetColumnDeclaration(StorageColumnSetting column, StorageEntitySetting table, bool forLogTable = false)
         {
             StringBuilder sb = new StringBuilder();
             AppendColumnNameType(column, sb);
@@ -181,7 +181,7 @@ namespace OzzCodeGen.CodeEngines.Storage
                     string fKeyRef = string.Format("Alter Table [{0}].[{1}] Add {2}",
                                         table.SchemaName,
                                         table.TableName,
-                                        GetForeignKeyReferences(column, table, true));
+                                        GetForeignKeyReferences(column, table, true, forLogTable));
 
                     if (!AdditionalCommands.Contains(fKeyRef))
                     {
@@ -191,7 +191,7 @@ namespace OzzCodeGen.CodeEngines.Storage
                 else
                 {
                     sb.Append(' ');
-                    sb.Append(GetForeignKeyReferences(column, table, false));
+                    sb.Append(GetForeignKeyReferences(column, table, false, forLogTable));
                 }
             }
 
@@ -245,8 +245,8 @@ namespace OzzCodeGen.CodeEngines.Storage
             }
         }
 
-        private string GetForeignKeyReferences(StorageColumnSetting column, StorageEntitySetting table, bool putColumnName, 
-            StorageEntitySetting foreignTable = null)
+        private string GetForeignKeyReferences(StorageColumnSetting column, StorageEntitySetting table,
+            bool putColumnName, bool forLogTable, StorageEntitySetting foreignTable = null)
         {
             if (foreignTable == null)
             {
@@ -257,7 +257,15 @@ namespace OzzCodeGen.CodeEngines.Storage
 
             StringBuilder sb = new StringBuilder();
             sb.Append("Constraint FK_");
-            sb.Append(table.Name);
+            if (forLogTable)
+            {
+                sb.Append(table.LogTableName);
+            }
+            else
+            {
+                sb.Append(table.Name);
+            }
+
             sb.Append('_');
             sb.Append(column.Name);
             sb.Append(" Foreign Key");
