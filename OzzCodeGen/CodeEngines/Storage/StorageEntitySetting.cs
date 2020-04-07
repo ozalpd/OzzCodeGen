@@ -133,6 +133,10 @@ namespace OzzCodeGen.CodeEngines.Storage
                 _logTableName = string.Empty;
         }
 
+        public string ConcatTableNameAndSchema()
+        {
+            return string.Concat("[", SchemaName, "].[", TableName, "]");
+        }
 
         public bool HasLogTable
         {

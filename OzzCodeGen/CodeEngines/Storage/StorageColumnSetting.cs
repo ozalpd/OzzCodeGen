@@ -163,6 +163,15 @@ namespace OzzCodeGen.CodeEngines.Storage
         }
         private bool _doNotLog;
 
+        public string GetLogParam()
+        {
+            if (string.IsNullOrEmpty(UpdateDefault) == false
+                && UpdateDefault.Equals("GetDate()", StringComparison.InvariantCultureIgnoreCase))
+                return "GetDate()";
+
+            return string.Concat("[", Name, "]");
+        }
+
         public string ForeignKeyTable
         {
             get { return _fKeyTable; }

@@ -5,25 +5,68 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".sql" #>
 SET ANSI_NULLS ON
-GO
+Go
 SET QUOTED_IDENTIFIER ON
-GO
+Go
 
 <#  var firstBase = TableDefinition.GetFirstBase();
     string pkeyVal = "@" + firstBase.PrimaryKeyColumn.Name;
     var deleteMarkColumn = firstBase.GetDeleteMarkColumn();
     bool createInsertOrUpdate = TableDefinition.StoredProcInsertOrUpdate;
+    string logInsSP = string.Concat("[", CodeEngine.LogSchemaName, "].[", TableDefinition.LogTableName, "_Insert]");
 #>
+<#  if(TableDefinition.HasLogTable) { #>
+-- --------------------------------------------------------------------
+-- Stored Procedure: <#= logInsSP #>
+-- --------------------------------------------------------------------
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'<#= logInsSP #>') AND type in (N'P', N'PC'))
+DROP PROCEDURE <#= logInsSP #>
+Go
+CREATE PROCEDURE <#= logInsSP #>
+    @<#= TableDefinition.Name #>Id <#= GetColumnType(TableDefinition.PrimaryKeyColumn) #>,
+    @LogStatus [int],
+    @LogStatusDescription [nVarChar](100)
+As
+Begin
+    Insert Into [<#= CodeEngine.LogSchemaName #>].[<#= TableDefinition.LogTableName #>](
+            [<#= TableDefinition.Name #>Id],
+<#  var columns = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false & c.DoNotLog == false & c.Exclude == false);
+    foreach (var column in columns)
+    {#>
+            [<#= column.Name #>],
+<#  } #>
+            [LogStatus], 
+            [LogStatusDescription])
+    Select  [<#= TableDefinition.PrimaryKeyColumn.Name #>],
+<#  foreach (var column in columns)
+    {#>
+            <#= column.GetLogParam() #>,
+<#  } #>
+            @LogStatus,
+            @LogStatusDescription
+    From  <#= TableDefinition.ConcatTableNameAndSchema() #>
+    Where <#= TableDefinition.ConcatTableNameAndSchema() #>.[<#= TableDefinition.PrimaryKeyColumn.Name #>] = @<#= TableDefinition.Name #>Id;
+End
+Go
+<#  } #>
 -- --------------------------------------------------------------------
 -- Stored Procedure: [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Delete]
 -- --------------------------------------------------------------------
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Delete]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Delete]
-GO
+Go
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Delete]
     <#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>
 As
 Begin
+<#  if(TableDefinition.HasLogTable) { #>
+    /* Silinmeden önceki son hali loglanıyor... */
+    Exec <#= logInsSP #>
+        @<#= TableDefinition.Name #>Id = <#= pkeyVal #>,
+        @LogStatus = 4010,
+        @LogStatusDescription = N'Siliniyor...';
+
+<#  } #>
 <#
 if(deleteMarkColumn != null)
 {
@@ -60,7 +103,7 @@ Go
 -- --------------------------------------------------------------------
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Insert]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Insert]
-GO
+Go
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Insert]
 <#        
     var colDeclaresIns = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) && c.Exclude == false & string.IsNullOrEmpty(c.InsertDefault));
@@ -76,7 +119,13 @@ Begin
 
 <# WriteInsertStatement(firstBase, string.Empty); #>
 
-    Set @newKey = SCOPE_IDENTITY()
+    Set @newKey = SCOPE_IDENTITY();
+<#  if(TableDefinition.HasLogTable) { #>
+    Exec <#= logInsSP #>
+        @<#= TableDefinition.Name #>Id = @newKey,
+        @LogStatus = 1010,
+        @LogStatusDescription = N'Yeni Kayıt';
+<#  } #>
 <#  if(TableDefinition.UseInheritance)
     { #>
 
@@ -91,7 +140,7 @@ Go
 -- --------------------------------------------------------------------
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Update]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Update]
-GO
+Go
 <# 
     var colDeclaresUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & string.IsNullOrEmpty(c.UpdateDefault));
 #>
@@ -114,6 +163,13 @@ Begin
 <# WriteUpdateStatement(firstBase, pkeyVal); #>
 <#    } #>
 
+<#  if(TableDefinition.HasLogTable) { #>
+    Exec <#= logInsSP #>
+        @<#= TableDefinition.Name #>Id = <#= pkeyVal #>,
+        @LogStatus = 1020,
+        @LogStatusDescription = N'Genel Güncelleme';
+
+<#  } #>
 <# WriteSelectStatement(pkeyVal); #>
 End
 Go
@@ -124,7 +180,7 @@ Go
 -- --------------------------------------------------------------------
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_InsertOrUpdate]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_InsertOrUpdate]
-GO
+Go
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_InsertOrUpdate]
     --<#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>,
 <#        
@@ -141,7 +197,7 @@ Begin
 
     Set @Result = 0
     Select <#= pkeyVal #> = <#= firstBase.PrimaryKeyColumn.Name #>
-        From [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>]
+        From <#= TableDefinition.ConcatTableNameAndSchema() #>
         Where <#= firstBase.PrimaryKeyColumn.Name #> = <#= pkeyVal #>
 
     If @Id Is Null
@@ -286,9 +342,9 @@ protected void WriteSelectStatement(string keyValue)
 <#+ //TODO: Handle more than one inherited base
     if(TableDefinition.UseInheritance)
     { #>
-    From  [<#= firstBase.SchemaName #>].[<#= firstBase.TableName #>] Inner Join [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>] On [<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>] = [<#= TableDefinition.TableName #>].[<#= TableDefinition.PrimaryKeyColumn.Name #>]
+    From  [<#= firstBase.SchemaName #>].[<#= firstBase.TableName #>] Inner Join <#= TableDefinition.ConcatTableNameAndSchema() #> On [<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>] = [<#= TableDefinition.TableName #>].[<#= TableDefinition.PrimaryKeyColumn.Name #>]
 <#+    } else { #>
-    From  [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>]
+    From  <#= TableDefinition.ConcatTableNameAndSchema() #>
 <#+    } #>
     Where [<#= firstBase.SchemaName #>].[<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>] = <#= keyValue #>
 <#+ 
