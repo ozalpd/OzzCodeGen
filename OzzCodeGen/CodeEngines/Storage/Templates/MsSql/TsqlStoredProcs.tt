@@ -71,7 +71,7 @@ Begin
 if(deleteMarkColumn != null)
 {
  #>
-    Declare @<#= deleteMarkColumn.Name #> bit
+    Declare @<#= deleteMarkColumn.Name #> bit;
 
     Select @<#= deleteMarkColumn.Name #> = <#= deleteMarkColumn.Name #>
         From [<#= TableDefinition.SchemaName #>].[<#= firstBase.TableName #>]

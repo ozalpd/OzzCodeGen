@@ -1,4 +1,8 @@
-﻿namespace OzzCodeGen.Wpf
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace OzzCodeGen.Wpf
 {
     public partial class BuildInfo
     {
@@ -6,7 +10,7 @@
         {
             get
             {
-                return "2020.04.06 22:30";
+                return "2020.04.07 15:45";
             }
         }
     }

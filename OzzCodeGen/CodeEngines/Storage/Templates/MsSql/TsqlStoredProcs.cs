@@ -323,7 +323,7 @@ if(deleteMarkColumn != null)
             
             #line default
             #line hidden
-            this.Write(" bit\r\n\r\n    Select @");
+            this.Write(" bit;\r\n\r\n    Select @");
             
             #line 76 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(deleteMarkColumn.Name));
