@@ -145,7 +145,7 @@ Go
     var colDeclaresUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & string.IsNullOrEmpty(c.UpdateDefault));
 #>
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Update]
-    <#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>,
+    <#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #><# if(colDeclaresUpd.Any()){ #>,<# } #> 
 <#        
     colNr = 0;
     foreach (var column in colDeclaresUpd)
@@ -155,7 +155,6 @@ CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableN
 <#    } #>
 As
 Begin
-
 <# WriteUpdateStatement(TableDefinition, pkeyVal); #>
 <#  if(TableDefinition.UseInheritance)
     { #>
