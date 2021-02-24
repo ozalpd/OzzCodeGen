@@ -9,22 +9,23 @@ Go
 SET QUOTED_IDENTIFIER ON
 Go
 CREATE TABLE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>](
-<#    if(TableDefinition.PrimaryKeyColumn != null) { #>
+<#  if(TableDefinition.PrimaryKeyColumn != null) { #>
     <#= TableDefinition.GetPrimaryKeyDeclaration() #>,
 <#  }
     else { #>
     --No Primary Key defined!
 <#  } #>
-<#    var columns = TableDefinition.UseInheritance ?
-            TableDefinition.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false) :
-            TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false);
-
-      foreach (var column in columns)
-      {#>
+<#  var columns = TableDefinition.UseInheritance
+                ? TableDefinition.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false)
+                : TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false);
+    var uniqueCols = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & c.Unique);
+    int idx = 0;
+    foreach (var column in columns)
+    {#>
     <#= TableDefinition.GetColumnDeclaration(column) #>,<#= column.FormatComment() #>
-<#    } #>
-<#    if(TableDefinition.ModifyTrack) 
-      { 
+<#  } #>
+<#  if(TableDefinition.ModifyTrack) 
+    { 
         foreach (var column in CodeEngine.GetModifyTrackColumns())
         {
             if(columns.Where(c=>c.Name.Equals(column.Name)).Count()==0)
@@ -43,9 +44,24 @@ CREATE TABLE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName 
   ON [PRIMARY]) ON [PRIMARY]
 <#  } #>
 Go
-<#	foreach (var column in columns.Where(c=>c.Indexed))
-    {#>
+<#	foreach (var column in columns.Where(c => c.Indexed))
+    {   //TODO: add an enum type, IndexType { NotIndexed, Nonclustered, Unique}
+        if (column.Unique && false) {#>
+Create Unique Index [idx_<#= TableDefinition.TableName #>_<#= column.Name #>] On [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>]([<#= column.Name #>] <# if(column.SortDesc) {#>Desc<#} else {#>Asc<# } #>)
+<#      } else { #>
 Create Nonclustered Index [idx_<#= TableDefinition.TableName #>_<#= column.Name #>] On [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>]([<#= column.Name #>] <# if(column.SortDesc) {#>Desc<#} else {#>Asc<# } #>)
+<#      } #>
+Go
+<#  } #>
+<#  if (uniqueCols.Any()){ #>
+Create Unique Index [idx_uniq_<#= TableDefinition.TableName #>] On [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>](
+<#      idx = 0;
+        foreach (var col in uniqueCols){
+            idx++;#>
+    [<#= col.Name #>] <# if(col.SortDesc) {#>Desc<#} else {#>Asc<# } #><# if(idx<uniqueCols.Count()){ #>,
+<# } else { #>)<# } #>
+<#      } #>
+
 Go
 <#  } #>
 <#    if(TableDefinition.Name == "EntityUpdate" && columns.Where(c => c.Name == "UpdateDate").Any()) { #>

@@ -976,8 +976,9 @@ if(deleteMarkColumn != null)
             
             #line 198 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
   }
+    var colsInsOrUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & (string.IsNullOrEmpty(c.InsertDefault) || string.IsNullOrEmpty(c.UpdateDefault)));
     colNr = 0;
-    foreach (var column in colDeclaresUpd)
+    foreach (var column in colsInsOrUpd)
     { 
             colNr++;
             
@@ -985,57 +986,208 @@ if(deleteMarkColumn != null)
             #line hidden
             this.Write("    @");
             
-            #line 203 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 204 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(column.Name));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 203 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 204 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetColumnType(column)));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 204 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 205 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     } 
             
             #line default
             #line hidden
-            this.Write("    @Result int OUTPUT\r\nAs\r\nBegin\r\n    Set @Result = 0;\r\n\r\n    If Exists (Select " +
-                    "* From [");
+            this.Write("    @Result int OUTPUT\r\nAs\r\nBegin\r\n");
             
-            #line 210 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 209 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+  if(insPKey==false) {
+        var uniqueCols = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & c.Unique);
+  
+            
+            #line default
+            #line hidden
+            this.Write("    Declare ");
+            
+            #line 212 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(keyVarName));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 212 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetColumnType(pKey)));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n\r\n    Select ");
+            
+            #line 214 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(keyVarName));
+            
+            #line default
+            #line hidden
+            this.Write(" = [");
+            
+            #line 214 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(pKey.Name));
+            
+            #line default
+            #line hidden
+            this.Write("]\r\n    From  ");
+            
+            #line 215 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.ConcatTableNameAndSchema()));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 216 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+      if(uniqueCols.Any()) {
+            var firstUnique = uniqueCols.First(); 
+            
+            #line default
+            #line hidden
+            this.Write("    Where [");
+            
+            #line 218 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(firstUnique.Name));
+            
+            #line default
+            #line hidden
+            this.Write("] = @");
+            
+            #line 218 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(firstUnique.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 219 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+          foreach (var col in uniqueCols.Where(c => c != firstUnique))
+            { 
+            
+            #line default
+            #line hidden
+            this.Write("      And [");
+            
+            #line 221 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(col.Name));
+            
+            #line default
+            #line hidden
+            this.Write("] = @");
+            
+            #line 221 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(col.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 222 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+          }
+        } else { 
+            
+            #line default
+            #line hidden
+            this.Write("    Where [");
+            
+            #line 224 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(pKey.Name));
+            
+            #line default
+            #line hidden
+            this.Write("] = ");
+            
+            #line 224 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(keyVarName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 225 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+      } 
+            
+            #line default
+            #line hidden
+            this.Write(" \r\n");
+            
+            #line 226 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+    } 
+            
+            #line default
+            #line hidden
+            this.Write("    Set @Result = 0;\r\n\r\n");
+            
+            #line 229 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+  if(insPKey) { 
+            
+            #line default
+            #line hidden
+            this.Write("    If Exists (Select * From [");
+            
+            #line 230 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.SchemaName));
             
             #line default
             #line hidden
             this.Write("].[");
             
-            #line 210 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 230 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.TableName));
             
             #line default
             #line hidden
-            this.Write("] Where ");
+            this.Write("] Where [");
             
-            #line 210 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 230 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pKey));
             
             #line default
             #line hidden
-            this.Write(" = ");
+            this.Write("] = ");
             
-            #line 210 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 230 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(keyVarName));
             
             #line default
             #line hidden
-            this.Write(")\r\n    Begin\r\n");
+            this.Write(")\r\n");
             
-            #line 212 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 231 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+  } else { 
+            
+            #line default
+            #line hidden
+            this.Write("    If ");
+            
+            #line 232 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(keyVarName));
+            
+            #line default
+            #line hidden
+            this.Write(" Is Not Null\r\n");
+            
+            #line 233 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+    } 
+            
+            #line default
+            #line hidden
+            this.Write("    Begin\r\n");
+            
+            #line 235 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
   PushIndent("    ");
     WriteUpdateStatement(TableDefinition, keyVarName);
     PopIndent(); 
@@ -1043,7 +1195,7 @@ if(deleteMarkColumn != null)
             #line default
             #line hidden
             
-            #line 215 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 238 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
   if(TableDefinition.UseInheritance)
     { 
             
@@ -1051,7 +1203,7 @@ if(deleteMarkColumn != null)
             #line hidden
             this.Write("\r\n");
             
-            #line 218 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 241 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
   PushIndent("    ");
     WriteUpdateStatement(firstBase, keyVarName);
     PopIndent(); 
@@ -1059,14 +1211,14 @@ if(deleteMarkColumn != null)
             #line default
             #line hidden
             
-            #line 221 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 244 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     } 
             
             #line default
             #line hidden
             this.Write("        Set @Result = -1;\r\n    End\r\n    Else\r\n    Begin\r\n");
             
-            #line 226 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 249 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
   PushIndent("    ");
     if(insPKey) {
         WriteInsertStatement(firstBase, keyVarName);
@@ -1080,31 +1232,31 @@ if(deleteMarkColumn != null)
             this.Write("        Set @Result = 1;\r\n    End\r\n    Select @Result\r\nEnd\r\nGo\r\n/*\r\nTo map in EF\r" +
                     "\n\r\n        public int InsertOrUpdate(");
             
-            #line 241 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 264 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.EntityDefinition.Name));
             
             #line default
             #line hidden
             this.Write(" entity)\r\n        {\r\n            var result = ");
             
-            #line 243 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 266 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.TableName));
             
             #line default
             #line hidden
             this.Write("_InsertOrUpdate(\r\n                //entity.");
             
-            #line 244 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 267 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pKey));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 245 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 268 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
         
     colNr = 0;
-    foreach (var column in colDeclaresUpd)
+    foreach (var column in colsInsOrUpd)
     { 
             colNr++;
             
@@ -1112,14 +1264,14 @@ if(deleteMarkColumn != null)
             #line hidden
             this.Write("                entity.");
             
-            #line 250 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 273 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(column.Name));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 251 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 274 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     } 
             
             #line default
@@ -1127,7 +1279,7 @@ if(deleteMarkColumn != null)
             this.Write("                new ObjectParameter(\"Result\", typeof(int)));\r\n\r\n            retur" +
                     "n result.FirstOrDefault() ?? 0;\r\n        }\r\n\r\n*/\r\n");
             
-            #line 258 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+            #line 281 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     } 
             
             #line default
@@ -1135,7 +1287,7 @@ if(deleteMarkColumn != null)
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 259 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 282 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  
 protected void WriteDeleteStatement(StorageEntitySetting table, StorageEntitySetting baseTable,string pkeyValue)
 { 
@@ -1143,209 +1295,209 @@ protected void WriteDeleteStatement(StorageEntitySetting table, StorageEntitySet
         #line default
         #line hidden
         
-        #line 261 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 284 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("    Delete From [");
 
         
         #line default
         #line hidden
         
-        #line 262 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 285 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(table.SchemaName));
 
         
         #line default
         #line hidden
         
-        #line 262 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 285 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 262 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 285 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(table.TableName));
 
         
         #line default
         #line hidden
         
-        #line 262 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 285 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("]\r\n        Where [");
 
         
         #line default
         #line hidden
         
-        #line 263 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 286 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(table.SchemaName));
 
         
         #line default
         #line hidden
         
-        #line 263 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 286 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 263 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 286 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(table.TableName));
 
         
         #line default
         #line hidden
         
-        #line 263 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 286 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 263 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 286 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(table.PrimaryKeyColumn.Name));
 
         
         #line default
         #line hidden
         
-        #line 263 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 286 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("] = ");
 
         
         #line default
         #line hidden
         
-        #line 263 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 286 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(pkeyValue));
 
         
         #line default
         #line hidden
         
-        #line 263 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 286 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("\r\n");
 
         
         #line default
         #line hidden
         
-        #line 264 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 287 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  if(TableDefinition.UseInheritance)
     { 
         
         #line default
         #line hidden
         
-        #line 265 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 288 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("\r\n    Delete From [");
 
         
         #line default
         #line hidden
         
-        #line 267 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 290 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(baseTable.SchemaName));
 
         
         #line default
         #line hidden
         
-        #line 267 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 290 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 267 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 290 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(baseTable.TableName));
 
         
         #line default
         #line hidden
         
-        #line 267 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 290 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("]\r\n        Where [");
 
         
         #line default
         #line hidden
         
-        #line 268 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 291 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(baseTable.SchemaName));
 
         
         #line default
         #line hidden
         
-        #line 268 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 291 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 268 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 291 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(baseTable.TableName));
 
         
         #line default
         #line hidden
         
-        #line 268 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 291 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 268 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 291 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(baseTable.PrimaryKeyColumn.Name));
 
         
         #line default
         #line hidden
         
-        #line 268 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 291 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("] = ");
 
         
         #line default
         #line hidden
         
-        #line 268 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 291 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(pkeyValue));
 
         
         #line default
         #line hidden
         
-        #line 268 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 291 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("\r\n");
 
         
         #line default
         #line hidden
         
-        #line 269 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 292 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     } 
         
         #line default
         #line hidden
         
-        #line 270 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 293 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  
 } 
         
         #line default
         #line hidden
         
-        #line 272 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 295 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  
 protected void WriteUpdateStatement(StorageEntitySetting table, string pkeyValue, int maxLineLen = 48)
 {
@@ -1359,42 +1511,42 @@ protected void WriteUpdateStatement(StorageEntitySetting table, string pkeyValue
         #line default
         #line hidden
         
-        #line 280 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 303 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("    Update [");
 
         
         #line default
         #line hidden
         
-        #line 281 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 304 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(table.SchemaName));
 
         
         #line default
         #line hidden
         
-        #line 281 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 304 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 281 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 304 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(table.TableName));
 
         
         #line default
         #line hidden
         
-        #line 281 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 304 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("]\r\n       Set ");
 
         
         #line default
         #line hidden
         
-        #line 282 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 305 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     
     int colNr = 0, colLen, lineLen = 0;
     PushIndent("           ");
@@ -1410,54 +1562,54 @@ this.Write("]\r\n       Set ");
         #line default
         #line hidden
         
-        #line 292 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 315 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("[");
 
         
         #line default
         #line hidden
         
-        #line 293 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 316 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(column.Name));
 
         
         #line default
         #line hidden
         
-        #line 293 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 316 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("] = ");
 
         
         #line default
         #line hidden
         
-        #line 293 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 316 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(colValue));
 
         
         #line default
         #line hidden
         
-        #line 293 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 316 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  if(colNr < columns.Count()) {
         
         #line default
         #line hidden
         
-        #line 293 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 316 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(", ");
 
         
         #line default
         #line hidden
         
-        #line 293 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 316 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  } 
         
         #line default
         #line hidden
         
-        #line 294 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 317 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     }
     PopIndent();
     WriteLine("");
@@ -1466,77 +1618,77 @@ this.Write(", ");
         #line default
         #line hidden
         
-        #line 297 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 320 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("     Where [");
 
         
         #line default
         #line hidden
         
-        #line 298 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 321 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(table.SchemaName));
 
         
         #line default
         #line hidden
         
-        #line 298 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 321 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 298 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 321 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(table.TableName));
 
         
         #line default
         #line hidden
         
-        #line 298 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 321 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 298 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 321 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(table.PrimaryKeyColumn.Name));
 
         
         #line default
         #line hidden
         
-        #line 298 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 321 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("] = ");
 
         
         #line default
         #line hidden
         
-        #line 298 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 321 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(pkeyValue));
 
         
         #line default
         #line hidden
         
-        #line 298 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 321 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("\r\n");
 
         
         #line default
         #line hidden
         
-        #line 299 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 322 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  }
 } 
         
         #line default
         #line hidden
         
-        #line 301 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 324 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  
 protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue, int maxLineLen = 48)
 {
@@ -1548,42 +1700,42 @@ protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue
         #line default
         #line hidden
         
-        #line 307 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 330 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("    Insert Into [");
 
         
         #line default
         #line hidden
         
-        #line 308 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 331 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(table.SchemaName));
 
         
         #line default
         #line hidden
         
-        #line 308 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 331 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 308 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 331 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(table.TableName));
 
         
         #line default
         #line hidden
         
-        #line 308 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 331 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("](\r\n");
 
         
         #line default
         #line hidden
         
-        #line 309 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 332 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  
     PushIndent("            ");
     if(!string.IsNullOrEmpty(pkeyValue)){ 
@@ -1591,34 +1743,34 @@ this.Write("](\r\n");
         #line default
         #line hidden
         
-        #line 311 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 334 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("[");
 
         
         #line default
         #line hidden
         
-        #line 311 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 334 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(table.PrimaryKeyColumn.Name));
 
         
         #line default
         #line hidden
         
-        #line 311 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 334 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("], ");
 
         
         #line default
         #line hidden
         
-        #line 311 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 334 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  } 
         
         #line default
         #line hidden
         
-        #line 312 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 335 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     
     int colNr = 0, colLen, lineLen = 0;
     string colValue;
@@ -1634,60 +1786,60 @@ this.Write("], ");
         #line default
         #line hidden
         
-        #line 322 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 345 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("[");
 
         
         #line default
         #line hidden
         
-        #line 323 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 346 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(column.Name));
 
         
         #line default
         #line hidden
         
-        #line 323 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 346 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("]");
 
         
         #line default
         #line hidden
         
-        #line 323 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 346 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  if(colNr < columns.Count()) {
         
         #line default
         #line hidden
         
-        #line 323 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 346 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(", ");
 
         
         #line default
         #line hidden
         
-        #line 323 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 346 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
   } else { 
         
         #line default
         #line hidden
         
-        #line 323 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 346 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(")");
 
         
         #line default
         #line hidden
         
-        #line 323 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 346 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
   } 
         
         #line default
         #line hidden
         
-        #line 324 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 347 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     }
     PopIndent();
     WriteLine("");
@@ -1696,40 +1848,40 @@ this.Write(")");
         #line default
         #line hidden
         
-        #line 327 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 350 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("    Values (");
 
         
         #line default
         #line hidden
         
-        #line 328 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 351 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  if(!string.IsNullOrEmpty(pkeyValue)){ 
         
         #line default
         #line hidden
         
-        #line 328 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 351 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(pkeyValue));
 
         
         #line default
         #line hidden
         
-        #line 328 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 351 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(", ");
 
         
         #line default
         #line hidden
         
-        #line 328 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 351 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  } 
         
         #line default
         #line hidden
         
-        #line 329 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 352 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     colNr = 0;
     PushIndent("            ");
     lineLen = 0;
@@ -1744,46 +1896,46 @@ this.Write(", ");
         #line default
         #line hidden
         
-        #line 339 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 362 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(colValue));
 
         
         #line default
         #line hidden
         
-        #line 339 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 362 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  if(colNr < columns.Count()) {
         
         #line default
         #line hidden
         
-        #line 339 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 362 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(", ");
 
         
         #line default
         #line hidden
         
-        #line 339 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 362 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
   } else { 
         
         #line default
         #line hidden
         
-        #line 339 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 362 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(")");
 
         
         #line default
         #line hidden
         
-        #line 339 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 362 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
   } 
         
         #line default
         #line hidden
         
-        #line 340 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 363 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  }
     PopIndent();
     WriteLine("");
@@ -1792,14 +1944,14 @@ this.Write(")");
         #line default
         #line hidden
         
-        #line 344 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 367 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  
 } 
         
         #line default
         #line hidden
         
-        #line 346 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 369 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  
 protected void WriteSelectStatement(string keyValue)
 {
@@ -1809,48 +1961,48 @@ protected void WriteSelectStatement(string keyValue)
         #line default
         #line hidden
         
-        #line 350 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 373 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("    Select  [");
 
         
         #line default
         #line hidden
         
-        #line 351 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 374 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(firstBase.TableName));
 
         
         #line default
         #line hidden
         
-        #line 351 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 374 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 351 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 374 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(firstBase.PrimaryKeyColumn.Name));
 
         
         #line default
         #line hidden
         
-        #line 351 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 374 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("],\r\n");
 
         
         #line default
         #line hidden
         
-        #line 352 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 375 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  WriteSelectColumns(TableDefinition, TableDefinition.UseInheritance); 
         
         #line default
         #line hidden
         
-        #line 353 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 376 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  if(TableDefinition.UseInheritance)
     {
         //TODO: Handle more than one inherited base
@@ -1860,7 +2012,7 @@ this.Write("],\r\n");
         #line default
         #line hidden
         
-        #line 358 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 381 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  //TODO: Handle more than one inherited base
     if(TableDefinition.UseInheritance)
     { 
@@ -1868,215 +2020,215 @@ this.Write("],\r\n");
         #line default
         #line hidden
         
-        #line 360 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 383 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("    From  [");
 
         
         #line default
         #line hidden
         
-        #line 361 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 384 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(firstBase.SchemaName));
 
         
         #line default
         #line hidden
         
-        #line 361 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 384 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 361 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 384 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(firstBase.TableName));
 
         
         #line default
         #line hidden
         
-        #line 361 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 384 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("] Inner Join ");
 
         
         #line default
         #line hidden
         
-        #line 361 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 384 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.ConcatTableNameAndSchema()));
 
         
         #line default
         #line hidden
         
-        #line 361 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 384 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(" On [");
 
         
         #line default
         #line hidden
         
-        #line 361 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 384 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(firstBase.TableName));
 
         
         #line default
         #line hidden
         
-        #line 361 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 384 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 361 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 384 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(firstBase.PrimaryKeyColumn.Name));
 
         
         #line default
         #line hidden
         
-        #line 361 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 384 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("] = [");
 
         
         #line default
         #line hidden
         
-        #line 361 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 384 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.TableName));
 
         
         #line default
         #line hidden
         
-        #line 361 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 384 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 361 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 384 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.PrimaryKeyColumn.Name));
 
         
         #line default
         #line hidden
         
-        #line 361 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 384 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("]\r\n");
 
         
         #line default
         #line hidden
         
-        #line 362 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 385 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     } else { 
         
         #line default
         #line hidden
         
-        #line 362 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 385 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("    From  ");
 
         
         #line default
         #line hidden
         
-        #line 363 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 386 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.ConcatTableNameAndSchema()));
 
         
         #line default
         #line hidden
         
-        #line 363 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 386 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("\r\n");
 
         
         #line default
         #line hidden
         
-        #line 364 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 387 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     } 
         
         #line default
         #line hidden
         
-        #line 364 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 387 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("    Where [");
 
         
         #line default
         #line hidden
         
-        #line 365 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 388 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(firstBase.SchemaName));
 
         
         #line default
         #line hidden
         
-        #line 365 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 388 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 365 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 388 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(firstBase.TableName));
 
         
         #line default
         #line hidden
         
-        #line 365 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 388 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 365 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 388 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(firstBase.PrimaryKeyColumn.Name));
 
         
         #line default
         #line hidden
         
-        #line 365 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 388 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("] = ");
 
         
         #line default
         #line hidden
         
-        #line 365 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 388 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(keyValue));
 
         
         #line default
         #line hidden
         
-        #line 365 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 388 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("\r\n");
 
         
         #line default
         #line hidden
         
-        #line 366 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 389 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  
 } 
         
         #line default
         #line hidden
         
-        #line 368 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 391 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 
 protected void WriteSelectColumns(StorageEntitySetting table, bool hasMore = false)
 {    
@@ -2091,75 +2243,75 @@ protected void WriteSelectColumns(StorageEntitySetting table, bool hasMore = fal
         #line default
         #line hidden
         
-        #line 377 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 400 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("            [");
 
         
         #line default
         #line hidden
         
-        #line 378 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 401 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(table.TableName));
 
         
         #line default
         #line hidden
         
-        #line 378 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 401 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("].[");
 
         
         #line default
         #line hidden
         
-        #line 378 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 401 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(column.Name));
 
         
         #line default
         #line hidden
         
-        #line 378 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 401 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write("]");
 
         
         #line default
         #line hidden
         
-        #line 378 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 401 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  if(colNr < columns.Count() | hasMore) {
         
         #line default
         #line hidden
         
-        #line 378 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 401 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(",");
 
         
         #line default
         #line hidden
         
-        #line 378 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 401 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  } 
         
         #line default
         #line hidden
         
-        #line 378 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 401 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 this.Write(" \r\n");
 
         
         #line default
         #line hidden
         
-        #line 379 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 402 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     }
 
         
         #line default
         #line hidden
         
-        #line 381 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
+        #line 404 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  
 } 
         

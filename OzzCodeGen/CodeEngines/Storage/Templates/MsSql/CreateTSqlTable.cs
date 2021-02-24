@@ -45,7 +45,7 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
             this.Write("](\r\n");
             
             #line 12 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
-    if(TableDefinition.PrimaryKeyColumn != null) { 
+  if(TableDefinition.PrimaryKeyColumn != null) { 
             
             #line default
             #line hidden
@@ -73,40 +73,41 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
             #line hidden
             
             #line 18 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
-    var columns = TableDefinition.UseInheritance ?
-            TableDefinition.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false) :
-            TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false);
-
-      foreach (var column in columns)
-      {
+  var columns = TableDefinition.UseInheritance
+                ? TableDefinition.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false)
+                : TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false);
+    var uniqueCols = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & c.Unique);
+    int idx = 0;
+    foreach (var column in columns)
+    {
             
             #line default
             #line hidden
             this.Write("    ");
             
-            #line 24 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 25 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.GetColumnDeclaration(column)));
             
             #line default
             #line hidden
             this.Write(",");
             
-            #line 24 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 25 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(column.FormatComment()));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 25 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
-    } 
+            #line 26 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+  } 
             
             #line default
             #line hidden
             
-            #line 26 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
-    if(TableDefinition.ModifyTrack) 
-      { 
+            #line 27 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+  if(TableDefinition.ModifyTrack) 
+    { 
         foreach (var column in CodeEngine.GetModifyTrackColumns())
         {
             if(columns.Where(c=>c.Name.Equals(column.Name)).Count()==0)
@@ -116,21 +117,21 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
             #line hidden
             this.Write("    ");
             
-            #line 32 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 33 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.GetColumnDeclaration(column)));
             
             #line default
             #line hidden
             this.Write(",");
             
-            #line 32 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 33 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(column.FormatComment()));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 33 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 34 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
 			}
         }
       } 
@@ -138,21 +139,21 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
             #line default
             #line hidden
             
-            #line 36 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 37 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
     if(TableDefinition.PrimaryKeyColumn != null) { 
             
             #line default
             #line hidden
             this.Write("  CONSTRAINT [PK_");
             
-            #line 37 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 38 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.TableName));
             
             #line default
             #line hidden
             this.Write("] PRIMARY KEY CLUSTERED ([");
             
-            #line 37 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 38 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.PrimaryKeyColumn.Name));
             
             #line default
@@ -161,84 +162,252 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
                     "_DUP_KEY = OFF,\r\n    ALLOW_ROW_LOCKS  = ON,\r\n    ALLOW_PAGE_LOCKS  = ON)\r\n  ON [" +
                     "PRIMARY]) ON [PRIMARY]\r\n");
             
-            #line 44 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 45 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
   } 
             
             #line default
             #line hidden
             this.Write("Go\r\n");
             
-            #line 46 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
-	foreach (var column in columns.Where(c=>c.Indexed))
-    {
+            #line 47 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+	foreach (var column in columns.Where(c => c.Indexed))
+    {   //TODO: add an enum type, IndexType { NotIndexed, Nonclustered, Unique}
+        if (column.Unique && false) {
             
             #line default
             #line hidden
-            this.Write("Create Nonclustered Index [idx_");
+            this.Write("Create Unique Index [idx_");
             
-            #line 48 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 50 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.TableName));
             
             #line default
             #line hidden
             this.Write("_");
             
-            #line 48 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 50 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(column.Name));
             
             #line default
             #line hidden
             this.Write("] On [");
             
-            #line 48 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 50 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.SchemaName));
             
             #line default
             #line hidden
             this.Write("].[");
             
-            #line 48 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 50 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.TableName));
             
             #line default
             #line hidden
             this.Write("]([");
             
-            #line 48 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 50 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(column.Name));
             
             #line default
             #line hidden
             this.Write("] ");
             
-            #line 48 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 50 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
  if(column.SortDesc) {
             
             #line default
             #line hidden
             this.Write("Desc");
             
-            #line 48 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 50 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
 } else {
             
             #line default
             #line hidden
             this.Write("Asc");
             
-            #line 48 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 50 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
  } 
             
             #line default
             #line hidden
-            this.Write(")\r\nGo\r\n");
+            this.Write(")\r\n");
             
-            #line 50 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 51 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+      } else { 
+            
+            #line default
+            #line hidden
+            this.Write("Create Nonclustered Index [idx_");
+            
+            #line 52 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.TableName));
+            
+            #line default
+            #line hidden
+            this.Write("_");
+            
+            #line 52 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(column.Name));
+            
+            #line default
+            #line hidden
+            this.Write("] On [");
+            
+            #line 52 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.SchemaName));
+            
+            #line default
+            #line hidden
+            this.Write("].[");
+            
+            #line 52 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.TableName));
+            
+            #line default
+            #line hidden
+            this.Write("]([");
+            
+            #line 52 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(column.Name));
+            
+            #line default
+            #line hidden
+            this.Write("] ");
+            
+            #line 52 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+ if(column.SortDesc) {
+            
+            #line default
+            #line hidden
+            this.Write("Desc");
+            
+            #line 52 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+} else {
+            
+            #line default
+            #line hidden
+            this.Write("Asc");
+            
+            #line 52 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n");
+            
+            #line 53 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+      } 
+            
+            #line default
+            #line hidden
+            this.Write("Go\r\n");
+            
+            #line 55 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 51 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 56 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+  if (uniqueCols.Any()){ 
+            
+            #line default
+            #line hidden
+            this.Write("Create Unique Index [idx_uniq_");
+            
+            #line 57 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.TableName));
+            
+            #line default
+            #line hidden
+            this.Write("] On [");
+            
+            #line 57 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.SchemaName));
+            
+            #line default
+            #line hidden
+            this.Write("].[");
+            
+            #line 57 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.TableName));
+            
+            #line default
+            #line hidden
+            this.Write("](\r\n");
+            
+            #line 58 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+      idx = 0;
+        foreach (var col in uniqueCols){
+            idx++;
+            
+            #line default
+            #line hidden
+            this.Write("    [");
+            
+            #line 61 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(col.Name));
+            
+            #line default
+            #line hidden
+            this.Write("] ");
+            
+            #line 61 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+ if(col.SortDesc) {
+            
+            #line default
+            #line hidden
+            this.Write("Desc");
+            
+            #line 61 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+} else {
+            
+            #line default
+            #line hidden
+            this.Write("Asc");
+            
+            #line 61 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+ } 
+            
+            #line default
+            #line hidden
+            
+            #line 61 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+ if(idx<uniqueCols.Count()){ 
+            
+            #line default
+            #line hidden
+            this.Write(",\r\n");
+            
+            #line 62 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+ } else { 
+            
+            #line default
+            #line hidden
+            this.Write(")");
+            
+            #line 62 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+ } 
+            
+            #line default
+            #line hidden
+            
+            #line 63 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+      } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\nGo\r\n");
+            
+            #line 66 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+  } 
+            
+            #line default
+            #line hidden
+            
+            #line 67 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
     if(TableDefinition.Name == "EntityUpdate" && columns.Where(c => c.Name == "UpdateDate").Any()) { 
             
             #line default
@@ -246,104 +415,104 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
             this.Write("\r\nCREATE PROCEDURE EntityUpdated\r\n    @EntityTypeId    int\r\nAS\r\nBEGIN\r\n    Update" +
                     " [");
             
-            #line 57 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 73 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.SchemaName));
             
             #line default
             #line hidden
             this.Write("].[");
             
-            #line 57 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 73 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.TableName));
             
             #line default
             #line hidden
             this.Write("] Set [UpdateDate] = GETDATE()\r\n    Where [");
             
-            #line 58 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 74 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.SchemaName));
             
             #line default
             #line hidden
             this.Write("].[");
             
-            #line 58 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 74 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.TableName));
             
             #line default
             #line hidden
             this.Write("].[");
             
-            #line 58 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 74 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.PrimaryKeyColumn.Name));
             
             #line default
             #line hidden
             this.Write("] = @EntityTypeId\r\nEND\r\nGo\r\n");
             
-            #line 61 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 77 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 62 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 78 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
   if(TableDefinition.HasLogTable) { 
             
             #line default
             #line hidden
             this.Write("\r\n/****** Log table for ");
             
-            #line 64 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 80 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.TableName));
             
             #line default
             #line hidden
             this.Write("  ******/\r\nCREATE TABLE [");
             
-            #line 65 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 81 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.LogSchemaName));
             
             #line default
             #line hidden
             this.Write("].[");
             
-            #line 65 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 81 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.LogTableName));
             
             #line default
             #line hidden
             this.Write("](\r\n");
             
-            #line 66 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 82 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
       if(TableDefinition.PrimaryKeyColumn != null) { 
             
             #line default
             #line hidden
             this.Write("    ");
             
-            #line 67 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 83 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.GetPrimaryKeyDeclaration()));
             
             #line default
             #line hidden
             this.Write(",\r\n    [");
             
-            #line 68 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 84 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.Name));
             
             #line default
             #line hidden
             this.Write("Id] ");
             
-            #line 68 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 84 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetColumnType(TableDefinition.PrimaryKeyColumn)));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 69 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 85 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
       }
         else { 
             
@@ -351,7 +520,7 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
             #line hidden
             this.Write("    --No Primary Key defined!\r\n");
             
-            #line 72 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 88 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
       }
         columns = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false & c.DoNotLog == false & c.Exclude == false);
         foreach (var column in columns)
@@ -361,20 +530,20 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
             #line hidden
             this.Write("    ");
             
-            #line 76 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 92 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.GetColumnDeclaration(column, true)));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 77 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 93 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
       } 
             
             #line default
             #line hidden
             
-            #line 78 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 94 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
     if(TableDefinition.PrimaryKeyColumn != null) { 
             
             #line default
@@ -382,14 +551,14 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
             this.Write("    [LogStatus] [int] Not Null,\r\n    [LogStatusDescription] [nVarChar](100) Not N" +
                     "ull,\r\n  CONSTRAINT [PK_");
             
-            #line 81 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 97 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.LogTableName));
             
             #line default
             #line hidden
             this.Write("] PRIMARY KEY CLUSTERED ([");
             
-            #line 81 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 97 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.PrimaryKeyColumn.Name));
             
             #line default
@@ -398,14 +567,14 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
                     "_DUP_KEY = OFF,\r\n    ALLOW_ROW_LOCKS  = ON,\r\n    ALLOW_PAGE_LOCKS  = ON)\r\n  ON [" +
                     "PRIMARY]) ON [PRIMARY]\r\n");
             
-            #line 88 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 104 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
   } 
             
             #line default
             #line hidden
             this.Write("Go\r\n");
             
-            #line 90 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
+            #line 106 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt"
   } 
             
             #line default

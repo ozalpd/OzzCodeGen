@@ -80,6 +80,19 @@ namespace OzzCodeGen.CodeEngines.Storage
         private bool _indexed;
 
 
+        public bool Unique
+        {
+            get { return _unique; }
+            set
+            {
+                _unique = value;
+                RaisePropertyChanged("Unique");
+            }
+        }
+        private bool _unique;
+
+
+
         public bool SortDesc
         {
             get { return _sortDesc; }

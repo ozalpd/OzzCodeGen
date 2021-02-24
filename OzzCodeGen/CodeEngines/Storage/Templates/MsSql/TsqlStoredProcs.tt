@@ -196,8 +196,9 @@ CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableN
 <#  if(insPKey) { #>
     <#= keyVarName #> <#= GetColumnType(pKey) #>,
 <#  }
+    var colsInsOrUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & (string.IsNullOrEmpty(c.InsertDefault) || string.IsNullOrEmpty(c.UpdateDefault)));
     colNr = 0;
-    foreach (var column in colDeclaresUpd)
+    foreach (var column in colsInsOrUpd)
     { 
             colNr++;#>
     @<#= column.Name #> <#= GetColumnType(column) #>,
@@ -205,9 +206,31 @@ CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableN
     @Result int OUTPUT
 As
 Begin
+<#  if(insPKey==false) {
+        var uniqueCols = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & c.Unique);
+  #>
+    Declare <#= keyVarName #> <#= GetColumnType(pKey) #>;
+
+    Select <#= keyVarName #> = [<#= pKey.Name #>]
+    From  <#= TableDefinition.ConcatTableNameAndSchema() #>
+<#      if(uniqueCols.Any()) {
+            var firstUnique = uniqueCols.First(); #>
+    Where [<#= firstUnique.Name #>] = @<#= firstUnique.Name #>
+<#          foreach (var col in uniqueCols.Where(c => c != firstUnique))
+            { #>
+      And [<#= col.Name #>] = @<#= col.Name #>
+<#          }
+        } else { #>
+    Where [<#= pKey.Name #>] = <#= keyVarName #>
+<#      } #> 
+<#    } #>
     Set @Result = 0;
 
-    If Exists (Select * From [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>] Where <#= pKey #> = <#= keyVarName #>)
+<#  if(insPKey) { #>
+    If Exists (Select * From [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>] Where [<#= pKey #>] = <#= keyVarName #>)
+<#  } else { #>
+    If <#= keyVarName #> Is Not Null
+<#    } #>
     Begin
 <#  PushIndent("    ");
     WriteUpdateStatement(TableDefinition, keyVarName);
@@ -244,7 +267,7 @@ To map in EF
                 //entity.<#= pKey #>,
 <#        
     colNr = 0;
-    foreach (var column in colDeclaresUpd)
+    foreach (var column in colsInsOrUpd)
     { 
             colNr++;#>
                 entity.<#= column.Name #>,
