@@ -71,7 +71,7 @@ CREATE TABLE [<#= CodeEngine.LogSchemaName #>].[<#= TableDefinition.LogTableName
     --No Primary Key defined!
 <#      }
         columns = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false & c.DoNotLog == false & c.Exclude == false);
-		foreach (var column in columns)
+        foreach (var column in columns)
         {#>
     <#= TableDefinition.GetColumnDeclaration(column, true) #>,
 <#      } #>

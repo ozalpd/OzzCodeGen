@@ -53,7 +53,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             if (column.DataType.ToLowerInvariant().StartsWith("nullable<"))
             {
                 column.DataType = column.DataType.Remove(0, "nullable<".Length).Replace(">", "");
-            }   
+            }
             column.DataType.Replace("?", "");
 
             switch (column.DataType.ToLowerInvariant())
@@ -125,8 +125,9 @@ namespace OzzCodeGen.CodeEngines.Storage
 
             AppendColumnNameType(table.PrimaryKeyColumn, sb);
 
-            if (table.PrimaryKeyColumn.PropertyDefinition.IsTypeNumeric() &
-                !table.UseInheritance)
+            var pKeyDefinition = table.PrimaryKeyColumn.PropertyDefinition;
+            if (pKeyDefinition.IsTypeNumeric() && !table.UseInheritance
+                && pKeyDefinition.IsStoreGenerated)
             {
                 sb.Append(" Identity(1,1)");
             }

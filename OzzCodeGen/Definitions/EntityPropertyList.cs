@@ -27,7 +27,7 @@ namespace OzzCodeGen.Definitions
                 List<SimpleProperty> properties = new List<SimpleProperty>();
                 foreach (var p in this)
                 {
-                    if(p is SimpleProperty)
+                    if (p is SimpleProperty)
                         properties.Add(p as SimpleProperty);
                 }
                 return properties;
@@ -42,7 +42,7 @@ namespace OzzCodeGen.Definitions
                 List<ComplexProperty> properties = new List<ComplexProperty>();
                 foreach (var p in this)
                 {
-                    if(p is ComplexProperty)
+                    if (p is ComplexProperty)
                         properties.Add(p as ComplexProperty);
                 }
                 return properties;
@@ -68,7 +68,8 @@ namespace OzzCodeGen.Definitions
         {
             property.EntityDefinition = this.EntityDefinition;
             base.Add(property);
-            SetNewDisplayOrder(property);
+            if (property.DisplayOrder <= 0)
+                SetNewDisplayOrder(property);
         }
 
         public void Add(BaseProperty property, bool distinctly)

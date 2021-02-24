@@ -10,7 +10,9 @@ SET QUOTED_IDENTIFIER ON
 Go
 
 <#  var firstBase = TableDefinition.GetFirstBase();
-    string pkeyVal = "@" + firstBase.PrimaryKeyColumn.Name;
+    var pKey = firstBase.PrimaryKeyColumn;
+    bool insPKey = !(pKey.PropertyDefinition.IsStoreGenerated && pKey.PropertyDefinition.IsTypeNumeric() && !TableDefinition.UseInheritance);
+    string keyVarName = "@" + pKey.Name;
     var deleteMarkColumn = firstBase.GetDeleteMarkColumn();
     bool createInsertOrUpdate = TableDefinition.StoredProcInsertOrUpdate;
     string logInsSP = string.Concat("[", CodeEngine.LogSchemaName, "].[", TableDefinition.LogTableName, "_Insert]");
@@ -56,13 +58,13 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= TableDe
 DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Delete]
 Go
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Delete]
-    <#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>
+    <#= keyVarName #> <#= GetColumnType(pKey) #>
 As
 Begin
 <#  if(TableDefinition.HasLogTable) { #>
     /* Silinmeden önceki son hali loglanıyor... */
     Exec <#= logInsSP #>
-        @<#= TableDefinition.Name #>Id = <#= pkeyVal #>,
+        @<#= TableDefinition.Name #>Id = <#= keyVarName #>,
         @LogStatus = 4010,
         @LogStatusDescription = N'Siliniyor...';
 
@@ -75,13 +77,13 @@ if(deleteMarkColumn != null)
 
     Select @<#= deleteMarkColumn.Name #> = <#= deleteMarkColumn.Name #>
         From [<#= TableDefinition.SchemaName #>].[<#= firstBase.TableName #>]
-        Where <#= firstBase.PrimaryKeyColumn #> = <#= pkeyVal #>
+        Where <#= pKey #> = <#= keyVarName #>
 
     If @<#= deleteMarkColumn.Name #> = 1
     Begin
         /* TODO: Check cascaded data from other tables */
 <#  PushIndent("    ");
-    WriteDeleteStatement(TableDefinition, firstBase, pkeyVal);
+    WriteDeleteStatement(TableDefinition, firstBase, keyVarName);
     PopIndent(); #>
         
     End
@@ -89,11 +91,11 @@ if(deleteMarkColumn != null)
     Begin
         Update [<#= TableDefinition.SchemaName #>].[<#= firstBase.TableName #>]
             Set <#= deleteMarkColumn.Name #> = 1
-            Where [<#= firstBase.PrimaryKeyColumn #>] = <#= pkeyVal #>
+            Where [<#= pKey #>] = <#= keyVarName #>
     End
 <#    } else { #>
     /* TODO: Check cascaded data from other tables */
-<# WriteDeleteStatement(TableDefinition, firstBase, pkeyVal); #>
+<# WriteDeleteStatement(TableDefinition, firstBase, keyVarName); #>
 <#
 } #>
 End
@@ -108,6 +110,10 @@ CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableN
 <#        
     var colDeclaresIns = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) && c.Exclude == false & string.IsNullOrEmpty(c.InsertDefault));
     int colNr = 0;
+    string keyVal = insPKey ? keyVarName : "@newKey";
+    if(insPKey){ #>
+    <#= keyVarName #> <#= GetColumnType(pKey) #>,
+<#    }
     foreach (var column in colDeclaresIns)
     { 
             colNr++;#>
@@ -115,24 +121,30 @@ CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableN
 <#    } #>
 As
 Begin
-    Declare @newKey        <#= TableDefinition.PrimaryKeyColumn.DataType #>
+<#  if(!insPKey) { #>
+    Declare <#= keyVal #>        <#= TableDefinition.PrimaryKeyColumn.DataType #>
 
-<# WriteInsertStatement(firstBase, string.Empty); #>
+<#  } #>
+<#  if(insPKey) {
+        WriteInsertStatement(firstBase, keyVarName);
+    } else {
+        WriteInsertStatement(firstBase, string.Empty); #>
 
-    Set @newKey = SCOPE_IDENTITY();
+    Set <#= keyVal #> = SCOPE_IDENTITY();
+<#  } #>
 <#  if(TableDefinition.HasLogTable) { #>
     Exec <#= logInsSP #>
-        @<#= TableDefinition.Name #>Id = @newKey,
+        @<#= TableDefinition.Name #>Id = <#= keyVal #>,
         @LogStatus = 1010,
         @LogStatusDescription = N'Yeni Kayıt';
 <#  } #>
 <#  if(TableDefinition.UseInheritance)
     { #>
 
-<# WriteInsertStatement(TableDefinition, "@newKey"); #>
+<# WriteInsertStatement(TableDefinition, keyVal); #>
 <#    } #>
 
-<# WriteSelectStatement("@newKey"); #>
+<# WriteSelectStatement(keyVal); #>
 End
 Go
 -- --------------------------------------------------------------------
@@ -145,7 +157,7 @@ Go
     var colDeclaresUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & string.IsNullOrEmpty(c.UpdateDefault));
 #>
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Update]
-    <#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #><# if(colDeclaresUpd.Any()){ #>,<# } #> 
+    <#= keyVarName #> <#= GetColumnType(pKey) #><# if(colDeclaresUpd.Any()){ #>,<# } #> 
 <#        
     colNr = 0;
     foreach (var column in colDeclaresUpd)
@@ -155,21 +167,21 @@ CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableN
 <#    } #>
 As
 Begin
-<# WriteUpdateStatement(TableDefinition, pkeyVal); #>
+<# WriteUpdateStatement(TableDefinition, keyVarName); #>
 <#  if(TableDefinition.UseInheritance)
     { #>
 
-<# WriteUpdateStatement(firstBase, pkeyVal); #>
+<# WriteUpdateStatement(firstBase, keyVarName); #>
 <#    } #>
 
 <#  if(TableDefinition.HasLogTable) { #>
     Exec <#= logInsSP #>
-        @<#= TableDefinition.Name #>Id = <#= pkeyVal #>,
+        @<#= TableDefinition.Name #>Id = <#= keyVarName #>,
         @LogStatus = 1020,
         @LogStatusDescription = N'Genel Güncelleme';
 
 <#  } #>
-<# WriteSelectStatement(pkeyVal); #>
+<# WriteSelectStatement(keyVarName); #>
 End
 Go
 <# if(createInsertOrUpdate){ #>
@@ -181,8 +193,9 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= TableDe
 DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_InsertOrUpdate]
 Go
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_InsertOrUpdate]
-    --<#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>,
-<#        
+<#  if(insPKey) { #>
+    <#= keyVarName #> <#= GetColumnType(pKey) #>,
+<#  }
     colNr = 0;
     foreach (var column in colDeclaresUpd)
     { 
@@ -192,28 +205,32 @@ CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableN
     @Result int OUTPUT
 As
 Begin
-    Declare <#= pkeyVal #> <#= GetColumnType(firstBase.PrimaryKeyColumn) #>
+    Set @Result = 0;
 
-    Set @Result = 0
-    Select <#= pkeyVal #> = <#= firstBase.PrimaryKeyColumn.Name #>
-        From <#= TableDefinition.ConcatTableNameAndSchema() #>
-        Where <#= firstBase.PrimaryKeyColumn.Name #> = <#= pkeyVal #>
-
-    If @Id Is Null
+    If Exists (Select * From [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>] Where <#= pKey #> = <#= keyVarName #>)
     Begin
-        <# WriteInsertStatement(firstBase, string.Empty); #>
-        Set @Result = 1
-    End
-
-    If (Not <#= pkeyVal #> Is Null)
-    Begin
-<# WriteUpdateStatement(TableDefinition, pkeyVal); #>
+<#  PushIndent("    ");
+    WriteUpdateStatement(TableDefinition, keyVarName);
+    PopIndent(); #>
 <#  if(TableDefinition.UseInheritance)
     { #>
 
-<# WriteUpdateStatement(firstBase, pkeyVal); #>
+<#  PushIndent("    ");
+    WriteUpdateStatement(firstBase, keyVarName);
+    PopIndent(); #>
 <#    } #>
-        Set @Result = -1
+        Set @Result = -1;
+    End
+    Else
+    Begin
+<#  PushIndent("    ");
+    if(insPKey) {
+        WriteInsertStatement(firstBase, keyVarName);
+    } else {
+        WriteInsertStatement(firstBase, string.Empty);
+    }
+    PopIndent(); #>
+        Set @Result = 1;
     End
     Select @Result
 End
@@ -224,7 +241,7 @@ To map in EF
         public int InsertOrUpdate(<#= TableDefinition.EntityDefinition.Name #> entity)
         {
             var result = <#= TableDefinition.TableName #>_InsertOrUpdate(
-                //entity.<#= firstBase.PrimaryKeyColumn #>,
+                //entity.<#= pKey #>,
 <#        
     colNr = 0;
     foreach (var column in colDeclaresUpd)

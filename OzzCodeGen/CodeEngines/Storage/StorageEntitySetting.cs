@@ -70,8 +70,8 @@ namespace OzzCodeGen.CodeEngines.Storage
         {
             get
             {
-                if (string.IsNullOrEmpty(_schemaName) && CodeEngine != null)
-                    _schemaName = CodeEngine.SchemaName;
+                if (string.IsNullOrEmpty(_schemaName))
+                    _schemaName = GetDefaultSchemaName();
                 return _schemaName;
             }
             set
@@ -82,6 +82,18 @@ namespace OzzCodeGen.CodeEngines.Storage
             }
         }
         private string _schemaName;
+
+        private string GetDefaultSchemaName()
+        {
+            var baseTable = GetBaseTable();
+            if (baseTable != null && !string.IsNullOrEmpty(baseTable.SchemaName))
+                return baseTable.SchemaName;
+
+            if (CodeEngine != null)
+                return CodeEngine.SchemaName;
+
+            return "dbo";
+        }
 
 
         public string TableName
