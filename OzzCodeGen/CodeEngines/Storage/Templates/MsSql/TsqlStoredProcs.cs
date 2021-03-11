@@ -1049,7 +1049,7 @@ if(deleteMarkColumn != null)
             
             #line default
             #line hidden
-            this.Write("\r\n");
+            this.Write(" (nolock)\r\n");
             
             #line 216 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
       if(uniqueCols.Any()) {

@@ -212,7 +212,7 @@ Begin
     Declare <#= keyVarName #> <#= GetColumnType(pKey) #>;
 
     Select <#= keyVarName #> = [<#= pKey.Name #>]
-    From  <#= TableDefinition.ConcatTableNameAndSchema() #>
+    From  <#= TableDefinition.ConcatTableNameAndSchema() #> (nolock)
 <#      if(uniqueCols.Any()) {
             var firstUnique = uniqueCols.First(); #>
     Where [<#= firstUnique.Name #>] = @<#= firstUnique.Name #>
