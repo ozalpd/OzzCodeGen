@@ -240,8 +240,18 @@ Begin
 
 <#  PushIndent("    ");
     WriteUpdateStatement(firstBase, keyVarName);
+    if(TableDefinition.HasLogTable)
     PopIndent(); #>
-<#    } #>
+<#    } 
+    if(TableDefinition.HasLogTable) {
+        PushIndent("    ");#>
+    
+    Exec <#= logInsSP #>
+        @<#= TableDefinition.Name #>Id = <#= keyVarName #>,
+        @LogStatus = 1025,
+        @LogStatusDescription = N'Otom. Güncelleme';
+<#      PopIndent();
+    }#>
         Set @Result = -1;
     End
     Else
@@ -251,7 +261,15 @@ Begin
         WriteInsertStatement(firstBase, keyVarName);
     } else {
         WriteInsertStatement(firstBase, string.Empty);
-    }
+    } #>
+<#  if(TableDefinition.HasLogTable) { #>
+
+    Set <#= keyVarName #> = SCOPE_IDENTITY();
+    Exec <#= logInsSP #>
+        @<#= TableDefinition.Name #>Id = <#= keyVarName #>,
+        @LogStatus = 1015,
+        @LogStatusDescription = N'Otom. Yeni Kayıt';
+<#  }
     PopIndent(); #>
         Set @Result = 1;
     End
