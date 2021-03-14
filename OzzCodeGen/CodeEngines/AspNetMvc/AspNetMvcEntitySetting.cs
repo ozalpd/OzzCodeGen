@@ -513,7 +513,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             get
             {
                 if (_indexViewGeneration == 0)
-                    _indexViewGeneration = IndexViewGeneration.HtmlTableWithButtonsAction;
+                    _indexViewGeneration = IndexViewGeneration.HtmlTableWithMenuAction;
                 return _indexViewGeneration;
             }
             set

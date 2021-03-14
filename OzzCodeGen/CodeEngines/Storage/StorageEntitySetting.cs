@@ -189,19 +189,21 @@ namespace OzzCodeGen.CodeEngines.Storage
             return TableName + "Log";
         }
 
-        public bool StoredProcs
+
+        public StoredProcGeneration StoredProcGeneration
         {
             get
             {
-                return _storedProcs;
+                return _storedProcGeneration;
             }
             set
             {
-                _storedProcs = value;
-                RaisePropertyChanged("StoredProcs");
+                _storedProcGeneration = value;
+                RaisePropertyChanged("StoredProcGeneration");
             }
         }
-        private bool _storedProcs;
+        private StoredProcGeneration _storedProcGeneration;
+
 
         public bool CustomStoredProcs
         {
@@ -216,38 +218,6 @@ namespace OzzCodeGen.CodeEngines.Storage
             }
         }
         private bool _customStoredProcs;
-
-        public bool StoredProcInsertOrUpdate
-        {
-            get
-            {
-                return _storedProcInsertOrUpdate;
-            }
-            set
-            {
-                _storedProcInsertOrUpdate = value;
-                RaisePropertyChanged("StoredProcInsertOrUpdate");
-            }
-        }
-        private bool _storedProcInsertOrUpdate;
-
-        public bool ModifyTrack
-        {
-            get
-            {
-                if (!_modifyTrack.HasValue)
-                {
-                    _modifyTrack = Name == "EntityUpdate";
-                }
-                return _modifyTrack.Value;
-            }
-            set
-            {
-                _modifyTrack = value;
-                RaisePropertyChanged("ModifyTrack");
-            }
-        }
-        private bool? _modifyTrack;
 
 
         public string FinishingScript

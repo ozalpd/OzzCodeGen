@@ -64,7 +64,7 @@ foreach (var table in tables.Where(e => !e.Exclude))
 { 
     i++;
     WriteExecutingFile(table.Name + ".sql", i);
-    if(table.StoredProcs)
+    if(table.StoredProcGeneration>StoredProcGeneration.NoStoredProcedure)
     {
         WriteExecutingFile(table.TableName + "-SP.sql");
     }

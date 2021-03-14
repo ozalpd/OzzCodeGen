@@ -24,16 +24,6 @@ CREATE TABLE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName 
     {#>
     <#= TableDefinition.GetColumnDeclaration(column) #>,<#= column.FormatComment() #>
 <#  } #>
-<#  if(TableDefinition.ModifyTrack) 
-    { 
-        foreach (var column in CodeEngine.GetModifyTrackColumns())
-        {
-            if(columns.Where(c=>c.Name.Equals(column.Name)).Count()==0)
-            {#>
-    <#= TableDefinition.GetColumnDeclaration(column) #>,<#= column.FormatComment() #>
-<#			}
-        }
-      } #>
 <#    if(TableDefinition.PrimaryKeyColumn != null) { #>
   CONSTRAINT [PK_<#= TableDefinition.TableName #>] PRIMARY KEY CLUSTERED ([<#= TableDefinition.PrimaryKeyColumn.Name #>] ASC)
   WITH (PAD_INDEX  = OFF,

@@ -21,6 +21,7 @@
         </ObjectDataProvider>
         <Converters:BoolInverter x:Key="boolInverter"/>
         <Converters:BoolToColor x:Key="invertTrueToPinkBG" ColorForFalseValue="White" ColorForTrueValue="#FFFFCFCF" />
+        <Converters:EnumDescriptionConverter x:Key="enumConverter" />
         <Style x:Key="topbarButtons" TargetType="{x:Type Button}">
             <Setter Property="Height" Value="Auto" />
             <Setter Property="Width" Value="122" />
@@ -380,7 +381,7 @@
                 <TabItem Header="Details">
                     <Grid DataContext="{Binding SelectedItem, ElementName=grdEntitySettings}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="170"/>
+                            <ColumnDefinition Width="186"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.Resources>
@@ -431,7 +432,13 @@
                                     <CheckBox IsChecked="{Binding IndexView}" Content="Index View" ToolTip="Generate Index view"/>
                                     <ComboBox ItemsSource="{Binding Source={StaticResource indexViewGeneration}}"
                                               SelectedItem="{Binding IndexViewGeneration}"
-                                              FontSize="11" />
+                                              FontSize="11" Margin="4,0,0,0">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
                                     <TextBlock Height="2" Margin="1"/>
                                     <CheckBox IsChecked="{Binding DetailsView}" Content="Details View" ToolTip="Generate Details view"/>
                                     <CheckBox IsChecked="{Binding DetailsPartialView}" Content="Partial Details View" ToolTip="Generate Details view with a partial _Details"/>
@@ -605,9 +612,15 @@
                                 Background="#ffe0c0" BorderBrush="#404040" BorderThickness="1,1,1,0">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Display Properties:" Margin="4,0" VerticalAlignment="Center" />
-                            <ComboBox ItemsSource="{Binding Source={StaticResource mvcViewTypes}}"
+                                <ComboBox ItemsSource="{Binding Source={StaticResource mvcViewTypes}}"
                                           SelectedItem="{Binding FilterViewType}"
-                                          Width="160" Margin="4,1" />
+                                          Width="160" Margin="4,1">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
                         </StackPanel>
                         </Border>
                         <DataGrid ItemsSource="{Binding FilteredDisplayColumns, Mode=OneWay}"

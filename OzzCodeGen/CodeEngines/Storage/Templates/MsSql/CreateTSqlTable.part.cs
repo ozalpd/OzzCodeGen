@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
 {
@@ -17,12 +12,12 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
 
         public override bool WriteToFile(string FilePath, bool overwriteExisting)
         {
-            if (TableDefinition.StoredProcs && !TableDefinition.CustomStoredProcs)
+            if (TableDefinition.StoredProcGeneration > StoredProcGeneration.NoStoredProcedure && !TableDefinition.CustomStoredProcs)
             {
                 var spTemplate = new TsqlStoredProcs(TableDefinition);
                 var spPath = Path.Combine(Path.GetDirectoryName(FilePath), spTemplate.GetDefaultFileName());
 
-                return base.WriteToFile(FilePath, overwriteExisting) & 
+                return base.WriteToFile(FilePath, overwriteExisting) &
                     spTemplate.WriteToFile(spPath, overwriteExisting);
             }
             else

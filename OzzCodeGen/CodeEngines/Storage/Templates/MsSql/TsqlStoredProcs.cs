@@ -36,7 +36,7 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
     bool insPKey = !(pKey.PropertyDefinition.IsStoreGenerated && pKey.PropertyDefinition.IsTypeNumeric() && !TableDefinition.UseInheritance);
     string keyVarName = "@" + pKey.Name;
     var deleteMarkColumn = firstBase.GetDeleteMarkColumn();
-    bool createInsertOrUpdate = TableDefinition.StoredProcInsertOrUpdate;
+    bool createInsertOrUpdate = TableDefinition.StoredProcGeneration>=StoredProcGeneration.InsertOrUpdateAndCUD;
     string logInsSP = string.Concat("[", CodeEngine.LogSchemaName, "].[", TableDefinition.LogTableName, "_Insert]");
 
             

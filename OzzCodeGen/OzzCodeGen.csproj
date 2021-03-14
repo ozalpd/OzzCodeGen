@@ -305,6 +305,7 @@
     <Compile Include="CodeEngines\ObjectiveC\UI\ObjcEngineUI.xaml.cs">
       <DependentUpon>ObjcEngineUI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CodeEngines\Storage\Enums.cs" />
     <Compile Include="CodeEngines\Storage\SqliteScriptsEngine.cs" />
     <Compile Include="CodeEngines\Storage\StorageEntitySetting.cs" />
     <Compile Include="CodeEngines\Storage\StorageColumnSetting.cs" />
