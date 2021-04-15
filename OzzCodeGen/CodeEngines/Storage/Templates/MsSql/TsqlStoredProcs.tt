@@ -194,22 +194,27 @@ DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableNam
 Go
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_InsertOrUpdate]
 <#  if(insPKey) { #>
-    <#= keyVarName #> <#= GetColumnType(pKey) #>,
+    <#= keyVarName #> <#= GetColumnType(pKey) #>
 <#  }
     var colsInsOrUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & (string.IsNullOrEmpty(c.InsertDefault) || string.IsNullOrEmpty(c.UpdateDefault)));
     colNr = 0;
     foreach (var column in colsInsOrUpd)
     { 
             colNr++;#>
-    @<#= column.Name #> <#= GetColumnType(column) #>,
-<#    } #>
+    @<#= column.Name #> <#= GetColumnType(column) #><# if(colNr < colsInsOrUpd.Count() || TableDefinition.StoredProcGeneration==StoredProcGeneration.InsertOrUpdateAndCUD) {#>,<#  } #> 
+<#    }
+    if (TableDefinition.StoredProcGeneration==StoredProcGeneration.InsertOrUpdateAndCUD){#>
     @Result int OUTPUT
+<#    } #>
 As
 Begin
 <#  if(insPKey==false) {
         var uniqueCols = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & c.Unique);
   #>
     Declare <#= keyVarName #> <#= GetColumnType(pKey) #>;
+<#  if (TableDefinition.StoredProcGeneration>StoredProcGeneration.InsertOrUpdateAndCUD){#>
+    Declare @Result int;
+<#    } #>
 
     Select <#= keyVarName #> = [<#= pKey.Name #>]
     From  <#= TableDefinition.ConcatTableNameAndSchema() #> (nolock)
@@ -273,13 +278,32 @@ Begin
     PopIndent(); #>
         Set @Result = 1;
     End
+
+<#  string resulType = "int";
+    switch (TableDefinition.StoredProcGeneration)
+    {
+        case StoredProcGeneration.InsertOrUpdateAndCUD:#>
     Select @Result
+<#         break;
+        case StoredProcGeneration.InsertOrUpdateWithRowResult:
+            resulType = TableDefinition.EntityDefinition.Name;
+            WriteSelectStatement(keyVarName);
+            break;
+        case StoredProcGeneration.InsertOrUpdateWithComplexResult:
+            resulType = TableDefinition.TableName + "_InsertOrUpdate" + "_Result"; #>
+    Select  [<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>],
+<#          WriteSelectColumns(firstBase, true); #>
+            @Result As Result
+    From  <#= TableDefinition.ConcatTableNameAndSchema() #>
+    Where [<#= firstBase.SchemaName #>].[<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>] = <#= keyVarName #>
+<#          break;
+        default:
+            break;
+    }#>
 End
 Go
-/*
-To map in EF
-
-        public int InsertOrUpdate(<#= TableDefinition.EntityDefinition.Name #> entity)
+/* To map in EF
+        public <#= resulType #> InsertOrUpdate(<#= TableDefinition.EntityDefinition.Name #> entity)
         {
             var result = <#= TableDefinition.TableName #>_InsertOrUpdate(
                 //entity.<#= pKey #>,
@@ -288,11 +312,17 @@ To map in EF
     foreach (var column in colsInsOrUpd)
     { 
             colNr++;#>
-                entity.<#= column.Name #>,
-<#    } #>
+                entity.<#= column.Name #><# if(colNr < colsInsOrUpd.Count() || TableDefinition.StoredProcGeneration==StoredProcGeneration.InsertOrUpdateAndCUD) {#>,<#  } #> 
+<#    }
+    if(TableDefinition.StoredProcGeneration==StoredProcGeneration.InsertOrUpdateAndCUD){#>
                 new ObjectParameter("Result", typeof(int)));
 
             return result.FirstOrDefault() ?? 0;
+<#    } else {#>
+                );
+
+            return result.FirstOrDefault();
+<#    } #>
         }
 
 */
@@ -394,7 +424,7 @@ protected void WriteSelectStatement(string keyValue)
 <#+ if(TableDefinition.UseInheritance)
     {
         //TODO: Handle more than one inherited base
-        WriteSelectColumns(firstBase); 
+        WriteSelectColumns(firstBase);
     } #>
 <#+ //TODO: Handle more than one inherited base
     if(TableDefinition.UseInheritance)
@@ -416,7 +446,7 @@ protected void WriteSelectColumns(StorageEntitySetting table, bool hasMore = fal
     foreach (var column in columns)
     {
         colNr++; #>
-            [<#= table.TableName #>].[<#= column.Name #>]<#+ if(colNr < columns.Count() | hasMore) {#>,<#+ } #> 
+            [<#= table.TableName #>].[<#= column.Name #>]<#+ if(colNr < columns.Count() || hasMore) {#>,<#+ } #> 
 <#+    }
 #>
 <#+ 
