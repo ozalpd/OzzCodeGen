@@ -103,7 +103,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             }
         }
         private bool _sortDesc;
-        
+
         /// <summary>
         /// Is column of the Property nullable
         /// </summary>
@@ -139,7 +139,7 @@ namespace OzzCodeGen.CodeEngines.Storage
         public virtual string FormatComment()
         {
             var engine = ((StorageEntitySetting)EntitySetting).CodeEngine;
-            
+
             if (engine.PutCommentsIntoScripts && !string.IsNullOrEmpty(PropertyDefinition.Comment))
             {
                 return string.Format(" /* {0} */", PropertyDefinition.Comment);
@@ -187,8 +187,8 @@ namespace OzzCodeGen.CodeEngines.Storage
             if (IsString)
                 return $"IsNull([{Name}], '') != IsNull(@{Name}, '')";
 
-            return $"(IsNull([{Name}], @{Name}) Is Not Null And @{Name} Is Null)\r\n" + 
-                   $"Or (IsNull(@{ Name}, [{ Name}]) Is Not Null And [{ Name}] Is Null)\r\n" + 
+            return $"(IsNull([{Name}], @{Name}) Is Not Null And @{Name} Is Null)\r\n" +
+                   $"Or (IsNull(@{ Name}, [{ Name}]) Is Not Null And [{ Name}] Is Null)\r\n" +
                    $"Or [{ Name}] != @{ Name}";
         }
 
@@ -228,6 +228,67 @@ namespace OzzCodeGen.CodeEngines.Storage
         }
         private string _fKeyTable;
 
+        private string GetInsertOrUpdateDefault(string paramName)
+        {
+            if (string.IsNullOrWhiteSpace(InsertOrUpdateDefault))
+                return string.Empty;
+
+            var param = InsertOrUpdateDefault.Split(';')
+                                             .Select(p => p.Trim())
+                                             .FirstOrDefault(p => p.StartsWith(paramName, StringComparison.InvariantCultureIgnoreCase));
+            if (string.IsNullOrWhiteSpace(param))
+                return string.Empty;
+
+            return param.Substring(paramName.Length, param.Length - paramName.Length);
+        }
+        static string insParam = "Insert:";
+        static string updParam = "Update:";
+        //TODO: IfNullDefault:N'xxx' if stored proc param is null insert default value (eg N'xxx') or
+        static string ifNullParam = "IfNullDefault:"; //update with previous value (first declare and fill $"@prev{Name}" var
+
+        /// <summary>
+        /// returns default value for insert procedure
+        /// </summary>
+        /// <param name="forInsOrUpdate"></param>
+        /// <returns></returns>
+        public string GetInsertDefault(bool forInsOrUpdate)
+        {
+            if (forInsOrUpdate && string.IsNullOrWhiteSpace(InsertOrUpdateDefault) == false)
+            {
+                return GetInsertOrUpdateDefault(insParam);
+            }
+            else if(string.IsNullOrEmpty(InsertDefault))
+            {
+                return string.Empty;
+            }
+            return InsertDefault;
+        }
+
+        public string GetInsertValue(bool forInsOrUpdate)
+        {
+            var val = GetInsertDefault(forInsOrUpdate);
+            return string.IsNullOrEmpty(val) ? $"@{Name}" : val;
+        }
+
+        public string GetUpdateDefault(bool forInsOrUpdate)
+        {
+            if (forInsOrUpdate && string.IsNullOrWhiteSpace(InsertOrUpdateDefault) == false)
+            {
+                return GetInsertOrUpdateDefault(updParam);
+            }
+            else if (string.IsNullOrEmpty(UpdateDefault))
+            {
+                return string.Empty;
+            }
+            return UpdateDefault;
+        }
+
+        public string GetUpdateValue(bool forInsOrUpdate)
+        {
+            var val = GetUpdateDefault(forInsOrUpdate);
+            return string.IsNullOrEmpty(val) ? $"@{Name}" : val;
+        }
+
         public string InsertDefault
         {
             get { return _insertDefault; }
@@ -238,6 +299,18 @@ namespace OzzCodeGen.CodeEngines.Storage
             }
         }
         private string _insertDefault;
+
+
+        public string InsertOrUpdateDefault
+        {
+            get { return _insertOrUpdateDefault; }
+            set
+            {
+                _insertOrUpdateDefault = value;
+                RaisePropertyChanged("InsertOrUpdateDefault");
+            }
+        }
+        private string _insertOrUpdateDefault;
 
         public string UpdateDefault
         {
@@ -250,5 +323,5 @@ namespace OzzCodeGen.CodeEngines.Storage
         }
         private string _updateDefault;
     }
-    
+
 }

@@ -199,7 +199,7 @@ CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableN
 <#  if(insPKey) { #>
     <#= keyVarName #> <#= GetColumnType(pKey) #>
 <#  }
-    var colsInsOrUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & (string.IsNullOrEmpty(c.InsertDefault) || string.IsNullOrEmpty(c.UpdateDefault)));
+    var colsInsOrUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) && (string.IsNullOrEmpty(c.GetInsertDefault(true)) || string.IsNullOrEmpty(c.GetUpdateDefault(true))));
     colNr = 0;
     foreach (var column in colsInsOrUpd)
     { 
@@ -275,9 +275,9 @@ Begin
     Begin
 <#  PushIndent("    ");
     if(insPKey) {
-        WriteInsertStatement(firstBase, keyVarName);
+        WriteInsertStatement(firstBase, keyVarName, forInsOrUpdate: true);
     } else {
-        WriteInsertStatement(firstBase, string.Empty);
+        WriteInsertStatement(firstBase, string.Empty, forInsOrUpdate: true);
     } #>
 <#  if(TableDefinition.HasLogTable) { #>
 
@@ -395,7 +395,7 @@ Or <#= column.GetAlterCheckLine() #><#+ if(colNr == colsToCheck.Count()) {#>)<#+
     PopIndent();
 } #>
 <#+ 
-protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue, int maxLineLen = 48)
+protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue, bool forInsOrUpdate = false, int maxLineLen = 48)
 {
     var columns = table.UseInheritance ?
             table.Properties.Where(c => !c.PrimaryKey & !c.Exclude & c.InsertDefault != "null") :
@@ -410,7 +410,7 @@ protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue
     string colValue;
     foreach (var column in columns)
     {
-        colValue = string.IsNullOrEmpty(column.InsertDefault) ? "@" + column.Name : column.InsertDefault;
+        colValue = column.GetInsertValue(forInsOrUpdate);
         colLen = colValue.Length > column.Name.Length ? colValue.Length : column.Name.Length;
         lineLen += colLen;
         if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); lineLen = colValue.Length; } 
@@ -427,7 +427,7 @@ protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue
     lineLen = 0;
     foreach (var column in columns)
     {
-        colValue = string.IsNullOrEmpty(column.InsertDefault) ? "@" + column.Name : column.InsertDefault;
+        colValue = column.GetInsertValue(forInsOrUpdate);
         colLen = colValue.Length > column.Name.Length ? colValue.Length : column.Name.Length;
         lineLen += colLen;
         if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); lineLen = colValue.Length;} 

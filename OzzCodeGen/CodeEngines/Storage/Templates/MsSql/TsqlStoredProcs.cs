@@ -989,7 +989,7 @@ if(deleteMarkColumn != null)
             
             #line 201 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
   }
-    var colsInsOrUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & (string.IsNullOrEmpty(c.InsertDefault) || string.IsNullOrEmpty(c.UpdateDefault)));
+    var colsInsOrUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) && (string.IsNullOrEmpty(c.GetInsertDefault(true)) || string.IsNullOrEmpty(c.GetUpdateDefault(true))));
     colNr = 0;
     foreach (var column in colsInsOrUpd)
     { 
@@ -1327,9 +1327,9 @@ if(deleteMarkColumn != null)
             #line 276 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
   PushIndent("    ");
     if(insPKey) {
-        WriteInsertStatement(firstBase, keyVarName);
+        WriteInsertStatement(firstBase, keyVarName, forInsOrUpdate: true);
     } else {
-        WriteInsertStatement(firstBase, string.Empty);
+        WriteInsertStatement(firstBase, string.Empty, forInsOrUpdate: true);
     } 
             
             #line default
@@ -2062,7 +2062,7 @@ this.Write(" \r\n");
         
         #line 397 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  
-protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue, int maxLineLen = 48)
+protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue, bool forInsOrUpdate = false, int maxLineLen = 48)
 {
     var columns = table.UseInheritance ?
             table.Properties.Where(c => !c.PrimaryKey & !c.Exclude & c.InsertDefault != "null") :
@@ -2148,7 +2148,7 @@ this.Write("], ");
     string colValue;
     foreach (var column in columns)
     {
-        colValue = string.IsNullOrEmpty(column.InsertDefault) ? "@" + column.Name : column.InsertDefault;
+        colValue = column.GetInsertValue(forInsOrUpdate);
         colLen = colValue.Length > column.Name.Length ? colValue.Length : column.Name.Length;
         lineLen += colLen;
         if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); lineLen = colValue.Length; } 
@@ -2259,7 +2259,7 @@ this.Write(", ");
     lineLen = 0;
     foreach (var column in columns)
     {
-        colValue = string.IsNullOrEmpty(column.InsertDefault) ? "@" + column.Name : column.InsertDefault;
+        colValue = column.GetInsertValue(forInsOrUpdate);
         colLen = colValue.Length > column.Name.Length ? colValue.Length : column.Name.Length;
         lineLen += colLen;
         if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); lineLen = colValue.Length;} 
