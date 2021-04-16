@@ -162,6 +162,37 @@ namespace OzzCodeGen.CodeEngines.Storage
             }
         }
 
+        /// <summary>
+        /// Check if this column altered in update stored procedure by where clause
+        /// </summary>
+        public bool CheckIfAltered
+        {
+            get
+            {
+                return _doNotCheckIfAltered;
+            }
+            set
+            {
+                _doNotCheckIfAltered = value;
+                RaisePropertyChanged("CheckIfAltered");
+            }
+        }
+        private bool _doNotCheckIfAltered;
+
+        public string GetAlterCheckLine()
+        {
+            if (Nullable == false)
+                return $"[{Name}] != @{Name}";
+
+            if (IsString)
+                return $"IsNull([{Name}], '') != IsNull(@{Name}, '')";
+
+            return $"(IsNull([{Name}], @{Name}) Is Not Null And @{Name} Is Null)\r\n" + 
+                   $"Or (IsNull(@{ Name}, [{ Name}]) Is Not Null And [{ Name}] Is Null)\r\n" + 
+                   $"Or [{ Name}] != @{ Name}";
+        }
+
+
         public bool DoNotLog
         {
             get

@@ -175,6 +175,9 @@ Begin
 <#    } #>
 
 <#  if(TableDefinition.HasLogTable) { #>
+<#  if(colDeclaresUpd.Any(c=>c.CheckIfAltered)) { #>
+    If @@ROWCOUNT > 0
+<#  } #>
     Exec <#= logInsSP #>
         @<#= TableDefinition.Name #>Id = <#= keyVarName #>,
         @LogStatus = 1020,
@@ -249,15 +252,24 @@ Begin
     PopIndent(); #>
 <#    } 
     if(TableDefinition.HasLogTable) {
-        PushIndent("    ");#>
-    
+        PushIndent("    ");
+        WriteLine("");
+        if(colDeclaresUpd.Any(c=>c.CheckIfAltered)) {
+            PushIndent("    ");#>
+If @@ROWCOUNT > 0
+Begin
+<#      } #>
     Exec <#= logInsSP #>
         @<#= TableDefinition.Name #>Id = <#= keyVarName #>,
         @LogStatus = 1025,
         @LogStatusDescription = N'Otom. Güncelleme';
-<#      PopIndent();
-    }#>
+<#  }
+    PopIndent(); #>
         Set @Result = -1;
+<#      if(TableDefinition.HasLogTable && colDeclaresUpd.Any(c=>c.CheckIfAltered)) {
+        PopIndent(); #>
+        End
+<#      }#>
     End
     Else
     Begin
@@ -346,6 +358,7 @@ protected void WriteUpdateStatement(StorageEntitySetting table, string pkeyValue
     var columns = table.UseInheritance ?
             table.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false & c.UpdateDefault != "NeverUpdate") :
             table.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false & c.UpdateDefault != "NeverUpdate");
+    var colsToCheck = columns.Where(c => c.CheckIfAltered && string.IsNullOrEmpty(c.UpdateDefault));
     if(columns.Any())
     {
  #>
@@ -367,7 +380,19 @@ protected void WriteUpdateStatement(StorageEntitySetting table, string pkeyValue
     WriteLine("");
  #>
      Where [<#= table.SchemaName #>].[<#= table.TableName #>].[<#= table.PrimaryKeyColumn.Name #>] = <#= pkeyValue #>
-<#+ }
+<#+ colNr = 0;
+    foreach (var column in colsToCheck)
+    {
+        colNr++;
+        if(colNr==1){ #>
+      And (<#= column.GetAlterCheckLine() #><#+ if(colNr == colsToCheck.Count()) {#>)<#+ } #> 
+<#+    PushIndent("        ");
+        } else {#>
+Or <#= column.GetAlterCheckLine() #><#+ if(colNr == colsToCheck.Count()) {#>)<#+ } #> 
+<#+         }
+        }
+    }
+    PopIndent();
 } #>
 <#+ 
 protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue, int maxLineLen = 48)
