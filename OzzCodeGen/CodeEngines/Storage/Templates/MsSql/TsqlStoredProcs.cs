@@ -1237,7 +1237,7 @@ if(deleteMarkColumn != null)
             
             #line 243 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
   PushIndent("    ");
-    WriteUpdateStatement(TableDefinition, keyVarName);
+    WriteUpdateStatement(TableDefinition, keyVarName, forInsOrUpdate: true);
     PopIndent(); 
             
             #line default
@@ -1253,7 +1253,7 @@ if(deleteMarkColumn != null)
             
             #line 249 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
   PushIndent("    ");
-    WriteUpdateStatement(firstBase, keyVarName);
+    WriteUpdateStatement(firstBase, keyVarName, forInsOrUpdate: true);
     if(TableDefinition.HasLogTable)
     PopIndent(); 
             
@@ -1770,11 +1770,11 @@ this.Write("\r\n");
         
         #line 355 "C:\Users\ozalp\source\repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  
-protected void WriteUpdateStatement(StorageEntitySetting table, string pkeyValue, int maxLineLen = 48)
+protected void WriteUpdateStatement(StorageEntitySetting table, string pkeyValue, bool forInsOrUpdate = false, int maxLineLen = 48)
 {
-    var columns = table.UseInheritance ?
-            table.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false & c.UpdateDefault != "NeverUpdate") :
-            table.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false & c.UpdateDefault != "NeverUpdate");
+    var columns = table.UseInheritance
+                ? table.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false & c.GetUpdateDefault(forInsOrUpdate) != "NeverUpdate")
+                : table.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false & c.GetUpdateDefault(forInsOrUpdate) != "NeverUpdate");
     var colsToCheck = columns.Where(c => c.CheckIfAltered && string.IsNullOrEmpty(c.UpdateDefault));
     if(columns.Any())
     {
