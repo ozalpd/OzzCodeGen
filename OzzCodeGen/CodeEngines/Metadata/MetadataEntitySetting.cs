@@ -9,6 +9,16 @@ namespace OzzCodeGen.CodeEngines.Metadata
         [XmlIgnore]
         public MetadataCodeEngine CodeEngine { get; set; }
 
+        [XmlIgnore]
+        public bool HasCustomAttributes
+        {
+            get
+            {
+                return Properties != null
+                    && Properties.Any(p => !string.IsNullOrEmpty(p.CustomAttributes));
+            }
+        }
+
         public override AbstractEntitySetting<MetadataPropertySetting> GetBaseEntitySetting()
         {
             if (string.IsNullOrEmpty(EntityDefinition.BaseTypeName))

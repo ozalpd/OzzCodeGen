@@ -20,6 +20,17 @@ namespace OzzCodeGen.CodeEngines.Metadata
         }
 
 
+        public string CustomAttributes
+        {
+            get { return _custValid; }
+            set
+            {
+                _custValid = value;
+                RaisePropertyChanged("CustomAttributes");
+            }
+        }
+        private string _custValid;
+
         public string DataFormatString
         {
             get { return _dataFormatString; }

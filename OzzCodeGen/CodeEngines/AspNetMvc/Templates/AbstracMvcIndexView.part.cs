@@ -90,7 +90,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
                 var complex = (ComplexProperty)item.PropertyDefinition;
                 var fkey = fkeys.FirstOrDefault(f => f.Name.Equals(complex.DependentPropertyName));
                 var fEntity = Entity.CodeEngine.Entities.FirstOrDefault(e => e.Name.Equals(complex.TypeName));
-                if(fEntity!=null && fkey != null)
+                if (fEntity != null && fkey != null)
                 {
                     var autocompl = new MvcJQueryAutoComplete(fEntity, fkey);
                     autocompl.RelatedEntity = Entity;

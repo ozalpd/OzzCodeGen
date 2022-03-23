@@ -26,6 +26,16 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
         protected List<string> GetPropertyAttributes(MetadataPropertySetting property)
         {
             var attributes = new List<string>();
+            if (!string.IsNullOrEmpty(property.CustomAttributes))
+            {
+                var custAttribs = property.CustomAttributes.Split(';');
+                foreach (var cust in custAttribs)
+                {
+                    if (!string.IsNullOrWhiteSpace(cust))
+                        attributes.Add($"[{cust}]");
+                }
+            }
+
             AddKeyAttrib(property, attributes);
             AddDisplayFormat(property, attributes);
             AddMaxLeghtAttrib(property, attributes);

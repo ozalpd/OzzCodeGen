@@ -125,7 +125,7 @@ namespace OzzCodeGen.CodeEngines.Metadata
             if (RenderAllEntities)
             {
                 bool allWritten = true;
-                foreach(MetadataEntitySetting setting in EntitySettings.Where(e => e.Exclude == false))
+                foreach (MetadataEntitySetting setting in EntitySettings.Where(e => e.Exclude == false))
                 {
                     allWritten = RenderTemplate(setting) & allWritten;
                 }
@@ -207,6 +207,24 @@ namespace OzzCodeGen.CodeEngines.Metadata
                 property.Required = string.Empty;
             }
         }
+
+
+        public string CustomAttribNamespace
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_customAttribNamespace))
+                    _customAttribNamespace = $"{NamespaceName}.Validate";
+                return _customAttribNamespace;
+            }
+            set
+            {
+                _customAttribNamespace = value;
+                RaisePropertyChanged("CustomAttribNamespace");
+            }
+        }
+        private string _customAttribNamespace;
+
 
         private void ExludeProperty(object o, RoutedEventArgs ea)
         {
