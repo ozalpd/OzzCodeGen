@@ -14,7 +14,10 @@ Go
     bool insPKey = !(pKey.PropertyDefinition.IsStoreGenerated && pKey.PropertyDefinition.IsTypeNumeric() && !TableDefinition.UseInheritance);
     string keyVarName = "@" + pKey.Name;
     var deleteMarkColumn = firstBase.GetDeleteMarkColumn();
-    bool createInsertOrUpdate = TableDefinition.StoredProcGeneration>=StoredProcGeneration.InsertOrUpdateAndCUD;
+    int colNr = 0;
+    var colDeclaresUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & string.IsNullOrEmpty(c.UpdateDefault));
+    var sprocGeneration = TableDefinition.StoredProcGeneration;
+    bool createInsertOrUpdate = sprocGeneration > StoredProcGeneration.CUD;
     string logInsSP = string.Concat("[", CodeEngine.LogSchemaName, "].[", TableDefinition.LogTableName, "_Insert]");
 #>
 <#  if(TableDefinition.HasLogTable) { #>
@@ -51,6 +54,7 @@ Begin
 End
 Go
 <#  } #>
+<#  if(sprocGeneration!=StoredProcGeneration.InsertOrUpdateOnly) { #>
 -- --------------------------------------------------------------------
 -- Stored Procedure: [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Delete]
 -- --------------------------------------------------------------------
@@ -109,7 +113,6 @@ Go
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Insert]
 <#        
     var colDeclaresIns = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) && c.Exclude == false & string.IsNullOrEmpty(c.InsertDefault));
-    int colNr = 0;
     string keyVal = insPKey ? keyVarName : "@newKey";
     if(insPKey){ #>
     <#= keyVarName #> <#= GetColumnType(pKey) #>,
@@ -153,9 +156,6 @@ Go
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Update]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Update]
 Go
-<# 
-    var colDeclaresUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & string.IsNullOrEmpty(c.UpdateDefault));
-#>
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Update]
     <#= keyVarName #> <#= GetColumnType(pKey) #><# if(colDeclaresUpd.Any()){ #>,<# } #> 
 <#        
@@ -187,6 +187,7 @@ Begin
 <# WriteSelectStatement(keyVarName); #>
 End
 Go
+<#  } #>
 <# if(createInsertOrUpdate){ #>
 
 -- --------------------------------------------------------------------
@@ -202,20 +203,17 @@ CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableN
     var colsInsOrUpd = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) && (string.IsNullOrEmpty(c.GetInsertDefault(true)) || string.IsNullOrEmpty(c.GetUpdateDefault(true))));
     colNr = 0;
     foreach (var column in colsInsOrUpd)
-    { 
+    {
             colNr++;#>
-    @<#= column.Name #> <#= GetColumnType(column) #><# if(colNr < colsInsOrUpd.Count() || TableDefinition.StoredProcGeneration==StoredProcGeneration.InsertOrUpdateAndCUD) {#>,<#  } #> 
-<#    }
-    if (TableDefinition.StoredProcGeneration==StoredProcGeneration.InsertOrUpdateAndCUD){#>
-    @Result int OUTPUT
-<#    } #>
+    @<#= column.Name #> <#= GetColumnType(column) #><# if(colNr < colsInsOrUpd.Count()) {#>,<#  } #> 
+<# } #>
 As
 Begin
 <#  if(insPKey==false) {
         var uniqueCols = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && c.Exclude == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) & c.Unique);
   #>
     Declare <#= keyVarName #> <#= GetColumnType(pKey) #>;
-<#  if (TableDefinition.StoredProcGeneration>StoredProcGeneration.InsertOrUpdateAndCUD){#>
+<#  if (createInsertOrUpdate){#>
     Declare @Result int;
 <#    } #>
 
@@ -292,7 +290,7 @@ Begin
     End
 
 <#  string resulType = "int";
-    switch (TableDefinition.StoredProcGeneration)
+    switch (sprocGeneration)
     {
         case StoredProcGeneration.InsertOrUpdateAndCUD:#>
     Select @Result
@@ -301,17 +299,17 @@ Begin
             resulType = TableDefinition.EntityDefinition.Name;
             WriteSelectStatement(keyVarName);
             break;
-        case StoredProcGeneration.InsertOrUpdateWithComplexResult:
+        default:
+            break;
+    }#>
+<#  if(sprocGeneration==StoredProcGeneration.InsertOrUpdateOnly || sprocGeneration==StoredProcGeneration.InsertOrUpdateWithComplexResult) {
             resulType = TableDefinition.TableName + "_InsertOrUpdate" + "_Result"; #>
     Select  [<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>],
 <#          WriteSelectColumns(firstBase, true); #>
             @Result As Result
     From  <#= TableDefinition.ConcatTableNameAndSchema() #>
-    Where [<#= firstBase.SchemaName #>].[<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>] = <#= keyVarName #>
-<#          break;
-        default:
-            break;
-    }#>
+    Where [<#= firstBase.SchemaName #>].[<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>] = <#= keyVarName  #>
+<#  }#>
 End
 Go
 /* To map in EF
@@ -324,9 +322,9 @@ Go
     foreach (var column in colsInsOrUpd)
     { 
             colNr++;#>
-                entity.<#= column.Name #><# if(colNr < colsInsOrUpd.Count() || TableDefinition.StoredProcGeneration==StoredProcGeneration.InsertOrUpdateAndCUD) {#>,<#  } #> 
+                entity.<#= column.Name #><# if(colNr < colsInsOrUpd.Count() || sprocGeneration==StoredProcGeneration.InsertOrUpdateAndCUD) {#>,<#  } #> 
 <#    }
-    if(TableDefinition.StoredProcGeneration==StoredProcGeneration.InsertOrUpdateAndCUD){#>
+    if(sprocGeneration==StoredProcGeneration.InsertOrUpdateAndCUD){#>
                 new ObjectParameter("Result", typeof(int)));
 
             return result.FirstOrDefault() ?? 0;

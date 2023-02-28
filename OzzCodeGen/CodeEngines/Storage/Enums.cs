@@ -15,6 +15,11 @@ namespace OzzCodeGen.CodeEngines.Storage
         [Description("CUD (Create, Update, Delete)")]
         CUD = 100,
         /// <summary>
+        /// Generates an InsertOrUpdate stored procedure one which retuns an Id result
+        /// </summary>
+        [Description("InsertOrUpdate(returns row with result) wo CUD")]
+        InsertOrUpdateOnly = 150,
+        /// <summary>
         /// Generates CUD stored procedures and an InsertOrUpdate one which retuns an int result
         /// </summary>
         [Description("InsertOrUpdate(returns simple result) and CUD")]
