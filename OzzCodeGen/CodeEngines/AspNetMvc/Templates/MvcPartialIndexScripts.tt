@@ -13,10 +13,10 @@ WriteUsingNamespaces(); #>
         $('#ajxDelete').attr('onclick', 'ajaxDelete(' + id + ')');
     }
     function ajaxDelete(id) {
-        var requestUrl = '/@Model/Delete/' + id;
+        let requestUrl = '/@Model/Delete/' + id;
         $('#deleteConfirm').modal('hide');
 
-        var request = $.get(requestUrl, function (data) {
+        let request = $.get(requestUrl, function (data) {
         }).done(function () {
             refreshData();
         });
@@ -24,12 +24,12 @@ WriteUsingNamespaces(); #>
 
         request.error(function (jqXHR, textStatus, errorThrown) {
             hideBusy();
-            var msgboxMsg = jqXHR.responseText;
+            let msgboxMsg = jqXHR.responseText;
             showMessageBox(errorThrown, msgboxMsg, true);
         });
     }
     function showImage(title, imgUrl, cancelButton) {
-        var innerHtml = "<img src='" + imgUrl + "' class='img-responsive center-block' />";
+        let innerHtml = "<img src='" + imgUrl + "' class='img-responsive center-block' />";
         showMessageBox(title, innerHtml, cancelButton);
     }
     function showMessageBox(title, text, cancelButton) {
@@ -47,7 +47,7 @@ WriteUsingNamespaces(); #>
         $('#messageBox').modal('hide');
     }
     function showCannotDelete(item, relatedRecords) {
-        var msgText = '@MessageStrings.CanNotDelete ' + item + '.<br/>@MessageStrings.BecauseOfRelatedRecords.<br/>' + relatedRecords;
+        let msgText = '@MessageStrings.CanNotDelete ' + item + '.<br/>@MessageStrings.BecauseOfRelatedRecords.<br/>' + relatedRecords;
         showMessageBox('@MessageStrings.UnableToDelete!', msgText, true);
     }
     function toogleAccordionSign() {
@@ -77,10 +77,10 @@ WriteUsingNamespaces(); #>
     }
     var furtherValid = function () { return true; }
     function submitDataInputForm() {
-        var inputForm = $('#dataInputForm');
+        let inputForm = $('#dataInputForm');
         if ($(inputForm).valid() && furtherValid()) {
             showBusy();
-            var url = $(inputForm).attr('action');
+            let url = $(inputForm).attr('action');
             url += (url.indexOf('?') == -1) ? '?' : '&';
             url += 'modal=true';
             $.ajax({
@@ -100,7 +100,7 @@ WriteUsingNamespaces(); #>
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     $('#dataInputModal').modal('hide');
-                    var msgboxMsg = jqXHR.responseText;
+                    let msgboxMsg = jqXHR.responseText;
                     showMessageBox(errorThrown, msgboxMsg, true);
                     hideBusy();
                 }

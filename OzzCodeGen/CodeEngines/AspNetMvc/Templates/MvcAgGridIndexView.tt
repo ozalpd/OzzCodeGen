@@ -67,7 +67,7 @@ WriteUsingNamespaces(); #>
         var gridOptions;
 
         var initPage = function() {
-            var init = this;
+            let init = this;
             init.columnDefs = columnDefs();
             init.gridOptions = {
                 columnDefs: init.columnDefs,
@@ -88,7 +88,7 @@ WriteUsingNamespaces(); #>
             }
 
             function actionCellRenderer(params) {
-                var actions = '<div class="btn-group" style="margin-top:-3px;">' +
+                let actions = '<div class="btn-group" style="margin-top:-3px;">' +
                     '<button type="button" title="@ActionStrings.Action" class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" onclick="onActionMenuClick(this)">' +
                     '<span class="glyphicon glyphicon-tasks"></span> <span class="caret"></span>' +
                     '</button>' +
@@ -145,8 +145,8 @@ WriteUsingNamespaces(); #>
         }
 
         function getPagedData(page) {
-            var searchString = $('#SearchString').val();
-            var url = "/<#= Entity.ControllerName #>/Get<#= Entity.Name #>PagedList";
+            let searchString = $('#SearchString').val();
+            let url = "/<#= Entity.ControllerName #>/Get<#= Entity.Name #>PagedList";
             showBusy();
             $.getJSON(url, {
                 pageSize: result.PageSize,
@@ -166,7 +166,7 @@ WriteUsingNamespaces(); #>
 <# } #>
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     hideBusy();
-                    var msgboxMsg = jqXHR.responseText;
+                    let msgboxMsg = jqXHR.responseText;
                     showMessageBox(textStatus, msgboxMsg, true);
                 }).always(function (jqXHR) {
 
@@ -179,8 +179,8 @@ WriteUsingNamespaces(); #>
                     return true;
                 }
                 showBusy();
-                var title = $(this).attr("input-modal");
-                var url = this.href;
+                let title = $(this).attr("input-modal");
+                let url = this.href;
                 url += (url.indexOf('?') == -1) ? '?' : '&';
                 url += 'modal=true';
                 $('#dataInputBody').load(url, function () {
@@ -188,7 +188,7 @@ WriteUsingNamespaces(); #>
                     if (title != null || title != '') {
                         $('#dataInputTitle').html(title);
                     }
-                    var inputForm = document.getElementById('dataInputForm');
+                    let inputForm = document.getElementById('dataInputForm');
                     if (inputForm != null) {
                         $('#dataInputFooter').show();
                     }
@@ -204,14 +204,14 @@ WriteUsingNamespaces(); #>
 
         function onActionMenuClick(menuBtn){
             setTimeout(function(){
-                var menuHeight = 220;
-                var rectMenu = menuBtn.getBoundingClientRect();
-                var rectGrid = document.getElementById("mainGrid").getBoundingClientRect();
+                let menuHeight = 220;
+                let rectMenu = menuBtn.getBoundingClientRect();
+                let rectGrid = document.getElementById("mainGrid").getBoundingClientRect();
 
-                var diffY = rectGrid.bottom - rectMenu.bottom - menuHeight;
+                let diffY = rectGrid.bottom - rectMenu.bottom - menuHeight;
                 if (diffY < 0) {
-                    var viewport = $('#mainGrid .ag-body-viewport');
-                    var viewportScroll = viewport.scrollTop();
+                    let viewport = $('#mainGrid .ag-body-viewport');
+                    let viewportScroll = viewport.scrollTop();
                     viewport.scrollTop((diffY * -1) + viewportScroll);
                 }
             },250);

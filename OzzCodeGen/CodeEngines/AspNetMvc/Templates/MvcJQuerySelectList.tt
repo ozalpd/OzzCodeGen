@@ -27,10 +27,10 @@ WriteUsingNamespaces(); #>
 </div>
 <script type="text/javascript">
     $('#<#= FKeyProperty.Name #>').change(function () {
-        var selectedId = $(this).val();
+        let selectedId = $(this).val();
         if (selectedId != null && selectedId != '') {
             $.getJSON('/<#= Entity.ControllerName #>/Get<#= Entity.Name #>List', { <#= FKeyProperty.Name.ToCamelCase() #>: selectedId, pageSize: 100 }, function (<#= Entity.Name.Pluralize().ToCamelCase() #>) {
-                var targetSelect = $('#<#= GetRelatedEntityFKeyName() #>');
+                let targetSelect = $('#<#= GetRelatedEntityFKeyName() #>');
                 targetSelect.empty();
                 targetSelect.append($('<option/>', {
                     value: '',

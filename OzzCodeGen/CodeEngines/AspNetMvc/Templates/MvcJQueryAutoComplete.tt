@@ -40,13 +40,13 @@ WriteUsingNamespaces(); #>
         minLenght: 1,
         delay: 500,
         source: function (request, response) {
-            var url = $(this.element).data('url');
+            let url = $(this.element).data('url');
             $.getJSON(url, { searchString: request.term, pageSize: 25 }, function (data) {
                 response(data);
             });
         },
         select: function (event, ui) {
-            var itemId = ui.item.id;
+            let itemId = ui.item.id;
             $('#<#= FKeyProperty.Name #>').val(itemId);
 <# foreach (var property in properties) { #>
 <# if (property.PropertyDefinition.TypeName=="decimal") { #>
@@ -65,8 +65,8 @@ WriteUsingNamespaces(); #>
             }
         },
         open: function (event, ui) {
-            var boxWidth = $('#<#= Entity.EntityDefinition.DisplayMember #>').outerWidth();
-            var minWidth = 300;
+            let boxWidth = $('#<#= Entity.EntityDefinition.DisplayMember #>').outerWidth();
+            let minWidth = 300;
             $(this).autocomplete("widget")
                 .css({ "width": (boxWidth > minWidth ? boxWidth : minWidth) })
                 .addClass('fontSize80pc');

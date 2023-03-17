@@ -201,8 +201,8 @@ else
                     return true;
                 }
                 showBusy();
-                var title = $(this).attr("input-modal");
-                var url = this.href;
+                let title = $(this).attr("input-modal");
+                let url = this.href;
                 url += (url.indexOf('?') == -1) ? '?' : '&';
                 url += 'modal=true';
                 $('#dataInputBody').load(url, function(responseText, textStatus, XMLHttpRequest) {
@@ -212,7 +212,7 @@ else
                             $('#dataInputTitle').html(title);
                         }
                         
-                        var inputForm = document.getElementById('dataInputForm');
+                        let inputForm = document.getElementById('dataInputForm');
                         if (inputForm != null) {
                             $('#dataInputFooter').show();
                         }
@@ -232,14 +232,14 @@ else
 <#  if(Entity.IndexViewGeneration == IndexViewGeneration.HtmlTableWithMenuAction) { #>
         function onActionMenuClick(menuBtn) {
             setTimeout(function () {
-                var menuHeight = 160;
-                var rectMenu = menuBtn.getBoundingClientRect();
-                var rectGrid = document.getElementById("<#= gridId #>").getBoundingClientRect();
-                var diffY = rectGrid.bottom - rectMenu.bottom - menuHeight;
+                let menuHeight = 160;
+                let rectMenu = menuBtn.getBoundingClientRect();
+                let rectGrid = document.getElementById("<#= gridId #>").getBoundingClientRect();
+                let diffY = rectGrid.bottom - rectMenu.bottom - menuHeight;
 
                 if (diffY < 0) {
-                    var viewport = $('#<#= gridId #>Parent');
-                    var viewportScroll = viewport.scrollTop();
+                    let viewport = $('#<#= gridId #>Parent');
+                    let viewportScroll = viewport.scrollTop();
                     viewport.scrollTop((diffY * -1) + viewportScroll);
                 }
             }, 250);

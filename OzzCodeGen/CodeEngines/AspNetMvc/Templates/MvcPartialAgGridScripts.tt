@@ -12,8 +12,8 @@ WriteUsingNamespaces(); #>
     }
 
     function getPagedData(page) {
-        var searchString = $('#SearchString').val();
-        var url = '@Model';
+        let searchString = $('#SearchString').val();
+        let url = '@Model';
         showBusy();
         $.getJSON(url, {
             pageSize: result.PageSize,
@@ -29,7 +29,7 @@ WriteUsingNamespaces(); #>
                 displayRecordStats(result.Items.length, result.TotalCount);
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 hideBusy();
-                var msgboxMsg = jqXHR.responseText;
+                let msgboxMsg = jqXHR.responseText;
                 showMessageBox(textStatus, msgboxMsg, true);
             }).always(function (jqXHR) {
 
