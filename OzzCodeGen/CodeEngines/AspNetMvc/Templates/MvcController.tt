@@ -24,12 +24,13 @@ var strongForeignPKeyProperty = Entity.StrongForeignEntity==null ? null : Entity
 string strongForeignPKey = strongForeignPKeyProperty==null ? "Id" : strongForeignPKeyProperty.Name;  
 
 string [] fillSelectListsMethods = Entity.GetFillSelectListsMethods();
+string classType = Entity.SealedController ? "sealed partial" : "partial";
 
 WriteUsingNamespaces(); #>
 
 namespace <#= NamespaceName #>
 {
-    public partial class <#= Entity.ControllerName #>Controller<# if (!CustomFile){ #> : <#= Entity.BaseControllerName #><# } #> 
+    public <#= classType #> class <#= Entity.ControllerName #>Controller<# if (!CustomFile){ #> : <#= Entity.BaseControllerName #><# } #> 
     {
 <#
 if (CustomFile)
@@ -52,7 +53,7 @@ if (CustomFile)
 else 
 { #>
 <# if (Entity.GenerateGetQueryMethod){ #>
-        protected virtual async Task<IQueryable<<#= Entity.Name #>>> Get<#= Entity.Name #>Query(QueryParameters qParams)
+        private async Task<IQueryable<<#= Entity.Name #>>> Get<#= Entity.Name #>Query(QueryParameters qParams)
         {
             var query = Get<#= Entity.Name #>Query();
 <#  if(searchProperties.Where(p => p.IsString).Any())
@@ -104,7 +105,7 @@ else
 <#  } #>
 <# if (Entity.GenerateGetDtoQueryMethod){ #>
 <#  string queryResult = Entity.Name.Equals(Entity.ModelForJson) ? "result" : "list"; #>
-        protected virtual async Task<List<<#= Entity.ModelForJson #>>> Get<#= Entity.Name #>DtoList(QueryParameters qParams)
+        private async Task<List<<#= Entity.ModelForJson #>>> Get<#= Entity.Name #>DtoList(QueryParameters qParams)
         {
             var query = await Get<#= Entity.Name #>Query(qParams);
             var <#= queryResult #> = qParams.TotalCount > 0 ? await query.ToListAsync() : new List<<#= Entity.Name #>>();

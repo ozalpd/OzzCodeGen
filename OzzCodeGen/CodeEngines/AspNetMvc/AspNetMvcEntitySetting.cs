@@ -127,6 +127,23 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
         private string _saveParameter;
 
+
+        public bool SealedController
+        {
+            get
+            {
+                if (_sealed == null)
+                    _sealed = true;
+                return _sealed.Value;
+            }
+            set
+            {
+                _sealed = value;
+                RaisePropertyChanged("SealedController");
+            }
+        }
+        private bool? _sealed;
+
         /// <summary>
         /// Model or ViewModel class name for List action
         /// </summary>
@@ -872,7 +889,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 }
             }
         }
-        
+
         [XmlIgnore]
         public IEnumerable<AspNetMvcPropertySetting> DisplayColumns
         {

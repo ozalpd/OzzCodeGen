@@ -408,6 +408,7 @@
                                 </StackPanel>
                                 <TextBlock Text="Generate" TextAlignment="Center" Background="#D0FFFFFF"/>
                                 <CheckBox IsChecked="{Binding GenerateController}" Content="Controller" ToolTip="Generate controller for this entity"/>
+                                <CheckBox IsChecked="{Binding SealedController}" Content="Sealed Controller" ToolTip="Generate sealed type controller class"/>
                                 <CheckBox IsChecked="{Binding GenerateGetQueryMethod}" Content="GetEntityQuery">
                                     <CheckBox.ToolTip>
                                         <TextBlock Text="{Binding Name, StringFormat='Generate Get\{0\}Query(QueryParameters qParams) method in controller'}"/>
