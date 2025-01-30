@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using OzzCodeGen.CodeEngines.DataLayer;
+using OzzCodeGen.CodeEngines.TechDocument;
 using OzzCodeGen.CodeEngines.Localization;
 using OzzCodeGen.CodeEngines.Storage;
 
@@ -14,6 +10,7 @@ namespace OzzCodeGen.CodeEngines
     {
         public const string AspNetMvcEngineId = "AspNetMvc_Controller_View_Generator";
         public const string EfDbFirstDataLayerId = "EF_DatabaseFirst_DataLayer";
+        public const string EfTechnicalDocId = "EF_Technical_Document";
         public const string LocalizationResxGenId = "Localization_Resource_Generator";
         public const string MetadataCodeEngineId = "Metadata_Class_Generator";
 
@@ -38,6 +35,9 @@ namespace OzzCodeGen.CodeEngines
 
                 case EfDbFirstDataLayerId:
                     return new DataLayerEngine();
+
+                case EfTechnicalDocId:
+                    return new TechDocumentEngine();
 
                 case LocalizationResxGenId:
                     return new ResxEngine();
@@ -76,6 +76,10 @@ namespace OzzCodeGen.CodeEngines
                 case EfDbFirstDataLayerId:
                     fileName = Path.Combine(Directory, DataLayerEngine.DefaultFileName);
                     return DataLayerEngine.OpenFile(fileName);
+
+                case EfTechnicalDocId:
+                    fileName = Path.Combine(Directory, TechDocumentEngine.DefaultFileName);
+                    return TechDocumentEngine.OpenFile(fileName);
 
                 case LocalizationResxGenId:
                     fileName = Path.Combine(Directory, ResxEngine.DefaultFileName);

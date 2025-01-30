@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Serialization;
@@ -11,8 +8,6 @@ using OzzCodeGen.CodeEngines.DataLayer.Templates;
 using OzzCodeGen.CodeEngines.DataLayer.UI;
 using OzzCodeGen.CodeEngines.Localization;
 using OzzCodeGen.Definitions;
-using OzzCodeGen.Templates;
-using OzzCodeGen.UI;
 using OzzCodeGen.Utilities;
 
 namespace OzzCodeGen.CodeEngines.DataLayer
