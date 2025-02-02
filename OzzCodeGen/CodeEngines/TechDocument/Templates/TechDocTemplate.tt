@@ -7,7 +7,8 @@
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzCodeGen.Templates" #>
 <#
-    var properties = EntitySetting.GetInheritedIncludedProperties();
+    bool useAll = EntitySetting.UseInheritedProperties;
+    var properties = useAll ? EntitySetting.GetInheritedIncludedProperties() : EntitySetting.Properties;
 #>
 <#= EntitySetting.Name #>
 <#
@@ -22,7 +23,7 @@ Barındırdığı veri sahaları aşağıda listelenmiştir.
 foreach (var property in properties) 
 {
 #>
-<#= property.Name #> <#= property.PropertyDefinition.TypeName #>
+<#= property.Name #> <#= property.GetTypeDescription() #> <#= property.AddtDescription #>
 <#	} #>
 <#+
   // Insert any template procedures here

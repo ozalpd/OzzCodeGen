@@ -23,6 +23,7 @@ namespace OzzCodeGen.CodeEngines.TechDocument
                     .FirstOrDefault(e => e.EntityDefinition.Name.Equals(EntityDefinition.BaseTypeName));
         }
 
+        [XmlIgnore]
         public StorageEntitySetting StorageEntity
         {
             get
@@ -41,5 +42,24 @@ namespace OzzCodeGen.CodeEngines.TechDocument
         }
         bool _lookedEntitySetting;
         StorageEntitySetting _storageEntity = null;
+
+
+        public bool UseInheritedProperties
+        {
+            get
+            {
+                if (_useInheritedroperties == null)
+                    _useInheritedroperties = true;
+
+                return _useInheritedroperties.Value;
+            }
+            set
+            {
+                _useInheritedroperties = value;
+                RaisePropertyChanged("UseInheritedProperties");
+            }
+        }
+        private bool? _useInheritedroperties;
+
     }
 }

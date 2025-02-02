@@ -25,13 +25,16 @@ namespace OzzCodeGen.CodeEngines.TechDocument.UI
         {
             InitializeComponent();
 
+            ColumnWidths.Add("UseInheritedProperties", 60);
+
             HiddenColumns.Add("DataType");
-            HiddenColumns.Add("CodeEngine");
-            HiddenColumns.Add("HtmlEncode");
             HiddenColumns.Add("IsSimple");
             HiddenColumns.Add("IsString");
-            HiddenColumns.Add("TechDocEntitySetting");
+            HiddenColumns.Add("CodeEngine");
+            HiddenColumns.Add("HtmlEncode");
             HiddenColumns.Add("Properties");
+            HiddenColumns.Add("StorageEntity");
+            HiddenColumns.Add("TechDocEntitySetting");
 
             EntitiesDataGrid = grdEntitySettings;
             PropertiesDataGrid = grdPropertySettings;

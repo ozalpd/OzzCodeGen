@@ -33,20 +33,21 @@ namespace OzzCodeGen.CodeEngines.TechDocument.Templates
             
             #line 9 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
 
-    var properties = EntitySetting.GetInheritedIncludedProperties();
+    bool useAll = EntitySetting.UseInheritedProperties;
+    var properties = useAll ? EntitySetting.GetInheritedIncludedProperties() : EntitySetting.Properties;
 
             
             #line default
             #line hidden
             
-            #line 12 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
+            #line 13 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 13 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
+            #line 14 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
 
     if(EntitySetting.StorageEntity!=null)
     {
@@ -56,28 +57,28 @@ namespace OzzCodeGen.CodeEngines.TechDocument.Templates
             #line hidden
             this.Write("Bu entity ");
             
-            #line 17 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
+            #line 18 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.StorageEntity.SchemaName));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 17 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
+            #line 18 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.StorageEntity.TableName));
             
             #line default
             #line hidden
             this.Write(" tablosundan bağlanmıştır.\r\n");
             
-            #line 18 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
+            #line 19 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
 	} 
             
             #line default
             #line hidden
             this.Write("Barındırdığı veri sahaları aşağıda listelenmiştir.\r\n\r\n");
             
-            #line 21 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
+            #line 22 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
 
 foreach (var property in properties) 
 {
@@ -86,21 +87,28 @@ foreach (var property in properties)
             #line default
             #line hidden
             
-            #line 25 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
+            #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 25 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.PropertyDefinition.TypeName));
+            #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.GetTypeDescription()));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.AddtDescription));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
+            #line 27 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
 	} 
             
             #line default
@@ -108,7 +116,7 @@ foreach (var property in properties)
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 27 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
+        #line 28 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
 
   // Insert any template procedures here
   void foo(){}

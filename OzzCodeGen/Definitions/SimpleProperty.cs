@@ -3,9 +3,26 @@ using System.Linq;
 
 namespace OzzCodeGen.Definitions
 {
-    //TODO: Add EnumPropertyType 
     public class SimpleProperty : BaseProperty
     {
+        public string EnumTypeName
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_enumTypeName)
+                    || !IsTypeIntNumeric()) //sadece tamsayı
+                    return string.Empty;
+
+                return _enumTypeName;
+            }
+            set
+            {
+                _enumTypeName = value;
+                RaisePropertyChanged("EnumTypeName");
+            }
+        }
+        private string _enumTypeName;
+
         public bool IsKey
         {
             get { return isKey; }
@@ -57,6 +74,11 @@ namespace OzzCodeGen.Definitions
         public override bool IsTypeNullable()
         {
             return IsTypeNullable(TypeName);
+        }
+
+        public bool IsTypeIntNumeric()
+        {
+            return IsTypeIntNumeric(TypeName);
         }
 
         public override bool IsTypeNumeric()
