@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OzzCodeGen.CodeEngines.Storage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,5 +22,24 @@ namespace OzzCodeGen.CodeEngines.TechDocument
                     .Entities
                     .FirstOrDefault(e => e.EntityDefinition.Name.Equals(EntityDefinition.BaseTypeName));
         }
+
+        public StorageEntitySetting StorageEntity
+        {
+            get
+            {
+                if (_lookedEntitySetting)
+                    return _storageEntity;
+
+                var engine = CodeEngine.GetStorageEngine();
+                if (engine != null)
+                {
+                    _storageEntity = engine.Entities.FirstOrDefault(e => e.Name.Equals(Name));
+                }
+                _lookedEntitySetting = true;
+                return _storageEntity;
+            }
+        }
+        bool _lookedEntitySetting;
+        StorageEntitySetting _storageEntity = null;
     }
 }

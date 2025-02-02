@@ -1,4 +1,5 @@
 ﻿using OzzCodeGen.CodeEngines.Localization;
+using OzzCodeGen.CodeEngines.Storage;
 using OzzCodeGen.CodeEngines.TechDocument.Templates;
 using OzzCodeGen.CodeEngines.TechDocument.UI;
 using OzzCodeGen.Definitions;
@@ -13,6 +14,7 @@ using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.TechDocument
 {
+    [XmlInclude(typeof(TechDocEntitySetting))]
     public class TechDocumentEngine : BaseCodeEngine
     {
         public override string EngineId => EngineTypes.EfTechnicalDocId;
@@ -32,6 +34,17 @@ namespace OzzCodeGen.CodeEngines.TechDocument
 
         public override UserControl GetSettingsDlgUI()
         {
+            return null;
+        }
+
+
+
+        public StorageCodeEngine GetStorageEngine()
+        {
+            var engine = Project.GetCodeEngine(EngineTypes.TSqlScriptsId);
+            if (engine != null && engine is StorageCodeEngine)
+                return (StorageCodeEngine)engine;
+
             return null;
         }
 

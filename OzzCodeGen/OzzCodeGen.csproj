@@ -357,6 +357,11 @@
     <Compile Include="CodeEngines\Storage\UI\StorageEngineUI.xaml.cs">
       <DependentUpon>StorageEngineUI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CodeEngines\TechDocument\Templates\TechDocTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TechDocTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Include="CodeEngines\TechDocument\Templates\TechDocTemplate.part.cs" />
     <Compile Include="CodeEngines\TechDocument\UI\TechDocEngineUI.xaml.cs">
       <DependentUpon>TechDocEngineUI.xaml</DependentUpon>
@@ -700,6 +705,10 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MetadataClassTemplate.cs</LastGenOutput>
     </Content>
+    <None Include="CodeEngines\TechDocument\Templates\TechDocTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>TechDocTemplate.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

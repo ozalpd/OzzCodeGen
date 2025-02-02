@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OzzCodeGen.CodeEngines.Storage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OzzCodeGen.CodeEngines.TechDocument.Templates
 {
-    public class TechDocTemplate : AbstractTemplate
+    public partial class TechDocTemplate : AbstractTemplate
     {
         public TechDocTemplate(TechDocEntitySetting entitySetting)
         {
