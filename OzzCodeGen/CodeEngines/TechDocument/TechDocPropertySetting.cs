@@ -117,6 +117,17 @@ namespace OzzCodeGen.CodeEngines.TechDocument
                         }
                         return sb.ToString();
 
+                    case "byte":
+                        if (simple.IsNullable)
+                        {
+                            sb.Append("Nullable<byte> (boş kalabilir 8 bit tamsayı) tipinde.");
+                        }
+                        else
+                        {
+                            sb.Append("byte (8 bit tamsayı) tipinde.");
+                        }
+                        return sb.ToString();
+
                     case "decimal":
                         return simple.IsNullable
                             ? "Nullable<decimal> (boş kalabilir ondalık sayı) tipinde."
