@@ -76,7 +76,7 @@ namespace OzzCodeGen.CodeEngines.TechDocument
                 return sb.ToString();
             }
 
-
+            ComplexProperty dependedComplex = null;
             if (PropertyDefinition is StringProperty)
             {
                 var strProperty = (StringProperty)PropertyDefinition;
@@ -89,16 +89,13 @@ namespace OzzCodeGen.CodeEngines.TechDocument
                 {
                     sb.Append("azami");
                 }
-                sb.Append(" karakter genişliğinde sahadır.");
-
-                return sb.ToString();
+                sb.Append(" karakter genişliğinde");
             }
 
             if (PropertyDefinition is SimpleProperty)
             {
                 var simple = (SimpleProperty)PropertyDefinition;
                 bool isNull = simple.IsNullable;
-                ComplexProperty dependedComplex = null;
 
                 switch (PropertyDefinition.TypeName.ToLowerInvariant())
                 {
@@ -126,7 +123,7 @@ namespace OzzCodeGen.CodeEngines.TechDocument
                             sb.Append("int (64 bit tamsayı) tipinde");
                         }
 
-                        dependedComplex = GetDependedComplex(simple);
+                        dependedComplex = GetDependedComplex(simple.Name);
                         if (dependedComplex != null)
                         {
                             sb.Append(" bağlı ");
@@ -162,32 +159,32 @@ namespace OzzCodeGen.CodeEngines.TechDocument
                     //    column.DataType = "UniqueIdentifier";
                     //    break;
 
-                    //case "guid":
-                    //    column.DataType = "UniqueIdentifier";
-                    //    break;
+                    case "guid":
+                        return isNull ? "Nullable<Guid> (boş kalabilir 128 Bit Global Unique Identifier) tipinde."
+                                      : "Guid (128 Bit Global Unique Identifier) tipinde.";
 
 
                     default:
                         break;
                 }
+            }
 
-                if (sb.Length > 0)
-                {
-                    sb.Append(" sahadır.");
-                    return sb.ToString();
-                }
+            if (sb.Length > 0)
+            {
+                sb.Append(" sahadır.");
+                return sb.ToString();
             }
 
             return PropertyDefinition.TypeName;
         }
 
-        private ComplexProperty GetDependedComplex(SimpleProperty simple)
+        private ComplexProperty GetDependedComplex(string propertyName)
         {
             ComplexProperty dependedComplex;
             var propDefs = TechDocEntitySetting.Properties.Select(p => p.PropertyDefinition);
             var complexes = propDefs.OfType<ComplexProperty>().ToList();
 
-            dependedComplex = complexes.FirstOrDefault(p => p.DependentPropertyName == simple.Name);
+            dependedComplex = complexes.FirstOrDefault(p => p.DependentPropertyName == propertyName);
             return dependedComplex;
         }
     }

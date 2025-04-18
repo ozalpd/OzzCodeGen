@@ -74,8 +74,8 @@
 
             <Grid Grid.Row="4" Grid.RowSpan="4" Grid.ColumnSpan="5" Margin="4">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" MaxWidth="420"/>
-                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="6*" MaxWidth="512"/>
+                    <ColumnDefinition Width="8*"/>
                 </Grid.ColumnDefinitions>
 
                 <DataGrid x:Name="grdEntitySettings" ItemsSource="{Binding Entities, Mode=TwoWay}"
