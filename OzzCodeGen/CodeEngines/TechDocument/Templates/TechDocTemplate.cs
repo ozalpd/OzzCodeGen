@@ -76,7 +76,14 @@ namespace OzzCodeGen.CodeEngines.TechDocument.Templates
             
             #line default
             #line hidden
-            this.Write("Barındırdığı veri sahaları aşağıda listelenmiştir.\r\n\r\n");
+            
+            #line 20 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.GetLocalizedName("tr")));
+            
+            #line default
+            #line hidden
+            this.Write(" kayıtlarına ait veri sahalarından oluşur, içerdiği sahalar aşağıda listelenmişti" +
+                    "r.\r\n\r\n");
             
             #line 22 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
 

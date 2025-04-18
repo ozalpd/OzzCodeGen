@@ -37,7 +37,18 @@ namespace OzzCodeGen.CodeEngines.TechDocument
             return null;
         }
 
+        public ResxEngine GetResxEngine()
+        {
+            var engine = Project.GetCodeEngine(EngineTypes.LocalizationResxGenId);
+            if (engine != null && engine is ResxEngine)
+            {
+                var resx = (ResxEngine)engine;
+                resx.OpenVocabularies();
 
+                return resx;
+            }
+            return null;
+        }
 
         public StorageCodeEngine GetStorageEngine()
         {
@@ -46,6 +57,18 @@ namespace OzzCodeGen.CodeEngines.TechDocument
                 return (StorageCodeEngine)engine;
 
             return null;
+        }
+
+        public string GetTranslation(string name, string langCode)
+        {
+            var engine = GetResxEngine();
+            var vocabulary = engine.Vocabularies[langCode];
+            if (vocabulary == null)
+                vocabulary = engine.Vocabularies["notr"];
+
+            var vocab = vocabulary.FirstOrDefault(var => var.Name == name);
+
+            return vocab != null ? vocab.Translation : name;
         }
 
         public override List<string> GetTemplateList()

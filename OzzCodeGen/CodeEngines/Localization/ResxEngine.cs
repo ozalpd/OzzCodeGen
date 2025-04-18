@@ -110,7 +110,7 @@ namespace OzzCodeGen.CodeEngines.Localization
             }
             else
             {
-                return string.Format("{0}{1}", entity.Name, "String");
+                return $"{entity.Name}String";
             }
         }
 

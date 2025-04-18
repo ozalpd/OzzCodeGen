@@ -17,7 +17,7 @@
 #>
 Bu entity <#= EntitySetting.StorageEntity.SchemaName #>.<#= EntitySetting.StorageEntity.TableName #> tablosundan bağlanmıştır.
 <#	} #>
-Barındırdığı veri sahaları aşağıda listelenmiştir.
+<#= EntitySetting.GetLocalizedName("tr") #> kayıtlarına ait veri sahalarından oluşur, içerdiği sahalar aşağıda listelenmiştir.
 
 <#
 foreach (var property in properties) 

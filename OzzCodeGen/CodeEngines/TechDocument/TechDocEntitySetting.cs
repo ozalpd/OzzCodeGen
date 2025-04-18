@@ -1,4 +1,5 @@
-﻿using OzzCodeGen.CodeEngines.Storage;
+﻿using OzzCodeGen.CodeEngines.Localization;
+using OzzCodeGen.CodeEngines.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,37 @@ namespace OzzCodeGen.CodeEngines.TechDocument
                     .FirstOrDefault(e => e.EntityDefinition.Name.Equals(EntityDefinition.BaseTypeName));
         }
 
+        public string GetLocalizedName(string langCode)
+        {
+            return CodeEngine.GetTranslation(Name, langCode);
+        }
+
+        [XmlIgnore]
+        public LocalizationEntitySetting LocalizationEntity
+        {
+            get
+            {
+                if (_checkedLocalEntity)
+                    return _localEntity;
+
+                var engine = CodeEngine.GetResxEngine();
+                if (engine != null)
+                {
+                    _localEntity = engine.Entities.FirstOrDefault(e => e.Name.Equals(Name));
+                }
+                _checkedLocalEntity = true;
+                return _localEntity;
+            }
+        }
+        bool _checkedLocalEntity = false;
+        LocalizationEntitySetting _localEntity = null;
+
         [XmlIgnore]
         public StorageEntitySetting StorageEntity
         {
             get
             {
-                if (_lookedEntitySetting)
+                if (_chkedStorageEntity)
                     return _storageEntity;
 
                 var engine = CodeEngine.GetStorageEngine();
@@ -36,11 +62,11 @@ namespace OzzCodeGen.CodeEngines.TechDocument
                 {
                     _storageEntity = engine.Entities.FirstOrDefault(e => e.Name.Equals(Name));
                 }
-                _lookedEntitySetting = true;
+                _chkedStorageEntity = true;
                 return _storageEntity;
             }
         }
-        bool _lookedEntitySetting;
+        bool _chkedStorageEntity = false;
         StorageEntitySetting _storageEntity = null;
 
 

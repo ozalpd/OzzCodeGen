@@ -41,6 +41,7 @@ namespace OzzCodeGen.CodeEngines.TechDocument
         }
         private string _addtDescription;
 
+        string langCode = "tr";
         public string GetTypeDescription()
         {
             if (PropertyDefinition is CollectionProperty)
@@ -53,14 +54,24 @@ namespace OzzCodeGen.CodeEngines.TechDocument
             if (PropertyDefinition is ComplexProperty)
             {
                 var complex = (ComplexProperty)PropertyDefinition;
-                var dependentProp = complex.GetDependency();
+                var dependentProp = complex.Dependency;
                 if (dependentProp != null)
                 {
                     sb.Append(dependentProp.Name);
                     sb.Append(" ile işaret edilen ");
                 }
                 sb.Append(complex.TypeName);
-                sb.Append(" tipinde saha.");
+                sb.Append(" tipinde");
+
+                string localTypeName = CodeEngine.GetTranslation(Name, langCode);
+                if (!string.IsNullOrEmpty(localTypeName))
+                {
+                    sb.Append(" bağlı ");
+                    sb.Append(localTypeName);
+                    sb.Append(" verisini tutan");
+                }
+
+                sb.Append(" saha.");
 
                 return sb.ToString();
             }
@@ -78,7 +89,7 @@ namespace OzzCodeGen.CodeEngines.TechDocument
                 {
                     sb.Append("azami");
                 }
-                sb.Append(" karakter genişliğinde.");
+                sb.Append(" karakter genişliğinde sahadır.");
 
                 return sb.ToString();
             }
@@ -87,18 +98,17 @@ namespace OzzCodeGen.CodeEngines.TechDocument
             {
                 var simple = (SimpleProperty)PropertyDefinition;
                 bool isNull = simple.IsNullable;
+                ComplexProperty dependedComplex = null;
 
                 switch (PropertyDefinition.TypeName.ToLowerInvariant())
                 {
                     case "bool":
-                        return simple.IsNullable
-                            ? "Nullable<bool> (boş kalabilir boolean) tipinde."
-                            : "bool boolean tipinde.";
+                        return isNull ? "Nullable<bool> (boş kalabilir boolean) tipinde."
+                                      : "bool boolean tipinde.";
 
                     case "datetime":
-                        return simple.IsNullable
-                            ? "Nullable<DateTime> (boş kalabilir zaman) tipinde."
-                            : "DateTime (zaman) tipinde.";
+                        return isNull ? "Nullable<DateTime> (boş kalabilir zaman) tipinde."
+                                      : "DateTime (zaman) tipinde.";
 
                     case "int":
                         if (!string.IsNullOrWhiteSpace(simple.EnumTypeName))
@@ -109,29 +119,44 @@ namespace OzzCodeGen.CodeEngines.TechDocument
                         }
                         if (simple.IsNullable)
                         {
-                            sb.Append("Nullable<int> (boş kalabilir 64 bit tamsayı) tipinde.");
+                            sb.Append("Nullable<int> (boş kalabilir 64 bit tamsayı) tipinde");
                         }
                         else
                         {
-                            sb.Append("int (64 bit tamsayı) tipinde.");
+                            sb.Append("int (64 bit tamsayı) tipinde");
                         }
-                        return sb.ToString();
+
+                        dependedComplex = GetDependedComplex(simple);
+                        if (dependedComplex != null)
+                        {
+                            sb.Append(" bağlı ");
+                            string dependTranslation = CodeEngine.GetTranslation(dependedComplex.Name, langCode);
+                            sb.Append(dependTranslation);
+
+                            if (dependedComplex.Name.Equals(dependTranslation, StringComparison.InvariantCultureIgnoreCase) == false)
+                            {
+                                sb.Append(" (");
+                                sb.Append(dependedComplex.Name);
+                                sb.Append(")");
+                            }
+                            sb.Append(" verisine ait kayıt numarasını tutan");
+                        }
+                        break;
 
                     case "byte":
-                        if (simple.IsNullable)
+                        if (isNull)
                         {
-                            sb.Append("Nullable<byte> (boş kalabilir 8 bit tamsayı) tipinde.");
+                            sb.Append("Nullable<byte> (boş kalabilir 8 bit tamsayı) tipinde");
                         }
                         else
                         {
-                            sb.Append("byte (8 bit tamsayı) tipinde.");
+                            sb.Append("byte (8 bit tamsayı) tipinde");
                         }
-                        return sb.ToString();
+                        break;
 
                     case "decimal":
-                        return simple.IsNullable
-                            ? "Nullable<decimal> (boş kalabilir ondalık sayı) tipinde."
-                            : "decimal (ondalık sayı) tipinde.";
+                        return isNull ? "Nullable<decimal> (boş kalabilir ondalık sayı) tipinde."
+                                      : "decimal (ondalık sayı) tipinde.";
 
                     //case "system.guid":
                     //    column.DataType = "UniqueIdentifier";
@@ -145,9 +170,25 @@ namespace OzzCodeGen.CodeEngines.TechDocument
                     default:
                         break;
                 }
+
+                if (sb.Length > 0)
+                {
+                    sb.Append(" sahadır.");
+                    return sb.ToString();
+                }
             }
 
             return PropertyDefinition.TypeName;
+        }
+
+        private ComplexProperty GetDependedComplex(SimpleProperty simple)
+        {
+            ComplexProperty dependedComplex;
+            var propDefs = TechDocEntitySetting.Properties.Select(p => p.PropertyDefinition);
+            var complexes = propDefs.OfType<ComplexProperty>().ToList();
+
+            dependedComplex = complexes.FirstOrDefault(p => p.DependentPropertyName == simple.Name);
+            return dependedComplex;
         }
     }
 }
