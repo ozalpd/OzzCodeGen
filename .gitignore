@@ -210,3 +210,19 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+#Temporary Generated Files
+[Gg]enerated [Cc]odes/
+[Gg]enerated[Cc]odes/
+
+#SampleData Files
+[Ss]ample[Dd]ata/
+
+#Draft Works
+/DraftNotes
+/Draft
+
+#Archive Files
+*.rar
+*.zip
+*.7z
