@@ -175,11 +175,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CommonLibraries\OzzUtils.Wpf\OzzUtils.Wpf.csproj">
-      <Project>{930D101F-C0A8-4F5B-986D-6C71CE3C66F0}</Project>
-      <Name>OzzUtils.Wpf</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CommonLibraries\OzzUtils\OzzUtils.csproj">
+    <ProjectReference Include="..\OzzUtils\OzzUtils.csproj">
       <Project>{d417166b-12eb-43b5-af18-d634ae620f0b}</Project>
       <Name>OzzUtils</Name>
     </ProjectReference>

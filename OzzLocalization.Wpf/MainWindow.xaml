@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OzzLocalization.Wpf"
         xmlns:ViewModels="clr-namespace:OzzLocalization.Wpf.ViewModels"
-        xmlns:Converters="clr-namespace:OzzUtils.Wpf.Converters;assembly=OzzUtils.Wpf"
+        xmlns:Converters="clr-namespace:OzzUtils.Wpf.Converters;assembly=OzzUtils"
         x:Class="OzzLocalization.Wpf.MainWindow"
         mc:Ignorable="d"
         Title="Vocabulary Editor"

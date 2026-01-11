@@ -9,11 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzzCodeGen.Providers.Ef", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzzCodeGen.Wpf", "OzzCodeGen.Wpf\OzzCodeGen.Wpf.csproj", "{246DE687-7DA0-48B8-B544-5F29837A417F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzzUtils", "..\CommonLibraries\OzzUtils\OzzUtils.csproj", "{D417166B-12EB-43B5-AF18-D634AE620F0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzzUtils", "OzzUtils\OzzUtils.csproj", "{D417166B-12EB-43B5-AF18-D634AE620F0B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzzLocalization", "OzzLocalization\OzzLocalization.csproj", "{7E5B007E-BA07-4685-B014-CBD9D8DE3C14}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzzUtils.Wpf", "..\CommonLibraries\OzzUtils.Wpf\OzzUtils.Wpf.csproj", "{930D101F-C0A8-4F5B-986D-6C71CE3C66F0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzzLocalization.Wpf", "OzzLocalization.Wpf\OzzLocalization.Wpf.csproj", "{1720DBC9-15D9-4AA5-822A-EB9A8B5E7CC8}"
 EndProject
