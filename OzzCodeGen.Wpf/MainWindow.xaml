@@ -415,6 +415,7 @@
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
                                         <TextBlock Text="Is Primary Key:" Grid.Row="0" Grid.Column="0"/>
                                         <CheckBox IsChecked="{Binding IsKey, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" />
@@ -422,6 +423,9 @@
                                         <CheckBox IsChecked="{Binding IsForeignKey, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" />
                                         <TextBlock Text="Is Nullable:" Grid.Row="2" Grid.Column="0"/>
                                         <CheckBox IsChecked="{Binding IsNullable, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" />
+                                        <TextBlock Text="Enum Name:" Grid.Row="3" Grid.Column="0" ToolTip="Enum Type Name"/>
+                                        <TextBox Text="{Binding EnumTypeName, Mode=TwoWay, NotifyOnValidationError=True}"
+                                                 Grid.Row="3" Grid.Column="1" ToolTip="Enum Type Name"/>
                                     </Grid>
                                     <Grid x:Name="StringPropertyGrid">
                                         <Grid.ColumnDefinitions>

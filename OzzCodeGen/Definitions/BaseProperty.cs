@@ -44,7 +44,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (_comment == value) return;
                 _comment = value;
-                RaisePropertyChanged("comment");
+                RaisePropertyChanged("Comment");
             }
         }
         string _comment;
@@ -286,13 +286,19 @@ namespace OzzCodeGen.Definitions
         {
             return p.IsTypeNumeric();
         }
-        public static bool IsTypeNumeric(string typeName)
+        public static bool IsTypeIntNumeric(string typeName)
         {
             return typeName.ToLowerInvariant().Contains("int") || typeName.Contains("uint") ||
-                 typeName.Contains("short") || typeName.Contains("ushort") ||
-                 typeName.Contains("ulong") || typeName.Contains("long") ||
-                 typeName.Contains("decimal") || typeName.Contains("float") || typeName.Contains("double") ||
-                 typeName.Contains("byte") || typeName.Contains("sbyte");
+                   typeName.Contains("short") || typeName.Contains("ushort") ||
+                   typeName.Contains("ulong") || typeName.Contains("long") ||
+                   typeName.Contains("byte") || typeName.Contains("sbyte");
+        }
+
+        public static bool IsTypeNumeric(string typeName)
+        {
+            return IsTypeIntNumeric(typeName) || typeName.Contains("decimal") ||
+                   typeName.Contains("float") || typeName.Contains("double") ||
+                   typeName.Contains("byte") || typeName.Contains("sbyte");
         }
 
 

@@ -124,14 +124,15 @@ namespace OzzCodeGen.Wpf
         {
             var engines = new List<string>();
 
-            AddCodeEngineName(engines, EngineTypes.MetadataCodeEngineId);
-            AddCodeEngineName(engines, EngineTypes.LocalizationResxGenId);
-            AddCodeEngineName(engines, EngineTypes.AspNetMvcEngineId);
-            AddCodeEngineName(engines, EngineTypes.TSqlScriptsId);
-            AddCodeEngineName(engines, EngineTypes.SqliteScriptsId);
             AddCodeEngineName(engines, EngineTypes.AndroidEngineId);
-            AddCodeEngineName(engines, EngineTypes.ObjcEngineId);
+            AddCodeEngineName(engines, EngineTypes.AspNetMvcEngineId);
             AddCodeEngineName(engines, EngineTypes.EfDbFirstDataLayerId);
+            AddCodeEngineName(engines, EngineTypes.EfTechnicalDocId);
+            AddCodeEngineName(engines, EngineTypes.LocalizationResxGenId);
+            AddCodeEngineName(engines, EngineTypes.MetadataCodeEngineId);
+            AddCodeEngineName(engines, EngineTypes.ObjcEngineId);
+            AddCodeEngineName(engines, EngineTypes.SqliteScriptsId);
+            AddCodeEngineName(engines, EngineTypes.TSqlScriptsId);
 
             return engines;
         }

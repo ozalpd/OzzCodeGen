@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace OzzCodeGen.Definitions
 {
@@ -23,6 +24,22 @@ namespace OzzCodeGen.Definitions
             }
             return typeNames;
         }
+
+        [XmlIgnore]
+        public SimpleProperty Dependency
+        {
+            get
+            {
+                if (_chkedDependency)
+                    return _dependency;
+
+                _dependency = GetDependency();
+                _chkedDependency = true;
+                return _dependency;
+            }
+        }
+        SimpleProperty _dependency;
+        bool _chkedDependency = false;
 
         public SimpleProperty GetDependency()
         {

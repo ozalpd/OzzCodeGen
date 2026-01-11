@@ -160,6 +160,9 @@
       <DependentUpon>MvcViewSnippets.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeEngines\AspNetMvc\Templates\MvcViewSnippets.part.cs" />
+    <Compile Include="CodeEngines\TechDocument\TechDocEntitySetting.cs" />
+    <Compile Include="CodeEngines\TechDocument\TechDocPropertySetting.cs" />
+    <Compile Include="CodeEngines\TechDocument\TechDocumentEngine.cs" />
     <Compile Include="CodeEngines\Java\Templates\AbstractJavaTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -353,6 +356,15 @@
     </Compile>
     <Compile Include="CodeEngines\Storage\UI\StorageEngineUI.xaml.cs">
       <DependentUpon>StorageEngineUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CodeEngines\TechDocument\Templates\TechDocTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TechDocTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeEngines\TechDocument\Templates\TechDocTemplate.part.cs" />
+    <Compile Include="CodeEngines\TechDocument\UI\TechDocEngineUI.xaml.cs">
+      <DependentUpon>TechDocEngineUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="CodeGenProject.cs" />
     <Compile Include="Definitions\BaseClassProperty.cs" />
@@ -600,6 +612,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CodeEngines\TechDocument\UI\TechDocEngineUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\CommonTemplateSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -689,7 +705,12 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MetadataClassTemplate.cs</LastGenOutput>
     </Content>
+    <None Include="CodeEngines\TechDocument\Templates\TechDocTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>TechDocTemplate.cs</LastGenOutput>
+    </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
