@@ -150,7 +150,23 @@ namespace OzzCodeGen.Wpf
                 Project = project;
                 Project.HasProjectChanges = false;
                 SelectedEntity = Project.DataModel.FirstOrDefault();
-                Project.ModelProvider = GetModelProviders().First(m => m.ProviderId == Project.ModelProviderId);
+                
+                var provider = GetModelProviders().FirstOrDefault(m => m.ProviderId == Project.ModelProviderId);
+                if (provider == null)
+                {
+                    BusyView.Visibility = System.Windows.Visibility.Hidden;
+                    tmrProgressValue.Stop();
+                    timer.Stop();
+                    MessageBox.Show(
+                        string.Format("This project uses '{0}' which is no longer supported.\n\n" +
+                        "Please create a new project using the Empty Model Provider.", Project.ModelProviderId),
+                        "Unsupported Model Provider",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+                
+                Project.ModelProvider = provider;
                 btnRefresh.IsEnabled = Project.ModelProvider.CanRefresh;
                 BusyView.Visibility = System.Windows.Visibility.Hidden;
 

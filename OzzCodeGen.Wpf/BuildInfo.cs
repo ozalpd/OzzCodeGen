@@ -10,7 +10,7 @@ namespace OzzCodeGen.Wpf
         {
             get
             {
-                return "2026.01.11 21:12";
+                return "2026.01.11 21:46";
             }
         }
     }

@@ -179,10 +179,6 @@
       <Project>{d417166b-12eb-43b5-af18-d634ae620f0b}</Project>
       <Name>OzzUtils</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OzzCodeGen.Ef\OzzCodeGen.Providers.Ef.csproj">
-      <Project>{5b84eda9-e2b7-4227-8287-c15b27d8c9b5}</Project>
-      <Name>OzzCodeGen.Providers.Ef</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OzzCodeGen\OzzCodeGen.csproj">
       <Project>{794c935f-7fc8-4d07-ab2f-bd37008f67cc}</Project>
       <Name>OzzCodeGen</Name>

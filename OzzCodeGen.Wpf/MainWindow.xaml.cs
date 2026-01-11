@@ -180,7 +180,6 @@ namespace OzzCodeGen.Wpf
         {
             var modelProviders = new List<IModelProvider>();
             modelProviders.Add(new EmptyModel());
-            modelProviders.Add(new Providers.Ef.Ef5());
 
             return modelProviders;
         }
