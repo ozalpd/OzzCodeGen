@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using System.ComponentModel;
 using OzzCodeGen.Providers;
 using System.IO;
 using OzzCodeGen.CodeEngines.Localization;
@@ -17,7 +18,10 @@ namespace OzzCodeGen.UI
             InitializeComponent();
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string ModelSource { get; set; }
+        
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public EmptyModel Provider { get; set; }
 
         public DataModel GetDataModel()
@@ -26,6 +30,7 @@ namespace OzzCodeGen.UI
             return model;
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public List<ModelTemplate> ModelTemplates
         {
             get { return _modelTemplates; }

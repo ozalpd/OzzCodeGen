@@ -11,7 +11,7 @@
         Closing="Window_Closing"
         Height="320" Width="800" MinWidth="640"
         Activated="Window_Activated"
-        Icon="Assets/App-organizer.ico">
+        Icon="Assets\App-organizer.ico">
     <Window.DataContext>
         <ViewModels:VocabularyEditorVM/>
     </Window.DataContext>

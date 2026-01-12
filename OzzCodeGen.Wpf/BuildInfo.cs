@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace OzzCodeGen.Wpf
+﻿namespace OzzCodeGen.Wpf;
+public partial class BuildInfo
 {
-    public partial class BuildInfo
+    public static string Date
     {
-        public static string Date
+        get
         {
-            get
-            {
-                return "2026.01.11 22:00";
-            }
+            return "2026.01.12 01:10";
         }
     }
 }
