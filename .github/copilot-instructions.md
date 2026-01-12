@@ -24,10 +24,10 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - **Templates & T4:** Many engine templates are `.tt`-backed with `*.part.cs` companions; the `.csproj` wires `DependentUpon` to keep generated pieces grouped (see [OzzCodeGen.csproj](OzzCodeGen/OzzCodeGen.csproj#L25-L112)).
 
 ## Developer Workflows
-- **Build:** Uses .NET Framework 4.8 and `packages.config` restore.
-  - Restore and build from a Developer Command Prompt:
-    - `nuget restore OzzGenClassic.sln`
-    - `MSBuild.exe OzzGenClassic.sln /p:Configuration=Debug`
+- **Build:** Uses .NET 10 SDK.
+  - Restore and build from any terminal:
+    - `dotnet restore OzzGenClassic.sln`
+    - `dotnet build OzzGenClassic.sln -c Debug`
   - WPF startup projects: set [OzzCodeGen.Wpf](OzzCodeGen.Wpf) or [OzzLocalization.Wpf](OzzLocalization.Wpf) as Startup.
 - **Run (CodeGen):** Launch `OzzCodeGen.Wpf`. Create/open a project (`*.OzzGen`), pick a Model Provider (EF or Empty), then add one or more Engines. For EF, select an `.edmx` via provider dialog; use the Refresh button to sync schema (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L113-L129), [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L239-L247)).
 - **Run (Localization):** Launch `OzzLocalization.Wpf` and edit `vocabulary.??.xml` files (default `notr`). See [Vocabularies.cs](OzzLocalization/Vocabularies.cs#L6-L20) for naming and [OpenVocabularies](OzzLocalization/Vocabularies.cs#L64-L95).
@@ -54,6 +54,6 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 
 ## Notes
 - Tests are not present; rely on manual verification via WPF apps.
-- NuGet uses `packages.config` + `packages/` folder; prefer `nuget restore` over `msbuild /t:Restore` for compatibility.
+- Project files use SDK-style `.csproj` format with .NET 10 as the target framework.
 
-If any section is unclear or missing (e.g., a specific engine’s output layout or provider dialogs), tell me which part you want expanded and I’ll iterate. 
+If any section is unclear or missing (e.g., a specific engine's output layout or provider dialogs), tell me which part you want expanded and I'll iterate.

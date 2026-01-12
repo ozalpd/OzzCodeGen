@@ -13,13 +13,13 @@ OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. 
 - **OzzLocalization.sln**: Vocabulary management (OzzLocalization + OzzLocalization.Wpf).
 
 ## Build
-Use .NET Framework 4.8 with `packages.config` restore.
+Use .NET 10 SDK.
 
 ```bat
-nuget restore OzzGenClassic.sln
-MSBuild.exe OzzGenClassic.sln /p:Configuration=Debug
-nuget restore OzzLocalization.sln
-MSBuild.exe OzzLocalization.sln /p:Configuration=Debug
+dotnet restore OzzGenClassic.sln
+dotnet build OzzGenClassic.sln -c Debug
+dotnet restore OzzLocalization.sln
+dotnet build OzzLocalization.sln -c Debug
 ```
 
 ## Run
