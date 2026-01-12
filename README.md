@@ -1,6 +1,6 @@
 # OzzCodeGen & OzzLocalization
 
-OzzCodeGen is a pluggable code generator library with a WPF UI. OzzLocalization is a companion library (with its own WPF UI) used to create and manage translated strings that OzzCodeGen can consume during code generation.
+OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Components
 - **OzzCodeGen**: Core library with domain model (`DataModel`, `EntityDefinition`, `BaseProperty`), provider abstractions (`IModelProvider`), and multiple code engines under `OzzCodeGen/CodeEngines`.
