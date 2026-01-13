@@ -3,12 +3,13 @@
 Use this guide to be productive quickly in this repo. Focus on the concrete patterns implemented here (WPF apps + pluggable code-generation engines + XML-serialized models), not generic advice.
 
 ## Big Picture
-- **Solutions:** The repo hosts two solutions: [OzzGenClassic.sln](OzzGenClassic.sln) (code generation tooling) and [OzzLocalization.sln](OzzLocalization.sln) (vocabulary management).
+- **Solution:** The repo contains a single solution [OzzCodeGen.sln](OzzCodeGen.sln) with both code generation tooling and vocabulary management.
 - **Apps:** WPF fronts in [OzzCodeGen.Wpf](OzzCodeGen.Wpf) and [OzzLocalization.Wpf](OzzLocalization.Wpf). The former loads/edits a `CodeGenProject`, selects `CodeEngines`, and generates artifacts; the latter manages vocabularies.
 - **Relationship:** OzzCodeGen is the code generator library with its UI in [OzzCodeGen.Wpf](OzzCodeGen.Wpf). [OzzLocalization](OzzLocalization) (and [OzzLocalization.Wpf](OzzLocalization.Wpf)) is used to create translated strings that OzzCodeGen consumes via its localization/resource engines.
 - **Core library:** [OzzCodeGen](OzzCodeGen) contains the domain model (`DataModel`, `EntityDefinition`, `BaseProperty`), provider abstractions (`IModelProvider`), and multiple code engines under [CodeEngines](OzzCodeGen/CodeEngines).
 - **Providers:** EF Db-first and an interactive Empty provider live in [OzzCodeGen.Ef](OzzCodeGen.Ef) and [OzzCodeGen/Providers](OzzCodeGen/Providers). Providers produce a `DataModel` from a source (e.g., `.edmx`).
 - **Localization:** [OzzLocalization](OzzLocalization) handles XML vocabularies (see [Vocabularies.cs](OzzLocalization/Vocabularies.cs), [Vocabulary.cs](OzzLocalization/Vocabulary.cs)).
+- **OzzUtils:** Shared utilities library (e.g., common extensions, helpers) consumed by both code generation and localization projects.
 
 ## Architectural Patterns
 - **Project orchestration:** `CodeGenProject` is the central state holder; engines attach to it and react to changes.
@@ -26,19 +27,38 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 ## Developer Workflows
 - **Build:** Uses .NET 10 SDK.
   - Restore and build from any terminal:
-    - `dotnet restore OzzGenClassic.sln`
-    - `dotnet build OzzGenClassic.sln -c Debug`
+    - `dotnet restore OzzCodeGen.sln`
+    - `dotnet build OzzCodeGen.sln -c Debug`
   - WPF startup projects: set [OzzCodeGen.Wpf](OzzCodeGen.Wpf) or [OzzLocalization.Wpf](OzzLocalization.Wpf) as Startup.
 - **Run (CodeGen):** Launch `OzzCodeGen.Wpf`. Create/open a project (`*.OzzGen`), pick a Model Provider (EF or Empty), then add one or more Engines. For EF, select an `.edmx` via provider dialog; use the Refresh button to sync schema (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L113-L129), [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L239-L247)).
 - **Run (Localization):** Launch `OzzLocalization.Wpf` and edit `vocabulary.??.xml` files (default `notr`). See [Vocabularies.cs](OzzLocalization/Vocabularies.cs#L6-L20) for naming and [OpenVocabularies](OzzLocalization/Vocabularies.cs#L64-L95).
 - **Generated outputs:** Engines persist their own settings/files next to the project and write artifacts under `CodeGenProject.TargetFolder` (default `..\Generated Codes`, resolved via [TargetSolutionDir](OzzCodeGen/CodeGenProject.cs#L121-L139)).
-- **Version info:** `BuildInfo.tt` generates `BuildInfo.cs`; the main window title uses `BuildInfo.Date` (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L23-L36)).
+
+### T4 Templates & Build Info
+- **BuildInfo pattern:** [BuildInfo.tt](OzzCodeGen.Wpf/BuildInfo.tt) auto-generates [BuildInfo.cs](OzzCodeGen.Wpf/BuildInfo.cs) with `BuildInfo.Date` (used in main window title).
+  - T4 files are preprocessed at build time; the `.csproj` declares [DependentUpon](OzzCodeGen.Wpf/OzzCodeGen.Wpf.csproj) relationships so IDE groups `.tt` with generated `.cs`.
+  - Manual regeneration in Visual Studio: right-click `.tt` file → **Run Custom Tool**.
+  - If changes don't appear: rebuild solution or delete/recreate the generated file.
+- **Template examples:** Engine templates under `CodeEngines/<Engine>/Templates/` follow the same `.tt` + `*.part.cs` pattern for maintainability.
 
 ### Quick Start (Localization → ResxEngine)
-- Build both solutions, then create `vocabulary.notr.xml` in a folder alongside your `.OzzGen` project file (use [OzzLocalization.Wpf](OzzLocalization.Wpf)).
+- Build the solution, then create `vocabulary.notr.xml` in a folder alongside your `.OzzGen` project file (use [OzzLocalization.Wpf](OzzLocalization.Wpf)).
 - In [OzzCodeGen.Wpf](OzzCodeGen.Wpf): create a project, add `Localization_Resource_Generator`, and save the project to establish `TargetSolutionDir`.
 - In the engine UI: set `TargetFolder` (default `App_GlobalResources`) and `VocabularyFolder` relative to the project file.
 - Choose `SingleResx` for combined resources or per-entity; render to generate `.resx` under `TargetSolutionDir/TargetFolder` (see [ResxEngine.cs](OzzCodeGen/CodeEngines/Localization/ResxEngine.cs)).
+
+## Engine Lifecycle
+- **Instantiation:** `EngineTypes.GetInstance()` creates an engine from its ID; engines store settings in XML files next to the project.
+- **Refresh:** When the data model changes, `RefreshFromProject()` is called on each active engine to sync state from the `CodeGenProject`.
+- **Template rendering:** Engines expose template selection and rendering via their UI control (`UiControl`). Templates execute with access to the current `DataModel` and engine settings.
+- **Output generation:** Rendered output is written to `CodeGenProject.TargetFolder`. Engines control file naming, encoding, and organization.
+- **Settings persistence:** Engine state (UI selections, paths, flags) is saved via `SaveToFile()` when the project is saved (see [CodeGenProject.SaveBoundFiles](OzzCodeGen/CodeGenProject.cs#L220-L231)).
+
+## XML Serialization Patterns
+- **Serialization attributes:** Domain classes (`DataModel`, `EntityDefinition`, `BaseProperty`, `Vocabulary`) use `[XmlRoot]`, `[XmlElement]`, `[XmlAttribute]` for controlled serialization.
+- **Custom logic:** Classes may implement `XmlSerializationHelper` methods or override serialization for nested structures (e.g., `EntityDefinition.Properties` as a collection).
+- **Versioning:** Serialized XML is version-agnostic; new optional properties default to their type's default value if missing on deserialization.
+- **Round-trip:** Ensure read/write cycles preserve data. Test by saving, closing, and reopening a project to verify no loss.
 
 ## Conventions & Integration Points
 - **Engine ID-first design:** UI and persistence use engine IDs; adding an engine requires updating [EngineTypes.GetInstance](OzzCodeGen/CodeEngines/EngineTypes.cs#L15-L60) and `OpenFile` mapping ([EngineTypes.cs](OzzCodeGen/CodeEngines/EngineTypes.cs#L62-L135)).
@@ -52,8 +72,27 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - **Add a code engine:** Create a `BaseCodeEngine` subclass with `EngineId`, `DefaultFileName`, `OpenFile()`, `RefreshFromProject()`, and a `UiControl` user control under `CodeEngines/<Engine>/UI`. Register in [EngineTypes.cs](OzzCodeGen/CodeEngines/EngineTypes.cs).
 - **Use templates:** Back templates with `.tt` and `*.part.cs`; align with existing `DependentUpon` usage in [OzzCodeGen.csproj](OzzCodeGen/OzzCodeGen.csproj).
 
+## Testing Strategy
+- **Manual verification:** Since automated tests are not present, verify changes via the WPF UIs.
+- **Key workflows to test:**
+  - Create a new project with each Model Provider (Empty, EF).
+  - Add/remove engines and verify settings persist across save/load.
+  - Modify data model and trigger engine refresh; confirm outputs update.
+  - Test end-to-end: vocabulary creation → ResxEngine render → `.resx` generation.
+  - Edge cases: empty models, large schemas, special characters in names, relative path resolution.
+- **Regression checks:** After changes, run both WPF apps and exercise the main use cases in **Quick Start (Localization → ResxEngine)**.
+
+## Troubleshooting
+- **Project fails to load:** Check XML format in `.OzzGen` file. Ensure all referenced model provider paths are valid. See `CodeGenProject.OpenFile()`.
+- **Model provider refresh fails:** For EF, verify `.edmx` path is accessible. For Empty, ensure `Defaults/` folder exists. Check Output window for detailed errors.
+- **Engine output not appearing:** Verify `TargetFolder` resolves to an accessible directory (relative to `TargetSolutionDir`). Check engine's `RefreshFromProject()` and template selection. Review engine-specific logs in Output window.
+- **Template generation error:** Inspect `.tt` file for syntax issues. Verify all referenced properties exist on the model. Manually regenerate via **Run Custom Tool**.
+- **Serialization roundtrip fails:** Compare saved XML with schema expectations. Check for uninitialized collections or nested objects with null defaults.
+- **BuildInfo.Date not updating:** Right-click `BuildInfo.tt` → **Run Custom Tool**, or rebuild the entire project.
+
 ## Notes
 - Tests are not present; rely on manual verification via WPF apps.
 - Project files use SDK-style `.csproj` format with .NET 10 as the target framework.
+- OzzUtils is a shared dependency across all projects; changes there may require rebuild of dependent projects.
 
 If any section is unclear or missing (e.g., a specific engine's output layout or provider dialogs), tell me which part you want expanded and I'll iterate.
