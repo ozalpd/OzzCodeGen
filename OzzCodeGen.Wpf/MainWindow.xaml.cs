@@ -124,13 +124,18 @@ namespace OzzCodeGen.Wpf
         {
             var engines = new List<string>();
 
-            AddCodeEngineName(engines, EngineTypes.AndroidEngineId);
+            // Android and Java code generation engine removed in this version 2026-01-13 Özalp
+            //AddCodeEngineName(engines, EngineTypes.AndroidEngineId);
             AddCodeEngineName(engines, EngineTypes.AspNetMvcEngineId);
-            AddCodeEngineName(engines, EngineTypes.EfDbFirstDataLayerId);
+            // Entity Framework Database First Data Layer Engine removed in this version 2026-01-13 Özalp
+            //AddCodeEngineName(engines, EngineTypes.EfDbFirstDataLayerId);
+
             AddCodeEngineName(engines, EngineTypes.EfTechnicalDocId);
             AddCodeEngineName(engines, EngineTypes.LocalizationResxGenId);
             AddCodeEngineName(engines, EngineTypes.MetadataCodeEngineId);
-            AddCodeEngineName(engines, EngineTypes.ObjcEngineId);
+            //Objective-C code generation engine removed in this version 2026-01-13 Özalp
+            //AddCodeEngineName(engines, EngineTypes.ObjcEngineId);
+            
             AddCodeEngineName(engines, EngineTypes.SqliteScriptsId);
             AddCodeEngineName(engines, EngineTypes.TSqlScriptsId);
 

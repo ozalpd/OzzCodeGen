@@ -33,7 +33,7 @@ namespace OzzCodeGen.Wpf
             {
                 int i = grdEntities.SelectedIndex;
 
-                if(sender is NewPropertyDialog)
+                if (sender is NewPropertyDialog)
                 {
                     var newProperty = (NewPropertyDialog)sender;
                     var property = newProperty.PropertyDefinition;
@@ -131,7 +131,7 @@ namespace OzzCodeGen.Wpf
                 OpenProject(openDlg.FileName);
             }
         }
-
+        static string unsuppProvider = "Unsupported Model Provider";
         private void OpenProject(string fileName)
         {
             if (!File.Exists(fileName))
@@ -145,12 +145,25 @@ namespace OzzCodeGen.Wpf
             timer.Interval = new TimeSpan(4000000);
             timer.Tick += (object sender, EventArgs e) =>
             {
-                CodeGenProject project = CodeGenProject.OpenFile(fileName);
+                CodeGenProject project = null;
+                try
+                {
+                    project = CodeGenProject.OpenFile(fileName);
+                }
+                catch (Exception ex)
+                {
+                    string msgHeader = ex is NotImplementedException
+                                     ? unsuppProvider
+                                     : "Error Opening Project File";
+                    MessageBox.Show(ex.Message, msgHeader, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    project = null;
+                    throw;
+                }
                 Settings.AddToRecentFiles(fileName);
                 Project = project;
                 Project.HasProjectChanges = false;
                 SelectedEntity = Project.DataModel.FirstOrDefault();
-                
+
                 var provider = GetModelProviders().FirstOrDefault(m => m.ProviderId == Project.ModelProviderId);
                 if (provider == null)
                 {
@@ -160,12 +173,12 @@ namespace OzzCodeGen.Wpf
                     MessageBox.Show(
                         string.Format("This project uses '{0}' which is no longer supported.\n\n" +
                         "Please create a new project using the Empty Model Provider.", Project.ModelProviderId),
-                        "Unsupported Model Provider",
+                        unsuppProvider,
                         MessageBoxButton.OK,
                         MessageBoxImage.Warning);
                     return;
                 }
-                
+
                 Project.ModelProvider = provider;
                 btnRefresh.IsEnabled = Project.ModelProvider.CanRefresh;
                 BusyView.Visibility = System.Windows.Visibility.Hidden;
@@ -179,7 +192,7 @@ namespace OzzCodeGen.Wpf
         public void OpenMostRecentProject()
         {
             var recentProject = MostRecentProjectFile;
-            if(recentProject!=null && recentProject.FileExists)
+            if (recentProject != null && recentProject.FileExists)
             {
                 OpenProject(recentProject.FullPath);
             }
