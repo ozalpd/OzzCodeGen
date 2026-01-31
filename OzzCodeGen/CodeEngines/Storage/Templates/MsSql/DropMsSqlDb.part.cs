@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
+﻿namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
 {
     public partial class DropMsSqlDb : AbstractStorageTemplate
     {

@@ -19,7 +19,7 @@ CREATE TABLE <#= TableDefinition.TableName #>(
 	<#= TableDefinition.GetColumnDeclaration(column) #><# if(i < columns.Count()){ #>,<# } #> 
 <#    } #>
 );
-<#	foreach (var column in columns.Where(c=>c.Indexed))
+<#	foreach (var column in columns.Where(c => c.Indexed))
     {#>
 <#= GetIndexDeclaration(column) #>;
 <#  } #>
