@@ -347,7 +347,7 @@ protected void WriteDeleteStatement(StorageEntitySetting table, StorageEntitySet
 
     Delete From [<#= baseTable.SchemaName #>].[<#= baseTable.TableName #>]
         Where [<#= baseTable.SchemaName #>].[<#= baseTable.TableName #>].[<#= baseTable.PrimaryKeyColumn.Name #>] = <#= pkeyValue #>
-<#+    } #>
+<#+  } #>
 <#+ 
 } #>
 <#+ 

@@ -476,11 +476,14 @@ namespace OzzCodeGen.CodeEngines.Storage
                 dropTemplate.WriteToFile(file, true);
             }
 
-            var additnTemplate = new Additionals(this);
-            if (additnTemplate != null)
+            if (AdditionalCommands != null && AdditionalCommands.Count != 0)
             {
-                string file = Path.Combine(TargetDirectory, additnTemplate.GetDefaultFileName());
-                additnTemplate.WriteToFile(file, true);
+                var additnTemplate = new Additionals(this);
+                if (additnTemplate != null)
+                {
+                    string file = Path.Combine(TargetDirectory, additnTemplate.GetDefaultFileName());
+                    additnTemplate.WriteToFile(file, true);
+                }
             }
         }
 

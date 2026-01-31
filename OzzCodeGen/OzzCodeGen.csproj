@@ -20,4 +20,62 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
     </None>
   </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="CodeEngines\Storage\Templates\Additionals.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Additionals.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CreateMsSqlDb.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CreateTSqlTable.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\Storage\Templates\MsSql\DropMsSqlDb.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DropMsSqlDb.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TsqlStoredProcs.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\Storage\Templates\Sqlite\CreateSqliteTable.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CreateSqliteTable.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="CodeEngines\Storage\Templates\Additionals.tt">
+      <LastGenOutput>Additionals.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt">
+      <LastGenOutput>CreateMsSqlDb.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\Storage\Templates\MsSql\CreateTSqlTable.tt">
+      <LastGenOutput>CreateTSqlTable.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\Storage\Templates\MsSql\DropMsSqlDb.tt">
+      <LastGenOutput>DropMsSqlDb.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt">
+      <LastGenOutput>TsqlStoredProcs.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\Storage\Templates\Sqlite\CreateSqliteTable.tt">
+      <LastGenOutput>CreateSqliteTable.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
 </Project>
