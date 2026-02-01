@@ -13,7 +13,7 @@ var properties = CreateForm ?
         Entity.DisplayColumns.Where(e => e.InCreateView) :
         Entity.DisplayColumns.Where(e => e.InEditView);
 var decimalProperties = properties
-        .Where(p => p.PropertyDefinition.TypeName.Contains("decimal") ||
+        .Where(p => p.PropertyDefinition.TypeName.Contains("decimal")    ||
                 p.PropertyDefinition.TypeName.Contains("float") ||
                 p.PropertyDefinition.TypeName.Contains("double"));
 
@@ -80,8 +80,7 @@ foreach (var property in properties)
 <#      } #>
             </div>
         </div>
-<#  } #>
-<#
+<#  }
 } #>
 <#  if(PartialView) { #>
         @if (modal)

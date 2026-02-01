@@ -1,6 +1,7 @@
-﻿using System.ComponentModel;
+﻿using OzzUtils.Savables;
+using System.ComponentModel;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
-using OzzUtils.Savables;
 
 namespace OzzCodeGen.Definitions
 {
@@ -81,6 +82,7 @@ namespace OzzCodeGen.Definitions
         private EnumMemberList _members;
 
         [XmlIgnore]
+        [JsonIgnore]
         public EnumDefinitionList EnumList { get; set; }
 
         public override string ToString()

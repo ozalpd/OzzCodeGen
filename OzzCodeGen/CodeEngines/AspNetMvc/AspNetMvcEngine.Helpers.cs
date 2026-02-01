@@ -1,10 +1,10 @@
-﻿using OzzCodeGen.Definitions;
-using OzzUtils;
+﻿using OzzUtils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc
@@ -81,6 +81,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         /// RoleName, MethodName dictionary
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Dictionary<string, string> IsUserInRoleMethods
         {
             get

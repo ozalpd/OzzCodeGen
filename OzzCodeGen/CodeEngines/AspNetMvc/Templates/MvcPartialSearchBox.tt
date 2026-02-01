@@ -3,8 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-<# 
-WriteUsingNamespaces(); #>
+<# WriteUsingNamespaces(); #>
 <div class="input-group">
     @Html.TextBox("SearchString", null, new { @class = "form-control", placeholder = MessageStrings.EnterKeywordHere })
     <span class="input-group-btn">

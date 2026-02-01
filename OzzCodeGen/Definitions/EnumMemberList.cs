@@ -1,5 +1,6 @@
 ﻿using OzzUtils.Savables;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen.Definitions
@@ -12,6 +13,7 @@ namespace OzzCodeGen.Definitions
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public EnumDefinition EnumDefinition { get; set; }
 
         public new void Add(EnumMember member)

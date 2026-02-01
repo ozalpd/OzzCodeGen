@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using OzzCodeGen.Providers;
 using OzzUtils;
-using System.ComponentModel;
-using System.Xml.Serialization;
-using OzzCodeGen.Providers;
 using OzzUtils.Savables;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 
 namespace OzzCodeGen.Definitions
 {
@@ -40,6 +41,7 @@ namespace OzzCodeGen.Definitions
         private string name;
 
         [XmlIgnore]
+        [JsonIgnore]
         public DataModel DataModel
         {
             get { return dataModel; }

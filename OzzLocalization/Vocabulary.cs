@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OzzLocalization
@@ -14,9 +15,11 @@ namespace OzzLocalization
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public string CultureCode { get; private set; }
 
         [XmlIgnore]
+        [JsonIgnore]
         public string FilePath { get; set; }
 
         public void AddUnique(Vocab vocab)

@@ -25,7 +25,3 @@ foreach (var property in properties)
 #>
 <#= property.Name #> <#= property.GetTypeDescription() #> <#= property.AddtDescription #>
 <#	} #>
-<#+
-  // Insert any template procedures here
-  void foo(){}
-#>

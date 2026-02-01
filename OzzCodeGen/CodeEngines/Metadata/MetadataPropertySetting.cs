@@ -1,6 +1,7 @@
 ﻿using OzzCodeGen.Definitions;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.Metadata
@@ -8,12 +9,14 @@ namespace OzzCodeGen.CodeEngines.Metadata
     public class MetadataPropertySetting : BasePropertySetting
     {
         [XmlIgnore]
+        [JsonIgnore]
         public MetadataEntitySetting MetadataEntitySetting
         {
             get { return (MetadataEntitySetting)EntitySetting; }
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public MetadataCodeEngine CodeEngine
         {
             get { return MetadataEntitySetting.CodeEngine; }
@@ -268,6 +271,7 @@ namespace OzzCodeGen.CodeEngines.Metadata
 
 
         [XmlIgnore]
+        [JsonIgnore]
         protected string ResourceName
         {
             get

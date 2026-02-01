@@ -1,5 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.Metadata
@@ -7,9 +7,11 @@ namespace OzzCodeGen.CodeEngines.Metadata
     public class MetadataEntitySetting : AbstractEntitySetting<MetadataPropertySetting>
     {
         [XmlIgnore]
+        [JsonIgnore]
         public MetadataCodeEngine CodeEngine { get; set; }
 
         [XmlIgnore]
+        [JsonIgnore]
         public bool HasCustomAttributes
         {
             get

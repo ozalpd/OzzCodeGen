@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Text.Json.Serialization;
+using System.Windows;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -12,6 +13,7 @@ namespace OzzUtils.Wpf
         public double Width { get; set; }
 
         [XmlIgnore]
+        [JsonIgnore]
         public bool IsOnPrimaryScreen { get; private set; }
 
 

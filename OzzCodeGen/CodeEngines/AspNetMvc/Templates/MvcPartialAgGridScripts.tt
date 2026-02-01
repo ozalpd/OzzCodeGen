@@ -3,8 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-<# 
-WriteUsingNamespaces(); #>
+<# WriteUsingNamespaces(); #>
 @model string
 <script type="text/javascript">
     function refreshData() {

@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using OzzUtils;
+﻿using OzzUtils;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 
 namespace OzzCodeGen.Definitions
 {
@@ -225,9 +226,11 @@ namespace OzzCodeGen.Definitions
 
         
         [XmlIgnore]
+        [JsonIgnore]
         public EntityDefinition EntityDefinition { get; set; }
 
         [XmlIgnore]
+        [JsonIgnore]
         public List<string> UsableTypeNames
         {
             get

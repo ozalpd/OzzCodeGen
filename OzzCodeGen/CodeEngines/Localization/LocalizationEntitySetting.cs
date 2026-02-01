@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.Localization
@@ -7,6 +7,7 @@ namespace OzzCodeGen.CodeEngines.Localization
     public class LocalizationEntitySetting : BaseEntitySetting
     {
         [XmlIgnore]
+        [JsonIgnore]
         public string BaseTypeName
         {
             get

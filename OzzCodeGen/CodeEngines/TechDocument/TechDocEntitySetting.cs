@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -12,6 +13,7 @@ namespace OzzCodeGen.CodeEngines.TechDocument
     public class TechDocEntitySetting : AbstractEntitySetting<TechDocPropertySetting>
     {
         [XmlIgnore]
+        [JsonIgnore]
         public TechDocumentEngine CodeEngine { get; set; }
 
         public override AbstractEntitySetting<TechDocPropertySetting> GetBaseEntitySetting()
@@ -30,6 +32,7 @@ namespace OzzCodeGen.CodeEngines.TechDocument
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public LocalizationEntitySetting LocalizationEntity
         {
             get
@@ -50,6 +53,7 @@ namespace OzzCodeGen.CodeEngines.TechDocument
         LocalizationEntitySetting _localEntity = null;
 
         [XmlIgnore]
+        [JsonIgnore]
         public StorageEntitySetting StorageEntity
         {
             get

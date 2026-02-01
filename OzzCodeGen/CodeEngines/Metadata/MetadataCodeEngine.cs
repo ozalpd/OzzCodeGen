@@ -1,15 +1,16 @@
-﻿using System;
+﻿using OzzCodeGen.CodeEngines.Localization;
+using OzzCodeGen.CodeEngines.Metadata.Templates;
+using OzzCodeGen.CodeEngines.Metadata.UI;
+using OzzCodeGen.Definitions;
+using OzzCodeGen.Utilities;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json.Serialization;
+using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Serialization;
-using OzzCodeGen.Definitions;
-using OzzCodeGen.CodeEngines.Localization;
-using OzzCodeGen.CodeEngines.Metadata.UI;
-using OzzCodeGen.Utilities;
-using System.Windows;
-using OzzCodeGen.CodeEngines.Metadata.Templates;
-using System.IO;
 
 namespace OzzCodeGen.CodeEngines.Metadata
 {
@@ -17,7 +18,9 @@ namespace OzzCodeGen.CodeEngines.Metadata
     public class MetadataCodeEngine : BaseCodeEngine
     {
         public override string EngineId { get { return EngineTypes.MetadataCodeEngineId; } }
+
         [XmlIgnore]
+        [JsonIgnore]
         public static string DefaultFileName { get { return "MetadataCodeEngine.settings"; } }
         public override string ProjectTypeName { get { return "Metadata class generator"; } }
 
@@ -273,6 +276,7 @@ namespace OzzCodeGen.CodeEngines.Metadata
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public List<MetadataEntitySetting> Entities
         {
             get
@@ -312,6 +316,7 @@ namespace OzzCodeGen.CodeEngines.Metadata
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public ResxEngine ResxEngine
         {
             get

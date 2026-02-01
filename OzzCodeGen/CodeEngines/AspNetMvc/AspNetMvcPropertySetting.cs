@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OzzCodeGen.Definitions;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
-using OzzCodeGen.Definitions;
-using System.ComponentModel;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc
 {
@@ -187,6 +182,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private string _useForEdit;
 
         [XmlIgnore]
+        [JsonIgnore]
         public bool IsSensitiveData
         {
             get
@@ -196,6 +192,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public AspNetMvcEntitySetting MvcEntity
         {
             get { return (AspNetMvcEntitySetting)EntitySetting; }
@@ -220,6 +217,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public string[] UseForEditList
         {
             get

@@ -130,7 +130,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
         bool? _isUserAdmin;
 
 <#  foreach (var role in roles)
-        { 
+    { 
         string varName = "_" + IsUserInRoleMethods[role.Trim()].ToCamelCase();
  #>
 

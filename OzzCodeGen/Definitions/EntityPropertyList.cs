@@ -1,6 +1,7 @@
 ﻿using OzzUtils.Savables;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen.Definitions
@@ -17,9 +18,11 @@ namespace OzzCodeGen.Definitions
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public EntityDefinition EntityDefinition { get; set; }
 
         [XmlIgnore]
+        [JsonIgnore]
         public List<SimpleProperty> SimpleProperties
         {
             get
@@ -35,6 +38,7 @@ namespace OzzCodeGen.Definitions
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public List<ComplexProperty> ComplexProperties
         {
             get
@@ -50,6 +54,7 @@ namespace OzzCodeGen.Definitions
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public List<CollectionProperty> CollectionProperties
         {
             get

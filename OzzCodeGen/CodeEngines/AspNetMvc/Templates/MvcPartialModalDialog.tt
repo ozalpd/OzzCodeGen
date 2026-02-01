@@ -3,8 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-<# 
-WriteUsingNamespaces(); #>
+<# WriteUsingNamespaces(); #>
 <div class="modal fade" id="messageBox"> @* Message Box *@
     <div class="modal-dialog">
         <div class="modal-content">

@@ -49,8 +49,8 @@ WriteUsingNamespaces(); #>
     </div>
 <# if (property.PropertyDefinition.RestrictedData) { #>
     }
-<# } #>
-<# } #>
+<#    }
+} #>
 <#  if(!PartialView) { #>
 @Html.Partial("<#= MvcPartialDetailFormButtons.ViewName #>")
 <# } #>

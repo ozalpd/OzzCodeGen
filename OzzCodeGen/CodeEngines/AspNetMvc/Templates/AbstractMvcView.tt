@@ -11,7 +11,7 @@
 public void WriteUsingNamespaces()
 {
 	foreach(string namspc in UsingNamespaces)
-	{#>
+    {#>
 @using <#= namspc #>
 <#+ }
 } #>

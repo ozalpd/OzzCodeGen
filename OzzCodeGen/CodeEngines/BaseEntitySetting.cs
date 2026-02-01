@@ -1,8 +1,9 @@
-﻿using System;
+﻿using OzzCodeGen.Definitions;
+using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
-using OzzCodeGen.Definitions;
 
 namespace OzzCodeGen.CodeEngines
 {
@@ -56,6 +57,7 @@ namespace OzzCodeGen.CodeEngines
         private bool _overwriteExisting;
 
         [XmlIgnore]
+        [JsonIgnore]
         public DataModel DataModel
         {
             get { return _dataModel; }
@@ -69,6 +71,7 @@ namespace OzzCodeGen.CodeEngines
         DataModel _dataModel;
 
         [XmlIgnore]
+        [JsonIgnore]
         public EntityDefinition EntityDefinition
         {
             get

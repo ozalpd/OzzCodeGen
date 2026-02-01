@@ -26,6 +26,111 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\AbstractMvcView.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AbstractMvcView.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcAgGridIndexView.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcBaseController.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcBaseController.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcController.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcController.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcDetailsView.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcDetailsView.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcDisplayTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcEditView.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcEditView.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcIndexView.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcIndexView.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcJQueryAutoComplete.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcJQuerySelectList.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcPartialAgGridScripts.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcPartialAgGridScripts.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcPartialDetailFormButtons.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcPartialDetailFormButtons.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcPartialIndexScripts.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcPartialIndexScripts.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcPartialModalDialog.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcPartialModalDialog.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcPartialPager.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcPartialPager.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcPartialSaveButtons.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcPartialSaveButtons.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcPartialSearchBox.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcPartialSearchBox.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcSecurityRoles.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcSecurityRoles.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\AspNetMvc\Templates\MvcViewSnippets.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MvcViewSnippets.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\Localization\Templates\LocalizationResx.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LocalizationResx.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CodeEngines\Metadata\Templates\MetadataClassTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MetadataClassTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Update="CodeEngines\Storage\Templates\Additionals.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -56,9 +161,77 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CreateSqliteTable.tt</DependentUpon>
     </Compile>
+    <Compile Update="CodeEngines\TechDocument\Templates\TechDocTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TechDocTemplate.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="CodeEngines\AspNetMvc\Templates\AbstractMvcView.tt">
+      <LastGenOutput>AbstractMvcView.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt">
+      <LastGenOutput>MvcAgGridIndexView.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcBaseController.tt">
+      <LastGenOutput>MvcBaseController.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcController.tt">
+      <LastGenOutput>MvcController.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt">
+      <LastGenOutput>MvcDetailsView.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcDisplayTemplate.tt">
+      <LastGenOutput>MvcDisplayTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcEditView.tt">
+      <LastGenOutput>MvcEditView.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcIndexView.tt">
+      <LastGenOutput>MvcIndexView.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt">
+      <LastGenOutput>MvcJQueryAutoComplete.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt">
+      <LastGenOutput>MvcJQuerySelectList.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcPartialAgGridScripts.tt">
+      <LastGenOutput>MvcPartialAgGridScripts.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcPartialDetailFormButtons.tt">
+      <LastGenOutput>MvcPartialDetailFormButtons.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcPartialIndexScripts.tt">
+      <LastGenOutput>MvcPartialIndexScripts.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcPartialModalDialog.tt">
+      <LastGenOutput>MvcPartialModalDialog.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcPartialPager.tt">
+      <LastGenOutput>MvcPartialPager.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcPartialSaveButtons.tt">
+      <LastGenOutput>MvcPartialSaveButtons.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcPartialSearchBox.tt">
+      <LastGenOutput>MvcPartialSearchBox.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcSecurityRoles.tt">
+      <LastGenOutput>MvcSecurityRoles.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt">
+      <LastGenOutput>MvcViewSnippets.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\Localization\Templates\LocalizationResx.tt">
+      <LastGenOutput>LocalizationResx.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\Metadata\Templates\MetadataClassTemplate.tt">
+      <LastGenOutput>MetadataClassTemplate.cs</LastGenOutput>
+    </None>
     <None Update="CodeEngines\Storage\Templates\Additionals.tt">
       <LastGenOutput>Additionals.cs</LastGenOutput>
     </None>
@@ -76,6 +249,9 @@
     </None>
     <None Update="CodeEngines\Storage\Templates\Sqlite\CreateSqliteTable.tt">
       <LastGenOutput>CreateSqliteTable.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\TechDocument\Templates\TechDocTemplate.tt">
+      <LastGenOutput>TechDocTemplate.cs</LastGenOutput>
     </None>
   </ItemGroup>
 </Project>

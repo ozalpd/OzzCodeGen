@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen
@@ -104,6 +105,7 @@ namespace OzzCodeGen
         private string _modelProviderId;
 
         [XmlIgnore]
+        [JsonIgnore]
         public IModelProvider ModelProvider
         {
             get { return _modelProvider; }
@@ -138,6 +140,7 @@ namespace OzzCodeGen
         private string _targetFolder;
 
         [XmlIgnore]
+        [JsonIgnore]
         public string TargetSolutionDir
         {
             get
@@ -199,6 +202,7 @@ namespace OzzCodeGen
         private EnumDefinitionList _enumDefinitions;
 
         [XmlIgnore]
+        [JsonIgnore]
         public string SearchString
         {
             get { return _searchString; }
@@ -272,6 +276,7 @@ namespace OzzCodeGen
         private string _sourceClassPrefix = string.Empty;
 
         [XmlIgnore]
+        [JsonIgnore]
         public bool HasProjectChanges
         {
             get { return _hasProjectChanges; }
@@ -313,6 +318,7 @@ namespace OzzCodeGen
 
 
         [XmlIgnore]
+        [JsonIgnore]
         public BaseCodeEngine CurrentCodeEngine
         {
             get { return _currentCodeEngine; }

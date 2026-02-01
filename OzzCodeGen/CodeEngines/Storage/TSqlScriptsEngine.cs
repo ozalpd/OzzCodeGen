@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
-using OzzCodeGen.CodeEngines.Storage.Templates;
+﻿using OzzCodeGen.CodeEngines.Storage.Templates;
 using OzzCodeGen.CodeEngines.Storage.Templates.MsSql;
 using OzzCodeGen.Definitions;
 using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.Storage
 {
@@ -22,6 +23,7 @@ namespace OzzCodeGen.CodeEngines.Storage
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public static string DefaultFileName { get { return "TSqlScriptsGen.settings"; } }
 
         public override string GetDefaultFileName()

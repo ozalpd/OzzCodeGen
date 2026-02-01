@@ -1,9 +1,9 @@
-﻿using System;
+﻿using OzzCodeGen.Definitions;
+using OzzUtils;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
-using OzzCodeGen.Definitions;
-using OzzUtils;
 
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc
@@ -11,6 +11,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
     public class AspNetMvcEntitySetting : AbstractEntitySetting<AspNetMvcPropertySetting>
     {
         [XmlIgnore]
+        [JsonIgnore]
         public AspNetMvcEngine CodeEngine { get; set; }
 
         public string ControllerName
@@ -65,6 +66,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private string _strongDependedForeignKey;
 
         [XmlIgnore]
+        [JsonIgnore]
         public AspNetMvcPropertySetting StrongForeignKeyProperty
         {
             get
@@ -77,6 +79,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public AspNetMvcEntitySetting StrongForeignEntity
         {
             get
@@ -853,6 +856,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
 
 
         [XmlIgnore]
+        [JsonIgnore]
         public MvcFilterType FilterViewType
         {
             get { return _filterViewType; }
@@ -866,6 +870,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private MvcFilterType _filterViewType;
 
         [XmlIgnore]
+        [JsonIgnore]
         public IEnumerable<AspNetMvcPropertySetting> FilteredDisplayColumns
         {
             get
@@ -891,6 +896,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public IEnumerable<AspNetMvcPropertySetting> DisplayColumns
         {
             get

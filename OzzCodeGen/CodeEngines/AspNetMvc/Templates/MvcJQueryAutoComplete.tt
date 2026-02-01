@@ -55,8 +55,8 @@ WriteUsingNamespaces(); #>
             //setSelectListID('#<#= property.Name #> > option', ui.item.<#= property.Name #>);
 <# } else { #>
             //$('#<#= property.Name #>').val(ui.item.<#= property.Name #>);
-<#	} #>
-<#	} #>
+<#	}
+} #>
         },
         change: function (event, ui) {
             if (ui.item == null) {

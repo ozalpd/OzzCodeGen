@@ -3,8 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-<# 
-WriteUsingNamespaces(); #>
+<# WriteUsingNamespaces(); #>
 <div class="row">
     <div class="col-md-6">
         @Html.ActionLink(@ActionStrings.Edit, "Edit", null, new { id = Model.Id }, new { @class = "btn btn-default" })

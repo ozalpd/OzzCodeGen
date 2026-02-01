@@ -5,8 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzUtils" #>
-<# 
-var roles = CodeEngine.SecurityRoles.Where(r => !r.Equals(CodeEngine.AdminRole));
+<# var roles = CodeEngine.SecurityRoles.Where(r => !r.Equals(CodeEngine.AdminRole));
  #>
 namespace <#= CodeEngine.ModelsNamespace #>
 {

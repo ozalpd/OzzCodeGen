@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Windows.Controls;
 using System.Xml.Serialization;
 using OzzCodeGen.Definitions;
@@ -12,12 +13,15 @@ namespace OzzCodeGen.CodeEngines
     public abstract class BaseCodeEngine : SavableObject, INotifyPropertyChanged
     {
         [XmlIgnore]
+        [JsonIgnore]
         public abstract string EngineId { get; }
         [XmlIgnore]
+        [JsonIgnore]
         public abstract string ProjectTypeName { get; }
         public abstract string GetDefaultFileName();
 
         [XmlIgnore]
+        [JsonIgnore]
         public CodeGenProject Project
         {
             get { return _project; }
@@ -132,6 +136,7 @@ namespace OzzCodeGen.CodeEngines
         public abstract string GetDefaultTargetFolder();
 
         [XmlIgnore]
+        [JsonIgnore]
         public string TargetDirectory
         {
             get
@@ -148,6 +153,7 @@ namespace OzzCodeGen.CodeEngines
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public bool OverwriteExisting
         {
             get { return _overwriteExisting; }
@@ -162,6 +168,7 @@ namespace OzzCodeGen.CodeEngines
 
 
         [XmlIgnore]
+        [JsonIgnore]
         public List<string> Templates
         {
             get
@@ -198,6 +205,7 @@ namespace OzzCodeGen.CodeEngines
         protected virtual void OnEntitySettingsChanged() { }
 
         [XmlIgnore]
+        [JsonIgnore]
         public BaseEntitySetting CurrentEntitySetting
         {
             get
@@ -232,6 +240,7 @@ namespace OzzCodeGen.CodeEngines
 
 
         [XmlIgnore]
+        [JsonIgnore]
         public bool CanRender
         {
             get { return _canRender; }
@@ -291,6 +300,7 @@ namespace OzzCodeGen.CodeEngines
 
         public abstract List<string> GetTemplateList();
         [XmlIgnore]
+        [JsonIgnore]
         public string SelectedTemplate
         {
             get
@@ -307,6 +317,7 @@ namespace OzzCodeGen.CodeEngines
         private string _selectedTemplate;
 
         [XmlIgnore]
+        [JsonIgnore]
         public UserControl UiControl
         {
             get

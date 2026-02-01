@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using OzzCodeGen.CodeEngines.AspNetMvc.UI;
+using OzzCodeGen.CodeEngines.Localization;
+using OzzCodeGen.CodeEngines.Storage;
+using OzzCodeGen.Definitions;
+using OzzUtils;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
-using OzzCodeGen.CodeEngines.AspNetMvc.UI;
-using OzzCodeGen.CodeEngines.Localization;
-using OzzCodeGen.Definitions;
-using System.Collections.ObjectModel;
-using OzzUtils;
-using OzzCodeGen.CodeEngines.Storage;
 
 namespace OzzCodeGen.CodeEngines.AspNetMvc
 {
@@ -26,6 +27,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         public static string FillSelectListsMethodDefaultName = "SetSelectLists";
 
         [XmlIgnore]
+        [JsonIgnore]
         public static string DefaultFileName { get { return "AspNetMvcGen.settings"; } }
         public override string GetDefaultFileName()
         {
@@ -82,6 +84,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public ObservableCollection<AspNetMvcEntitySetting> Entities
         {
             get
@@ -199,6 +202,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private string _targetViewsFolder;
 
         [XmlIgnore]
+        [JsonIgnore]
         public string TargetViewsDir
         {
             get
@@ -235,6 +239,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private string _targetModelsFolder;
 
         [XmlIgnore]
+        [JsonIgnore]
         public string TargetModelsDir
         {
             get
@@ -271,6 +276,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private string _SnippetsFolder;
 
         [XmlIgnore]
+        [JsonIgnore]
         public string SnippetsDir
         {
             get
@@ -307,6 +313,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         private string _targetControllersFolder;
 
         [XmlIgnore]
+        [JsonIgnore]
         public string TargetControllersDir
         {
             get
@@ -673,6 +680,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
         bool _areCanUserMethodsPublic;
 
         [XmlIgnore]
+        [JsonIgnore]
         public ResxEngine ResxEngine
         {
             get
@@ -689,6 +697,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
 
 
         [XmlIgnore]
+        [JsonIgnore]
         public StorageCodeEngine StorageEngine
         {
             get

@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Windows.Controls;
-using System.Xml.Serialization;
-using OzzCodeGen.CodeEngines.Localization.Templates;
+﻿using OzzCodeGen.CodeEngines.Localization.Templates;
 using OzzCodeGen.CodeEngines.Localization.UI;
 using OzzCodeGen.Definitions;
-using OzzUtils;
-using System.Collections.ObjectModel;
 using OzzLocalization;
+using OzzUtils;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Text.Json.Serialization;
+using System.Windows.Controls;
+using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.Localization
 {
@@ -20,6 +21,7 @@ namespace OzzCodeGen.CodeEngines.Localization
         public override string ProjectTypeName { get { return "Localization Resource Generator"; } }
 
         [XmlIgnore]
+        [JsonIgnore]
         public static string DefaultFileName { get { return "ResourceGen.settings"; } }
         public override string GetDefaultFileName()
         {
@@ -147,6 +149,7 @@ namespace OzzCodeGen.CodeEngines.Localization
         private string _vocabularyFolder;
 
         [XmlIgnore]
+        [JsonIgnore]
         public string VocabularyDir
         {
             get
@@ -176,6 +179,7 @@ namespace OzzCodeGen.CodeEngines.Localization
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public ObservableCollection<LocalizationEntitySetting> Entities
         {
             get
@@ -251,6 +255,7 @@ namespace OzzCodeGen.CodeEngines.Localization
         };
 
         [XmlIgnore]
+        [JsonIgnore]
         public LocalizationEntitySetting SelectedSuplmEntity
         {
             get { return _selectedSuplmEntity; }
@@ -265,6 +270,7 @@ namespace OzzCodeGen.CodeEngines.Localization
         private LocalizationEntitySetting _selectedSuplmEntity;
 
         [XmlIgnore]
+        [JsonIgnore]
         public LocalizationPropertySetting SelectedSuplmProperty
         {
             set
@@ -422,7 +428,7 @@ namespace OzzCodeGen.CodeEngines.Localization
                     });
                 }
                 foreach (var e in enumDef.Members)
-                    {
+                {
                     if (!combinedEntity.Properties.Where(lp => lp.Name == e.Name).Any())
                     {
                         combinedEntity.Properties.Add(new LocalizationPropertySetting()
@@ -545,9 +551,11 @@ namespace OzzCodeGen.CodeEngines.Localization
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public bool SaveWithVocabularies { get; set; }
 
         [XmlIgnore]
+        [JsonIgnore]
         public Vocabularies Vocabularies
         {
             set { _vocabularies = value; }

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using OzzCodeGen.CodeEngines.Storage.Templates;
+using OzzCodeGen.CodeEngines.Storage.Templates.Sqlite;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
-using OzzCodeGen.CodeEngines.Storage.Templates;
-using OzzCodeGen.CodeEngines.Storage.Templates.Sqlite;
 
 namespace OzzCodeGen.CodeEngines.Storage
 {
@@ -22,6 +23,7 @@ namespace OzzCodeGen.CodeEngines.Storage
 
 
         [XmlIgnore]
+        [JsonIgnore]
         public static string DefaultFileName { get { return "SqliteScriptsGen.settings"; } }
 
         public override string GetDefaultFileName()

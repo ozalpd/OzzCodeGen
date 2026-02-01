@@ -42,7 +42,7 @@ if (CustomFile)
 <#      foreach (var item in fkeyProperties)
         { 
              WriteViewBagSelectList(item); 
-         } #>
+        } #>
         }
 
 <#  } #>

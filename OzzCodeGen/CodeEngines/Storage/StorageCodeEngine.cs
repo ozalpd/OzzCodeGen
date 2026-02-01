@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Windows.Controls;
-using System.Xml.Serialization;
-using OzzCodeGen.CodeEngines.Storage.Templates;
+﻿using OzzCodeGen.CodeEngines.Storage.Templates;
 using OzzCodeGen.CodeEngines.Storage.UI;
 using OzzCodeGen.Definitions;
 using OzzUtils;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Text.Json.Serialization;
+using System.Windows.Controls;
+using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.Storage
 {
@@ -152,6 +153,7 @@ namespace OzzCodeGen.CodeEngines.Storage
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public ObservableCollection<StorageEntitySetting> Entities
         {
             get
@@ -219,6 +221,7 @@ namespace OzzCodeGen.CodeEngines.Storage
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public List<string> AdditionalCommands
         {
             get

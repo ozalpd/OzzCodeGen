@@ -1,8 +1,9 @@
-﻿using System.ComponentModel;
+﻿using OzzCodeGen.Definitions;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
-using OzzCodeGen.Definitions;
 
 namespace OzzCodeGen.CodeEngines
 {
@@ -36,9 +37,11 @@ namespace OzzCodeGen.CodeEngines
         private bool _exclude;
 
         [XmlIgnore]
+        [JsonIgnore]
         public BaseEntitySetting EntitySetting { get; set; }
 
         [XmlIgnore]
+        [JsonIgnore]
         public BaseProperty PropertyDefinition
         {
             get
@@ -61,6 +64,7 @@ namespace OzzCodeGen.CodeEngines
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public bool IsSimpleOrString
         {
             get
@@ -70,6 +74,7 @@ namespace OzzCodeGen.CodeEngines
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public bool IsSimple
         {
             get
@@ -79,6 +84,7 @@ namespace OzzCodeGen.CodeEngines
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public bool IsString
         {
             get
@@ -88,6 +94,7 @@ namespace OzzCodeGen.CodeEngines
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public bool IsBoolean
         {
             get
@@ -98,6 +105,7 @@ namespace OzzCodeGen.CodeEngines
         }
 
         [XmlIgnore]
+        [JsonIgnore]
         public bool IsDateTime
         {
             get

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.Storage
@@ -36,6 +37,7 @@ namespace OzzCodeGen.CodeEngines.Storage
 
 
         [XmlIgnore]
+        [JsonIgnore]
         public StorageColumnSetting PrimaryKeyColumn
         {
             get
@@ -248,9 +250,11 @@ namespace OzzCodeGen.CodeEngines.Storage
 
 
         [XmlIgnore]
+        [JsonIgnore]
         public StorageCodeEngine CodeEngine { get; set; }
 
         [XmlIgnore]
+        [JsonIgnore]
         public List<StorageEntitySetting> ForeignTables
         {
             get
