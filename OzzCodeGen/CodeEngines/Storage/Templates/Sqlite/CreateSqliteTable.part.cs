@@ -14,7 +14,12 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.Sqlite
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("Create Index If Not Exists idx_");
+            sb.Append("Create");
+            if (column.Unique)
+            {
+                sb.Append(" Unique");
+            }
+            sb.Append(" Index If Not Exists idx_");
             sb.Append(TableDefinition.TableName);
             sb.Append('_');
             sb.Append(column.Name);
