@@ -28,7 +28,7 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.Sqlite
         /// </summary>
         public override string TransformText()
         {
-            this.Write("CREATE TABLE ");
+            this.Write("CREATE TABLE IF NOT EXISTS ");
             
             #line 7 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\Sqlite\CreateSqliteTable.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.TableName));
