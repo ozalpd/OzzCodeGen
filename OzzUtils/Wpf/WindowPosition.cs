@@ -23,6 +23,8 @@ namespace OzzUtils.Wpf
 
         public void GetWindowPositions(Window window)
         {
+            if (window.WindowState == WindowState.Minimized)
+                return;
             Top = window.Top;
             Left = window.Left;
             Height = window.Height;
