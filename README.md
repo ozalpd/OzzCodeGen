@@ -105,9 +105,35 @@ dotnet build OzzCodeGen.sln -c Debug
 - **SingleResx enabled:** `EntityStrings.notr.resx`, `EntityStrings.tr.resx` (default file base is `SingleResxFilename` → `EntityStrings`).
 - **Per-entity resources:** `CustomerString.notr.resx`, `OrderString.tr.resx` (default base from `GetDefaultTargetFile` → `${entity.Name}String`).
 
+## Target Platform
+
+`CodeGenProject.TargetPlatform` controls the target .NET platform for generated code via the `TargetDotNetPlatform` enum (defined in `OzzCodeGen/_enums.cs`):
+
+| Value | Description |
+|---|---|
+| `DotNetFramework` | Classic .NET Framework output (default for backward compatibility). |
+| `ModernDotNet` | Modern .NET (.NET 6+) output — enables nullable reference type annotations (`?` suffix) and other modern conventions. |
+
+Engines check `Project.TargetPlatform` to adapt generated code. For example, `MetadataPropertySetting.GetTypeName()` appends `?` for nullable reference types only when targeting `ModernDotNet`. The WPF UI exposes this via a **Target Platform** ComboBox in the toolbar.
+
+## Code Engines
+
+| Engine ID | Description | Status |
+|---|---|---|
+| `Metadata_Class_Generator` | Generates metadata/validation attribute classes. | ✅ Active |
+| `AspNetMvc_Controller_View_Generator` | Generates ASP.NET MVC controllers and Razor views. | ✅ Active |
+| `T-Sql_Scripts_Generator` | Generates T-SQL DDL scripts. | ✅ Active |
+| `Sqlite_Scripts_Generator` | Generates SQLite DDL scripts. | ✅ Active |
+| `Localization_Resource_Generator` | Generates `.resx` resource files from XML vocabularies. | ✅ Active |
+| `EF_Technical_Document` | Generates technical documentation from the data model. | ✅ Active |
+| `EF_DatabaseFirst_DataLayer` | EF Database-First data layer generation. | ❌ Removed |
+| `ObjectiveC_Code_Generator` | Objective-C code generation. | ❌ Removed |
+| `Android_Code_Generator` | Android/Java code generation. | ❌ Removed |
+
 ## Key Patterns
 - Engine IDs and registration: see `OzzCodeGen/CodeEngines/EngineTypes.cs`.
 - Project orchestration: see `OzzCodeGen/CodeGenProject.cs`.
+- Target platform enum: see `OzzCodeGen/_enums.cs` (`TargetDotNetPlatform`).
 - Data model serialization and helpers: see `OzzCodeGen/DataModel.cs`.
 - EF Db-first provider: see `OzzCodeGen.Ef/Ef5.Provider.cs`.
 - Vocabulary loading/saving: see `OzzLocalization/Vocabularies.cs` and `OzzLocalization/Vocabulary.cs`.

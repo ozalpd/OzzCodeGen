@@ -137,7 +137,7 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
                 StringProperty definition = (StringProperty)property.PropertyDefinition;
                 var resxEngine = EntitySetting.CodeEngine.ResxEngine;
 
-                if (EntitySetting.CodeEngine.UseResourceFiles && resxEngine != null && 
+                if (EntitySetting.CodeEngine.UseResourceFiles && resxEngine != null &&
                     !string.IsNullOrEmpty(resxEngine.ErrorResxFilename))
                 {
                     StringBuilder sb = new StringBuilder();
@@ -202,14 +202,23 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
 
         public override string GetDefaultFileName()
         {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(EntitySetting.Name);
+
             if (MetadataForDTO)
             {
-                return EntitySetting.Name + "DTO.meta.cs";
+                sb.Append("DTO");
             }
-            else
+
+            MetadataCodeEngine codeEngine = EntitySetting.CodeEngine;
+            if (codeEngine != null && codeEngine.SeperateMetaDataClass)
             {
-                return EntitySetting.Name + ".meta.cs";
+                sb.Append(".meta");
             }
+
+            sb.Append(".cs");
+
+            return sb.ToString();
         }
     }
 }

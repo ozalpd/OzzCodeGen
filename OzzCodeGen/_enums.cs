@@ -1,7 +1,4 @@
-﻿using System;
-using System.Xml.Serialization;
-
-namespace OzzCodeGen
+﻿namespace OzzCodeGen
 {
     /// <summary>
     /// Overwrite method when saving a file
@@ -20,5 +17,11 @@ namespace OzzCodeGen
         DateTime,
         Simple,
         String
+    }
+
+    public enum TargetDotNetPlatform
+    {
+        DotNetFramework,
+        ModernDotNet
     }
 }

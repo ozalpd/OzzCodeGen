@@ -20,6 +20,7 @@ namespace OzzCodeGen.CodeEngines.Metadata.UI
 
             HiddenColumns.Add("DataType");
             HiddenColumns.Add("CodeEngine");
+            HiddenColumns.Add("HasCustomAttributes");
             HiddenColumns.Add("HtmlEncode");
             HiddenColumns.Add("IsSimple");
             HiddenColumns.Add("IsString");

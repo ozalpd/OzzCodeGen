@@ -35,40 +35,41 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
                     "sing System.ComponentModel.DataAnnotations;\r\n");
             
             #line 13 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
-  if(EntitySetting.HasCustomAttributes) { 
+  var codeEngine = EntitySetting.CodeEngine;
+    if(EntitySetting.HasCustomAttributes) { 
             
             #line default
             #line hidden
             this.Write("using ");
             
-            #line 14 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.CodeEngine.CustomAttribNamespace));
+            #line 15 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(codeEngine.CustomAttribNamespace));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 15 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            #line 16 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
 	} 
             
             #line default
             #line hidden
             
-            #line 16 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
-  if(EntitySetting.CodeEngine.UseResourceFiles) { 
+            #line 17 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+  if(codeEngine.UseResourceFiles) { 
             
             #line default
             #line hidden
             this.Write("using ");
             
-            #line 17 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.CodeEngine.ResxEngine.NamespaceName));
+            #line 18 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(codeEngine.ResxEngine.NamespaceName));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 18 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            #line 19 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
 	} 
             
             #line default
@@ -83,35 +84,42 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
 
 namespace ");
             
-            #line 27 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            #line 28 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(NamespaceName));
             
             #line default
             #line hidden
-            this.Write("\r\n{\r\n    [MetadataTypeAttribute(typeof(");
+            this.Write("\r\n{\r\n");
             
-            #line 29 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+  if(codeEngine.SeperateMetaDataClass) { 
+            
+            #line default
+            #line hidden
+            this.Write("    [MetadataTypeAttribute(typeof(");
+            
+            #line 31 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 29 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            #line 31 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write("Metadata))]\r\n    public partial class ");
             
-            #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n        internal sealed partial class ");
             
-            #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            #line 34 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
@@ -119,18 +127,60 @@ namespace ");
             this.Write("Metadata\r\n        {\r\n            // This metadata class is not intended to be ins" +
                     "tantiated.\r\n            private ");
             
-            #line 35 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write("Metadata() { }\r\n\r\n");
             
-            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            #line 39 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+	PushIndent("    ");
+    } else { 
+            
+            #line default
+            #line hidden
+            this.Write("    public partial class ");
+            
+            #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n    {\r\n");
+            
+            #line 43 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+	} 
+            
+            #line default
+            #line hidden
+            
+            #line 44 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
 
-var properties = GetInheritedIncludedProperties();
-foreach (var property in properties) 
-{
+    var properties = GetInheritedIncludedProperties();
+    foreach (var property in properties) 
+    {
+        var comment = property.PropertyDefinition.Comment;
+        if(codeEngine.GenerateXmlDoc && !string.IsNullOrWhiteSpace(comment)) {
+            
+            #line default
+            #line hidden
+            this.Write("        /// <summary>\r\n        /// ");
+            
+            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(comment));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        /// </summary>\r\n");
+            
+            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+		} 
+            
+            #line default
+            #line hidden
+            
+            #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
     List<string> attributes  = GetPropertyAttributes(property);
     if(attributes.Any())
     {
@@ -140,43 +190,52 @@ foreach (var property in properties)
             
             #line default
             #line hidden
-            this.Write("            ");
+            this.Write("        ");
             
-            #line 47 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            #line 60 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(attibute));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 48 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            #line 61 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
 		} 
             
             #line default
             #line hidden
-            this.Write("            public ");
+            this.Write("        public ");
             
-            #line 49 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.PropertyDefinition.TypeName));
+            #line 62 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.GetTypeName()));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 49 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            #line 62 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(" { get; set; }\r\n\r\n");
             
-            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+            #line 64 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
 	}
 } 
+    if(EntitySetting.CodeEngine.SeperateMetaDataClass) {
+    PopIndent();
             
             #line default
             #line hidden
-            this.Write("        }\r\n    }\r\n}");
+            this.Write("        }\r\n");
+            
+            #line 69 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
+	} 
+            
+            #line default
+            #line hidden
+            this.Write("    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

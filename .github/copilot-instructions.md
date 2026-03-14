@@ -15,9 +15,15 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - **Project orchestration:** `CodeGenProject` is the central state holder; engines attach to it and react to changes.
   - See [CodeGenProject.cs](OzzCodeGen/CodeGenProject.cs#L12-L25) for engine list and [GetCodeEngine](OzzCodeGen/CodeGenProject.cs#L306-L309).
   - `TargetFolder` is relative to the saved project file; resolved via [TargetSolutionDir](OzzCodeGen/CodeGenProject.cs#L121-L139).
+- **Target platform:** `CodeGenProject.TargetPlatform` is a `TargetDotNetPlatform` enum (defined in [_enums.cs](OzzCodeGen/_enums.cs)) with two values:
+  - `DotNetFramework` – classic .NET Framework output (default for backward compatibility).
+  - `ModernDotNet` – modern .NET (.NET 6+) output, enabling nullable reference type annotations and other modern conventions.
+  - Engines check `Project.TargetPlatform` to adapt generated code (e.g., `MetadataPropertySetting.GetTypeName()` appends `?` for nullable reference types only when targeting `ModernDotNet`).
+  - The WPF UI exposes this via a `ComboBox` bound to `{StaticResource TargetPlatformValues}` in [MainWindow.xaml](OzzCodeGen.Wpf/MainWindow.xaml).
 - **Data model:** `DataModel` is an `ObservableCollection<EntityDefinition>` with move/reorder helpers and XML (de)serialization (see [DataModel.cs](OzzCodeGen/DataModel.cs#L1-L22), [DataModel.cs](OzzCodeGen/DataModel.cs#L60-L97)).
 - **Pluggable engines:** Engine IDs are centralized in [EngineTypes.cs](OzzCodeGen/CodeEngines/EngineTypes.cs); the WPF UI binds to these IDs and injects engine-specific UIs.
-  - Example IDs: `AspNetMvc_Controller_View_Generator`, `EF_DatabaseFirst_DataLayer`, `T-Sql_Scripts_Generator`, `Sqlite_Scripts_Generator`.
+  - Active IDs: `Metadata_Class_Generator`, `AspNetMvc_Controller_View_Generator`, `T-Sql_Scripts_Generator`, `Sqlite_Scripts_Generator`, `Localization_Resource_Generator`, `EF_Technical_Document`.
+  - Removed engines (throw `NotImplementedException` on load): `EF_DatabaseFirst_DataLayer`, `ObjectiveC_Code_Generator`, `Android_Code_Generator`.
   - The WPF app injects `Project.CurrentCodeEngine.UiControl` into the layout (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L194-L209)).
 - **Model providers:** Implement `IModelProvider` ([IModelProvider.cs](OzzCodeGen/Providers/IModelProvider.cs)), returning/refreshing a `DataModel`.
   - EF provider loads from `.edmx`, maps EF types and navigation, and marks keys/non-nullables; see [Ef5.Provider.cs](OzzCodeGen.Ef/Ef5.Provider.cs#L34-L63), [Ef5.Provider.cs](OzzCodeGen.Ef/Ef5.Provider.cs#L68-L108), [Ef5.Provider.cs](OzzCodeGen.Ef/Ef5.Provider.cs#L146-L196).

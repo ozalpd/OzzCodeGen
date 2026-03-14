@@ -10,11 +10,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-<#  if(EntitySetting.HasCustomAttributes) { #>
-using <#= EntitySetting.CodeEngine.CustomAttribNamespace #>;
+<#  var codeEngine = EntitySetting.CodeEngine;
+    if(EntitySetting.HasCustomAttributes) { #>
+using <#= codeEngine.CustomAttribNamespace #>;
 <#	} #>
-<#  if(EntitySetting.CodeEngine.UseResourceFiles) { #>
-using <#= EntitySetting.CodeEngine.ResxEngine.NamespaceName #>;
+<#  if(codeEngine.UseResourceFiles) { #>
+using <#= codeEngine.ResxEngine.NamespaceName #>;
 <#	} #>
 //------------------------------------------------------------------------------
 //
@@ -26,6 +27,7 @@ using <#= EntitySetting.CodeEngine.ResxEngine.NamespaceName #>;
 
 namespace <#= NamespaceName #>
 {
+<#  if(codeEngine.SeperateMetaDataClass) { #>
     [MetadataTypeAttribute(typeof(<#= ClassName #>.<#= EntitySetting.Name #>Metadata))]
     public partial class <#= ClassName #>
     {
@@ -34,22 +36,36 @@ namespace <#= NamespaceName #>
             // This metadata class is not intended to be instantiated.
             private <#= EntitySetting.Name #>Metadata() { }
 
+<#	PushIndent("    ");
+    } else { #>
+    public partial class <#= ClassName #>
+    {
+<#	} #>
 <#
-var properties = GetInheritedIncludedProperties();
-foreach (var property in properties) 
-{
-    List<string> attributes  = GetPropertyAttributes(property);
+    var properties = GetInheritedIncludedProperties();
+    foreach (var property in properties) 
+    {
+        var comment = property.PropertyDefinition.Comment;
+        if(codeEngine.GenerateXmlDoc && !string.IsNullOrWhiteSpace(comment)) {#>
+        /// <summary>
+        /// <#= comment #>
+        /// </summary>
+<#		} #>
+<#    List<string> attributes  = GetPropertyAttributes(property);
     if(attributes.Any())
     {
         foreach(string attibute in attributes)
         {
 #>
-            <#= attibute #>
+        <#= attibute #>
 <#		} #>
-            public <#= property.PropertyDefinition.TypeName #> <#= property.Name #> { get; set; }
+        public <#= property.GetTypeName() #> <#= property.Name #> { get; set; }
 
 <#	}
-} #>
+} 
+    if(EntitySetting.CodeEngine.SeperateMetaDataClass) {
+    PopIndent();#>
         }
+<#	} #>
     }
 }

@@ -158,6 +158,24 @@ namespace OzzCodeGen
             }
         }
 
+        public TargetDotNetPlatform TargetPlatform
+        {
+            get
+            {
+                if (_targetPlatform == null)
+                {
+                    _targetPlatform = TargetDotNetPlatform.DotNetFramework;
+                }
+                return _targetPlatform.Value;
+            }
+            set
+            {
+                if (_targetPlatform == value) return;
+                _targetPlatform = value;
+                RaisePropertyChanged("TargetDotNetPlatform");
+            }
+        }
+        private TargetDotNetPlatform? _targetPlatform;
 
         public string ModelSource
         {
