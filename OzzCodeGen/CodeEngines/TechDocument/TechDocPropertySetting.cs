@@ -82,9 +82,9 @@ namespace OzzCodeGen.CodeEngines.TechDocument
             {
                 var strProperty = (StringProperty)PropertyDefinition;
                 sb.Append("string (karakter dizisi) tipinde, ");
-                if (strProperty.MaxLenght > 0)
+                if (strProperty.MaxLength > 0)
                 {
-                    sb.Append(strProperty.MaxLenght);
+                    sb.Append(strProperty.MaxLength);
                 }
                 else
                 {

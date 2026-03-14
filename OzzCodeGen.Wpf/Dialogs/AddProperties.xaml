@@ -21,8 +21,8 @@
             <Button Name="btnParseText" Margin="4" Click="btnParseText_Click">
                 <TextBlock Text="Parse Text" Margin="5,0"/>
             </Button>
-            <TextBlock Text="Max String Lenght:" Margin="4,7,2,2"/>
-            <TextBox Text="{Binding MaxStringLenght}" Margin="4" Width="60"/>
+            <TextBlock Text="Max String Length:" Margin="4,7,2,2"/>
+            <TextBox Text="{Binding MaxStringLength}" Margin="4" Width="60"/>
             <CheckBox IsChecked="{Binding AllStringsNullable}" Margin="8,8,0,0" Content="All Strings Nullable"/>
             <CheckBox IsChecked="{Binding IncludeComplexProperties}" Margin="8,8,0,0" Content="Include Complex Properties"/>
         </StackPanel>

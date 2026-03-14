@@ -21,17 +21,17 @@ namespace OzzCodeGen.CodeEngines.Storage
         private string _DataType;
 
 
-        public int Lenght
+        public int Length
         {
-            get { return _lenght; }
+            get { return _length; }
             set
             {
-                if (_lenght == value) return;
-                _lenght = value;
-                RaisePropertyChanged("Lenght");
+                if (_length == value) return;
+                _length = value;
+                RaisePropertyChanged("Length");
             }
         }
-        private int _lenght;
+        private int _length;
 
         /// <summary>
         /// PrimaryKey column

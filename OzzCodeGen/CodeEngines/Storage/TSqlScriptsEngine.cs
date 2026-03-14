@@ -65,9 +65,9 @@ namespace OzzCodeGen.CodeEngines.Storage
                     if (column.PropertyDefinition.DefinitionType == DefinitionType.String)
                     {
                         var strProperty = (StringProperty)column.PropertyDefinition;
-                        colLen = strProperty.MaxLenght;// > 0 ? strProperty.MaxLenght : 2048;
+                        colLen = strProperty.MaxLength;// > 0 ? strProperty.MaxLength : 2048;
                     }
-                    column.Lenght = colLen;
+                    column.Length = colLen;
                     break;
 
                 case "bool":
@@ -160,8 +160,8 @@ namespace OzzCodeGen.CodeEngines.Storage
                 dataType.Equals("nchar") || dataType.Equals("char") || dataType.Equals("varbinary"))
             {
                 sb.Append('(');
-                if (column.Lenght > 0)
-                    sb.Append(column.Lenght);
+                if (column.Length > 0)
+                    sb.Append(column.Length);
                 else
                     sb.Append("max");
                 sb.Append(')');
@@ -318,13 +318,13 @@ namespace OzzCodeGen.CodeEngines.Storage
             {
                 Name = "ModifierIp",
                 DataType = "varchar",
-                Lenght = 50
+                Length = 50
             });
             _modifyTracColumns.Add(new StorageColumnSetting()
             {
                 Name = "CreatorIp",
                 DataType = "varchar",
-                Lenght = 50
+                Length = 50
             });
 
             _modifyTracColumns.Add(new StorageColumnSetting()

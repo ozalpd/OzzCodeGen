@@ -38,7 +38,7 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
 
             AddKeyAttrib(property, attributes);
             AddDisplayFormat(property, attributes);
-            AddMaxLeghtAttrib(property, attributes);
+            AddMaxLengthAttrib(property, attributes);
             AddRequiredAttrib(property, attributes);
             AddDataTypeAttrib(property, attributes);
 
@@ -129,10 +129,10 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
             }
         }
 
-        private void AddMaxLeghtAttrib(MetadataPropertySetting property, List<string> attributes)
+        private void AddMaxLengthAttrib(MetadataPropertySetting property, List<string> attributes)
         {
             if (property.PropertyDefinition is StringProperty
-                && ((StringProperty)property.PropertyDefinition).MaxLenght > 0)
+                && ((StringProperty)property.PropertyDefinition).MaxLength > 0)
             {
                 StringProperty definition = (StringProperty)property.PropertyDefinition;
                 var resxEngine = EntitySetting.CodeEngine.ResxEngine;
@@ -142,17 +142,17 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
                 {
                     StringBuilder sb = new StringBuilder();
                     sb.Append("[StringLength(");
-                    sb.Append(definition.MaxLenght);
+                    sb.Append(definition.MaxLength);
                     sb.Append(", ErrorMessageResourceType = typeof(");
                     //sb.Append(resxEngine.NamespaceName);
                     //sb.Append('.');
                     sb.Append(resxEngine.ErrorResxFilename);
-                    sb.Append("), ErrorMessageResourceName = \"MaxLeght\")]");
+                    sb.Append("), ErrorMessageResourceName = \"MaxLength\")]");
                     attributes.Add(sb.ToString());
                 }
                 else
                 {
-                    attributes.Add(string.Format("[StringLength({0})]", definition.MaxLenght));
+                    attributes.Add(string.Format("[StringLength({0})]", definition.MaxLength));
                 }
             }
         }

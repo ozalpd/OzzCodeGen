@@ -119,7 +119,7 @@ WriteUsingNamespaces();
             #line default
             #line hidden
             this.Write(@"').autocomplete({
-        minLenght: 1,
+        minLength: 1,
         delay: 500,
         source: function (request, response) {
             let url = $(this.element).data('url');

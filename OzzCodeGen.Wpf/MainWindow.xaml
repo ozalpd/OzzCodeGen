@@ -436,8 +436,8 @@
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text="Max Lenght:" Grid.Row="0" Grid.Column="0"/>
-                                        <TextBox Text="{Binding MaxLenght, Mode=TwoWay, NotifyOnValidationError=True}" Grid.Row="0" Grid.Column="1"/>
+                                        <TextBlock Text="Max Length:" Grid.Row="0" Grid.Column="0"/>
+                                        <TextBox Text="{Binding MaxLength, Mode=TwoWay, NotifyOnValidationError=True}" Grid.Row="0" Grid.Column="1"/>
                                     </Grid>
                                     <Grid x:Name="ClassPropertyGrid">
                                         <Grid.ColumnDefinitions>

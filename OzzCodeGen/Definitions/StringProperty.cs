@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace OzzCodeGen.Definitions
 {
     public class StringProperty : SimpleProperty
     {
 
-        public int MaxLenght
+        public int MaxLength
         {
-            get { return maxLenght; }
+            get { return maxLength; }
             set
             {
-                if (maxLenght == value) return;
-                maxLenght = value;
-                RaisePropertyChanged("MaxLenght");
+                if (maxLength == value) return;
+                maxLength = value;
+                RaisePropertyChanged("MaxLength");
             }
         }
-        private int maxLenght;
-
+        private int maxLength;
         public override bool IsTypeNullable() { return true; }
         public override bool IsTypeNumeric() { return false; }
         public override bool IsTypeDateTime() { return false; }
@@ -36,7 +31,7 @@ namespace OzzCodeGen.Definitions
         public override BaseProperty Clone()
         {
             var clone = (StringProperty)base.Clone();
-            clone.MaxLenght = this.MaxLenght;
+            clone.MaxLength = this.MaxLength;
 
             return clone;
         }

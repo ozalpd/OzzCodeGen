@@ -13,7 +13,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 if (!_useInSearch.HasValue)
                 {
                     _useInSearch = PropertyDefinition.IsTypeString() &&
-                        ((StringProperty)PropertyDefinition).MaxLenght < 257;
+                        ((StringProperty)PropertyDefinition).MaxLength < 257;
                 }
                 return _useInSearch.Value;
             }

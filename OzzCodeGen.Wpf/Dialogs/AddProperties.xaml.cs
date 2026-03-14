@@ -69,20 +69,20 @@ namespace OzzCodeGen.Wpf.Dialogs
         private bool _inclComplexProperties;
 
 
-        public int? MaxStringLenght
+        public int? MaxStringLength
         {
             get
             {
-                return _maxLenght;
+                return _maxLength;
             }
             set
             {
-                if (_maxLenght == value) return;
-                _maxLenght = value;
-                RaisePropertyChanged("MaxStringLenght");
+                if (_maxLength == value) return;
+                _maxLength = value;
+                RaisePropertyChanged("MaxStringLength");
             }
         }
-        private int? _maxLenght;
+        private int? _maxLength;
 
         public EntityPropertyList ParsedProperties
         {
@@ -163,8 +163,8 @@ namespace OzzCodeGen.Wpf.Dialogs
             if(p is StringProperty)
             {
                 ((StringProperty)p).IsNullable = AllStringsNullable;
-                if (MaxStringLenght.HasValue)
-                    ((StringProperty)p).MaxLenght = MaxStringLenght.Value;
+                if (MaxStringLength.HasValue)
+                    ((StringProperty)p).MaxLength = MaxStringLength.Value;
             }
 
             return p;
