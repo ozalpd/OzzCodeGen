@@ -26,6 +26,7 @@ namespace OzzCodeGen.CodeEngines.Metadata.UI
             HiddenColumns.Add("IsSimple");
             HiddenColumns.Add("IsString");
             HiddenColumns.Add("MetadataEntitySetting");
+            HiddenColumns.Add("ModelProperties");
             HiddenColumns.Add("Properties");
 
             EntitiesDataGrid = grdEntitySettings;

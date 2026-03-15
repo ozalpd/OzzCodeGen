@@ -1,9 +1,9 @@
-﻿using OzzCodeGen.CodeEngines.Localization;
-using OzzCodeGen.CodeEngines.Metadata.Templates;
+﻿using OzzCodeGen.CodeEngines.Metadata.Templates;
 using OzzCodeGen.CodeEngines.Metadata.UI;
 using OzzCodeGen.CodeEngines.ModelClass;
 using OzzCodeGen.Utilities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -27,6 +27,62 @@ public class MetadataCodeEngine : BaseModelClassCodeEngine
     public override string GetDefaultFileName()
     {
         return DefaultFileName;
+    }
+
+    public override string GetDefaultTargetFolder()
+    {
+        return "Metadata";
+    }
+
+    protected override BaseEntitySetting CreateEntitySetting()
+    {
+        return new MetadataEntitySetting();
+    }
+
+    protected override BaseModelClassPropertySetting CreatePropertySetting()
+    {
+        return new MetadataPropertySetting();
+    }
+
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public List<MetadataEntitySetting> Entities
+    {
+        get
+        {
+            if (Project == null || string.IsNullOrEmpty(Project.SearchString))
+            {
+                return _entities;
+            }
+            else
+            {
+                var result = _entities
+                    .Where(e => e.Name.StartsWith(Project.SearchString, StringComparison.InvariantCultureIgnoreCase) ||
+                        e.Properties.Where(p => p.Name.StartsWith(Project.SearchString, StringComparison.InvariantCultureIgnoreCase)).Any());
+                return result.ToList();
+            }
+        }
+        set
+        {
+            if (_entities == value) return;
+            _entities = value;
+            RaisePropertyChanged("Entities");
+        }
+    }
+    private List<MetadataEntitySetting> _entities;
+
+    protected override void OnEntitySettingsChanged()
+    {
+        var entities = new List<MetadataEntitySetting>();
+        if (EntitySettings != null)
+        {
+            foreach (MetadataEntitySetting item in EntitySettings)
+            {
+                entities.Add(item);
+            }
+        }
+        Entities = entities;
     }
 
     public bool SeperateMetaDataClass

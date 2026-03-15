@@ -57,27 +57,25 @@
                     <ColumnDefinition Width="160"/>
                     <ColumnDefinition Width="160"/>
                     <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <CheckBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Center" Margin="8,4,0,0"
-                      Content="Generate for DTO"
-                      ToolTip="Generate metadata classes for DataTranferObjects"
-                      IsChecked="{Binding GenerateForDTO}"/>
-
-                <CheckBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Margin="8,4,0,0"
-                      Content="Seperated MetaData Class"
-                      ToolTip="Generate a seperated metadata class for each entity instead of using the MetadataType attribute on the entity class"
-                      IsChecked="{Binding SeperateMetaDataClass}"/>
-
-                <CheckBox Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Center" Margin="8,4,0,0"
                       Content="Generate XML Doc"
                       ToolTip="Generate XML documentation for the metadata classes"
                       IsChecked="{Binding GenerateXmlDoc}"/>
 
-                <CheckBox Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Center" Margin="8,4,0,0"
+                <CheckBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Center" Margin="8,4,0,0"
                       Content="Use Resx Resource"
                       ToolTip="Use resx resource files for error messages and display names instead of hard coded strings"
                       IsChecked="{Binding UseResourceFiles}"/>
+
+                <CheckBox Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Center" Margin="8,4,0,0"
+                      Content="Generate for DTO"
+                      ToolTip="Generate metadata classes for DataTranferObjects"
+                      IsChecked="{Binding GenerateForDTO}"/>
             </Grid>
 
             <TextBlock Text="Namespace:"

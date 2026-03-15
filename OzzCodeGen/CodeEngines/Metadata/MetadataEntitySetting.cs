@@ -10,8 +10,9 @@ namespace OzzCodeGen.CodeEngines.Metadata
             if (string.IsNullOrEmpty(EntityDefinition.BaseTypeName))
                 return null;
 
-            return CodeEngine
-                    .Entities
+            var codeEngine = (MetadataCodeEngine)CodeEngine;
+
+            return codeEngine.Entities
                     .OfType<MetadataEntitySetting>()
                     .FirstOrDefault(e => e.EntityDefinition.Name.Equals(EntityDefinition.BaseTypeName));
         }

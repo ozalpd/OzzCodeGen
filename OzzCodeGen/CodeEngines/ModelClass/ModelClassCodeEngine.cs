@@ -1,8 +1,8 @@
-using OzzCodeGen.CodeEngines.Metadata;
-using OzzCodeGen.CodeEngines.Metadata.Templates;
+using OzzCodeGen.CodeEngines.ModelClass.Templates;
 using OzzCodeGen.CodeEngines.ModelClass.UI;
 using OzzCodeGen.Utilities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.ModelClass;
 
+[XmlInclude(typeof(ModelClassEntitySetting))]
 public class ModelClassCodeEngine : BaseModelClassCodeEngine
 {
     public override string EngineId { get { return EngineTypes.ModelClassCodeEngineId; } }
@@ -27,6 +28,62 @@ public class ModelClassCodeEngine : BaseModelClassCodeEngine
         return DefaultFileName;
     }
 
+    public override string GetDefaultTargetFolder()
+    {
+        return "Models";
+    }
+
+    protected override BaseEntitySetting CreateEntitySetting()
+    {
+        return new ModelClassEntitySetting();
+    }
+
+    protected override BaseModelClassPropertySetting CreatePropertySetting()
+    {
+        return new ModelPropertySetting();
+    }
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public List<ModelClassEntitySetting> Entities
+    {
+        get
+        {
+            if (Project == null || string.IsNullOrEmpty(Project.SearchString))
+            {
+                return _entities;
+            }
+            else
+            {
+                var result = _entities
+                    .Where(e => e.Name.StartsWith(Project.SearchString, StringComparison.InvariantCultureIgnoreCase) ||
+                        e.Properties.Where(p => p.Name.StartsWith(Project.SearchString, StringComparison.InvariantCultureIgnoreCase)).Any());
+                return result.ToList();
+            }
+        }
+        set
+        {
+            if (_entities == value) return;
+            _entities = value;
+            RaisePropertyChanged("Entities");
+        }
+    }
+    private List<ModelClassEntitySetting> _entities;
+
+    protected override void OnEntitySettingsChanged()
+    {
+        var entities = new List<ModelClassEntitySetting>();
+        if (EntitySettings != null)
+        {
+            foreach (ModelClassEntitySetting item in EntitySettings)
+            {
+                entities.Add(item);
+            }
+        }
+        Entities = entities;
+    }
+
+
     /// <summary>
     /// Reads a project settings file and creates a ProjectSettings instance
     /// </summary>
@@ -41,18 +98,18 @@ public class ModelClassCodeEngine : BaseModelClassCodeEngine
         return instance;
     }
 
-    protected bool RenderTemplate(MetadataEntitySetting entitySettings)
+    protected bool RenderTemplate(ModelClassEntitySetting entitySettings)
     {
         if (entitySettings == null)
             return false;
 
-        var template = new MetadataClassTemplate(entitySettings);
+        var template = new ModelClassTemplate(entitySettings);
         var fileName = Path.Combine(TargetDirectory, template.GetDefaultFileName());
         bool allWritten = true;
 
         if (GenerateForDTO)
         {
-            var dtoTemplate = new MetadataClassTemplate(entitySettings, true);
+            var dtoTemplate = new ModelClassTemplate(entitySettings, true);
             var dtoFileName = Path.Combine(TargetDirectory, dtoTemplate.GetDefaultFileName());
             allWritten = dtoTemplate.WriteToFile(dtoFileName, OverwriteExisting || entitySettings.OverwriteExisting);
         }
@@ -69,7 +126,7 @@ public class ModelClassCodeEngine : BaseModelClassCodeEngine
         if (RenderAllEntities)
         {
             bool allWritten = true;
-            foreach (MetadataEntitySetting setting in EntitySettings.Where(e => e.Exclude == false))
+            foreach (ModelClassEntitySetting setting in EntitySettings.Where(e => e.Exclude == false))
             {
                 allWritten = RenderTemplate(setting) & allWritten;
             }
@@ -131,11 +188,11 @@ public class ModelClassCodeEngine : BaseModelClassCodeEngine
     {
         foreach (var entity in Entities)
         {
-            ClearReq(entity);
+            ClearReq((ModelClassEntitySetting)entity);
         }
     }
 
-    private static void ClearReq(MetadataEntitySetting entity)
+    private static void ClearReq(ModelClassEntitySetting entity)
     {
         if (entity == null) return;
         foreach (var property in entity.Properties)
@@ -166,16 +223,16 @@ public class ModelClassCodeEngine : BaseModelClassCodeEngine
         }
     }
 
-    private MetadataPropertySetting GetSelectedProperty()
+    private ModelPropertySetting GetSelectedProperty()
     {
         if (_engineUI.grdPropertySettings.SelectedItem == null) return null;
-        return (MetadataPropertySetting)_engineUI.grdPropertySettings.SelectedItem;
+        return (ModelPropertySetting)_engineUI.grdPropertySettings.SelectedItem;
     }
 
-    protected MetadataEntitySetting GetSelectedEntity()
+    protected ModelClassEntitySetting GetSelectedEntity()
     {
         if (_engineUI.grdEntitySettings.SelectedItem == null) return null;
-        return (MetadataEntitySetting)_engineUI.grdEntitySettings.SelectedItem;
+        return (ModelClassEntitySetting)_engineUI.grdEntitySettings.SelectedItem;
     }
 
 }

@@ -6,13 +6,12 @@
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzCodeGen.CodeEngines" #>
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
-<#@ import namespace="OzzCodeGen.CodeEngines.ModelClass.Templates" #>
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-<#  var codeEngine = EntitySetting.CodeEngine as MetadataCodeEngine;
-    var properties = GetInheritedIncludedProperties() as IEnumerable<MetadataPropertySetting>;
+<#  var codeEngine = EntitySetting.CodeEngine as ModelClassCodeEngine;
+    var properties = GetInheritedIncludedProperties() as IEnumerable<ModelPropertySetting>;
     if (EntitySetting.HasCustomAttributes) { #>
 using <#= codeEngine.CustomAttribNamespace #>;
 <#	} #>
@@ -29,20 +28,8 @@ using <#= codeEngine.ResxEngine.NamespaceName #>;
 
 namespace <#= NamespaceName #>
 {
-<#  if(codeEngine.SeperateMetaDataClass) { #>
-    [MetadataTypeAttribute(typeof(<#= ClassName #>.<#= EntitySetting.Name #>Metadata))]
     public partial class <#= ClassName #>
     {
-        internal sealed partial class <#= EntitySetting.Name #>Metadata
-        {
-            // This metadata class is not intended to be instantiated.
-            private <#= EntitySetting.Name #>Metadata() { }
-
-<#	PushIndent("    ");
-    } else { #>
-    public partial class <#= ClassName #>
-    {
-<#	} #>
 <#
     foreach (var property in properties) 
     {
@@ -63,10 +50,6 @@ namespace <#= NamespaceName #>
         public <#= property.GetTypeName() #> <#= property.Name #> { get; set; }
 
 <#	}
-} 
-    if(codeEngine.SeperateMetaDataClass) {
-    PopIndent();#>
-        }
-<#	} #>
+} #>
     }
 }

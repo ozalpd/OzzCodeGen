@@ -131,6 +131,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>MetadataClassTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Update="CodeEngines\ModelClass\Templates\ModelClassTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ModelClassTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Update="CodeEngines\Storage\Templates\Additionals.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -231,6 +236,9 @@
     </None>
     <None Update="CodeEngines\Metadata\Templates\MetadataClassTemplate.tt">
       <LastGenOutput>MetadataClassTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="CodeEngines\ModelClass\Templates\ModelClassTemplate.tt">
+      <LastGenOutput>ModelClassTemplate.cs</LastGenOutput>
     </None>
     <None Update="CodeEngines\Storage\Templates\Additionals.tt">
       <LastGenOutput>Additionals.cs</LastGenOutput>

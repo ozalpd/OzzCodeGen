@@ -120,7 +120,8 @@ Engines check `Project.TargetPlatform` to adapt generated code. For example, `Me
 
 | Engine ID | Description | Status |
 |---|---|---|
-| `Metadata_Class_Generator` | Generates metadata/validation attribute classes. | ✅ Active |
+| `Model_Class_Generator` | Generates model classes (primary path) using `ModelClassTemplate`/`BaseModelClassTemplate`. | ✅ Active |
+| `Metadata_Class_Generator` | Generates metadata/validation attribute classes (legacy compatibility path). | ✅ Active |
 | `AspNetMvc_Controller_View_Generator` | Generates ASP.NET MVC controllers and Razor views. | ✅ Active |
 | `T-Sql_Scripts_Generator` | Generates T-SQL DDL scripts. | ✅ Active |
 | `Sqlite_Scripts_Generator` | Generates SQLite DDL scripts. | ✅ Active |
@@ -130,8 +131,24 @@ Engines check `Project.TargetPlatform` to adapt generated code. For example, `Me
 | `ObjectiveC_Code_Generator` | Objective-C code generation. | ❌ Removed |
 | `Android_Code_Generator` | Android/Java code generation. | ❌ Removed |
 
+## Migration Note: `Model_Class_Generator` vs `Metadata_Class_Generator`
+
+- Use `Model_Class_Generator` for **new projects**. It is the primary and actively evolved model-class generation path.
+- Keep `Metadata_Class_Generator` for **existing/legacy projects** that already depend on metadata engine IDs/settings and serialized project compatibility.
+- Both engines remain loadable, but migration should be incremental:
+  1. Create new outputs with `Model_Class_Generator`.
+  2. Keep `Metadata_Class_Generator` enabled for old outputs/settings until manual validation is complete.
+  3. Remove legacy engine usage only after save/load and generated output parity checks pass.
+
 ## Key Patterns
 - Engine IDs and registration: see `OzzCodeGen/CodeEngines/EngineTypes.cs`.
+- Model-class primary stack:
+  - `OzzCodeGen/CodeEngines/ModelClass/ModelClassCodeEngine.cs`
+  - `OzzCodeGen/CodeEngines/ModelClass/BaseModelClassCodeEngine.cs`
+  - `OzzCodeGen/CodeEngines/ModelClass/Templates/ModelClassTemplate.tt`
+  - `OzzCodeGen/CodeEngines/ModelClass/Templates/BaseModelClassTemplate.cs`
+- Metadata compatibility stack:
+  - `OzzCodeGen/CodeEngines/Metadata/MetadataCodeEngine.cs`
 - Project orchestration: see `OzzCodeGen/CodeGenProject.cs`.
 - Target platform enum: see `OzzCodeGen/_enums.cs` (`TargetDotNetPlatform`).
 - Data model serialization and helpers: see `OzzCodeGen/DataModel.cs`.
