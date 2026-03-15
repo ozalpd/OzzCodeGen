@@ -1,4 +1,5 @@
-﻿using OzzCodeGen.UI;
+﻿using OzzCodeGen.CodeEngines.ModelClass;
+using OzzCodeGen.UI;
 using System.Collections.Generic;
 
 namespace OzzCodeGen.CodeEngines.Metadata.UI

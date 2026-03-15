@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 namespace OzzCodeGen.CodeEngines.Metadata;
 
 [XmlInclude(typeof(MetadataEntitySetting))]
-public class MetadataCodeEngine : ModelClassCodeEngineBase
+public class MetadataCodeEngine : BaseModelClassCodeEngine
 {
     public override string EngineId { get { return EngineTypes.MetadataCodeEngineId; } }
 

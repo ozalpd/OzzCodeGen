@@ -73,6 +73,9 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - **Serialization:** Project, data model, and vocabularies use XML serializers. Saving a project triggers engine-bound file saves (see [CodeGenProject.SaveBoundFiles](OzzCodeGen/CodeGenProject.cs#L220-L231)).
 - **Defaults discovery:** The empty provider scans `Defaults/` recursively for `.OzzGen` files; the WPF app prompts for the folder if missing (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L153-L173), [EmptyModel.cs](OzzCodeGen/Providers/EmptyModel.cs#L141-L167)).
 
+## Naming Conventions
+- **Base class naming:** Prefix base classes with 'Base' (e.g., `BaseModelClassPropertySetting`, `BaseModelClassCodeEngine`) to group related base classes together in Solution Explorer for improved readability.
+
 ## Extending This Repo
 - **Add a model provider:** Implement `IModelProvider`, wire UI selection, and set `CodeGenProject.ModelProvider`. Provide `SelectSource()` for source picking and `RefreshDataModel()` for schema sync.
 - **Add a code engine:** Create a `BaseCodeEngine` subclass with `EngineId`, `DefaultFileName`, `OpenFile()`, `RefreshFromProject()`, and a `UiControl` user control under `CodeEngines/<Engine>/UI`. Register in [EngineTypes.cs](OzzCodeGen/CodeEngines/EngineTypes.cs).

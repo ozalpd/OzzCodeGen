@@ -16,7 +16,7 @@ using System.Xml.Serialization;
 namespace OzzCodeGen.CodeEngines.ModelClass;
 
 [XmlInclude(typeof(MetadataEntitySetting))]
-public abstract class ModelClassCodeEngineBase : BaseCodeEngine
+public abstract class BaseModelClassCodeEngine : BaseCodeEngine
 {
     public override string GetDefaultTargetFolder()
     {

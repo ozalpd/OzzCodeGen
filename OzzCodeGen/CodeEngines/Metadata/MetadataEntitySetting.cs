@@ -1,27 +1,10 @@
-﻿using System.Linq;
-using System.Text.Json.Serialization;
-using System.Xml.Serialization;
-using OzzCodeGen.CodeEngines.ModelClass;
+﻿using OzzCodeGen.CodeEngines.ModelClass;
+using System.Linq;
 
 namespace OzzCodeGen.CodeEngines.Metadata
 {
-    public class MetadataEntitySetting : AbstractEntitySetting<MetadataPropertySetting>
+    public class MetadataEntitySetting : BaseModelClassEntitySetting<MetadataPropertySetting>
     {
-        [XmlIgnore]
-        [JsonIgnore]
-        public ModelClassCodeEngineBase CodeEngine { get; set; }
-
-        [XmlIgnore]
-        [JsonIgnore]
-        public bool HasCustomAttributes
-        {
-            get
-            {
-                return Properties != null
-                    && Properties.Any(p => !string.IsNullOrEmpty(p.CustomAttributes));
-            }
-        }
-
         public override AbstractEntitySetting<MetadataPropertySetting> GetBaseEntitySetting()
         {
             if (string.IsNullOrEmpty(EntityDefinition.BaseTypeName))
@@ -29,6 +12,7 @@ namespace OzzCodeGen.CodeEngines.Metadata
 
             return CodeEngine
                     .Entities
+                    .OfType<MetadataEntitySetting>()
                     .FirstOrDefault(e => e.EntityDefinition.Name.Equals(EntityDefinition.BaseTypeName));
         }
     }

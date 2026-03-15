@@ -1,4 +1,5 @@
-﻿using OzzCodeGen.Definitions;
+﻿using OzzCodeGen.CodeEngines.ModelClass;
+using OzzCodeGen.Definitions;
 using OzzCodeGen.Templates.Cs;
 using System;
 using System.Collections.Generic;

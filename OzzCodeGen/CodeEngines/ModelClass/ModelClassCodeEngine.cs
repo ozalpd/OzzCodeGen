@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.ModelClass;
 
-public class ModelClassCodeEngine : ModelClassCodeEngineBase
+public class ModelClassCodeEngine : BaseModelClassCodeEngine
 {
     public override string EngineId { get { return EngineTypes.ModelClassCodeEngineId; } }
 
