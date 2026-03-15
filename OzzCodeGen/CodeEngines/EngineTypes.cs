@@ -2,6 +2,8 @@
 using OzzCodeGen.CodeEngines.TechDocument;
 using OzzCodeGen.CodeEngines.Localization;
 using OzzCodeGen.CodeEngines.Storage;
+using OzzCodeGen.CodeEngines.Metadata;
+using OzzCodeGen.CodeEngines.ModelClass;
 using System;
 
 namespace OzzCodeGen.CodeEngines
@@ -13,6 +15,7 @@ namespace OzzCodeGen.CodeEngines
         public const string EfTechnicalDocId = "EF_Technical_Document";
         public const string LocalizationResxGenId = "Localization_Resource_Generator";
         public const string MetadataCodeEngineId = "Metadata_Class_Generator";
+        public const string ModelClassCodeEngineId = "Model_Class_Generator";
 
         public const string TSqlScriptsId = "T-Sql_Scripts_Generator";
         public const string SqliteScriptsId = "Sqlite_Scripts_Generator";
@@ -27,8 +30,11 @@ namespace OzzCodeGen.CodeEngines
         {
             switch (targetProjectId)
             {
+                case ModelClassCodeEngineId:
+                    return new ModelClassCodeEngine();
+
                 case MetadataCodeEngineId:
-                    return new Metadata.MetadataCodeEngine();
+                    return new MetadataCodeEngine();
 
                 case AspNetMvcEngineId:
                     return new AspNetMvc.AspNetMvcEngine();
@@ -70,6 +76,10 @@ namespace OzzCodeGen.CodeEngines
 
             switch (targetProjectId)
             {
+                case ModelClassCodeEngineId:
+                    fileName = Path.Combine(Directory, ModelClassCodeEngine.DefaultFileName);
+                    return ModelClassCodeEngine.OpenFile(fileName);
+
                 case MetadataCodeEngineId:
                     fileName = Path.Combine(Directory, Metadata.MetadataCodeEngine.DefaultFileName);
                     return Metadata.MetadataCodeEngine.OpenFile(fileName);

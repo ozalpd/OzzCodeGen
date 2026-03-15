@@ -1,4 +1,5 @@
 ﻿using OzzCodeGen.Definitions;
+using OzzCodeGen.CodeEngines.ModelClass;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -17,7 +18,7 @@ namespace OzzCodeGen.CodeEngines.Metadata
 
         [XmlIgnore]
         [JsonIgnore]
-        public MetadataCodeEngine CodeEngine
+        public ModelClassCodeEngineBase CodeEngine
         {
             get { return MetadataEntitySetting.CodeEngine; }
         }

@@ -210,7 +210,7 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
                 sb.Append("DTO");
             }
 
-            MetadataCodeEngine codeEngine = EntitySetting.CodeEngine;
+            MetadataCodeEngine codeEngine = EntitySetting.CodeEngine as MetadataCodeEngine;
             if (codeEngine != null && codeEngine.SeperateMetaDataClass)
             {
                 sb.Append(".meta");

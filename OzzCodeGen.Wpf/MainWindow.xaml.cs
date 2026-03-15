@@ -132,6 +132,7 @@ namespace OzzCodeGen.Wpf
 
             AddCodeEngineName(engines, EngineTypes.EfTechnicalDocId);
             AddCodeEngineName(engines, EngineTypes.LocalizationResxGenId);
+            AddCodeEngineName(engines, EngineTypes.ModelClassCodeEngineId);
             AddCodeEngineName(engines, EngineTypes.MetadataCodeEngineId);
             //Objective-C code generation engine removed in this version 2026-01-13 Özalp
             //AddCodeEngineName(engines, EngineTypes.ObjcEngineId);

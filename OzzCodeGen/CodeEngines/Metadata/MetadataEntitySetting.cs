@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
+using OzzCodeGen.CodeEngines.ModelClass;
 
 namespace OzzCodeGen.CodeEngines.Metadata
 {
@@ -8,7 +9,7 @@ namespace OzzCodeGen.CodeEngines.Metadata
     {
         [XmlIgnore]
         [JsonIgnore]
-        public MetadataCodeEngine CodeEngine { get; set; }
+        public ModelClassCodeEngineBase CodeEngine { get; set; }
 
         [XmlIgnore]
         [JsonIgnore]

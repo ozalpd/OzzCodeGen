@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-<#  var codeEngine = EntitySetting.CodeEngine;
+<#  var codeEngine = EntitySetting.CodeEngine as MetadataCodeEngine;
     if(EntitySetting.HasCustomAttributes) { #>
 using <#= codeEngine.CustomAttribNamespace #>;
 <#	} #>
@@ -63,7 +63,7 @@ namespace <#= NamespaceName #>
 
 <#	}
 } 
-    if(EntitySetting.CodeEngine.SeperateMetaDataClass) {
+    if(codeEngine.SeperateMetaDataClass) {
     PopIndent();#>
         }
 <#	} #>

@@ -35,7 +35,7 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
                     "sing System.ComponentModel.DataAnnotations;\r\n");
             
             #line 13 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
-  var codeEngine = EntitySetting.CodeEngine;
+  var codeEngine = EntitySetting.CodeEngine as MetadataCodeEngine;
     if(EntitySetting.HasCustomAttributes) { 
             
             #line default
@@ -223,7 +223,7 @@ namespace ");
             #line 64 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
 	}
 } 
-    if(EntitySetting.CodeEngine.SeperateMetaDataClass) {
+    if(codeEngine.SeperateMetaDataClass) {
     PopIndent();
             
             #line default
