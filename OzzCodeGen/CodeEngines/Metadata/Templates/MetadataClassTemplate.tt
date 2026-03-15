@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 <#  var codeEngine = EntitySetting.CodeEngine as MetadataCodeEngine;
-    var properties = GetInheritedIncludedProperties() as IEnumerable<MetadataPropertySetting>;
+    var properties = GetInheritedIncludedProperties();
     if (EntitySetting.HasCustomAttributes) { #>
 using <#= codeEngine.CustomAttribNamespace #>;
 <#	} #>

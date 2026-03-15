@@ -36,7 +36,7 @@ namespace OzzCodeGen.CodeEngines.ModelClass.Templates
             
             #line 13 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
   var codeEngine = EntitySetting.CodeEngine as ModelClassCodeEngine;
-    var properties = GetInheritedIncludedProperties() as IEnumerable<ModelPropertySetting>;
+    var properties = GetInheritedIncludedProperties();
     if (EntitySetting.HasCustomAttributes) { 
             
             #line default

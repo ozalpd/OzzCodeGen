@@ -136,15 +136,18 @@ namespace OzzCodeGen.CodeEngines.ModelClass.Templates
 
         public IEnumerable<BaseModelClassPropertySetting> GetInheritedIncludedProperties()
         {
+            var inheritedProperties = EntitySetting.GetInheritedProperties();
             if (MetadataForDTO)
             {
-                return EntitySetting
-                            .GetInheritedIncludedProperties()
-                            .Where(p => p.IsSimpleOrString && !p.DTOExclusion);
+                return inheritedProperties
+                    .Where(p => p.IsSimpleOrString && !p.DTOExclusion && !p.Exclude)
+                    .OrderBy(c => c.PropertyDefinition.DisplayOrder);
             }
             else
             {
-                return EntitySetting.GetInheritedIncludedProperties();
+                return inheritedProperties
+                    .Where(c => !c.Exclude)
+                    .OrderBy(c => c.PropertyDefinition.DisplayOrder);
             }
         }
 

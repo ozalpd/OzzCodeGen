@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 <#  var codeEngine = EntitySetting.CodeEngine as ModelClassCodeEngine;
-    var properties = GetInheritedIncludedProperties() as IEnumerable<ModelPropertySetting>;
+    var properties = GetInheritedIncludedProperties();
     if (EntitySetting.HasCustomAttributes) { #>
 using <#= codeEngine.CustomAttribNamespace #>;
 <#	} #>

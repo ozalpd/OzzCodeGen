@@ -37,7 +37,7 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
             
             #line 14 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
   var codeEngine = EntitySetting.CodeEngine as MetadataCodeEngine;
-    var properties = GetInheritedIncludedProperties() as IEnumerable<MetadataPropertySetting>;
+    var properties = GetInheritedIncludedProperties();
     if (EntitySetting.HasCustomAttributes) { 
             
             #line default

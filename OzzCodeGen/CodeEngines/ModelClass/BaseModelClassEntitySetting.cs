@@ -10,6 +10,7 @@ namespace OzzCodeGen.CodeEngines.ModelClass
         string Name { get; }
         BaseModelClassCodeEngine CodeEngine { get; set; }
         IEnumerable<BaseModelClassPropertySetting> ModelProperties { get; }
+        IEnumerable<BaseModelClassPropertySetting> GetInheritedProperties();
         BaseModelClassPropertySetting FindProperty(string propertyName);
         IEnumerable<BaseModelClassPropertySetting> GetInheritedIncludedProperties();
         void AddProperty(BaseModelClassPropertySetting propertySetting);
@@ -65,10 +66,14 @@ namespace OzzCodeGen.CodeEngines.ModelClass
                 .ToList();
         }
 
+        public new IEnumerable<BaseModelClassPropertySetting> GetInheritedProperties()
+        {
+            return base.GetInheritedProperties().Cast<BaseModelClassPropertySetting>();
+        }
+
         public new IEnumerable<BaseModelClassPropertySetting> GetInheritedIncludedProperties()
         {
-            var result = base.GetInheritedIncludedProperties() as IEnumerable<BaseModelClassPropertySetting>;
-            return result;
+            return base.GetInheritedIncludedProperties().Cast<BaseModelClassPropertySetting>();
         }
     }
 }
