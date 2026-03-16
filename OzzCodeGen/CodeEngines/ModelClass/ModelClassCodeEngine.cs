@@ -70,6 +70,17 @@ public class ModelClassCodeEngine : BaseModelClassCodeEngine
     }
     private List<ModelClassEntitySetting> _entities;
 
+    public bool GenerateXmlDoc
+    {
+        get { return _generateXmlDoc; }
+        set
+        {
+            _generateXmlDoc = value;
+            RaisePropertyChanged("GenerateXmlDoc");
+        }
+    }
+    private bool _generateXmlDoc;
+
     protected override void OnEntitySettingsChanged()
     {
         var entities = new List<ModelClassEntitySetting>();

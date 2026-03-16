@@ -136,17 +136,6 @@ public abstract class BaseModelClassCodeEngine : BaseCodeEngine
     }
     private bool _generateForDTO;
 
-    public bool GenerateXmlDoc
-    {
-        get { return _generateXmlDoc; }
-        set
-        {
-            _generateXmlDoc = value;
-            RaisePropertyChanged("GenerateXmlDoc");
-        }
-    }
-    private bool _generateXmlDoc;
-
     [XmlIgnore]
     [JsonIgnore]
     public ResxEngine ResxEngine

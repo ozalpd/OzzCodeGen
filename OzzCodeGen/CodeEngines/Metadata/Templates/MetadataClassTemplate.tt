@@ -45,13 +45,7 @@ namespace <#= NamespaceName #>
 <#	} #>
 <#
     foreach (var property in properties) 
-    {
-        var comment = property.PropertyDefinition.Comment;
-        if(codeEngine.GenerateXmlDoc && !string.IsNullOrWhiteSpace(comment)) {#>
-        /// <summary>
-        /// <#= comment #>
-        /// </summary>
-<#		} #>
+    { #>
 <#    List<string> attributes  = GetPropertyAttributes(property);
     if(attributes.Any())
     {
