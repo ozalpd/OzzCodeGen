@@ -124,11 +124,11 @@ namespace ");
             #line hidden
             
             #line 42 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
-    List<string> attributes  = GetPropertyAttributes(property);
-    if(attributes.Any())
-    {
-        foreach(string attibute in attributes)
+      List<string> attributes  = GetPropertyAttributes(property);
+        if(attributes.Any() && codeEngine.GenAnnotations)
         {
+            foreach(string attibute in attributes)
+            {
 
             
             #line default
@@ -143,29 +143,29 @@ namespace ");
             this.Write("\r\n");
             
             #line 49 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
-		} 
+		    }
+        }
             
             #line default
             #line hidden
             this.Write("        public ");
             
-            #line 50 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.GetTypeName()));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 50 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(" { get; set; }\r\n\r\n");
             
-            #line 52 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
-	}
-} 
+            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+  } 
             
             #line default
             #line hidden

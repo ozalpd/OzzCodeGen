@@ -70,6 +70,17 @@ public class ModelClassCodeEngine : BaseModelClassCodeEngine
     }
     private List<ModelClassEntitySetting> _entities;
 
+    public bool GenAnnotations
+    {
+        get { return _genAnnotations; }
+        set
+        {
+            _genAnnotations = value;
+            RaisePropertyChanged("GenAnnotations");
+        }
+    }
+    private bool _genAnnotations;
+
     public bool GenerateXmlDoc
     {
         get { return _generateXmlDoc; }

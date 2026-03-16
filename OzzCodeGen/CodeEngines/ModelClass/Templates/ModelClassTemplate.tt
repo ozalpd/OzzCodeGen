@@ -39,17 +39,17 @@ namespace <#= NamespaceName #>
         /// <#= comment #>
         /// </summary>
 <#		} #>
-<#    List<string> attributes  = GetPropertyAttributes(property);
-    if(attributes.Any())
-    {
-        foreach(string attibute in attributes)
+<#      List<string> attributes  = GetPropertyAttributes(property);
+        if(attributes.Any() && codeEngine.GenAnnotations)
         {
+            foreach(string attibute in attributes)
+            {
 #>
         <#= attibute #>
-<#		} #>
+<#		    }
+        }#>
         public <#= property.GetTypeName() #> <#= property.Name #> { get; set; }
 
-<#	}
-} #>
+<#  } #>
     }
 }
