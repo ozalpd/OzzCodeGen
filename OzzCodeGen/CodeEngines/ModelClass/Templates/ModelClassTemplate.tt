@@ -12,6 +12,10 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 <#  var codeEngine = EntitySetting.CodeEngine as ModelClassCodeEngine;
     var properties = GetInheritedIncludedProperties();
+    var complexProperties = GetComplexProperties();
+    var collectionProperties = GetCollectionProperties();
+    var stringProperties = GetStringProperties();
+    var simpleProperties = GetSimpleProperties();
     if (EntitySetting.HasCustomAttributes) { #>
 using <#= codeEngine.CustomAttribNamespace #>;
 <#	} #>
@@ -30,6 +34,29 @@ namespace <#= NamespaceName #>
 {
     public partial class <#= ClassName #>
     {
+        public <#= ClassName #>()
+        {
+<#  foreach(var property in collectionProperties) {
+            var propertyDefinition = property.PropertyDefinition as CollectionProperty; #>
+            this.<#= property.Name #> = new HashSet<<#= propertyDefinition.GetObjectTypeName() #>>();
+<#  } #>
+<#  if (TargetPlatform == TargetDotNetPlatform.ModernDotNet) {
+        foreach(var property in complexProperties) {
+            var propertyDefinition = property.PropertyDefinition as ComplexProperty;
+            if (propertyDefinition != null && !propertyDefinition.Dependency.IsNullable) { #>
+            this.<#= property.Name #> = new <#= property.GetTypeName() #>();
+<#            }
+        }
+        foreach(var property in stringProperties) {
+            var propertyDefinition = property.PropertyDefinition as SimpleProperty;
+            if(propertyDefinition != null && !propertyDefinition.IsNullable) { #>
+            this.<#= property.Name #> = string.Empty;
+<#            }
+        }
+    }#>
+
+            OnInitilazed();
+        }
 <#
     foreach (var property in properties) 
     {
@@ -51,5 +78,33 @@ namespace <#= NamespaceName #>
         public <#= property.GetTypeName() #> <#= property.Name #> { get; set; }
 
 <#  } #>
+
+        /// <summary>
+        /// Clones all properties in a new <#= ClassName #> instance,
+        /// except PrimaryKey(s)
+        /// </summary>
+        /// <returns>New <#= ClassName #> instance</returns>
+        public <#= ClassName #> Clone()
+        {
+            var clone = new <#= ClassName #>();
+<#  foreach(var property in simpleProperties) {
+            var propertyDefinition = property.PropertyDefinition as SimpleProperty;
+            if(propertyDefinition != null && !propertyDefinition.IsKey) {  #>
+            clone.<#= property.Name #> = this.<#= property.Name #>;
+<#      }
+    } #>
+
+            Cloning(clone);
+            return clone;
+        }
+
+        // Use below method in a partial class file (eg. <#= ClassName #>.part.cs)
+        // to add more detailed data to clone
+        partial void Cloning(<#= ClassName #> clone);
+
+
+        // Use below method in a partial class file (eg. <#= ClassName #>.part.cs)
+        // to add some functionality after the constructor
+        partial void OnInitilazed();
     }
 }

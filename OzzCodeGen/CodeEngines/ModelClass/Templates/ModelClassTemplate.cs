@@ -37,40 +37,44 @@ namespace OzzCodeGen.CodeEngines.ModelClass.Templates
             #line 13 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
   var codeEngine = EntitySetting.CodeEngine as ModelClassCodeEngine;
     var properties = GetInheritedIncludedProperties();
+    var complexProperties = GetComplexProperties();
+    var collectionProperties = GetCollectionProperties();
+    var stringProperties = GetStringProperties();
+    var simpleProperties = GetSimpleProperties();
     if (EntitySetting.HasCustomAttributes) { 
             
             #line default
             #line hidden
             this.Write("using ");
             
-            #line 16 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 20 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(codeEngine.CustomAttribNamespace));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 17 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 21 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
 	} 
             
             #line default
             #line hidden
             
-            #line 18 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 22 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
   if (codeEngine.UseResourceFiles && codeEngine.ResxEngine != null) { 
             
             #line default
             #line hidden
             this.Write("using ");
             
-            #line 19 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 23 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(codeEngine.ResxEngine.NamespaceName));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 20 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
 	} 
             
             #line default
@@ -85,21 +89,107 @@ namespace OzzCodeGen.CodeEngines.ModelClass.Templates
 
 namespace ");
             
-            #line 29 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 33 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(NamespaceName));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    public partial class ");
             
-            #line 31 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 35 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default
             #line hidden
-            this.Write("\r\n    {\r\n");
+            this.Write("\r\n    {\r\n        public ");
             
-            #line 33 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
+            
+            #line default
+            #line hidden
+            this.Write("()\r\n        {\r\n");
+            
+            #line 39 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+  foreach(var property in collectionProperties) {
+            var propertyDefinition = property.PropertyDefinition as CollectionProperty; 
+            
+            #line default
+            #line hidden
+            this.Write("            this.");
+            
+            #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" = new HashSet<");
+            
+            #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(propertyDefinition.GetObjectTypeName()));
+            
+            #line default
+            #line hidden
+            this.Write(">();\r\n");
+            
+            #line 42 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+  } 
+            
+            #line default
+            #line hidden
+            
+            #line 43 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+  if (TargetPlatform == TargetDotNetPlatform.ModernDotNet) {
+        foreach(var property in complexProperties) {
+            var propertyDefinition = property.PropertyDefinition as ComplexProperty;
+            if (propertyDefinition != null && !propertyDefinition.Dependency.IsNullable) { 
+            
+            #line default
+            #line hidden
+            this.Write("            this.");
+            
+            #line 47 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" = new ");
+            
+            #line 47 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.GetTypeName()));
+            
+            #line default
+            #line hidden
+            this.Write("();\r\n");
+            
+            #line 48 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            }
+        }
+        foreach(var property in stringProperties) {
+            var propertyDefinition = property.PropertyDefinition as SimpleProperty;
+            if(propertyDefinition != null && !propertyDefinition.IsNullable) { 
+            
+            #line default
+            #line hidden
+            this.Write("            this.");
+            
+            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" = string.Empty;\r\n");
+            
+            #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            }
+        }
+    }
+            
+            #line default
+            #line hidden
+            this.Write("\r\n            OnInitilazed();\r\n        }\r\n");
+            
+            #line 60 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
 
     foreach (var property in properties) 
     {
@@ -110,20 +200,20 @@ namespace ");
             #line hidden
             this.Write("        /// <summary>\r\n        /// ");
             
-            #line 39 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 66 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(comment));
             
             #line default
             #line hidden
             this.Write("\r\n        /// </summary>\r\n");
             
-            #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 68 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
 		} 
             
             #line default
             #line hidden
             
-            #line 42 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 69 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
       List<string> attributes  = GetPropertyAttributes(property);
         if(attributes.Any() && codeEngine.GenAnnotations)
         {
@@ -135,14 +225,14 @@ namespace ");
             #line hidden
             this.Write("        ");
             
-            #line 48 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 75 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(attibute));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 49 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 76 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
 		    }
         }
             
@@ -150,26 +240,110 @@ namespace ");
             #line hidden
             this.Write("        public ");
             
-            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 78 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.GetTypeName()));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 78 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(" { get; set; }\r\n\r\n");
             
-            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            #line 80 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
   } 
             
             #line default
             #line hidden
-            this.Write("    }\r\n}\r\n");
+            this.Write("\r\n        /// <summary>\r\n        /// Clones all properties in a new ");
+            
+            #line 83 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
+            
+            #line default
+            #line hidden
+            this.Write(" instance,\r\n        /// except PrimaryKey(s)\r\n        /// </summary>\r\n        ///" +
+                    " <returns>New ");
+            
+            #line 86 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
+            
+            #line default
+            #line hidden
+            this.Write(" instance</returns>\r\n        public ");
+            
+            #line 87 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
+            
+            #line default
+            #line hidden
+            this.Write(" Clone()\r\n        {\r\n            var clone = new ");
+            
+            #line 89 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
+            
+            #line default
+            #line hidden
+            this.Write("();\r\n");
+            
+            #line 90 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+  foreach(var property in simpleProperties) {
+            var propertyDefinition = property.PropertyDefinition as SimpleProperty;
+            if(propertyDefinition != null && !propertyDefinition.IsKey) {  
+            
+            #line default
+            #line hidden
+            this.Write("            clone.");
+            
+            #line 93 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" = this.");
+            
+            #line 93 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n");
+            
+            #line 94 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+      }
+    } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n            Cloning(clone);\r\n            return clone;\r\n        }\r\n\r\n        //" +
+                    " Use below method in a partial class file (eg. ");
+            
+            #line 101 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
+            
+            #line default
+            #line hidden
+            this.Write(".part.cs)\r\n        // to add more detailed data to clone\r\n        partial void Cl" +
+                    "oning(");
+            
+            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
+            
+            #line default
+            #line hidden
+            this.Write(" clone);\r\n\r\n\r\n        // Use below method in a partial class file (eg. ");
+            
+            #line 106 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\ModelClass\Templates\ModelClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
+            
+            #line default
+            #line hidden
+            this.Write(".part.cs)\r\n        // to add some functionality after the constructor\r\n        pa" +
+                    "rtial void OnInitilazed();\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

@@ -134,23 +134,109 @@ namespace OzzCodeGen.CodeEngines.ModelClass.Templates
             }
         }
 
+        /// <summary>
+        /// Retrieves all property settings that represent collection properties for the current model class,
+        /// including inherited properties.
+        /// </summary>
+        /// <remarks>Collection properties are identified by their property definition type. This method
+        /// includes both directly declared and inherited collection properties.</remarks>
+        /// <returns>An enumerable collection of property settings corresponding to collection properties defined or inherited by
+        /// the model class.</returns>
+        public IEnumerable<BaseModelClassPropertySetting> GetCollectionProperties()
+        {
+            if (_collectionProperties != null)
+                return _collectionProperties;
+
+            var properties = GetInheritedIncludedProperties();
+            _collectionProperties = properties.Where(p => p.PropertyDefinition is CollectionProperty);
+            return _collectionProperties;
+        }
+        IEnumerable<BaseModelClassPropertySetting> _collectionProperties = null;
+
+
+        /// <summary>
+        /// Retrieves all navigation-like properties that point to another entity type,
+        /// including inherited properties.
+        /// </summary>
+        /// <returns>An enumerable collection of property settings corresponding to navigation-like properties defined or inherited by
+        /// the model class.</returns>
+        public IEnumerable<BaseModelClassPropertySetting> GetComplexProperties()
+        {
+            if (_complexProperties != null)
+                return _complexProperties;
+
+            var properties = GetInheritedIncludedProperties();
+            _complexProperties = properties.Where(p => p.PropertyDefinition is ComplexProperty);
+            return _complexProperties;
+        }
+        IEnumerable<BaseModelClassPropertySetting> _complexProperties = null;
+
         public IEnumerable<BaseModelClassPropertySetting> GetInheritedIncludedProperties()
         {
+            if (_inheritedProperties != null)
+                return _inheritedProperties;
+
             var inheritedProperties = EntitySetting.GetInheritedProperties();
             if (MetadataForDTO)
             {
-                return inheritedProperties
+                _inheritedProperties = inheritedProperties
                     .Where(p => p.IsSimpleOrString && !p.DTOExclusion && !p.Exclude)
                     .OrderBy(c => c.PropertyDefinition.DisplayOrder);
             }
             else
             {
-                return inheritedProperties
+                _inheritedProperties = inheritedProperties
                     .Where(c => !c.Exclude)
                     .OrderBy(c => c.PropertyDefinition.DisplayOrder);
             }
+            return _inheritedProperties;
         }
+        IEnumerable<BaseModelClassPropertySetting> _inheritedProperties = null;
 
+        /// <summary>
+        /// Retrieves all SimpleProperty and StringProperty settings for the current model class, including inherited properties.
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{BaseModelClassPropertySetting}"/> containing the property settings for all simple
+        /// and string properties. The collection is empty if no simple or string properties are present.</returns>
+        public IEnumerable<BaseModelClassPropertySetting> GetSimpleProperties()
+        {
+            if (_simpleProperties != null)
+                return _simpleProperties;
+
+            var properties = GetInheritedIncludedProperties();
+            _simpleProperties = properties.Where(p => p.PropertyDefinition is SimpleProperty);
+            return _simpleProperties;
+        }
+        IEnumerable<BaseModelClassPropertySetting> _simpleProperties = null;
+
+        /// <summary>
+        /// Returns an enumerable collection of property settings that represent string properties for the current model
+        /// class.
+        /// </summary>
+        /// <remarks>The returned collection includes only those properties whose definitions are of type
+        /// <see cref="StringProperty"/>. The result is cached for subsequent calls.</remarks>
+        /// <returns>An <see cref="IEnumerable{BaseModelClassPropertySetting}"/> containing the property settings for all string
+        /// properties. The collection is empty if no string properties are present.</returns>
+        public IEnumerable<BaseModelClassPropertySetting> GetStringProperties()
+        {
+            if (_stringProperties != null)
+                return _stringProperties;
+
+            var properties = GetInheritedIncludedProperties();
+            _stringProperties = properties.Where(p => p.PropertyDefinition is StringProperty);
+            return _stringProperties;
+        }
+        IEnumerable<BaseModelClassPropertySetting> _stringProperties = null;
+
+        /// <summary>
+        /// Generates a list of attribute strings to be applied to a property based on its settings.
+        /// </summary>
+        /// <remarks>The returned attribute strings are formatted for direct inclusion in generated C#
+        /// code. Custom attributes, validation attributes, and display-related attributes are included based on the
+        /// values present in the provided property settings.</remarks>
+        /// <param name="property">The property settings used to determine which attributes to generate.</param>
+        /// <returns>A list of strings, each representing an attribute to be applied to the property. The list may be empty if no
+        /// attributes are applicable.</returns>
         protected List<string> GetPropertyAttributes(BaseModelClassPropertySetting property)
         {
             var attributes = new List<string>();
@@ -190,6 +276,9 @@ namespace OzzCodeGen.CodeEngines.ModelClass.Templates
 
             return attributes;
         }
+
+
+        public TargetDotNetPlatform TargetPlatform => CodeEngine.Project.TargetPlatform;
 
         public override bool WriteToFile(string FilePath, bool overwriteExisting)
         {
