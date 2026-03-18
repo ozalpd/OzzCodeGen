@@ -88,7 +88,7 @@ dotnet build OzzCodeGen.sln -c Debug
 	- Add engines via the plus button, e.g., `Localization_Resource_Generator`.
 	- Save the project (`.OzzGen`) to establish `TargetSolutionDir`.
 4. In the `Localization_Resource_Generator` UI:
-	- Set `TargetFolder` (default `App_GlobalResources`).
+	- Set `TargetFolder` (default `$"{Project.TargetFolder}\\{Project.Name}.i18n"`).
 	- Set `VocabularyFolder` to the folder containing `vocabulary.??.xml` (relative to the project file).
 	- Choose `SingleResx` for a combined resource or per-entity resources.
 	- Click Render to generate `.resx` files under `TargetSolutionDir/TargetFolder`.
@@ -97,12 +97,12 @@ dotnet build OzzCodeGen.sln -c Debug
 - Engine ID: `Localization_Resource_Generator` (see `OzzCodeGen/CodeEngines/EngineTypes.cs`).
 - Vocabulary discovery: ResxEngine loads vocabularies from `VocabularyDir` resolved from `CodeGenProject.SavedFileName` + `VocabularyFolder` (see `ResxEngine.VocabularyDir`).
 - Outputs:
-  - Default target folder is `App_GlobalResources` (see `ResxEngine.GetDefaultTargetFolder`).
+  - Default target folder is `$"{Project.TargetFolder}\\{Project.Name}.i18n"` (see `ResxEngine.GetDefaultTargetFolder`).
   - Generates one `.resx` per culture code for each entity or a single combined file when `SingleResx` is enabled (see `ResxEngine.RenderSelectedTemplate`).
 - Optional: Set `SaveWithVocabularies` to duplicate `vocabulary.??.xml` into the target directory on save (see `ResxEngine.SaveToFile`).
 
 ### Output Naming Examples
-- **SingleResx enabled:** `EntityStrings.notr.resx`, `EntityStrings.tr.resx` (default file base is `SingleResxFilename` → `EntityStrings`).
+- **SingleResx enabled:** `LocalizedStrings.notr.resx`, `LocalizedStrings.tr.resx` (default file base is `SingleResxFilename` → `LocalizedStrings`).
 - **Per-entity resources:** `CustomerString.notr.resx`, `OrderString.tr.resx` (default base from `GetDefaultTargetFile` → `${entity.Name}String`).
 
 ## Target Platform

@@ -124,7 +124,7 @@ namespace OzzCodeGen.CodeEngines.Localization
             {
                 if (string.IsNullOrEmpty(_singleResxFilename))
                 {
-                    _singleResxFilename = "EntityStrings";
+                    _singleResxFilename = "LocalizedStrings";
                 }
                 return _singleResxFilename;
             }
@@ -251,6 +251,7 @@ namespace OzzCodeGen.CodeEngines.Localization
         public static string[] DefaultSupplementaryEntities = {
             "ActionStrings",
             "CommonStrings",
+            "ErrorStrings",
             "MessageStrings"
         };
 
@@ -596,7 +597,8 @@ namespace OzzCodeGen.CodeEngines.Localization
 
         public override string GetDefaultTargetFolder()
         {
-            return "App_GlobalResources";
+
+            return $"{Project.TargetFolder}\\{Project.Name}.i18n";
         }
     }
 }

@@ -52,7 +52,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 ### Quick Start (Localization → ResxEngine)
 - Build the solution, then create `vocabulary.notr.xml` in a folder alongside your `.OzzGen` project file (use [OzzLocalization.Wpf](OzzLocalization.Wpf)).
 - In [OzzCodeGen.Wpf](OzzCodeGen.Wpf): create a project, add `Localization_Resource_Generator`, and save the project to establish `TargetSolutionDir`.
-- In the engine UI: set `TargetFolder` (default `App_GlobalResources`) and `VocabularyFolder` relative to the project file.
+- In the engine UI: set `TargetFolder` (default `$"{Project.TargetFolder}\\{Project.Name}.i18n"`) and `VocabularyFolder` relative to the project file.
 - Choose `SingleResx` for combined resources or per-entity; render to generate `.resx` under `TargetSolutionDir/TargetFolder` (see [ResxEngine.cs](OzzCodeGen/CodeEngines/Localization/ResxEngine.cs)).
 
 ## Engine Lifecycle
