@@ -71,6 +71,11 @@ namespace OzzCodeGen.Definitions
             return dependent.FirstOrDefault();
         }
 
+        public bool IsTypeDecimalNumeric()
+        {
+            return IsTypeDecimalNumeric(TypeName);
+        }
+
         public override bool IsTypeNullable()
         {
             return IsTypeNullable(TypeName);

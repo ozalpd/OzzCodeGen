@@ -97,10 +97,9 @@ namespace OzzCodeGen.CodeEngines.ModelClass.Templates
                 && ((StringProperty)property.PropertyDefinition).MaxLength > 0)
             {
                 StringProperty definition = (StringProperty)property.PropertyDefinition;
-                var resxEngine = CodeEngine.ResxEngine;
 
-                if (CodeEngine.UseResourceFiles && resxEngine != null &&
-                    !string.IsNullOrEmpty(resxEngine.ErrorResxFilename))
+
+                if (!string.IsNullOrEmpty(ErrorResxFilename))
                 {
                     StringBuilder sb = new StringBuilder();
                     sb.Append("[StringLength(");
@@ -108,7 +107,7 @@ namespace OzzCodeGen.CodeEngines.ModelClass.Templates
                     sb.Append(", ErrorMessageResourceType = typeof(");
                     //sb.Append(resxEngine.NamespaceName);
                     //sb.Append('.');
-                    sb.Append(resxEngine.ErrorResxFilename);
+                    sb.Append(ErrorResxFilename);
                     sb.Append("), ErrorMessageResourceName = \"MaxLength\")]");
                     attributes.Add(sb.ToString());
                 }
@@ -131,6 +130,19 @@ namespace OzzCodeGen.CodeEngines.ModelClass.Templates
                 {
                     attributes.Add("[Required(" + property.Required + ")]");
                 }
+            }
+        }
+
+        protected string ErrorResxFilename
+        {
+            get
+            {
+                var resxEngine = CodeEngine.UseResourceFiles
+                               ? CodeEngine.ResxEngine : null;
+
+                return resxEngine != null
+                     ? resxEngine.ErrorResxFilename
+                     : string.Empty;
             }
         }
 
@@ -262,11 +274,25 @@ namespace OzzCodeGen.CodeEngines.ModelClass.Templates
             if (!string.IsNullOrEmpty(property.RegularExpression))
                 attributes.Add("[RegularExpression(" + property.RegularExpression + ")]");
 
+            string rangeString = property.Range;
+            if (!string.IsNullOrEmpty(property.Range) && !string.IsNullOrEmpty(ErrorResxFilename))
+            {
+                string rangeResource = property.GetRangeResource();
+                if (!string.IsNullOrEmpty(rangeResource))
+                {
+                    rangeString = $"{property.Range}, ErrorMessageResourceType = typeof({ErrorResxFilename}), ErrorMessageResourceName =\"{rangeResource}\"";
+                }
+            }
+
             if (!string.IsNullOrEmpty(property.Range))
-                attributes.Add("[Range(" + property.Range + ")]");
+            {
+                attributes.Add($"[Range({rangeString})]");
+            }
 
             if (!string.IsNullOrEmpty(property.DefaultValue))
+            {
                 attributes.Add("[DefaultValue(" + property.DefaultValue + ")]");
+            }
 
             string displayAttrib = property.GetDisplayAttrib();
             if (!string.IsNullOrEmpty(displayAttrib))

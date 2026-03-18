@@ -141,6 +141,28 @@ namespace OzzCodeGen.CodeEngines.ModelClass
             }
         }
 
+        public string GetRangeResource()
+        {
+            var propDef = PropertyDefinition as SimpleProperty;
+            if (propDef == null || string.IsNullOrEmpty(ResourceName))
+                return string.Empty;
+
+            if (propDef.IsTypeIntNumeric())
+            {
+                return "RangeInt";
+            }
+            else if (propDef.IsTypeDecimalNumeric())
+            {
+                return "RangeDecimal";
+            }
+            else if (propDef.IsTypeDateTime())
+            {
+                return "RangeDateTime";
+            }
+
+            return string.Empty;
+        }
+
         public string GetTypeName()
         {
             StringBuilder sb = new StringBuilder();
@@ -265,6 +287,13 @@ namespace OzzCodeGen.CodeEngines.ModelClass
         }
         private string _required;
 
+        /// <summary>
+        /// Gets the name of the resource file associated with the current model entity, if resource files are used.
+        /// </summary>
+        /// <remarks>If resource files are not enabled, this property returns an empty string. When
+        /// resource files are enabled, the returned value depends on whether a single resource file is used or a
+        /// per-entity resource file is configured. This property is intended for use by derived classes that need to
+        /// access the resolved resource file name for localization or code generation purposes.</remarks>
         [XmlIgnore]
         [JsonIgnore]
         protected string ResourceName

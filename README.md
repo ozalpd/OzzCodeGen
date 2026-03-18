@@ -16,13 +16,12 @@ OzzLocalization ←→ OzzLocalization.Wpf
     ↓
 OzzCodeGen ←→ OzzCodeGen.Wpf
     ├── CodeEngines (Pluggable generators)
-    ├── Providers (EF Db-first, Empty)
-    └── OzzCodeGen.Ef (EF integration)
+    └── Providers (Empty)
 ```
 
 - **OzzUtils**: Shared utilities library (extensions, helpers) consumed by code generation and localization projects.
 - **OzzCodeGen**: Core library with domain model (`DataModel`, `EntityDefinition`, `BaseProperty`), provider abstractions (`IModelProvider`), and multiple code engines under `OzzCodeGen/CodeEngines`.
-- **OzzCodeGen.Wpf**: WPF application for creating/opening a `CodeGenProject`, selecting a Model Provider (EF or Empty), adding Code Engines, and generating artifacts.
+- **OzzCodeGen.Wpf**: WPF application for creating/opening a `CodeGenProject`, selecting a Model Provider, adding Code Engines, and generating artifacts.
 - **OzzLocalization**: Library that manages XML vocabularies (see `OzzLocalization/Vocabularies.cs`, `OzzLocalization/Vocabulary.cs`). Provides `vocabulary.??.xml` files consumed by resource-related engines.
 - **OzzLocalization.Wpf**: WPF application for editing and organizing vocabularies used by OzzCodeGen.
 
@@ -84,7 +83,7 @@ dotnet build OzzCodeGen.sln -c Debug
 1. Build the solution (see Build section).
 2. Launch `OzzLocalization.Wpf` and create `vocabulary.notr.xml` under a folder next to your project file.
 3. Launch `OzzCodeGen.Wpf` and create a new project:
-	- Pick a Model Provider (e.g., Empty or EF `.edmx`).
+	- Pick a Model Provider (e.g., Empty).
 	- Add engines via the plus button, e.g., `Localization_Resource_Generator`.
 	- Save the project (`.OzzGen`) to establish `TargetSolutionDir`.
 4. In the `Localization_Resource_Generator` UI:
@@ -98,6 +97,7 @@ dotnet build OzzCodeGen.sln -c Debug
 - Vocabulary discovery: ResxEngine loads vocabularies from `VocabularyDir` resolved from `CodeGenProject.SavedFileName` + `VocabularyFolder` (see `ResxEngine.VocabularyDir`).
 - Outputs:
   - Default target folder is `$"{Project.TargetFolder}\\{Project.Name}.i18n"` (see `ResxEngine.GetDefaultTargetFolder`).
+  - Default combined resource base name is `SingleResxFilename = "LocalizedStrings"`.
   - Generates one `.resx` per culture code for each entity or a single combined file when `SingleResx` is enabled (see `ResxEngine.RenderSelectedTemplate`).
 - Optional: Set `SaveWithVocabularies` to duplicate `vocabulary.??.xml` into the target directory on save (see `ResxEngine.SaveToFile`).
 
@@ -152,7 +152,7 @@ Engines check `Project.TargetPlatform` to adapt generated code. For example, `Me
 - Project orchestration: see `OzzCodeGen/CodeGenProject.cs`.
 - Target platform enum: see `OzzCodeGen/_enums.cs` (`TargetDotNetPlatform`).
 - Data model serialization and helpers: see `OzzCodeGen/DataModel.cs`.
-- EF Db-first provider: see `OzzCodeGen.Ef/Ef5.Provider.cs`.
+- Model provider implementation (Empty): see `OzzCodeGen/Providers/EmptyModel.cs`.
 - Vocabulary loading/saving: see `OzzLocalization/Vocabularies.cs` and `OzzLocalization/Vocabulary.cs`.
 
 ## Troubleshooting
@@ -163,7 +163,7 @@ Engines check `Project.TargetPlatform` to adapt generated code. For example, `Me
 
 ### Runtime Issues
 - **Project fails to load**: Check `.OzzGen` file is valid XML. Verify model provider paths are accessible.
-- **Model provider refresh fails**: For EF, ensure `.edmx` file exists and is valid. For Empty, verify `Defaults/` folder exists.
+- **Model provider refresh fails**: For Empty, verify `Defaults/` folder exists.
 - **Engine output not appearing**: Check `TargetFolder` is accessible. Verify engine template is selected. Review Output window logs.
 - **BuildInfo.Date not updating**: Right-click `BuildInfo.tt` → **Run Custom Tool** or rebuild solution.
 
