@@ -1,14 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net10.0-windows</TargetFramework>
-    <RootNamespace>OzzLocalization</RootNamespace>
-    <AssemblyName>OzzLocalization</AssemblyName>
-    <ProjectGuid>{7E5B007E-BA07-4685-B014-CBD9D8DE3C14}</ProjectGuid>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Copyright>Copyright © 2026 ozalpd</Copyright>
+		<Company>Ozalp Donduren</Company>
+		<Product>Ozz Localization</Product>
+		<Description>Library for Localization String Editor</Description>
+		
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<RootNamespace>OzzLocalization</RootNamespace>
+		<AssemblyName>OzzLocalization</AssemblyName>
+		
+		<Version>2.0.0</Version>
+		<AssemblyVersion>2.0.0.0</AssemblyVersion>
+		<FileVersion>2.0.0.0</FileVersion>
+		<InformationalVersion>2.0.0</InformationalVersion>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\OzzUtils\OzzUtils.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\OzzUtils\OzzUtils.csproj" />
+	</ItemGroup>
 
 </Project>

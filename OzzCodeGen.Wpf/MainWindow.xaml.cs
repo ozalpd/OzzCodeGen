@@ -12,6 +12,7 @@ using System.IO;
 using OzzCodeGen.CodeEngines;
 using OzzCodeGen.Providers;
 using System.Windows.Threading;
+using System.Reflection;
 
 namespace OzzCodeGen.Wpf
 {
@@ -28,7 +29,7 @@ namespace OzzCodeGen.Wpf
             MainContainer.IsEnabled = false;
             settingsFile = Path.Combine(
                             Path.GetDirectoryName(
-                            System.Reflection.Assembly.GetExecutingAssembly().Location),
+                            Assembly.GetExecutingAssembly().Location),
                             "OzzCodeGen.settings");
 
             if (File.Exists(settingsFile))
@@ -58,7 +59,11 @@ namespace OzzCodeGen.Wpf
 
         protected string DefaultTitle
         {
-            get { return string.Format("Ozz Code Generator | {0}", BuildInfo.Date); }
+            get
+            {
+                var version = Assembly.GetExecutingAssembly().GetName().Version;
+                return string.Format("Ozz Code Generator | v{0}", version?.ToString(3));
+            }
         }
 
 

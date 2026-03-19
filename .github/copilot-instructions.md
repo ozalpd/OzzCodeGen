@@ -7,7 +7,8 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - **Apps:** WPF fronts in [OzzCodeGen.Wpf](OzzCodeGen.Wpf) and [OzzLocalization.Wpf](OzzLocalization.Wpf). The former loads/edits a `CodeGenProject`, selects `CodeEngines`, and generates artifacts; the latter manages vocabularies.
 - **Relationship:** OzzCodeGen is the code generator library with its UI in [OzzCodeGen.Wpf](OzzCodeGen.Wpf). [OzzLocalization](OzzLocalization) (and [OzzLocalization.Wpf](OzzLocalization.Wpf)) is used to create translated strings that OzzCodeGen consumes via its localization/resource engines.
 - **Core library:** [OzzCodeGen](OzzCodeGen) contains the domain model (`DataModel`, `EntityDefinition`, `BaseProperty`), provider abstractions (`IModelProvider`), and multiple code engines under [CodeEngines](OzzCodeGen/CodeEngines).
-- **Providers:** EF Db-first and an interactive Empty provider live in [OzzCodeGen.Ef](OzzCodeGen.Ef) and [OzzCodeGen/Providers](OzzCodeGen/Providers). Providers produce a `DataModel` from a source (e.g., `.edmx`).
+- **Providers:** An interactive Empty provider lives in [OzzCodeGen/Providers](OzzCodeGen/Providers). Providers produce a `DataModel` from a source. The EF Database-First provider (`OzzCodeGen.Ef`) has been removed from the solution.
+
 - **Localization:** [OzzLocalization](OzzLocalization) handles XML vocabularies (see [Vocabularies.cs](OzzLocalization/Vocabularies.cs), [Vocabulary.cs](OzzLocalization/Vocabulary.cs)).
 - **OzzUtils:** Shared utilities library (e.g., common extensions, helpers) consumed by both code generation and localization projects.
 
@@ -27,7 +28,6 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
   - Removed engines (throw `NotImplementedException` on load): `EF_DatabaseFirst_DataLayer`, `ObjectiveC_Code_Generator`, `Android_Code_Generator`.
   - The WPF app injects `Project.CurrentCodeEngine.UiControl` into the layout (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L194-L209)).
 - **Model providers:** Implement `IModelProvider` ([IModelProvider.cs](OzzCodeGen/Providers/IModelProvider.cs)), returning/refreshing a `DataModel`.
-  - EF provider loads from `.edmx`, maps EF types and navigation, and marks keys/non-nullables; see [Ef5.Provider.cs](OzzCodeGen.Ef/Ef5.Provider.cs#L34-L63), [Ef5.Provider.cs](OzzCodeGen.Ef/Ef5.Provider.cs#L68-L108), [Ef5.Provider.cs](OzzCodeGen.Ef/Ef5.Provider.cs#L146-L196).
   - Empty provider discovers `.OzzGen` templates under `Defaults/` and opens an interactive dialog (see [EmptyModel.cs](OzzCodeGen/Providers/EmptyModel.cs#L78-L112), [EmptyModel.cs](OzzCodeGen/Providers/EmptyModel.cs#L116-L167)).
 - **Templates & T4:** Many engine templates are `.tt`-backed with `*.part.cs` companions; the `.csproj` wires `DependentUpon` to keep generated pieces grouped (see [OzzCodeGen.csproj](OzzCodeGen/OzzCodeGen.csproj#L25-L112)).
   - Model-class templates live under `CodeEngines/ModelClass/Templates/` and share behavior via `BaseModelClassTemplate` + engine/settings base classes.
@@ -38,7 +38,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
     - `dotnet restore OzzCodeGen.sln`
     - `dotnet build OzzCodeGen.sln -c Debug`
   - WPF startup projects: set [OzzCodeGen.Wpf](OzzCodeGen.Wpf) or [OzzLocalization.Wpf](OzzLocalization.Wpf) as Startup.
-- **Run (CodeGen):** Launch `OzzCodeGen.Wpf`. Create/open a project (`*.OzzGen`), pick a Model Provider (EF or Empty), then add one or more Engines. For EF, select an `.edmx` via provider dialog; use the Refresh button to sync schema (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L113-L129), [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L239-L247)).
+- **Run (CodeGen):** Launch `OzzCodeGen.Wpf`. Create/open a project (`*.OzzGen`), pick the Empty Model Provider, then add one or more Engines. Use the Refresh button to sync the model (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L113-L129), [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L239-L247)).
 - **Run (Localization):** Launch `OzzLocalization.Wpf` and edit `vocabulary.??.xml` files (default `notr`). See [Vocabularies.cs](OzzLocalization/Vocabularies.cs#L6-L20) for naming and [OpenVocabularies](OzzLocalization/Vocabularies.cs#L64-L95).
 - **Generated outputs:** Engines persist their own settings/files next to the project and write artifacts under `CodeGenProject.TargetFolder` (default `..\Generated Codes`, resolved via [TargetSolutionDir](OzzCodeGen/CodeGenProject.cs#L121-L139)).
 
@@ -72,7 +72,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 ## Conventions & Integration Points
 - **Engine ID-first design:** UI and persistence use engine IDs; adding an engine requires updating [EngineTypes.GetInstance](OzzCodeGen/CodeEngines/EngineTypes.cs#L15-L60) and `OpenFile` mapping ([EngineTypes.cs](OzzCodeGen/CodeEngines/EngineTypes.cs#L62-L135)).
 - **Engine UI contract:** Engines expose a WPF `UserControl` via `UiControl` and an optional settings dialog via `GetSettingsDlgUI()`; the host injects the control (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L194-L209)).
-- **Provider UX:** `EmptyModel` uses a WinForms dialog, `Ef5` uses file pickers; both set `CodeGenProject.ModelProvider` and feed `DataModel` back to the project.
+- **Provider UX:** `EmptyModel` uses a WinForms dialog; sets `CodeGenProject.ModelProvider` and feeds `DataModel` back to the project.
 - **Serialization:** Project, data model, and vocabularies use XML serializers. Saving a project triggers engine-bound file saves (see [CodeGenProject.SaveBoundFiles](OzzCodeGen/CodeGenProject.cs#L220-L231)).
 - **Defaults discovery:** The empty provider scans `Defaults/` recursively for `.OzzGen` files; the WPF app prompts for the folder if missing (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L153-L173), [EmptyModel.cs](OzzCodeGen/Providers/EmptyModel.cs#L141-L167)).
 
@@ -87,7 +87,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 ## Testing Strategy
 - **Manual verification:** Since automated tests are not present, verify changes via the WPF UIs.
 - **Key workflows to test:**
-  - Create a new project with each Model Provider (Empty, EF).
+  - Create a new project with the Empty Model Provider.
   - Add/remove engines and verify settings persist across save/load.
   - Modify data model and trigger engine refresh; confirm outputs update.
   - Test end-to-end: vocabulary creation → ResxEngine render → `.resx` generation.
@@ -96,7 +96,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 
 ## Troubleshooting
 - **Project fails to load:** Check XML format in `.OzzGen` file. Ensure all referenced model provider paths are valid. See `CodeGenProject.OpenFile()`.
-- **Model provider refresh fails:** For EF, verify `.edmx` path is accessible. For Empty, ensure `Defaults/` folder exists. Check Output window for detailed errors.
+- **Model provider refresh fails:** For Empty, ensure `Defaults/` folder exists. Check Output window for detailed errors.
 - **Engine output not appearing:** Verify `TargetFolder` resolves to an accessible directory (relative to `TargetSolutionDir`). Check engine's `RefreshFromProject()` and template selection. Review engine-specific logs in Output window.
 - **Template generation error:** Inspect `.tt` file for syntax issues. Verify all referenced properties exist on the model. Manually regenerate via **Run Custom Tool**.
 - **Serialization roundtrip fails:** Compare saved XML with schema expectations. Check for uninitialized collections or nested objects with null defaults.
@@ -104,7 +104,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 
 ## Notes
 - Tests are not present; rely on manual verification via WPF apps.
-- Project files use SDK-style `.csproj` format with .NET 10 as the target framework.
+- Project files use SDK-style `.csproj` format targeting .NET 10; assembly metadata (`Version`, `Copyright`, `Company`, `Product`, `Description`) is declared directly in each `.csproj`.
 - OzzUtils is a shared dependency across all projects; changes there may require rebuild of dependent projects.
 
 If any section is unclear or missing (e.g., a specific engine's output layout or provider dialogs), tell me which part you want expanded and I'll iterate.

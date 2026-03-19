@@ -4,7 +4,7 @@ OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. 
 
 ## Prerequisites
 - **.NET 10 SDK** – Download from [dotnet.microsoft.com](https://dotnet.microsoft.com/download/dotnet/10.0)
-- **Visual Studio 2022** (or later) with WPF and C# workloads, or **Visual Studio Code** with C# extensions
+- **Visual Studio 2026** (or later) with WPF and C# workloads, or **Visual Studio Code** with C# extensions
 - **Git** (optional, for cloning the repository)
 
 ## Components
