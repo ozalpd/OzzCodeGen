@@ -143,6 +143,14 @@ namespace OzzCodeGen.CodeEngines.ModelClass
 
         public string GetRangeResource()
         {
+            if (string.IsNullOrEmpty(Range))
+                return string.Empty;
+
+            if (Range.Contains(".MaxValue"))
+            {
+                return "ValueMin";
+            }
+
             var propDef = PropertyDefinition as SimpleProperty;
             if (propDef == null || string.IsNullOrEmpty(ResourceName))
                 return string.Empty;
