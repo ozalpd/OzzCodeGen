@@ -35,7 +35,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 if (!_inIndexView.HasValue)
                 {
                     _inIndexView = !(PropertyDefinition.IsClientComputed ||
-                                      PropertyDefinition.IsStoreGenerated ||
+                                      (PropertyDefinition is SimpleProperty simpleProperty && simpleProperty.IsStoreGenerated) ||
                                       PropertyDefinition.IsServerComputed ||
                                       Name.EndsWith("Id"));
                 }
@@ -84,7 +84,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 if (!_inCreateView.HasValue)
                 {
                     _inCreateView = !(PropertyDefinition.IsClientComputed ||
-                                      PropertyDefinition.IsStoreGenerated ||
+                                      (PropertyDefinition is SimpleProperty simpleProperty && simpleProperty.IsStoreGenerated) ||
                                       PropertyDefinition.IsServerComputed ||
                                       PropertyDefinition is ComplexProperty);
                 }
@@ -109,10 +109,10 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 if (!_inEditView.HasValue)
                 {
-                    _inEditView = !(PropertyDefinition.IsClientComputed ||
-                                      PropertyDefinition.IsStoreGenerated ||
-                                      PropertyDefinition.IsServerComputed ||
-                                      PropertyDefinition is ComplexProperty);
+                    _inEditView = !(PropertyDefinition.IsClientComputed
+                                || (PropertyDefinition is SimpleProperty simpleProperty && simpleProperty.IsStoreGenerated)
+                                || PropertyDefinition.IsServerComputed
+                                || PropertyDefinition is ComplexProperty);
                 }
                 return _inEditView.Value;
             }
@@ -132,7 +132,8 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             {
                 if (!_hasValidation.HasValue)
                 {
-                    _hasValidation = !PropertyDefinition.IsStoreGenerated & !PropertyDefinition.IsServerComputed;
+                    _hasValidation = !(PropertyDefinition is SimpleProperty simpleProperty && simpleProperty.IsStoreGenerated)
+                                  && !PropertyDefinition.IsServerComputed;
                 }
                 return _hasValidation.Value;
             }
@@ -143,7 +144,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             }
         }
         private bool? _hasValidation;
-        
+
 
         public string UseForCreate
         {

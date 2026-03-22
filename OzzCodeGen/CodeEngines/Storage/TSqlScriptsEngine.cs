@@ -127,7 +127,7 @@ namespace OzzCodeGen.CodeEngines.Storage
 
             AppendColumnNameType(table.PrimaryKeyColumn, sb);
 
-            var pKeyDefinition = table.PrimaryKeyColumn.PropertyDefinition;
+            SimpleProperty pKeyDefinition = (SimpleProperty)table.PrimaryKeyColumn.PropertyDefinition;
             if (pKeyDefinition.IsTypeNumeric() && !table.UseInheritance
                 && pKeyDefinition.IsStoreGenerated)
             {

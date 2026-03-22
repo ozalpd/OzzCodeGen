@@ -14,8 +14,6 @@ namespace OzzCodeGen.Wpf.Dialogs
         {
             InitializeComponent();
             DependentProperty = BaseProperty.CreatePropertyDefinition("int");
-            DependentProperty.Editable = true;
-            DependentProperty.UiVisible = true;
             ((SimpleProperty)DependentProperty).IsForeignKey = true;
         }
 
@@ -60,18 +58,21 @@ namespace OzzCodeGen.Wpf.Dialogs
             {
                 ComplexPropertySettingsContainer.Visibility = System.Windows.Visibility.Visible;
                 CollectionPropertySettingsContainer.Visibility = System.Windows.Visibility.Collapsed;
+                SimplePropertySettingsContainer.Visibility = System.Windows.Visibility.Collapsed;
                 CreateDependecy = true;
             }
             else if (PropertyDefinition.DefinitionType == DefinitionType.Collection)
             {
                 ComplexPropertySettingsContainer.Visibility = System.Windows.Visibility.Visible;
                 CollectionPropertySettingsContainer.Visibility = System.Windows.Visibility.Visible;
+                SimplePropertySettingsContainer.Visibility = System.Windows.Visibility.Collapsed;
                 CreateDependecy = false;
             }
             else
             {
                 ComplexPropertySettingsContainer.Visibility = System.Windows.Visibility.Collapsed;
                 CollectionPropertySettingsContainer.Visibility = System.Windows.Visibility.Collapsed;
+                SimplePropertySettingsContainer.Visibility = System.Windows.Visibility.Visible;
                 btnPropertyName.IsEnabled = false;
                 CreateDependecy = false;
             }

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.1] - 2026-03-23
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.1.1`.
+- Bumped `OzzCodeGen.Wpf` version to `2.1.1`.
+- Bumped `OzzLocalization` version to `2.1.1`.
+- Bumped `OzzLocalization.Wpf` version to `2.1.1`.
+- Added `IsImmutable` property to `SimpleProperty`.
+- Moved `IsStoreGenerated` property from `BaseProperty` to `SimpleProperty`.
+- Updated `NewPropertyDialog` UI and bindings for `IsImmutable` and `IsStoreGenerated`.
+
+### Removed
+- Removed `UiVisible`, `SourceTypeName`, and `Editable` properties from `BaseProperty`.
+
 ## [2.1.0] - 2026-03-22
 
 ### Changed

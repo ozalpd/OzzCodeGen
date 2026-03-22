@@ -3,10 +3,12 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.1.0`
-- `OzzCodeGen.Wpf`: `2.1.0`
-- `OzzLocalization`: `2.1.0`
-- `OzzLocalization.Wpf`: `2.1.0`
+- `OzzCodeGen`: `2.1.1`
+- `OzzCodeGen.Wpf`: `2.1.1`
+- `OzzLocalization`: `2.1.1`
+- `OzzLocalization.Wpf`: `2.1.1`
+
+`2.1.1` adds `IsImmutable` property to `SimpleProperty`, moves `IsStoreGenerated` to `SimpleProperty`, and cleans up unused properties in `BaseProperty`.
 
 `2.1.0` includes UI icon updates in `OzzCodeGen.Wpf` and `OzzLocalization.Wpf`, with migration from legacy PNG toolbar/menu icons to Bootstrap icon path resources.
 

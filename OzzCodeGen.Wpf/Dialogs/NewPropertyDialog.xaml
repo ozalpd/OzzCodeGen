@@ -2,16 +2,17 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="New Property" Height="400" Width="460" ShowInTaskbar="False" Loaded="window_Loaded">
-    <Grid DataContext="{Binding ElementName=window, Mode=OneWay}">
+
+    <Grid DataContext="{Binding ElementName=window, Mode=OneWay}" Margin="6">
         <Grid.RowDefinitions>
-            <RowDefinition Height="9"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="32"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="48"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1" DataContext="{Binding PropertyDefinition}">
+        <Grid Grid.Row="0" DataContext="{Binding PropertyDefinition}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -21,12 +22,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="26"/>
                 <RowDefinition Height="26"/>
-                <RowDefinition Height="26"/>
                 <RowDefinition Height="6"/>
-                <RowDefinition Height="26"/>
-                <RowDefinition Height="26"/>
-                <RowDefinition Height="26"/>
-                <RowDefinition Height="52"/>
+                <RowDefinition Height="80"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Property Name:" Margin="5"/>
@@ -47,38 +44,48 @@
                     Grid.Row="1" Grid.Column="3" Margin="1" 
                     TabIndex="2" Click="btnPropertyName_Click" />
 
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Source Type:" Margin="5"/>
-            <TextBox Text="{Binding SourceTypeName}" 
-                     Grid.Row="2" Grid.Column="1" Margin="1" 
-                     Grid.ColumnSpan="3"
-                     HorizontalAlignment="Stretch" 
-                     TabIndex="3"/>
-
-            <!-- Checkboxes Begins-->
-
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="Server Computed:" Margin="5"/>
-            <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding IsServerComputed}" VerticalAlignment="Center" TabIndex="3"/>
-
-            <TextBlock Grid.Row="4" Grid.Column="2" Text="Store Generated:" Margin="5"/>
-            <CheckBox Grid.Row="4" Grid.Column="3" IsChecked="{Binding IsStoreGenerated}" VerticalAlignment="Center" TabIndex="4"/>
-
-            <TextBlock Grid.Row="5" Grid.Column="0" Text="Client Computed:" Margin="5"/>
-            <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding IsClientComputed}" VerticalAlignment="Center" TabIndex="5"/>
-
-            <TextBlock Grid.Row="6" Grid.Column="0" Text="Editable:" Margin="5"/>
-            <CheckBox Grid.Row="6" Grid.Column="1" IsChecked="{Binding Editable}" VerticalAlignment="Center" TabIndex="6"/>
-
-            <TextBlock Grid.Row="6" Grid.Column="2" Text="UI Visible:" Margin="5"/>
-            <CheckBox Grid.Row="6" Grid.Column="3" IsChecked="{Binding UiVisible}" VerticalAlignment="Center" TabIndex="7"/>
-            <!-- Checkboxes Ends-->
-
-            <TextBlock Grid.Row="7" Grid.Column="0" Text="Comment:" Margin="5"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Comment:" Margin="5"/>
             <TextBox Text="{Binding Comment}" 
-                     Grid.Row="7" Grid.Column="1" Margin="1" 
+                     Grid.Row="3" Grid.Column="1" Margin="1" 
                      Grid.ColumnSpan="3"
                      HorizontalAlignment="Stretch" 
                      TextWrapping="Wrap" 
                      TabIndex="8"/>
+        </Grid>
+        <Grid x:Name="SimplePropertySettingsContainer" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="6"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Server Computed:" Margin="5"/>
+            <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding IsServerComputed}" VerticalAlignment="Center" TabIndex="3"/>
+
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="Store Generated:" Margin="5"/>
+            <CheckBox Grid.Row="0" Grid.Column="3" IsChecked="{Binding IsStoreGenerated}" VerticalAlignment="Center" TabIndex="4"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Client Computed:" Margin="5"/>
+            <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding IsClientComputed}" VerticalAlignment="Center" TabIndex="5"/>
+
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Nullable:" Margin="5"/>
+            <CheckBox Grid.Row="2" Grid.Column="1" IsChecked="{Binding IsNullable}" VerticalAlignment="Center" TabIndex="6"/>
+            <TextBlock Grid.Row="2" Grid.Column="2" Text="Immutable:" Margin="5"/>
+            <CheckBox Grid.Row="2" Grid.Column="3" IsChecked="{Binding IsImmutable}" VerticalAlignment="Center" TabIndex="7"/>
+
+            <!--
+            <TextBlock Text="Max Length:" Grid.Row="3" Grid.Column="0"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding MaxLength, Mode=TwoWay, NotifyOnValidationError=True}"/>
+            -->
         </Grid>
 
         <Grid Name="ComplexPropertySettingsContainer" Grid.Row="2">
@@ -89,6 +96,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="26"/>
                 <RowDefinition Height="26"/>
                 <RowDefinition Height="26"/>
                 <RowDefinition Height="26"/>
@@ -109,10 +117,15 @@
                      HorizontalAlignment="Stretch" 
                      TabIndex="12"/>
 
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Property Type:" Margin="5"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Nullable:" Margin="5"/>
+            <CheckBox Grid.Row="2" Grid.Column="1" IsChecked="{Binding DependentProperty.IsNullable}" VerticalAlignment="Center" TabIndex="6"/>
+            <TextBlock Grid.Row="2" Grid.Column="2" Text="Immutable:" Margin="5"/>
+            <CheckBox Grid.Row="2" Grid.Column="3" IsChecked="{Binding DependentProperty.IsImmutable}" VerticalAlignment="Center" TabIndex="7"/>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Property Type:" Margin="5"/>
             <ComboBox ItemsSource="{Binding DependentProperty.UsableTypeNames}"
                       Text="{Binding DependentProperty.TypeName}" 
-                      Grid.Row="2" Grid.Column="1" Margin="1" 
+                      Grid.Row="3" Grid.Column="1" Margin="1" 
                       Grid.ColumnSpan="3"
                       TabIndex="1"/>
 
@@ -138,7 +151,7 @@
 
         </Grid>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="13" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Margin="6" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Name="btnAccept" Content="OK" Width="72" Margin="5" IsDefault="True" Click="btnAccept_Click" TabIndex="121" />
             <Button Name="btnCancel" Content="Cancel" Width="72" Margin="5" IsCancel="True" TabIndex="122"/>
         </StackPanel>

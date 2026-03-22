@@ -1,19 +1,7 @@
 ﻿using OzzCodeGen.Definitions;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace OzzCodeGen.Wpf.Dialogs
 {
@@ -157,8 +145,6 @@ namespace OzzCodeGen.Wpf.Dialogs
             var parts = regex.Replace(line, " ").Split(' ');
 
             var p = BaseProperty.CreatePropertyDefinition(parts[0], parts[1]);
-            p.UiVisible = true;
-            p.Editable = true;
 
             if(p is StringProperty)
             {

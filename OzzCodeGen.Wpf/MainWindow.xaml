@@ -367,10 +367,10 @@
                                     <DataGridTextColumn Binding="{Binding Name}" Header="Property Name" Width="100"/>
                                     <DataGridTextColumn Binding="{Binding DisplayName}" Header="Display Name" Width="100"/>
                                     <DataGridTextColumn Binding="{Binding TypeName}" Header="Type" Width="100"/>
-                                    <DataGridTextColumn Binding="{Binding DisplayOrder, NotifyOnValidationError=True}"
-                                                        Header="Display Order" Width="80" CellStyle="{StaticResource CellRightAlign}"/>
-                                    <DataGridCheckBoxColumn Binding="{Binding UiVisible}" Header="UI Visible" Width="40"/>
-                                    <DataGridCheckBoxColumn Binding="{Binding Editable}" Header="Editable" Width="40"/>
+                                    <DataGridTextColumn Binding="{Binding DisplayOrder, NotifyOnValidationError=True}" Header="Display Order" Width="80"
+                                                        CellStyle="{StaticResource CellRightAlign}"/>
+                                    <DataGridCheckBoxColumn Binding="{Binding IsNullable}" Header="Nullable" Width="40"/>
+                                    <DataGridCheckBoxColumn Binding="{Binding IsImmutable}" Header="Immutable" Width="40"/>
                                     <DataGridTemplateColumn Header="Restricted Data" Width="48">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -480,6 +480,7 @@
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
                                         <TextBlock Text="Is Primary Key:" Grid.Row="0" Grid.Column="0"/>
                                         <CheckBox IsChecked="{Binding IsKey, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" />
@@ -487,9 +488,12 @@
                                         <CheckBox IsChecked="{Binding IsForeignKey, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" />
                                         <TextBlock Text="Is Nullable:" Grid.Row="2" Grid.Column="0"/>
                                         <CheckBox IsChecked="{Binding IsNullable, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" />
-                                        <TextBlock Text="Enum Name:" Grid.Row="3" Grid.Column="0" ToolTip="Enum Type Name"/>
+                                        <TextBlock Text="Is Immutable:" Grid.Row="3" Grid.Column="0"/>
+                                        <CheckBox IsChecked="{Binding IsImmutable, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" />
+                                        
+                                        <TextBlock Text="Enum Name:" Grid.Row="4" Grid.Column="0" ToolTip="Enum Type Name"/>
                                         <TextBox Text="{Binding EnumTypeName, Mode=TwoWay, NotifyOnValidationError=True}"
-                                                 Grid.Row="3" Grid.Column="1" ToolTip="Enum Type Name"/>
+                                                 Grid.Row="4" Grid.Column="1" ToolTip="Enum Type Name"/>
                                     </Grid>
                                     <Grid x:Name="StringPropertyGrid">
                                         <Grid.ColumnDefinitions>

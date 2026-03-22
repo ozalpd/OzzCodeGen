@@ -1,4 +1,5 @@
 ﻿<#@ template inherits="AbstractStorageTemplate" debug="false" hostspecific="false" language="C#" #>
+<#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ assembly name="System.Core" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
@@ -11,7 +12,8 @@ Go
 
 <#  var firstBase = TableDefinition.GetFirstBase();
     var pKey = firstBase.PrimaryKeyColumn;
-    bool insPKey = !(pKey.PropertyDefinition.IsStoreGenerated && pKey.PropertyDefinition.IsTypeNumeric() && !TableDefinition.UseInheritance);
+    SimpleProperty propDef = (SimpleProperty)pKey.PropertyDefinition;
+    bool insPKey = !(propDef.IsStoreGenerated && propDef.IsTypeNumeric() && !TableDefinition.UseInheritance);
     string keyVarName = "@" + pKey.Name;
     var deleteMarkColumn = firstBase.GetDeleteMarkColumn();
     int colNr = 0;
