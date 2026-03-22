@@ -24,14 +24,6 @@
             <core:TargetDotNetPlatform>DotNetFramework</core:TargetDotNetPlatform>
             <core:TargetDotNetPlatform>ModernDotNet</core:TargetDotNetPlatform>
         </x:Array>
-        <BitmapImage x:Key="uriNew" UriSource="Assets\NewDocumentHS.png"/>
-        <BitmapImage x:Key="uriOpen" UriSource="Assets\openHS.png"/>
-        <BitmapImage x:Key="uriSave" UriSource="Assets\saveHS.png"/>
-        <BitmapImage x:Key="uriRefresh" UriSource="Assets\refresh_24.png"/>
-        <Image x:Key="imgNew" Source="{StaticResource uriNew}" Stretch="Uniform"/>
-        <Image x:Key="imgOpen" Source="{StaticResource uriOpen}" Stretch="Uniform"/>
-        <Image x:Key="imgSave" Source="{StaticResource uriSave}" Stretch="Uniform"/>
-        <Image x:Key="imgRefresh" Source="{StaticResource uriRefresh}" Stretch="Uniform"/>
     </Window.Resources>
     <Grid DataContext="{Binding ElementName=window, Mode=OneWay}">
         <Grid.RowDefinitions>
@@ -51,12 +43,16 @@
                         <MenuItem Header="_File" Height="28">
                             <MenuItem Header="_New" Command="{Binding NewProjectCommand}" InputGestureText="Ctrl+N">
                                 <MenuItem.Icon>
-                                    <Image Source="{StaticResource uriNew}"/>
+                                    <Viewbox Width="14" Height="14">
+                                        <Path Fill="#0044D7" Data="{StaticResource file-earmark-plus}"/>
+                                    </Viewbox>
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="_Open" Command="{Binding OpenProjectCommand}" InputGestureText="Ctrl+O">
                                 <MenuItem.Icon>
-                                    <Image Source="{StaticResource uriOpen}"/>
+                                    <Viewbox Width="14" Height="14">
+                                        <Path Fill="#0044D7" Data="{StaticResource folder2-open}"/>
+                                    </Viewbox>
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="{Binding MostRecentProjectFile.Name,StringFormat='Open \{0\}'}"
@@ -64,7 +60,9 @@
                                       InputGestureText="Ctrl+R"/>
                             <MenuItem Header="_Save" Command="{Binding SaveProjectCommand}" InputGestureText="Ctrl+S">
                                 <MenuItem.Icon>
-                                    <Image Source="{StaticResource uriSave}"/>
+                                    <Viewbox Width="14" Height="14">
+                                        <Path Fill="#0044D7" Data="{StaticResource floppy-fill}"/>
+                                    </Viewbox>
                                 </MenuItem.Icon>
                             </MenuItem>
                             <Separator />
@@ -79,25 +77,37 @@
                     <Button x:Name="btnNewProject"
                             ToolTip="New Project"
                             Command="{Binding NewProjectCommand}"
-                            Content="{Binding Mode=OneWay, Source={StaticResource imgNew}}"
-                            Style="{StaticResource toolbarButtons}"/>
+                            Style="{StaticResource toolbarButtons}">
+                        <Viewbox Width="22" Height="22">
+                            <Path Fill="#0044D7" Data="{StaticResource file-earmark-plus}"/>
+                        </Viewbox>
+                    </Button>
                     <Button x:Name="btnOpen"
                             Command="{Binding OpenProjectCommand}"
                             ToolTip="Open Project"
-                            Content="{Binding Mode=OneWay, Source={StaticResource imgOpen}}"
-                            Style="{StaticResource toolbarButtons}"/>
+                            Style="{StaticResource toolbarButtons}">
+                        <Viewbox Width="22" Height="22">
+                            <Path Fill="#0044D7" Data="{StaticResource folder2-open}"/>
+                        </Viewbox>
+                    </Button>
                     <Button x:Name="btnSave"
                             ToolTip="Save Project"
                             Command="{Binding SaveProjectCommand}"
-                            Content="{Binding Mode=OneTime, Source={StaticResource imgSave}}"
                             IsEnabled="{Binding ElementName=MainContainer,Path=IsEnabled}"
-                            Style="{StaticResource toolbarButtons}"/>
+                            Style="{StaticResource toolbarButtons}">
+                        <Viewbox Width="20" Height="20">
+                            <Path Fill="#0044D7" Data="{StaticResource floppy-fill}"/>
+                        </Viewbox>
+                    </Button>
                     <Button x:Name="btnRefresh"
                             ToolTip="Refresh"
                             Click="btnRefresh_Click"
-                            Content="{Binding Mode=OneWay, Source={StaticResource imgRefresh}}"
                             IsEnabled="{Binding ElementName=MainContainer,Path=IsEnabled}"
-                            Style="{StaticResource toolbarButtons}"/>
+                            Style="{StaticResource toolbarButtons}">
+                        <Viewbox Width="22" Height="22">
+                            <Path Fill="#0044D7" Data="{StaticResource arrow-clockwise}"/>
+                        </Viewbox>
+                    </Button>
                     <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=MainContainer,Path=IsEnabled}" Margin="14,1,0,1">
                         <Button Name="btnFilterEntities" Content="Find" Margin="2" Padding="5,0" Click="btnFilter_Click"/>
                         <TextBox Name="txtFilterEntities" Width="196" KeyDown="txtFilter_KeyDown"/>
@@ -177,37 +187,56 @@
                                         <MenuItem Tag="Inherited" Header="New Inherited Entity" Click="mnuAddEntity_Click"/>
                                     </ContextMenu>
                                 </Button.ContextMenu>
-                                <Image Source="Assets\add.png" Stretch="None"/>
+                                <Viewbox Width="18" Height="18">
+                                    <Path Fill="#004487" Data="{StaticResource plus-square}"/>
+                                </Viewbox>
                             </Button>
-                            <Button x:Name="btnRemoveEntity" 
-                                ToolTip="Remove Entity" 
-                                Style="{StaticResource sidebarButtons}" 
-                                Click="btnRemoveEntity_Click">
-                                <Image Source="Assets\minus_red.png" Stretch="None"/>
+                            <Button x:Name="btnRemoveEntity"
+                                    ToolTip="Remove Entity"
+                                    Style="{StaticResource sidebarButtons}"
+                                    Click="btnRemoveEntity_Click"
+                                    Background="#FFC80000">
+                                <Viewbox Width="18" Height="18">
+                                    <Path Fill="#EBEBEB" Data="{StaticResource trash}" Margin="0,0,2,0"/>
+                                </Viewbox>
                             </Button>
                             <Button x:Name="btnMoveEntityTop" 
                                 ToolTip="Move Entity Top" 
                                 Style="{StaticResource sidebarButtons}" 
                                 Click="btnMoveEntityTop_Click">
-                                <Image Source="Assets\arrow_top.png" Stretch="None"/>
+                                <Viewbox Width="18" Height="18">
+                                    <Grid>
+                                        <Path Fill="#004487" Data="{StaticResource arrow-up}" Margin="0,0,4,5"/>
+                                        <Path Fill="#004487" Data="{StaticResource arrow-up}" Margin="0,5,4,0"/>
+                                    </Grid>
+                                </Viewbox>
                             </Button>
                             <Button x:Name="btnMoveEntityUp" 
                                 ToolTip="Move Entity Up" 
                                 Style="{StaticResource sidebarButtons}" 
                                 Click="btnMoveEntityUp_Click">
-                                <Image Source="Assets\arrow_up.png" Stretch="None"/>
+                                <Viewbox Width="18" Height="18">
+                                    <Path Fill="#004487" Data="{StaticResource arrow-up}" Margin="0,0,4,0"/>
+                                </Viewbox>
                             </Button>
                             <Button x:Name="btnMoveEntityDown" 
                                 ToolTip="Move Entity Down" 
                                 Style="{StaticResource sidebarButtons}" 
                                 Click="btnMoveEntityDown_Click">
-                                <Image Source="Assets\arrow_down.png" Stretch="None"/>
+                                <Viewbox Width="18" Height="18">
+                                    <Path Fill="#004487" Data="{StaticResource arrow-down}" Margin="0,0,4,0"/>
+                                </Viewbox>
                             </Button>
                             <Button x:Name="btnMoveEntityBottom" 
                                 ToolTip="Move Entity Bottom" 
                                 Style="{StaticResource sidebarButtons}" 
                                 Click="btnMoveEntityBottom_Click">
-                                <Image Source="Assets\arrow_bottom.png" Stretch="None"/>
+                                <Viewbox Width="18" Height="18">
+                                    <Grid>
+                                        <Path Fill="#004487" Data="{StaticResource arrow-down}" Margin="0,0,4,5"/>
+                                        <Path Fill="#004487" Data="{StaticResource arrow-down}" Margin="0,5,4,0"/>
+                                    </Grid>
+                                </Viewbox>
                             </Button>
                         </StackPanel>
                         <!-- Entities Datagrid -->
@@ -252,52 +281,78 @@
                                             <MenuItem Header="Navigation Collection Property" Tag="collection" Click="mnuAddProperty_Click"/>
                                         </ContextMenu>
                                     </Button.ContextMenu>
-                                    <Image Source="Assets\add.png" Stretch="None"/>
+                                    <Viewbox Width="18" Height="18">
+                                        <Path Fill="#004487" Data="{StaticResource plus-square}"/>
+                                    </Viewbox>
                                 </Button>
 
-                                <Button x:Name="btnRemoveProperty" 
-                                    ToolTip="Remove Property" 
-                                    Style="{StaticResource sidebarButtons}" 
-                                    Click="btnRemoveProperty_Click">
-                                    <Image Source="Assets\minus_red.png" Stretch="None"/>
+                                <Button x:Name="btnRemoveProperty"
+                                        ToolTip="Remove Property"
+                                        Style="{StaticResource sidebarButtons}"
+                                        Click="btnRemoveProperty_Click"
+                                        Background="#FFC80000">
+                                    <Viewbox Width="18" Height="18">
+                                        <Path Fill="#EBEBEB" Data="{StaticResource trash}" Margin="0,0,2,0"/>
+                                    </Viewbox>
                                 </Button>
 
                                 <Button x:Name="btnMovePropertyTop" 
                                     ToolTip="Move Property Top" 
                                     Style="{StaticResource sidebarButtons}" 
                                     Click="btnMovePropertyTop_Click">
-                                    <Image Source="Assets\arrow_top.png" Stretch="None"/>
+                                    <Viewbox Width="18" Height="18">
+                                        <Grid>
+                                            <Path Fill="#004487" Data="{StaticResource arrow-up}" Margin="0,0,4,5"/>
+                                            <Path Fill="#004487" Data="{StaticResource arrow-up}" Margin="0,5,4,0"/>
+                                        </Grid>
+                                    </Viewbox>
                                 </Button>
 
                                 <Button x:Name="btnMovePropertyUp" 
                                     ToolTip="Move Property Up" 
                                     Style="{StaticResource sidebarButtons}" 
                                     Click="btnMovePropertyUp_Click">
-                                    <Image Source="Assets\arrow_up.png" Stretch="None"/>
+                                    <Viewbox Width="18" Height="18">
+                                        <Path Fill="#004487" Data="{StaticResource arrow-up}" Margin="0,0,4,0"/>
+                                    </Viewbox>
                                 </Button>
 
                                 <Button x:Name="btnMovePropertyDown" 
                                     ToolTip="Move Property Down" 
                                     Style="{StaticResource sidebarButtons}" 
                                     Click="btnMovePropertyDown_Click">
-                                    <Image Source="Assets\arrow_down.png" Stretch="None"/>
+                                    <Viewbox Width="18" Height="18">
+                                        <Path Fill="#004487" Data="{StaticResource arrow-down}" Margin="0,0,4,0"/>
+                                    </Viewbox>
                                 </Button>
 
                                 <Button x:Name="btnMovePropertyBottom" 
                                     ToolTip="Move Property Bottom" 
                                     Style="{StaticResource sidebarButtons}" 
                                     Click="btnMovePropertyBottom_Click">
-                                    <Image Source="Assets\arrow_bottom.png" Stretch="None"/>
+                                    <Viewbox Width="18" Height="18">
+                                        <Grid>
+                                            <Path Fill="#004487" Data="{StaticResource arrow-down}" Margin="0,0,4,5"/>
+                                            <Path Fill="#004487" Data="{StaticResource arrow-down}" Margin="0,5,4,0"/>
+                                        </Grid>
+                                    </Viewbox>
                                 </Button>
 
-                                <Button x:Name="btnOrderPropertiesByName" 
-                                    ToolTip="Order Properties by Names" Content="A⇣z"
-                                    Style="{StaticResource sidebarButtons}" Click="btnOrderPropertiesByName_Click"/>
-                                
+                                <Button x:Name="btnOrderPropertiesByName"
+                                        ToolTip="Order Properties by Names"
+                                        Style="{StaticResource sidebarButtons}"
+                                        Click="btnOrderPropertiesByName_Click">
+                                    <Viewbox Width="18" Height="18">
+                                        <Path Fill="#004487" Data="{StaticResource sort-alpha-down}" Margin="0,0,2,0"/>
+                                    </Viewbox>
+                                </Button>
+
                                 <Button x:Name="btnAddProperties"
                                         ToolTip="Add multiple properties"
                                         Style="{StaticResource sidebarButtons}" Click="btnAddProperties_Click">
-                                    <Image Source="Assets\task_16.png" Stretch="None"/>
+                                    <Viewbox Width="18" Height="18">
+                                        <Path Fill="#004487" Data="{StaticResource journal-plus}"/>
+                                    </Viewbox>
                                 </Button>
 
 
@@ -502,16 +557,16 @@
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal">
                         <Button x:Name="btnAddEnum" 
-                            ToolTip="Add New Enum"
-                            Content="Add Enum"
-                            Style="{StaticResource toolbarBigBtn}"
-                            Click="btnAddEnum_Click"/>
+                                ToolTip="Add New Enum"
+                                Content="Add Enum"
+                                Style="{StaticResource toolbarBigBtn}"
+                                Click="btnAddEnum_Click"/>
 
                         <Button x:Name="btnRemoveEnum"
-                            ToolTip="Remove selected enum" 
-                            Content="Remove Enum"
-                            Style="{StaticResource toolbarBigBtn}" 
-                            Click="btnRemoveEnum_Click"/>
+                                ToolTip="Remove selected enum"
+                                Content="Remove Enum"
+                                Style="{StaticResource toolbarBigBtn}"
+                                Click="btnRemoveEnum_Click"/>
 
                     </StackPanel>
 
@@ -530,45 +585,64 @@
                         Grid.Column="1" Grid.Row="1"
                         Margin="0,24,0,0">
                         <Button x:Name="btnAddEnumMember"
-                            ToolTip="Add new member to selected enum"
-                            Style="{StaticResource sidebarButtons}"
-                            Click="btnAddEnumMember_Click">
-                            <Image Source="Assets\add.png" Stretch="None"/>
+                                ToolTip="Add new member to selected enum"
+                                Style="{StaticResource sidebarButtons}"
+                                Click="btnAddEnumMember_Click">
+                            <Viewbox Width="18" Height="18">
+                                <Path Fill="#004487" Data="{StaticResource plus-square}"/>
+                            </Viewbox>
                         </Button>
 
-                        <Button x:Name="btnRemoveEnumMember" 
-                            ToolTip="Remove selected enum member"
-                            Style="{StaticResource sidebarButtons}"
-                            Click="btnRemoveEnumMember_Click">
-                            <Image Source="Assets\minus_red.png" Stretch="None"/>
+                        <Button x:Name="btnRemoveEnumMember"
+                                ToolTip="Remove selected enum member"
+                                Style="{StaticResource sidebarButtons}"
+                                Background="#FFC80000"
+                                Click="btnRemoveEnumMember_Click">
+                            <Viewbox Width="18" Height="18">
+                                <Path Fill="#EBEBEB" Data="{StaticResource trash}" Margin="0,0,2,0"/>
+                            </Viewbox>
                         </Button>
 
-                        <Button x:Name="btnMoveEnumMemberTop" 
-                            ToolTip="Move selected enum member top" 
-                            Style="{StaticResource sidebarButtons}" 
-                            Click="btnMoveEnumMemberTop_Click">
-                            <Image Source="Assets\arrow_top.png" Stretch="None"/>
+                        <Button x:Name="btnMoveEnumMemberTop"
+                                ToolTip="Move selected enum member top"
+                                Style="{StaticResource sidebarButtons}"
+                                Click="btnMoveEnumMemberTop_Click">
+                            <Viewbox Width="18" Height="18">
+                                <Grid>
+                                    <Path Fill="#004487" Data="{StaticResource arrow-up}" Margin="0,0,4,5"/>
+                                    <Path Fill="#004487" Data="{StaticResource arrow-up}" Margin="0,5,4,0"/>
+                                </Grid>
+                            </Viewbox>
                         </Button>
 
-                        <Button x:Name="btnMoveEnumMemberUp" 
-                            ToolTip="Move selected enum member up" 
-                            Style="{StaticResource sidebarButtons}" 
-                            Click="btnMoveEnumMemberUp_Click">
-                            <Image Source="Assets\arrow_up.png" Stretch="None"/>
+                        <Button x:Name="btnMoveEnumMemberUp"
+                                ToolTip="Move selected enum member up"
+                                Style="{StaticResource sidebarButtons}"
+                                Click="btnMoveEnumMemberUp_Click">
+                            <Viewbox Width="18" Height="18">
+                                <Path Fill="#004487" Data="{StaticResource arrow-up}" Margin="0,0,4,0"/>
+                            </Viewbox>
                         </Button>
 
-                        <Button x:Name="btnMoveEnumMemberDown" 
-                            ToolTip="Move selected enum member down" 
-                            Style="{StaticResource sidebarButtons}" 
-                            Click="btnMoveEnumMemberDown_Click">
-                            <Image Source="Assets\arrow_down.png" Stretch="None"/>
+                        <Button x:Name="btnMoveEnumMemberDown"
+                                ToolTip="Move selected enum member down"
+                                Style="{StaticResource sidebarButtons}"
+                                Click="btnMoveEnumMemberDown_Click">
+                            <Viewbox Width="18" Height="18">
+                                <Path Fill="#004487" Data="{StaticResource arrow-down}" Margin="0,0,4,0"/>
+                            </Viewbox>
                         </Button>
 
-                        <Button x:Name="btnMoveEnumMemberBottom" 
-                            ToolTip="Move selected enum member bottom" 
-                            Style="{StaticResource sidebarButtons}"
-                            Click="btnMoveEnumMemberBottom_Click">
-                            <Image Source="Assets\arrow_bottom.png" Stretch="None"/>
+                        <Button x:Name="btnMoveEnumMemberBottom"
+                                ToolTip="Move selected enum member bottom"
+                                Style="{StaticResource sidebarButtons}"
+                                Click="btnMoveEnumMemberBottom_Click">
+                            <Viewbox Width="18" Height="18">
+                                <Grid>
+                                    <Path Fill="#004487" Data="{StaticResource arrow-down}" Margin="0,0,4,5"/>
+                                    <Path Fill="#004487" Data="{StaticResource arrow-down}" Margin="0,5,4,0"/>
+                                </Grid>
+                            </Viewbox>
                         </Button>
                     </StackPanel>
                     <Grid DataContext="{Binding SelectedItem, ElementName=grdEnums}" Grid.Column="2" Grid.Row="1">

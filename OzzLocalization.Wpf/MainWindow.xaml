@@ -4,7 +4,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OzzLocalization.Wpf"
         xmlns:ViewModels="clr-namespace:OzzLocalization.Wpf.ViewModels"
-        xmlns:Converters="clr-namespace:OzzUtils.Wpf.Converters;assembly=OzzUtils"
         x:Class="OzzLocalization.Wpf.MainWindow"
         mc:Ignorable="d"
         Title="Vocabulary Editor"
@@ -15,11 +14,6 @@
     <Window.DataContext>
         <ViewModels:VocabularyEditorVM/>
     </Window.DataContext>
-    <Window.Resources>
-        <Converters:BoolToColor x:Key="IsTranslatedConverter" ColorForFalseValue="#FFFFDFDA" />
-        <Converters:BoolToColor x:Key="IsTranslatedConverterHeader" ColorForFalseValue="#700" ColorForTrueValue="#050" />
-        <Converters:BoolToColor x:Key="FileExistsConverter" ColorForFalseValue="#FFD00000" ColorForTrueValue="#FF00C000" />
-    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" MinWidth="320"/>
@@ -33,18 +27,26 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
             <Button x:Name="btnNewProject" ToolTip="New Project" Click="btnNewProject_Click" Style="{StaticResource toolbarButtons}">
-                <Image Source="Assets\NewDocumentHS.png" Stretch="None"/>
+                <Viewbox Width="22" Height="22">
+                    <Path Fill="#0044D7" Data="{StaticResource file-earmark-plus}"/>
+                </Viewbox>
             </Button>
             <Button x:Name="btnOpen" Click="btnOpen_Click" ToolTip="Open Project" Style="{StaticResource toolbarButtons}" >
-                <Image Source="Assets\openHS.png" Stretch="None" />
+                <Viewbox Width="22" Height="22">
+                    <Path Fill="#0044D7" Data="{StaticResource folder2-open}"/>
+                </Viewbox>
             </Button>
             <Button x:Name="btnSave" ToolTip="Save Project" Click="btnSave_Click" Style="{StaticResource toolbarButtons}"  >
-                <Image Source="Assets\saveHS.png" Stretch="None"/>
+                <Viewbox Width="20" Height="20">
+                    <Path Fill="#0044D7" Data="{StaticResource floppy-fill}"/>
+                </Viewbox>
             </Button>
             <Button x:Name="btnRefresh" ToolTip="Combine Vocabularies"
 				Click="btnRefresh_Click"
 				Style="{StaticResource toolbarButtons}">
-                <Image Source="Assets\refresh_16.png" Stretch="None" />
+                <Viewbox Width="22" Height="22">
+                    <Path Fill="#0044D7" Data="{StaticResource arrow-clockwise}"/>
+                </Viewbox>
             </Button>
             <TextBlock Text="Select Culture:" Margin="6,8,2,6"/>
             <ComboBox ItemsSource="{Binding CultureCodes}"

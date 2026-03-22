@@ -2,6 +2,21 @@
 
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
+## Current Versions
+- `OzzCodeGen`: `2.1.0`
+- `OzzCodeGen.Wpf`: `2.1.0`
+- `OzzLocalization`: `2.1.0`
+- `OzzLocalization.Wpf`: `2.1.0`
+
+`2.1.0` includes UI icon updates in `OzzCodeGen.Wpf` and `OzzLocalization.Wpf`, with migration from legacy PNG toolbar/menu icons to Bootstrap icon path resources.
+
+## UI Icons
+- Icon set: **Bootstrap Icons v1.13.1**
+- Source: https://icons.getbootstrap.com
+- Repository: https://github.com/twbs/icons
+- License: **MIT**
+- Geometry resources are stored in `OzzCodeGen/Resources/BootstrapIcons.xaml`.
+
 ## Prerequisites
 - **.NET 10 SDK** – Download from [dotnet.microsoft.com](https://dotnet.microsoft.com/download/dotnet/10.0)
 - **Visual Studio 2026** (or later) with WPF and C# workloads, or **Visual Studio Code** with C# extensions

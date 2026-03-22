@@ -3,7 +3,21 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [2.0.0] - 2026-01-01
+## [2.1.0] - 2026-03-22
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.1.0`.
+- Bumped `OzzCodeGen.Wpf` version to `2.1.0`.
+- Bumped `OzzLocalization` version to `2.1.0`.
+- Bumped `OzzLocalization.Wpf` version to `2.1.0`.
+- Updated `OzzCodeGen.Wpf` UI toolbar/menu icon usage to Bootstrap icon path resources (**Bootstrap Icons v1.13.1**).
+- Updated `OzzLocalization.Wpf` UI toolbar icon usage to Bootstrap icon path resources (**Bootstrap Icons v1.13.1**).
+
+### Removed
+- Removed legacy PNG toolbar/menu icon resources from `OzzCodeGen.Wpf`.
+- Removed legacy PNG toolbar icon resources from `OzzLocalization.Wpf`.
+
+## [2.0.0] - 2026-03-20
 
 ### Changed
 - Migrated all projects from .NET Framework to **.NET 10**
