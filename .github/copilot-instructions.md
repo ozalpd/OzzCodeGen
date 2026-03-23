@@ -106,7 +106,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - Tests are not present; rely on manual verification via WPF apps.
 - Project files use SDK-style `.csproj` format targeting .NET 10; assembly metadata (`Version`, `Copyright`, `Company`, `Product`, `Description`) is declared directly in each `.csproj`.
 - Current version alignment:
-  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.1.1`
-  - `OzzLocalization` and `OzzLocalization.Wpf`: `2.1.1`
+  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.1.2`
+  - `OzzLocalization` and `OzzLocalization.Wpf`: `2.1.2`
 - `OzzCodeGen.Wpf` UI icons were migrated from legacy PNG resources to Bootstrap icon path resources (`Resources/BootstrapIcons.xaml`). Keep this convention for new toolbar/menu icons.
 - Bootstrap icon pack version in repo: **v1.13.1** (source: https://icons.getbootstrap.com, repository: https://github.com/twbs/icons, license: MIT).

@@ -108,7 +108,7 @@ namespace OzzCodeGen.CodeEngines.ModelClass.Templates
                     //sb.Append(resxEngine.NamespaceName);
                     //sb.Append('.');
                     sb.Append(ErrorResxFilename);
-                    sb.Append("), ErrorMessageResourceName = \"MaxLength\")]");
+                    sb.Append("), ErrorMessageResourceName = \"MaxStringLength\")]");
                     attributes.Add(sb.ToString());
                 }
                 else

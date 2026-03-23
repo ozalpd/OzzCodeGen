@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.2] - 2026-03-25
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.1.2`.
+- Bumped `OzzCodeGen.Wpf` version to `2.1.2`.
+- Bumped `OzzLocalization` version to `2.1.2`.
+- Bumped `OzzLocalization.Wpf` version to `2.1.2`.
+- Renamed `ErrorStrings.MaxLength` to `MaxStringLength` for better clarity in resource naming.
+
 ## [2.1.1] - 2026-03-23
 
 ### Changed
