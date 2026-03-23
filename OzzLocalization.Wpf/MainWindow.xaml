@@ -28,7 +28,28 @@
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
             <Button x:Name="btnNewProject" ToolTip="New Project" Click="btnNewProject_Click" Style="{StaticResource toolbarButtons}">
                 <Viewbox Width="22" Height="22">
-                    <Path Fill="#0044D7" Data="{StaticResource file-earmark-plus}"/>
+                    <Grid >
+                        <Path Fill="#0044D7" Data="{StaticResource file-earmark}" RenderTransformOrigin="0.55,0.75">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="-1" ScaleY="1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                        <Path Fill="#B8FF8B44" Data="{StaticResource lightning-fill}" RenderTransformOrigin="0,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
+                                    <SkewTransform AngleX="0"/>
+                                    <RotateTransform Angle="-40"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                    </Grid>
                 </Viewbox>
             </Button>
             <Button x:Name="btnOpen" Click="btnOpen_Click" ToolTip="Open Project" Style="{StaticResource toolbarButtons}" >
