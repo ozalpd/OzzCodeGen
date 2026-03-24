@@ -3,7 +3,19 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [2.1.2] - 2026-03-25
+## [2.1.3] - 2026-03-25
+
+### Added
+- Added `ModelValidator` generation template to `ModelClassCodeEngine`.
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.1.3`.
+- Bumped `OzzCodeGen.Wpf` version to `2.1.3`.
+- Bumped `OzzLocalization` version to `2.1.3`.
+- Bumped `OzzLocalization.Wpf` version to `2.1.3`.
+- Bound new properties to `ModelClassEngineUI.xaml`.
+
+## [2.1.2] - 2026-03-24
 
 ### Changed
 - Bumped `OzzCodeGen` version to `2.1.2`.

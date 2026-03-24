@@ -108,6 +108,10 @@ namespace OzzCodeGen.CodeEngines
         }
         private string _namespaceName;
 
+        /// <summary>
+        /// Target folder relative to the solution directory. It will be combined with the solution directory when rendering templates.
+        /// If not set, it will use the default value provided by GetDefaultTargetFolder().
+        /// </summary>
         public string TargetFolder
         {
             get
@@ -343,9 +347,9 @@ namespace OzzCodeGen.CodeEngines
             if (Project == null)
                 return string.Empty;
 
-            return Project.NamespaceName.EndsWith(".Models") ?
-                        Project.NamespaceName :
-                        Project.NamespaceName + ".Models";
+            return Project.NamespaceName.EndsWith(".Models")
+                 ? Project.NamespaceName
+                 : $"{Project.NamespaceName}.Models";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

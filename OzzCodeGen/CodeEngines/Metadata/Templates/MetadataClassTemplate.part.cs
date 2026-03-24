@@ -9,6 +9,7 @@ namespace OzzCodeGen.CodeEngines.Metadata.Templates
         public MetadataClassTemplate(MetadataEntitySetting entitySetting)
         {
             EntitySetting = entitySetting;
+            NamespaceName = EntitySetting.CodeEngine.NamespaceName;
         }
 
         public MetadataClassTemplate(MetadataEntitySetting entitySetting, bool forDTO)

@@ -308,7 +308,6 @@ namespace OzzCodeGen.CodeEngines.ModelClass.Templates
 
         public override bool WriteToFile(string FilePath, bool overwriteExisting)
         {
-            NamespaceName = EntitySetting.CodeEngine.NamespaceName;
             return base.WriteToFile(FilePath, overwriteExisting);
         }
     }

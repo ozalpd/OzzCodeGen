@@ -81,6 +81,24 @@ public class ModelClassCodeEngine : BaseModelClassCodeEngine
     }
     private bool _genAnnotations;
 
+    /// <summary>
+    /// Generates a validator class for all the entities when enabled.
+    /// </summary>
+    public bool GenerateValidator
+    {
+        set
+        {
+            _generateValidator = value;
+            RaisePropertyChanged("GenerateValidator");
+        }
+        get
+        {
+            return _generateValidator;
+        }
+    }
+    private bool _generateValidator;
+
+
     public bool GenerateXmlDoc
     {
         get { return _generateXmlDoc; }
@@ -91,6 +109,64 @@ public class ModelClassCodeEngine : BaseModelClassCodeEngine
         }
     }
     private bool _generateXmlDoc;
+
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public string TargetValidatorDirectory
+    {
+        get
+        {
+            if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
+            {
+                return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, ValidatorFolder));
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+    }
+    private string _TargetValidatorDirectory;
+
+    /// <summary>
+    /// Target folder for validator class which is relative to the solution directory.
+    /// </summary>
+    public string ValidatorFolder
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_validatorFolder))
+                _validatorFolder = "Validation";
+            return _validatorFolder;
+        }
+        set
+        {
+            _validatorFolder = value;
+            RaisePropertyChanged("ValidatorFolder");
+            RaisePropertyChanged("TargetValidatorDirectory");
+        }
+    }
+    private string _validatorFolder;
+
+    public readonly string ValidatorClassName = "ModelValidator";
+    
+    public string ValidatorNamespaceName
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_validatorNamespaceName))
+                _validatorNamespaceName = $"{Project.NamespaceName}.Validation";
+            return _validatorNamespaceName;
+        }
+        set
+        {
+            _validatorNamespaceName = value;
+            RaisePropertyChanged("ValidatorNamespaceName");
+        }
+    }
+    private string _validatorNamespaceName;
+
 
     protected override void OnEntitySettingsChanged()
     {
@@ -145,19 +221,31 @@ public class ModelClassCodeEngine : BaseModelClassCodeEngine
             Project.SearchString = string.Empty;
         }
 
+        bool allWritten = true;
+        var entity = GetSelectedEntity();
         if (RenderAllEntities)
         {
-            bool allWritten = true;
             foreach (ModelClassEntitySetting setting in EntitySettings.Where(e => e.Exclude == false))
             {
                 allWritten = RenderTemplate(setting) & allWritten;
             }
-            return allWritten;
         }
         else
         {
-            return RenderTemplate(GetSelectedEntity());
+            allWritten = RenderTemplate(entity);
         }
+
+        if (entity == null)
+            entity = Entities.FirstOrDefault(e => !e.Exclude);
+
+        if (GenerateValidator && entity != null)
+        {
+            var validatorTemplate = new ValidatorTemplate(entity);
+            var fileName = Path.Combine(TargetValidatorDirectory, validatorTemplate.GetDefaultFileName());
+            allWritten = validatorTemplate.WriteToFile(fileName, OverwriteExisting) & allWritten;
+        }
+
+        return allWritten;
     }
 
     public override bool RenderAllTemplates()

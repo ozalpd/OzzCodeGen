@@ -8,10 +8,11 @@ namespace OzzCodeGen.CodeEngines.ModelClass.Templates
         {
             EntitySetting = entitySetting;
             MetadataForDTO = metadataForDTO;
+            NamespaceName = EntitySetting.CodeEngine.NamespaceName;
         }
 
 
-        public override BaseModelClassCodeEngine CodeEngine => EntitySetting.CodeEngine;
+        public override ModelClassCodeEngine CodeEngine => (ModelClassCodeEngine)EntitySetting.CodeEngine;
 
 
         public override string GetDefaultFileName()

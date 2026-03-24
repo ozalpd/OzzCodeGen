@@ -111,7 +111,7 @@ public abstract class BaseModelClassCodeEngine : BaseCodeEngine
         get
         {
             if (string.IsNullOrEmpty(_customAttribNamespace))
-                _customAttribNamespace = $"{NamespaceName}.Validate";
+                _customAttribNamespace = $"{Project.NamespaceName}.Validate";
             return _customAttribNamespace;
         }
         set
