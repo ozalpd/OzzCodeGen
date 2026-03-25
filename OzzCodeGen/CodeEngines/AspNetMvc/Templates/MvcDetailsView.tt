@@ -17,7 +17,6 @@ WriteUsingNamespaces(); #>
 <#  } else if (PartialView){ #>
     bool modal = ViewBag.Modal ?? false;
 <# } #>
-
     //Authorization Flags
     bool canUserEdit = ViewBag.canUserEdit ?? false;
     bool canUserCreate = ViewBag.canUserCreate ?? false;
@@ -29,21 +28,21 @@ WriteUsingNamespaces(); #>
 <# } #>
 <#  if (PartialContainer){ #>
 @Html.Partial("_Details")
-<div class="form-horizontal">
+<div class="form">
 @Html.Partial("<#= MvcPartialDetailFormButtons.ViewName #>")
 </div>
 <#  } else { #>
-<div class="form-horizontal">
+<div class="form">
 <# foreach (var property in properties) { #>
 <# if (property.PropertyDefinition.RestrictedData) { #>
     @if (canSeeRestricted)
     {
 <# } #>
-    <div class="row mb5">
-        <label class="control-label col-md-2 col-sm-3 mb5">
+    <div class="row mb-1">
+        <label class="col-form-label col-md-2 col-sm-3 mb-1">
             @Html.DisplayNameFor(model => model.<#= property.Name #>)
         </label>
-        <div class="col-lg-8 col-md-9 col-sm-9 mt7">
+        <div class="col-lg-8 col-md-9 col-sm-9 mt-1">
             @Html.DisplayFor(m => m.<#= property.Name #>)
         </div>
     </div>

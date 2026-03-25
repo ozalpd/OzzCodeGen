@@ -32,7 +32,7 @@ WriteUsingNamespaces(); #>
 
     var title = <#= EntityResource #>.<#= Entity.Name.Pluralize() #>;
 }
-<div class="well hidden-print">
+<div class="card card-body d-print-none">
     <div class="row">
         <div class="col-md-6 col-sm-5">
             <h4>@title</h4>
@@ -89,8 +89,8 @@ WriteUsingNamespaces(); #>
 
             function actionCellRenderer(params) {
                 let actions = '<div class="btn-group" style="margin-top:-3px;">' +
-                    '<button type="button" title="@ActionStrings.Action" class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" onclick="onActionMenuClick(this)">' +
-                    '<span class="glyphicon glyphicon-tasks"></span> <span class="caret"></span>' +
+                    '<button type="button" title="@ActionStrings.Action" class="btn btn-sm btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" onclick="onActionMenuClick(this)">' +
+                    '<i class="fa fa-list"></i>' +
                     '</button>' +
                     '<ul class="dropdown-menu mb15" role="menu">' +
                     '<li><a href="@Url.Action("Details")/' + params.value + '"<#  if(Entity.DetailsPartialView) { #> input-modal="@ActionStrings.Details" <# } #>>@ActionStrings.Details</a></li>' +
@@ -100,7 +100,7 @@ WriteUsingNamespaces(); #>
                 }
                 @if(canUserDelete)
                 {
-                    @:'<li><a href="#deleteConfirm" data-toggle="modal" onclick="setDelete(getObjectById(result.Items,' + params.value + ').<#= DisplayMember #>, ' + params.value + ');">@ActionStrings.Delete</a></li>' +
+                    @:'<li><a href="#deleteConfirm" data-bs-toggle="modal" onclick="setDelete(getObjectById(result.Items,' + params.value + ').<#= DisplayMember #>, ' + params.value + ');">@ActionStrings.Delete</a></li>' +
                 }
 <#  if (entitiesThisForCreate.Any()) 
     { #>

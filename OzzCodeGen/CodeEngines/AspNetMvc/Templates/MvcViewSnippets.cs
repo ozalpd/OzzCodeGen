@@ -46,7 +46,7 @@ WriteUsingNamespaces();
             #line default
             #line hidden
             this.Write(" -->\r\n            <li class=\"dropdown\">\r\n                <a href=\"#\" class=\"dropd" +
-                    "own-toggle\" data-toggle=\"dropdown\">\r\n                    @");
+                    "own-toggle\" data-bs-toggle=\"dropdown\">\r\n                    @");
             
             #line 15 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));

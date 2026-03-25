@@ -3,10 +3,12 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.1.3`
-- `OzzCodeGen.Wpf`: `2.1.3`
-- `OzzLocalization`: `2.1.3`
-- `OzzLocalization.Wpf`: `2.1.3`
+- `OzzCodeGen`: `2.1.4`
+- `OzzCodeGen.Wpf`: `2.1.4`
+- `OzzLocalization`: `2.1.4`
+- `OzzLocalization.Wpf`: `2.1.4`
+
+`2.1.4` updates `AspNetMvc` templates for Bootstrap 5 compatibility while keeping Font Awesome 4.7.0-compatible code in place for now.
 
 `2.1.3` adds `ModelValidator` generation template to `ModelClassCodeEngine`.
 

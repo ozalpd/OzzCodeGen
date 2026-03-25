@@ -11,7 +11,7 @@ WriteUsingNamespaces(); #>
 
             <!-- Bootstrap navbar nav menu code for <#= Entity.ControllerName #> -->
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
                     @<#= EntityResource #>.<#= Entity.Name.Pluralize() #><b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">

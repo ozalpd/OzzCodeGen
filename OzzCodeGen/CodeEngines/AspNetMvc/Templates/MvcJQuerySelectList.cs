@@ -55,9 +55,9 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write(", htmlAttributes: new { @class = \"control-label col-lg-2 col-md-3 col-sm-3 col-xs" +
-                    "-12\" })\r\n    <div class=\"col-lg-2 col-md-3 col-sm-3 col-xs-5\">\r\n        @Html.Dr" +
-                    "opDownList(\"");
+            this.Write(", htmlAttributes: new { @class = \"col-form-label col-lg-2 col-md-3 col-sm-3 col-x" +
+                    "s-12\" })\r\n    <div class=\"col-lg-2 col-md-3 col-sm-3 col-xs-5\">\r\n        @Html.D" +
+                    "ropDownList(\"");
             
             #line 21 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQuerySelectList.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FKeyProperty.Name));

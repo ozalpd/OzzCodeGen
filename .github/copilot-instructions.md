@@ -106,7 +106,9 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - Tests are not present; rely on manual verification via WPF apps.
 - Project files use SDK-style `.csproj` format targeting .NET 10; assembly metadata (`Version`, `Copyright`, `Company`, `Product`, `Description`) is declared directly in each `.csproj`.
 - Current version alignment:
-  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.1.3`
-  - `OzzLocalization` and `OzzLocalization.Wpf`: `2.1.3`
+  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.1.4`
+  - `OzzLocalization` and `OzzLocalization.Wpf`: `2.1.4`
+- `AspNetMvc` templates have been updated for Bootstrap 5 compatibility, but not all templates have been fully checked yet.
+- Existing template code should remain compatible with Font Awesome 4.7.0 until a later modernization pass.
 - `OzzCodeGen.Wpf` UI icons were migrated from legacy PNG resources to Bootstrap icon path resources (`Resources/BootstrapIcons.xaml`).
 - Bootstrap icon pack version in repo: **v1.13.1** (source: https://icons.getbootstrap.com, repository: https://github.com/twbs/icons, license: MIT).

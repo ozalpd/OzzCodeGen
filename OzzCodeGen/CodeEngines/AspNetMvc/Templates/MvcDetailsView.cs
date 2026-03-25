@@ -82,8 +82,7 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write(@"
-    //Authorization Flags
+            this.Write(@"    //Authorization Flags
     bool canUserEdit = ViewBag.canUserEdit ?? false;
     bool canUserCreate = ViewBag.canUserCreate ?? false;
     bool canUserDelete = ViewBag.canUserDelete ?? false;
@@ -91,126 +90,126 @@ WriteUsingNamespaces();
 }
 ");
             
-            #line 27 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
   if(!PartialView || PartialContainer) { 
             
             #line default
             #line hidden
             this.Write("<h2>@");
             
-            #line 28 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 27 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntityResource));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 28 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 27 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
             
             #line default
             #line hidden
             this.Write(" @ActionStrings.Details</h2>\r\n");
             
-            #line 29 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 28 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 29 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
   if (PartialContainer){ 
             
             #line default
             #line hidden
-            this.Write("@Html.Partial(\"_Details\")\r\n<div class=\"form-horizontal\">\r\n@Html.Partial(\"");
+            this.Write("@Html.Partial(\"_Details\")\r\n<div class=\"form\">\r\n@Html.Partial(\"");
             
-            #line 33 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(MvcPartialDetailFormButtons.ViewName));
             
             #line default
             #line hidden
             this.Write("\")\r\n</div>\r\n");
             
-            #line 35 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 34 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
   } else { 
             
             #line default
             #line hidden
-            this.Write("<div class=\"form-horizontal\">\r\n");
+            this.Write("<div class=\"form\">\r\n");
             
-            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
  foreach (var property in properties) { 
             
             #line default
             #line hidden
             
-            #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
  if (property.PropertyDefinition.RestrictedData) { 
             
             #line default
             #line hidden
             this.Write("    @if (canSeeRestricted)\r\n    {\r\n");
             
-            #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 40 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("    <div class=\"row mb5\">\r\n        <label class=\"control-label col-md-2 col-sm-3 " +
-                    "mb5\">\r\n            @Html.DisplayNameFor(model => model.");
+            this.Write("    <div class=\"row mb-1\">\r\n        <label class=\"col-form-label col-md-2 col-sm-" +
+                    "3 mb-1\">\r\n            @Html.DisplayNameFor(model => model.");
             
-            #line 44 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 43 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
-            this.Write(")\r\n        </label>\r\n        <div class=\"col-lg-8 col-md-9 col-sm-9 mt7\">\r\n      " +
-                    "      @Html.DisplayFor(m => m.");
+            this.Write(")\r\n        </label>\r\n        <div class=\"col-lg-8 col-md-9 col-sm-9 mt-1\">\r\n     " +
+                    "       @Html.DisplayFor(m => m.");
             
-            #line 47 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 46 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(")\r\n        </div>\r\n    </div>\r\n");
             
-            #line 50 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 49 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
  if (property.PropertyDefinition.RestrictedData) { 
             
             #line default
             #line hidden
             this.Write("    }\r\n");
             
-            #line 52 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
     }
 } 
             
             #line default
             #line hidden
             
-            #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
   if(!PartialView) { 
             
             #line default
             #line hidden
             this.Write("@Html.Partial(\"");
             
-            #line 55 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(MvcPartialDetailFormButtons.ViewName));
             
             #line default
             #line hidden
             this.Write("\")\r\n");
             
-            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 55 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
  } 
             
             #line default
             #line hidden
             this.Write("</div>\r\n");
             
-            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
+            #line 57 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
  } 
             
             #line default

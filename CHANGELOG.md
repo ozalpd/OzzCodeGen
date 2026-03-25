@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.4] - 2026-03-25
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.1.4`.
+- Bumped `OzzCodeGen.Wpf` version to `2.1.4`.
+- Bumped `OzzLocalization` version to `2.1.4`.
+- Bumped `OzzLocalization.Wpf` version to `2.1.4`.
+- Updated `AspNetMvc` templates for Bootstrap 5 compatibility.
+- Kept existing Font Awesome 4.7.0-compatible template code.
+- Template compatibility checks are still in progress for the remaining templates.
+
 ## [2.1.3] - 2026-03-25
 
 ### Added

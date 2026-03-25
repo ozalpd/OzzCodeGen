@@ -92,8 +92,8 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write(";\r\n}\r\n<div class=\"well hidden-print\">\r\n    <div class=\"row\">\r\n        <div class=" +
-                    "\"col-md-6 col-sm-5\">\r\n            <h4>@title</h4>\r\n        </div>\r\n");
+            this.Write(";\r\n}\r\n<div class=\"card card-body d-print-none\">\r\n    <div class=\"row\">\r\n        <" +
+                    "div class=\"col-md-6 col-sm-5\">\r\n            <h4>@title</h4>\r\n        </div>\r\n");
             
             #line 40 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
   if(Entity.CreatePartialView) { 
@@ -220,8 +220,8 @@ WriteUsingNamespaces();
 
             function actionCellRenderer(params) {
                 let actions = '<div class=""btn-group"" style=""margin-top:-3px;"">' +
-                    '<button type=""button"" title=""@ActionStrings.Action"" class=""btn btn-xs btn-primary dropdown-toggle"" data-toggle=""dropdown"" onclick=""onActionMenuClick(this)"">' +
-                    '<span class=""glyphicon glyphicon-tasks""></span> <span class=""caret""></span>' +
+                    '<button type=""button"" title=""@ActionStrings.Action"" class=""btn btn-sm btn-outline-dark dropdown-toggle"" data-bs-toggle=""dropdown"" onclick=""onActionMenuClick(this)"">' +
+                    '<i class=""fa fa-list""></i>' +
                     '</button>' +
                     '<ul class=""dropdown-menu mb15"" role=""menu"">' +
                     '<li><a href=""@Url.Action(""Details"")/' + params.value + '""");
@@ -256,8 +256,8 @@ WriteUsingNamespaces();
             #line hidden
             this.Write(">@ActionStrings.Edit</a></li>\' +\r\n                }\r\n                @if(canUserD" +
                     "elete)\r\n                {\r\n                    @:\'<li><a href=\"#deleteConfirm\" d" +
-                    "ata-toggle=\"modal\" onclick=\"setDelete(getObjectById(result.Items,\' + params.valu" +
-                    "e + \').");
+                    "ata-bs-toggle=\"modal\" onclick=\"setDelete(getObjectById(result.Items,\' + params.v" +
+                    "alue + \').");
             
             #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(DisplayMember));

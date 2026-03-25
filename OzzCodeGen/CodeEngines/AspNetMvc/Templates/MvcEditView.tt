@@ -19,7 +19,6 @@ var decimalProperties = properties
 
 string modelName = CreateForm ? Entity.ModelForCreate : Entity.ModelForEdit;
 string formTypeName = CreateForm ? "Create" : "Edit";
-
 WriteUsingNamespaces(); #>
 @model <#= modelName #>
 @{
@@ -30,7 +29,7 @@ WriteUsingNamespaces(); #>
 <#  } #>
 }
 <#  if(!PartialView || PartialContainer) { #>
-<h2 class="col-lg-offset-2 col-md-offset-3 col-sm-offset-3">@ViewBag.Title</h2>
+<h2 class="offset-lg-2 offset-md-3 offset-sm-3">@ViewBag.Title</h2>
 <#  } #>
 <#  if (PartialContainer){ #>
 @Html.Partial("<#= PartialViewName #>")
@@ -39,7 +38,7 @@ WriteUsingNamespaces(); #>
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
+    <div class="form">
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.Id)
         
@@ -57,8 +56,8 @@ foreach (var property in properties)
         string editDivClass = useFor == "TextArea" ? "col-lg-7 col-md-8 col-sm-9" : "col-lg-5 col-md-6 col-sm-7";
         string autoFocus = visibleFields>0 ? string.Empty : ", @autofocus = \"autofocus\"";
         visibleFields++;#>
-        <div class="form-group">
-            @Html.LabelFor(model => model.<#= property.Name #>, htmlAttributes: new { @class = "control-label col-lg-2 col-md-3 col-sm-3" })
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.<#= property.Name #>, htmlAttributes: new { @class = "col-form-label col-lg-2 col-md-3 col-sm-3" })
             <div class="<#= editDivClass #>">
 <#      if (useFor == "DropDownList")
         { #>

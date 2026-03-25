@@ -109,8 +109,7 @@ namespace ");
                     "map[member] = list;\r\n                    }\r\n\r\n                    if (!list.Cont" +
                     "ains(message))\r\n                        list.Add(message);\r\n                }\r\n " +
                     "           }\r\n\r\n            return map.ToDictionary(k => k.Key, v => (IReadOnlyL" +
-                    "ist<string>)v.Value.AsReadOnly(), StringComparer.Ordinal);\r\n        }\r\n    }\r\n}\r" +
-                    "\n\r\n");
+                    "ist<string>)v.Value.AsReadOnly(), StringComparer.Ordinal);\r\n        }\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

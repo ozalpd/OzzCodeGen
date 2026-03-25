@@ -16,7 +16,7 @@ WriteUsingNamespaces(); #>
 }
 
 <div class="form-group">
-    @Html.Label(EntityStrings.<#= Entity.Name #>, htmlAttributes: new { @class = "control-label col-lg-2 col-md-3 col-sm-3 col-xs-12" })
+    @Html.Label(EntityStrings.<#= Entity.Name #>, htmlAttributes: new { @class = "col-form-label col-lg-2 col-md-3 col-sm-3 col-xs-12" })
     <div class="col-lg-2 col-md-3 col-sm-3 col-xs-5">
         @Html.DropDownList("<#= FKeyProperty.Name #>", null, ActionStrings.SelectPlease, htmlAttributes: new { @class = "form-control" })
     </div>

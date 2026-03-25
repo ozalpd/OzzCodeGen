@@ -63,18 +63,10 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write(", htmlAttributes: new { @class = \"control-label col-lg-2 col-md-3 col-sm-3\" })\r\n@" +
-                    "*    @Html.LabelFor(m => m.");
+            this.Write(", htmlAttributes: new { @class = \"col-form-label col-lg-2 col-md-3 col-sm-3\" })\r\n" +
+                    "    <div class=\"col-lg-5 col-md-6 col-sm-7\">\r\n        @Html.EditorFor(m => m.");
             
-            #line 23 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Entity.EntityDefinition.DisplayMember));
-            
-            #line default
-            #line hidden
-            this.Write(", htmlAttributes: new { @class = \"control-label col-lg-2 col-md-3 col-sm-3\" }) *@" +
-                    "\r\n    <div class=\"col-lg-5 col-md-6 col-sm-7\">\r\n        @Html.EditorFor(m => m.");
-            
-            #line 25 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.EntityDefinition.DisplayMember));
             
             #line default
@@ -83,21 +75,21 @@ WriteUsingNamespaces();
                     "-control ui-autocomplete-input\",\r\n            autocomplete = \"off\",\r\n           " +
                     " data_url = Url.Action(\"Get");
             
-            #line 31 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.Pluralize()));
             
             #line default
             #line hidden
             this.Write("ForAutoComplete\", \"");
             
-            #line 31 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ControllerName));
             
             #line default
             #line hidden
             this.Write("\")\r\n        }\r\n    })\r\n        @Html.ValidationMessageFor(m => m.");
             
-            #line 34 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 33 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.EntityDefinition.DisplayMember));
             
             #line default
@@ -105,7 +97,7 @@ WriteUsingNamespaces();
             this.Write(", \"\", new { @class = \"text-danger\" })\r\n        @Html.ValidationMessageFor(m => m." +
                     "");
             
-            #line 35 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 34 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FKeyProperty));
             
             #line default
@@ -113,7 +105,7 @@ WriteUsingNamespaces();
             this.Write(", \"\", new { @class = \"text-danger\" })\r\n    </div>\r\n</div>\r\n<script type=\"text/jav" +
                     "ascript\">\r\n    $(\'#");
             
-            #line 39 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.EntityDefinition.DisplayMember));
             
             #line default
@@ -131,83 +123,83 @@ WriteUsingNamespaces();
             let itemId = ui.item.id;
             $('#");
             
-            #line 50 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 49 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FKeyProperty.Name));
             
             #line default
             #line hidden
             this.Write("\').val(itemId);\r\n");
             
-            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 50 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
  foreach (var property in properties) { 
             
             #line default
             #line hidden
             
-            #line 52 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
  if (property.PropertyDefinition.TypeName=="decimal") { 
             
             #line default
             #line hidden
             this.Write("            //$(\'#");
             
-            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 52 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write("\').val(fixDecimalVal(ui.item.");
             
-            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 52 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write("));\r\n");
             
-            #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
  } else if (property.IsForeignKey()) { 
             
             #line default
             #line hidden
             this.Write("            //setSelectListID(\'#");
             
-            #line 55 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(" > option\', ui.item.");
             
-            #line 55 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 55 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("            //$(\'#");
             
-            #line 57 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write("\').val(ui.item.");
             
-            #line 57 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 57 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
 	}
 } 
             
@@ -216,7 +208,7 @@ WriteUsingNamespaces();
             this.Write("        },\r\n        change: function (event, ui) {\r\n            if (ui.item == nu" +
                     "ll) {\r\n                $(event.target).val(\'\');\r\n                $(\'#");
             
-            #line 64 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FKeyProperty.Name));
             
             #line default
@@ -224,7 +216,7 @@ WriteUsingNamespaces();
             this.Write("\').val(\'\');\r\n            }\r\n        },\r\n        open: function (event, ui) {\r\n   " +
                     "         let boxWidth = $(\'#");
             
-            #line 68 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
+            #line 67 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.EntityDefinition.DisplayMember));
             
             #line default

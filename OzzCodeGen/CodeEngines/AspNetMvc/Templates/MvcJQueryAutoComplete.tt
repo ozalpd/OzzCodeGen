@@ -19,8 +19,7 @@ WriteUsingNamespaces(); #>
 
 @Html.HiddenFor(m => m.<#= FKeyProperty #>)
 <div class="form-group">
-    @Html.Label(EntityStrings.<#= Entity.EntityDefinition.DisplayMember #>, htmlAttributes: new { @class = "control-label col-lg-2 col-md-3 col-sm-3" })
-@*    @Html.LabelFor(m => m.<#= Entity.EntityDefinition.DisplayMember #>, htmlAttributes: new { @class = "control-label col-lg-2 col-md-3 col-sm-3" }) *@
+    @Html.Label(EntityStrings.<#= Entity.EntityDefinition.DisplayMember #>, htmlAttributes: new { @class = "col-form-label col-lg-2 col-md-3 col-sm-3" })
     <div class="col-lg-5 col-md-6 col-sm-7">
         @Html.EditorFor(m => m.<#= Entity.EntityDefinition.DisplayMember #>, new
     {
