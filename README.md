@@ -3,10 +3,12 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.1.4`
-- `OzzCodeGen.Wpf`: `2.1.4`
-- `OzzLocalization`: `2.1.4`
-- `OzzLocalization.Wpf`: `2.1.4`
+- `OzzCodeGen`: `2.1.5`
+- `OzzCodeGen.Wpf`: `2.1.5`
+- `OzzLocalization`: `2.1.5`
+- `OzzLocalization.Wpf`: `2.1.5`
+
+`2.1.5` renames model-class and validator templates to follow the language-first naming convention (`BaseCSharpModelClassTemplate`, `CSharpModelClassTemplate`, `CSharpValidatorTemplate`). No functional changes; focused on code organization and naming consistency.
 
 `2.1.4` updates `AspNetMvc` templates for Bootstrap 5 compatibility while keeping Font Awesome 4.7.0-compatible code in place for now.
 
@@ -143,7 +145,7 @@ Engines check `Project.TargetPlatform` to adapt generated code. For example, `Me
 
 | Engine ID | Description | Status |
 |---|---|---|
-| `Model_Class_Generator` | Generates model classes (primary path) using `ModelClassTemplate`/`BaseModelClassTemplate`. | ✅ Active |
+| `Model_Class_Generator` | Generates model classes (primary path) using `CSharpModelClassTemplate`/`BaseCSharpModelClassTemplate`. | ✅ Active |
 | `Metadata_Class_Generator` | Generates metadata/validation attribute classes (legacy compatibility path). | ✅ Active |
 | `AspNetMvc_Controller_View_Generator` | Generates ASP.NET MVC controllers and Razor views. | ✅ Active |
 | `T-Sql_Scripts_Generator` | Generates T-SQL DDL scripts. | ✅ Active |
@@ -168,8 +170,8 @@ Engines check `Project.TargetPlatform` to adapt generated code. For example, `Me
 - Model-class primary stack:
   - `OzzCodeGen/CodeEngines/ModelClass/ModelClassCodeEngine.cs`
   - `OzzCodeGen/CodeEngines/ModelClass/BaseModelClassCodeEngine.cs`
-  - `OzzCodeGen/CodeEngines/ModelClass/Templates/ModelClassTemplate.tt`
-  - `OzzCodeGen/CodeEngines/ModelClass/Templates/BaseModelClassTemplate.cs`
+  - `OzzCodeGen/CodeEngines/ModelClass/Templates/CSharpModelClassTemplate.tt`
+  - `OzzCodeGen/CodeEngines/ModelClass/Templates/BaseCSharpModelClassTemplate.cs`
 - Metadata compatibility stack:
   - `OzzCodeGen/CodeEngines/Metadata/MetadataCodeEngine.cs`
 - Project orchestration: see `OzzCodeGen/CodeGenProject.cs`.

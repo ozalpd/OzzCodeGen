@@ -2,9 +2,9 @@
 
 namespace OzzCodeGen.CodeEngines.ModelClass.Templates
 {
-    public partial class ModelClassTemplate
+    public partial class CSharpModelClassTemplate
     {
-        public ModelClassTemplate(ModelClassEntitySetting entitySetting, bool metadataForDTO = false)
+        public CSharpModelClassTemplate(ModelClassEntitySetting entitySetting, bool metadataForDTO = false)
         {
             EntitySetting = entitySetting;
             MetadataForDTO = metadataForDTO;

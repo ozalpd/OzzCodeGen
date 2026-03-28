@@ -7,7 +7,7 @@ using System.Text;
 
 namespace OzzCodeGen.CodeEngines.ModelClass.Templates
 {
-    public abstract class BaseModelClassTemplate : CsClassBase
+    public abstract class BaseCSharpModelClassTemplate : CsClassBase
     {
         public string ClassName
         {

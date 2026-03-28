@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.5] - 2026-03-26
+
+### Changed
+- Renamed `BaseModelClassTemplate` to `BaseCSharpModelClassTemplate`.
+- Renamed `ModelClassTemplate` to `CSharpModelClassTemplate` (`.tt`, `.part.cs`, and generated `.cs`).
+- Renamed `ValidatorTemplate` to `CSharpValidatorTemplate` (`.tt`, `.part.cs`, and generated `.cs`).
+- Updated all references, constructors, and `.csproj` entries accordingly.
+- Updated code comments in generated files for clarity.
+- Reformatted `MainWindow` title string.
+- Bumped `OzzCodeGen` version to `2.1.5`.
+- Bumped `OzzCodeGen.Wpf` version to `2.1.5`.
+- Bumped `OzzLocalization` version to `2.1.5`.
+- Bumped `OzzLocalization.Wpf` version to `2.1.5`.
+- No functional changes; focused on code organization and language-first naming consistency.
+
 ## [2.1.4] - 2026-03-25
 
 ### Changed

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OzzCodeGen.CodeEngines.Metadata.Templates
 {
-    public partial class MetadataClassTemplate : BaseModelClassTemplate
+    public partial class MetadataClassTemplate : BaseCSharpModelClassTemplate
     {
         public MetadataClassTemplate(MetadataEntitySetting entitySetting)
         {

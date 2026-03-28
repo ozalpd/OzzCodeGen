@@ -30,7 +30,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - **Model providers:** Implement `IModelProvider` ([IModelProvider.cs](OzzCodeGen/Providers/IModelProvider.cs)), returning/refreshing a `DataModel`.
   - Empty provider discovers `.OzzGen` templates under `Defaults/` and opens an interactive dialog (see [EmptyModel.cs](OzzCodeGen/Providers/EmptyModel.cs#L78-L112), [EmptyModel.cs](OzzCodeGen/Providers/EmptyModel.cs#L116-L167)).
 - **Templates & T4:** Many engine templates are `.tt`-backed with `*.part.cs` companions; the `.csproj` wires `DependentUpon` to keep generated pieces grouped (see [OzzCodeGen.csproj](OzzCodeGen/OzzCodeGen.csproj#L25-L112)).
-  - Model-class templates live under `CodeEngines/ModelClass/Templates/` and share behavior via `BaseModelClassTemplate` + engine/settings base classes.
+  - Model-class templates live under `CodeEngines/ModelClass/Templates/` and share behavior via `BaseCSharpModelClassTemplate` + engine/settings base classes.
 
 ## Developer Workflows
 - **Build:** Uses .NET 10 SDK.
@@ -78,6 +78,10 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 
 ## Naming Conventions
 - **Base class naming:** Prefix base classes with 'Base' (e.g., `BaseModelClassPropertySetting`, `BaseModelClassCodeEngine`) to group related base classes together in Solution Explorer for improved readability.
+- **Language-first template naming:** Template classes use a language-first convention so the target language is immediately obvious and the pattern scales to future languages:
+  - `Base{Language}{Purpose}Template` – e.g., `BaseCSharpModelClassTemplate`
+  - `{Language}{Purpose}Template` – e.g., `CSharpModelClassTemplate`, `TypeScriptModelClassTemplate`
+  - `{Language}{Purpose}ValidatorTemplate` – e.g., `CSharpValidatorTemplate`, `RustValidatorTemplate`
 
 ## Extending This Repo
 - **Add a model provider:** Implement `IModelProvider`, wire UI selection, and set `CodeGenProject.ModelProvider`. Provide `SelectSource()` for source picking and `RefreshDataModel()` for schema sync.
@@ -106,8 +110,8 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - Tests are not present; rely on manual verification via WPF apps.
 - Project files use SDK-style `.csproj` format targeting .NET 10; assembly metadata (`Version`, `Copyright`, `Company`, `Product`, `Description`) is declared directly in each `.csproj`.
 - Current version alignment:
-  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.1.4`
-  - `OzzLocalization` and `OzzLocalization.Wpf`: `2.1.4`
+  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.1.5`
+  - `OzzLocalization` and `OzzLocalization.Wpf`: `2.1.5`
 - `AspNetMvc` templates have been updated for Bootstrap 5 compatibility, but not all templates have been fully checked yet.
 - Existing template code should remain compatible with Font Awesome 4.7.0 until a later modernization pass.
 - `OzzCodeGen.Wpf` UI icons were migrated from legacy PNG resources to Bootstrap icon path resources (`Resources/BootstrapIcons.xaml`).

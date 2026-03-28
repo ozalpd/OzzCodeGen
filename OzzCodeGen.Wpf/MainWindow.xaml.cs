@@ -1,18 +1,18 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using OzzCodeGen.CodeEngines;
+using OzzCodeGen.Definitions;
+using OzzCodeGen.Providers;
+using OzzCodeGen.Wpf.Dialogs;
+using OzzCodeGen.Wpf.Models;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using OzzCodeGen.Definitions;
-using Microsoft.Win32;
-using OzzCodeGen.Wpf.Dialogs;
-using System.ComponentModel;
-using OzzCodeGen.Wpf.Models;
-using System.IO;
-using OzzCodeGen.CodeEngines;
-using OzzCodeGen.Providers;
 using System.Windows.Threading;
-using System.Reflection;
 
 namespace OzzCodeGen.Wpf
 {
@@ -62,7 +62,7 @@ namespace OzzCodeGen.Wpf
             get
             {
                 var version = Assembly.GetExecutingAssembly().GetName().Version;
-                return string.Format("Ozz Code Generator | v{0}", version?.ToString(3));
+                return $"Ozz Code Generator  v{version?.ToString(3)}";
             }
         }
 

@@ -1,8 +1,8 @@
 ﻿namespace OzzCodeGen.CodeEngines.ModelClass.Templates
 {
-    public partial class ValidatorTemplate
+    public partial class CSharpValidatorTemplate
     {
-        public ValidatorTemplate(ModelClassEntitySetting entitySetting)
+        public CSharpValidatorTemplate(ModelClassEntitySetting entitySetting)
         {
             EntitySetting = entitySetting;
             NamespaceName = CodeEngine.ValidatorNamespaceName;

@@ -201,13 +201,13 @@ public class ModelClassCodeEngine : BaseModelClassCodeEngine
         if (entitySettings == null)
             return false;
 
-        var template = new ModelClassTemplate(entitySettings);
+        var template = new CSharpModelClassTemplate(entitySettings);
         var fileName = Path.Combine(TargetDirectory, template.GetDefaultFileName());
         bool allWritten = true;
 
         if (GenerateForDTO)
         {
-            var dtoTemplate = new ModelClassTemplate(entitySettings, true);
+            var dtoTemplate = new CSharpModelClassTemplate(entitySettings, true);
             var dtoFileName = Path.Combine(TargetDirectory, dtoTemplate.GetDefaultFileName());
             allWritten = dtoTemplate.WriteToFile(dtoFileName, OverwriteExisting || entitySettings.OverwriteExisting);
         }
@@ -240,7 +240,7 @@ public class ModelClassCodeEngine : BaseModelClassCodeEngine
 
         if (GenerateValidator && entity != null)
         {
-            var validatorTemplate = new ValidatorTemplate(entity);
+            var validatorTemplate = new CSharpValidatorTemplate(entity);
             var fileName = Path.Combine(TargetValidatorDirectory, validatorTemplate.GetDefaultFileName());
             allWritten = validatorTemplate.WriteToFile(fileName, OverwriteExisting) & allWritten;
         }
