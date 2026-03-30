@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.0] - 2026-03-30
+
+### Added
+- Added the `CS_Sqlite_Repository_Generator` code engine for generating C# SQLite repository classes.
+- Added the `CsSqliteRepository` engine stack under `OzzCodeGen/CodeEngines/CsSqliteRepository/` with engine, UI, and template files.
+
+### Changed
+- Standardized the new SQLite repository engine folder naming to the shorter `CsSqliteRepository` form.
+- Moved the AI-focused code engine guide from the repo root to `.github/instructions/code-engine-development-guide.md`.
+- Updated AI instruction references to point to the new guide location.
+- Bumped `OzzCodeGen` version to `2.2.0`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.0`.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.1.6] - 2026-03-30
 
 ### Changed

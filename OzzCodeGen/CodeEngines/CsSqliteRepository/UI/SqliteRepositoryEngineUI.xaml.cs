@@ -1,0 +1,45 @@
+using OzzCodeGen.UI;
+using System.Collections.Generic;
+
+namespace OzzCodeGen.CodeEngines.CsSqliteRepository.UI;
+
+public partial class SqliteRepositoryEngineUI : AbstractEngineUI
+{
+    public SqliteRepositoryEngineUI()
+    {
+        InitializeComponent();
+
+        ColumnWidths["Name"] = 130;
+        ColumnWidths.Add("TableName", 150);
+        ColumnWidths.Add("ColumnName", 150);
+        ColumnWidths.Add("ClrTypeName", 110);
+
+        HiddenColumns.Add("CodeEngine");
+        HiddenColumns.Add("HasCustomAttributes");
+        HiddenColumns.Add("ModelProperties");
+        HiddenColumns.Add("Properties");
+        HiddenColumns.Add("CustomAttributes");
+        HiddenColumns.Add("DataFormatString");
+        HiddenColumns.Add("DataType");
+        HiddenColumns.Add("DefaultValue");
+        HiddenColumns.Add("DTOExclusion");
+        HiddenColumns.Add("HtmlEncode");
+        HiddenColumns.Add("Range");
+        HiddenColumns.Add("RegularExpression");
+        HiddenColumns.Add("Required");
+        HiddenColumns.Add("ResourceName");
+        HiddenColumns.Add("UIHint");
+        HiddenColumns.Add("IsRepositoryColumn");
+        HiddenColumns.Add("IsSimple");
+        HiddenColumns.Add("IsString");
+
+        EntitiesDataGrid = grdEntitySettings;
+        PropertiesDataGrid = grdPropertySettings;
+        DataContext = CodeEngine;
+    }
+
+    protected override void OnCodeEngineChanged()
+    {
+        DataContext = CodeEngine;
+    }
+}

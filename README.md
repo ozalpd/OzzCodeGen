@@ -3,10 +3,12 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.1.6`
-- `OzzCodeGen.Wpf`: `2.1.6`
+- `OzzCodeGen`: `2.2.0`
+- `OzzCodeGen.Wpf`: `2.2.0`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
+
+`2.2.0` adds the `CS_Sqlite_Repository_Generator` engine under `OzzCodeGen/CodeEngines/CsSqliteRepository`, moves the AI-focused code engine guide to `.github/instructions/code-engine-development-guide.md`, bumps `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.2.0`, and leaves the localization projects unchanged at `2.1.6`.
 
 `2.1.6` refactors the model-class engine into `CsModelClass` for explicit C#-only naming, updates related engine and template references, and bumps all project versions. No functional changes.
 
@@ -148,6 +150,7 @@ Engines check `Project.TargetPlatform` to adapt generated code. For example, `Me
 | Engine ID | Description | Status |
 |---|---|---|
 | `CS_Model_Class_Generator` | Generates C# model classes (primary path) using `CSharpModelClassTemplate`/`BaseCSharpModelClassTemplate`. | ✅ Active |
+| `CS_Sqlite_Repository_Generator` | Generates C# SQLite repository classes using the `CsSqliteRepository` engine stack. | ✅ Active |
 | `Metadata_Class_Generator` | Generates metadata/validation attribute classes (legacy compatibility path). | ✅ Active |
 | `AspNetMvc_Controller_View_Generator` | Generates ASP.NET MVC controllers and Razor views. | ✅ Active |
 | `T-Sql_Scripts_Generator` | Generates T-SQL DDL scripts. | ✅ Active |
@@ -174,6 +177,10 @@ Engines check `Project.TargetPlatform` to adapt generated code. For example, `Me
   - `OzzCodeGen/CodeEngines/CsModelClass/BaseModelClassCodeEngine.cs`
   - `OzzCodeGen/CodeEngines/CsModelClass/Templates/CSharpModelClassTemplate.tt`
   - `OzzCodeGen/CodeEngines/CsModelClass/Templates/BaseCSharpModelClassTemplate.cs`
+- SQLite repository stack:
+  - `OzzCodeGen/CodeEngines/CsSqliteRepository/CSharpSqliteRepositoryEngine.cs`
+  - `OzzCodeGen/CodeEngines/CsSqliteRepository/Templates/CSharpSqliteRepositoryTemplate.cs`
+  - `OzzCodeGen/CodeEngines/CsSqliteRepository/Templates/CSharpSqliteRepositoryBaseTemplate.cs`
 - Metadata compatibility stack:
   - `OzzCodeGen/CodeEngines/Metadata/MetadataCodeEngine.cs`
 - Project orchestration: see `OzzCodeGen/CodeGenProject.cs`.

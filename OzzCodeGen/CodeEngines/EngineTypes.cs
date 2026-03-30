@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using OzzCodeGen.CodeEngines.CsSqliteRepository;
+using System.IO;
 using OzzCodeGen.CodeEngines.TechDocument;
 using OzzCodeGen.CodeEngines.Localization;
 using OzzCodeGen.CodeEngines.Storage;
@@ -11,6 +12,7 @@ namespace OzzCodeGen.CodeEngines
     public static class EngineTypes
     {
         public const string CsModelClassCodeEngineId = "CS_Model_Class_Generator";
+        public const string CSharpSqliteRepositoryEngineId = "CS_Sqlite_Repository_Generator";
 
         public const string TSqlScriptsId = "T-Sql_Scripts_Generator";
         public const string SqliteScriptsId = "Sqlite_Scripts_Generator";
@@ -33,6 +35,9 @@ namespace OzzCodeGen.CodeEngines
             {
                 case CsModelClassCodeEngineId:
                     return new CSharpModelClassCodeEngine();
+
+                case CSharpSqliteRepositoryEngineId:
+                    return new CSharpSqliteRepositoryEngine();
 
                 case MetadataCodeEngineId:
                     return new MetadataCodeEngine();
@@ -80,6 +85,10 @@ namespace OzzCodeGen.CodeEngines
                 case CsModelClassCodeEngineId:
                     fileName = Path.Combine(Directory, CSharpModelClassCodeEngine.DefaultFileName);
                     return CSharpModelClassCodeEngine.OpenFile(fileName);
+
+                case CSharpSqliteRepositoryEngineId:
+                    fileName = Path.Combine(Directory, CSharpSqliteRepositoryEngine.DefaultFileName);
+                    return CSharpSqliteRepositoryEngine.OpenFile(fileName);
 
                 case MetadataCodeEngineId:
                     fileName = Path.Combine(Directory, Metadata.MetadataCodeEngine.DefaultFileName);
