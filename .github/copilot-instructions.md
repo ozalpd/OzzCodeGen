@@ -23,14 +23,14 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
   - The WPF UI exposes this via a `ComboBox` bound to `{StaticResource TargetPlatformValues}` in [MainWindow.xaml](OzzCodeGen.Wpf/MainWindow.xaml).
 - **Data model:** `DataModel` is an `ObservableCollection<EntityDefinition>` with move/reorder helpers and XML (de)serialization (see [DataModel.cs](OzzCodeGen/DataModel.cs#L1-L22), [DataModel.cs](OzzCodeGen/DataModel.cs#L60-L97)).
 - **Pluggable engines:** Engine IDs are centralized in [EngineTypes.cs](OzzCodeGen/CodeEngines/EngineTypes.cs); the WPF UI binds to these IDs and injects engine-specific UIs.
-  - Active IDs: `Model_Class_Generator`, `Metadata_Class_Generator`, `AspNetMvc_Controller_View_Generator`, `T-Sql_Scripts_Generator`, `Sqlite_Scripts_Generator`, `Localization_Resource_Generator`, `EF_Technical_Document`.
-  - `Model_Class_Generator` is the primary model-class path; `Metadata_Class_Generator` remains for compatibility/legacy project loading.
+  - Active IDs: `CS_Model_Class_Generator`, `Metadata_Class_Generator`, `AspNetMvc_Controller_View_Generator`, `T-Sql_Scripts_Generator`, `Sqlite_Scripts_Generator`, `Localization_Resource_Generator`, `EF_Technical_Document`.
+  - `CsModelClass` is the primary C# model-class path; `Metadata_Class_Generator` remains for compatibility/legacy project loading.
   - Removed engines (throw `NotImplementedException` on load): `EF_DatabaseFirst_DataLayer`, `ObjectiveC_Code_Generator`, `Android_Code_Generator`.
   - The WPF app injects `Project.CurrentCodeEngine.UiControl` into the layout (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L194-L209)).
 - **Model providers:** Implement `IModelProvider` ([IModelProvider.cs](OzzCodeGen/Providers/IModelProvider.cs)), returning/refreshing a `DataModel`.
   - Empty provider discovers `.OzzGen` templates under `Defaults/` and opens an interactive dialog (see [EmptyModel.cs](OzzCodeGen/Providers/EmptyModel.cs#L78-L112), [EmptyModel.cs](OzzCodeGen/Providers/EmptyModel.cs#L116-L167)).
 - **Templates & T4:** Many engine templates are `.tt`-backed with `*.part.cs` companions; the `.csproj` wires `DependentUpon` to keep generated pieces grouped (see [OzzCodeGen.csproj](OzzCodeGen/OzzCodeGen.csproj#L25-L112)).
-  - Model-class templates live under `CodeEngines/ModelClass/Templates/` and share behavior via `BaseCSharpModelClassTemplate` + engine/settings base classes.
+  - C# model-class templates live under `CodeEngines/CsModelClass/Templates/` and share behavior via `BaseCSharpModelClassTemplate` + engine/settings base classes.
 
 ## Developer Workflows
 - **Build:** Uses .NET 10 SDK.

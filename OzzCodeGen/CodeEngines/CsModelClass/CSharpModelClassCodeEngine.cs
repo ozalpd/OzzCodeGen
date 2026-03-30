@@ -1,5 +1,5 @@
-using OzzCodeGen.CodeEngines.ModelClass.Templates;
-using OzzCodeGen.CodeEngines.ModelClass.UI;
+using OzzCodeGen.CodeEngines.CsModelClass.Templates;
+using OzzCodeGen.CodeEngines.CsModelClass.UI;
 using OzzCodeGen.Utilities;
 using System;
 using System.Collections.Generic;
@@ -10,18 +10,18 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Serialization;
 
-namespace OzzCodeGen.CodeEngines.ModelClass;
+namespace OzzCodeGen.CodeEngines.CsModelClass;
 
 [XmlInclude(typeof(ModelClassEntitySetting))]
-public class ModelClassCodeEngine : BaseModelClassCodeEngine
+public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
 {
-    public override string EngineId { get { return EngineTypes.ModelClassCodeEngineId; } }
+    public override string EngineId { get { return EngineTypes.CsModelClassCodeEngineId; } }
 
     [XmlIgnore]
     [JsonIgnore]
-    public static string DefaultFileName { get { return "ModelClassCodeEngine.settings"; } }
+    public static string DefaultFileName { get { return "CsModelClassCodeEngine.settings"; } }
 
-    public override string ProjectTypeName { get { return "Model class generator"; } }
+    public override string ProjectTypeName { get { return "C# Model Class Generator"; } }
 
     public override string GetDefaultFileName()
     {
@@ -187,11 +187,11 @@ public class ModelClassCodeEngine : BaseModelClassCodeEngine
     /// </summary>
     /// <param name="fileName">An XML file's path that contains project settings</param>
     /// <returns></returns>
-    public static ModelClassCodeEngine OpenFile(string fileName)
+    public static CSharpModelClassCodeEngine OpenFile(string fileName)
     {
-        ModelClassCodeEngine instance = GetInstanceFromFile(
+        CSharpModelClassCodeEngine instance = GetInstanceFromFile(
            fileName,
-           typeof(ModelClassCodeEngine)) as ModelClassCodeEngine;
+           typeof(CSharpModelClassCodeEngine)) as CSharpModelClassCodeEngine;
 
         return instance;
     }

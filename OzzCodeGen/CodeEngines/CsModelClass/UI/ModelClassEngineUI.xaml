@@ -1,10 +1,10 @@
-﻿<ui:AbstractEngineUI x:Class="OzzCodeGen.CodeEngines.ModelClass.UI.ModelClassEngineUI"
+﻿<ui:AbstractEngineUI x:Class="OzzCodeGen.CodeEngines.CsModelClass.UI.ModelClassEngineUI"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:ui="clr-namespace:OzzCodeGen.UI"
-                     xmlns:local="clr-namespace:OzzCodeGen.CodeEngines.ModelClass.UI"
+                     xmlns:local="clr-namespace:OzzCodeGen.CodeEngines.CsModelClass.UI"
                      mc:Ignorable="d" 
                      d:DesignHeight="460" d:DesignWidth="1400">
     <UserControl.Resources>

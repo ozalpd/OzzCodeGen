@@ -1,4 +1,4 @@
-﻿using OzzCodeGen.CodeEngines.ModelClass;
+﻿using OzzCodeGen.CodeEngines.CsModelClass;
 
 namespace OzzCodeGen.CodeEngines.Metadata
 {

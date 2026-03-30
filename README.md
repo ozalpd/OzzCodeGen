@@ -3,10 +3,12 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.1.5`
-- `OzzCodeGen.Wpf`: `2.1.5`
-- `OzzLocalization`: `2.1.5`
-- `OzzLocalization.Wpf`: `2.1.5`
+- `OzzCodeGen`: `2.1.6`
+- `OzzCodeGen.Wpf`: `2.1.6`
+- `OzzLocalization`: `2.1.6`
+- `OzzLocalization.Wpf`: `2.1.6`
+
+`2.1.6` refactors the model-class engine into `CsModelClass` for explicit C#-only naming, updates related engine and template references, and bumps all project versions. No functional changes.
 
 `2.1.5` renames model-class and validator templates to follow the language-first naming convention (`BaseCSharpModelClassTemplate`, `CSharpModelClassTemplate`, `CSharpValidatorTemplate`). No functional changes; focused on code organization and naming consistency.
 
@@ -145,7 +147,7 @@ Engines check `Project.TargetPlatform` to adapt generated code. For example, `Me
 
 | Engine ID | Description | Status |
 |---|---|---|
-| `Model_Class_Generator` | Generates model classes (primary path) using `CSharpModelClassTemplate`/`BaseCSharpModelClassTemplate`. | ✅ Active |
+| `CS_Model_Class_Generator` | Generates C# model classes (primary path) using `CSharpModelClassTemplate`/`BaseCSharpModelClassTemplate`. | ✅ Active |
 | `Metadata_Class_Generator` | Generates metadata/validation attribute classes (legacy compatibility path). | ✅ Active |
 | `AspNetMvc_Controller_View_Generator` | Generates ASP.NET MVC controllers and Razor views. | ✅ Active |
 | `T-Sql_Scripts_Generator` | Generates T-SQL DDL scripts. | ✅ Active |
@@ -156,22 +158,22 @@ Engines check `Project.TargetPlatform` to adapt generated code. For example, `Me
 | `ObjectiveC_Code_Generator` | Objective-C code generation. | ❌ Removed |
 | `Android_Code_Generator` | Android/Java code generation. | ❌ Removed |
 
-## Migration Note: `Model_Class_Generator` vs `Metadata_Class_Generator`
+## Migration Note: `CS_Model_Class_Generator` vs `Metadata_Class_Generator`
 
-- Use `Model_Class_Generator` for **new projects**. It is the primary and actively evolved model-class generation path.
+- Use `CS_Model_Class_Generator` for **new projects**. It is the primary and actively evolved C# model-class generation path.
 - Keep `Metadata_Class_Generator` for **existing/legacy projects** that already depend on metadata engine IDs/settings and serialized project compatibility.
 - Both engines remain loadable, but migration should be incremental:
-  1. Create new outputs with `Model_Class_Generator`.
+  1. Create new outputs with `CS_Model_Class_Generator`.
   2. Keep `Metadata_Class_Generator` enabled for old outputs/settings until manual validation is complete.
   3. Remove legacy engine usage only after save/load and generated output parity checks pass.
 
 ## Key Patterns
 - Engine IDs and registration: see `OzzCodeGen/CodeEngines/EngineTypes.cs`.
 - Model-class primary stack:
-  - `OzzCodeGen/CodeEngines/ModelClass/ModelClassCodeEngine.cs`
-  - `OzzCodeGen/CodeEngines/ModelClass/BaseModelClassCodeEngine.cs`
-  - `OzzCodeGen/CodeEngines/ModelClass/Templates/CSharpModelClassTemplate.tt`
-  - `OzzCodeGen/CodeEngines/ModelClass/Templates/BaseCSharpModelClassTemplate.cs`
+  - `OzzCodeGen/CodeEngines/CsModelClass/CSharpModelClassCodeEngine.cs`
+  - `OzzCodeGen/CodeEngines/CsModelClass/BaseModelClassCodeEngine.cs`
+  - `OzzCodeGen/CodeEngines/CsModelClass/Templates/CSharpModelClassTemplate.tt`
+  - `OzzCodeGen/CodeEngines/CsModelClass/Templates/BaseCSharpModelClassTemplate.cs`
 - Metadata compatibility stack:
   - `OzzCodeGen/CodeEngines/Metadata/MetadataCodeEngine.cs`
 - Project orchestration: see `OzzCodeGen/CodeGenProject.cs`.

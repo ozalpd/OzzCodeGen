@@ -1,5 +1,5 @@
-﻿using OzzCodeGen.CodeEngines.ModelClass;
-using OzzCodeGen.CodeEngines.ModelClass.Templates;
+﻿using OzzCodeGen.CodeEngines.CsModelClass;
+using OzzCodeGen.CodeEngines.CsModelClass.Templates;
 using System.Text;
 
 namespace OzzCodeGen.CodeEngines.Metadata.Templates

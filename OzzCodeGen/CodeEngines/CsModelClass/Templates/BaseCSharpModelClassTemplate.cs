@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace OzzCodeGen.CodeEngines.ModelClass.Templates
+namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
 {
     public abstract class BaseCSharpModelClassTemplate : CsClassBase
     {

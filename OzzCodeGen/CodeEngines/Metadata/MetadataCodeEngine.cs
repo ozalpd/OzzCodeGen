@@ -1,6 +1,6 @@
 ﻿using OzzCodeGen.CodeEngines.Metadata.Templates;
 using OzzCodeGen.CodeEngines.Metadata.UI;
-using OzzCodeGen.CodeEngines.ModelClass;
+using OzzCodeGen.CodeEngines.CsModelClass;
 using OzzCodeGen.Utilities;
 using System;
 using System.Collections.Generic;

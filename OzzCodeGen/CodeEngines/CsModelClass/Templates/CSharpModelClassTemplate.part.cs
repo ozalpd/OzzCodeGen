@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace OzzCodeGen.CodeEngines.ModelClass.Templates
+namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
 {
     public partial class CSharpModelClassTemplate
     {
@@ -12,7 +12,7 @@ namespace OzzCodeGen.CodeEngines.ModelClass.Templates
         }
 
 
-        public override ModelClassCodeEngine CodeEngine => (ModelClassCodeEngine)EntitySetting.CodeEngine;
+        public override CSharpModelClassCodeEngine CodeEngine => (CSharpModelClassCodeEngine)EntitySetting.CodeEngine;
 
 
         public override string GetDefaultFileName()

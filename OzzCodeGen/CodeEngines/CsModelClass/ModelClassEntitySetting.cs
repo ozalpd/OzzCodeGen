@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace OzzCodeGen.CodeEngines.ModelClass
+namespace OzzCodeGen.CodeEngines.CsModelClass
 {
     public class ModelClassEntitySetting : BaseModelClassEntitySetting<ModelPropertySetting>
     {
@@ -8,7 +8,7 @@ namespace OzzCodeGen.CodeEngines.ModelClass
         {
             if (string.IsNullOrEmpty(EntityDefinition.BaseTypeName))
                 return null;
-            var codeEngine = (ModelClassCodeEngine)CodeEngine;
+            var codeEngine = (CSharpModelClassCodeEngine)CodeEngine;
 
             return codeEngine.Entities
                     .OfType<ModelClassEntitySetting>()

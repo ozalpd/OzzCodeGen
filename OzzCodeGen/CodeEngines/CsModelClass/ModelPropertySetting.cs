@@ -1,5 +1,5 @@
 ﻿
-namespace OzzCodeGen.CodeEngines.ModelClass
+namespace OzzCodeGen.CodeEngines.CsModelClass
 {
     public class ModelPropertySetting : BaseModelClassPropertySetting
     {

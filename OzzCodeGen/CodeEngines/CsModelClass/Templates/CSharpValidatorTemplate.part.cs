@@ -1,4 +1,4 @@
-﻿namespace OzzCodeGen.CodeEngines.ModelClass.Templates
+﻿namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
 {
     public partial class CSharpValidatorTemplate
     {
@@ -8,7 +8,7 @@
             NamespaceName = CodeEngine.ValidatorNamespaceName;
         }
 
-        public override ModelClassCodeEngine CodeEngine => (ModelClassCodeEngine)EntitySetting.CodeEngine;
+        public override CSharpModelClassCodeEngine CodeEngine => (CSharpModelClassCodeEngine)EntitySetting.CodeEngine;
 
         public override string GetDefaultFileName()
         {

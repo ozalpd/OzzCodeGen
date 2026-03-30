@@ -1,4 +1,4 @@
-﻿using OzzCodeGen.CodeEngines.ModelClass;
+﻿using OzzCodeGen.CodeEngines.CsModelClass;
 using System.Linq;
 
 namespace OzzCodeGen.CodeEngines.Metadata

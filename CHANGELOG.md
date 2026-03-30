@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.6] - 2026-03-30
+
+### Changed
+- Renamed and reorganized the model-class code generation engine to `CsModelClass` to make its C#-specific purpose explicit.
+- Updated namespaces, class names, engine ID, templates, UI wiring, and project file references to use `CSharpModelClassCodeEngine`.
+- Updated metadata engine dependencies to follow the new engine structure.
+- Bumped `OzzCodeGen` version to `2.1.6`.
+- Bumped `OzzCodeGen.Wpf` version to `2.1.6`.
+- Bumped `OzzLocalization` version to `2.1.6`.
+- Bumped `OzzLocalization.Wpf` version to `2.1.6`.
+- No functional changes; this is a structural and clarity-focused refactor.
+
 ## [2.1.5] - 2026-03-26
 
 ### Changed

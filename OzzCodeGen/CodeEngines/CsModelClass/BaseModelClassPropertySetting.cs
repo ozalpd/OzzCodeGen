@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
-namespace OzzCodeGen.CodeEngines.ModelClass
+namespace OzzCodeGen.CodeEngines.CsModelClass
 {
     public abstract class BaseModelClassPropertySetting : BasePropertySetting
     {

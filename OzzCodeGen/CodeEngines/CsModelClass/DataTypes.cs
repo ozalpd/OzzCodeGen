@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace OzzCodeGen.CodeEngines.ModelClass
+namespace OzzCodeGen.CodeEngines.CsModelClass
 {
     public static class DataTypes
     {

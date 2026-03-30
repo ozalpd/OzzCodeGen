@@ -1,7 +1,7 @@
 ﻿using OzzCodeGen.UI;
 using System.Collections.Generic;
 
-namespace OzzCodeGen.CodeEngines.ModelClass.UI
+namespace OzzCodeGen.CodeEngines.CsModelClass.UI
 {
     /// <summary>
     /// Interaction logic for ModelClassEngineUI.xaml

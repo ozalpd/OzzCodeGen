@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 using System.Windows.Controls;
 using System.Xml.Serialization;
 
-namespace OzzCodeGen.CodeEngines.ModelClass;
+namespace OzzCodeGen.CodeEngines.CsModelClass;
 
 public abstract class BaseModelClassCodeEngine : BaseCodeEngine
 {

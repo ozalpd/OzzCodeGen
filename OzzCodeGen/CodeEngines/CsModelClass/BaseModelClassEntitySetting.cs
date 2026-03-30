@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
-namespace OzzCodeGen.CodeEngines.ModelClass
+namespace OzzCodeGen.CodeEngines.CsModelClass
 {
     public interface IModelClassEntitySetting
     {

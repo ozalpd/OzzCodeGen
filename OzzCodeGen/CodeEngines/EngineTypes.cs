@@ -3,22 +3,23 @@ using OzzCodeGen.CodeEngines.TechDocument;
 using OzzCodeGen.CodeEngines.Localization;
 using OzzCodeGen.CodeEngines.Storage;
 using OzzCodeGen.CodeEngines.Metadata;
-using OzzCodeGen.CodeEngines.ModelClass;
+using OzzCodeGen.CodeEngines.CsModelClass;
 using System;
 
 namespace OzzCodeGen.CodeEngines
 {
     public static class EngineTypes
     {
+        public const string CsModelClassCodeEngineId = "CS_Model_Class_Generator";
+
+        public const string TSqlScriptsId = "T-Sql_Scripts_Generator";
+        public const string SqliteScriptsId = "Sqlite_Scripts_Generator";
+
         public const string AspNetMvcEngineId = "AspNetMvc_Controller_View_Generator";
         public const string EfDbFirstDataLayerId = "EF_DatabaseFirst_DataLayer";
         public const string EfTechnicalDocId = "EF_Technical_Document";
         public const string LocalizationResxGenId = "Localization_Resource_Generator";
         public const string MetadataCodeEngineId = "Metadata_Class_Generator";
-        public const string ModelClassCodeEngineId = "Model_Class_Generator";
-
-        public const string TSqlScriptsId = "T-Sql_Scripts_Generator";
-        public const string SqliteScriptsId = "Sqlite_Scripts_Generator";
 
         public const string JavaEngineId = "Java_Code_Generator";
         public const string AndroidEngineId = "Android_Code_Generator";
@@ -30,8 +31,8 @@ namespace OzzCodeGen.CodeEngines
         {
             switch (targetProjectId)
             {
-                case ModelClassCodeEngineId:
-                    return new ModelClassCodeEngine();
+                case CsModelClassCodeEngineId:
+                    return new CSharpModelClassCodeEngine();
 
                 case MetadataCodeEngineId:
                     return new MetadataCodeEngine();
@@ -76,9 +77,9 @@ namespace OzzCodeGen.CodeEngines
 
             switch (targetProjectId)
             {
-                case ModelClassCodeEngineId:
-                    fileName = Path.Combine(Directory, ModelClassCodeEngine.DefaultFileName);
-                    return ModelClassCodeEngine.OpenFile(fileName);
+                case CsModelClassCodeEngineId:
+                    fileName = Path.Combine(Directory, CSharpModelClassCodeEngine.DefaultFileName);
+                    return CSharpModelClassCodeEngine.OpenFile(fileName);
 
                 case MetadataCodeEngineId:
                     fileName = Path.Combine(Directory, Metadata.MetadataCodeEngine.DefaultFileName);
