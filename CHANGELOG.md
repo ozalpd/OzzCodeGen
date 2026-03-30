@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.1] - 2026-03-30
+
+### Changed
+- Improved the `CsSqliteRepository` engine to resolve table names from the `SqliteScriptsEngine` when available, enabling accurate repository method generation.
+- `SqliteRepositoryEntitySetting.TableName` now retrieves the table mapping from the related `StorageEntitySetting` if the SQLite Scripts engine is active.
+- Bumped `OzzCodeGen` version to `2.2.1`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.1`.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.0] - 2026-03-30
 
 ### Added

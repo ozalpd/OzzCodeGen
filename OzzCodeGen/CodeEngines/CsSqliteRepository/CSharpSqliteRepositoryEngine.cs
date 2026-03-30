@@ -1,5 +1,6 @@
 using OzzCodeGen.CodeEngines.CsSqliteRepository.Templates;
 using OzzCodeGen.CodeEngines.CsSqliteRepository.UI;
+using OzzCodeGen.CodeEngines.Storage;
 using OzzCodeGen.Definitions;
 using OzzCodeGen.Utilities;
 using System;
@@ -84,6 +85,25 @@ public class CSharpSqliteRepositoryEngine : CsModelClass.BaseModelClassCodeEngin
         }
     }
     private List<SqliteRepositoryEntitySetting> _entities;
+
+    /// <summary>
+    /// Storage code engine is used to get information about the storage, such as table and column names, which can be used in the repository templates.
+    /// It is not serialized because it is retrieved from the project when needed.
+    /// </summary>
+    [XmlIgnore]
+    [JsonIgnore]
+    public SqliteScriptsEngine StorageCodeEngine
+    {
+        get
+        {
+            if (_storageCodeEngine == null && Project != null)
+            {
+                _storageCodeEngine = Project.GetCodeEngine(EngineTypes.SqliteScriptsId) as SqliteScriptsEngine;
+            }
+            return _storageCodeEngine;
+        }
+    }
+    private SqliteScriptsEngine _storageCodeEngine;
 
     public string ModelNamespaceName
     {

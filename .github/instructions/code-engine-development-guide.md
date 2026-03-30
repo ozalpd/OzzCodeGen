@@ -107,6 +107,7 @@ Checklist:
 - Ensure removed entities or properties are cleaned up when `cleanRemovedItems` is enabled.
 - Rebind engine-owned collections and raise property change notifications where the UI depends on them.
 - If the engine exposes filtered views such as `Entities`, keep the UI-facing property separate from the persisted backing collection when needed.
+- If the engine depends on metadata from another engine (e.g., `CsSqliteRepository` reads table/key info from `SqliteScriptsEngine`), cache the reference with `[XmlIgnore]` and `[JsonIgnore]` and use `Project.GetCodeEngine()` to resolve it lazily.
 
 For model-class-style engines, study `BaseModelClassCodeEngine` before introducing new sync logic.
 
