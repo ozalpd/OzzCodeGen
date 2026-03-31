@@ -1,5 +1,7 @@
-﻿using OzzCodeGen.Definitions;
+﻿using OzzCodeGen;
+using OzzCodeGen.Definitions;
 using OzzCodeGen.Wpf.Models;
+using System;
 using System.Linq;
 using System.Windows.Controls;
 
@@ -7,6 +9,8 @@ namespace OzzCodeGen.Wpf
 {
     public partial class MainWindow
     {
+        public Array TargetPlatformValues => Enum.GetValues(typeof(TargetDotNetPlatform));
+
         public AppSettings Settings
         {
             get { return _settings; }

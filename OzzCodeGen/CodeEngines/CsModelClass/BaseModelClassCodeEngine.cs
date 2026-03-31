@@ -11,7 +11,6 @@ namespace OzzCodeGen.CodeEngines.CsModelClass;
 
 public abstract class BaseModelClassCodeEngine : BaseCodeEngine
 {
-    protected abstract BaseEntitySetting CreateEntitySetting();
     protected abstract BaseModelClassPropertySetting CreatePropertySetting();
 
     protected virtual BaseModelClassPropertySetting GetDefaultPropertySetting(BaseProperty property, BaseEntitySetting setting)
@@ -32,25 +31,25 @@ public abstract class BaseModelClassCodeEngine : BaseCodeEngine
 
     protected override BaseEntitySetting GetDefaultSetting(EntityDefinition entity)
     {
-        var setting = CreateEntitySetting();
-        var modelClassSetting = setting as IModelClassEntitySetting;
+        var entitySetting = CreateEntitySetting();
+        var modelClassSetting = entitySetting as IModelClassEntitySetting;
         if (modelClassSetting == null)
         {
-            throw new InvalidOperationException($"{setting?.GetType().Name} must implement {nameof(IModelClassEntitySetting)}.");
+            throw new InvalidOperationException($"{entitySetting?.GetType().Name} must implement {nameof(IModelClassEntitySetting)}.");
         }
 
-        setting.DataModel = Project.DataModel;
-        setting.Name = entity.Name;
+        entitySetting.DataModel = Project.DataModel;
+        entitySetting.Name = entity.Name;
         modelClassSetting.CodeEngine = this;
 
         foreach (var property in entity.Properties)
         {
             if (property.DefinitionType != DefinitionType.Collection)
             {
-                _ = GetDefaultPropertySetting(property, setting);
+                _ = GetDefaultPropertySetting(property, entitySetting);
             }
         }
-        return setting;
+        return entitySetting;
     }
 
     protected override void RefreshSetting(BaseEntitySetting setting, EntityDefinition entity, bool cleanRemovedItems)
@@ -99,12 +98,6 @@ public abstract class BaseModelClassCodeEngine : BaseCodeEngine
     {
         RaisePropertyChanged("Entities");
     }
-
-    public override List<string> GetTemplateList()
-    {
-        return new List<string> { metadataClass };
-    }
-    private const string metadataClass = "Metadata Class";
 
     public string CustomAttribNamespace
     {

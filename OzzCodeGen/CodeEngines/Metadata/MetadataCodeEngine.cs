@@ -1,6 +1,6 @@
-﻿using OzzCodeGen.CodeEngines.Metadata.Templates;
+﻿using OzzCodeGen.CodeEngines.CsModelClass;
+using OzzCodeGen.CodeEngines.Metadata.Templates;
 using OzzCodeGen.CodeEngines.Metadata.UI;
-using OzzCodeGen.CodeEngines.CsModelClass;
 using OzzCodeGen.Utilities;
 using System;
 using System.Collections.Generic;
@@ -33,6 +33,12 @@ public class MetadataCodeEngine : BaseModelClassCodeEngine
     {
         return "Metadata";
     }
+
+    public override List<string> GetTemplateList()
+    {
+        return new List<string> { metadataClass };
+    }
+    private const string metadataClass = "Metadata Class";
 
     protected override BaseEntitySetting CreateEntitySetting()
     {

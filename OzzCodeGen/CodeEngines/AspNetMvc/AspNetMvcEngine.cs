@@ -66,6 +66,11 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
             return setting;
         }
 
+        protected override BaseEntitySetting CreateEntitySetting()
+        {
+            return new AspNetMvcEntitySetting();
+        }
+
         protected AspNetMvcPropertySetting GetDefaultPropertySetting(BaseProperty property, AspNetMvcEntitySetting setting)
         {
             var ps = new AspNetMvcPropertySetting()

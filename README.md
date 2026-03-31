@@ -3,10 +3,12 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.1`
-- `OzzCodeGen.Wpf`: `2.2.1`
+- `OzzCodeGen`: `2.2.2`
+- `OzzCodeGen.Wpf`: `2.2.2`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
+
+`2.2.2` refactors the code generation engines around engine-specific settings, introduces `BaseCSharpPropertySetting`, overhauls the `CS_Sqlite_Repository_Generator` engine, adds T4-generated SQLite repository templates, updates the Windows target framework to `net10.0-windows10.0.19041.0`, and bumps `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.2.2`. The new SQLite repository `.tt` files are scaffolded and intentionally still close to empty while further template work continues.
 
 `2.2.1` improves the `CS_Sqlite_Repository_Generator` engine by resolving table names from the `SqliteScriptsEngine` for accurate repository generation, enabling access to foreign keys and unique indexes when both engines are active.
 
@@ -60,11 +62,11 @@ OzzCodeGen ←→ OzzCodeGen.Wpf
 - **OzzCodeGen.sln**: Complete tooling solution containing code generation and vocabulary management (all projects listed above).
 
 ## Build
-Use .NET 10 SDK.
+Use .NET 10 SDK. Main Windows projects target `net10.0-windows10.0.19041.0`.
 
 ```bat
-dotnet restore OzzCodeGen.sln
-dotnet build OzzCodeGen.sln -c Debug
+ dotnet restore OzzCodeGen.sln
+ dotnet build OzzCodeGen.sln -c Debug
 ```
 
 ## Run
@@ -85,18 +87,21 @@ dotnet build OzzCodeGen.sln -c Debug
 5. Press **F5** to run or **Ctrl+F5** to run without debugging
 
 ### Adding a Custom Engine
-1. Create a new folder under `OzzCodeGen/CodeEngines/<YourEngineName>/`
+1. Create a new folder under `OzzCodeGen/CodeEngines/<YourEngineName>/`.
 2. Create a `BaseCodeEngine` subclass with:
    - `EngineId` property (unique identifier)
+   - `ProjectTypeName` property
    - `DefaultFileName` for saving engine state
-   - `OpenFile()` and `SaveToFile()` for persistence
+   - `CreateEntitySetting()` and `OpenFile()` for persistence and settings creation
    - `RefreshFromProject()` to sync with `CodeGenProject`
+   - `GetTemplateList()` for explicit template selection
    - `UiControl` property exposing a WPF `UserControl` for UI
-3. Add UI folder: `CodeEngines/<YourEngineName>/UI/` with your control
-4. Register the engine in `OzzCodeGen/CodeEngines/EngineTypes.cs`:
+3. Prefer engine-specific entity and property settings instead of generic `EntitySetting` and `PropertySetting` types.
+4. Add UI folder: `CodeEngines/<YourEngineName>/UI/` with your control.
+5. Register the engine in `OzzCodeGen/CodeEngines/EngineTypes.cs`:
    - Add a new case in `GetInstance()` method
    - Map the ID in the `OpenFile()` method
-5. For templates, use `.tt` (T4 template) + `*.part.cs` pattern and wire `DependentUpon` in `.csproj`
+6. For templates, use `.tt` (T4 template) + `*.part.cs` pattern and wire `DependentUpon` in `.csproj`. In-progress template scaffolds are acceptable while the engine contract is still being shaped.
 
 ### Adding a Custom Model Provider
 1. Implement `IModelProvider` interface (see `OzzCodeGen/Providers/IModelProvider.cs`)

@@ -9,6 +9,8 @@ namespace OzzCodeGen.CodeEngines
 {
     public abstract class BasePropertySetting : INotifyPropertyChanged
     {
+        protected abstract BaseCodeEngine GetCodeEngine();
+
         /// <summary>
         /// Name of the Property
         /// </summary>

@@ -18,20 +18,13 @@ public partial class SqliteRepositoryEngineUI : AbstractEngineUI
         HiddenColumns.Add("HasCustomAttributes");
         HiddenColumns.Add("ModelProperties");
         HiddenColumns.Add("Properties");
-        HiddenColumns.Add("CustomAttributes");
-        HiddenColumns.Add("DataFormatString");
-        HiddenColumns.Add("DataType");
-        HiddenColumns.Add("DefaultValue");
-        HiddenColumns.Add("DTOExclusion");
-        HiddenColumns.Add("HtmlEncode");
-        HiddenColumns.Add("Range");
-        HiddenColumns.Add("RegularExpression");
-        HiddenColumns.Add("Required");
-        HiddenColumns.Add("ResourceName");
-        HiddenColumns.Add("UIHint");
-        HiddenColumns.Add("IsRepositoryColumn");
+        HiddenColumns.Add("StorageEntitySetting");
+
+        //HiddenColumns.Add("IsRepositoryColumn");
         HiddenColumns.Add("IsSimple");
         HiddenColumns.Add("IsString");
+        HiddenColumns.Add("IsBoolean");
+        HiddenColumns.Add("IsDateTime");
 
         EntitiesDataGrid = grdEntitySettings;
         PropertiesDataGrid = grdPropertySettings;

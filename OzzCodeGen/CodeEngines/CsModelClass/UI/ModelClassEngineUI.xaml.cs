@@ -24,6 +24,8 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.UI
             HiddenColumns.Add("HtmlEncode");
             HiddenColumns.Add("IsSimple");
             HiddenColumns.Add("IsString");
+            HiddenColumns.Add("IsBoolean");
+            HiddenColumns.Add("IsDateTime");
             HiddenColumns.Add("MetadataEntitySetting");
             HiddenColumns.Add("ModelProperties");
             HiddenColumns.Add("Properties");

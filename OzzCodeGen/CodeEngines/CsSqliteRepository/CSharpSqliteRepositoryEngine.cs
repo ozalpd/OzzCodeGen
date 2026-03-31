@@ -1,21 +1,25 @@
+using OzzCodeGen.CodeEngines.CSharp;
 using OzzCodeGen.CodeEngines.CsSqliteRepository.Templates;
 using OzzCodeGen.CodeEngines.CsSqliteRepository.UI;
 using OzzCodeGen.CodeEngines.Storage;
+using OzzCodeGen.CodeEngines.TechDocument;
 using OzzCodeGen.Definitions;
 using OzzCodeGen.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Serialization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OzzCodeGen.CodeEngines.CsSqliteRepository;
 
 [XmlInclude(typeof(SqliteRepositoryEntitySetting))]
-public class CSharpSqliteRepositoryEngine : CsModelClass.BaseModelClassCodeEngine
+public class CSharpSqliteRepositoryEngine : BaseCodeEngine
 {
     public override string EngineId => EngineTypes.CSharpSqliteRepositoryEngineId;
 
@@ -32,7 +36,7 @@ public class CSharpSqliteRepositoryEngine : CsModelClass.BaseModelClassCodeEngin
 
     public override string GetDefaultTargetFolder()
     {
-        return "SqliteRepositories";
+        return "Repositories\\Sqlite";
     }
 
     protected override string GetDefaultNamespace()
@@ -42,7 +46,18 @@ public class CSharpSqliteRepositoryEngine : CsModelClass.BaseModelClassCodeEngin
 
         return Project.NamespaceName.EndsWith(".Repositories")
             ? Project.NamespaceName
-            : $"{Project.NamespaceName}.Repositories";
+            : $"{Project.NamespaceName}.Repositories.SQLite";
+    }
+
+    public override List<string> GetTemplateList()
+    {
+        return new List<string> { repoClass };
+    }
+    private const string repoClass = "Repository Class";
+
+    public override UserControl GetSettingsDlgUI()
+    {
+        return null;
     }
 
     protected override BaseEntitySetting CreateEntitySetting()
@@ -50,16 +65,17 @@ public class CSharpSqliteRepositoryEngine : CsModelClass.BaseModelClassCodeEngin
         return new SqliteRepositoryEntitySetting();
     }
 
-    protected override CsModelClass.BaseModelClassPropertySetting CreatePropertySetting()
+    protected SqliteRepositoryPropertySetting GetDefaultPropertySetting(BaseProperty property, SqliteRepositoryEntitySetting setting)
     {
-        return new SqliteRepositoryPropertySetting();
-    }
+        var defType = property.DefinitionType;
+        var repositoryProperty = new SqliteRepositoryPropertySetting()
+        {
+            Name = property.Name,
+            EntitySetting = setting,
+            Exclude = defType == DefinitionType.Complex || defType == DefinitionType.Collection
+        };
+        setting.Properties.Add(repositoryProperty);
 
-    protected override CsModelClass.BaseModelClassPropertySetting GetDefaultPropertySetting(BaseProperty property, BaseEntitySetting setting)
-    {
-        var repositoryProperty = (SqliteRepositoryPropertySetting)base.GetDefaultPropertySetting(property, setting);
-        repositoryProperty.ColumnName = property.Name;
-        repositoryProperty.Exclude = property is ComplexProperty || property is CollectionProperty;
         return repositoryProperty;
     }
 
@@ -105,33 +121,32 @@ public class CSharpSqliteRepositoryEngine : CsModelClass.BaseModelClassCodeEngin
     }
     private SqliteScriptsEngine _storageCodeEngine;
 
-    public string ModelNamespaceName
+    public string MetadataRepositoryName
     {
         get
         {
-            if (string.IsNullOrEmpty(_modelNamespaceName))
+            if (string.IsNullOrWhiteSpace(_metadataName))
             {
-                _modelNamespaceName = Project == null
-                    ? string.Empty
-                    : (Project.NamespaceName.EndsWith(".Models") ? Project.NamespaceName : $"{Project.NamespaceName}.Models");
+                _metadataName = "MetadataRepository";
             }
-            return _modelNamespaceName;
+            return _metadataName;
         }
         set
         {
-            if (_modelNamespaceName == value) return;
-            _modelNamespaceName = value;
-            RaisePropertyChanged(nameof(ModelNamespaceName));
+            if (_metadataName == value) return;
+            _metadataName = value;
+            RaisePropertyChanged(nameof(MetadataRepositoryName));
         }
     }
-    private string _modelNamespaceName;
+    private string _metadataName;
+
 
     public string BaseRepositoryClassName
     {
         get
         {
-            if (string.IsNullOrEmpty(_baseRepositoryClassName))
-                _baseRepositoryClassName = "SqliteRepositoryBase";
+            if (string.IsNullOrWhiteSpace(_baseRepositoryClassName))
+                _baseRepositoryClassName = "BaseDatabaseRepository";
             return _baseRepositoryClassName;
         }
         set
@@ -143,20 +158,7 @@ public class CSharpSqliteRepositoryEngine : CsModelClass.BaseModelClassCodeEngin
     }
     private string _baseRepositoryClassName;
 
-    public bool GenerateBaseRepository
-    {
-        get
-        {
-            return _generateBaseRepository ?? true;
-        }
-        set
-        {
-            if (_generateBaseRepository == value) return;
-            _generateBaseRepository = value;
-            RaisePropertyChanged(nameof(GenerateBaseRepository));
-        }
-    }
-    private bool? _generateBaseRepository;
+
 
     protected override void OnEntitySettingsChanged()
     {
@@ -173,20 +175,40 @@ public class CSharpSqliteRepositoryEngine : CsModelClass.BaseModelClassCodeEngin
 
     protected override void RefreshSetting(BaseEntitySetting setting, EntityDefinition entity, bool cleanRemovedItems)
     {
-        base.RefreshSetting(setting, entity, cleanRemovedItems);
-
         var repositorySetting = (SqliteRepositoryEntitySetting)setting;
-        if (string.IsNullOrEmpty(repositorySetting.TableName))
-            repositorySetting.TableName = repositorySetting.Name;
+        repositorySetting.DataModel = Project.DataModel;
+        repositorySetting.CodeEngine = this;
 
-        foreach (var property in repositorySetting.Properties)
+
+        List<SqliteRepositoryPropertySetting> remvProp = new List<SqliteRepositoryPropertySetting>();
+        foreach (var dalProp in repositorySetting.Properties)
         {
-            if (string.IsNullOrEmpty(property.ColumnName))
-                property.ColumnName = property.Name;
-
-            if (property.PropertyDefinition is ComplexProperty)
-                property.Exclude = true;
+            if (entity.Properties.FirstOrDefault(p => p.Name == dalProp.Name) == null)
+            {
+                remvProp.Add(dalProp);
+            }
         }
+        foreach (var dalProp in remvProp)
+        {
+            repositorySetting.Properties.Remove(dalProp);
+        }
+
+        foreach (var property in entity.Properties)
+        {
+            var ps = repositorySetting.Properties.FirstOrDefault(p => p.Name == property.Name);
+            if (ps == null)// && property.DefinitionType != DefinitionType.Collection
+            {
+                ps = GetDefaultPropertySetting(property, repositorySetting);
+            }
+            else //if (ps != null)
+            {
+                ps.EntitySetting = setting;
+            }
+        }
+        repositorySetting.Properties = new List<SqliteRepositoryPropertySetting>(
+                                        repositorySetting
+                                        .Properties
+                                        .OrderBy(p => p.PropertyDefinition.DisplayOrder));
     }
 
     public static CSharpSqliteRepositoryEngine OpenFile(string fileName)
@@ -220,10 +242,7 @@ public class CSharpSqliteRepositoryEngine : CsModelClass.BaseModelClassCodeEngin
         }
 
         var allWritten = true;
-        if (GenerateBaseRepository)
-        {
-            allWritten = RenderBaseTemplate() & allWritten;
-        }
+        allWritten = RenderBaseTemplate() & allWritten;
 
         var entity = GetSelectedEntity();
         if (RenderAllEntities)
@@ -288,5 +307,23 @@ public class CSharpSqliteRepositoryEngine : CsModelClass.BaseModelClassCodeEngin
     {
         if (_engineUI?.grdEntitySettings.SelectedItem == null) return null;
         return (SqliteRepositoryEntitySetting)_engineUI.grdEntitySettings.SelectedItem;
+    }
+
+    protected override BaseEntitySetting GetDefaultSetting(EntityDefinition entity)
+    {
+        var entitySetting = (SqliteRepositoryEntitySetting)CreateEntitySetting();
+
+        entitySetting.DataModel = Project.DataModel;
+        entitySetting.Name = entity.Name;
+        entitySetting.CodeEngine = this;
+
+        foreach (var property in entity.Properties)
+        {
+            if (property.DefinitionType != DefinitionType.Collection)
+            {
+                _ = GetDefaultPropertySetting(property, entitySetting);
+            }
+        }
+        return entitySetting;
     }
 }

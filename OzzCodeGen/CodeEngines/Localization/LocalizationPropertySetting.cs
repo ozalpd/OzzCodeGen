@@ -23,5 +23,10 @@
             }
         }
         private bool _validationMsg;
+
+        protected override BaseCodeEngine GetCodeEngine()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.2] - 2026-03-31
+
+### Added
+- Added T4-generated SQLite repository template files under `OzzCodeGen/CodeEngines/CsSqliteRepository/Templates/`.
+- Introduced `BaseCSharpPropertySetting` to centralize shared C# property type logic and engine access.
+
+### Changed
+- Refactored code generation engines to use engine-specific entity and property settings instead of the generic `EntitySetting` and `PropertySetting` types.
+- Refactored `CSharpSqliteRepositoryEngine` to inherit directly from `BaseCodeEngine`, improve property synchronization, always generate its base repository class, and update default folders and namespaces.
+- Updated code engine UIs and XAML for dynamic enum binding, adjusted column visibility, and related field renaming.
+- Updated `BaseCodeEngine` to require `CreateEntitySetting()` and `ProjectTypeName`, and implemented those contracts across engines.
+- Added explicit `GetTemplateList()` implementations to engines for clearer template selection.
+- Updated Windows target frameworks to `net10.0-windows10.0.19041.0`.
+- Bumped `OzzCodeGen` version to `2.2.2`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.2`.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
+### Notes
+- The new SQLite repository `.tt` files are scaffolded and intentionally still close to empty while template work continues.
+- Includes miscellaneous bug fixes, code cleanup, and maintainability improvements.
+
 ## [2.2.1] - 2026-03-30
 
 ### Changed

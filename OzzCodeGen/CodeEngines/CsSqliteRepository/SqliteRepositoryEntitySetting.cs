@@ -1,19 +1,26 @@
 using OzzCodeGen.CodeEngines.Storage;
 using OzzUtils;
 using System.Linq;
+using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.CsSqliteRepository;
 
-public class SqliteRepositoryEntitySetting : CsModelClass.BaseModelClassEntitySetting<SqliteRepositoryPropertySetting>
+public class SqliteRepositoryEntitySetting : AbstractEntitySetting<SqliteRepositoryPropertySetting>
 {
+    [XmlIgnore]
+    [JsonIgnore]
+    public CSharpSqliteRepositoryEngine CodeEngine { get; set; }
+
+    [XmlIgnore]
+    [JsonIgnore]
     public StorageEntitySetting StorageEntitySetting
     {
         get
         {
-            CSharpSqliteRepositoryEngine codeEngine = CodeEngine as CSharpSqliteRepositoryEngine;
-            if (_storageEntitySetting == null && codeEngine?.StorageCodeEngine != null)
+            if (_storageEntitySetting == null && CodeEngine?.StorageCodeEngine != null)
             {
-                _storageEntitySetting = codeEngine.StorageCodeEngine.Entities.FirstOrDefault(e => e.Name == Name);
+                _storageEntitySetting = CodeEngine.StorageCodeEngine.Entities.FirstOrDefault(e => e.Name == Name);
             }
 
             return _storageEntitySetting;

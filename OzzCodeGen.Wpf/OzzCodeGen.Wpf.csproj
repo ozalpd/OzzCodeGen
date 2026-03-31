@@ -6,16 +6,16 @@
 		<Description>Code Generator Application</Description>
 		
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net10.0-windows</TargetFramework>
+		<TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
 		<UseWPF>true</UseWPF>
 		<RootNamespace>OzzCodeGen.Wpf</RootNamespace>
 		<AssemblyName>OzzCodeGen.Wpf</AssemblyName>
 		<ApplicationIcon>Assets\App-software.ico</ApplicationIcon>
 
-		<Version>2.2.1</Version>
-		<AssemblyVersion>2.2.1.0</AssemblyVersion>
-		<FileVersion>2.2.1.0</FileVersion>
-		<InformationalVersion>2.2.1</InformationalVersion>
+		<Version>2.2.2</Version>
+		<AssemblyVersion>2.2.2.0</AssemblyVersion>
+		<FileVersion>2.2.2.0</FileVersion>
+		<InformationalVersion>2.2.2</InformationalVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

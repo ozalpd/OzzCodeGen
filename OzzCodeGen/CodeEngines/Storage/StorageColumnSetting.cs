@@ -185,8 +185,8 @@ namespace OzzCodeGen.CodeEngines.Storage
                 return $"IsNull([{Name}], '') != IsNull(@{Name}, '')";
 
             return $"(IsNull([{Name}], @{Name}) Is Not Null And @{Name} Is Null)\r\n" +
-                   $"Or (IsNull(@{ Name}, [{ Name}]) Is Not Null And [{ Name}] Is Null)\r\n" +
-                   $"Or [{ Name}] != @{ Name}";
+                   $"Or (IsNull(@{Name}, [{Name}]) Is Not Null And [{Name}] Is Null)\r\n" +
+                   $"Or [{Name}] != @{Name}";
         }
 
 
@@ -254,7 +254,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             {
                 return GetInsertOrUpdateDefault(insParam);
             }
-            else if(string.IsNullOrEmpty(InsertDefault))
+            else if (string.IsNullOrEmpty(InsertDefault))
             {
                 return string.Empty;
             }
@@ -284,6 +284,12 @@ namespace OzzCodeGen.CodeEngines.Storage
         {
             var val = GetUpdateDefault(forInsOrUpdate);
             return string.IsNullOrEmpty(val) ? $"@{Name}" : val;
+        }
+
+        protected override BaseCodeEngine GetCodeEngine()
+        {
+            var setting = (StorageEntitySetting)EntitySetting;
+            return setting?.CodeEngine;
         }
 
         public string InsertDefault

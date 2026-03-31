@@ -188,5 +188,11 @@ namespace OzzCodeGen.CodeEngines.TechDocument
             dependedComplex = complexes.FirstOrDefault(p => p.DependentPropertyName == propertyName);
             return dependedComplex;
         }
+
+        protected override BaseCodeEngine GetCodeEngine()
+        {
+            var entitySetting = (TechDocEntitySetting)EntitySetting;
+            return entitySetting?.CodeEngine;
+        }
     }
 }

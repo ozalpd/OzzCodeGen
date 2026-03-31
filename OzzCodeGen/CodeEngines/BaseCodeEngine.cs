@@ -15,10 +15,15 @@ namespace OzzCodeGen.CodeEngines
         [XmlIgnore]
         [JsonIgnore]
         public abstract string EngineId { get; }
+
         [XmlIgnore]
         [JsonIgnore]
         public abstract string ProjectTypeName { get; }
+
+        protected abstract BaseEntitySetting CreateEntitySetting();
+
         public abstract string GetDefaultFileName();
+
 
         [XmlIgnore]
         [JsonIgnore]

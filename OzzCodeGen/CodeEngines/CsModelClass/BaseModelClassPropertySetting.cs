@@ -1,3 +1,4 @@
+using OzzCodeGen.CodeEngines.CSharp;
 using OzzCodeGen.Definitions;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.CsModelClass
 {
-    public abstract class BaseModelClassPropertySetting : BasePropertySetting
+    public abstract class BaseModelClassPropertySetting : BaseCSharpPropertySetting
     {
         [XmlIgnore]
         [JsonIgnore]
@@ -169,41 +170,6 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             }
 
             return string.Empty;
-        }
-
-        public string GetTypeName()
-        {
-            StringBuilder sb = new StringBuilder();
-            if (PropertyDefinition.IsTypeNumeric() && PropertyDefinition is SimpleProperty)
-            {
-                sb.Append(((SimpleProperty)PropertyDefinition).EnumTypeName);
-            }
-            if (sb.Length == 0)
-            {
-                sb.Append(PropertyDefinition.TypeName);
-            }
-            if (PropertyDefinition is SimpleProperty && !PropertyDefinition.IsTypeString() && ((SimpleProperty)PropertyDefinition).IsNullable)
-            {
-                sb.Append("?");
-                return sb.ToString();
-            }
-
-            bool isClassic = CodeEngine.Project.TargetPlatform == TargetDotNetPlatform.DotNetFramework;
-            if (isClassic || PropertyDefinition is CollectionProperty)
-                return sb.ToString();
-
-            if (PropertyDefinition is ComplexProperty && ((ComplexProperty)PropertyDefinition).Dependency?.IsNullable == true)
-            {
-                sb.Append("?");
-                return sb.ToString();
-            }
-
-            if (PropertyDefinition is StringProperty && ((SimpleProperty)PropertyDefinition).IsNullable)
-            {
-                sb.Append("?");
-            }
-
-            return sb.ToString();
         }
 
         protected string GetDefaultRequiredMsg(BaseProperty PropertyDefinition)

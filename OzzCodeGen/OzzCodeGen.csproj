@@ -5,16 +5,16 @@
 		<Product>Ozz Code Gen</Product>
 		<Description>Code Generator Library</Description>
 
-		<TargetFramework>net10.0-windows</TargetFramework>
+		<TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
 		<RootNamespace>OzzCodeGen</RootNamespace>
 		<AssemblyName>OzzCodeGen</AssemblyName>
 
-		<Version>2.2.1</Version>
-		<AssemblyVersion>2.2.1.0</AssemblyVersion>
-		<FileVersion>2.2.1.0</FileVersion>
-		<InformationalVersion>2.2.1</InformationalVersion>
+		<Version>2.2.2</Version>
+		<AssemblyVersion>2.2.2.0</AssemblyVersion>
+		<FileVersion>2.2.2.0</FileVersion>
+		<InformationalVersion>2.2.2</InformationalVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -134,6 +134,16 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>CSharpValidatorTemplate.tt</DependentUpon>
+		</Compile>
+		<Compile Update="CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryBaseTemplate.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>CSharpSqliteRepositoryBaseTemplate.tt</DependentUpon>
+		</Compile>
+		<Compile Update="CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>CSharpSqliteRepositoryTemplate.tt</DependentUpon>
 		</Compile>
 		<Compile Update="CodeEngines\Localization\Templates\LocalizationResx.cs">
 			<DesignTime>True</DesignTime>
@@ -256,6 +266,12 @@
 		<None Update="CodeEngines\CsModelClass\Templates\CSharpValidatorTemplate.tt">
 		  <LastGenOutput>CSharpValidatorTemplate.cs</LastGenOutput>
 		</None>
+		<None Update="CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryBaseTemplate.tt">
+		  <LastGenOutput>CSharpSqliteRepositoryBaseTemplate.cs</LastGenOutput>
+		</None>
+		<None Update="CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt">
+		  <LastGenOutput>CSharpSqliteRepositoryTemplate.cs</LastGenOutput>
+		</None>
 		<None Update="CodeEngines\Localization\Templates\LocalizationResx.tt">
 			<LastGenOutput>LocalizationResx.cs</LastGenOutput>
 		</None>
@@ -289,5 +305,9 @@
 		<None Update="CodeEngines\TechDocument\Templates\TechDocTemplate.tt">
 			<LastGenOutput>TechDocTemplate.cs</LastGenOutput>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
 	</ItemGroup>
 </Project>

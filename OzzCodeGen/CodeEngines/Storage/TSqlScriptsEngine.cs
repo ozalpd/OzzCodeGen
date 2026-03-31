@@ -354,5 +354,10 @@ namespace OzzCodeGen.CodeEngines.Storage
         {
             return new DropMsSqlDb(this);
         }
+
+        protected override BaseEntitySetting CreateEntitySetting()
+        {
+            return new StorageEntitySetting() { CodeEngine = this };
+        }
     }
 }

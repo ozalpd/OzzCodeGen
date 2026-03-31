@@ -98,7 +98,7 @@ namespace OzzCodeGen.CodeEngines.TechDocument
         {
             if (entitySettings == null)
                 return false;
-            
+
             var template = new TechDocTemplate(entitySettings);
             var fileName = Path.Combine(TargetDirectory, template.GetDefaultFileName());
             bool allWritten = true;
@@ -289,6 +289,11 @@ namespace OzzCodeGen.CodeEngines.TechDocument
                typeof(TechDocumentEngine)) as TechDocumentEngine;
 
             return instance;
+        }
+
+        protected override BaseEntitySetting CreateEntitySetting()
+        {
+            return new TechDocEntitySetting();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace OzzCodeGen.CodeEngines.Localization
 
         protected override string GetDefaultNamespace()
         {
-            if (Project==null)
+            if (Project == null)
             {
                 return string.Empty;
             }
@@ -290,7 +290,7 @@ namespace OzzCodeGen.CodeEngines.Localization
         public bool ExistSupplmProperty(string propertyName)
         {
             bool exist = false;
-            foreach(var item in SupplementaryEntities)
+            foreach (var item in SupplementaryEntities)
             {
                 exist = item
                         .Properties
@@ -302,7 +302,7 @@ namespace OzzCodeGen.CodeEngines.Localization
 
         public bool AddSupplmProperty(string propertyName)
         {
-            if (SelectedSuplmEntity==null || ExistSupplmProperty(propertyName))
+            if (SelectedSuplmEntity == null || ExistSupplmProperty(propertyName))
                 return false;
 
             var property = new LocalizationPropertySetting()
@@ -599,6 +599,11 @@ namespace OzzCodeGen.CodeEngines.Localization
         {
 
             return $"{Project.TargetFolder}\\{Project.Name}.i18n";
+        }
+
+        protected override BaseEntitySetting CreateEntitySetting()
+        {
+            return new LocalizationEntitySetting();
         }
     }
 }

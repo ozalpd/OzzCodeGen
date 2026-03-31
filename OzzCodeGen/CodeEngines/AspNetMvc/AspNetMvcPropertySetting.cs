@@ -247,5 +247,11 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                 return false;
             }
         }
+
+        protected override BaseCodeEngine GetCodeEngine()
+        {
+            var entitySetting = (AspNetMvcEntitySetting)EntitySetting;
+            return entitySetting?.CodeEngine;
+        }
     }
 }

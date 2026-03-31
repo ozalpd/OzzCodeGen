@@ -1,10 +1,10 @@
-using OzzCodeGen.Definitions;
+using OzzCodeGen.CodeEngines.CSharp;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.CsSqliteRepository;
 
-public class SqliteRepositoryPropertySetting : CsModelClass.BaseModelClassPropertySetting
+public class SqliteRepositoryPropertySetting : BaseCSharpPropertySetting
 {
     public string ColumnName
     {
@@ -29,5 +29,11 @@ public class SqliteRepositoryPropertySetting : CsModelClass.BaseModelClassProper
 
     [XmlIgnore]
     [JsonIgnore]
-    public bool IsRepositoryColumn => PropertyDefinition is SimpleProperty || PropertyDefinition is StringProperty;
+    public bool IsRepositoryColumn => IsSimpleOrString;
+
+    protected override BaseCodeEngine GetCodeEngine()
+    {
+        SqliteRepositoryEntitySetting setting = (SqliteRepositoryEntitySetting)EntitySetting;
+        return setting?.CodeEngine;
+    }
 }

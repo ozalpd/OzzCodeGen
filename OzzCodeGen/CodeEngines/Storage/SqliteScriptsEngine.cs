@@ -129,5 +129,10 @@ namespace OzzCodeGen.CodeEngines.Storage
             }
             return instance;
         }
+
+        protected override BaseEntitySetting CreateEntitySetting()
+        {
+            return new StorageEntitySetting() { CodeEngine = this };
+        }
     }
 }

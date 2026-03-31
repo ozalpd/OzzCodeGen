@@ -33,6 +33,12 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
         return "Models";
     }
 
+    public override List<string> GetTemplateList()
+    {
+        return new List<string> { modelClass };
+    }
+    private const string modelClass = "Model Class";
+
     protected override BaseEntitySetting CreateEntitySetting()
     {
         return new ModelClassEntitySetting();

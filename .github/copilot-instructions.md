@@ -24,12 +24,14 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - **Pluggable engines:** Engine IDs are centralized in [EngineTypes.cs](OzzCodeGen/CodeEngines/EngineTypes.cs); the WPF UI binds to these IDs and injects engine-specific UIs.
   - Active IDs: `CS_Model_Class_Generator`, `CS_Sqlite_Repository_Generator`, `Metadata_Class_Generator`, `AspNetMvc_Controller_View_Generator`, `T-Sql_Scripts_Generator`, `Sqlite_Scripts_Generator`, `Localization_Resource_Generator`, `EF_Technical_Document`.
   - `CsModelClass` is the primary C# model-class path; `CsSqliteRepository` generates C# SQLite repository classes; `Metadata_Class_Generator` remains for compatibility/legacy project loading.
+  - Engines now prefer engine-specific entity/property settings instead of generic `EntitySetting` and `PropertySetting` types.
   - Removed engines (throw `NotImplementedException` on load): `EF_DatabaseFirst_DataLayer`, `ObjectiveC_Code_Generator`, `Android_Code_Generator`.
   - The WPF app injects `Project.CurrentCodeEngine.UiControl` into the layout (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L194-L209)).
 - **Model providers:** Implement `IModelProvider` ([IModelProvider.cs](OzzCodeGen/Providers/IModelProvider.cs)), returning/refreshing a `DataModel`.
   - Empty provider discovers `.OzzGen` templates under `Defaults/` and opens an interactive dialog (see [EmptyModel.cs](OzzCodeGen/Providers/EmptyModel.cs#L78-L112), [EmptyModel.cs](OzzCodeGen/Providers/EmptyModel.cs#L116-L167)).
 - **Templates & T4:** Many engine templates are `.tt`-backed with `*.part.cs` companions; the `.csproj` wires `DependentUpon` to keep generated pieces grouped (see [OzzCodeGen.csproj](OzzCodeGen/OzzCodeGen.csproj#L25-L112)).
   - C# model-class templates live under `CodeEngines/CsModelClass/Templates/` and share behavior via `BaseCSharpModelClassTemplate` + engine/settings base classes.
+  - SQLite repository templates under `CodeEngines/CsSqliteRepository/Templates/` are currently scaffolded and intentionally still close to empty while generation behavior is being completed.
 
 ## Developer Workflows
 - **Build:** Uses .NET 10 SDK.
@@ -85,16 +87,18 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 
 ## Extending This Repo
 - **Add a model provider:** Implement `IModelProvider`, wire UI selection, and set `CodeGenProject.ModelProvider`. Provide `SelectSource()` for source picking and `RefreshDataModel()` for schema sync.
-- **Add a code engine:** Create a `BaseCodeEngine` subclass with `EngineId`, `DefaultFileName`, `OpenFile()`, `RefreshFromProject()`, and a `UiControl` user control under `CodeEngines/<Engine>/UI`. Register in [EngineTypes.cs](OzzCodeGen/CodeEngines/EngineTypes.cs).
+- **Add a code engine:** Create a `BaseCodeEngine` subclass with `EngineId`, `ProjectTypeName`, `CreateEntitySetting()`, `DefaultFileName`, `OpenFile()`, `RefreshFromProject()`, `GetTemplateList()`, and a `UiControl` user control under `CodeEngines/<Engine>/UI`. Register in [EngineTypes.cs](OzzCodeGen/CodeEngines/EngineTypes.cs).
 - **Use templates:** Back templates with `.tt` and `*.part.cs`; align with existing `DependentUpon` usage in [OzzCodeGen.csproj](OzzCodeGen/OzzCodeGen.csproj).
 
 ### Code Engine Essentials
 - When adding or substantially modifying a code engine, follow `.github/instructions/code-engine-development-guide.md`.
 - Add the engine ID and wire both `EngineTypes.GetInstance()` and `EngineTypes.OpenFile()` so creation and project load both work.
-- Keep runtime-only state (`UserControl`, cached selections, computed directories) marked with `[XmlIgnore]` and `[JsonIgnore]` so project settings round-trip cleanly.
+- Prefer engine-specific entity/property settings instead of generic shared setting classes.
+- Keep runtime-only state (`UserControl`, cached selections, computed directories, engine cross-references) marked with `[XmlIgnore]` and `[JsonIgnore]` so project settings round-trip cleanly.
 - Expose engine-specific WPF UI through `UiControl`/`GetUiControl()` and rely on the host to inject it into `MainWindow`.
+- Implement `GetTemplateList()` explicitly so template selection is clear even when the engine currently has only one effective output path.
 - Keep output paths relative to `CodeGenProject.TargetSolutionDir` by using `TargetFolder`/`TargetDirectory` patterns instead of absolute persisted paths.
-- If the engine uses T4 templates, include the `.tt` and generated companions in `OzzCodeGen.csproj` with the same `DependentUpon` pattern used by existing engines.
+- If the engine uses T4 templates, include the `.tt` and generated companions in `OzzCodeGen.csproj` with the same `DependentUpon` pattern used by existing engines. Scaffolded `.tt` files are acceptable while generation behavior is still being completed.
 
 ## Testing Strategy
 - **Manual verification:** Since automated tests are not present, verify changes via the WPF UIs.
@@ -116,9 +120,9 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 
 ## Notes
 - Tests are not present; rely on manual verification via WPF apps.
-- Project files use SDK-style `.csproj` format targeting .NET 10; assembly metadata (`Version`, `Copyright`, `Company`, `Product`, `Description`) is declared directly in each `.csproj`.
+- Project files use SDK-style `.csproj` format targeting .NET 10. Current Windows projects target `net10.0-windows10.0.19041.0`; assembly metadata (`Version`, `Copyright`, `Company`, `Product`, `Description`) is declared directly in each `.csproj`.
 - Current version alignment:
-  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.2.1`
+  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.2.2`
   - `OzzLocalization` and `OzzLocalization.Wpf`: `2.1.6`
 - Versioning policy:
   - `OzzLocalization` and `OzzLocalization.Wpf` are expected to change infrequently and should normally advance with small monotonic patch increments (for example `2.1.6` -> `2.1.7` -> `2.1.8`) unless there is a real feature-driven or breaking-change reason to change minor or major versions.

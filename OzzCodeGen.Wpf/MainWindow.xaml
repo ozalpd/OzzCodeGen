@@ -5,7 +5,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Converters="clr-namespace:OzzUtils.Wpf.Converters;assembly=OzzUtils"
-        xmlns:core="clr-namespace:OzzCodeGen;assembly=OzzCodeGen"
         mc:Ignorable="d" Height="640" Width="1918" MinHeight="580" MinWidth="960"
         Title="Ozz Code Generator"
         Loaded="Window_Loaded" Closing="window_Closing"
@@ -20,10 +19,6 @@
     <Window.Resources>
         <Converters:BoolToColor x:Key="FileExistsConverter" ColorForFalseValue="#FFD00000" ColorForTrueValue="#FF00C000" />
         <Converters:BoolToColor x:Key="invertTrueToPinkBG" ColorForFalseValue="White" ColorForTrueValue="#FFFFCFCF" />
-        <x:Array x:Key="TargetPlatformValues" Type="{x:Type core:TargetDotNetPlatform}">
-            <core:TargetDotNetPlatform>DotNetFramework</core:TargetDotNetPlatform>
-            <core:TargetDotNetPlatform>ModernDotNet</core:TargetDotNetPlatform>
-        </x:Array>
     </Window.Resources>
     <Grid DataContext="{Binding ElementName=window, Mode=OneWay}">
         <Grid.RowDefinitions>
@@ -152,7 +147,7 @@
                     <TextBlock Text="Target Platform:" VerticalAlignment="Center" Width="96" Margin="14,0,0,0"/>
                     <ComboBox x:Name="cboTargetPlatform" Width="144" Margin="0,4" HorizontalAlignment="Left"
                               SelectedItem="{Binding Project.TargetPlatform}"
-                              ItemsSource="{Binding Source={StaticResource TargetPlatformValues}}"/>
+                              ItemsSource="{Binding TargetPlatformValues}"/>
                 </StackPanel>
             </StackPanel>
             <Grid DataContext="{Binding Project}" Width="640"
