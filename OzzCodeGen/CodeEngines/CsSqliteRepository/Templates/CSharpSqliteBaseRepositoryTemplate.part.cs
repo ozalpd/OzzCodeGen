@@ -4,9 +4,9 @@ using System.Text;
 
 namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
 {
-    public partial class CSharpSqliteRepositoryBaseTemplate
+    public partial class CSharpSqliteBaseRepositoryTemplate
     {
-        public CSharpSqliteRepositoryBaseTemplate(CSharpSqliteRepositoryEngine codeEngine) : base(codeEngine) { }
+        public CSharpSqliteBaseRepositoryTemplate(CSharpSqliteRepositoryEngine codeEngine) : base(codeEngine) { }
 
         public override string GetDefaultFileName()
         {

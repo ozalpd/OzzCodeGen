@@ -12,9 +12,9 @@
 		<AssemblyName>OzzCodeGen.Wpf</AssemblyName>
 		<ApplicationIcon>Assets\App-software.ico</ApplicationIcon>
 
-		<Version>2.2.3</Version>
-		<AssemblyVersion>2.2.3.0</AssemblyVersion>
-		<FileVersion>2.2.3.0</FileVersion>
+		<Version>2.2.4</Version>
+		<AssemblyVersion>2.2.4.0</AssemblyVersion>
+		<FileVersion>2.2.4.0</FileVersion>
 		<InformationalVersion>2.2.2</InformationalVersion>
 	</PropertyGroup>
 

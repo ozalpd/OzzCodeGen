@@ -247,9 +247,8 @@ public class CSharpSqliteRepositoryEngine : BaseCodeEngine
         return template.WriteToFile(fileName, OverwriteExisting || entitySettings.OverwriteExisting);
     }
 
-    protected bool RenderBaseTemplate()
+    protected bool RenderTemplate(BaseCSharpSqliteRepositoryTemplate template)
     {
-        var template = new CSharpSqliteRepositoryBaseTemplate(this);
         var fileName = Path.Combine(TargetDirectory, template.GetDefaultFileName());
         return template.WriteToFile(fileName, OverwriteExisting);
     }
@@ -262,7 +261,8 @@ public class CSharpSqliteRepositoryEngine : BaseCodeEngine
         }
 
         var allWritten = true;
-        allWritten = RenderBaseTemplate() & allWritten;
+        allWritten = RenderTemplate(new CSharpSqliteBaseRepositoryTemplate(this)) & allWritten;
+        allWritten = RenderTemplate(new CSharpSqliteMetadataRepositoryTemplate(this)) & allWritten;
 
         var entity = GetSelectedEntity();
         if (RenderAllEntities)

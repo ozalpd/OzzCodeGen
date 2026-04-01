@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.4] - 2026-04-01
+
+### Added
+- Added a SQLite metadata repository T4 template using a singleton pattern and `IMetadataRepository` interface.
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.2.4`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.4`.
+- Refactored SQLite base repository template naming for consistency.
+- Updated `CsSqliteRepository` engine output flow to generate both base and metadata repositories.
+- Updated `.csproj` template wiring for new/renamed SQLite repository template files and outputs.
+- Improved SQLite template formatting and XML documentation comments.
+- Updated README to point to `CHANGELOG.md` for release history.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.3] - 2026-04-01
 
 ### Changed

@@ -14,7 +14,6 @@
 //     so manual changes should be made in another partial class file.
 //
 //----------------------------------------------------------------------------------
-
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
@@ -86,7 +85,8 @@ namespace <#= CodeEngine.NamespaceName #>
                 <#= repositoryColumns[i].Name #> = <#= GetMappingExpression(repositoryColumns[i], i, "reader") #><# if (i+1 < repositoryColumns.Count) { #>,<#	} #> 
 <#  } #>
 
-            }
+            };
+
             return <#= EntitySetting.Name.ToCamelCase() #>;
         }
     }

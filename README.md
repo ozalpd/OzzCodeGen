@@ -3,32 +3,20 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.3`
-- `OzzCodeGen.Wpf`: `2.2.3`
+- `OzzCodeGen`: `2.2.4`
+- `OzzCodeGen.Wpf`: `2.2.4`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
-`2.2.3` enhances `CS_Sqlite_Repository_Generator` with per-entity DDL/seed/order-by settings, improved mapping/type-safety (including enum/null handling), validator integration support through `ModelClassCodeEngine`, improved helper methods for repository/foreign-key column detection, and a refreshed UI layout (including better grid behavior and a wider main window minimum width).
+## Changelog
 
-`2.2.2` refactors the code generation engines around engine-specific settings, introduces `BaseCSharpPropertySetting`, overhauls the `CS_Sqlite_Repository_Generator` engine, adds T4-generated SQLite repository templates, updates the Windows target framework to `net10.0-windows10.0.19041.0`, and bumps `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.2.2`. The new SQLite repository `.tt` files are scaffolded and intentionally still close to empty while further template work continues.
+See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 
-`2.2.1` improves the `CS_Sqlite_Repository_Generator` engine by resolving table names from the `SqliteScriptsEngine` for accurate repository generation, enabling access to foreign keys and unique indexes when both engines are active.
-
-`2.2.0` adds the `CS_Sqlite_Repository_Generator` code engine under `OzzCodeGen/CodeEngines/CsSqliteRepository`, moves the AI-focused code engine guide to `.github/instructions/code-engine-development-guide.md`, and bumps `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.2.0`.
-
-`2.1.6` refactors the model-class engine into `CsModelClass` for explicit C#-only naming, updates related engine and template references, and bumps all project versions. No functional changes.
-
-`2.1.5` renames model-class and validator templates to follow the language-first naming convention (`BaseCSharpModelClassTemplate`, `CSharpModelClassTemplate`, `CSharpValidatorTemplate`). No functional changes; focused on code organization and naming consistency.
-
-`2.1.4` updates `AspNetMvc` templates for Bootstrap 5 compatibility while keeping Font Awesome 4.7.0-compatible code in place for now.
-
-`2.1.3` adds `ModelValidator` generation template to `ModelClassCodeEngine`.
-
-`2.1.2` renames `ErrorStrings.MaxLength` to `MaxStringLength` for clarity in resource generation.
-
-`2.1.1` adds `IsImmutable` property to `SimpleProperty`, moves `IsStoreGenerated` to `SimpleProperty`, and cleans up unused properties in `BaseProperty`.
-
-`2.1.0` includes UI icon updates in `OzzCodeGen.Wpf` and `OzzLocalization.Wpf`, with migration from legacy PNG toolbar/menu icons to Bootstrap icon path resources.
+## Latest Highlights (2.2.4)
+- Added a SQLite metadata repository T4 template with singleton pattern and `IMetadataRepository` usage.
+- Refactored SQLite base repository template naming for consistency.
+- Updated the SQLite repository engine to generate both base and metadata repositories.
+- Updated project template wiring (`.csproj`) for new/renamed template outputs and improved template formatting/XML docs.
 
 ## UI Icons
 - Icon set: **Bootstrap Icons v1.13.1**

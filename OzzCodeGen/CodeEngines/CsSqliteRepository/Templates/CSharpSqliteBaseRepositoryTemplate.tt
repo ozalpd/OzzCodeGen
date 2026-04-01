@@ -13,10 +13,8 @@
 //     so manual changes should be made in another partial class file.
 //
 //----------------------------------------------------------------------------------
-
 using Microsoft.Data.Sqlite;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 <#  var modelClassEngine = CodeEngine.ModelClassCodeEngine;
     if (modelClassEngine != null && modelClassEngine.GenerateValidator) { #>
 using <#= modelClassEngine.ValidatorNamespaceName #>;
@@ -28,11 +26,10 @@ namespace <#= CodeEngine.NamespaceName #>
     /// Provides a base class for implementing SQLite database repositories for a specific entity type,
     /// offering common data access and transaction management functionality.
     /// </summary>
-    /// <remarks>This abstract class supplies shared logic for derived repository classes, including
-    /// connection management, transaction support, record counting with caching, and script execution. It is intended
-    /// to be inherited by concrete repository implementations for specific entities. The class assumes a
-    /// table-per-entity mapping and enforces validation and seeding patterns consistent with the application's
-    /// architecture.</remarks>
+    /// <remarks>This abstract class supplies shared logic for derived repository classes, including connection management,
+    /// transaction support, record counting with caching, and script execution. It is intended to be inherited by concrete
+    /// repository implementations for specific entities. The class assumes a table-per-entity mapping and enforces
+    /// validation and seeding patterns consistent with the application's architecture.</remarks>
     /// <typeparam name="T">The entity type that the repository manages. Must be a reference type.</typeparam>
     public abstract partial class <#= CodeEngine.BaseRepositoryClassName #><T> where T : class
     {
