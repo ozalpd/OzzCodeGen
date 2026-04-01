@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using OzzCodeGen.Definitions;
 
@@ -95,6 +96,16 @@ namespace OzzCodeGen.CodeEngines
             
             return GetInheritedComplexProperties()
                                 .FirstOrDefault(p => ((ComplexProperty)p.PropertyDefinition).DependentPropertyName == property.Name);
+        }
+
+        public bool HasDisplayOrderProperty()
+        {
+            return GetInheritedIncludedProperties().Any(p => p.Name.Equals("DisplayOrder", StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        public bool HasIsActiveProperty()
+        {
+            return GetInheritedIncludedProperties().Any(p => p.Name.Equals("IsActive", StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

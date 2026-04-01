@@ -20,6 +20,7 @@ public partial class SqliteRepositoryEngineUI : AbstractEngineUI
         HiddenColumns.Add("Properties");
         HiddenColumns.Add("StorageEntitySetting");
 
+        HiddenColumns.Add("ClrTypeName");
         //HiddenColumns.Add("IsRepositoryColumn");
         HiddenColumns.Add("IsSimple");
         HiddenColumns.Add("IsString");

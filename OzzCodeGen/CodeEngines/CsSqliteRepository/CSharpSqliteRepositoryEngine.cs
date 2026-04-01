@@ -1,4 +1,5 @@
 using OzzCodeGen.CodeEngines.CSharp;
+using OzzCodeGen.CodeEngines.CsModelClass;
 using OzzCodeGen.CodeEngines.CsSqliteRepository.Templates;
 using OzzCodeGen.CodeEngines.CsSqliteRepository.UI;
 using OzzCodeGen.CodeEngines.Storage;
@@ -25,7 +26,7 @@ public class CSharpSqliteRepositoryEngine : BaseCodeEngine
 
     [XmlIgnore]
     [JsonIgnore]
-    public static string DefaultFileName => "CSharpSqliteRepositoryEngine.settings";
+    public static string DefaultFileName => "CsSqliteRepositoryEngine.settings";
 
     public override string ProjectTypeName => "C# SQLite Repository Generator";
 
@@ -120,6 +121,25 @@ public class CSharpSqliteRepositoryEngine : BaseCodeEngine
         }
     }
     private SqliteScriptsEngine _storageCodeEngine;
+
+    /// <summary>
+    /// Model class code engine is used to get information about the model classes, such as validator class, which can be used in the repository templates.
+    /// </summary>
+    [XmlIgnore]
+    [JsonIgnore]
+    public CSharpModelClassCodeEngine ModelClassCodeEngine
+    {
+        get
+        {
+            if (_modelClassEngine == null && Project != null)
+            {
+                _modelClassEngine = Project.GetCodeEngine(EngineTypes.CsModelClassCodeEngineId) as CSharpModelClassCodeEngine;
+            }
+            return _modelClassEngine;
+        }
+    }
+    private CSharpModelClassCodeEngine _modelClassEngine;
+
 
     public string MetadataRepositoryName
     {

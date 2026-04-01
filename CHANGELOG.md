@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.3] - 2026-04-01
+
+### Changed
+- Enhanced `CsSqliteRepository` engine with per-entity DDL file, seed file, and order-by clause support.
+- Exposed `ModelClassCodeEngine` from the SQLite repository engine for validator/template integration scenarios.
+- Refactored repository mapping logic for stronger type safety and improved enum/null handling.
+- Updated SQLite repository templates to use the new entity settings and improved mapping behavior.
+- Added helper methods for `DisplayOrder`/`IsActive` detection and for repository/foreign-key column selection.
+- Improved SQLite repository engine UI with new fields, clearer layout, and better property-grid resizing behavior.
+- Updated default file-name behavior and hidden-column setup for clearer UI/editing flow.
+- Bumped `OzzCodeGen` version to `2.2.3`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.3`.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
+### Notes
+- This release focuses on flexibility, maintainability, and UX improvements for C# SQLite repository generation.
+
 ## [2.2.2] - 2026-03-31
 
 ### Added

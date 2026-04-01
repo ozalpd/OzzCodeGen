@@ -2,7 +2,9 @@ using OzzCodeGen.CodeEngines.CsModelClass;
 using OzzCodeGen.Definitions;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
+using System.Text;
 
 namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates;
 
@@ -109,135 +111,94 @@ public abstract class BaseCSharpSqliteRepositoryTemplate : AbstractTemplate
         return value.Replace("\"", "\"\"");
     }
 
-    protected string GetReadExpression(SqliteRepositoryPropertySetting property)
+    protected string GetMappingExpression(SqliteRepositoryPropertySetting property, int ordinalNr, string readerName = "reader")
     {
-        var ordinal = $"reader.GetOrdinal(\"{GetSqlLiteral(property.ColumnName)}\")";
+        var sp = property.PropertyDefinition as SimpleProperty;
+        bool isEnum = sp != null && !string.IsNullOrWhiteSpace(sp.EnumTypeName);
+        bool isNullable = sp != null && sp.IsNullable;
 
-        if (property.PropertyDefinition is StringProperty)
+        var sb = new StringBuilder();
+        if (isNullable)
         {
-            return $"reader.IsDBNull({ordinal}) ? null : Convert.ToString(reader.GetValue({ordinal}))";
+            sb.Append(readerName);
+            sb.Append(".IsDBNull(");
+            sb.Append(ordinalNr);
+            sb.Append(") ? null : ");
         }
 
-        if (property.PropertyDefinition is not SimpleProperty simpleProperty)
-            return $"default({property.GetTypeName()})";
-
-        if (!string.IsNullOrEmpty(simpleProperty.EnumTypeName))
+        if (isEnum)
         {
-            if (simpleProperty.IsNullable)
-                return $"reader.IsDBNull({ordinal}) ? null : ({simpleProperty.EnumTypeName}?)Convert.ToInt32(reader.GetValue({ordinal}))";
-
-            return $"({simpleProperty.EnumTypeName})Convert.ToInt32(reader.GetValue({ordinal}))";
+            sb.Append("(");
+            sb.Append(sp.EnumTypeName);
+            sb.Append(")");
         }
 
-        if (simpleProperty.IsTypeBoolean())
+        var typeName = GetNonNullableTypeName(property).ToLowerInvariant();
+        if (typeName.Equals("date") || typeName.Equals("datetime"))
         {
-            if (simpleProperty.IsNullable)
-                return $"reader.IsDBNull({ordinal}) ? null : Convert.ToInt32(reader.GetValue({ordinal})) != 0";
-
-            return $"Convert.ToInt32(reader.GetValue({ordinal})) != 0";
+            sb.Append("ToLocalDateTime(");
         }
 
-        if (simpleProperty.IsTypeDateTime())
+        sb.Append(readerName);
+        bool didCatch = false;
+        if (typeName.Equals("bool") || typeName.Equals("long") || typeName.Equals("ulong"))
         {
-            if (simpleProperty.IsNullable)
-                return $"reader.IsDBNull({ordinal}) ? null : Convert.ToDateTime(reader.GetValue({ordinal}))";
-
-            return $"Convert.ToDateTime(reader.GetValue({ordinal}))";
+            sb.Append(".GetInt64(");
+            didCatch = true;
+        }
+        else if (typeName.Equals("int") || typeName.Equals("uint") || isEnum)
+        {
+            sb.Append(".GetInt32(");
+            didCatch = true;
+        }
+        else if (typeName.Equals("short") || typeName.Equals("ushort"))
+        {
+            sb.Append(".GetInt32(");
+            didCatch = true;
+        }
+        else if (typeName.Equals("byte") || typeName.Equals("sbyte"))
+        {
+            sb.Append(".GetByte(");
+            didCatch = true;
+        }
+        else if (typeName.Equals("float"))
+        {
+            sb.Append(".GetFloat(");
+            didCatch = true;
+        }
+        else if (typeName.Equals("decimal"))
+        {
+            sb.Append(".GetDecimal(");
+            didCatch = true;
+        }
+        else if (typeName.Equals("double"))
+        {
+            sb.Append(".GetDouble(");
+            didCatch = true;
         }
 
-        if (simpleProperty.IsTypeGuid())
+        if (typeName.Equals("string") || !didCatch)
         {
-            if (simpleProperty.IsNullable)
-                return $"reader.IsDBNull({ordinal}) ? null : Guid.Parse(Convert.ToString(reader.GetValue({ordinal}))!)";
-
-            return $"Guid.Parse(Convert.ToString(reader.GetValue({ordinal}))!)";
+            sb.Append(".GetString(");
+            didCatch = true;
         }
 
-        if (simpleProperty.IsNullable)
-            return $"reader.IsDBNull({ordinal}) ? null : ({GetNonNullableTypeName(property)}?)Convert.{GetConvertMethodName(simpleProperty.TypeName)}(reader.GetValue({ordinal}))";
+        sb.Append(ordinalNr);
+        sb.Append(')');
 
-        return $"Convert.{GetConvertMethodName(simpleProperty.TypeName)}(reader.GetValue({ordinal}))";
-    }
-
-    protected string GetDbValueExpression(SqliteRepositoryPropertySetting property, string expression, bool expressionCanBeNull = true)
-    {
-        if (property.PropertyDefinition is StringProperty)
-            return expressionCanBeNull ? $"(object?){expression} ?? DBNull.Value" : expression;
-
-        if (property.PropertyDefinition is not SimpleProperty simpleProperty)
-            return expression;
-
-        if (!string.IsNullOrEmpty(simpleProperty.EnumTypeName))
+        if (typeName.Equals("bool"))
         {
-            if (simpleProperty.IsNullable && expressionCanBeNull)
-                return $"{expression}.HasValue ? (object)(int){expression}.Value : DBNull.Value";
-
-            return $"(int){expression}";
+            sb.Append(" == 1");
+        }
+        else if (typeName.Equals("date") || typeName.Equals("datetime"))
+        {
+            sb.Append(')');
+            if (!isNullable)
+            {
+                sb.Append(" ?? DateTime.MinValue");
+            }
         }
 
-        if (simpleProperty.IsTypeBoolean())
-        {
-            if (simpleProperty.IsNullable && expressionCanBeNull)
-                return $"{expression}.HasValue ? (object)({expression}.Value ? 1 : 0) : DBNull.Value";
-
-            return $"{expression} ? 1 : 0";
-        }
-
-        if (simpleProperty.IsTypeDateTime())
-        {
-            if (simpleProperty.IsNullable && expressionCanBeNull)
-                return $"{expression}.HasValue ? (object){expression}.Value.ToString(\"O\") : DBNull.Value";
-
-            return $"{expression}.ToString(\"O\")";
-        }
-
-        if (simpleProperty.IsTypeGuid())
-        {
-            if (simpleProperty.IsNullable && expressionCanBeNull)
-                return $"{expression}.HasValue ? (object){expression}.Value.ToString() : DBNull.Value";
-
-            return $"{expression}.ToString()";
-        }
-
-        if (simpleProperty.IsNullable && expressionCanBeNull)
-            return $"{expression}.HasValue ? (object){expression}.Value : DBNull.Value";
-
-        return expression;
-    }
-
-    protected string GetLastInsertAssignment(SqliteRepositoryPropertySetting property, string targetExpression)
-    {
-        var typeName = GetNonNullableTypeName(property);
-        return typeName switch
-        {
-            "int" => $"{targetExpression} = (int)connection.LastInsertRowId;",
-            "uint" => $"{targetExpression} = (uint)connection.LastInsertRowId;",
-            "long" => $"{targetExpression} = connection.LastInsertRowId;",
-            "ulong" => $"{targetExpression} = (ulong)connection.LastInsertRowId;",
-            "short" => $"{targetExpression} = (short)connection.LastInsertRowId;",
-            "ushort" => $"{targetExpression} = (ushort)connection.LastInsertRowId;",
-            "byte" => $"{targetExpression} = (byte)connection.LastInsertRowId;",
-            "sbyte" => $"{targetExpression} = (sbyte)connection.LastInsertRowId;",
-            _ => string.Empty
-        };
-    }
-
-    private static string GetConvertMethodName(string typeName)
-    {
-        return typeName.TrimEnd('?') switch
-        {
-            "int" => "ToInt32",
-            "uint" => "ToUInt32",
-            "long" => "ToInt64",
-            "ulong" => "ToUInt64",
-            "short" => "ToInt16",
-            "ushort" => "ToUInt16",
-            "byte" => "ToByte",
-            "sbyte" => "ToSByte",
-            "decimal" => "ToDecimal",
-            "double" => "ToDouble",
-            "float" => "ToSingle",
-            _ => "ToString"
-        };
+        return sb.ToString();
     }
 }

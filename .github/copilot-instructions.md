@@ -23,7 +23,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - **Data model:** `DataModel` is an `ObservableCollection<EntityDefinition>` with move/reorder helpers and XML (de)serialization (see [DataModel.cs](OzzCodeGen/DataModel.cs#L1-L22), [DataModel.cs](OzzCodeGen/DataModel.cs#L60-L97)).
 - **Pluggable engines:** Engine IDs are centralized in [EngineTypes.cs](OzzCodeGen/CodeEngines/EngineTypes.cs); the WPF UI binds to these IDs and injects engine-specific UIs.
   - Active IDs: `CS_Model_Class_Generator`, `CS_Sqlite_Repository_Generator`, `Metadata_Class_Generator`, `AspNetMvc_Controller_View_Generator`, `T-Sql_Scripts_Generator`, `Sqlite_Scripts_Generator`, `Localization_Resource_Generator`, `EF_Technical_Document`.
-  - `CsModelClass` is the primary C# model-class path; `CsSqliteRepository` generates C# SQLite repository classes; `Metadata_Class_Generator` remains for compatibility/legacy project loading.
+  - `CsModelClass` is the primary C# model-class path; `CsSqliteRepository` generates C# SQLite repository classes (including DDL/seed/order settings and improved mapping behavior); `Metadata_Class_Generator` remains for compatibility/legacy project loading.
   - Engines now prefer engine-specific entity/property settings instead of generic `EntitySetting` and `PropertySetting` types.
   - Removed engines (throw `NotImplementedException` on load): `EF_DatabaseFirst_DataLayer`, `ObjectiveC_Code_Generator`, `Android_Code_Generator`.
   - The WPF app injects `Project.CurrentCodeEngine.UiControl` into the layout (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L194-L209)).
@@ -31,7 +31,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
   - Empty provider discovers `.OzzGen` templates under `Defaults/` and opens an interactive dialog (see [EmptyModel.cs](OzzCodeGen/Providers/EmptyModel.cs#L78-L112), [EmptyModel.cs](OzzCodeGen/Providers/EmptyModel.cs#L116-L167)).
 - **Templates & T4:** Many engine templates are `.tt`-backed with `*.part.cs` companions; the `.csproj` wires `DependentUpon` to keep generated pieces grouped (see [OzzCodeGen.csproj](OzzCodeGen/OzzCodeGen.csproj#L25-L112)).
   - C# model-class templates live under `CodeEngines/CsModelClass/Templates/` and share behavior via `BaseCSharpModelClassTemplate` + engine/settings base classes.
-  - SQLite repository templates under `CodeEngines/CsSqliteRepository/Templates/` are currently scaffolded and intentionally still close to empty while generation behavior is being completed.
+  - SQLite repository templates under `CodeEngines/CsSqliteRepository/Templates/` are active and evolving; keep mappings aligned with entity settings and storage-engine metadata.
 
 ## Developer Workflows
 - **Build:** Uses .NET 10 SDK.

@@ -25,11 +25,11 @@
         {
             if (TableDefinition == null)
             {
-                return CodeEngine.DatabaseName + ".sql";
+                return $"CodeEngine.DatabaseName.sql";
             }
             else
             {
-                return TableDefinition.Name + ".sql";
+                return $"{TableDefinition.Name}.sql";
             }
         }
     }
