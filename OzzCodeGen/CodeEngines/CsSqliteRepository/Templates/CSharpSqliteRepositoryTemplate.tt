@@ -34,7 +34,7 @@ namespace <#= CodeEngine.NamespaceName #>
     {
         public <#= EntitySetting.Name #>Repository(string databasePath) : base(databasePath, "<#= EntitySetting.TableName #>")
         {
-            _selectStatement = $"SELECT <#= GetColumnList(repositoryColumns) #> FROM {_tableName}";
+            _selectStatement = $"SELECT {string.Join(", ", ColumnNames)} FROM {_tableName}";
             InitializeDatabase();
         }
         private readonly string _selectStatement;
@@ -82,12 +82,25 @@ namespace <#= CodeEngine.NamespaceName #>
             var <#= EntitySetting.Name.ToCamelCase() #> = new <#= EntitySetting.Name #>
             {
 <#  for (int i = 0; i < repositoryColumns.Count; i++) {  #>
-                <#= repositoryColumns[i].Name #> = <#= GetMappingExpression(repositoryColumns[i], i, "reader") #><# if (i+1 < repositoryColumns.Count) { #>,<#	} #> 
+                <#= repositoryColumns[i].Name #> = <#= GetMappingExpression(repositoryColumns[i], $"ColNrs.{repositoryColumns[i].Name}", "reader") #><# if (i+1 < repositoryColumns.Count) { #>,<#	} #> 
 <#  } #>
 
             };
 
             return <#= EntitySetting.Name.ToCamelCase() #>;
         }
+
+        public readonly struct ColNrs
+        {
+<#  for (int i = 0; i < repositoryColumns.Count; i++) {  #>
+            public readonly static int <#= repositoryColumns[i].Name #> = <#= i #>;
+<#  } #>
+        }
+
+        public readonly string[] ColumnNames = new[] {
+<#  for (int i = 0; i < repositoryColumns.Count; i++) {  #>
+            "<#= repositoryColumns[i].Name #>"<# if (i+1 < repositoryColumns.Count) { #>,<#	} #> 
+<#  } #>
+        };
     }
 }

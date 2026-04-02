@@ -49,12 +49,13 @@ namespace OzzCodeGen.CodeEngines.Storage
         protected override void FixColumnType(StorageColumnSetting column)
         {
             string s = column.DataType.ToLowerInvariant();
-            if (s.Equals("bool") || s.Equals("int") ||
-                s.Equals("uint") || s.Equals("datetime"))
+            if (s.Equals("uint") || s.Equals("short") || s.Equals("ushort") || s.Equals("int") ||
+                s.Equals("long") || s.Equals("ulong") || s.Equals("byte") || s.Equals("sbyte") ||
+                s.Equals("bool"))
             {
                 column.DataType = "INTEGER";
             }
-            else if (s.Equals("string"))
+            else if (s.Equals("string") || s.Equals("datetime"))
             {
                 column.DataType = "TEXT";
             }

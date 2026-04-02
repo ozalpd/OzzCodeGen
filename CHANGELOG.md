@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.5] - 2026-04-02
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.2.5`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.5`.
+- Updated `DatabaseMetadata.LastUpdateUtc` to allow `NULL` values.
+- Improved .NET-to-SQLite type mapping to map more numeric types to `INTEGER` and `datetime` to `TEXT`.
+- Generated `ColNrs` structs for named column ordinals and used them in repository mapping expressions for readability and safety.
+- Generated `ColumnNames` arrays and used them in `SELECT` statements for maintainability.
+- Updated mapping helpers so ordinal values can be passed as named constants where appropriate.
+- Improved maintainability, readability, and type-mapping accuracy in generated SQLite repository code.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.4] - 2026-04-01
 
 ### Added

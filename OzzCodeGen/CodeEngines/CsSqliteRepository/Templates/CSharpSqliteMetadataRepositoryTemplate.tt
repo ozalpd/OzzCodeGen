@@ -67,7 +67,7 @@ namespace <#= CodeEngine.NamespaceName #>
             metadataCommand.CommandText = @"
                     CREATE TABLE IF NOT EXISTS DatabaseMetadata (
                         Id INTEGER PRIMARY KEY CHECK (Id = 1),
-                        LastUpdateUtc TEXT NOT NULL
+                        LastUpdateUtc TEXT NULL
                     );
 
                     INSERT INTO DatabaseMetadata (Id, LastUpdateUtc)

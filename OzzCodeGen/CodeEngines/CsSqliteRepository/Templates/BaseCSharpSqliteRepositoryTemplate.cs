@@ -108,7 +108,7 @@ public abstract class BaseCSharpSqliteRepositoryTemplate : AbstractTemplate
         return value.Replace("\"", "\"\"");
     }
 
-    protected string GetMappingExpression(SqliteRepositoryPropertySetting property, int ordinalNr, string readerName = "reader")
+    protected string GetMappingExpression(SqliteRepositoryPropertySetting property, string ordinalNr, string readerName = "reader")
     {
         var sp = property.PropertyDefinition as SimpleProperty;
         bool isEnum = sp != null && !string.IsNullOrWhiteSpace(sp.EnumTypeName);

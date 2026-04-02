@@ -12,6 +12,12 @@ OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. 
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 
+## Latest Highlights (2.2.5)
+- Improved SQLite repository code generation with named column ordinals (`ColNrs`) and `ColumnNames` arrays.
+- Updated SQLite select and mapping code to use named constants for better readability and safety.
+- Expanded .NET-to-SQLite type mapping, including more numeric types to `INTEGER` and `datetime` to `TEXT`.
+- Changed `DatabaseMetadata.LastUpdateUtc` to allow `NULL` values.
+
 ## Latest Highlights (2.2.4)
 - Added a SQLite metadata repository T4 template with singleton pattern and `IMetadataRepository` usage.
 - Refactored SQLite base repository template naming for consistency.
