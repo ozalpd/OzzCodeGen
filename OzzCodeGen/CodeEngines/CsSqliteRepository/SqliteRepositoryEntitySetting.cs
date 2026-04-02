@@ -1,3 +1,4 @@
+using OzzCodeGen.CodeEngines.CSharp;
 using OzzCodeGen.CodeEngines.Storage;
 using OzzCodeGen.Definitions;
 using OzzUtils;
@@ -10,11 +11,16 @@ using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.CsSqliteRepository;
 
-public class SqliteRepositoryEntitySetting : AbstractEntitySetting<SqliteRepositoryPropertySetting>
+public class SqliteRepositoryEntitySetting : BaseCSharpEntitySetting<SqliteRepositoryPropertySetting>
 {
     [XmlIgnore]
     [JsonIgnore]
     public CSharpSqliteRepositoryEngine CodeEngine { get; set; }
+
+    protected override BaseCodeEngine GetCodeEngine()
+    {
+        return CodeEngine;
+    }
 
     [XmlIgnore]
     [JsonIgnore]

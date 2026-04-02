@@ -67,6 +67,10 @@ namespace OzzCodeGen.CodeEngines
 
         [XmlIgnore]
         [JsonIgnore]
+        public bool IsIntNumeric => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeIntNumeric();
+
+        [XmlIgnore]
+        [JsonIgnore]
         public bool IsSimpleOrString
         {
             get
@@ -94,6 +98,10 @@ namespace OzzCodeGen.CodeEngines
                 return PropertyDefinition is StringProperty;
             }
         }
+
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool IsNullableString => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsNullable && PropertyDefinition.IsTypeString();
 
         [XmlIgnore]
         [JsonIgnore]

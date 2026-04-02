@@ -11,10 +11,10 @@
 		<RootNamespace>OzzCodeGen</RootNamespace>
 		<AssemblyName>OzzCodeGen</AssemblyName>
 
-		<Version>2.2.5</Version>
-		<AssemblyVersion>2.2.5.0</AssemblyVersion>
-		<FileVersion>2.2.5.0</FileVersion>
-		<InformationalVersion>2.2.5</InformationalVersion>
+		<Version>2.2.6</Version>
+		<AssemblyVersion>2.2.6.0</AssemblyVersion>
+		<FileVersion>2.2.6.0</FileVersion>
+		<InformationalVersion>2.2.6</InformationalVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -134,6 +134,11 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>CSharpValidatorTemplate.tt</DependentUpon>
+		</Compile>
+		<Compile Update="CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>BaseCSharpSqliteRepositoryTemplate.tt</DependentUpon>
 		</Compile>
 		<Compile Update="CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.cs">
 		  <DesignTime>True</DesignTime>
@@ -275,6 +280,9 @@
 		</None>
 		<None Update="CodeEngines\CsModelClass\Templates\CSharpValidatorTemplate.tt">
 		  <LastGenOutput>CSharpValidatorTemplate.cs</LastGenOutput>
+		</None>
+		<None Update="CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt">
+		  <LastGenOutput>BaseCSharpSqliteRepositoryTemplate.cs</LastGenOutput>
 		</None>
 		<None Update="CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt">
 		  <LastGenOutput>CSharpSqliteBaseRepositoryTemplate.cs</LastGenOutput>

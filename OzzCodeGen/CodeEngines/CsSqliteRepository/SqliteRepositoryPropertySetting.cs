@@ -1,4 +1,7 @@
 using OzzCodeGen.CodeEngines.CSharp;
+using OzzCodeGen.CodeEngines.Storage;
+using OzzCodeGen.Definitions;
+using System.Linq;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
@@ -30,6 +33,30 @@ public class SqliteRepositoryPropertySetting : BaseCSharpPropertySetting
     [XmlIgnore]
     [JsonIgnore]
     public bool IsRepositoryColumn => IsSimpleOrString;
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public bool IsUniqueIndexed => StorageColumnSetting?.Indexed == true && StorageColumnSetting?.Unique == true;
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public StorageColumnSetting? StorageColumnSetting
+    {
+        get
+        {
+            if (_storageColumnSetting == null && IsSimpleOrString)
+            {
+                var entitySetting = (SqliteRepositoryEntitySetting)EntitySetting;
+                var storageEntity = entitySetting?.StorageEntitySetting;
+                if (storageEntity != null)
+                {
+                    _storageColumnSetting = storageEntity.Properties.FirstOrDefault(c => c.Name.Equals(Name));
+                }
+            }
+            return _storageColumnSetting;
+        }
+    }
+    private StorageColumnSetting? _storageColumnSetting;
 
     protected override BaseCodeEngine GetCodeEngine()
     {

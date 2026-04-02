@@ -3,8 +3,8 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.4`
-- `OzzCodeGen.Wpf`: `2.2.4`
+- `OzzCodeGen`: `2.2.6`
+- `OzzCodeGen.Wpf`: `2.2.6`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
@@ -12,17 +12,21 @@ OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. 
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 
+## Latest Highlights (2.2.6)
+- Refactored and enhanced C# SQLite repository code generation.
+- Introduced `BaseCSharpEntitySetting<T>` and aligned entity settings on the shared C# base.
+- Added `IsIntNumeric` and `IsNullableString` to `BasePropertySetting`.
+- Added `IsUniqueIndexed` and `StorageColumnSetting` to `SqliteRepositoryPropertySetting`.
+- Introduced reusable SQLite template helpers via `BaseCSharpSqliteRepositoryTemplate.tt` and generated companion code.
+- Refactored `CSharpSqliteRepositoryTemplate` to generate CRUD and lookup methods, support unique indexes, and improve SQL parameter handling.
+- Updated repository interface generation to include all relevant method signatures.
+- Updated model/validator templates to clarify partial class usage and improved namespace consistency.
+
 ## Latest Highlights (2.2.5)
 - Improved SQLite repository code generation with named column ordinals (`ColNrs`) and `ColumnNames` arrays.
 - Updated SQLite select and mapping code to use named constants for better readability and safety.
 - Expanded .NET-to-SQLite type mapping, including more numeric types to `INTEGER` and `datetime` to `TEXT`.
 - Changed `DatabaseMetadata.LastUpdateUtc` to allow `NULL` values.
-
-## Latest Highlights (2.2.4)
-- Added a SQLite metadata repository T4 template with singleton pattern and `IMetadataRepository` usage.
-- Refactored SQLite base repository template naming for consistency.
-- Updated the SQLite repository engine to generate both base and metadata repositories.
-- Updated project template wiring (`.csproj`) for new/renamed template outputs and improved template formatting/XML docs.
 
 ## UI Icons
 - Icon set: **Bootstrap Icons v1.13.1**
@@ -179,11 +183,16 @@ Engines check `Project.TargetPlatform` to adapt generated code. For example, `Me
   - `OzzCodeGen/CodeEngines/CsModelClass/CSharpModelClassCodeEngine.cs`
   - `OzzCodeGen/CodeEngines/CsModelClass/BaseModelClassCodeEngine.cs`
   - `OzzCodeGen/CodeEngines/CsModelClass/Templates/CSharpModelClassTemplate.tt`
-  - `OzzCodeGen/CodeEngines/CsModelClass/Templates/BaseCSharpModelClassTemplate.cs`
+  - `OzzCodeGen/CodeEngines/CsModelClass/Templates/BaseCSharpModelClassTemplate.tt`
+  - `OzzCodeGen/CodeEngines/CsModelClass/Templates/BaseCSharpModelClassTemplate.part.cs`
 - SQLite repository stack:
   - `OzzCodeGen/CodeEngines/CsSqliteRepository/CSharpSqliteRepositoryEngine.cs`
-  - `OzzCodeGen/CodeEngines/CsSqliteRepository/Templates/CSharpSqliteRepositoryTemplate.cs`
-  - `OzzCodeGen/CodeEngines/CsSqliteRepository/Templates/CSharpSqliteRepositoryBaseTemplate.cs`
+  - `OzzCodeGen/CodeEngines/CsSqliteRepository/Templates/BaseCSharpSqliteRepositoryTemplate.tt`
+  - `OzzCodeGen/CodeEngines/CsSqliteRepository/Templates/BaseCSharpSqliteRepositoryTemplate.part.cs`
+  - `OzzCodeGen/CodeEngines/CsSqliteRepository/Templates/CSharpSqliteBaseRepositoryTemplate.tt`
+  - `OzzCodeGen/CodeEngines/CsSqliteRepository/Templates/CSharpSqliteBaseRepositoryTemplate.part.cs`
+  - `OzzCodeGen/CodeEngines/CsSqliteRepository/Templates/CSharpSqliteRepositoryTemplate.tt`
+  - `OzzCodeGen/CodeEngines/CsSqliteRepository/Templates/CSharpSqliteRepositoryTemplate.part.cs`
 - Metadata compatibility stack:
   - `OzzCodeGen/CodeEngines/Metadata/MetadataCodeEngine.cs`
 - Project orchestration: see `OzzCodeGen/CodeGenProject.cs`.

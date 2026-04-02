@@ -1,3 +1,4 @@
+using OzzCodeGen.CodeEngines.CSharp;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -19,7 +20,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
         void SortProperties();
     }
 
-    public abstract class BaseModelClassEntitySetting<TPropertySetting> : AbstractEntitySetting<TPropertySetting>, IModelClassEntitySetting
+    public abstract class BaseModelClassEntitySetting<TPropertySetting> : BaseCSharpEntitySetting<TPropertySetting>, IModelClassEntitySetting
         where TPropertySetting : BaseModelClassPropertySetting
     {
         [XmlIgnore]
@@ -36,6 +37,12 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
         [XmlIgnore]
         [JsonIgnore]
         public virtual BaseModelClassCodeEngine CodeEngine { get; set; }
+
+        protected override BaseCodeEngine GetCodeEngine()
+        {
+            return CodeEngine;
+        }
+
 
         [XmlIgnore]
         [JsonIgnore]

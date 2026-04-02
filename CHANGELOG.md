@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.6] - 2026-04-02
+
+### Added
+- Introduced `BaseCSharpEntitySetting<T>` for shared C# entity logic, including nullable type handling.
+- Added `IsIntNumeric` and `IsNullableString` helpers to `BasePropertySetting`.
+- Added `IsUniqueIndexed` and `StorageColumnSetting` to `SqliteRepositoryPropertySetting`.
+- Added `BaseCSharpSqliteRepositoryTemplate.tt` and generated `.cs` companion for reusable SQLite repository T4 helpers.
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.2.6`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.6`.
+- Refactored `BaseModelClassEntitySetting` and `SqliteRepositoryEntitySetting` to inherit from the new C# entity base class.
+- Moved repository property and mapping logic to `BaseCSharpSqliteRepositoryTemplate.part.cs` for better organization.
+- Refactored `CSharpSqliteRepositoryTemplate` to generate CRUD and lookup methods, support unique indexes, and improve SQL parameter handling.
+- Updated repository interface generation to include all relevant method signatures.
+- Updated model and validator templates to clarify partial class usage.
+- Updated project files to include new template and generated code entries.
+- Applied miscellaneous code cleanups and namespace consistency improvements.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.5] - 2026-04-02
 
 ### Changed

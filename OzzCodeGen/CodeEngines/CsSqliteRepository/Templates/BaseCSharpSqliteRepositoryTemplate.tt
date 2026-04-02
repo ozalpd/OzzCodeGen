@@ -1,0 +1,25 @@
+﻿<#@ template language="C#" inherits="AbstractTemplate"#>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzCodeGen.Definitions" #>
+<#@ import namespace="OzzCodeGen.CodeEngines" #>
+<#@ import namespace="OzzCodeGen.Templates.Cs" #>
+<#@ import namespace="OzzUtils" #>
+<#+ 
+public void WriteColumnsAndParameters(IEnumerable<SqliteRepositoryPropertySetting> columns)
+{
+    PushIndent("    ");
+    PushIndent("    ");
+    foreach(var col in columns) {
+        if(col.IsNullableString ){#>
+    AddNullableTextParameter(command, "@<#= col.Name.ToCamelCase() #>", <#= EntitySetting.Name.ToCamelCase() #>.<#= col.Name #>);
+<#+     } else if(col.IsBoolean) { #>
+    command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", <#= EntitySetting.Name.ToCamelCase() #>.<#= col.Name #> ? 1 : 0);
+<#+     } else {#>
+    command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", <#= EntitySetting.Name.ToCamelCase() #>.<#= col.Name #>);
+<#+    }
+    }
+    PopIndent();
+} #>

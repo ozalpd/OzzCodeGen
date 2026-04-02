@@ -19,7 +19,18 @@ using System;
 using System.Collections.Generic;
 <#  var modelClassEngine = CodeEngine.ModelClassCodeEngine;
     var repositoryColumns = EntitySetting.GetRepositoryColumns().ToList();
+    var insertColumns = GetInsertProperties().ToList();
+
     string displayMember = EntitySetting.EntityDefinition.DisplayMember;
+    var pkey = GetPrimaryKey();
+    var unique = GetUniqueIndexed();
+
+    string memberSignature = $"Task<IReadOnlyList<{EntitySetting.Name}>> GetAllAsync(";
+    memberSignature = EntitySetting.HasIsActiveProperty()
+                    ? memberSignature + "bool? isActive = null)"
+                    : memberSignature + ")";
+    var signatureList = new List<string>();
+    signatureList.Add(memberSignature);
 
     if (modelClassEngine != null && modelClassEngine.GenerateValidator) { #>
 using <#= modelClassEngine.NamespaceName #>;
@@ -30,7 +41,7 @@ namespace <#= CodeEngine.NamespaceName #>
     /// <summary>
     /// SQLite-based repository for <#= EntitySetting.Name #> CRUD operations.
     /// </summary>
-    public partial class <#= EntitySetting.Name #>Repository : <#= CodeEngine.BaseRepositoryClassName #><<#= EntitySetting.Name #>>
+    public partial class <#= EntitySetting.Name #>Repository : <#= CodeEngine.BaseRepositoryClassName #><<#= EntitySetting.Name #>>, I<#= EntitySetting.Name #>Repository
     {
         public <#= EntitySetting.Name #>Repository(string databasePath) : base(databasePath, "<#= EntitySetting.TableName #>")
         {
@@ -48,7 +59,7 @@ namespace <#= CodeEngine.NamespaceName #>
 <#	} #>
         }
 
-        public async Task<IReadOnlyList<<#= EntitySetting.Name #>>> GetAllAsync(<# if (EntitySetting.HasIsActiveProperty()) { #>bool? isActive = null<#	} #>)
+        public async <#= memberSignature #>
         {
             var result = new List<<#= EntitySetting.Name #>>();
 
@@ -74,8 +85,95 @@ namespace <#= CodeEngine.NamespaceName #>
 
             return result;
         }
+<#  memberSignature = $"Task<{EntitySetting.GetTypeName(isNullable:true)}> GetBy{pkey.Name}Async({pkey.GetTypeName()} {pkey.Name.ToCamelCase()})";
+    signatureList.Add(memberSignature);
+#>
 
+        public async <#= memberSignature #>
+        {
+            await using var connection = await GetOpenConnectionAsync();
+            await using var command = connection.CreateCommand();
+            command.CommandText = $@"{_selectStatement}
+            WHERE <#= pkey.Name #> = @<#= pkey.Name.ToCamelCase() #>";
+            command.Parameters.AddWithValue("@<#= pkey.Name.ToCamelCase() #>", <#= pkey.Name.ToCamelCase() #>);
+
+            await using var reader = await command.ExecuteReaderAsync();
+            if (!await reader.ReadAsync())
+                return null;
+
+            return Map<#= EntitySetting.Name #>(reader);
+        }
+<#  if(unique != null) {
+        memberSignature = $"Task<{EntitySetting.GetTypeName(isNullable:true)}> GetBy{unique.Name}Async({unique.GetTypeName()} {unique.Name.ToCamelCase()})";
+        signatureList.Add(memberSignature);
+#>
+
+        public async <#= memberSignature #>
+        {
+<#      if(unique.IsString) {#>
+            if (string.IsNullOrWhiteSpace(<#= unique.Name.ToCamelCase() #>))
+                return null;
+
+<#      } else if(unique.PropertyDefinition.IsTypeNumeric()) { #>
+            if (<#= unique.Name.ToCamelCase() #> < 1)
+                return null;
+
+<#      } #>
+            await using var connection = await GetOpenConnectionAsync();
+            await using var command = connection.CreateCommand();
+            command.CommandText = $@"{_selectStatement}
+            WHERE <#= unique.Name #> = @<#= unique.Name.ToCamelCase() #>";
+            command.Parameters.AddWithValue("@<#= unique.Name.ToCamelCase() #>", <#= unique.Name.ToCamelCase() #>);
+
+            await using var reader = await command.ExecuteReaderAsync();
+            if (!await reader.ReadAsync())
+                return null;
+
+            return Map<#= EntitySetting.Name #>(reader);
+        }
+<#  } #>
+<#  // Create Method
+    // If unique indexed property exists, CreateAsync will return existing record's PK value.
+    memberSignature = $"Task<{pkey.GetTypeName()}> CreateAsync({EntitySetting.Name} {EntitySetting.Name.ToCamelCase()})";
+    signatureList.Add(memberSignature);
+#>
+
+        public async <#= memberSignature #>
+        {
+            ArgumentNullException.ThrowIfNull(<#= EntitySetting.Name.ToCamelCase() #>);
+            ValidateOrThrow(<#= EntitySetting.Name.ToCamelCase() #>);
+
+            await using var connection = await GetOpenConnectionAsync();
+<#  if(unique != null) { #>
+            var existing<#= EntitySetting.Name #> = await GetBy<#= unique.Name #>Async(<#= EntitySetting.Name.ToCamelCase() #>.<#= unique.Name #>);
+            if (existing<#= EntitySetting.Name #> != null)
+            {
+                <#= EntitySetting.Name.ToCamelCase() #>.<#= pkey.Name #> = existing<#= EntitySetting.Name #>.<#= pkey.Name #>;
+                await UpdateAsync(<#= EntitySetting.Name.ToCamelCase() #>);
+                return existing<#= EntitySetting.Name #>.<#= pkey.Name #>;
+            }
+<#      } #>
+
+            await using var command = connection.CreateCommand();
+            command.CommandText = @$"INSERT INTO {_tableName} ({string.Join(", ", ColumnNames[1..])})
+            VALUES (<#= GetParameterList(insertColumns) #>);
+            SELECT last_insert_rowid();";
+            
+<#      WriteColumnsAndParameters(insertColumns); #>
+
+<#      if(pkey.IsIntNumeric) {#>
+            var <#= pkey.Name.ToCamelCase() #> = Convert.<#= GetConvertMethodName(pkey.GetTypeName()) #>((long)(await command.ExecuteScalarAsync() ?? 0));
+<#      } else { #>
+            var <#= pkey.Name.ToCamelCase() #> = await command.ExecuteScalarAsync();
+<#      } #>
+            
+            await _metadataRepository.SaveLastUpdateUtcAsync(connection);
+            ClearRecordCountCache();
+
+            return <#= pkey.Name.ToCamelCase() #>;
+        }
         
+
 
         private static <#= EntitySetting.Name #> Map<#= EntitySetting.Name #>(SqliteDataReader reader)
         {
@@ -102,5 +200,12 @@ namespace <#= CodeEngine.NamespaceName #>
             "<#= repositoryColumns[i].Name #>"<# if (i+1 < repositoryColumns.Count) { #>,<#	} #> 
 <#  } #>
         };
+    }
+
+    public interface I<#= EntitySetting.Name #>Repository
+    {
+<#  foreach(var signature in signatureList) { #>
+        <#= signature #>;
+<#  } #>
     }
 }
