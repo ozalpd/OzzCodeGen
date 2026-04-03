@@ -222,7 +222,7 @@ namespace <#= CodeEngine.NamespaceName #>
             var existing<#= EntitySetting.Name #> = await GetBy<#= unique.Name #>Async(<#= EntitySetting.Name.ToCamelCase() #>.<#= unique.Name #>);
             if (existing<#= EntitySetting.Name #> != null && existing<#= EntitySetting.Name #>.<#= pkey.Name #> != <#= EntitySetting.Name.ToCamelCase() #>.<#= pkey.Name #>)
             {
-                throw new InvalidOperationException($"A different exchange with the same code already exists: {exchange.ExchangeCode}");
+                throw new InvalidOperationException($"A different <#= EntitySetting.Name #> with the same <#= unique.Name #> already exists: {<#= EntitySetting.Name.ToCamelCase() #>.<#= unique.Name #>}");
             }
 <#      } else {#>
             var existing<#= EntitySetting.Name #> = await GetBy<#= pkey.Name #>Async(<#= EntitySetting.Name.ToCamelCase() #>.<#= pkey.Name #>);
