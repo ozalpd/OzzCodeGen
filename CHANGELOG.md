@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.9] - 2026-04-03
+
+### Added
+- Added `SingleColumnUpdate` to SQLite repository property settings and exposed it in the WPF UI.
+- Added generation of `Update{ColumnName}Async` methods in SQLite repositories and repository interfaces for marked columns.
+- Added generated `DeleteAsync` methods to all SQLite repositories.
+- Added partial `OnCreated` and `OnUpdated` methods to generated repositories for extensibility.
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.2.9`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.9`.
+- Refactored `WriteColumnsAndParameters` to support custom value expressions.
+- Improved the SQLite repository property settings UI with a new side panel and minor style tweaks.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.8] - 2026-04-03
 
 ### Added
@@ -153,6 +169,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Bumped `OzzCodeGen.Wpf` version to `2.2.0`.
 - Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
 - Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
+## [2.1.0] - 2026-03-22
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.1.0`.
+- Bumped `OzzCodeGen.Wpf` version to `2.1.0`.
+- Bumped `OzzLocalization` version to `2.1.0`.
+- Bumped `OzzLocalization.Wpf` version to `2.1.0`.
+- Updated `OzzCodeGen.Wpf` UI toolbar/menu icon usage to Bootstrap icon path resources (**Bootstrap Icons v1.13.1**).
+- Updated `OzzLocalization.Wpf` UI toolbar icon usage to Bootstrap icon path resources (**Bootstrap Icons v1.13.1**).
+
+### Removed
+- Removed legacy PNG toolbar/menu icon resources from `OzzCodeGen.Wpf`.
+- Removed legacy PNG toolbar icon resources from `OzzLocalization.Wpf`.
 
 ## [2.0.0] - 2026-03-20
 

@@ -48,6 +48,21 @@ public class SqliteRepositoryPropertySetting : BaseCSharpPropertySetting
     private bool? _checkIfAltered;
 
 
+    /// <summary>
+    /// Generate a dedicated update method for this column.
+    /// </summary>
+    public bool SingleColumnUpdate
+    {
+        get { return _singleColumnUpdate; }
+        set
+        {
+            _singleColumnUpdate = value;
+            RaisePropertyChanged("SingleColumnUpdate");
+        }
+    }
+    private bool _singleColumnUpdate;
+
+
     [XmlIgnore]
     [JsonIgnore]
     public string ClrTypeName => GetTypeName();

@@ -3,14 +3,22 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.8`
-- `OzzCodeGen.Wpf`: `2.2.8`
+- `OzzCodeGen`: `2.2.9`
+- `OzzCodeGen.Wpf`: `2.2.9`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
+## Latest Highlights (2.2.9)
+- Added `SingleColumnUpdate` to SQLite repository property settings and exposed it in the WPF UI.
+- Generated `Update{ColumnName}Async` methods in SQLite repositories and repository interfaces for marked columns.
+- Refactored `WriteColumnsAndParameters` to support custom value expressions.
+- Added `DeleteAsync` method generation for all SQLite repositories.
+- Generated partial `OnCreated` and `OnUpdated` methods for repository extensibility.
+- Improved the SQLite repository property settings UI with a new side panel and minor style tweaks.
 
 ## Latest Highlights (2.2.8)
 - Added explicit `CreatedAt`/`UpdatedAt` timestamp support to generated SQLite repositories.

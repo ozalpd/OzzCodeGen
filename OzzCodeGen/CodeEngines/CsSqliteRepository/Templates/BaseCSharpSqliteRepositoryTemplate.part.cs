@@ -54,6 +54,11 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
         return GetRepositoryProperties().FirstOrDefault(p => p.IsUniqueIndexed && !p.IsKey);
     }
 
+    protected IEnumerable<SqliteRepositoryPropertySetting> GetForeignKeyProperties()
+    {
+        return GetRepositoryProperties().Where(p => p.IsForeignKey());
+    }
+
     protected IEnumerable<SqliteRepositoryPropertySetting> GetInsertProperties()
     {
         return GetRepositoryProperties().Where(p => !ShouldSkipInsert(p));
@@ -63,6 +68,12 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
     {
         return GetRepositoryProperties().Where(p => !p.IsKey && IsReadOnlyColumn(p));
     }
+
+    protected IEnumerable<SqliteRepositoryPropertySetting> GetSingleUpdateProperties()
+    {
+        return GetRepositoryProperties().Where(p => p.SingleColumnUpdate);
+    }
+
     protected IEnumerable<SqliteRepositoryPropertySetting> GetUpdateProperties()
     {
         string createdAtColName = EntitySetting.CreatedAtName;
@@ -246,4 +257,61 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
             _ => "ToString"
         };
     }
+
+    public void WriteColumnsAndParameters(IEnumerable<SqliteRepositoryPropertySetting> columns, SqliteRepositoryPropertySetting? pkey = null, SqliteRepositoryPropertySetting? createdAtCol = null, SqliteRepositoryPropertySetting? updatedAtCol = null)
+    {
+        var model = new WriteColumnsModel
+        {
+            Columns = columns.ToList(),
+            PKey = pkey,
+            PKeyValue = pkey != null ? $"{EntitySetting.Name.ToCamelCase()}.{pkey.Name}" : string.Empty,
+            CreatedAtCol = createdAtCol,
+            UpdatedAtCol = updatedAtCol
+        };
+        WriteColumnsAndParameters(model);
+    }
+
+    public void WriteColumnsAndParameters(WriteColumnsModel model)
+    {
+        PushIndent("    ");
+        PushIndent("    ");
+        bool hasTimeStamp = model.Columns.Any(c => c.Name == model.CreatedAtCol?.Name || c.Name == model.UpdatedAtCol?.Name);
+        if (hasTimeStamp)
+        {
+            PushIndent("    ");
+            WriteLine("var nowUtc = DateTime.UtcNow;");
+            PopIndent();
+        }
+        string val = string.Empty;
+        if (model.PKey != null)
+            WriteSingleColumnAndParameter(model.PKey, model.PKeyValue);
+
+        var columns = model.Columns.ToList();
+        var valueList = model.ValueList;
+
+        for (int i = 0; i < columns.Count; i++)
+        {
+            var col = columns[i];
+            val = valueList.Count > i ? valueList[i] : $"{EntitySetting.Name.ToCamelCase()}.{col.Name}";
+            bool isTimeStamp = col.Name == model.CreatedAtCol?.Name || col.Name == model.UpdatedAtCol?.Name;
+            WriteSingleColumnAndParameter(col, val, isTimeStamp);
+        }
+        PopIndent();
+        PopIndent();
+    }
+}
+
+public class WriteColumnsModel
+{
+    public WriteColumnsModel()
+    {
+        ValueList = new List<string>();
+    }
+
+    public List<SqliteRepositoryPropertySetting> Columns { get; set; }
+    public SqliteRepositoryPropertySetting? PKey { get; set; }
+    public string PKeyValue { get; set; }
+    public SqliteRepositoryPropertySetting? CreatedAtCol { get; set; }
+    public SqliteRepositoryPropertySetting? UpdatedAtCol { get; set; }
+    public List<string> ValueList { get; private set; }
 }
