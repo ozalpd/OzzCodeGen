@@ -20,6 +20,8 @@ using System.Collections.Generic;
 <#  var modelClassEngine = CodeEngine.ModelClassCodeEngine;
     var repositoryColumns = EntitySetting.GetRepositoryColumns().ToList();
     var insertColumns = GetInsertProperties().ToList();
+    var updateColumns = GetUpdateProperties().ToList();
+    var nonUpdateColumns = GetNonUpdateProperties().ToList();
 
     string displayMember = EntitySetting.EntityDefinition.DisplayMember;
     var pkey = GetPrimaryKey();
@@ -172,8 +174,57 @@ namespace <#= CodeEngine.NamespaceName #>
 
             return <#= pkey.Name.ToCamelCase() #>;
         }
-        
+<#  // Update Method
+    if(updateColumns.Count > 0) {
+        memberSignature = $"Task<bool> UpdateAsync({EntitySetting.Name} {EntitySetting.Name.ToCamelCase()})";
+        signatureList.Add(memberSignature);
+#>
 
+        public async <#= memberSignature #>
+        {
+            ArgumentNullException.ThrowIfNull(<#= EntitySetting.Name.ToCamelCase() #>);
+            ValidateOrThrow(<#= EntitySetting.Name.ToCamelCase() #>);
+
+            await using var connection = await GetOpenConnectionAsync();
+<#  if(unique != null) { #>
+            var existing<#= EntitySetting.Name #> = await GetBy<#= unique.Name #>Async(<#= EntitySetting.Name.ToCamelCase() #>.<#= unique.Name #>);
+            if (existing<#= EntitySetting.Name #> != null && existing<#= EntitySetting.Name #>.<#= pkey.Name #> != <#= EntitySetting.Name.ToCamelCase() #>.<#= pkey.Name #>)
+            {
+                throw new InvalidOperationException($"A different exchange with the same code already exists: {exchange.ExchangeCode}");
+            }
+<#      } #>
+
+            bool noChanges = existing<#= EntitySetting.Name #> != null
+<#  for (int i = 0; i < updateColumns.Count; i++) {  #>
+                          && existing<#= EntitySetting.Name #>.<#= updateColumns[i].Name #> == <#= EntitySetting.Name.ToCamelCase() #>.<#= updateColumns[i].Name #><# if (i+1 == updateColumns.Count) { #>;<#	} #> 
+<#  } #>
+
+            if (noChanges)
+                return false;
+
+            await using var command = connection.CreateCommand();
+<#  if (nonUpdateColumns.Count > 1) { #>
+            // Columns <#= string.Join(", ", nonUpdateColumns.Select(c => c.Name)) #> are not updated to avoid complications with existing references,
+            // so only <#= string.Join(", ", updateColumns.Select(c => c.Name)) #> are updated
+<#  } else if (nonUpdateColumns.Count > 0) { #>
+            // <#= string.Join(", ", nonUpdateColumns.Select(c => c.Name)) #> is not updated to avoid complications with existing references,
+            // so only <#= string.Join(", ", updateColumns.Select(c => c.Name)) #> are updated
+<#  } #>
+            command.CommandText = @$"UPDATE {_tableName} SET
+<#  for (int i = 0; i < updateColumns.Count; i++) {  #>
+                <#= updateColumns[i].Name #> = @<#= updateColumns[i].Name.ToCamelCase() #><# if (i+1 < updateColumns.Count) { #>,<#	} #> 
+<#  } #>
+            WHERE <#= pkey.Name #> = @<#= pkey.Name.ToCamelCase() #>";
+
+<#      WriteColumnsAndParameters(updateColumns, pkey); #>
+
+            var affectedRows = await command.ExecuteNonQueryAsync();
+            if (affectedRows > 0)
+                await _metadataRepository.SaveLastUpdateUtcAsync(connection);
+
+            return affectedRows > 0;
+        }
+<#  } #>
 
         private static <#= EntitySetting.Name #> Map<#= EntitySetting.Name #>(SqliteDataReader reader)
         {

@@ -44,6 +44,10 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
         return GetRepositoryProperties().Where(p => !ShouldSkipInsert(p));
     }
 
+    protected IEnumerable<SqliteRepositoryPropertySetting> GetNonUpdateProperties()
+    {
+        return GetRepositoryProperties().Where(p => !p.IsKey && IsReadOnlyColumn(p));
+    }
     protected IEnumerable<SqliteRepositoryPropertySetting> GetUpdateProperties()
     {
         return GetRepositoryProperties().Where(p => !p.IsKey && !IsReadOnlyColumn(p));

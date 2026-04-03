@@ -8,18 +8,26 @@
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzUtils" #>
 <#+ 
-public void WriteColumnsAndParameters(IEnumerable<SqliteRepositoryPropertySetting> columns)
+public void WriteColumnsAndParameters(IEnumerable<SqliteRepositoryPropertySetting> columns, SqliteRepositoryPropertySetting? pkey = null)
 {
     PushIndent("    ");
     PushIndent("    ");
+    if (pkey != null)
+        WriteSingleColumnAndParameter(pkey);
     foreach(var col in columns) {
-        if(col.IsNullableString ){#>
-    AddNullableTextParameter(command, "@<#= col.Name.ToCamelCase() #>", <#= EntitySetting.Name.ToCamelCase() #>.<#= col.Name #>);
-<#+     } else if(col.IsBoolean) { #>
-    command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", <#= EntitySetting.Name.ToCamelCase() #>.<#= col.Name #> ? 1 : 0);
-<#+     } else {#>
-    command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", <#= EntitySetting.Name.ToCamelCase() #>.<#= col.Name #>);
-<#+    }
+        WriteSingleColumnAndParameter(col);
     }
     PopIndent();
+    PopIndent();
+} #>
+<#+ 
+public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col)
+{
+    if(col.IsNullableString ){#>
+    AddNullableTextParameter(command, "@<#= col.Name.ToCamelCase() #>", <#= EntitySetting.Name.ToCamelCase() #>.<#= col.Name #>);
+<#+ } else if(col.IsBoolean) { #>
+    command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", <#= EntitySetting.Name.ToCamelCase() #>.<#= col.Name #> ? 1 : 0);
+<#+ } else {#>
+    command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", <#= EntitySetting.Name.ToCamelCase() #>.<#= col.Name #>);
+<#+ }
 } #>

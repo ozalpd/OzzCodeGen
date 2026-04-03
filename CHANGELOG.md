@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.7] - 2026-04-03
+
+### Added
+- Added `UpdateAsync` method generation to SQLite repository templates.
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.2.7`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.7`.
+- Generated repository `UpdateAsync` methods now include unique-constraint checks, change detection, and selective column updates.
+- Refactored parameter-writing logic for clarity and reuse across generated repository methods.
+- Improved maintainability and correctness of generated SQLite repository code.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.6] - 2026-04-02
 
 ### Added
