@@ -1,5 +1,6 @@
 using OzzCodeGen.Definitions;
 using OzzUtils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,9 +30,23 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
             .OrderBy(p => p.PropertyDefinition.DisplayOrder);
     }
 
+    protected SqliteRepositoryPropertySetting GetCreatedAtColumn()
+    {
+        string createdAtColName = EntitySetting.CreatedAtName;
+        return GetRepositoryProperties()
+                    .FirstOrDefault(p => p.ColumnName.Equals(createdAtColName, StringComparison.InvariantCultureIgnoreCase));
+    }
+
     protected SqliteRepositoryPropertySetting GetPrimaryKey()
     {
         return GetRepositoryProperties().FirstOrDefault(p => p.IsKey);
+    }
+
+    protected SqliteRepositoryPropertySetting GetUpdatedAtColumn()
+    {
+        string updatedAtColName = EntitySetting.UpdatedAtName;
+        return GetRepositoryProperties()
+                    .FirstOrDefault(p => p.ColumnName.Equals(updatedAtColName, StringComparison.InvariantCultureIgnoreCase));
     }
 
     protected SqliteRepositoryPropertySetting GetUniqueIndexed()
@@ -50,7 +65,11 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
     }
     protected IEnumerable<SqliteRepositoryPropertySetting> GetUpdateProperties()
     {
-        return GetRepositoryProperties().Where(p => !p.IsKey && !IsReadOnlyColumn(p));
+        string createdAtColName = EntitySetting.CreatedAtName;
+        return GetRepositoryProperties()
+                    .Where(p => !p.IsKey
+                             && !IsReadOnlyColumn(p)
+                             && !p.ColumnName.Equals(createdAtColName, StringComparison.InvariantCultureIgnoreCase));
     }
 
     protected virtual bool ShouldSkipInsert(SqliteRepositoryPropertySetting property)

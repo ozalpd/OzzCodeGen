@@ -1,6 +1,5 @@
 using OzzCodeGen.CodeEngines.CSharp;
 using OzzCodeGen.CodeEngines.Storage;
-using OzzCodeGen.Definitions;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
@@ -25,6 +24,29 @@ public class SqliteRepositoryPropertySetting : BaseCSharpPropertySetting
         }
     }
     private string _columnName;
+
+    /// <summary>
+    /// Check if this column altered in update stored procedure by where clause
+    /// </summary>
+    public bool CheckIfAltered
+    {
+        get
+        {
+            if (_checkIfAltered == null)
+            {
+                _checkIfAltered = StorageColumnSetting?.CheckIfAltered == true;
+            }
+
+            return _checkIfAltered.Value;
+        }
+        set
+        {
+            _checkIfAltered = value;
+            RaisePropertyChanged("CheckIfAltered");
+        }
+    }
+    private bool? _checkIfAltered;
+
 
     [XmlIgnore]
     [JsonIgnore]

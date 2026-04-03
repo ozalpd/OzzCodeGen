@@ -26,6 +26,8 @@ using System.Collections.Generic;
     string displayMember = EntitySetting.EntityDefinition.DisplayMember;
     var pkey = GetPrimaryKey();
     var unique = GetUniqueIndexed();
+    var createdAtCol = GetCreatedAtColumn();
+    var updatedAtCol= GetUpdatedAtColumn();
 
     string memberSignature = $"Task<IReadOnlyList<{EntitySetting.Name}>> GetAllAsync(";
     memberSignature = EntitySetting.HasIsActiveProperty()
@@ -150,9 +152,13 @@ namespace <#= CodeEngine.NamespaceName #>
             var existing<#= EntitySetting.Name #> = await GetBy<#= unique.Name #>Async(<#= EntitySetting.Name.ToCamelCase() #>.<#= unique.Name #>);
             if (existing<#= EntitySetting.Name #> != null)
             {
+<#      if (updateColumns.Count > 0) {#>
                 <#= EntitySetting.Name.ToCamelCase() #>.<#= pkey.Name #> = existing<#= EntitySetting.Name #>.<#= pkey.Name #>;
                 await UpdateAsync(<#= EntitySetting.Name.ToCamelCase() #>);
                 return existing<#= EntitySetting.Name #>.<#= pkey.Name #>;
+<#      } else { // We may throw error #>
+                throw new InvalidOperationException($"A different <#= EntitySetting.Name #> with the same <#= unique.Name #> already exists: {<#= EntitySetting.Name.ToCamelCase() #>.<#= unique.Name #>}");
+<#      } #>
             }
 <#      } #>
 
@@ -161,7 +167,7 @@ namespace <#= CodeEngine.NamespaceName #>
             VALUES (<#= GetParameterList(insertColumns) #>);
             SELECT last_insert_rowid();";
             
-<#      WriteColumnsAndParameters(insertColumns); #>
+<#      WriteColumnsAndParameters(insertColumns, createdAtCol:createdAtCol, updatedAtCol:updatedAtCol); #>
 
 <#      if(pkey.IsIntNumeric) {#>
             var <#= pkey.Name.ToCamelCase() #> = Convert.<#= GetConvertMethodName(pkey.GetTypeName()) #>((long)(await command.ExecuteScalarAsync() ?? 0));
@@ -192,8 +198,9 @@ namespace <#= CodeEngine.NamespaceName #>
             {
                 throw new InvalidOperationException($"A different exchange with the same code already exists: {exchange.ExchangeCode}");
             }
-<#      } #>
-
+<#      } else {#>
+            var existing<#= EntitySetting.Name #> = await GetBy<#= pkey.Name #>Async(<#= EntitySetting.Name.ToCamelCase() #>.<#= pkey.Name #>);
+<#  } #>
             bool noChanges = existing<#= EntitySetting.Name #> != null
 <#  for (int i = 0; i < updateColumns.Count; i++) {  #>
                           && existing<#= EntitySetting.Name #>.<#= updateColumns[i].Name #> == <#= EntitySetting.Name.ToCamelCase() #>.<#= updateColumns[i].Name #><# if (i+1 == updateColumns.Count) { #>;<#	} #> 
@@ -216,7 +223,7 @@ namespace <#= CodeEngine.NamespaceName #>
 <#  } #>
             WHERE <#= pkey.Name #> = @<#= pkey.Name.ToCamelCase() #>";
 
-<#      WriteColumnsAndParameters(updateColumns, pkey); #>
+<#      WriteColumnsAndParameters(updateColumns, pkey, updatedAtCol:updatedAtCol); #>
 
             var affectedRows = await command.ExecuteNonQueryAsync();
             if (affectedRows > 0)

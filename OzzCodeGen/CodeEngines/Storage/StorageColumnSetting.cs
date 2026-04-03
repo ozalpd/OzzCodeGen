@@ -166,15 +166,15 @@ namespace OzzCodeGen.CodeEngines.Storage
         {
             get
             {
-                return _doNotCheckIfAltered;
+                return _checkIfAltered;
             }
             set
             {
-                _doNotCheckIfAltered = value;
+                _checkIfAltered = value;
                 RaisePropertyChanged("CheckIfAltered");
             }
         }
-        private bool _doNotCheckIfAltered;
+        private bool _checkIfAltered;
 
         public string GetAlterCheckLine()
         {

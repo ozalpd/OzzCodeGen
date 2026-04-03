@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.8] - 2026-04-03
+
+### Added
+- Added `CreatedAtName` and `UpdatedAtName` properties to SQLite repository entity settings, with corresponding UI fields for configuration.
+- Added `CheckIfAltered` to SQLite repository property settings for generated update/change-detection checks.
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.2.8`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.8`.
+- Updated SQLite repository templates and generated code to set configured `CreatedAt`/`UpdatedAt` columns to `DateTime.UtcNow` during insert/update operations.
+- Prevented generated repository updates from modifying configured `CreatedAt` columns.
+- Expanded the SQLite repository UI to support timestamp field configuration and the `Overwrite Existing Files` option.
+- Refactored update and unique-constraint logic for better clarity and correctness.
+- Improved timestamp handling and overall robustness of generated SQLite repository code.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
+### Fixed
+- Fixed backing-field usage in `StorageColumnSetting`.
+
+
 ## [2.2.7] - 2026-04-03
 
 ### Added
@@ -132,93 +153,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Bumped `OzzCodeGen.Wpf` version to `2.2.0`.
 - Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
 - Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
-
-## [2.1.6] - 2026-03-30
-
-### Changed
-- Renamed and reorganized the model-class code generation engine to `CsModelClass` to make its C#-specific purpose explicit.
-- Updated namespaces, class names, engine ID, templates, UI wiring, and project file references to use `CSharpModelClassCodeEngine`.
-- Updated metadata engine dependencies to follow the new engine structure.
-- Bumped `OzzCodeGen` version to `2.1.6`.
-- Bumped `OzzCodeGen.Wpf` version to `2.1.6`.
-- Bumped `OzzLocalization` version to `2.1.6`.
-- Bumped `OzzLocalization.Wpf` version to `2.1.6`.
-- No functional changes; this is a structural and clarity-focused refactor.
-
-## [2.1.5] - 2026-03-26
-
-### Changed
-- Renamed `BaseModelClassTemplate` to `BaseCSharpModelClassTemplate`.
-- Renamed `ModelClassTemplate` to `CSharpModelClassTemplate` (`.tt`, `.part.cs`, and generated `.cs`).
-- Renamed `ValidatorTemplate` to `CSharpValidatorTemplate` (`.tt`, `.part.cs`, and generated `.cs`).
-- Updated all references, constructors, and `.csproj` entries accordingly.
-- Updated code comments in generated files for clarity.
-- Reformatted `MainWindow` title string.
-- Bumped `OzzCodeGen` version to `2.1.5`.
-- Bumped `OzzCodeGen.Wpf` version to `2.1.5`.
-- Bumped `OzzLocalization` version to `2.1.5`.
-- Bumped `OzzLocalization.Wpf` version to `2.1.5`.
-- No functional changes; focused on code organization and language-first naming consistency.
-
-## [2.1.4] - 2026-03-25
-
-### Changed
-- Bumped `OzzCodeGen` version to `2.1.4`.
-- Bumped `OzzCodeGen.Wpf` version to `2.1.4`.
-- Bumped `OzzLocalization` version to `2.1.4`.
-- Bumped `OzzLocalization.Wpf` version to `2.1.4`.
-- Updated `AspNetMvc` templates for Bootstrap 5 compatibility.
-- Kept existing Font Awesome 4.7.0-compatible template code.
-- Template compatibility checks are still in progress for the remaining templates.
-
-## [2.1.3] - 2026-03-25
-
-### Added
-- Added `ModelValidator` generation template to `ModelClassCodeEngine`.
-
-### Changed
-- Bumped `OzzCodeGen` version to `2.1.3`.
-- Bumped `OzzCodeGen.Wpf` version to `2.1.3`.
-- Bumped `OzzLocalization` version to `2.1.3`.
-- Bumped `OzzLocalization.Wpf` version to `2.1.3`.
-- Bound new properties to `ModelClassEngineUI.xaml`.
-
-## [2.1.2] - 2026-03-24
-
-### Changed
-- Bumped `OzzCodeGen` version to `2.1.2`.
-- Bumped `OzzCodeGen.Wpf` version to `2.1.2`.
-- Bumped `OzzLocalization` version to `2.1.2`.
-- Bumped `OzzLocalization.Wpf` version to `2.1.2`.
-- Renamed `ErrorStrings.MaxLength` to `MaxStringLength` for better clarity in resource naming.
-
-## [2.1.1] - 2026-03-23
-
-### Changed
-- Bumped `OzzCodeGen` version to `2.1.1`.
-- Bumped `OzzCodeGen.Wpf` version to `2.1.1`.
-- Bumped `OzzLocalization` version to `2.1.1`.
-- Bumped `OzzLocalization.Wpf` version to `2.1.1`.
-- Added `IsImmutable` property to `SimpleProperty`.
-- Moved `IsStoreGenerated` property from `BaseProperty` to `SimpleProperty`.
-- Updated `NewPropertyDialog` UI and bindings for `IsImmutable` and `IsStoreGenerated`.
-
-### Removed
-- Removed `UiVisible`, `SourceTypeName`, and `Editable` properties from `BaseProperty`.
-
-## [2.1.0] - 2026-03-22
-
-### Changed
-- Bumped `OzzCodeGen` version to `2.1.0`.
-- Bumped `OzzCodeGen.Wpf` version to `2.1.0`.
-- Bumped `OzzLocalization` version to `2.1.0`.
-- Bumped `OzzLocalization.Wpf` version to `2.1.0`.
-- Updated `OzzCodeGen.Wpf` UI toolbar/menu icon usage to Bootstrap icon path resources (**Bootstrap Icons v1.13.1**).
-- Updated `OzzLocalization.Wpf` UI toolbar icon usage to Bootstrap icon path resources (**Bootstrap Icons v1.13.1**).
-
-### Removed
-- Removed legacy PNG toolbar/menu icon resources from `OzzCodeGen.Wpf`.
-- Removed legacy PNG toolbar icon resources from `OzzLocalization.Wpf`.
 
 ## [2.0.0] - 2026-03-20
 

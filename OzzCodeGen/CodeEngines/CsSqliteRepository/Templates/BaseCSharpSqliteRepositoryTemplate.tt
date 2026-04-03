@@ -8,24 +8,33 @@
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzUtils" #>
 <#+ 
-public void WriteColumnsAndParameters(IEnumerable<SqliteRepositoryPropertySetting> columns, SqliteRepositoryPropertySetting? pkey = null)
+public void WriteColumnsAndParameters(IEnumerable<SqliteRepositoryPropertySetting> columns, SqliteRepositoryPropertySetting? pkey = null, SqliteRepositoryPropertySetting? createdAtCol = null, SqliteRepositoryPropertySetting? updatedAtCol = null)
 {
     PushIndent("    ");
     PushIndent("    ");
+    bool hasTimeStamp = columns.Any(c => c.Name == createdAtCol?.Name || c.Name == updatedAtCol?.Name);
+    if (hasTimeStamp) {
+        PushIndent("    ");
+        WriteLine("var nowUtc = DateTime.UtcNow;");
+        PopIndent();
+    }
     if (pkey != null)
         WriteSingleColumnAndParameter(pkey);
     foreach(var col in columns) {
-        WriteSingleColumnAndParameter(col);
+        bool isTimeStamp = col.Name == createdAtCol?.Name || col.Name == updatedAtCol?.Name;
+        WriteSingleColumnAndParameter(col, isTimeStamp);
     }
     PopIndent();
     PopIndent();
 } #>
 <#+ 
-public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col)
+public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col, bool isTimeStamp = false)
 {
-    if(col.IsNullableString ){#>
+    if (isTimeStamp) {#>
+    command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", nowUtc.ToString("O"));
+<#+ } else if (col.IsNullableString ){#>
     AddNullableTextParameter(command, "@<#= col.Name.ToCamelCase() #>", <#= EntitySetting.Name.ToCamelCase() #>.<#= col.Name #>);
-<#+ } else if(col.IsBoolean) { #>
+<#+ } else if (col.IsBoolean) { #>
     command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", <#= EntitySetting.Name.ToCamelCase() #>.<#= col.Name #> ? 1 : 0);
 <#+ } else {#>
     command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", <#= EntitySetting.Name.ToCamelCase() #>.<#= col.Name #>);

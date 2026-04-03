@@ -1,5 +1,4 @@
 using OzzCodeGen.UI;
-using System.Collections.Generic;
 
 namespace OzzCodeGen.CodeEngines.CsSqliteRepository.UI;
 
@@ -18,12 +17,16 @@ public partial class SqliteRepositoryEngineUI : AbstractEngineUI
         HiddenColumns.Add("HasCustomAttributes");
         HiddenColumns.Add("ModelProperties");
         HiddenColumns.Add("Properties");
+        HiddenColumns.Add("OrderByClause");
         HiddenColumns.Add("StorageEntitySetting");
+        HiddenColumns.Add("StorageColumnSetting");
 
         HiddenColumns.Add("ClrTypeName");
         //HiddenColumns.Add("IsRepositoryColumn");
         HiddenColumns.Add("IsSimple");
         HiddenColumns.Add("IsString");
+        HiddenColumns.Add("IsIntNumeric");
+        HiddenColumns.Add("IsNullableString");
         HiddenColumns.Add("IsBoolean");
         HiddenColumns.Add("IsDateTime");
 
