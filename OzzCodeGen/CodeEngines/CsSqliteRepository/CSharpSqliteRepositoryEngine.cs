@@ -73,11 +73,17 @@ public class CSharpSqliteRepositoryEngine : BaseCodeEngine
         {
             Name = property.Name,
             EntitySetting = setting,
-            Exclude = defType == DefinitionType.Complex || defType == DefinitionType.Collection
+            Exclude = defType == DefinitionType.Complex || defType == DefinitionType.Collection,
+            IsLoadingFromFile = false
         };
         setting.Properties.Add(repositoryProperty);
 
         return repositoryProperty;
+    }
+
+    protected string GetRepositoryName(string entityName)
+    {
+        return $"{entityName}Repository";
     }
 
     [XmlIgnore]
@@ -234,6 +240,13 @@ public class CSharpSqliteRepositoryEngine : BaseCodeEngine
     public static CSharpSqliteRepositoryEngine OpenFile(string fileName)
     {
         var instance = GetInstanceFromFile(fileName, typeof(CSharpSqliteRepositoryEngine)) as CSharpSqliteRepositoryEngine;
+        foreach (var setting in instance.EntitySettings.OfType<SqliteRepositoryEntitySetting>())
+        {
+            foreach (var prop in setting.Properties)
+            {
+                prop.IsLoadingFromFile = false;
+            }
+        }
         return instance;
     }
 

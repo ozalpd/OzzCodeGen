@@ -28,6 +28,9 @@ using System.Collections.Generic;
     var unique = GetUniqueIndexed();
     var createdAtCol = GetCreatedAtColumn();
     var updatedAtCol = GetUpdatedAtColumn();
+    var autoloadCols = GetAutoLoadProperties().ToList();
+    var autoloadTypeNames = autoloadCols.Where(p => p.GetTypeName(getReturnType: true) != EntitySetting.Name).Select(p => p.GetTypeName(getReturnType: true)).Distinct().ToList();
+    bool hasSelfAutoload = autoloadCols.Any(p => p.GetTypeName(getReturnType: true) == EntitySetting.Name);
     var fkeyColumns = GetForeignKeyProperties().ToList();
     var singleUpdCols = GetSingleUpdateProperties().ToList();
 
@@ -49,12 +52,26 @@ namespace <#= CodeEngine.NamespaceName #>
     /// </summary>
     public partial class <#= EntitySetting.Name #>Repository : <#= CodeEngine.BaseRepositoryClassName #><<#= EntitySetting.Name #>>, I<#= EntitySetting.Name #>Repository
     {
+<#  if (autoloadCols.Count > 0) { #>
+        public <#= EntitySetting.Name #>Repository(string databasePath
+<#      for (int i = 0; i < autoloadTypeNames.Count; i++) { #>
+                               ,I<#= GetRepositoryName(autoloadTypeNames[i]) #>? <#= GetRepositoryName(autoloadTypeNames[i]).ToCamelCase() #> = null<# if (autoloadTypeNames.Count == i+1) { #>
+) : base(databasePath, "<#= EntitySetting.TableName #>")<#	} #> 
+<#	    } #>
+<#	} else { #>
         public <#= EntitySetting.Name #>Repository(string databasePath) : base(databasePath, "<#= EntitySetting.TableName #>")
+<#	} #>
         {
             _selectStatement = $"SELECT {string.Join(", ", ColumnNames)} FROM {_tableName}";
+<#  foreach (string name in autoloadTypeNames) {#>
+            _<#= GetRepositoryName(name).ToCamelCase() #> = <#= GetRepositoryName(name).ToCamelCase() #> ?? new <#= GetRepositoryName(name) #>(databasePath);
+<#	} #>
             InitializeDatabase();
         }
         private readonly string _selectStatement;
+<#  foreach (string name in autoloadTypeNames) {#>
+        private readonly I<#= GetRepositoryName(name) #> _<#= GetRepositoryName(name).ToCamelCase() #>;
+<#	} #>
 
         private void InitializeDatabase()
         {
@@ -65,9 +82,18 @@ namespace <#= CodeEngine.NamespaceName #>
 <#	} #>
         }
 
+<#      // GetAllAsync#>
         public async <#= memberSignature #>
         {
             var result = new List<<#= EntitySetting.Name #>>();
+<#  foreach (string name in autoloadTypeNames) {
+        string autoPKeyName = GetEntityPKeyName(name);
+#>
+            var <#= name.Pluralize().ToCamelCase() #>By<#= autoPKeyName #> = (await _<#= GetRepositoryName(name).ToCamelCase() #>.GetAllAsync()).ToDictionary(item => item.<#= autoPKeyName #>);
+<#	}
+    if (hasSelfAutoload) { #>
+            var <#= EntitySetting.Name.Pluralize().ToCamelCase() #>By<#= pkey.Name #> = (await GetAllAsync()).ToDictionary(item => item.<#= pkey.Name #>);
+<#	} #>
 
             await using var connection = await GetOpenConnectionAsync();
             await using var command = connection.CreateCommand();
@@ -86,17 +112,33 @@ namespace <#= CodeEngine.NamespaceName #>
             await using var reader = await command.ExecuteReaderAsync();
             while (await reader.ReadAsync())
             {
+                var <#= EntitySetting.Name.ToCamelCase() #> = Map<#= EntitySetting.Name #>(reader);
+<#  if (autoloadCols.Count > 0) {
+        foreach (var prop in autoloadCols) {
+            var propFKey = prop.GetForeignKeyProperty();
+            string propTypeName = prop.GetTypeName(getReturnType: true);
+            string autoPKeyName = GetEntityPKeyName(propTypeName); #>
+                if (<#= propTypeName.Pluralize().ToCamelCase() #>By<#= autoPKeyName #>.TryGetValue(<#= EntitySetting.Name.ToCamelCase() #>.<#= propFKey.GetSafeValueExpr() #>, out var <#= prop.Name.ToCamelCase() #>))
+                    <#= EntitySetting.Name.ToCamelCase() #>.<#= prop.Name #> = <#= prop.Name.ToCamelCase() #>;
+
+<# } #>
+                result.Add(<#= EntitySetting.Name.ToCamelCase() #>);
+<#    } else { #>
                 result.Add(Map<#= EntitySetting.Name #>(reader));
+<#	} #>
             }
 
             return result;
         }
-<#  memberSignature = $"Task<{EntitySetting.GetTypeName(isNullable:true)}> GetBy{pkey.Name}Async({pkey.GetTypeName()} {pkey.Name.ToCamelCase()})";
+<#  memberSignature = $"Task<{EntitySetting.GetTypeName(isNullable:true)}> GetBy{pkey.Name}Async({pkey.GetTypeName()}? {pkey.Name.ToCamelCase()})";
     signatureList.Add(memberSignature);
 #>
 
         public async <#= memberSignature #>
         {
+            if (!<#= pkey.Name.ToCamelCase() #>.HasValue)
+                return null;
+
             await using var connection = await GetOpenConnectionAsync();
             await using var command = connection.CreateCommand();
             command.CommandText = $@"{_selectStatement}
@@ -107,10 +149,10 @@ namespace <#= CodeEngine.NamespaceName #>
             if (!await reader.ReadAsync())
                 return null;
 
-            return Map<#= EntitySetting.Name #>(reader);
+<#  WriteGetByResult(autoloadCols, autoloadTypeNames); #>
         }
 <#  if(unique != null) {
-        memberSignature = $"Task<{EntitySetting.GetTypeName(isNullable:true)}> GetBy{unique.Name}Async({unique.GetTypeName()} {unique.Name.ToCamelCase()})";
+        memberSignature = $"Task<{EntitySetting.GetTypeName(isNullable:true)}> GetBy{unique.Name}Async({unique.GetTypeName()}? {unique.Name.ToCamelCase()})";
         signatureList.Add(memberSignature);
 #>
 
@@ -121,7 +163,7 @@ namespace <#= CodeEngine.NamespaceName #>
                 return null;
 
 <#      } else if(unique.PropertyDefinition.IsTypeNumeric()) { #>
-            if (<#= unique.Name.ToCamelCase() #> < 1)
+            if (!<#= unique.Name.ToCamelCase() #>.HasValue || <#= unique.Name.ToCamelCase() #>.Value < 1)
                 return null;
 
 <#      } #>
@@ -135,7 +177,7 @@ namespace <#= CodeEngine.NamespaceName #>
             if (!await reader.ReadAsync())
                 return null;
 
-            return Map<#= EntitySetting.Name #>(reader);
+<#  WriteGetByResult(autoloadCols, autoloadTypeNames); #>
         }
 <#  } #>
 <#  // Create Method
@@ -178,9 +220,9 @@ namespace <#= CodeEngine.NamespaceName #>
 <#      } #>
             
             await _metadataRepository.SaveLastUpdateUtcAsync(connection);
+            ClearRecordCountCache();
             <#= EntitySetting.Name.ToCamelCase() #>.<#= pkey.Name #> = <#= pkey.Name.ToCamelCase() #>;
             OnCreated(<#= EntitySetting.Name.ToCamelCase() #>);
-            ClearRecordCountCache();
 
             return <#= pkey.Name.ToCamelCase() #>;
         }
@@ -224,6 +266,8 @@ namespace <#= CodeEngine.NamespaceName #>
             {
                 throw new InvalidOperationException($"A different <#= EntitySetting.Name #> with the same <#= unique.Name #> already exists: {<#= EntitySetting.Name.ToCamelCase() #>.<#= unique.Name #>}");
             }
+
+            existing<#= EntitySetting.Name #> = await GetBy<#= pkey.Name #>Async(<#= EntitySetting.Name.ToCamelCase() #>.<#= pkey.Name #>);
 <#      } else {#>
             var existing<#= EntitySetting.Name #> = await GetBy<#= pkey.Name #>Async(<#= EntitySetting.Name.ToCamelCase() #>.<#= pkey.Name #>);
 <#  } #>
@@ -265,8 +309,7 @@ namespace <#= CodeEngine.NamespaceName #>
         partial void OnUpdated(<#= pkey.GetTypeName() #> <#= EntitySetting.Name.ToCamelCase() #><#= pkey.Name #>);
 <#      }
     } #>
-<#
-    foreach (var col in singleUpdCols) {
+<#  foreach (var col in singleUpdCols) {
         memberSignature = $"Task<bool> Update{col.Name}Async({pkey.GetTypeName()} {pkey.Name.ToCamelCase()}, {col.GetTypeName()} {col.Name.ToCamelCase()})";
         signatureList.Add(memberSignature);
         var cols = new List<SqliteRepositoryPropertySetting>();
@@ -308,6 +351,21 @@ namespace <#= CodeEngine.NamespaceName #>
             return affectedRows > 0;
         }
 <#  } #>
+<#  foreach (string name in autoloadTypeNames) {
+        string autoPKeyName = GetEntityPKeyName(name);
+        var autoEntity = GetEntityByName(name);
+        if (autoEntity == null)
+            continue;#>
+
+        private async Task Load<#= name #>Async(<#= EntitySetting.Name #> <#= EntitySetting.Name.ToCamelCase() #>)
+        {
+<#      foreach (var col in autoloadCols.Where(p => p.GetTypeName(getReturnType: true) == autoEntity.Name)) { #>
+            <#= EntitySetting.Name.ToCamelCase() #>.<#= col.Name #> = await _<#= GetRepositoryName(name).ToCamelCase() #>.GetBy<#= autoPKeyName #>Async(<#= EntitySetting.Name.ToCamelCase() #>.<#= col.GetForeignKeyName() #>)
+                            ?? new <#= name #> { <#= autoPKeyName #> = <#= EntitySetting.Name.ToCamelCase() #>.<#= col.GetForeignKeyName() #> };
+<#	    } #>
+        }
+
+<#	} #>
 
         private static <#= EntitySetting.Name #> Map<#= EntitySetting.Name #>(SqliteDataReader reader)
         {

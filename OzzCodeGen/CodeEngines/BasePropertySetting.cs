@@ -21,11 +21,14 @@ namespace OzzCodeGen.CodeEngines
             {
                 if (_name == value) return;
                 _name = value != null ? value.Replace(" ", "") : string.Empty;
-                RaisePropertyChanged("Name");
+                RaisePropertyChanged(nameof(Name));
             }
         }
         private string _name;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this item is excluded from processing.
+        /// </summary>
         public bool Exclude
         {
             get { return _exclude; }
@@ -33,7 +36,7 @@ namespace OzzCodeGen.CodeEngines
             {
                 if (_exclude == value) return;
                 _exclude = value;
-                RaisePropertyChanged("Exclude");
+                RaisePropertyChanged(nameof(Exclude));
             }
         }
         private bool _exclude;
@@ -65,10 +68,61 @@ namespace OzzCodeGen.CodeEngines
                                         .FirstOrDefault(e => e.Name == Name);
         }
 
+        public string GetForeignKeyName()
+        {
+            if (PropertyDefinition is ComplexProperty)
+                return ((ComplexProperty)PropertyDefinition).DependentPropertyName;
+
+            return string.Empty;
+        }
+
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool IsLoadingFromFile
+        {
+            get { return _isLoadingFromFile; }
+            set { _isLoadingFromFile = value; }
+        }
+        bool _isLoadingFromFile = true;
+
+
+        /// <summary>
+        /// Gets a value indicating whether the property represents a collection type.
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool IsCollection => PropertyDefinition is CollectionProperty;
+
+        /// <summary>
+        /// Gets a value indicating whether the property represents a complex type (i.e., a non-primitive, non-string type).
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool IsComplex => PropertyDefinition is ComplexProperty;
+
+
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool IsDecimalNumeric => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeDecimalNumeric();
+
+        /// <summary>
+        /// Gets a value indicating whether the property is of an integer numeric type.
+        /// </summary>
+        /// <remarks>This property returns <see langword="true"/> if the underlying property definition
+        /// represents an integer-based numeric type, such as <see cref="int"/> or <see cref="long"/>. Use this property
+        /// to determine if integer-specific logic should be applied.</remarks>
         [XmlIgnore]
         [JsonIgnore]
         public bool IsIntNumeric => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeIntNumeric();
 
+
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool IsNullable => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsNullable;
+
+        /// <summary>
+        /// Gets a value indicating whether the property definition represents a simple or string property.
+        /// </summary>
         [XmlIgnore]
         [JsonIgnore]
         public bool IsSimpleOrString
@@ -79,6 +133,9 @@ namespace OzzCodeGen.CodeEngines
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the property definition represents a simple property.
+        /// </summary>
         [XmlIgnore]
         [JsonIgnore]
         public bool IsSimple
@@ -89,6 +146,9 @@ namespace OzzCodeGen.CodeEngines
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the property is defined as a string type.
+        /// </summary>
         [XmlIgnore]
         [JsonIgnore]
         public bool IsString
@@ -99,6 +159,9 @@ namespace OzzCodeGen.CodeEngines
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the property is of type string and is nullable.
+        /// </summary>
         [XmlIgnore]
         [JsonIgnore]
         public bool IsNullableString => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsNullable && PropertyDefinition.IsTypeString();
@@ -114,6 +177,9 @@ namespace OzzCodeGen.CodeEngines
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the property is of type DateTime.
+        /// </summary>
         [XmlIgnore]
         [JsonIgnore]
         public bool IsDateTime
@@ -130,12 +196,21 @@ namespace OzzCodeGen.CodeEngines
             return PropertyDefinition.GetNullableTypeName();
         }
 
+        /// <summary>
+        /// Determines whether the property represents a foreign key relationship.
+        /// </summary>
+        /// <returns>true if the property is a foreign key; otherwise, false.</returns>
         public bool IsForeignKey()
         {
-            return PropertyDefinition is SimpleProperty && 
+            return PropertyDefinition is SimpleProperty &&
                     ((SimpleProperty)PropertyDefinition).IsForeignKey;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the property is a key.
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
         public bool IsKey
         {
             get

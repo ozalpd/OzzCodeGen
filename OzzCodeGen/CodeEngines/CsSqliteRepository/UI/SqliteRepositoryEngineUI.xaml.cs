@@ -12,10 +12,11 @@ public partial class SqliteRepositoryEngineUI : AbstractEngineUI
         ColumnWidths.Add("TableName", 150);
         ColumnWidths.Add("ColumnName", 150);
         ColumnWidths.Add("ClrTypeName", 100);
+        ColumnWidths.Add("AutoLoad", 48);
+        ColumnWidths.Add("CheckIfAltered", 48);
+        ColumnWidths.Add("IsUniqueIndexed", 48);
         ColumnWidths.Add("SingleColumnUpdate", 48);
         ColumnWidths.Add("IsRepositoryColumn", 48);
-        ColumnWidths.Add("IsUniqueIndexed", 48);
-        ColumnWidths.Add("CheckIfAltered", 48);
 
         HiddenColumns.Add("CodeEngine");
         HiddenColumns.Add("HasCustomAttributes");

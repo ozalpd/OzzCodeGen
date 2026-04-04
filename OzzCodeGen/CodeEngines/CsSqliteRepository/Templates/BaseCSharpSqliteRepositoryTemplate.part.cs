@@ -37,6 +37,23 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
                     .FirstOrDefault(p => p.ColumnName.Equals(createdAtColName, StringComparison.InvariantCultureIgnoreCase));
     }
 
+    protected SqliteRepositoryEntitySetting? GetEntityByName(string entityName)
+    {
+        var entity = CodeEngine.Entities.FirstOrDefault(e => e.Name == entityName);
+        return entity;
+    }
+
+    protected string GetEntityPKeyName(string entityName)
+    {
+        var entity = CodeEngine.Entities.FirstOrDefault(e => e.Name == entityName);
+        if (entity == null)
+            return string.Empty;
+
+        var keyProperty = entity.GetInheritedSimpleProperties()
+                                .FirstOrDefault(p => p.IsKey);
+        return keyProperty?.Name ?? string.Empty;
+    }
+
     protected SqliteRepositoryPropertySetting GetPrimaryKey()
     {
         return GetRepositoryProperties().FirstOrDefault(p => p.IsKey);
@@ -52,6 +69,16 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
     protected SqliteRepositoryPropertySetting GetUniqueIndexed()
     {
         return GetRepositoryProperties().FirstOrDefault(p => p.IsUniqueIndexed && !p.IsKey);
+    }
+
+    protected IEnumerable<SqliteRepositoryPropertySetting> GetAutoLoadProperties()
+    {
+        var cols = EntitySetting.GetInheritedIncludedProperties()
+                            .OfType<SqliteRepositoryPropertySetting>()
+                            .Where(p => p.AutoLoad)
+                            .OrderBy(p => p.PropertyDefinition.DisplayOrder);
+
+        return cols;
     }
 
     protected IEnumerable<SqliteRepositoryPropertySetting> GetForeignKeyProperties()
@@ -83,6 +110,11 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
                              && !p.ColumnName.Equals(createdAtColName, StringComparison.InvariantCultureIgnoreCase));
     }
 
+    protected string GetRepositoryName(string entityName)
+    {
+        return $"{entityName}Repository";
+    }
+
     protected virtual bool ShouldSkipInsert(SqliteRepositoryPropertySetting property)
     {
         if (!property.IsKey)
@@ -100,25 +132,6 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
             return false;
 
         return simpleProperty.IsImmutable || simpleProperty.IsStoreGenerated || property.PropertyDefinition.IsServerComputed;
-    }
-
-    protected string GetEntityTypeName()
-    {
-        return EntitySetting?.Name ?? string.Empty;
-    }
-
-    protected string GetRepositoryClassName()
-    {
-        return $"{GetEntityTypeName()}Repository";
-    }
-
-    protected string GetEntityReturnType()
-    {
-        var entityTypeName = GetEntityTypeName();
-        if (CodeEngine?.Project?.TargetPlatform == TargetDotNetPlatform.ModernDotNet)
-            return entityTypeName + "?";
-
-        return entityTypeName;
     }
 
     protected string GetNonNullableTypeName(SqliteRepositoryPropertySetting property)
@@ -141,11 +154,6 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
     protected string GetParameterList(IEnumerable<SqliteRepositoryPropertySetting> properties)
     {
         return string.Join(", ", properties.Select(p => $"@{p.ColumnName.ToCamelCase()}"));
-    }
-
-    protected string GetSqlLiteral(string value)
-    {
-        return value.Replace("\"", "\"\"");
     }
 
     protected string GetMappingExpression(SqliteRepositoryPropertySetting property, string ordinalNr, string readerName = "reader")

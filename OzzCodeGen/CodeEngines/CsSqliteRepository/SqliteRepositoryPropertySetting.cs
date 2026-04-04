@@ -8,22 +8,26 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository;
 
 public class SqliteRepositoryPropertySetting : BaseCSharpPropertySetting
 {
-    public string ColumnName
+    /// <summary>
+    /// Gets or sets a value indicating whether the property should be automatically loaded when its parent entity is
+    /// loaded.
+    /// </summary>
+    /// <remarks>This property is only applicable to complex or collection properties. Setting this value to
+    /// <see langword="true"/> for other property types has no effect.</remarks>
+    public bool AutoLoad
     {
-        get
-        {
-            if (string.IsNullOrEmpty(_columnName))
-                _columnName = Name;
-            return _columnName;
-        }
+        get { return _autoLoad; }
         set
         {
-            if (_columnName == value) return;
-            _columnName = value;
-            RaisePropertyChanged(nameof(ColumnName));
+            bool newValue = value && (IsLoadingFromFile || IsComplex || IsCollection);
+            if (newValue != _autoLoad)
+            {
+                _autoLoad = newValue;
+                RaisePropertyChanged(nameof(AutoLoad));
+            }
         }
     }
-    private string _columnName;
+    private bool _autoLoad = false;
 
     /// <summary>
     /// Check if this column altered in update stored procedure by where clause
@@ -42,10 +46,31 @@ public class SqliteRepositoryPropertySetting : BaseCSharpPropertySetting
         set
         {
             _checkIfAltered = value;
-            RaisePropertyChanged("CheckIfAltered");
+            RaisePropertyChanged(nameof(CheckIfAltered));
         }
     }
     private bool? _checkIfAltered;
+
+    /// <summary>
+    /// Gets or sets a value that is table column name for this property. If not set, it defaults to the same as property name.
+    /// </summary>
+    public string ColumnName
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_columnName))
+                _columnName = Name;
+            return _columnName;
+        }
+        set
+        {
+            if (_columnName == value) return;
+            _columnName = value;
+            RaisePropertyChanged(nameof(ColumnName));
+        }
+    }
+    private string _columnName;
+
 
 
     /// <summary>
@@ -57,11 +82,22 @@ public class SqliteRepositoryPropertySetting : BaseCSharpPropertySetting
         set
         {
             _singleColumnUpdate = value;
-            RaisePropertyChanged("SingleColumnUpdate");
+            RaisePropertyChanged(nameof(SingleColumnUpdate));
         }
     }
     private bool _singleColumnUpdate;
 
+
+
+    public SqliteRepositoryPropertySetting? GetForeignKeyProperty()
+    {
+        string fkeyName = GetForeignKeyName();
+        if (string.IsNullOrEmpty(fkeyName))
+            return null;
+
+        var entitySetting = EntitySetting as SqliteRepositoryEntitySetting;
+        return entitySetting?.Properties.FirstOrDefault(p => p.Name.Equals(fkeyName));
+    }
 
     [XmlIgnore]
     [JsonIgnore]

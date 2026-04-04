@@ -3,14 +3,24 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.9`
-- `OzzCodeGen.Wpf`: `2.2.9`
+- `OzzCodeGen`: `2.2.10`
+- `OzzCodeGen.Wpf`: `2.2.10`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
+## Latest Highlights (2.2.10)
+- Added `AutoLoad` to SQLite repository property settings and exposed it in the WPF UI.
+- Generated constructors with repository dependencies for autoloaded navigation types.
+- Generated preload logic for related entities in `GetAllAsync` and `GetBy*Async` methods.
+- Added generated `Load*Async` methods for autoloaded navigation properties.
+- Updated generated `GetBy*Async` methods to accept nullable keys and return `null` when no key value is provided.
+- Added and used helper methods for type checks, safe value expressions, and foreign key navigation.
+- Reordered and resized SQLite repository property-grid columns, plus minor UI color improvements.
+- Refactored property change notifications to use `nameof(...)`.
 
 ## Latest Highlights (2.2.9)
 - Added `SingleColumnUpdate` to SQLite repository property settings and exposed it in the WPF UI.
@@ -34,22 +44,6 @@ See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 - Generated update methods now include unique-constraint checks, change detection, and selective column updates.
 - Refactored repository parameter-writing logic for better clarity and reuse.
 - Improved maintainability and correctness of generated SQLite repository code.
-
-## Latest Highlights (2.2.6)
-- Refactored and enhanced C# SQLite repository code generation.
-- Introduced `BaseCSharpEntitySetting<T>` and aligned entity settings on the shared C# base.
-- Added `IsIntNumeric` and `IsNullableString` to `BasePropertySetting`.
-- Added `IsUniqueIndexed` and `StorageColumnSetting` to `SqliteRepositoryPropertySetting`.
-- Introduced reusable SQLite template helpers via `BaseCSharpSqliteRepositoryTemplate.tt` and generated companion code.
-- Refactored `CSharpSqliteRepositoryTemplate` to generate CRUD and lookup methods, support unique indexes, and improve SQL parameter handling.
-- Updated repository interface generation to include all relevant method signatures.
-- Updated model/validator templates to clarify partial class usage and improved namespace consistency.
-
-## Latest Highlights (2.2.5)
-- Improved SQLite repository code generation with named column ordinals (`ColNrs`) and `ColumnNames` arrays.
-- Updated SQLite select and mapping code to use named constants for better readability and safety.
-- Expanded .NET-to-SQLite type mapping, including more numeric types to `INTEGER` and `datetime` to `TEXT`.
-- Changed `DatabaseMetadata.LastUpdateUtc` to allow `NULL` values.
 
 ## UI Icons
 - Icon set: **Bootstrap Icons v1.13.1**

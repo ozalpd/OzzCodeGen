@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.10] - 2026-04-04
+
+### Added
+- Added `AutoLoad` to SQLite repository property settings and exposed it in the WPF UI.
+- Added constructor generation with repository dependencies for autoloaded navigation types.
+- Added preload support for related entities in generated `GetAllAsync` and `GetBy*Async` methods.
+- Added generation of `Load*Async` methods for autoloaded navigation properties.
+- Added helper methods for type checks, safe value expressions, and foreign key navigation.
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.2.10`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.10`.
+- Updated `GetBy*Async` method generation to accept nullable keys and return `null` when key values are not provided.
+- Updated generated code to use safe value expressions for nullable foreign keys and nullable types.
+- Reordered and resized SQLite repository property-grid columns in the UI.
+- Improved UI colors with minor styling adjustments.
+- Refactored property change notifications to use `nameof(...)`.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.9] - 2026-04-03
 
 ### Added

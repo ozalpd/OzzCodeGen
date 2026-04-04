@@ -10,13 +10,30 @@
 <#+ 
 public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col, string value, bool isTimeStamp = false)
 {
+    string enumName = col.GetEnumTypeName();
     if (isTimeStamp) {#>
     command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", nowUtc.ToString("O"));
 <#+ } else if (col.IsNullableString ){#>
     AddNullableTextParameter(command, "@<#= col.Name.ToCamelCase() #>", <#= value #>);
 <#+ } else if (col.IsBoolean) { #>
     command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", <#= value #> ? 1 : 0);
+<#+ } else if (!string.IsNullOrEmpty(enumName)) {#>
+    command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", (<#= col.PropertyDefinition.TypeName #>)<#= value #>);
 <#+ } else {#>
     command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", <#= value #>);
 <#+ }
 } #>
+<#+ 
+public void WriteGetByResult(IEnumerable<SqliteRepositoryPropertySetting> autoloadCols, IEnumerable<string> autoloadTypeNames){
+    var pkey = GetPrimaryKey();
+    var selfAutoloadCols = autoloadCols.Where(p => p.GetTypeName(getReturnType: true) == EntitySetting.Name);
+#>
+            var <#= EntitySetting.Name.ToCamelCase() #> = Map<#= EntitySetting.Name #>(reader);
+<#+ foreach (var prop in selfAutoloadCols) { #>
+            <#= EntitySetting.Name.ToCamelCase() #>.<#= prop.Name #> = await GetBy<#= pkey.Name #>Async(<#= EntitySetting.Name.ToCamelCase() #>.<#= prop.GetForeignKeyName() #>);
+<#+ } #>
+<#+     foreach (string name in autoloadTypeNames) {#>
+            await Load<#= name #>Async(<#= EntitySetting.Name.ToCamelCase() #>);
+<#+ } #>
+            return <#= EntitySetting.Name.ToCamelCase() #>;
+<#+ }#>
