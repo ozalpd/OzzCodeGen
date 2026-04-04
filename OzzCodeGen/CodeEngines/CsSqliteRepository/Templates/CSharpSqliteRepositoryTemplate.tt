@@ -121,11 +121,9 @@ namespace <#= CodeEngine.NamespaceName #>
                 if (<#= propTypeName.Pluralize().ToCamelCase() #>By<#= autoPKeyName #>.TryGetValue(<#= EntitySetting.Name.ToCamelCase() #>.<#= propFKey.GetSafeValueExpr() #>, out var <#= prop.Name.ToCamelCase() #>))
                     <#= EntitySetting.Name.ToCamelCase() #>.<#= prop.Name #> = <#= prop.Name.ToCamelCase() #>;
 
-<# } #>
-                result.Add(<#= EntitySetting.Name.ToCamelCase() #>);
-<#    } else { #>
-                result.Add(Map<#= EntitySetting.Name #>(reader));
+<#      } #>
 <#	} #>
+                result.Add(<#= EntitySetting.Name.ToCamelCase() #>);
             }
 
             return result;
@@ -333,7 +331,7 @@ namespace <#= CodeEngine.NamespaceName #>
         {
             await using var connection = await GetOpenConnectionAsync();
             await using var command = connection.CreateCommand();
-            command.CommandText = @"UPDATE {_tableName} SET
+            command.CommandText = @$"UPDATE {_tableName} SET
 <#  for (int i = 0; i < cols.Count; i++) {  #>
                 <#= cols[i].Name #> = @<#= cols[i].Name.ToCamelCase() #><# if (i+1 < cols.Count) { #>,<#	} #> 
 <#  } #>
