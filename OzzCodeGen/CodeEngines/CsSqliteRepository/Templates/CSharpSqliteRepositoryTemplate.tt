@@ -33,13 +33,7 @@ using System.Collections.Generic;
     bool hasSelfAutoload = autoloadCols.Any(p => p.GetTypeName(getReturnType: true) == EntitySetting.Name);
     var fkeyColumns = GetForeignKeyProperties().ToList();
     var singleUpdCols = GetSingleUpdateProperties().ToList();
-
-    string memberSignature = $"Task<IReadOnlyList<{EntitySetting.Name}>> GetAllAsync(";
-    memberSignature = EntitySetting.HasIsActiveProperty()
-                    ? memberSignature + "bool? isActive = null)"
-                    : memberSignature + ")";
-    var signatureList = new List<string>();
-    signatureList.Add(memberSignature);
+    string memberSignature = string.Empty;
 
     if (modelClassEngine != null && modelClassEngine.GenerateValidator) { #>
 using <#= modelClassEngine.NamespaceName #>;
@@ -82,7 +76,9 @@ namespace <#= CodeEngine.NamespaceName #>
 <#	} #>
         }
 
-<#      // GetAllAsync#>
+<#  // GetAllAsync
+    memberSignature = GetSignature(MethodType.GetAll);
+    AddSignature(memberSignature); #>
         public async <#= memberSignature #>
         {
             var result = new List<<#= EntitySetting.Name #>>();
@@ -128,9 +124,9 @@ namespace <#= CodeEngine.NamespaceName #>
 
             return result;
         }
-<#  memberSignature = $"Task<{EntitySetting.GetTypeName(isNullable:true)}> GetBy{pkey.Name}Async({pkey.GetTypeName()}? {pkey.Name.ToCamelCase()})";
-    signatureList.Add(memberSignature);
-#>
+<#  // GetByPKeyAsync
+    memberSignature = GetSignature(MethodType.GetByPKey);
+    AddSignature(memberSignature); #>
 
         public async <#= memberSignature #>
         {
@@ -149,10 +145,10 @@ namespace <#= CodeEngine.NamespaceName #>
 
 <#  WriteGetByResult(autoloadCols, autoloadTypeNames); #>
         }
-<#  if(unique != null) {
-        memberSignature = $"Task<{EntitySetting.GetTypeName(isNullable:true)}> GetBy{unique.Name}Async({unique.GetTypeName()}? {unique.Name.ToCamelCase()})";
-        signatureList.Add(memberSignature);
-#>
+<#  // GetByUniqueAsync
+    memberSignature = GetSignature(MethodType.GetByUniqueIndex);
+    if(!string.IsNullOrWhiteSpace(memberSignature)) {
+        AddSignature(memberSignature);#>
 
         public async <#= memberSignature #>
         {
@@ -180,8 +176,8 @@ namespace <#= CodeEngine.NamespaceName #>
 <#  } #>
 <#  // Create Method
     // If unique indexed property exists, CreateAsync will return existing record's PK value.
-    memberSignature = $"Task<{pkey.GetTypeName()}> CreateAsync({EntitySetting.Name} {EntitySetting.Name.ToCamelCase()})";
-    signatureList.Add(memberSignature);
+    memberSignature = GetSignature(MethodType.Create);
+    AddSignature(memberSignature);
 #>
 
         public async <#= memberSignature #>
@@ -226,8 +222,8 @@ namespace <#= CodeEngine.NamespaceName #>
         }
         partial void OnCreated(<#= EntitySetting.Name #> <#= EntitySetting.Name.ToCamelCase() #>);
 <#  // Delete Method
-    memberSignature = $"Task<bool> DeleteAsync({pkey.GetTypeName()} {pkey.Name.ToCamelCase()})";
-    signatureList.Add(memberSignature);
+    memberSignature = GetSignature(MethodType.DeleteByPKey);
+    AddSignature(memberSignature);
 #>
 
         public async <#= memberSignature #>
@@ -248,8 +244,8 @@ namespace <#= CodeEngine.NamespaceName #>
         }
 <#  // Update Method
     if (updateColumns.Count > 0) {
-        memberSignature = $"Task<bool> UpdateAsync({EntitySetting.Name} {EntitySetting.Name.ToCamelCase()})";
-        signatureList.Add(memberSignature);
+        memberSignature = GetSignature(MethodType.UpdateEntity);
+        AddSignature(memberSignature);
 #>
 
         public async <#= memberSignature #>
@@ -308,34 +304,20 @@ namespace <#= CodeEngine.NamespaceName #>
 <#      }
     } #>
 <#  foreach (var col in singleUpdCols) {
-        memberSignature = $"Task<bool> Update{col.Name}Async({pkey.GetTypeName()} {pkey.Name.ToCamelCase()}, {col.GetTypeName()} {col.Name.ToCamelCase()})";
-        signatureList.Add(memberSignature);
-        var cols = new List<SqliteRepositoryPropertySetting>();
-        cols.Add(col);
-        var writeModel = new WriteColumnsModel {
-            Columns = cols,
-            PKey = pkey,
-            PKeyValue = pkey.Name.ToCamelCase(),
-            CreatedAtCol = createdAtCol,
-            UpdatedAtCol = updatedAtCol
-        };
-        writeModel.ValueList.Add(col.Name.ToCamelCase());
-
-        if (updatedAtCol != null) {
-            cols.Add(updatedAtCol);
-            writeModel.ValueList.Add(updatedAtCol?.Name.ToCamelCase());
-        }
-    #>
+        memberSignature = GetSignature(MethodType.UpdateSingleColumnById, col);
+        if(!string.IsNullOrWhiteSpace(memberSignature)) {
+            AddSignature(memberSignature);
+            var writeModel = GetWriteColumnsModel(col); #>
 
         public async <#= memberSignature #>
         {
             await using var connection = await GetOpenConnectionAsync();
             await using var command = connection.CreateCommand();
             command.CommandText = @$"UPDATE {_tableName} SET
-<#  for (int i = 0; i < cols.Count; i++) {  #>
-                <#= cols[i].Name #> = @<#= cols[i].Name.ToCamelCase() #><# if (i+1 < cols.Count) { #>,<#	} #> 
+<#  for (int i = 0; i < writeModel.Columns.Count; i++) {  #>
+                <#= writeModel.Columns[i].Name #> = @<#= writeModel.Columns[i].Name.ToCamelCase() #><# if (i+1 < writeModel.Columns.Count) { #>,<#	} #> 
 <#  } #>
-            WHERE <#= pkey.Name #> = @<#= pkey.Name.ToCamelCase() #>";
+            WHERE <#= writeModel.PKey.Name #> = @<#= writeModel.PKeyValue #>";
             
 <#      WriteColumnsAndParameters(writeModel); #>
 
@@ -348,7 +330,8 @@ namespace <#= CodeEngine.NamespaceName #>
 
             return affectedRows > 0;
         }
-<#  } #>
+<#      }
+    }#>
 <#  foreach (string name in autoloadTypeNames) {
         string autoPKeyName = GetEntityPKeyName(name);
         var autoEntity = GetEntityByName(name);
@@ -394,7 +377,7 @@ namespace <#= CodeEngine.NamespaceName #>
 
     public interface I<#= EntitySetting.Name #>Repository
     {
-<#  foreach(var signature in signatureList) { #>
+<#  foreach(var signature in SignatureList) { #>
         <#= signature #>;
 <#  } #>
     }

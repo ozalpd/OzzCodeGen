@@ -18,6 +18,60 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
     protected CSharpSqliteRepositoryEngine CodeEngine { get; }
     protected SqliteRepositoryEntitySetting EntitySetting { get; }
 
+    protected List<string> SignatureList = new List<string>();
+
+    protected void AddSignature(string signature)
+    {
+        if (!SignatureList.Contains(signature))
+            SignatureList.Add(signature);
+    }
+
+    protected string GetSignature(MethodType methodType, SqliteRepositoryPropertySetting column = null)
+    {
+        var pkey = GetPrimaryKey();
+        var unique = GetUniqueIndexed();
+        switch (methodType)
+        {
+            case MethodType.Create:
+                return $"Task<{pkey.GetTypeName()}> CreateAsync({EntitySetting.Name} {EntitySetting.Name.ToCamelCase()})";
+
+            case MethodType.DeleteByPKey:
+                return $"Task<bool> DeleteAsync({pkey.GetTypeName()} {pkey.Name.ToCamelCase()})";
+
+            case MethodType.DeleteByUniqueIndex:
+                if (unique != null)
+                    return $"Task<bool> DeleteAsync({unique.GetTypeName()} {unique.Name.ToCamelCase()})";
+                break;
+
+            case MethodType.GetAll:
+                return $"Task<IReadOnlyList<{EntitySetting.Name}>> GetAllAsync({(EntitySetting.HasIsActiveProperty() ? "bool? isActive = null" : "")})";
+
+            case MethodType.GetByPKey:
+                return $"Task<{EntitySetting.GetTypeName(isNullable: true)}> GetBy{pkey.Name}Async({pkey.GetTypeName()}? {pkey.Name.ToCamelCase()})";
+
+            case MethodType.GetByUniqueIndex:
+                if (unique != null)
+                    return $"Task<{EntitySetting.GetTypeName(isNullable: true)}> GetBy{unique.Name}Async({unique.GetTypeName()}? {unique.Name.ToCamelCase()})";
+                break;
+
+            case MethodType.GetByForeignKey:
+                break;
+
+            case MethodType.UpdateEntity:
+                return $"Task<bool> UpdateAsync({EntitySetting.Name} {EntitySetting.Name.ToCamelCase()})";
+
+            case MethodType.UpdateSingleColumnById:
+                if (column != null)
+                    return $"Task<bool> Update{column.Name}Async({pkey.GetTypeName()} {pkey.Name.ToCamelCase()}, {column.GetTypeName()} {column.Name.ToCamelCase()})";
+                break;
+
+            default:
+                break;
+        }
+
+        return string.Empty;
+    }
+
     protected IEnumerable<SqliteRepositoryPropertySetting> GetRepositoryProperties()
     {
         if (EntitySetting == null)
@@ -309,11 +363,25 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
     }
 }
 
+public enum MethodType
+{
+    Create,
+    DeleteByPKey,
+    DeleteByUniqueIndex,
+    GetAll,
+    GetByPKey,
+    GetByUniqueIndex,
+    GetByForeignKey,
+    UpdateEntity,
+    UpdateSingleColumnById,
+}
+
 public class WriteColumnsModel
 {
     public WriteColumnsModel()
     {
         ValueList = new List<string>();
+        Columns = new List<SqliteRepositoryPropertySetting>();
     }
 
     public List<SqliteRepositoryPropertySetting> Columns { get; set; }
