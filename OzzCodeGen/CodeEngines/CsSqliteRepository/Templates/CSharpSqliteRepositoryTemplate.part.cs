@@ -15,6 +15,11 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
 
         protected WriteColumnsModel GetWriteColumnsModel(SqliteRepositoryPropertySetting column, bool forInsert = false)
         {
+            return GetWriteColumnsModel(new[] { column }, forInsert);
+        }
+
+        protected WriteColumnsModel GetWriteColumnsModel(IEnumerable<SqliteRepositoryPropertySetting> columns, bool forInsert = false)
+        {
             var pkey = GetPrimaryKey();
             var createdAtCol = GetCreatedAtColumn();
             var updatedAtCol = GetUpdatedAtColumn();
@@ -26,8 +31,12 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
                 CreatedAtCol = createdAtCol,
                 UpdatedAtCol = updatedAtCol
             };
-            writeModel.Columns.Add(column);
-            writeModel.ValueList.Add(column.Name.ToCamelCase());
+            
+            foreach (var column in columns)
+            {
+                writeModel.Columns.Add(column);
+                writeModel.ValueList.Add(column.Name.ToCamelCase());
+            }
 
             if (updatedAtCol != null)
             {
