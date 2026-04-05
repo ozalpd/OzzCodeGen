@@ -3,14 +3,20 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.10`
-- `OzzCodeGen.Wpf`: `2.2.10`
+- `OzzCodeGen`: `2.2.11`
+- `OzzCodeGen.Wpf`: `2.2.11`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
+## Latest Highlights (2.2.11)
+- Refactored C# SQLite repository code generation templates to modularize method generation with helper methods.
+- Generated `GetByForeignKey` methods for each foreign-key column, alongside `GetAll`, `GetByPKey`, and `GetByUnique`.
+- Renamed enum value `GetByUniqueIndex` to `GetByUnique` for clarity.
+- Improved maintainability and support for more flexible querying in generated SQLite repositories.
 
 ## Latest Highlights (2.2.10)
 - Added `AutoLoad` to SQLite repository property settings and exposed it in the WPF UI.

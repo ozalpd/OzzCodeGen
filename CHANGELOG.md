@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.11] - 2026-04-05
+
+### Added
+- Added generated `GetByForeignKey` methods for each foreign-key column in SQLite repositories.
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.2.11`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.11`.
+- Refactored C# SQLite repository code generation templates to modularize method generation using helper methods.
+- SQLite repositories now generate `GetByForeignKey` methods in addition to `GetAll`, `GetByPKey`, and `GetByUnique`.
+- Renamed enum value `GetByUniqueIndex` to `GetByUnique` for clarity.
+- Improved maintainability and support for more flexible querying in generated SQLite repositories.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.10] - 2026-04-04
 
 ### Added

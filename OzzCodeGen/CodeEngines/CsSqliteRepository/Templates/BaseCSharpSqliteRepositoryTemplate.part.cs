@@ -49,12 +49,14 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
             case MethodType.GetByPKey:
                 return $"Task<{EntitySetting.GetTypeName(isNullable: true)}> GetBy{pkey.Name}Async({pkey.GetTypeName()}? {pkey.Name.ToCamelCase()})";
 
-            case MethodType.GetByUniqueIndex:
+            case MethodType.GetByUnique:
                 if (unique != null)
                     return $"Task<{EntitySetting.GetTypeName(isNullable: true)}> GetBy{unique.Name}Async({unique.GetTypeName()}? {unique.Name.ToCamelCase()})";
                 break;
 
             case MethodType.GetByForeignKey:
+                if (column != null)
+                    return $"Task<IReadOnlyList<{EntitySetting.Name}>> GetBy{column.Name}Async({column.GetTypeName()} {column.Name.ToCamelCase()}{(EntitySetting.HasIsActiveProperty() ? ", bool? isActive = null" : "")})";
                 break;
 
             case MethodType.UpdateEntity:
@@ -370,7 +372,7 @@ public enum MethodType
     DeleteByUniqueIndex,
     GetAll,
     GetByPKey,
-    GetByUniqueIndex,
+    GetByUnique,
     GetByForeignKey,
     UpdateEntity,
     UpdateSingleColumnById,
