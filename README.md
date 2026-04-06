@@ -3,14 +3,23 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.11`
-- `OzzCodeGen.Wpf`: `2.2.11`
+- `OzzCodeGen`: `2.2.12`
+- `OzzCodeGen.Wpf`: `2.2.12`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
+## Latest Highlights (2.2.12)
+- Increased `MainWindow` height from `640` to `832`.
+- Restructured the **Entities** tab layout in `MainWindow.xaml` for better usability.
+- Rebalanced column definitions to give more space to entity and property grids.
+- Moved `grdEntities` and `grdProperties` sections into two-column `Grid` containers.
+- Increased selected `DataGrid` column widths to improve readability.
+- Removed redundant `StackPanel` containers and obsolete row-definition usage in the Entities tab.
+- Increased max width limits for main Entities-tab grids to `1280`.
 
 ## Latest Highlights (2.2.11)
 - Refactored C# SQLite repository code generation templates to modularize method generation with helper methods.

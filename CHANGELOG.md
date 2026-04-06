@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.12] - 2026-04-06
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.2.12`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.12`.
+- Increased `MainWindow` height from `640` to `832` for improved working space.
+- Restructured the **Entities** tab layout in `MainWindow.xaml` for better usability.
+- Adjusted Entities-tab column definitions to allocate more space to entity/property grids.
+- Moved entity and property `DataGrid` regions into two-column `Grid` containers.
+- Increased `DataGrid` column widths for better readability.
+- Removed redundant `StackPanel` containers and obsolete row-definition usage in the Entities layout.
+- Increased max width limits for main Entities-tab grids to `1280`.
+
 ## [2.2.11] - 2026-04-05
 
 ### Added

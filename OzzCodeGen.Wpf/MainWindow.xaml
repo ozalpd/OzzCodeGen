@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Converters="clr-namespace:OzzUtils.Wpf.Converters;assembly=OzzUtils"
-        mc:Ignorable="d" Height="640" Width="1918" MinHeight="580" MinWidth="1440"
+        mc:Ignorable="d" Height="832" Width="1918" MinHeight="580" MinWidth="1440"
         Title="Ozz Code Generator"
         Loaded="Window_Loaded" Closing="window_Closing"
         Icon="Assets\App-software.ico">
@@ -180,18 +180,14 @@
             <TabItem x:Name="EntityTab" Header="Entities">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" MinWidth="140" MaxWidth="640" />
-                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" MinWidth="240" MaxWidth="1280" />
+                        <ColumnDefinition Width="3*" />
                     </Grid.ColumnDefinitions>
-                    <!--
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="28"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    -->
-                    <StackPanel Orientation="Horizontal">
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+                    <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Vertical" Margin="0,24,4,0">
                             <Button x:Name="btnAddEntity" 
                                 ToolTip="Add Entity" 
@@ -256,17 +252,17 @@
                             </Button>
                         </StackPanel>
                         <!-- Entities Datagrid -->
-                        <DataGrid x:Name="grdEntities"
+                        <DataGrid x:Name="grdEntities" Grid.Column="1"
                                   ItemsSource="{Binding DataModel}"
                                   SelectedItem="{Binding SelectedEntity}"
                                   AutoGenerateColumns="False" CanUserAddRows="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Name}" Header="Entity Name" Width="120"/>
-                                <DataGridTextColumn Binding="{Binding BaseTypeName}" Header="Base Type" Width="100"/>
-                                <DataGridTextColumn Binding="{Binding NamespaceName}" Header="Namespace" Width="80"/>
+                                <DataGridTextColumn Binding="{Binding Name}" Header="Entity Name" Width="160"/>
+                                <DataGridTextColumn Binding="{Binding BaseTypeName}" Header="Base Type" Width="160"/>
+                                <DataGridTextColumn Binding="{Binding NamespaceName}" Header="Namespace" Width="160"/>
                                 <DataGridCheckBoxColumn Binding="{Binding Abstract}" Header="Abstract" Width="40"/>
-                                <DataGridTextColumn Binding="{Binding DisplayName}" Header="Display Name" Width="100"/>
-                                <DataGridTextColumn Binding="{Binding DisplayMember}" Header="Display Member" Width="100"/>
+                                <DataGridTextColumn Binding="{Binding DisplayName}" Header="Display Name" Width="160"/>
+                                <DataGridTextColumn Binding="{Binding DisplayMember}" Header="Display Member" Width="160"/>
                                 <DataGridCheckBoxColumn Binding="{Binding LetDownloadAll}" Header="Let Download All" Width="40"/>
                             </DataGrid.Columns>
                             <DataGrid.ContextMenu>
@@ -277,14 +273,18 @@
                                 </ContextMenu>
                             </DataGrid.ContextMenu>
                         </DataGrid>
-                    </StackPanel>
+                    </Grid>
                     <Grid Grid.Row="1" Grid.Column="1" Margin="9,0,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="6*" MinWidth="130" MaxWidth="740" />
+                            <ColumnDefinition Width="6*" MinWidth="130" MaxWidth="1280" />
                             <ColumnDefinition Width="4*" MinWidth="130" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel Orientation="Vertical" Margin="0,24,4,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,24,4,0">
                                 <Button x:Name="btnAddProperty" 
                                     ToolTip="Add Property" 
                                     Style="{StaticResource sidebarButtons}" 
@@ -373,16 +373,16 @@
 
 
                             </StackPanel>
-                            <DataGrid x:Name="grdProperties"
+                            <DataGrid x:Name="grdProperties" Grid.Column="1"
                                       ItemsSource="{Binding SelectedEntity.Properties}"
                                       SelectedItem="{Binding SelectedProperty}"
                                       AutoGenerateColumns="False"
                                       IsSynchronizedWithCurrentItem="True"
                                       CanUserAddRows="False" >
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding Name}" Header="Property Name" Width="100"/>
-                                    <DataGridTextColumn Binding="{Binding DisplayName}" Header="Display Name" Width="100"/>
-                                    <DataGridTextColumn Binding="{Binding TypeName}" Header="Type" Width="100"/>
+                                    <DataGridTextColumn Binding="{Binding Name}" Header="Property Name" Width="160"/>
+                                    <DataGridTextColumn Binding="{Binding DisplayName}" Header="Display Name" Width="160"/>
+                                    <DataGridTextColumn Binding="{Binding TypeName}" Header="Type" Width="160"/>
                                     <DataGridTextColumn Binding="{Binding DisplayOrder, NotifyOnValidationError=True}" Header="Display Order" Width="80"
                                                         CellStyle="{StaticResource CellRightAlign}"/>
                                     <DataGridCheckBoxColumn Binding="{Binding IsNullable}" Header="Nullable" Width="40"/>
@@ -408,7 +408,7 @@
                                     <DataGridTextColumn Binding="{Binding DefinitionType}" Header="Def. Type" Width="60" IsReadOnly="True"/>
                                 </DataGrid.Columns>
                             </DataGrid>
-                        </StackPanel>
+                        </Grid>
 
                         <Border BorderBrush="Gray" BorderThickness="1" 
                             Grid.Row="1" Grid.Column="1" 

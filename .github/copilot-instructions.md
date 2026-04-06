@@ -74,7 +74,6 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 ## Conventions & Integration Points
 - **Engine ID-first design:** UI and persistence use engine IDs; adding an engine requires updating [EngineTypes.GetInstance](OzzCodeGen/CodeEngines/EngineTypes.cs#L15-L60) and `OpenFile` mapping ([EngineTypes.cs](OzzCodeGen/CodeEngines/EngineTypes.cs#L62-L135)).
 - **Engine UI contract:** Engines expose a WPF `UserControl` via `UiControl` and an optional settings dialog via `GetSettingsDlgUI()`; the host injects the control (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L194-L209)).
-- **SQLite repository UI:** Keep SQLite repository engine configuration aligned with generated template behavior. User-configurable entity settings such as `CreatedAtName`, `UpdatedAtName`, file overwrite options, and property-level flags such as `SingleColumnUpdate` and `AutoLoad` should be reflected consistently in both the UI and generated repository output. Query-generation changes such as per-foreign-key `GetByForeignKey` methods should stay consistent across repository classes, interfaces, and helper methods.
 - **Provider UX:** `EmptyModel` uses a WinForms dialog; sets `CodeGenProject.ModelProvider` and feeds `DataModel` back to the project.
 - **Serialization:** Project, data model, and vocabularies use XML serializers. Saving a project triggers engine-bound file saves (see [CodeGenProject.SaveBoundFiles](OzzCodeGen/CodeGenProject.cs#L220-L231)).
 - **Defaults discovery:** The empty provider scans `Defaults/` recursively for `.OzzGen` files; the WPF app prompts for the folder if missing (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L153-L173), [EmptyModel.cs](OzzCodeGen/Providers/EmptyModel.cs#L141-L167)).
@@ -126,7 +125,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - Tests are not present; rely on manual verification via WPF apps.
 - Project files use SDK-style `.csproj` format targeting .NET 10. Current Windows projects target `net10.0-windows10.0.19041.0`; assembly metadata (`Version`, `Copyright`, `Company`, `Product`, `Description`) is declared directly in each `.csproj`.
 - Current version alignment:
-  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.2.11`
+  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.2.12`
   - `OzzLocalization` and `OzzLocalization.Wpf`: `2.1.6`
 - Versioning policy:
   - `OzzLocalization` and `OzzLocalization.Wpf` are expected to change infrequently and should normally advance with small monotonic patch increments (for example `2.1.6` -> `2.1.7` -> `2.1.8`) unless there is a real feature-driven or breaking-change reason to change minor or major versions.
