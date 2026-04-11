@@ -259,7 +259,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Name}" Header="Entity Name" Width="160"/>
                                 <DataGridTextColumn Binding="{Binding BaseTypeName}" Header="Base Type" Width="160"/>
-                                <DataGridTextColumn Binding="{Binding NamespaceName}" Header="Namespace" Width="160"/>
+                                <DataGridTextColumn Binding="{Binding NamespaceName}" Header="Namespace" Width="80"/>
                                 <DataGridCheckBoxColumn Binding="{Binding Abstract}" Header="Abstract" Width="40"/>
                                 <DataGridTextColumn Binding="{Binding DisplayName}" Header="Display Name" Width="160"/>
                                 <DataGridTextColumn Binding="{Binding DisplayMember}" Header="Display Member" Width="160"/>

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.13] - 2026-04-11
+
+### Added
+- Added `CompositeIndexColumns` and related settings support to `StorageColumnSetting` for multi-column/composite index generation.
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.2.13`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.13`.
+- Improved property change notifications using `nameof(...)` and expanded XML documentation in storage settings code.
+- Refactored storage-setting methods for improved readability and maintainability.
+- Updated T-SQL and SQLite storage templates to generate composite indexes and refactored index-generation logic.
+- Updated `StorageEntitySetting` inheritance/structure for cleaner, more maintainable code.
+- Cleaned up `StorageEngineUI` and `SqliteRepositoryEngineUI` by hiding more technical columns and improving load-state handling (`IsLoadingFromFile`).
+- Reduced the `Namespace` column width in `MainWindow.xaml` for better UI balance.
+- Applied general code cleanup and documentation improvements across the storage engine area.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.12] - 2026-04-06
 
 ### Changed
@@ -175,7 +193,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 - Added T4-generated SQLite repository template files under `OzzCodeGen/CodeEngines/CsSqliteRepository/Templates/`.
-- Introduced `BaseCSharpPropertySetting` to centralize shared C# property type logic and engine access.
+- Introduced `BaseCSharpPropertySetting` to centralize shared C# property type logic.
 
 ### Changed
 - Refactored code generation engines to use engine-specific entity and property settings instead of the generic `EntitySetting` and `PropertySetting` types.

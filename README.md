@@ -3,14 +3,23 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.12`
-- `OzzCodeGen.Wpf`: `2.2.12`
+- `OzzCodeGen`: `2.2.13`
+- `OzzCodeGen.Wpf`: `2.2.13`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
+## Latest Highlights (2.2.13)
+- Added `CompositeIndexColumns` and related storage settings to support multi-column/composite index generation.
+- Updated T-SQL and SQLite templates to generate composite indexes and refactored index-generation flow.
+- Improved storage settings code with clearer method structure, expanded XML documentation, and broader `nameof(...)` property-change usage.
+- Refined `StorageEntitySetting` for cleaner inheritance and maintainability.
+- Cleaned up `StorageEngineUI` and `SqliteRepositoryEngineUI` by hiding more technical columns and improving `IsLoadingFromFile` handling.
+- Reduced `Namespace` column width in `MainWindow.xaml` for better layout balance.
+- Applied general cleanup and documentation improvements.
 
 ## Latest Highlights (2.2.12)
 - Increased `MainWindow` height from `640` to `832`.
@@ -36,29 +45,6 @@ See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 - Added and used helper methods for type checks, safe value expressions, and foreign key navigation.
 - Reordered and resized SQLite repository property-grid columns, plus minor UI color improvements.
 - Refactored property change notifications to use `nameof(...)`.
-
-## Latest Highlights (2.2.9)
-- Added `SingleColumnUpdate` to SQLite repository property settings and exposed it in the WPF UI.
-- Generated `Update{ColumnName}Async` methods in SQLite repositories and repository interfaces for marked columns.
-- Refactored `WriteColumnsAndParameters` to support custom value expressions.
-- Added `DeleteAsync` method generation for all SQLite repositories.
-- Generated partial `OnCreated` and `OnUpdated` methods for repository extensibility.
-- Improved the SQLite repository property settings UI with a new side panel and minor style tweaks.
-
-## Latest Highlights (2.2.8)
-- Added explicit `CreatedAt`/`UpdatedAt` timestamp support to generated SQLite repositories.
-- Added `CreatedAtName` and `UpdatedAtName` configuration to SQLite repository entity settings, with matching UI fields.
-- Generated repository templates now set configured timestamp columns to `DateTime.UtcNow` on insert/update and avoid updating `CreatedAt`.
-- Added `CheckIfAltered` to SQLite repository property settings for generated update checks.
-- Expanded the SQLite repository UI to support timestamp fields and the `Overwrite Existing Files` option.
-- Refactored update and unique-constraint logic for clarity and correctness.
-- Fixed backing-field usage in `StorageColumnSetting`.
-
-## Latest Highlights (2.2.7)
-- Added `UpdateAsync` support to generated SQLite repository templates.
-- Generated update methods now include unique-constraint checks, change detection, and selective column updates.
-- Refactored repository parameter-writing logic for better clarity and reuse.
-- Improved maintainability and correctness of generated SQLite repository code.
 
 ## UI Icons
 - Icon set: **Bootstrap Icons v1.13.1**
@@ -243,6 +229,5 @@ Engines check `Project.TargetPlatform` to adapt generated code. For example, `Me
 - **Project fails to load**: Check `.OzzGen` file is valid XML. Verify model provider paths are accessible.
 - **Model provider refresh fails**: For Empty, verify `Defaults/` folder exists.
 - **Engine output not appearing**: Check `TargetFolder` is accessible. Verify engine template is selected. Review Output window logs.
-- **BuildInfo.Date not updating**: Right-click `BuildInfo.tt` → **Run Custom Tool** or rebuild solution.
 
 For deeper troubleshooting, see [`.github/copilot-instructions.md`](.github/copilot-instructions.md#troubleshooting).

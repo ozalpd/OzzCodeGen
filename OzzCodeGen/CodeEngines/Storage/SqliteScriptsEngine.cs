@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OzzCodeGen.CodeEngines.Storage
 {
@@ -126,7 +127,12 @@ namespace OzzCodeGen.CodeEngines.Storage
             SqliteScriptsEngine instance = GetInstanceFromFile(fileName, typeof(SqliteScriptsEngine)) as SqliteScriptsEngine;
             foreach (var item in instance.EntitySettings)
             {
-                ((StorageEntitySetting)item).CodeEngine = instance;
+                var setting = item as StorageEntitySetting;
+                setting.CodeEngine = instance;
+                foreach (var prop in setting.Properties)
+                {
+                    prop.IsLoadingFromFile = false;
+                }
             }
             return instance;
         }

@@ -7,9 +7,8 @@ using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.Storage
 {
-    public class StorageEntitySetting : BaseEntitySetting
+    public class StorageEntitySetting : AbstractEntitySetting<StorageColumnSetting>
     {
-
         public string InheritedEntity
         {
             get { return _inheritEntityName; }
@@ -17,7 +16,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             {
                 if (_inheritEntityName == value) return;
                 _inheritEntityName = value;
-                RaisePropertyChanged("InheritedEntity");
+                RaisePropertyChanged(nameof(InheritedEntity));
             }
         }
         private string _inheritEntityName;
@@ -29,7 +28,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             set
             {
                 _tableInheritance = value & !string.IsNullOrEmpty(InheritedEntity);
-                RaisePropertyChanged("UseInheritance");
+                RaisePropertyChanged(nameof(UseInheritance));
             }
         }
         private bool _tableInheritance;
@@ -52,14 +51,14 @@ namespace OzzCodeGen.CodeEngines.Storage
                             _primaryKey = baseTable.PrimaryKeyColumn;
                     }
                     if (_primaryKey != null)
-                        RaisePropertyChanged("PrimaryKeyColumn");
+                        RaisePropertyChanged(nameof(PrimaryKeyColumn));
                 }
                 return _primaryKey;
             }
             set
             {
                 if (_primaryKey == value) return;
-                RaisePropertyChanged("PrimaryKeyColumn");
+                RaisePropertyChanged(nameof(PrimaryKeyColumn));
                 _primaryKey = value;
             }
         }
@@ -78,7 +77,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             {
                 if (_schemaName == value) return;
                 _schemaName = value;
-                RaisePropertyChanged("SchemaName");
+                RaisePropertyChanged(nameof(SchemaName));
             }
         }
         private string _schemaName;
@@ -117,9 +116,9 @@ namespace OzzCodeGen.CodeEngines.Storage
             {
                 OnTableNameChanging(value);
                 _tableName = value;
-                RaisePropertyChanged("TableName");
+                RaisePropertyChanged(nameof(TableName));
                 if (HasLogTable)
-                    RaisePropertyChanged("LogTableName");
+                    RaisePropertyChanged(nameof(LogTableName));
             }
         }
         private string _tableName;
@@ -159,9 +158,9 @@ namespace OzzCodeGen.CodeEngines.Storage
             set
             {
                 _hasLogTable = value;
-                RaisePropertyChanged("HasLogTable");
+                RaisePropertyChanged(nameof(HasLogTable));
                 if (HasLogTable)
-                    RaisePropertyChanged("LogTableName");
+                    RaisePropertyChanged(nameof(LogTableName));
             }
         }
         private bool _hasLogTable;
@@ -177,7 +176,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             set
             {
                 _logTableName = value;
-                RaisePropertyChanged("LogTableName");
+                RaisePropertyChanged(nameof(LogTableName));
             }
         }
         private string _logTableName;
@@ -199,7 +198,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             set
             {
                 _storedProcGeneration = value;
-                RaisePropertyChanged("StoredProcGeneration");
+                RaisePropertyChanged(nameof(StoredProcGeneration));
             }
         }
         private StoredProcGeneration _storedProcGeneration;
@@ -214,7 +213,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             set
             {
                 _customStoredProcs = value;
-                RaisePropertyChanged("CustomStoredProcs");
+                RaisePropertyChanged(nameof(CustomStoredProcs));
             }
         }
         private bool _customStoredProcs;
@@ -226,27 +225,10 @@ namespace OzzCodeGen.CodeEngines.Storage
             set
             {
                 _finishingScript = value;
-                RaisePropertyChanged("FinishingScript");
+                RaisePropertyChanged(nameof(FinishingScript));
             }
         }
         private string _finishingScript;
-
-
-        public List<StorageColumnSetting> Properties
-        {
-            get
-            {
-                if (_properties == null) _properties = new List<StorageColumnSetting>();
-                return _properties;
-            }
-            set
-            {
-                if (_properties == value) return;
-                _properties = value;
-                RaisePropertyChanged("Properties");
-            }
-        }
-        protected List<StorageColumnSetting> _properties;
 
 
         [XmlIgnore]
@@ -317,6 +299,15 @@ namespace OzzCodeGen.CodeEngines.Storage
         public string GetPrimaryKeyDeclaration()
         {
             return CodeEngine.GetPrimaryKeyDeclaration(this, false);
+        }
+
+        public override AbstractEntitySetting<StorageColumnSetting> GetBaseEntitySetting()
+        {
+            if (string.IsNullOrEmpty(EntityDefinition?.BaseTypeName))
+                return null;
+
+            return CodeEngine.Entities
+                             .FirstOrDefault(e => e.EntityDefinition.Name.Equals(EntityDefinition.BaseTypeName));
         }
 
         public string GetColumnDeclaration(StorageColumnSetting column, bool forLogTable = false)

@@ -24,6 +24,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - **Pluggable engines:** Engine IDs are centralized in [EngineTypes.cs](OzzCodeGen/CodeEngines/EngineTypes.cs); the WPF UI binds to these IDs and injects engine-specific UIs.
   - Active IDs: `CS_Model_Class_Generator`, `CS_Sqlite_Repository_Generator`, `Metadata_Class_Generator`, `AspNetMvc_Controller_View_Generator`, `T-Sql_Scripts_Generator`, `Sqlite_Scripts_Generator`, `Localization_Resource_Generator`, `EF_Technical_Document`.
   - `CsModelClass` is the primary C# model-class path; `CsSqliteRepository` generates C# SQLite repository classes (CRUD + lookup + interface signatures) with configurable `CreatedAt`/`UpdatedAt` timestamp columns, `SingleColumnUpdate` and `AutoLoad` property support, generated `UpdateAsync`, `Update{ColumnName}Async`, `DeleteAsync`, `Load*Async`, `GetByPKey`, `GetByUnique`, and per-foreign-key `GetByForeignKey` methods, nullable-key-aware `GetBy*Async` patterns, preload support for autoloaded navigation properties, change detection/selective column updates, partial `OnCreated`/`OnUpdated` extensibility hooks, DDL/seed/order settings, unique-index awareness, and robust parameter/mapping behavior.
+  - Storage engine/index generation supports composite indexes through `StorageColumnSetting.CompositeIndexColumns`; keep parsing/matching logic centralized and preserve original model column casing when generating SQL.
   - Engines now prefer engine-specific entity/property settings instead of generic `EntitySetting` and `PropertySetting` types.
   - Removed engines (throw `NotImplementedException` on load): `EF_DatabaseFirst_DataLayer`, `ObjectiveC_Code_Generator`, `Android_Code_Generator`.
   - The WPF app injects `Project.CurrentCodeEngine.UiControl` into the layout (see [MainWindow.xaml.cs](OzzCodeGen.Wpf/MainWindow.xaml.cs#L194-L209)).
@@ -33,6 +34,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - **Templates & T4:** Many engine templates are `.tt`-backed with `*.part.cs` companions; the `.csproj` wires `DependentUpon` to keep generated pieces grouped (see [OzzCodeGen.csproj](OzzCodeGen/OzzCodeGen.csproj#L25-L112)).
   - C# model-class templates live under `CodeEngines/CsModelClass/Templates/` and share behavior via `BaseCSharpModelClassTemplate` + engine/settings base classes.
   - SQLite repository templates under `CodeEngines/CsSqliteRepository/Templates/` are active and evolving; prefer shared helper logic in `BaseCSharpSqliteRepositoryTemplate.tt` + `BaseCSharpSqliteRepositoryTemplate.part.cs`, including reusable parameter-writing helpers, custom/safe value-expression support, type-check helpers, foreign-key navigation helpers, modularized method-generation helpers, timestamp-column handling, and focused per-template rendering logic.
+  - Storage templates under `CodeEngines/Storage/Templates/` should keep index generation logic modular and consistent across T-SQL and SQLite outputs, including composite-index support.
 
 ## Developer Workflows
 - **Build:** Uses .NET 10 SDK.
@@ -102,6 +104,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - Keep output paths relative to `CodeGenProject.TargetSolutionDir` by using `TargetFolder`/`TargetDirectory` patterns instead of absolute persisted paths.
 - If the engine uses T4 templates, include the `.tt` and generated companions in `OzzCodeGen.csproj` with the same `DependentUpon` pattern used by existing engines. Scaffolded `.tt` files are acceptable while generation behavior is still being completed.
 - For SQLite repository generation, keep timestamp behavior explicit: set configured `CreatedAt`/`UpdatedAt` columns during insert/update generation, prevent `CreatedAt` from being updated after insert, use property-level flags such as `CheckIfAltered`, `SingleColumnUpdate`, and `AutoLoad` when generating update/load logic, preserve extensibility hooks such as partial `OnCreated`/`OnUpdated` methods, keep safe value expressions for nullable foreign keys/types in generated SQL parameter logic, and keep helper-based method generation consistent across `GetAll`, `GetByPKey`, `GetByUnique`, and foreign-key query methods.
+- For storage DDL generation, keep index generation helpers centralized and ensure both MSSQL and SQLite templates support composite-index fields consistently.
 
 ## Testing Strategy
 - **Manual verification:** Since automated tests are not present, verify changes via the WPF UIs.
@@ -119,13 +122,12 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - **Engine output not appearing:** Verify `TargetFolder` resolves to an accessible directory (relative to `TargetSolutionDir`). Check engine's `RefreshFromProject()` and template selection. Review engine-specific logs in Output window.
 - **Template generation error:** Inspect `.tt` file for syntax issues. Verify all referenced properties exist on the model. Manually regenerate via **Run Custom Tool**.
 - **Serialization roundtrip fails:** Compare saved XML with schema expectations. Check for uninitialized collections or nested objects with null defaults.
-- **BuildInfo.Date not updating:** Right-click `BuildInfo.tt` → **Run Custom Tool**, or rebuild the entire project.
 
 ## Notes
 - Tests are not present; rely on manual verification via WPF apps.
 - Project files use SDK-style `.csproj` format targeting .NET 10. Current Windows projects target `net10.0-windows10.0.19041.0`; assembly metadata (`Version`, `Copyright`, `Company`, `Product`, `Description`) is declared directly in each `.csproj`.
 - Current version alignment:
-  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.2.12`
+  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.2.13`
   - `OzzLocalization` and `OzzLocalization.Wpf`: `2.1.6`
 - Versioning policy:
   - `OzzLocalization` and `OzzLocalization.Wpf` are expected to change infrequently and should normally advance with small monotonic patch increments (for example `2.1.6` -> `2.1.7` -> `2.1.8`) unless there is a real feature-driven or breaking-change reason to change minor or major versions.

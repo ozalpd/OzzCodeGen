@@ -27,11 +27,16 @@ public partial class SqliteRepositoryEngineUI : AbstractEngineUI
         HiddenColumns.Add("StorageColumnSetting");
 
         HiddenColumns.Add("ClrTypeName");
+        HiddenColumns.Add("IsLoadingFromFile");
         //HiddenColumns.Add("IsRepositoryColumn");
         HiddenColumns.Add("IsSimple");
         HiddenColumns.Add("IsString");
         HiddenColumns.Add("IsIntNumeric");
+        HiddenColumns.Add("IsDecimalNumeric");
         HiddenColumns.Add("IsNullableString");
+        HiddenColumns.Add("IsCollection");
+        HiddenColumns.Add("IsNullable");
+        HiddenColumns.Add("IsComplex");
         HiddenColumns.Add("IsBoolean");
         HiddenColumns.Add("IsDateTime");
 

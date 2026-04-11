@@ -111,7 +111,12 @@ namespace OzzCodeGen.CodeEngines.Storage
             TSqlScriptsEngine instance = GetInstanceFromFile(fileName, typeof(TSqlScriptsEngine)) as TSqlScriptsEngine;
             foreach (var item in instance.EntitySettings)
             {
-                ((StorageEntitySetting)item).CodeEngine = instance;
+                var setting = item as StorageEntitySetting;
+                setting.CodeEngine = instance;
+                foreach (var prop in setting.Properties)
+                {
+                    prop.IsLoadingFromFile = false;
+                }
             }
             return instance;
         }

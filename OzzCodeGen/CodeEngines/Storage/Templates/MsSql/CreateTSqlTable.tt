@@ -34,13 +34,9 @@ CREATE TABLE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName 
   ON [PRIMARY]) ON [PRIMARY]
 <#  } #>
 Go
-<#	foreach (var column in columns.Where(c => c.Indexed))
-    {   //TODO: add an enum type, IndexType { NotIndexed, Nonclustered, Unique}
-        if (column.Unique && false) {#>
-Create Unique Index [idx_<#= TableDefinition.TableName #>_<#= column.Name #>] On [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>]([<#= column.Name #>] <# if(column.SortDesc) {#>Desc<#} else {#>Asc<# } #>)
-<#      } else { #>
-Create Nonclustered Index [idx_<#= TableDefinition.TableName #>_<#= column.Name #>] On [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>]([<#= column.Name #>] <# if(column.SortDesc) {#>Desc<#} else {#>Asc<# } #>)
-<#      } #>
+<#	foreach (var column in columns.Where(c => c.Indexed && !c.Unique))
+    {#>
+<#= GetIndexDeclaration(column) #>;
 Go
 <#  } #>
 <#  if (uniqueCols.Any()){ #>
