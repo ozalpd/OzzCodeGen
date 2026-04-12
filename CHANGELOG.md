@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.14] - 2026-04-12
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.2.14`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.14`.
+- Improved T-SQL index generation in `CreateTSqlTable.part.cs` to correctly format column names ending with ` Desc` as descending index columns, using case-insensitive matching and proper SQL syntax.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.13] - 2026-04-11
 
 ### Added

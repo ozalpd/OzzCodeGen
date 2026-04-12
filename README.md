@@ -3,14 +3,19 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.13`
-- `OzzCodeGen.Wpf`: `2.2.13`
+- `OzzCodeGen`: `2.2.14`
+- `OzzCodeGen.Wpf`: `2.2.14`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
+## Latest Highlights (2.2.14)
+- Improved T-SQL index generation in `CreateTSqlTable.part.cs` to correctly format index columns ending with ` Desc` as descending columns.
+- Added case-insensitive matching for ` Desc` suffix handling in index-column parsing.
+- Corrected generated SQL syntax for descending index columns.
 
 ## Latest Highlights (2.2.13)
 - Added `CompositeIndexColumns` and related storage settings to support multi-column/composite index generation.

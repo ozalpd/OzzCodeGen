@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -62,8 +63,18 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
             foreach (var item in names)
             {
                 sb.Append(", [");
-                sb.Append(item);
-                sb.Append(']');
+                if (item.EndsWith(" Desc", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrWhiteSpace(item))
+
+                {
+                    sb.Append(item.Substring(0, item.Length - 5).TrimEnd());
+                    sb.Append(']');
+                    sb.Append(" Desc");
+                }
+                else
+                {
+                    sb.Append(item);
+                    sb.Append(']');
+                }
             }
         }
 
