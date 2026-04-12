@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.15] - 2026-04-12
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.2.15`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.15`.
+- Improved generated SQLite repository extensibility by adding an `OnLoaded` partial method call after entity loading.
+- Improved autoload logic to skip self-referencing properties and `ICollection<>` types, preventing recursive loading paths.
+- Enhanced repository-name resolution to handle `Dto` suffixes and `ICollection<>` wrappers more consistently.
+- Limited generated autoload behavior to complex/navigation properties only.
+- Improved null/empty checks and autoload handling in generated `GetAllAsync` and `GetByPKeyAsync` methods.
+- Standardized generation of partial hooks for `OnLoaded`, `OnCreated`, and `OnUpdated`.
+- Applied minor formatting and whitespace cleanup for readability.
+- Increased correctness, extensibility, and maintainability of generated repository code.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.14] - 2026-04-12
 
 ### Changed

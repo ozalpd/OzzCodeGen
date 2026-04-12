@@ -32,8 +32,10 @@ public void WriteGetByResult(IEnumerable<SqliteRepositoryPropertySetting> autolo
 <#+ foreach (var prop in selfAutoloadCols) { #>
             <#= EntitySetting.Name.ToCamelCase() #>.<#= prop.Name #> = await GetBy<#= pkey.Name #>Async(<#= EntitySetting.Name.ToCamelCase() #>.<#= prop.GetForeignKeyName() #>);
 <#+ } #>
-<#+     foreach (string name in autoloadTypeNames) {#>
+<#+     foreach (string name in autoloadTypeNames.Where(n => n != EntitySetting.Name && !n.StartsWith("ICollection<"))) {#>
             await Load<#= name #>Async(<#= EntitySetting.Name.ToCamelCase() #>);
 <#+ } #>
+            
+            OnLoaded(<#= EntitySetting.Name.ToCamelCase() #>);
             return <#= EntitySetting.Name.ToCamelCase() #>;
 <#+ }#>

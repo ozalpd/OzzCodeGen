@@ -168,7 +168,11 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
 
     protected string GetRepositoryName(string entityName)
     {
-        return $"{entityName}Repository";
+        string fixedName = entityName.EndsWith("Dto") ? entityName[..^3] : entityName;
+        if (fixedName.StartsWith("ICollection<"))
+            fixedName = fixedName.Substring(12, fixedName.Length - 13);
+
+        return $"{fixedName}Repository";
     }
 
     protected virtual bool ShouldSkipInsert(SqliteRepositoryPropertySetting property)
