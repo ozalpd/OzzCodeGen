@@ -1,5 +1,6 @@
 using OzzCodeGen.CodeEngines.CsModelClass.Templates;
 using OzzCodeGen.CodeEngines.CsModelClass.UI;
+using OzzCodeGen.CodeEngines.CsSqliteRepository;
 using OzzCodeGen.Utilities;
 using System;
 using System.Collections.Generic;
@@ -71,7 +72,7 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
         {
             if (_entities == value) return;
             _entities = value;
-            RaisePropertyChanged("Entities");
+            RaisePropertyChanged(nameof(Entities));
         }
     }
     private List<ModelClassEntitySetting> _entities;
@@ -82,7 +83,7 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
         set
         {
             _genAnnotations = value;
-            RaisePropertyChanged("GenAnnotations");
+            RaisePropertyChanged(nameof(GenAnnotations));
         }
     }
     private bool _genAnnotations;
@@ -95,7 +96,7 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
         set
         {
             _generateValidator = value;
-            RaisePropertyChanged("GenerateValidator");
+            RaisePropertyChanged(nameof(GenerateValidator));
         }
         get
         {
@@ -104,6 +105,23 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
     }
     private bool _generateValidator;
 
+    /// <summary>
+    /// Generates a QueryParameters helper class when enabled.
+    /// </summary>
+    public bool GenerateQueryParam
+    {
+        set
+        {
+            _generateQueryParam = value;
+            RaisePropertyChanged(nameof(GenerateQueryParam));
+        }
+        get
+        {
+            return _generateQueryParam;
+        }
+    }
+    private bool _generateQueryParam;
+
 
     public bool GenerateXmlDoc
     {
@@ -111,10 +129,27 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
         set
         {
             _generateXmlDoc = value;
-            RaisePropertyChanged("GenerateXmlDoc");
+            RaisePropertyChanged(nameof(GenerateXmlDoc));
         }
     }
     private bool _generateXmlDoc;
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public string TargetQueryParamDirectory
+    {
+        get
+        {
+            if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
+            {
+                return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, QueryParamFolder));
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+    }
 
 
     [XmlIgnore]
@@ -133,7 +168,42 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
             }
         }
     }
-    private string _TargetValidatorDirectory;
+
+    /// <summary>
+    /// Target folder for QueryParameters class which is relative to the solution directory.
+    /// </summary>
+    public string QueryParamFolder
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_queryParamFolder))
+                _queryParamFolder = "Helpers";
+            return _queryParamFolder;
+        }
+        set
+        {
+            _queryParamFolder = value;
+            RaisePropertyChanged(nameof(QueryParamFolder));
+            RaisePropertyChanged(nameof(TargetQueryParamDirectory));
+        }
+    }
+    private string _queryParamFolder;
+
+    public string QueryParamNamespaceName
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_queryParamNamespaceName))
+                _queryParamNamespaceName = $"{Project.NamespaceName}.Helpers";
+            return _queryParamNamespaceName;
+        }
+        set
+        {
+            _queryParamNamespaceName = value;
+            RaisePropertyChanged(nameof(QueryParamNamespaceName));
+        }
+    }
+    private string _queryParamNamespaceName;
 
     /// <summary>
     /// Target folder for validator class which is relative to the solution directory.
@@ -149,14 +219,15 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
         set
         {
             _validatorFolder = value;
-            RaisePropertyChanged("ValidatorFolder");
-            RaisePropertyChanged("TargetValidatorDirectory");
+            RaisePropertyChanged(nameof(ValidatorFolder));
+            RaisePropertyChanged(nameof(TargetValidatorDirectory));
         }
     }
     private string _validatorFolder;
 
+    public readonly string QueryParamClassName = "QueryParameters";
     public readonly string ValidatorClassName = "ModelValidator";
-    
+
     public string ValidatorNamespaceName
     {
         get
@@ -168,7 +239,7 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
         set
         {
             _validatorNamespaceName = value;
-            RaisePropertyChanged("ValidatorNamespaceName");
+            RaisePropertyChanged(nameof(ValidatorNamespaceName));
         }
     }
     private string _validatorNamespaceName;
@@ -199,6 +270,13 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
            fileName,
            typeof(CSharpModelClassCodeEngine)) as CSharpModelClassCodeEngine;
 
+        foreach (var setting in instance.EntitySettings.OfType<ModelClassEntitySetting>())
+        {
+            foreach (var prop in setting.Properties)
+            {
+                prop.IsLoadingFromFile = false;
+            }
+        }
         return instance;
     }
 
@@ -241,14 +319,18 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
             allWritten = RenderTemplate(entity);
         }
 
-        if (entity == null)
-            entity = Entities.FirstOrDefault(e => !e.Exclude);
-
-        if (GenerateValidator && entity != null)
+        if (GenerateValidator)
         {
-            var validatorTemplate = new CSharpValidatorTemplate(entity);
+            var validatorTemplate = new CSharpValidatorTemplate(this);
             var fileName = Path.Combine(TargetValidatorDirectory, validatorTemplate.GetDefaultFileName());
             allWritten = validatorTemplate.WriteToFile(fileName, OverwriteExisting) & allWritten;
+        }
+
+        if (GenerateQueryParam)
+        {
+            var queryParamTemplate = new QueryParametersTemplate(this);
+            var fileName = Path.Combine(TargetQueryParamDirectory, queryParamTemplate.GetDefaultFileName());
+            allWritten = queryParamTemplate.WriteToFile(fileName, OverwriteExisting) & allWritten;
         }
 
         return allWritten;

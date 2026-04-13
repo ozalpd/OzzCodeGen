@@ -6,9 +6,6 @@
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzCodeGen.CodeEngines" #>
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 <#  var codeEngine = EntitySetting.CodeEngine as CSharpModelClassCodeEngine;
     var properties = GetInheritedIncludedProperties();
@@ -30,7 +27,6 @@ using <#= codeEngine.ResxEngine.NamespaceName #>;
 //     so manual changes should be made in another partial class file.
 //
 //----------------------------------------------------------------------------------
-
 namespace <#= NamespaceName #>
 {
     public partial class <#= ClassName #>

@@ -256,31 +256,106 @@ using System.Collections.Generic;
             
             #line default
             #line hidden
-            this.Write("            InitializeDatabase();\r\n        }\r\n        private readonly string _se" +
-                    "lectStatement;\r\n");
+            this.Write("            InitializeDatabase();\r\n");
+            
+            #line 64 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+  if (autoloadTypeNames.Count == 0) { 
+            
+            #line default
+            #line hidden
+            this.Write("            OnInitialized();\r\n");
             
             #line 66 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+	} else if (autoloadTypeNames.Count == 1) { 
+            
+            #line default
+            #line hidden
+            this.Write("            OnInitialized(");
+            
+            #line 67 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetRepositoryName(autoloadTypeNames[0]).ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(" == null);\r\n");
+            
+            #line 68 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+	} else { 
+            
+            #line default
+            #line hidden
+            this.Write("            OnInitialized(");
+            
+            #line 69 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetRepositoryName(autoloadTypeNames[0]).ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(" == null\r\n");
+            
+            #line 70 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+      for (int i = 1; i < autoloadTypeNames.Count; i++) { 
+            
+            #line default
+            #line hidden
+            this.Write("                        , ");
+            
+            #line 71 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetRepositoryName(autoloadTypeNames[i]).ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(" == null");
+            
+            #line 71 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+ if (autoloadTypeNames.Count == i+1) { 
+            
+            #line default
+            #line hidden
+            this.Write(");");
+            
+            #line 71 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write(" \r\n");
+            
+            #line 72 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+      } 
+            
+            #line default
+            #line hidden
+            
+            #line 73 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+	} 
+            
+            #line default
+            #line hidden
+            this.Write("        }\r\n        private readonly string _selectStatement;\r\n");
+            
+            #line 76 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   foreach (string name in autoloadTypeNames) {
             
             #line default
             #line hidden
             this.Write("        private readonly I");
             
-            #line 67 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 77 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetRepositoryName(name)));
             
             #line default
             #line hidden
             this.Write(" _");
             
-            #line 67 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 77 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetRepositoryName(name).ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 68 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 78 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 	} 
             
             #line default
@@ -288,41 +363,134 @@ using System.Collections.Generic;
             this.Write("\r\n        private void InitializeDatabase()\r\n        {\r\n            using var con" +
                     "nection = GetOpenConnection();\r\n            ExecuteScript(connection, \"");
             
-            #line 73 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 83 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.FileNameDDL));
             
             #line default
             #line hidden
             this.Write("\");\r\n");
             
-            #line 74 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 84 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   if (!string.IsNullOrWhiteSpace(EntitySetting.FileNameSeed)) {  
             
             #line default
             #line hidden
             this.Write("            SeedIfEmpty(connection, \"");
             
-            #line 75 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 85 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.FileNameSeed));
             
             #line default
             #line hidden
             this.Write("\");\r\n");
             
-            #line 76 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 86 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 	} 
             
             #line default
             #line hidden
-            this.Write("        }\r\n");
+            this.Write("        }\r\n\r\n");
             
-            #line 78 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 89 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+  if (autoloadTypeNames.Count > 0) { 
+            
+            #line default
+            #line hidden
+            this.Write(@"        /// <summary>
+        /// Initialization hook for additional setup after the repository is constructed.
+        /// The parameters indicate whether the corresponding repository was created by this repository (true) or provided externally (false),
+        /// which can be useful to determine if any additional initialization or event wiring is needed.
+        /// </summary>
+");
+            
+            #line 95 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+  } 
+            
+            #line default
+            #line hidden
+            
+            #line 96 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+  if (autoloadTypeNames.Count == 0) { 
+            
+            #line default
+            #line hidden
+            this.Write("        partial void OnInitialized();\r\n");
+            
+            #line 98 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+	} else if (autoloadTypeNames.Count == 1) { 
+            
+            #line default
+            #line hidden
+            this.Write("        partial void OnInitialized(bool is");
+            
+            #line 99 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetRepositoryName(autoloadTypeNames[0])));
+            
+            #line default
+            #line hidden
+            this.Write("Null);\r\n");
+            
+            #line 100 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+	} else { 
+            
+            #line default
+            #line hidden
+            this.Write("        partial void OnInitialized(bool is");
+            
+            #line 101 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetRepositoryName(autoloadTypeNames[0])));
+            
+            #line default
+            #line hidden
+            this.Write("Null\r\n");
+            
+            #line 102 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+      for (int i = 1; i < autoloadTypeNames.Count; i++) { 
+            
+            #line default
+            #line hidden
+            this.Write("                                 , bool is");
+            
+            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetRepositoryName(autoloadTypeNames[i])));
+            
+            #line default
+            #line hidden
+            this.Write("Null");
+            
+            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+ if (autoloadTypeNames.Count == i+1) { 
+            
+            #line default
+            #line hidden
+            this.Write(");");
+            
+            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write(" \r\n");
+            
+            #line 104 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+      } 
+            
+            #line default
+            #line hidden
+            
+            #line 105 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+  } 
+            
+            #line default
+            #line hidden
+            
+            #line 106 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   WriteGetMulipleRecordsMethod(); // GetAllAsync 
             
             #line default
             #line hidden
             
-            #line 79 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 107 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   foreach (var fkey in fkeyColumns) {
         WriteGetMulipleRecordsMethod(fkey);
             
@@ -330,40 +498,40 @@ using System.Collections.Generic;
             #line hidden
             this.Write("        \r\n");
             
-            #line 82 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 110 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 	} 
             
             #line default
             #line hidden
             
-            #line 83 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 111 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   WriteGetSingleRecordMethod(pkey); // GetByPKeyAsync 
             
             #line default
             #line hidden
             
-            #line 84 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 112 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   WriteGetSingleRecordMethod(unique); // GetByUniqueAsync 
             
             #line default
             #line hidden
             this.Write("        partial void OnLoaded(");
             
-            #line 85 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 113 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 85 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 113 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n\r\n");
             
-            #line 87 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 115 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   // Create Method
     // If unique indexed property exists, CreateAsync will return existing record's PK value.
     memberSignature = GetSignature(MethodType.Create);
@@ -374,168 +542,168 @@ using System.Collections.Generic;
             #line hidden
             this.Write("        public async ");
             
-            #line 92 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 120 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(memberSignature));
             
             #line default
             #line hidden
             this.Write("\r\n        {\r\n            ArgumentNullException.ThrowIfNull(");
             
-            #line 94 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 122 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n            ValidateOrThrow(");
             
-            #line 95 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 123 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n\r\n            await using var connection = await GetOpenConnectionAsync();\r\n");
             
-            #line 98 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 126 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   if(unique != null) { 
             
             #line default
             #line hidden
             this.Write("            var existing");
             
-            #line 99 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 127 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" = await GetBy");
             
-            #line 99 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 127 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(unique.Name));
             
             #line default
             #line hidden
             this.Write("Async(");
             
-            #line 99 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 127 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 99 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 127 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(unique.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n            if (existing");
             
-            #line 100 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 128 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" != null)\r\n            {\r\n");
             
-            #line 102 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 130 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       if (updateColumns.Count > 0) {
             
             #line default
             #line hidden
             this.Write("                ");
             
-            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 131 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 131 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
             
             #line default
             #line hidden
             this.Write(" = existing");
             
-            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 131 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 131 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
             
             #line default
             #line hidden
             this.Write(";\r\n                await UpdateAsync(");
             
-            #line 104 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 132 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n                return existing");
             
-            #line 105 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 133 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 105 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 133 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 106 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 134 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       } else { // We may throw error 
             
             #line default
             #line hidden
             this.Write("                throw new InvalidOperationException($\"A different ");
             
-            #line 107 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 135 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" with the same ");
             
-            #line 107 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 135 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(unique.Name));
             
             #line default
             #line hidden
             this.Write(" already exists: {");
             
-            #line 107 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 135 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 107 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 135 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(unique.Name));
             
             #line default
             #line hidden
             this.Write("}\");\r\n");
             
-            #line 108 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 136 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       } 
             
             #line default
             #line hidden
             this.Write("            }\r\n");
             
-            #line 110 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 138 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       } 
             
             #line default
@@ -544,56 +712,56 @@ using System.Collections.Generic;
                     "command.CommandText = @$\"INSERT INTO {_tableName} ({string.Join(\", \", ColumnName" +
                     "s[1..])})\r\n            VALUES (");
             
-            #line 114 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 142 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetParameterList(insertColumns)));
             
             #line default
             #line hidden
             this.Write(");\r\n            SELECT last_insert_rowid();\";\r\n            \r\n");
             
-            #line 117 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 145 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       WriteColumnsAndParameters(insertColumns, createdAtCol:createdAtCol, updatedAtCol:updatedAtCol); 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 119 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 147 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       if(pkey.IsIntNumeric) {
             
             #line default
             #line hidden
             this.Write("            var ");
             
-            #line 120 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 148 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" = Convert.");
             
-            #line 120 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 148 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetConvertMethodName(pkey.GetTypeName())));
             
             #line default
             #line hidden
             this.Write("((long)(await command.ExecuteScalarAsync() ?? 0));\r\n");
             
-            #line 121 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 149 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       } else { 
             
             #line default
             #line hidden
             this.Write("            var ");
             
-            #line 122 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 150 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" = await command.ExecuteScalarAsync();\r\n");
             
-            #line 123 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 151 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       } 
             
             #line default
@@ -601,56 +769,56 @@ using System.Collections.Generic;
             this.Write("            \r\n            await _metadataRepository.SaveLastUpdateUtcAsync(connec" +
                     "tion);\r\n            ClearRecordCountCache();\r\n            ");
             
-            #line 127 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 155 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 127 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 155 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 127 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 155 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(";\r\n            OnCreated(");
             
-            #line 128 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 156 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n\r\n            return ");
             
-            #line 130 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 158 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(";\r\n        }\r\n        partial void OnCreated(");
             
-            #line 132 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 160 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 132 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 160 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 133 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 161 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   // Delete Method
     memberSignature = GetSignature(MethodType.DeleteByPKey);
     AddSignature(memberSignature);
@@ -660,7 +828,7 @@ using System.Collections.Generic;
             #line hidden
             this.Write("\r\n        public async ");
             
-            #line 138 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 166 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(memberSignature));
             
             #line default
@@ -669,28 +837,28 @@ using System.Collections.Generic;
                     "c();\r\n            await using var command = connection.CreateCommand();\r\n       " +
                     "     command.CommandText = $\"DELETE FROM {_tableName} WHERE ");
             
-            #line 142 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 170 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
             
             #line default
             #line hidden
             this.Write(" = @");
             
-            #line 142 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 170 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("\";\r\n            command.Parameters.AddWithValue(\"@");
             
-            #line 143 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 171 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("\", ");
             
-            #line 143 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 171 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name.ToCamelCase()));
             
             #line default
@@ -708,7 +876,7 @@ using System.Collections.Generic;
         }
 ");
             
-            #line 154 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 182 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   // Update Method
     if (updateColumns.Count > 0) {
         memberSignature = GetSignature(MethodType.UpdateEntity);
@@ -719,91 +887,91 @@ using System.Collections.Generic;
             #line hidden
             this.Write("\r\n        public async ");
             
-            #line 160 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 188 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(memberSignature));
             
             #line default
             #line hidden
             this.Write("\r\n        {\r\n            ArgumentNullException.ThrowIfNull(");
             
-            #line 162 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 190 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n            ValidateOrThrow(");
             
-            #line 163 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 191 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n\r\n            await using var connection = await GetOpenConnectionAsync();\r\n");
             
-            #line 166 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 194 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   if (unique != null) { 
             
             #line default
             #line hidden
             this.Write("            var existing");
             
-            #line 167 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 195 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" = await GetBy");
             
-            #line 167 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 195 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(unique.Name));
             
             #line default
             #line hidden
             this.Write("Async(");
             
-            #line 167 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 195 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 167 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 195 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(unique.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n            if (existing");
             
-            #line 168 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 196 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" != null && existing");
             
-            #line 168 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 196 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 168 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 196 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
             
             #line default
             #line hidden
             this.Write(" != ");
             
-            #line 168 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 196 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 168 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 196 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
             
             #line default
@@ -811,160 +979,160 @@ using System.Collections.Generic;
             this.Write(")\r\n            {\r\n                throw new InvalidOperationException($\"A differe" +
                     "nt ");
             
-            #line 170 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 198 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" with the same ");
             
-            #line 170 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 198 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(unique.Name));
             
             #line default
             #line hidden
             this.Write(" already exists: {");
             
-            #line 170 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 198 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 170 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 198 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(unique.Name));
             
             #line default
             #line hidden
             this.Write("}\");\r\n            }\r\n\r\n            existing");
             
-            #line 173 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 201 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" = await GetBy");
             
-            #line 173 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 201 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
             
             #line default
             #line hidden
             this.Write("Async(");
             
-            #line 173 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 201 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 173 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 201 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 174 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 202 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       } else {
             
             #line default
             #line hidden
             this.Write("            var existing");
             
-            #line 175 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 203 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" = await GetBy");
             
-            #line 175 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 203 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
             
             #line default
             #line hidden
             this.Write("Async(");
             
-            #line 175 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 203 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 175 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 203 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 176 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 204 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   } 
             
             #line default
             #line hidden
             this.Write("            bool noChanges = existing");
             
-            #line 177 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 205 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" != null\r\n");
             
-            #line 178 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 206 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   for (int i = 0; i < updateColumns.Count; i++) {  
             
             #line default
             #line hidden
             this.Write("                          && existing");
             
-            #line 179 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 207 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 179 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 207 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(updateColumns[i].Name));
             
             #line default
             #line hidden
             this.Write(" == ");
             
-            #line 179 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 207 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 179 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 207 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(updateColumns[i].Name));
             
             #line default
             #line hidden
             
-            #line 179 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 207 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
  if (i+1 == updateColumns.Count) { 
             
             #line default
             #line hidden
             this.Write(";");
             
-            #line 179 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 207 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 	} 
             
             #line default
             #line hidden
             this.Write(" \r\n");
             
-            #line 180 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 208 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   } 
             
             #line default
@@ -972,14 +1140,14 @@ using System.Collections.Generic;
             this.Write("\r\n            if (noChanges)\r\n                return false;\r\n\r\n            await " +
                     "using var command = connection.CreateCommand();\r\n");
             
-            #line 186 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 214 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   if (nonUpdateColumns.Count > 1) { 
             
             #line default
             #line hidden
             this.Write("            // ");
             
-            #line 187 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 215 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", nonUpdateColumns.Select(c => c.Name))));
             
             #line default
@@ -987,21 +1155,21 @@ using System.Collections.Generic;
             this.Write(" are not updated to avoid complications with existing references,\r\n            //" +
                     " so only ");
             
-            #line 188 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 216 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", updateColumns.Select(c => c.Name))));
             
             #line default
             #line hidden
             this.Write(" are updated\r\n");
             
-            #line 189 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 217 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   } else if (nonUpdateColumns.Count > 0) { 
             
             #line default
             #line hidden
             this.Write("            // ");
             
-            #line 190 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 218 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", nonUpdateColumns.Select(c => c.Name))));
             
             #line default
@@ -1009,76 +1177,76 @@ using System.Collections.Generic;
             this.Write(" is not updated to avoid complications with existing references,\r\n            // " +
                     "so only ");
             
-            #line 191 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 219 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", updateColumns.Select(c => c.Name))));
             
             #line default
             #line hidden
             this.Write(" are updated\r\n");
             
-            #line 192 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 220 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   } 
             
             #line default
             #line hidden
             this.Write("            command.CommandText = @$\"UPDATE {_tableName} SET\r\n");
             
-            #line 194 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 222 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   for (int i = 0; i < updateColumns.Count; i++) {  
             
             #line default
             #line hidden
             this.Write("                ");
             
-            #line 195 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 223 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(updateColumns[i].Name));
             
             #line default
             #line hidden
             this.Write(" = @");
             
-            #line 195 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 223 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(updateColumns[i].Name.ToCamelCase()));
             
             #line default
             #line hidden
             
-            #line 195 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 223 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
  if (i+1 < updateColumns.Count) { 
             
             #line default
             #line hidden
             this.Write(",");
             
-            #line 195 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 223 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 	} 
             
             #line default
             #line hidden
             this.Write(" \r\n");
             
-            #line 196 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 224 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   } 
             
             #line default
             #line hidden
             this.Write("            WHERE ");
             
-            #line 197 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 225 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
             
             #line default
             #line hidden
             this.Write(" = @");
             
-            #line 197 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 225 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("\";\r\n\r\n");
             
-            #line 199 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 227 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       WriteColumnsAndParameters(updateColumns, pkey, updatedAtCol:updatedAtCol); 
             
             #line default
@@ -1087,7 +1255,7 @@ using System.Collections.Generic;
                     "   if (affectedRows > 0)\r\n            {\r\n                await _metadataReposito" +
                     "ry.SaveLastUpdateUtcAsync(connection);\r\n                OnUpdated(");
             
-            #line 205 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 233 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
@@ -1095,55 +1263,55 @@ using System.Collections.Generic;
             this.Write(");\r\n            }\r\n            \r\n            return affectedRows > 0;\r\n        }\r" +
                     "\n        partial void OnUpdated(");
             
-            #line 210 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 238 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 210 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 238 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 211 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 239 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   if (singleUpdCols.Count > 0) { 
             
             #line default
             #line hidden
             this.Write("        partial void OnUpdated(");
             
-            #line 212 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 240 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.GetTypeName()));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 212 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 240 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             
-            #line 212 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 240 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 213 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 241 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       }
     } 
             
             #line default
             #line hidden
             
-            #line 215 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 243 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   foreach (var col in singleUpdCols) {
         memberSignature = GetSignature(MethodType.UpdateSingleColumnById, col);
         if(!string.IsNullOrWhiteSpace(memberSignature)) {
@@ -1154,7 +1322,7 @@ using System.Collections.Generic;
             #line hidden
             this.Write("\r\n        public async ");
             
-            #line 221 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 249 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(memberSignature));
             
             #line default
@@ -1163,62 +1331,62 @@ using System.Collections.Generic;
                     "c();\r\n            await using var command = connection.CreateCommand();\r\n       " +
                     "     command.CommandText = @$\"UPDATE {_tableName} SET\r\n");
             
-            #line 226 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 254 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   for (int i = 0; i < writeModel.Columns.Count; i++) {  
             
             #line default
             #line hidden
             this.Write("                ");
             
-            #line 227 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 255 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(writeModel.Columns[i].Name));
             
             #line default
             #line hidden
             this.Write(" = @");
             
-            #line 227 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 255 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(writeModel.Columns[i].Name.ToCamelCase()));
             
             #line default
             #line hidden
             
-            #line 227 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 255 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
  if (i+1 < writeModel.Columns.Count) { 
             
             #line default
             #line hidden
             this.Write(",");
             
-            #line 227 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 255 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 	} 
             
             #line default
             #line hidden
             this.Write(" \r\n");
             
-            #line 228 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 256 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   } 
             
             #line default
             #line hidden
             this.Write("            WHERE ");
             
-            #line 229 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 257 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(writeModel.PKey.Name));
             
             #line default
             #line hidden
             this.Write(" = @");
             
-            #line 229 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 257 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(writeModel.PKeyValue));
             
             #line default
             #line hidden
             this.Write("\";\r\n            \r\n");
             
-            #line 231 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 259 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       WriteColumnsAndParameters(writeModel); 
             
             #line default
@@ -1227,21 +1395,21 @@ using System.Collections.Generic;
                     "   if (affectedRows > 0)\r\n            {\r\n                await _metadataReposito" +
                     "ry.SaveLastUpdateUtcAsync(connection);\r\n                OnUpdated(");
             
-            #line 237 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 265 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n            }\r\n\r\n            return affectedRows > 0;\r\n        }\r\n");
             
-            #line 242 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 270 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       }
     }
             
             #line default
             #line hidden
             
-            #line 244 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 272 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   foreach (string name in autoloadTypeNames) {
         string autoPKeyName = GetEntityPKeyName(name);
         var autoEntity = GetEntityByName(name);
@@ -1252,279 +1420,279 @@ using System.Collections.Generic;
             #line hidden
             this.Write("\r\n        private async Task Load");
             
-            #line 250 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 278 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
             this.Write("Async(");
             
-            #line 250 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 278 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 250 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 278 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n");
             
-            #line 252 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 280 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       foreach (var col in autoloadCols.Where(p => p.GetTypeName(getReturnType: true) == autoEntity.Name)) { 
             
             #line default
             #line hidden
             this.Write("            ");
             
-            #line 253 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 281 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 253 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 281 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(col.Name));
             
             #line default
             #line hidden
             this.Write(" = await _");
             
-            #line 253 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 281 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetRepositoryName(name).ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".GetBy");
             
-            #line 253 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 281 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(autoPKeyName));
             
             #line default
             #line hidden
             this.Write("Async(");
             
-            #line 253 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 281 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 253 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 281 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(col.GetForeignKeyName()));
             
             #line default
             #line hidden
             this.Write(")\r\n                            ?? new ");
             
-            #line 254 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 282 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
             this.Write(" { ");
             
-            #line 254 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 282 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(autoPKeyName));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 254 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 282 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 254 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 282 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(col.GetForeignKeyName()));
             
             #line default
             #line hidden
             this.Write(" };\r\n");
             
-            #line 255 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 283 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 	    } 
             
             #line default
             #line hidden
             this.Write("        }\r\n\r\n");
             
-            #line 258 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 286 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 	} 
             
             #line default
             #line hidden
             this.Write("\r\n        private static ");
             
-            #line 260 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 288 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" Map");
             
-            #line 260 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 288 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write("(SqliteDataReader reader)\r\n        {\r\n            var ");
             
-            #line 262 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 290 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" = new ");
             
-            #line 262 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 290 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write("\r\n            {\r\n");
             
-            #line 264 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 292 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   for (int i = 0; i < repositoryColumns.Count; i++) {  
             
             #line default
             #line hidden
             this.Write("                ");
             
-            #line 265 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 293 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(repositoryColumns[i].Name));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 265 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 293 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetMappingExpression(repositoryColumns[i], $"ColNrs.{repositoryColumns[i].Name}", "reader")));
             
             #line default
             #line hidden
             
-            #line 265 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 293 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
  if (i+1 < repositoryColumns.Count) { 
             
             #line default
             #line hidden
             this.Write(",");
             
-            #line 265 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 293 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 	} 
             
             #line default
             #line hidden
             this.Write(" \r\n");
             
-            #line 266 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 294 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   } 
             
             #line default
             #line hidden
             this.Write("\r\n            };\r\n\r\n            return ");
             
-            #line 270 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 298 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(";\r\n        }\r\n\r\n        public readonly struct ColNrs\r\n        {\r\n");
             
-            #line 275 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 303 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   for (int i = 0; i < repositoryColumns.Count; i++) {  
             
             #line default
             #line hidden
             this.Write("            public readonly static int ");
             
-            #line 276 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 304 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(repositoryColumns[i].Name));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 276 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 304 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 277 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 305 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   } 
             
             #line default
             #line hidden
             this.Write("        }\r\n\r\n        public readonly string[] ColumnNames = new[] {\r\n");
             
-            #line 281 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 309 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   for (int i = 0; i < repositoryColumns.Count; i++) {  
             
             #line default
             #line hidden
             this.Write("            \"");
             
-            #line 282 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 310 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(repositoryColumns[i].Name));
             
             #line default
             #line hidden
             this.Write("\"");
             
-            #line 282 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 310 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
  if (i+1 < repositoryColumns.Count) { 
             
             #line default
             #line hidden
             this.Write(",");
             
-            #line 282 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 310 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 	} 
             
             #line default
             #line hidden
             this.Write(" \r\n");
             
-            #line 283 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 311 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   } 
             
             #line default
             #line hidden
             this.Write("        };\r\n    }\r\n\r\n    public partial interface I");
             
-            #line 287 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 315 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write("Repository\r\n    {\r\n");
             
-            #line 289 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 317 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   foreach(var signature in SignatureList) { 
             
             #line default
             #line hidden
             this.Write("        ");
             
-            #line 290 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 318 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(signature));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 291 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            #line 319 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   } 
             
             #line default
@@ -1533,7 +1701,7 @@ using System.Collections.Generic;
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 294 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 322 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 
 public void WriteGetMulipleRecordsMethod(SqliteRepositoryPropertySetting fkey = null){
     var methodType = fkey == null ? MethodType.GetAll : MethodType.GetByForeignKey;
@@ -1550,42 +1718,42 @@ public void WriteGetMulipleRecordsMethod(SqliteRepositoryPropertySetting fkey = 
         #line default
         #line hidden
         
-        #line 305 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 333 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("\r\n        public async ");
 
         
         #line default
         #line hidden
         
-        #line 307 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 335 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(memberSignature));
 
         
         #line default
         #line hidden
         
-        #line 307 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 335 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("\r\n        {\r\n            var result = new List<");
 
         
         #line default
         #line hidden
         
-        #line 309 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 337 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
 
         
         #line default
         #line hidden
         
-        #line 309 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 337 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(">();\r\n");
 
         
         #line default
         #line hidden
         
-        #line 310 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 338 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
  foreach (string name in autoloadTypeNames.Where(n => n != EntitySetting.Name && !n.StartsWith("ICollection<"))) {
         string autoPKeyName = GetEntityPKeyName(name);
 
@@ -1593,132 +1761,132 @@ this.Write(">();\r\n");
         #line default
         #line hidden
         
-        #line 312 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 340 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("            var ");
 
         
         #line default
         #line hidden
         
-        #line 313 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 341 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(name.Pluralize().ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 313 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 341 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("By");
 
         
         #line default
         #line hidden
         
-        #line 313 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 341 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(autoPKeyName));
 
         
         #line default
         #line hidden
         
-        #line 313 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 341 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(" = (await _");
 
         
         #line default
         #line hidden
         
-        #line 313 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 341 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(GetRepositoryName(name).ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 313 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 341 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(".GetAllAsync()).ToDictionary(item => item.");
 
         
         #line default
         #line hidden
         
-        #line 313 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 341 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(autoPKeyName));
 
         
         #line default
         #line hidden
         
-        #line 313 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 341 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(");\r\n");
 
         
         #line default
         #line hidden
         
-        #line 314 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 342 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 	}
     if (hasSelfAutoload) { 
         
         #line default
         #line hidden
         
-        #line 315 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 343 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("            var ");
 
         
         #line default
         #line hidden
         
-        #line 316 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 344 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize().ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 316 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 344 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("By");
 
         
         #line default
         #line hidden
         
-        #line 316 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 344 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
 
         
         #line default
         #line hidden
         
-        #line 316 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 344 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(" = (await GetAllAsync()).ToDictionary(item => item.");
 
         
         #line default
         #line hidden
         
-        #line 316 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 344 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
 
         
         #line default
         #line hidden
         
-        #line 316 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 344 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(");\r\n");
 
         
         #line default
         #line hidden
         
-        #line 317 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 345 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 	} 
         
         #line default
         #line hidden
         
-        #line 317 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 345 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("\r\n            await using var connection = await GetOpenConnectionAsync();\r\n     " +
         "       await using var command = connection.CreateCommand();\r\n            comman" +
         "d.CommandText = _selectStatement;\r\n");
@@ -1727,34 +1895,34 @@ this.Write("\r\n            await using var connection = await GetOpenConnection
         #line default
         #line hidden
         
-        #line 322 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 350 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
  if (!string.IsNullOrEmpty(filterCondition)) { 
         
         #line default
         #line hidden
         
-        #line 322 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 350 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("            command.CommandText += \" ");
 
         
         #line default
         #line hidden
         
-        #line 323 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 351 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(filterCondition));
 
         
         #line default
         #line hidden
         
-        #line 323 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 351 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("\";\r\n");
 
         
         #line default
         #line hidden
         
-        #line 324 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 352 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
      PushIndent("        ");
         WriteSingleColumnAndParameter(fkey, fkey.Name.ToCamelCase());
         PopIndent();
@@ -1763,13 +1931,13 @@ this.Write("\";\r\n");
         #line default
         #line hidden
         
-        #line 329 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 357 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
  if (EntitySetting.HasIsActiveProperty()) { 
         
         #line default
         #line hidden
         
-        #line 329 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 357 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("            if (isActive.HasValue)\r\n            {\r\n                command.Comman" +
         "dText += \" ");
 
@@ -1777,14 +1945,14 @@ this.Write("            if (isActive.HasValue)\r\n            {\r\n             
         #line default
         #line hidden
         
-        #line 332 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 360 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(isActiveCondition));
 
         
         #line default
         #line hidden
         
-        #line 332 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 360 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("\";\r\n                command.Parameters.AddWithValue(\"@isActive\", isActive.Value ?" +
         " 1 : 0);\r\n            }\r\n\r\n");
 
@@ -1792,27 +1960,27 @@ this.Write("\";\r\n                command.Parameters.AddWithValue(\"@isActive\"
         #line default
         #line hidden
         
-        #line 336 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 364 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
  } 
         
         #line default
         #line hidden
         
-        #line 336 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 364 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("            command.CommandText += \" ");
 
         
         #line default
         #line hidden
         
-        #line 337 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 365 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.OrderByClause));
 
         
         #line default
         #line hidden
         
-        #line 337 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 365 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("\";\r\n\r\n            await using var reader = await command.ExecuteReaderAsync();\r\n " +
         "           while (await reader.ReadAsync())\r\n            {\r\n                var " +
         "");
@@ -1821,35 +1989,35 @@ this.Write("\";\r\n\r\n            await using var reader = await command.Execut
         #line default
         #line hidden
         
-        #line 342 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 370 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 342 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 370 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(" = Map");
 
         
         #line default
         #line hidden
         
-        #line 342 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 370 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
 
         
         #line default
         #line hidden
         
-        #line 342 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 370 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("(reader);\r\n");
 
         
         #line default
         #line hidden
         
-        #line 343 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 371 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
  if (autoloadCols.Count > 0) {
         foreach (var prop in autoloadCols.Where(p => p.IsComplex)) {
             var propFKey = prop.GetForeignKeyProperty();
@@ -1859,165 +2027,165 @@ this.Write("(reader);\r\n");
         #line default
         #line hidden
         
-        #line 347 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 375 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("                if (");
 
         
         #line default
         #line hidden
         
-        #line 348 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 376 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propTypeName.Pluralize().ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 348 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 376 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("By");
 
         
         #line default
         #line hidden
         
-        #line 348 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 376 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(autoPKeyName));
 
         
         #line default
         #line hidden
         
-        #line 348 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 376 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(".TryGetValue(");
 
         
         #line default
         #line hidden
         
-        #line 348 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 376 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 348 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 376 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(".");
 
         
         #line default
         #line hidden
         
-        #line 348 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 376 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propFKey.GetSafeValueExpr()));
 
         
         #line default
         #line hidden
         
-        #line 348 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 376 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(", out var ");
 
         
         #line default
         #line hidden
         
-        #line 348 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 376 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name.ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 348 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 376 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("))\r\n                    ");
 
         
         #line default
         #line hidden
         
-        #line 349 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 377 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 349 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 377 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(".");
 
         
         #line default
         #line hidden
         
-        #line 349 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 377 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
 
         
         #line default
         #line hidden
         
-        #line 349 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 377 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(" = ");
 
         
         #line default
         #line hidden
         
-        #line 349 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 377 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name.ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 349 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 377 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(";\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 351 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 379 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
      } 
         
         #line default
         #line hidden
         
-        #line 352 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 380 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 	} 
         
         #line default
         #line hidden
         
-        #line 352 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 380 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("                result.Add(");
 
         
         #line default
         #line hidden
         
-        #line 353 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 381 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 353 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 381 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(");\r\n            }\r\n\r\n            return result;\r\n        }\r\n");
 
         
         #line default
         #line hidden
         
-        #line 358 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 386 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 }
         
         #line default
         #line hidden
         
-        #line 359 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 387 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 
 public void WriteGetSingleRecordMethod(SqliteRepositoryPropertySetting column){
     if(column == null)
@@ -2037,102 +2205,102 @@ public void WriteGetSingleRecordMethod(SqliteRepositoryPropertySetting column){
         #line default
         #line hidden
         
-        #line 373 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 401 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("\r\n        public async ");
 
         
         #line default
         #line hidden
         
-        #line 375 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 403 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(memberSignature));
 
         
         #line default
         #line hidden
         
-        #line 375 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 403 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("\r\n        {\r\n");
 
         
         #line default
         #line hidden
         
-        #line 377 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 405 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
      if(column.IsString) {
         
         #line default
         #line hidden
         
-        #line 377 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 405 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("            if (string.IsNullOrWhiteSpace(");
 
         
         #line default
         #line hidden
         
-        #line 378 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 406 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(column.Name.ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 378 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 406 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("))\r\n                return null;\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 381 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 409 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
      } else if(column.PropertyDefinition.IsTypeNumeric()) { 
         
         #line default
         #line hidden
         
-        #line 381 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 409 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("            if (!");
 
         
         #line default
         #line hidden
         
-        #line 382 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 410 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(column.Name.ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 382 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 410 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(".HasValue || ");
 
         
         #line default
         #line hidden
         
-        #line 382 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 410 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(column.Name.ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 382 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 410 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(".Value < 1)\r\n                return null;\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 385 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 413 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
      } 
         
         #line default
         #line hidden
         
-        #line 385 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 413 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("            await using var connection = await GetOpenConnectionAsync();\r\n       " +
         "     await using var command = connection.CreateCommand();\r\n            command." +
         "CommandText = $@\"{_selectStatement}\r\n            WHERE ");
@@ -2141,56 +2309,56 @@ this.Write("            await using var connection = await GetOpenConnectionAsyn
         #line default
         #line hidden
         
-        #line 389 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 417 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(column.Name));
 
         
         #line default
         #line hidden
         
-        #line 389 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 417 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(" = @");
 
         
         #line default
         #line hidden
         
-        #line 389 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 417 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(column.Name.ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 389 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 417 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("\";\r\n            command.Parameters.AddWithValue(\"@");
 
         
         #line default
         #line hidden
         
-        #line 390 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 418 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(column.Name.ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 390 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 418 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("\", ");
 
         
         #line default
         #line hidden
         
-        #line 390 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 418 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(column.Name.ToCamelCase()));
 
         
         #line default
         #line hidden
         
-        #line 390 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 418 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write(");\r\n\r\n            await using var reader = await command.ExecuteReaderAsync();\r\n " +
         "           if (!await reader.ReadAsync())\r\n                return null;\r\n\r\n");
 
@@ -2198,20 +2366,20 @@ this.Write(");\r\n\r\n            await using var reader = await command.Execute
         #line default
         #line hidden
         
-        #line 396 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 424 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
  WriteGetByResult(autoloadCols, autoloadTypeNames); 
         
         #line default
         #line hidden
         
-        #line 396 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 424 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 this.Write("        }\r\n");
 
         
         #line default
         #line hidden
         
-        #line 398 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+        #line 426 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 }
         
         #line default

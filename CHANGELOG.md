@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.17] - 2026-04-13
+
+### Added
+- Added support in the C# model-class engine to generate a `QueryParameters` helper class with paging/search support.
+- Added a new QueryParameters T4 template and related project wiring for generation.
+- Added WPF UI options to enable/disable QueryParameters generation and configure its namespace and target folder.
+- Added `OnInitialized` partial hooks in generated SQLite repositories for flexible initialization.
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.2.17`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.17`.
+- Improved code quality by using `nameof(...)` in property-change notifications.
+- Hid more technical columns in property-grid views for cleaner UX.
+- Refactored validator-template logic for improved maintainability.
+- Applied minor UI/layout improvements for better usability.
+- Updated project files to include newly added templates.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.16] - 2026-04-13
 
 ### Changed

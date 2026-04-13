@@ -7,14 +7,8 @@
 <#@ import namespace="OzzCodeGen.CodeEngines" #>
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 using System.ComponentModel.DataAnnotations;
-<#  var codeEngine = EntitySetting.CodeEngine as CSharpModelClassCodeEngine;
-    var properties = GetInheritedIncludedProperties();
-    var complexProperties = GetComplexProperties();
-    var collectionProperties = GetCollectionProperties();
-    var stringProperties = GetStringProperties();
-    var simpleProperties = GetSimpleProperties();
-    if (EntitySetting.HasCustomAttributes) { #>
-using <#= codeEngine.CustomAttribNamespace #>;
+<#  if (HasCustomAttributes()) { #>
+using <#= CodeEngine.CustomAttribNamespace #>;
 <#	} #>
 //----------------------------------------------------------------------------------
 //
@@ -24,10 +18,9 @@ using <#= codeEngine.CustomAttribNamespace #>;
 //     so manual changes should be made in another partial class file.
 //
 //----------------------------------------------------------------------------------
-
 namespace <#= NamespaceName #>
 {
-    public static partial class <#= codeEngine.ValidatorClassName #>
+    public static partial class <#= CodeEngine.ValidatorClassName #>
     {
         public static IReadOnlyDictionary<string, IReadOnlyList<string>> Validate(object model)
         {

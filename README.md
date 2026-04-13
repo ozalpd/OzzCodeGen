@@ -3,14 +3,22 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.16`
-- `OzzCodeGen.Wpf`: `2.2.16`
+- `OzzCodeGen`: `2.2.17`
+- `OzzCodeGen.Wpf`: `2.2.17`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
+## Latest Highlights (2.2.17)
+- Added `QueryParameters` helper-class generation (paging/search) in the C# Model Class engine.
+- Added QueryParameters template/config support with namespace and target-folder configuration in the WPF UI.
+- Added `OnInitialized` partial methods in generated SQLite repositories for initialization extensibility.
+- Improved code quality with broader `nameof(...)` usage in property notifications.
+- Hid more technical columns in property-grid views and refactored validator-template logic.
+- Applied minor UI/layout usability improvements and wired new templates into project files.
 
 ## Latest Highlights (2.2.16)
 - Refactored repository code generation to improve autoload-property and repository-dependency handling.
@@ -51,21 +59,6 @@ See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 - Removed redundant `StackPanel` containers and obsolete row-definition usage in the Entities tab.
 - Increased max width limits for main Entities-tab grids to `1280`.
 
-## Latest Highlights (2.2.11)
-- Refactored C# SQLite repository code generation templates to modularize method generation with helper methods.
-- Generated `GetByForeignKey` methods for each foreign-key column, alongside `GetAll`, `GetByPKey`, and `GetByUnique`.
-- Renamed enum value `GetByUniqueIndex` to `GetByUnique` for clarity.
-- Improved maintainability and support for more flexible querying in generated SQLite repositories.
-
-## Latest Highlights (2.2.10)
-- Added `AutoLoad` to SQLite repository property settings and exposed it in the WPF UI.
-- Generated constructors with repository dependencies for autoloaded navigation types.
-- Generated preload logic for related entities in `GetAllAsync` and `GetBy*Async` methods.
-- Added generated `Load*Async` methods for autoloaded navigation properties.
-- Updated generated `GetBy*Async` methods to accept nullable keys and return `null` when no key value is provided.
-- Added and used helper methods for type checks, safe value expressions, and foreign key navigation.
-- Reordered and resized SQLite repository property-grid columns, plus minor UI color improvements.
-- Refactored property change notifications to use `nameof(...)`.
 
 ## UI Icons
 - Icon set: **Bootstrap Icons v1.13.1**

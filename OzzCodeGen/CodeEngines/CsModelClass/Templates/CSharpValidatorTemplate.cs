@@ -34,26 +34,20 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
             this.Write("using System.ComponentModel.DataAnnotations;\r\n");
             
             #line 10 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\CSharpValidatorTemplate.tt"
-  var codeEngine = EntitySetting.CodeEngine as CSharpModelClassCodeEngine;
-    var properties = GetInheritedIncludedProperties();
-    var complexProperties = GetComplexProperties();
-    var collectionProperties = GetCollectionProperties();
-    var stringProperties = GetStringProperties();
-    var simpleProperties = GetSimpleProperties();
-    if (EntitySetting.HasCustomAttributes) { 
+  if (HasCustomAttributes()) { 
             
             #line default
             #line hidden
             this.Write("using ");
             
-            #line 17 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\CSharpValidatorTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(codeEngine.CustomAttribNamespace));
+            #line 11 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\CSharpValidatorTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.CustomAttribNamespace));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 18 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\CSharpValidatorTemplate.tt"
+            #line 12 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\CSharpValidatorTemplate.tt"
 	} 
             
             #line default
@@ -66,18 +60,17 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
 //     so manual changes should be made in another partial class file.
 //
 //----------------------------------------------------------------------------------
-
 namespace ");
             
-            #line 28 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\CSharpValidatorTemplate.tt"
+            #line 21 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\CSharpValidatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(NamespaceName));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    public static partial class ");
             
-            #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\CSharpValidatorTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(codeEngine.ValidatorClassName));
+            #line 23 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\CSharpValidatorTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.ValidatorClassName));
             
             #line default
             #line hidden

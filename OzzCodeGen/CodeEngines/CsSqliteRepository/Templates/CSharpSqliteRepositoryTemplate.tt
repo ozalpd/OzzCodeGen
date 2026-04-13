@@ -61,6 +61,16 @@ namespace <#= CodeEngine.NamespaceName #>
             _<#= GetRepositoryName(name).ToCamelCase() #> = <#= GetRepositoryName(name).ToCamelCase() #> ?? new <#= GetRepositoryName(name) #>(<#= GetRepositoryInitialization(name) #>);
 <#	} #>
             InitializeDatabase();
+<#  if (autoloadTypeNames.Count == 0) { #>
+            OnInitialized();
+<#	} else if (autoloadTypeNames.Count == 1) { #>
+            OnInitialized(<#= GetRepositoryName(autoloadTypeNames[0]).ToCamelCase() #> == null);
+<#	} else { #>
+            OnInitialized(<#= GetRepositoryName(autoloadTypeNames[0]).ToCamelCase() #> == null
+<#      for (int i = 1; i < autoloadTypeNames.Count; i++) { #>
+                        , <#= GetRepositoryName(autoloadTypeNames[i]).ToCamelCase() #> == null<# if (autoloadTypeNames.Count == i+1) { #>);<# } #> 
+<#      } #>
+<#	} #>
         }
         private readonly string _selectStatement;
 <#  foreach (string name in autoloadTypeNames) {#>
@@ -75,6 +85,24 @@ namespace <#= CodeEngine.NamespaceName #>
             SeedIfEmpty(connection, "<#= EntitySetting.FileNameSeed #>");
 <#	} #>
         }
+
+<#  if (autoloadTypeNames.Count > 0) { #>
+        /// <summary>
+        /// Initialization hook for additional setup after the repository is constructed.
+        /// The parameters indicate whether the corresponding repository was created by this repository (true) or provided externally (false),
+        /// which can be useful to determine if any additional initialization or event wiring is needed.
+        /// </summary>
+<#  } #>
+<#  if (autoloadTypeNames.Count == 0) { #>
+        partial void OnInitialized();
+<#	} else if (autoloadTypeNames.Count == 1) { #>
+        partial void OnInitialized(bool is<#= GetRepositoryName(autoloadTypeNames[0]) #>Null);
+<#	} else { #>
+        partial void OnInitialized(bool is<#= GetRepositoryName(autoloadTypeNames[0]) #>Null
+<#      for (int i = 1; i < autoloadTypeNames.Count; i++) { #>
+                                 , bool is<#= GetRepositoryName(autoloadTypeNames[i]) #>Null<# if (autoloadTypeNames.Count == i+1) { #>);<# } #> 
+<#      } #>
+<#  } #>
 <#  WriteGetMulipleRecordsMethod(); // GetAllAsync #>
 <#  foreach (var fkey in fkeyColumns) {
         WriteGetMulipleRecordsMethod(fkey);#>
