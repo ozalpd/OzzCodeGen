@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.16] - 2026-04-13
+
+### Changed
+- Bumped `OzzCodeGen` version to `2.2.16`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.16`.
+- Refactored generated repository autoload and dependency logic for improved correctness and maintainability.
+- Added caching for autoload and foreign-key properties in `SqliteRepositoryEntitySetting`.
+- Introduced `GetRepositoryName` and `HasThisKindOfRepository` helpers for more robust repository-name resolution and dependency checks.
+- Updated template logic to inject repository dependencies only when required, improving generated constructor parameters.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.15] - 2026-04-12
 
 ### Changed

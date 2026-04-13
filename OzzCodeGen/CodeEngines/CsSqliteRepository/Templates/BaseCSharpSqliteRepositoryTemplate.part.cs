@@ -129,12 +129,7 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
 
     protected IEnumerable<SqliteRepositoryPropertySetting> GetAutoLoadProperties()
     {
-        var cols = EntitySetting.GetInheritedIncludedProperties()
-                            .OfType<SqliteRepositoryPropertySetting>()
-                            .Where(p => p.AutoLoad)
-                            .OrderBy(p => p.PropertyDefinition.DisplayOrder);
-
-        return cols;
+        return EntitySetting.GetAutoLoadProperties();
     }
 
     protected IEnumerable<SqliteRepositoryPropertySetting> GetForeignKeyProperties()
@@ -166,13 +161,17 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
                              && !p.ColumnName.Equals(createdAtColName, StringComparison.InvariantCultureIgnoreCase));
     }
 
+    protected string GetRepositoryInitialization(string entityName)
+    {
+        if (!EntitySetting.HasThisKindOfRepository(entityName))
+            return "databasePath";
+
+        return $"databasePath, {GetRepositoryName(EntitySetting.Name).ToCamelCase()}: this";
+    }
+
     protected string GetRepositoryName(string entityName)
     {
-        string fixedName = entityName.EndsWith("Dto") ? entityName[..^3] : entityName;
-        if (fixedName.StartsWith("ICollection<"))
-            fixedName = fixedName.Substring(12, fixedName.Length - 13);
-
-        return $"{fixedName}Repository";
+        return EntitySetting.GetRepositoryName(entityName);
     }
 
     protected virtual bool ShouldSkipInsert(SqliteRepositoryPropertySetting property)

@@ -170,6 +170,17 @@ public class SqliteRepositoryEntitySetting : BaseCSharpEntitySetting<SqliteRepos
     }
     private string _orderByClause;
 
+    public IEnumerable<SqliteRepositoryPropertySetting> GetAutoLoadProperties()
+    {
+        if (_autoLoadProperties == null)
+            _autoLoadProperties = GetInheritedIncludedProperties()
+                                        .Where(p => p.AutoLoad)
+                                        .OrderBy(p => p.PropertyDefinition.DisplayOrder)
+                                        .ToList();
+        return _autoLoadProperties;
+    }
+    IEnumerable<SqliteRepositoryPropertySetting> _autoLoadProperties;
+
     public override AbstractEntitySetting<SqliteRepositoryPropertySetting> GetBaseEntitySetting()
     {
         if (string.IsNullOrEmpty(EntityDefinition?.BaseTypeName))
@@ -179,6 +190,19 @@ public class SqliteRepositoryEntitySetting : BaseCSharpEntitySetting<SqliteRepos
         return codeEngine.Entities
                          .FirstOrDefault(e => e.EntityDefinition.Name.Equals(EntityDefinition.BaseTypeName));
     }
+
+    public IEnumerable<SqliteRepositoryPropertySetting> GetForeignKeyColumns()
+    {
+        if (_fkeyColumns == null)
+            _fkeyColumns = GetRepositoryColumns()
+                                .Where(p => p.PropertyDefinition is SimpleProperty
+                                         && ((SimpleProperty)p.PropertyDefinition).IsForeignKey)
+                                .OrderBy(c => c.PropertyDefinition.DisplayOrder)
+                                .ToList();
+
+        return _fkeyColumns;
+    }
+    IEnumerable<SqliteRepositoryPropertySetting> _fkeyColumns;
 
     public new IEnumerable<SqliteRepositoryPropertySetting> GetInheritedProperties()
     {
@@ -204,16 +228,35 @@ public class SqliteRepositoryEntitySetting : BaseCSharpEntitySetting<SqliteRepos
     }
     IEnumerable<SqliteRepositoryPropertySetting> _repositoryColumns;
 
-    public IEnumerable<SqliteRepositoryPropertySetting> GetForeignKeyColumns()
+    public string GetRepositoryName()
     {
-        if (_fkeyColumns == null)
-            _fkeyColumns = GetRepositoryColumns()
-                                .Where(p => p.PropertyDefinition is SimpleProperty
-                                         && ((SimpleProperty)p.PropertyDefinition).IsForeignKey)
-                                .OrderBy(c => c.PropertyDefinition.DisplayOrder)
-                                .ToList();
-
-        return _fkeyColumns;
+        return GetRepositoryName(Name);
     }
-    IEnumerable<SqliteRepositoryPropertySetting> _fkeyColumns;
+
+    public string GetRepositoryName(string entityName)
+    {
+        string fixedName = FixEntityTypeName(entityName);
+
+        return $"{fixedName}Repository";
+    }
+
+    private static string FixEntityTypeName(string entityName)
+    {
+        string fixedName = entityName.EndsWith("Dto") ? entityName[..^3] : entityName;
+        if (fixedName.StartsWith("ICollection<"))
+            fixedName = fixedName.Substring(12, fixedName.Length - 13);
+        return fixedName;
+    }
+
+    public bool HasThisKindOfRepository(string entityName)
+    {
+        string fixedName = FixEntityTypeName(entityName);
+
+        var entity = CodeEngine.Entities.FirstOrDefault(c => c.Name.Equals(fixedName, StringComparison.InvariantCultureIgnoreCase));
+        if (entity == null)
+            return false;
+
+        var autoLoadProperties = entity.GetAutoLoadProperties();
+        return autoLoadProperties.Any(p => p.PropertyDefinition.TypeName.Equals(Name, StringComparison.InvariantCultureIgnoreCase));
+    }
 }

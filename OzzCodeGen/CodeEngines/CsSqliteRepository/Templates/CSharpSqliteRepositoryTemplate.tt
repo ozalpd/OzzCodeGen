@@ -49,7 +49,7 @@ namespace <#= CodeEngine.NamespaceName #>
 <#  if (autoloadCols.Count > 0) { #>
         public <#= EntitySetting.Name #>Repository(string databasePath
 <#      for (int i = 0; i < autoloadTypeNames.Count; i++) { #>
-                               ,I<#= GetRepositoryName(autoloadTypeNames[i]) #>? <#= GetRepositoryName(autoloadTypeNames[i]).ToCamelCase() #> = null<# if (autoloadTypeNames.Count == i+1) { #>
+                               , I<#= GetRepositoryName(autoloadTypeNames[i]) #>? <#= GetRepositoryName(autoloadTypeNames[i]).ToCamelCase() #> = null<# if (autoloadTypeNames.Count == i+1) { #>
 ) : base(databasePath, "<#= EntitySetting.TableName #>")<#	} #> 
 <#	    } #>
 <#	} else { #>
@@ -58,7 +58,7 @@ namespace <#= CodeEngine.NamespaceName #>
         {
             _selectStatement = $"SELECT {string.Join(", ", ColumnNames)} FROM {_tableName}";
 <#  foreach (string name in autoloadTypeNames) {#>
-            _<#= GetRepositoryName(name).ToCamelCase() #> = <#= GetRepositoryName(name).ToCamelCase() #> ?? new <#= GetRepositoryName(name) #>(databasePath);
+            _<#= GetRepositoryName(name).ToCamelCase() #> = <#= GetRepositoryName(name).ToCamelCase() #> ?? new <#= GetRepositoryName(name) #>(<#= GetRepositoryInitialization(name) #>);
 <#	} #>
             InitializeDatabase();
         }

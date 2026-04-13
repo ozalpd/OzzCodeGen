@@ -144,7 +144,7 @@ using System.Collections.Generic;
             
             #line default
             #line hidden
-            this.Write("                               ,I");
+            this.Write("                               , I");
             
             #line 52 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetRepositoryName(autoloadTypeNames[i])));
@@ -242,7 +242,14 @@ using System.Collections.Generic;
             
             #line default
             #line hidden
-            this.Write("(databasePath);\r\n");
+            this.Write("(");
+            
+            #line 61 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetRepositoryInitialization(name)));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n");
             
             #line 62 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
 	} 
