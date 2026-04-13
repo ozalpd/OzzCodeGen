@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Added caching for autoload and foreign-key properties in `SqliteRepositoryEntitySetting`.
 - Introduced `GetRepositoryName` and `HasThisKindOfRepository` helpers for more robust repository-name resolution and dependency checks.
 - Updated template logic to inject repository dependencies only when required, improving generated constructor parameters.
+- Updated `CSharpSqliteRepositoryTemplate.cs` and `CSharpSqliteRepositoryTemplate.tt` to generate repository interfaces as `partial`, enabling interface extensions across multiple files.
 - Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
 - Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
 

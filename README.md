@@ -17,6 +17,7 @@ See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 - Added caching for autoload and foreign-key properties in `SqliteRepositoryEntitySetting`.
 - Introduced `GetRepositoryName` and `HasThisKindOfRepository` helpers for more robust repository-name resolution and dependency checks.
 - Updated template logic to inject repository dependencies only when needed, improving generated constructor parameter generation.
+- Updated `CSharpSqliteRepositoryTemplate.cs` and `CSharpSqliteRepositoryTemplate.tt` to generate repository interfaces as `partial`, enabling extension across multiple files.
 
 ## Latest Highlights (2.2.15)
 - Added `OnLoaded` partial-method generation after entity materialization to improve repository extensibility.

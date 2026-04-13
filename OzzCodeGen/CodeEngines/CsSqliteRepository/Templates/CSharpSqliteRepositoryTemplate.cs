@@ -1501,7 +1501,7 @@ using System.Collections.Generic;
             
             #line default
             #line hidden
-            this.Write("        };\r\n    }\r\n\r\n    public interface I");
+            this.Write("        };\r\n    }\r\n\r\n    public partial interface I");
             
             #line 287 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
