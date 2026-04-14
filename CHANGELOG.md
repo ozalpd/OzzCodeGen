@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.18] - 2026-04-14
+
+### Added
+- Added per-entity strongly-typed `QueryParameters` class generation support via the new `GenerateQueryParam` property.
+
+### Changed
+- Refactored model-class templates and related code paths to support generation of both base and derived `QueryParameters` classes.
+- Updated search-parameter inclusion logic to use `IsSearchParameter` for controlling which properties participate in generated SQL/LINQ `WHERE` filtering.
+- Improved naming consistency and updated project documentation.
+- Bumped `OzzCodeGen` version to `2.2.18`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.18`.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.17] - 2026-04-13
 
 ### Added

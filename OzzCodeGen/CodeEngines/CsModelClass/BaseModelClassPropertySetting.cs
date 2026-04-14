@@ -29,7 +29,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             set
             {
                 _custValid = value;
-                RaisePropertyChanged("CustomAttributes");
+                RaisePropertyChanged(nameof(CustomAttributes));
             }
         }
         private string _custValid;
@@ -40,7 +40,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             set
             {
                 _dataFormatString = value;
-                RaisePropertyChanged("DataFormatString");
+                RaisePropertyChanged(nameof(DataFormatString));
             }
         }
         private string _dataFormatString;
@@ -58,7 +58,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             set
             {
                 _dataType = value;
-                RaisePropertyChanged("DataType");
+                RaisePropertyChanged(nameof(DataType));
             }
         }
         private string _dataType;
@@ -72,7 +72,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             set
             {
                 _defaultValue = value;
-                RaisePropertyChanged("DefaultValue");
+                RaisePropertyChanged(nameof(DefaultValue));
             }
         }
         private string _defaultValue;
@@ -84,7 +84,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             {
                 if (_dtoExclusion == value) return;
                 _dtoExclusion = value;
-                RaisePropertyChanged("DTOExclusion");
+                RaisePropertyChanged(nameof(DTOExclusion));
             }
         }
         private bool _dtoExclusion;
@@ -213,7 +213,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             set
             {
                 _htmlEncode = value;
-                RaisePropertyChanged("HtmlEncode");
+                RaisePropertyChanged(nameof(HtmlEncode));
             }
         }
         private bool? _htmlEncode;
@@ -225,7 +225,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             {
                 if (_range == value) return;
                 _range = value;
-                RaisePropertyChanged("Range");
+                RaisePropertyChanged(nameof(Range));
             }
         }
         private string _range;
@@ -237,7 +237,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             {
                 if (_regularExpression == value) return;
                 _regularExpression = value;
-                RaisePropertyChanged("RegularExpression");
+                RaisePropertyChanged(nameof(RegularExpression));
             }
         }
         private string _regularExpression;
@@ -256,7 +256,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             {
                 if (_required == value) return;
                 _required = value;
-                RaisePropertyChanged("Required");
+                RaisePropertyChanged(nameof(Required));
             }
         }
         private string _required;
@@ -311,7 +311,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             {
                 if (_uiHint == value) return;
                 _uiHint = value;
-                RaisePropertyChanged("UIHint");
+                RaisePropertyChanged(nameof(UIHint));
             }
         }
         private string _uiHint;

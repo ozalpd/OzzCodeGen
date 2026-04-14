@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace OzzCodeGen.CodeEngines.CsModelClass
 {
@@ -15,5 +16,52 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
                     .FirstOrDefault(e => e.EntityDefinition.Name.Equals(EntityDefinition.BaseTypeName));
         }
 
+        /// <summary>
+        /// Generates a QueryParameters helper class for this entity when enabled.
+        /// </summary>
+        public bool GenerateQueryParam
+        {
+            set
+            {
+                _generateQueryParam = value;
+                RaisePropertyChanged(nameof(GenerateQueryParam));
+            }
+            get
+            {
+                return _generateQueryParam;
+            }
+        }
+        private bool _generateQueryParam;
+
+        public IEnumerable<ModelPropertySetting> SearchableProperties
+        {
+            get
+            {
+                if (_searchableProperties == null)
+                    _searchableProperties = GetInheritedIncludedProperties().OfType<ModelPropertySetting>()
+                                                           .Where(p => p.IsSearchParameter)
+                                                           .OrderBy(p => p.PropertyDefinition.DisplayOrder);
+                return _searchableProperties;
+            }
+        }
+        IEnumerable<ModelPropertySetting> _searchableProperties;
+
+        IEnumerable<ModelPropertySetting> SearchableComplexProperties
+        {
+            get
+            {
+                return SearchableProperties.Where(p => p.IsComplex)
+                                           .OrderBy(p => p.PropertyDefinition.DisplayOrder);
+            }
+        }
+
+        public IEnumerable<ModelPropertySetting> SearchableSimpleProperties
+        {
+            get
+            {
+                return SearchableProperties.Where(p => p.IsSimpleOrString)
+                                           .OrderBy(p => p.PropertyDefinition.DisplayOrder);
+            }
+        }
     }
 }

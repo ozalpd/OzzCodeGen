@@ -15,6 +15,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
     using OzzCodeGen.Definitions;
     using OzzCodeGen.CodeEngines;
     using OzzCodeGen.Templates.Cs;
+    using OzzUtils;
     using System;
     
     /// <summary>
@@ -39,65 +40,360 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
 //     so manual changes should be made in another partial class file.
 //
 //----------------------------------------------------------------------------------
-namespace ");
+");
             
-            #line 17 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            #line 18 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+  if (EntitySetting == null) { //If no EntitySetting passed that means we are generating QueryParameters class not derived one 
+            
+            #line default
+            #line hidden
+            this.Write("namespace ");
+            
+            #line 19 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(NamespaceName));
             
             #line default
             #line hidden
-            this.Write("\r\n{\r\n\tpublic partial class ");
+            this.Write("\r\n{\r\n    /// <summary>\r\n    /// Represents the query parameters for pagination an" +
+                    "d searching.\r\n    /// </summary>\r\n    public partial class ");
             
-            #line 19 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
             
             #line default
             #line hidden
-            this.Write("\r\n\t{\r\n\t\tpublic ");
+            this.Write("\r\n    {\r\n        public ");
             
-            #line 21 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
             
             #line default
             #line hidden
-            this.Write(@"()
-		{
-			Page = 1;
-			PageSize = 20;
-		}
-
-		public int Page { get; set; }
-		public int PageSize { get; set; }
-		public string? SearchString { get; set; }
-
-		public int PageCount
-		{
-			get
-			{
-				return TotalCount > 0 ? (int)Math.Ceiling(TotalCount / (double)PageSize) : 0;
-			}
-		}
-
-		public int Skip
-		{
-			get { return (Page - 1) * PageSize; }
-		}
-
-		public int TotalCount
-		{
-			get { return _totalCount; }
-			set
-			{
-				_totalCount = value;
-				if (Page < 1) Page = 1;
-				if (Page > PageCount) Page = PageCount;
-				int skip = (Page - 1) * PageSize;
-			}
-		}
-		int _totalCount;
-	}
-}
-");
+            this.Write("()\r\n        {\r\n            Page = 1;\r\n            PageSize = 20;\r\n        }\r\n\r\n  " +
+                    "      /// <summary>\r\n        /// Initializes a new instance of the <see cref=\"");
+            
+            #line 33 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            
+            #line default
+            #line hidden
+            this.Write("\"/> class based on the specified query parameters.\r\n        /// </summary>\r\n     " +
+                    "   /// <param name=\"queryParameters\">The query parameters to copy values from.</" +
+                    "param>\r\n        public QueryParameters(QueryParameters queryParameters)\r\n       " +
+                    " {\r\n            if (queryParameters != null)\r\n            {\r\n                Pag" +
+                    "e = queryParameters.Page;\r\n                PageSize = queryParameters.PageSize;\r" +
+                    "\n                SearchString = queryParameters.SearchString;\r\n            }\r\n  " +
+                    "      }\r\n\r\n        /// <summary>\r\n        /// Gets or sets the current page numb" +
+                    "er.\r\n        /// </summary>\r\n        public int Page { get; set; }\r\n        \r\n  " +
+                    "      /// <summary>\r\n        /// Gets or sets the number of items per page.\r\n   " +
+                    "     /// </summary>\r\n        public int PageSize { get; set; }\r\n        \r\n      " +
+                    "  /// <summary>\r\n        /// Gets or sets the general purpose search string.\r\n  " +
+                    "      /// </summary>\r\n        public string? SearchString { get; set; }\r\n\r\n     " +
+                    "   /// <summary>\r\n        /// Gets the total number of pages based on the total " +
+                    "count and page size.\r\n        /// </summary>\r\n        public int PageCount\r\n    " +
+                    "    {\r\n            get\r\n            {\r\n                return TotalCount > 0 ? (" +
+                    "int)Math.Ceiling(TotalCount / (double)PageSize) : 0;\r\n            }\r\n        }\r\n" +
+                    "\r\n        /// <summary>\r\n        /// Gets the number of items to skip based on t" +
+                    "he current page and page size.\r\n        /// </summary>\r\n        public int Skip\r" +
+                    "\n        {\r\n            get { return (Page - 1) * PageSize; }\r\n        }\r\n\r\n    " +
+                    "    /// <summary>\r\n        /// Gets or sets the total number of items.\r\n        " +
+                    "/// </summary>\r\n        public int TotalCount\r\n        {\r\n            get { retu" +
+                    "rn _totalCount; }\r\n            set\r\n            {\r\n                _totalCount =" +
+                    " value;\r\n                if (Page < 1) Page = 1;\r\n                if (Page > Pag" +
+                    "eCount) Page = PageCount;\r\n                int skip = (Page - 1) * PageSize;\r\n  " +
+                    "          }\r\n        }\r\n        int _totalCount;\r\n    }\r\n}\r\n");
+            
+            #line 97 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+  }
+    else
+    {
+        var searchableSimples = EntitySetting.SearchableSimpleProperties.ToList(); 
+            
+            #line default
+            #line hidden
+            this.Write("using ");
+            
+            #line 101 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.NamespaceName));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n\r\nnamespace ");
+            
+            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(NamespaceName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n{\r\n    /// <summary>\r\n    /// Represents the query parameters for the ");
+            
+            #line 106 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" entity.\r\n    /// </summary>\r\n    public partial class ");
+            
+            #line 108 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            
+            #line 108 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            
+            #line default
+            #line hidden
+            this.Write(" : ");
+            
+            #line 108 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n    {\r\n        public ");
+            
+            #line 110 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            
+            #line 110 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            
+            #line default
+            #line hidden
+            this.Write("() { }\r\n\r\n        /// <summary>\r\n        /// Initializes a new instance of the <s" +
+                    "ee cref=\"");
+            
+            #line 113 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            
+            #line 113 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            
+            #line default
+            #line hidden
+            this.Write("\"/> class based on the specified query parameters.\r\n        /// </summary>\r\n     " +
+                    "   /// <param name=\"queryParameters\">The query parameters to copy values from.</" +
+                    "param>\r\n        public ");
+            
+            #line 116 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            
+            #line 116 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            
+            #line default
+            #line hidden
+            this.Write("(");
+            
+            #line 116 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            
+            #line 116 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            
+            #line default
+            #line hidden
+            this.Write(" queryParameters) : base(queryParameters)\r\n        {\r\n            if (queryParame" +
+                    "ters != null && queryParameters is ");
+            
+            #line 118 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            
+            #line 118 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 118 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write("QueryParams)\r\n            {\r\n");
+            
+            #line 120 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+  foreach (var property in searchableSimples.Where(p => !p.IsDateTime)) { 
+            
+            #line default
+            #line hidden
+            this.Write("                ");
+            
+            #line 121 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" = ");
+            
+            #line 121 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write("QueryParams.");
+            
+            #line 121 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n");
+            
+            #line 122 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+    } 
+            
+            #line default
+            #line hidden
+            
+            #line 123 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+  foreach (var item in searchableSimples.Where(p => p.IsDateTime)) { 
+            
+            #line default
+            #line hidden
+            this.Write("                ");
+            
+            #line 124 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            
+            #line default
+            #line hidden
+            this.Write("Min = ");
+            
+            #line 124 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write("QueryParams.");
+            
+            #line 124 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            
+            #line default
+            #line hidden
+            this.Write("Min;\r\n                ");
+            
+            #line 125 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            
+            #line default
+            #line hidden
+            this.Write("Max = ");
+            
+            #line 125 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write("QueryParams.");
+            
+            #line 125 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            
+            #line default
+            #line hidden
+            this.Write("Max;\r\n");
+            
+            #line 126 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+    } 
+            
+            #line default
+            #line hidden
+            this.Write("            }\r\n        }\r\n\r\n");
+            
+            #line 130 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+  foreach (var property in searchableSimples.Where(p => !p.IsDateTime)) { 
+            
+            #line default
+            #line hidden
+            this.Write("        public ");
+            
+            #line 131 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.GetTypeName(getReturnType:true)));
+            
+            #line default
+            #line hidden
+            this.Write("? ");
+            
+            #line 131 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" { get; set; }\r\n");
+            
+            #line 132 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+    } 
+            
+            #line default
+            #line hidden
+            
+            #line 133 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+  foreach (var item in searchableSimples.Where(p => p.IsDateTime)) { 
+            
+            #line default
+            #line hidden
+            this.Write("        public ");
+            
+            #line 134 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.GetNullableTypeName()));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 134 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            
+            #line default
+            #line hidden
+            this.Write("Min { get; set; }\r\n        public ");
+            
+            #line 135 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.GetNullableTypeName()));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 135 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            
+            #line default
+            #line hidden
+            this.Write("Max { get; set; }\r\n");
+            
+            #line 136 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+  } 
+            
+            #line default
+            #line hidden
+            this.Write("    }\r\n}\r\n");
+            
+            #line 139 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+    } 
+            
+            #line default
+            #line hidden
             return this.GenerationEnvironment.ToString();
         }
     }

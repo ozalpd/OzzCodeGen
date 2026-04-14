@@ -2,18 +2,25 @@
 {
     public partial class QueryParametersTemplate
     {
-        public QueryParametersTemplate(CSharpModelClassCodeEngine codeEngine)
+        public QueryParametersTemplate(CSharpModelClassCodeEngine codeEngine, ModelClassEntitySetting entitySetting = null)
         {
             _codeEngine = codeEngine;
-            NamespaceName = CodeEngine.ValidatorNamespaceName;
+            NamespaceName = CodeEngine.QueryParamNamespaceName;
+
+            _entitySetting = entitySetting;
         }
+
+        public override ModelClassEntitySetting EntitySetting => _entitySetting;
+        ModelClassEntitySetting? _entitySetting;
 
         public override CSharpModelClassCodeEngine CodeEngine => _codeEngine;
         CSharpModelClassCodeEngine _codeEngine;
 
         public override string GetDefaultFileName()
         {
-            return "QueryParameters.cs";
+            return EntitySetting != null
+                ? $"{EntitySetting.Name}QueryParameters.cs"
+                : "QueryParameters.cs";
         }
     }
 }

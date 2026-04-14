@@ -23,7 +23,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - **Data model:** `DataModel` is an `ObservableCollection<EntityDefinition>` with move/reorder helpers and XML (de)serialization (see [DataModel.cs](OzzCodeGen/DataModel.cs#L1-L22), [DataModel.cs](OzzCodeGen/DataModel.cs#L60-L97)).
 - **Pluggable engines:** Engine IDs are centralized in [EngineTypes.cs](OzzCodeGen/CodeEngines/EngineTypes.cs); the WPF UI binds to these IDs and injects engine-specific UIs.
   - Active IDs: `CS_Model_Class_Generator`, `CS_Sqlite_Repository_Generator`, `Metadata_Class_Generator`, `AspNetMvc_Controller_View_Generator`, `T-Sql_Scripts_Generator`, `Sqlite_Scripts_Generator`, `Localization_Resource_Generator`, `EF_Technical_Document`.
-  - `CsModelClass` is the primary C# model-class path; it now supports optional generation of a reusable `QueryParameters` helper class (paging/search) with configurable target namespace/folder exposed in the model-class engine UI.
+  - `CsModelClass` is the primary C# model-class path; it supports `QueryParameters` generation with paging/search support, including per-entity strongly-typed derived classes controlled by `GenerateQueryParam`.
   - `CsSqliteRepository` generates C# SQLite repository classes (CRUD + lookup + interface signatures) with configurable `CreatedAt`/`UpdatedAt` timestamp columns, `SingleColumnUpdate` and `AutoLoad` property support, generated `UpdateAsync`, `Update{ColumnName}Async`, `DeleteAsync`, `Load*Async`, `GetByPKey`, `GetByUnique`, and per-foreign-key `GetByForeignKey` methods, nullable-key-aware `GetBy*Async` patterns, preload support for autoloaded navigation properties, change detection/selective column updates, partial `OnInitialized`/`OnLoaded`/`OnCreated`/`OnUpdated` extensibility hooks, DDL/seed/order settings, unique-index awareness, repository-name resolution for `Dto` and `ICollection<>` wrappers, and robust parameter/mapping behavior.
   - For repository autoload generation, only load complex/navigation properties, skip self-references and `ICollection<>` wrappers, and preserve null/empty guards in generated `GetAllAsync` and `GetByPKeyAsync` flows.
   - Storage engine/index generation supports composite indexes through `StorageColumnSetting.CompositeIndexColumns`; keep parsing/matching logic centralized and preserve original model column casing when generating SQL.
@@ -35,7 +35,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
   - Empty provider discovers `.OzzGen` templates under `Defaults/` and opens an interactive dialog (see [EmptyModel.cs](OzzCodeGen/Providers/EmptyModel.cs#L78-L112), [EmptyModel.cs](OzzCodeGen/Providers/EmptyModel.cs#L116-L167)).
 - **Templates & T4:** Many engine templates are `.tt`-backed with `*.part.cs` companions; the `.csproj` wires `DependentUpon` to keep generated pieces grouped (see [OzzCodeGen.csproj](OzzCodeGen/OzzCodeGen.csproj#L25-L112)).
   - C# model-class templates live under `CodeEngines/CsModelClass/Templates/` and share behavior via `BaseCSharpModelClassTemplate` + engine/settings base classes.
-  - Keep optional `QueryParameters` generation support aligned between model-class templates (`QueryParametersTemplate.tt` + `.part.cs`), engine settings, and the model-class WPF UI toggles/namespace-folder configuration.
+  - Keep `QueryParameters` generation support aligned between model-class templates (`QueryParametersTemplate.tt` + `.part.cs`), engine settings, and the model-class WPF UI toggles/namespace-folder configuration; support both base and derived per-entity outputs and use `IsSearchParameter` to control inclusion in generated filtering logic.
   - SQLite repository templates under `CodeEngines/CsSqliteRepository/Templates/` are active and evolving; prefer shared helper logic in `BaseCSharpSqliteRepositoryTemplate.tt` + `BaseCSharpSqliteRepositoryTemplate.part.cs`, including reusable parameter-writing helpers, custom/safe value-expression support, type-check helpers, foreign-key navigation helpers, modularized method-generation helpers, timestamp-column handling, consistent partial-hook generation (`OnInitialized`/`OnLoaded`/`OnCreated`/`OnUpdated`), and focused per-template rendering logic.
   - Storage templates under `CodeEngines/Storage/Templates/` should keep index generation logic modular and consistent across T-SQL and SQLite outputs, including composite-index support and correct case-insensitive ` Desc` suffix handling for descending index columns.
 
@@ -90,7 +90,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
   - `{Language}{Purpose}Template` – e.g., `CSharpModelClassTemplate`, `TypeScriptModelClassTemplate`
   - `{Language}{Purpose}ValidatorTemplate` – e.g., `CSharpValidatorTemplate`, `RustValidatorTemplate`
 - **Folder and namespace naming:** Prefer folder and namespace names that are as short as possible while still understandable; for example, prefer `CsSqliteRepository` over `CSharpSqliteRepository`.
-- **Property names:** Use shorter property names for setting/property names when suggesting API names.
+- **Property names:** Use clearer property names for flags controlling inclusion in generated SQL/LINQ WHERE filtering, such as `IsSearchParameter` instead of longer names like `IncludeInSearchParameters`.
 
 ## Extending This Repo
 - **Add a model provider:** Implement `IModelProvider`, wire UI selection, and set `CodeGenProject.ModelProvider`. Provide `SelectSource()` for source picking and `RefreshDataModel()` for schema sync.
@@ -130,7 +130,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - Tests are not present; rely on manual verification via WPF apps.
 - Project files use SDK-style `.csproj` format targeting .NET 10. Current Windows projects target `net10.0-windows10.0.19041.0`; assembly metadata (`Version`, `Copyright`, `Company`, `Product`, `Description`) is declared directly in each `.csproj`.
 - Current version alignment:
-  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.2.17`
+  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.2.18`
   - `OzzLocalization` and `OzzLocalization.Wpf`: `2.1.6`
 - Versioning policy:
   - `OzzLocalization` and `OzzLocalization.Wpf` are expected to change infrequently and should normally advance with small monotonic patch increments (for example `2.1.6` -> `2.1.7` -> `2.1.8`) unless there is a real feature-driven or breaking-change reason to change minor or major versions.

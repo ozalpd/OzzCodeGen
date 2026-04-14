@@ -1,7 +1,6 @@
 using OzzCodeGen.CodeEngines.Localization;
 using OzzCodeGen.Definitions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Windows.Controls;
@@ -110,7 +109,7 @@ public abstract class BaseModelClassCodeEngine : BaseCodeEngine
         set
         {
             _customAttribNamespace = value;
-            RaisePropertyChanged("CustomAttribNamespace");
+            RaisePropertyChanged(nameof(CustomAttribNamespace));
         }
     }
     private string _customAttribNamespace;
@@ -120,7 +119,7 @@ public abstract class BaseModelClassCodeEngine : BaseCodeEngine
         set
         {
             _generateForDTO = value;
-            RaisePropertyChanged("GenerateForDTO");
+            RaisePropertyChanged(nameof(GenerateForDTO));
         }
         get
         {
@@ -150,7 +149,7 @@ public abstract class BaseModelClassCodeEngine : BaseCodeEngine
         set
         {
             _useResourceFiles = value;
-            RaisePropertyChanged("UseResourceFiles");
+            RaisePropertyChanged(nameof(UseResourceFiles));
         }
         get
         {

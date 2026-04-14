@@ -105,23 +105,6 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
     }
     private bool _generateValidator;
 
-    /// <summary>
-    /// Generates a QueryParameters helper class when enabled.
-    /// </summary>
-    public bool GenerateQueryParam
-    {
-        set
-        {
-            _generateQueryParam = value;
-            RaisePropertyChanged(nameof(GenerateQueryParam));
-        }
-        get
-        {
-            return _generateQueryParam;
-        }
-    }
-    private bool _generateQueryParam;
-
 
     public bool GenerateXmlDoc
     {
@@ -287,15 +270,23 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
 
         var template = new CSharpModelClassTemplate(entitySettings);
         var fileName = Path.Combine(TargetDirectory, template.GetDefaultFileName());
-        bool allWritten = true;
+        bool allWritten = template.WriteToFile(fileName, OverwriteExisting || entitySettings.OverwriteExisting);
 
         if (GenerateForDTO)
         {
             var dtoTemplate = new CSharpModelClassTemplate(entitySettings, true);
-            var dtoFileName = Path.Combine(TargetDirectory, dtoTemplate.GetDefaultFileName());
-            allWritten = dtoTemplate.WriteToFile(dtoFileName, OverwriteExisting || entitySettings.OverwriteExisting);
+            fileName = Path.Combine(TargetDirectory, dtoTemplate.GetDefaultFileName());
+            allWritten = allWritten && dtoTemplate.WriteToFile(fileName, OverwriteExisting || entitySettings.OverwriteExisting);
         }
-        return template.WriteToFile(fileName, OverwriteExisting || entitySettings.OverwriteExisting) & allWritten;
+
+        if (entitySettings.GenerateQueryParam)
+        {
+            var queryParamTemplate = new QueryParametersTemplate(this, entitySettings);
+            fileName = Path.Combine(TargetQueryParamDirectory, queryParamTemplate.GetDefaultFileName());
+            allWritten = queryParamTemplate.WriteToFile(fileName, OverwriteExisting || entitySettings.OverwriteExisting) && allWritten;
+        }
+
+        return allWritten;
     }
 
     public override bool RenderSelectedTemplate()
@@ -305,11 +296,14 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
             Project.SearchString = string.Empty;
         }
 
+        var entitySet = EntitySettings
+                            .OfType<ModelClassEntitySetting>()
+                            .ToList();
         bool allWritten = true;
         var entity = GetSelectedEntity();
         if (RenderAllEntities)
         {
-            foreach (ModelClassEntitySetting setting in EntitySettings.Where(e => e.Exclude == false))
+            foreach (var setting in entitySet.Where(e => e.Exclude == false))
             {
                 allWritten = RenderTemplate(setting) & allWritten;
             }
@@ -326,7 +320,7 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
             allWritten = validatorTemplate.WriteToFile(fileName, OverwriteExisting) & allWritten;
         }
 
-        if (GenerateQueryParam)
+        if (entitySet.Any(e => e.GenerateQueryParam))
         {
             var queryParamTemplate = new QueryParametersTemplate(this);
             var fileName = Path.Combine(TargetQueryParamDirectory, queryParamTemplate.GetDefaultFileName());
