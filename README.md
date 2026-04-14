@@ -3,14 +3,20 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.18`
-- `OzzCodeGen.Wpf`: `2.2.18`
+- `OzzCodeGen`: `2.2.19`
+- `OzzCodeGen.Wpf`: `2.2.19`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
+## Latest Highlights (2.2.19)
+- Refactored `QueryParametersTemplate` to better distinguish simple searchable properties from min/max date/numeric searchable properties.
+- Added `HasAnySearchCriteria()` virtual/override methods for more robust and extensible generated search detection.
+- Added partial-method support for custom `HasAnySearchCriteria()` logic extension.
+- Bumped `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.2.19`.
 
 ## Latest Highlights (2.2.18)
 - Added per-entity strongly-typed `QueryParameters` class generation support via `GenerateQueryParam`.

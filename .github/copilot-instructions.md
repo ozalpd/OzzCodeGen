@@ -24,6 +24,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - **Pluggable engines:** Engine IDs are centralized in [EngineTypes.cs](OzzCodeGen/CodeEngines/EngineTypes.cs); the WPF UI binds to these IDs and injects engine-specific UIs.
   - Active IDs: `CS_Model_Class_Generator`, `CS_Sqlite_Repository_Generator`, `Metadata_Class_Generator`, `AspNetMvc_Controller_View_Generator`, `T-Sql_Scripts_Generator`, `Sqlite_Scripts_Generator`, `Localization_Resource_Generator`, `EF_Technical_Document`.
   - `CsModelClass` is the primary C# model-class path; it supports `QueryParameters` generation with paging/search support, including per-entity strongly-typed derived classes controlled by `GenerateQueryParam`.
+  - Query-parameter search generation should distinguish simple search fields from min/max (date/numeric) range fields, and generated classes should rely on extensible `HasAnySearchCriteria()` virtual/override methods with partial-method hooks for custom search detection logic.
   - `CsSqliteRepository` generates C# SQLite repository classes (CRUD + lookup + interface signatures) with configurable `CreatedAt`/`UpdatedAt` timestamp columns, `SingleColumnUpdate` and `AutoLoad` property support, generated `UpdateAsync`, `Update{ColumnName}Async`, `DeleteAsync`, `Load*Async`, `GetByPKey`, `GetByUnique`, and per-foreign-key `GetByForeignKey` methods, nullable-key-aware `GetBy*Async` patterns, preload support for autoloaded navigation properties, change detection/selective column updates, partial `OnInitialized`/`OnLoaded`/`OnCreated`/`OnUpdated` extensibility hooks, DDL/seed/order settings, unique-index awareness, repository-name resolution for `Dto` and `ICollection<>` wrappers, and robust parameter/mapping behavior.
   - For repository autoload generation, only load complex/navigation properties, skip self-references and `ICollection<>` wrappers, and preserve null/empty guards in generated `GetAllAsync` and `GetByPKeyAsync` flows.
   - Storage engine/index generation supports composite indexes through `StorageColumnSetting.CompositeIndexColumns`; keep parsing/matching logic centralized and preserve original model column casing when generating SQL.
@@ -130,7 +131,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - Tests are not present; rely on manual verification via WPF apps.
 - Project files use SDK-style `.csproj` format targeting .NET 10. Current Windows projects target `net10.0-windows10.0.19041.0`; assembly metadata (`Version`, `Copyright`, `Company`, `Product`, `Description`) is declared directly in each `.csproj`.
 - Current version alignment:
-  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.2.18`
+  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.2.19`
   - `OzzLocalization` and `OzzLocalization.Wpf`: `2.1.6`
 - Versioning policy:
   - `OzzLocalization` and `OzzLocalization.Wpf` are expected to change infrequently and should normally advance with small monotonic patch increments (for example `2.1.6` -> `2.1.7` -> `2.1.8`) unless there is a real feature-driven or breaking-change reason to change minor or major versions.

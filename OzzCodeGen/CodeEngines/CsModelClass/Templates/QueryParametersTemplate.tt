@@ -92,12 +92,29 @@ namespace <#= NamespaceName #>
             }
         }
         int _totalCount;
+
+        public virtual bool HasAnySearchCriteria()
+        {
+            _hasAnySearchCriteria = !string.IsNullOrEmpty(SearchString);
+
+            OnHasAnySearchCriteria();
+            return _hasAnySearchCriteria;
+        }
+
+        /// <summary>
+        /// Called when determining if there are any search criteria, can be used in a partial class to extend the logic.
+        /// Setting _hasAnySearchCriteria to true in this method will indicate that there are search criteria.
+        /// </summary>
+        partial void OnHasAnySearchCriteria();
+        bool _hasAnySearchCriteria;
     }
 }
 <#  }
     else
     {
-        var searchableSimples = EntitySetting.SearchableSimpleProperties.ToList(); #>
+        var searchableSimples = EntitySetting.SearchableSimpleProperties.Where(p => !p.IsDateTime && !p.IsDecimalNumeric).ToList();
+        var searchableMinMaxProperties = EntitySetting.SearchableSimpleProperties.Where(p => p.IsDateTime || p.IsDecimalNumeric).ToList();
+        #>
 using <#= CodeEngine.NamespaceName #>;
 
 namespace <#= NamespaceName #>
@@ -117,23 +134,46 @@ namespace <#= NamespaceName #>
         {
             if (queryParameters != null && queryParameters is <#= EntitySetting.Name #><#= CodeEngine.QueryParamClassName #> <#= EntitySetting.Name.ToCamelCase() #>QueryParams)
             {
-<#  foreach (var property in searchableSimples.Where(p => !p.IsDateTime)) { #>
+<#  foreach (var property in searchableSimples) { #>
                 <#= property.Name #> = <#= EntitySetting.Name.ToCamelCase() #>QueryParams.<#= property.Name #>;
 <#    } #>
-<#  foreach (var item in searchableSimples.Where(p => p.IsDateTime)) { #>
+<#  foreach (var item in searchableMinMaxProperties) { #>
                 <#= item.Name #>Min = <#= EntitySetting.Name.ToCamelCase() #>QueryParams.<#= item.Name #>Min;
                 <#= item.Name #>Max = <#= EntitySetting.Name.ToCamelCase() #>QueryParams.<#= item.Name #>Max;
 <#    } #>
             }
         }
 
-<#  foreach (var property in searchableSimples.Where(p => !p.IsDateTime)) { #>
+<#  foreach (var property in searchableSimples) { #>
         public <#= property.GetTypeName(getReturnType:true) #>? <#= property.Name #> { get; set; }
 <#    } #>
-<#  foreach (var item in searchableSimples.Where(p => p.IsDateTime)) { #>
+<#  foreach (var item in searchableMinMaxProperties) { #>
         public <#= item.GetNullableTypeName() #> <#= item.Name #>Min { get; set; }
         public <#= item.GetNullableTypeName() #> <#= item.Name #>Max { get; set; }
 <#  } #>
+
+        public override bool HasAnySearchCriteria()
+        {
+            _hasAnySearchCriteria = base.HasAnySearchCriteria();        
+            if (_hasAnySearchCriteria) return true;
+
+<#  foreach (var property in searchableSimples) { #>
+            _hasAnySearchCriteria = _hasAnySearchCriteria || <#= property.Name #>.HasValue;
+<#    } #>
+<#  foreach (var property in searchableMinMaxProperties) { #>
+            _hasAnySearchCriteria = _hasAnySearchCriteria || <#= property.Name #>Min.HasValue || <#= property.Name #>Max.HasValue;
+<#    } #>
+
+            OnHasAnySearchCriteria();
+            return _hasAnySearchCriteria;
+        }
+
+        /// <summary>
+        /// Called when determining if there are any search criteria, can be used in a partial class to extend the logic.
+        /// Setting _hasAnySearchCriteria to true in this method will indicate that there are search criteria.
+        /// </summary>
+        partial void OnHasAnySearchCriteria();
+        bool _hasAnySearchCriteria;
     }
 }
 <#    } #>

@@ -11,10 +11,10 @@
 		<RootNamespace>OzzCodeGen</RootNamespace>
 		<AssemblyName>OzzCodeGen</AssemblyName>
 
-		<Version>2.2.18</Version>
-		<AssemblyVersion>2.2.18.0</AssemblyVersion>
-		<FileVersion>2.2.18.0</FileVersion>
-		<InformationalVersion>2.2.18</InformationalVersion>
+		<Version>2.2.19</Version>
+		<AssemblyVersion>2.2.19.0</AssemblyVersion>
+		<FileVersion>2.2.19.0</FileVersion>
+		<InformationalVersion>2.2.19</InformationalVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

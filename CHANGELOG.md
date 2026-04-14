@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.19] - 2026-04-14
+
+### Added
+- Added `HasAnySearchCriteria()` virtual/override methods for more robust and extensible search-criteria detection in generated `QueryParameters` classes.
+- Added partial-method support for custom `HasAnySearchCriteria()` logic extensions.
+
+### Changed
+- Refactored `QueryParametersTemplate` search generation logic to better distinguish simple searchable properties from min/max (date/numeric) searchable properties.
+- Bumped `OzzCodeGen` version to `2.2.19`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.19`.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.18] - 2026-04-14
 
 ### Added
