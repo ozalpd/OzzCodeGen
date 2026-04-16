@@ -206,8 +206,8 @@
                                     <RowDefinition Height="28"/>
                                     <RowDefinition Height="28"/>
                                     <RowDefinition Height="28"/>
-                                    <RowDefinition Height="28"/>
-                                    <RowDefinition Height="28"/>
+                                    <RowDefinition Height="8"/>
+                                    <RowDefinition Height="24"/>
                                     <RowDefinition Height="28"/>
                                     <RowDefinition Height="28"/>
                                     <RowDefinition Height="28"/>
@@ -215,28 +215,37 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <CheckBox Grid.Row="0" VerticalAlignment="Center"
+                                <CheckBox Grid.Row="0" Margin="4,0,0,0" VerticalAlignment="Center"
                                           ToolTip="Automatically load this property when its parent entity is loaded"
                                           Content="Auto Load"
                                           IsChecked="{Binding AutoLoad}"/>
 
-                                <CheckBox Grid.Row="1" VerticalAlignment="Center"
+                                <CheckBox Grid.Row="1" Margin="4,0,0,0" VerticalAlignment="Center"
                                           ToolTip="In update method, check if the value has been altered"
                                           Content="Check If Altered"
                                           IsChecked="{Binding CheckIfAltered}"/>
 
-                                <CheckBox Grid.Row="2" VerticalAlignment="Center"
+                                <CheckBox Grid.Row="2" Margin="4,0,0,0" VerticalAlignment="Center"
                                           ToolTip="Generate a dedicated update method for this column"
                                           Content="Single Column Update"
                                           IsChecked="{Binding SingleColumnUpdate}"/>
 
-                                <CheckBox Grid.Row="4" VerticalAlignment="Center"
+                                <TextBlock Grid.Row="4" Margin="4,0,0,0"
+                                           Text="Decimal to Integer Scale:"
+                                           ToolTip="Base-10 scale used when converting decimal values to SQLite integer storage"
+                                           VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="5" Margin="4,0,4,0" VerticalAlignment="Top"
+                                         Text="{Binding DecimalToIntegerScale, Mode=TwoWay}"
+                                         ToolTip="Base-10 scale used when converting decimal values to SQLite integer storage"
+                                         Style="{StaticResource textBoxStyle}"/>
+
+                                <CheckBox Grid.Row="7" Margin="4,0,0,0" VerticalAlignment="Center"
                                           ToolTip="Indicates if this property is a repository column"
                                           Content="Repository Column"
                                           IsEnabled="False"
                                           IsChecked="{Binding IsRepositoryColumn, Mode=OneWay}"/>
 
-                                <CheckBox Grid.Row="5" VerticalAlignment="Center"
+                                <CheckBox Grid.Row="8" Margin="4,0,0,0" VerticalAlignment="Center"
                                           ToolTip="Indicates if this property is uniquely indexed"
                                           Content="Unique Indexed"
                                           IsEnabled="False"

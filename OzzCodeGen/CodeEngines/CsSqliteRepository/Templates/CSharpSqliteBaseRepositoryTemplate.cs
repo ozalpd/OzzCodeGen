@@ -99,63 +99,57 @@ using System.ComponentModel.DataAnnotations;
                     "g = _metadataRepository.ConnectionString;\r\n            _tableName = tableName;\r\n" +
                     "        }\r\n\r\n        protected readonly string _connectionString;\r\n        prote" +
                     "cted readonly MetadataRepository _metadataRepository;\r\n        protected readonl" +
-                    "y string _tableName;\r\n\r\n        protected static void AddNullableTextParameter(S" +
-                    "qliteCommand command, string parameterName, string? value)\r\n        {\r\n         " +
-                    "   var parameter = command.CreateParameter();\r\n            parameter.ParameterNa" +
-                    "me = parameterName;\r\n            parameter.SqliteType = SqliteType.Text;\r\n      " +
-                    "      parameter.Value = value is null ? DBNull.Value : value;\r\n            comma" +
-                    "nd.Parameters.Add(parameter);\r\n        }\r\n\r\n        protected static void Execut" +
-                    "eScript(SqliteConnection connection, string scriptFileName)\r\n        {\r\n        " +
-                    "    var scriptPath = Path.Combine(ScriptsDirectory, scriptFileName);\r\n          " +
-                    "  if (!File.Exists(scriptPath))\r\n                throw new FileNotFoundException" +
-                    "($\"SQL script file not found: {scriptPath}\", scriptPath);\r\n\r\n            var sql" +
-                    " = File.ReadAllText(scriptPath);\r\n            if (string.IsNullOrWhiteSpace(sql)" +
-                    ")\r\n                return;\r\n\r\n            using var command = connection.CreateC" +
-                    "ommand();\r\n            command.CommandText = sql;\r\n            command.ExecuteNo" +
-                    "nQuery();\r\n        }\r\n        private static readonly string ScriptsDirectory = " +
-                    "Path.Combine(AppContext.BaseDirectory, \"DbScripts\");\r\n\r\n\r\n        protected long" +
-                    " GetRecordCount()\r\n        {\r\n            using var connection = GetOpenConnecti" +
-                    "on();\r\n            using var countCommand = connection.CreateCommand();\r\n       " +
-                    "     countCommand.CommandText = $\"SELECT COUNT(1) FROM {_tableName}\";\r\n\r\n       " +
-                    "     _cachedRecordCount = Convert.ToInt64(countCommand.ExecuteScalar());\r\n      " +
-                    "      return _cachedRecordCount.Value;\r\n        }\r\n\r\n        protected void Clea" +
-                    "rRecordCountCache()\r\n        {\r\n            _cachedRecordCount = null;\r\n        " +
-                    "}\r\n\r\n        public long RecordCount\r\n        {\r\n            get\r\n            {\r" +
-                    "\n                if (!_cachedRecordCount.HasValue)\r\n                {\r\n         " +
-                    "           _cachedRecordCount = GetRecordCount();\r\n                }\r\n          " +
-                    "      return _cachedRecordCount.Value;\r\n            }\r\n        }\r\n        privat" +
-                    "e long? _cachedRecordCount;\r\n\r\n        protected SqliteConnection GetOpenConnect" +
-                    "ion()\r\n        {\r\n            var connection = new SqliteConnection(_connectionS" +
-                    "tring);\r\n            connection.Open();\r\n            return connection;\r\n       " +
-                    " }\r\n\r\n        protected async Task<SqliteConnection> GetOpenConnectionAsync()\r\n " +
-                    "       {\r\n            var connection = new SqliteConnection(_connectionString);\r" +
-                    "\n            await connection.OpenAsync();\r\n            return connection;\r\n    " +
-                    "    }\r\n\r\n        protected async Task ExecuteInTransactionAsync(Func<SqliteConne" +
-                    "ction, SqliteTransaction, Task> operation)\r\n        {\r\n            ArgumentNullE" +
-                    "xception.ThrowIfNull(operation);\r\n\r\n            await using var connection = awa" +
-                    "it GetOpenConnectionAsync();\r\n            using var transaction = connection.Beg" +
-                    "inTransaction();\r\n\r\n            try\r\n            {\r\n                await operat" +
-                    "ion(connection, transaction);\r\n                transaction.Commit();\r\n          " +
-                    "  }\r\n            catch\r\n            {\r\n                transaction.Rollback();\r\n" +
-                    "                throw;\r\n            }\r\n        }\r\n\r\n        protected async Task" +
-                    "<TResult> ExecuteInTransactionAsync<TResult>(Func<SqliteConnection, SqliteTransa" +
-                    "ction, Task<TResult>> operation)\r\n        {\r\n            ArgumentNullException.T" +
-                    "hrowIfNull(operation);\r\n\r\n            await using var connection = await GetOpen" +
-                    "ConnectionAsync();\r\n            using var transaction = connection.BeginTransact" +
-                    "ion();\r\n\r\n            try\r\n            {\r\n                var result = await ope" +
-                    "ration(connection, transaction);\r\n                transaction.Commit();\r\n       " +
-                    "         return result;\r\n            }\r\n            catch\r\n            {\r\n      " +
-                    "          transaction.Rollback();\r\n                throw;\r\n            }\r\n      " +
-                    "  }\r\n\r\n        protected void SeedIfEmpty(SqliteConnection connection, string se" +
-                    "edScriptFileName)\r\n        {\r\n            if (RecordCount > 0)\r\n                " +
-                    "return;\r\n\r\n            ExecuteScript(connection, seedScriptFileName);\r\n         " +
-                    "   ClearRecordCountCache();\r\n        }\r\n\r\n        protected static DateTime? ToL" +
-                    "ocalDateTime(string? utcValue)\r\n        {\r\n            DateTime? dateTime = null" +
-                    ";\r\n            if (DateTimeOffset.TryParse(utcValue, out var parsedUtc))\r\n      " +
-                    "          dateTime = parsedUtc.ToLocalTime().DateTime;\r\n\r\n            return dat" +
-                    "eTime;\r\n        }\r\n");
+                    "y string _tableName;\r\n\r\n        protected static void ExecuteScript(SqliteConnec" +
+                    "tion connection, string scriptFileName)\r\n        {\r\n            var scriptPath =" +
+                    " Path.Combine(ScriptsDirectory, scriptFileName);\r\n            if (!File.Exists(s" +
+                    "criptPath))\r\n                throw new FileNotFoundException($\"SQL script file n" +
+                    "ot found: {scriptPath}\", scriptPath);\r\n\r\n            var sql = File.ReadAllText(" +
+                    "scriptPath);\r\n            if (string.IsNullOrWhiteSpace(sql))\r\n                r" +
+                    "eturn;\r\n\r\n            using var command = connection.CreateCommand();\r\n         " +
+                    "   command.CommandText = sql;\r\n            command.ExecuteNonQuery();\r\n        }" +
+                    "\r\n        private static readonly string ScriptsDirectory = Path.Combine(AppCont" +
+                    "ext.BaseDirectory, \"DbScripts\");\r\n\r\n\r\n        protected long GetRecordCount()\r\n " +
+                    "       {\r\n            using var connection = GetOpenConnection();\r\n            u" +
+                    "sing var countCommand = connection.CreateCommand();\r\n            countCommand.Co" +
+                    "mmandText = $\"SELECT COUNT(1) FROM {_tableName}\";\r\n\r\n            _cachedRecordCo" +
+                    "unt = Convert.ToInt64(countCommand.ExecuteScalar());\r\n            return _cached" +
+                    "RecordCount.Value;\r\n        }\r\n\r\n        protected void ClearRecordCountCache()\r" +
+                    "\n        {\r\n            _cachedRecordCount = null;\r\n        }\r\n\r\n        public " +
+                    "long RecordCount\r\n        {\r\n            get\r\n            {\r\n                if " +
+                    "(!_cachedRecordCount.HasValue)\r\n                {\r\n                    _cachedRe" +
+                    "cordCount = GetRecordCount();\r\n                }\r\n                return _cached" +
+                    "RecordCount.Value;\r\n            }\r\n        }\r\n        private long? _cachedRecor" +
+                    "dCount;\r\n\r\n        protected SqliteConnection GetOpenConnection()\r\n        {\r\n  " +
+                    "          var connection = new SqliteConnection(_connectionString);\r\n           " +
+                    " connection.Open();\r\n            return connection;\r\n        }\r\n\r\n        protec" +
+                    "ted async Task<SqliteConnection> GetOpenConnectionAsync()\r\n        {\r\n          " +
+                    "  var connection = new SqliteConnection(_connectionString);\r\n            await c" +
+                    "onnection.OpenAsync();\r\n            return connection;\r\n        }\r\n\r\n        pro" +
+                    "tected async Task ExecuteInTransactionAsync(Func<SqliteConnection, SqliteTransac" +
+                    "tion, Task> operation)\r\n        {\r\n            ArgumentNullException.ThrowIfNull" +
+                    "(operation);\r\n\r\n            await using var connection = await GetOpenConnection" +
+                    "Async();\r\n            using var transaction = connection.BeginTransaction();\r\n\r\n" +
+                    "            try\r\n            {\r\n                await operation(connection, tran" +
+                    "saction);\r\n                transaction.Commit();\r\n            }\r\n            cat" +
+                    "ch\r\n            {\r\n                transaction.Rollback();\r\n                thro" +
+                    "w;\r\n            }\r\n        }\r\n\r\n        protected async Task<TResult> ExecuteInT" +
+                    "ransactionAsync<TResult>(Func<SqliteConnection, SqliteTransaction, Task<TResult>" +
+                    "> operation)\r\n        {\r\n            ArgumentNullException.ThrowIfNull(operation" +
+                    ");\r\n\r\n            await using var connection = await GetOpenConnectionAsync();\r\n" +
+                    "            using var transaction = connection.BeginTransaction();\r\n\r\n          " +
+                    "  try\r\n            {\r\n                var result = await operation(connection, t" +
+                    "ransaction);\r\n                transaction.Commit();\r\n                return resu" +
+                    "lt;\r\n            }\r\n            catch\r\n            {\r\n                transactio" +
+                    "n.Rollback();\r\n                throw;\r\n            }\r\n        }\r\n\r\n        prote" +
+                    "cted void SeedIfEmpty(SqliteConnection connection, string seedScriptFileName)\r\n " +
+                    "       {\r\n            if (RecordCount > 0)\r\n                return;\r\n\r\n         " +
+                    "   ExecuteScript(connection, seedScriptFileName);\r\n            ClearRecordCountC" +
+                    "ache();\r\n        }\r\n\r\n        protected static DateTime? ToLocalDateTime(string?" +
+                    " utcValue)\r\n        {\r\n            DateTime? dateTime = null;\r\n            if (D" +
+                    "ateTimeOffset.TryParse(utcValue, out var parsedUtc))\r\n                dateTime =" +
+                    " parsedUtc.ToLocalTime().DateTime;\r\n\r\n            return dateTime;\r\n        }\r\n");
             
-            #line 171 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
+            #line 162 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
 	if (modelClassEngine != null && modelClassEngine.GenerateValidator) { 
             
             #line default
@@ -163,7 +157,7 @@ using System.ComponentModel.DataAnnotations;
             this.Write("\r\n        protected static void ValidateOrThrow(object model)\r\n        {\r\n       " +
                     "     var errors = ");
             
-            #line 175 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
+            #line 166 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(modelClassEngine.ValidatorClassName));
             
             #line default
@@ -173,7 +167,7 @@ using System.ComponentModel.DataAnnotations;
                     "e));\r\n                throw new ValidationException(message);\r\n            }\r\n  " +
                     "      }\r\n");
             
-            #line 182 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
+            #line 173 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
 	} 
             
             #line default

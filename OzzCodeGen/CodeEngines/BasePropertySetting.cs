@@ -1,4 +1,5 @@
 ﻿using OzzCodeGen.Definitions;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -101,9 +102,22 @@ namespace OzzCodeGen.CodeEngines
         public bool IsComplex => PropertyDefinition is ComplexProperty;
 
 
+        /// <summary>
+        /// Gets a value indicating whether the property is the C# <see langword="decimal"/> type.
+        /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsDecimalNumeric => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeDecimalNumeric();
+        public bool IsDecimal => PropertyDefinition.TypeName.Equals("decimal", StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// Gets a value indicating whether the property is a fractional numeric type like <see langword="float"/>, <see langword="double"/>, or <see langword="decimal"/>.
+        /// </summary>
+        /// <remarks>
+        /// Returns <see langword="true"/> for <see langword="float"/>, <see langword="double"/>, and <see langword="decimal"/>.
+        /// </remarks>
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool IsFractionalNumeric => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeDecimalNumeric();
 
         /// <summary>
         /// Gets a value indicating whether the property is of an integer numeric type.
@@ -113,7 +127,7 @@ namespace OzzCodeGen.CodeEngines
         /// to determine if integer-specific logic should be applied.</remarks>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsIntNumeric => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeIntNumeric();
+        public bool IsIntegerNumeric => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeIntNumeric();
 
 
         [XmlIgnore]

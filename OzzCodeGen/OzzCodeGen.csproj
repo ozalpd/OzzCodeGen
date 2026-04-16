@@ -11,10 +11,10 @@
 		<RootNamespace>OzzCodeGen</RootNamespace>
 		<AssemblyName>OzzCodeGen</AssemblyName>
 
-		<Version>2.2.19</Version>
-		<AssemblyVersion>2.2.19.0</AssemblyVersion>
-		<FileVersion>2.2.19.0</FileVersion>
-		<InformationalVersion>2.2.19</InformationalVersion>
+		<Version>2.2.20</Version>
+		<AssemblyVersion>2.2.20.0</AssemblyVersion>
+		<FileVersion>2.2.20.0</FileVersion>
+		<InformationalVersion>2.2.20</InformationalVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -149,6 +149,11 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>CSharpSqliteBaseRepositoryTemplate.tt</DependentUpon>
+		</Compile>
+		<Compile Update="CodeEngines\CsSqliteRepository\Templates\CSharpSqliteExtensionsTemplate.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>CSharpSqliteExtensionsTemplate.tt</DependentUpon>
 		</Compile>
 		<Compile Update="CodeEngines\CsSqliteRepository\Templates\CSharpSqliteMetadataRepositoryTemplate.cs">
 		  <DesignTime>True</DesignTime>
@@ -294,6 +299,9 @@
 		</None>
 		<None Update="CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt">
 		  <LastGenOutput>CSharpSqliteBaseRepositoryTemplate.cs</LastGenOutput>
+		</None>
+		<None Update="CodeEngines\CsSqliteRepository\Templates\CSharpSqliteExtensionsTemplate.tt">
+		  <LastGenOutput>CSharpSqliteExtensionsTemplate.cs</LastGenOutput>
 		</None>
 		<None Update="CodeEngines\CsSqliteRepository\Templates\CSharpSqliteMetadataRepositoryTemplate.tt">
 		  <LastGenOutput>CSharpSqliteMetadataRepositoryTemplate.cs</LastGenOutput>

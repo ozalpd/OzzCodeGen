@@ -73,7 +73,7 @@ this.Write("\", nowUtc.ToString(\"O\"));\r\n");
         #line hidden
         
         #line 16 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
-this.Write("    AddNullableTextParameter(command, \"@");
+this.Write("    command.AddNullableParameter(\"@");
 
         
         #line default

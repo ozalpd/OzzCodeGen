@@ -3,14 +3,22 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.19`
-- `OzzCodeGen.Wpf`: `2.2.19`
+- `OzzCodeGen`: `2.2.20`
+- `OzzCodeGen.Wpf`: `2.2.20`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
+## Latest Highlights (2.2.20)
+- Added `SqliteExtensions` for reusable nullable and scaled decimal SQLite parameter handling in generated repositories.
+- Added `DecimalToIntegerScale` to SQLite repository property settings and exposed it in the WPF UI.
+- Added generation of a `DecimalToIntegerScale` struct for entities with decimal columns.
+- Replaced `AddNullableTextParameter` usage in repository templates and generated code with SQLite extension methods.
+- Renamed `IsDecimalNumeric`/`IsIntNumeric` to `IsFractionalNumeric`/`IsIntegerNumeric` for clearer intent.
+- Bumped `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.2.20`.
 
 ## Latest Highlights (2.2.19)
 - Refactored `QueryParametersTemplate` to better distinguish simple searchable properties from min/max date/numeric searchable properties.
@@ -201,7 +209,7 @@ Engines check `Project.TargetPlatform` to adapt generated code. For example, `Me
 | Engine ID | Description | Status |
 |---|---|---|
 | `CS_Model_Class_Generator` | Generates C# model classes (primary path) using `CSharpModelClassTemplate`/`BaseCSharpModelClassTemplate`. | ✅ Active |
-| `CS_Sqlite_Repository_Generator` | Generates C# SQLite repository classes using the `CsSqliteRepository` engine stack. | ✅ Active |
+| `CS_Sqlite_Repository_Generator` | Generates C# SQLite repository classes using the `CsSqliteRepository` engine stack, including `SqliteExtensions`-based nullable/scaled decimal handling and per-property `DecimalToIntegerScale` support. | ✅ Active |
 | `Metadata_Class_Generator` | Generates metadata/validation attribute classes (legacy compatibility path). | ✅ Active |
 | `AspNetMvc_Controller_View_Generator` | Generates ASP.NET MVC controllers and Razor views. | ✅ Active |
 | `T-Sql_Scripts_Generator` | Generates T-SQL DDL scripts. | ✅ Active |

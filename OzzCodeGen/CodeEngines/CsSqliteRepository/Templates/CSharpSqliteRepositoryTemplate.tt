@@ -15,10 +15,9 @@
 //
 //----------------------------------------------------------------------------------
 using Microsoft.Data.Sqlite;
-using System;
-using System.Collections.Generic;
 <#  var modelClassEngine = CodeEngine.ModelClassCodeEngine;
     var repositoryColumns = EntitySetting.GetRepositoryColumns().ToList();
+    var decimalColumns = repositoryColumns.Where(c => c.IsDecimal).ToList();
     var insertColumns = GetInsertProperties().ToList();
     var updateColumns = GetUpdateProperties().ToList();
     var nonUpdateColumns = GetNonUpdateProperties().ToList();
@@ -38,6 +37,7 @@ using System.Collections.Generic;
     if (modelClassEngine != null && modelClassEngine.GenerateValidator) { #>
 using <#= modelClassEngine.NamespaceName #>;
 <#	} #>
+using <#= CodeEngine.NamespaceName #>.Extensions;
 
 namespace <#= CodeEngine.NamespaceName #>
 {
@@ -144,7 +144,7 @@ namespace <#= CodeEngine.NamespaceName #>
             
 <#      WriteColumnsAndParameters(insertColumns, createdAtCol:createdAtCol, updatedAtCol:updatedAtCol); #>
 
-<#      if(pkey.IsIntNumeric) {#>
+<#      if(pkey.IsIntegerNumeric) {#>
             var <#= pkey.Name.ToCamelCase() #> = Convert.<#= GetConvertMethodName(pkey.GetTypeName()) #>((long)(await command.ExecuteScalarAsync() ?? 0));
 <#      } else { #>
             var <#= pkey.Name.ToCamelCase() #> = await command.ExecuteScalarAsync();
@@ -298,6 +298,9 @@ namespace <#= CodeEngine.NamespaceName #>
             return <#= EntitySetting.Name.ToCamelCase() #>;
         }
 
+        /// <summary>
+        /// Contains the column numbers for each property in the SQLiteDataReader.
+        /// </summary>
         public readonly struct ColNrs
         {
 <#  for (int i = 0; i < repositoryColumns.Count; i++) {  #>
@@ -305,11 +308,26 @@ namespace <#= CodeEngine.NamespaceName #>
 <#  } #>
         }
 
+        /// <summary>
+        /// Contains the names of all columns in the SQLiteDataReader.
+        /// </summary>
         public readonly string[] ColumnNames = new[] {
 <#  for (int i = 0; i < repositoryColumns.Count; i++) {  #>
             "<#= repositoryColumns[i].Name #>"<# if (i+1 < repositoryColumns.Count) { #>,<#	} #> 
 <#  } #>
         };
+<#  if (decimalColumns.Count > 0) { #>
+
+        /// <summary>
+        /// Contains the scale values used for converting decimal properties to integer storage.
+        /// </summary>
+        public readonly struct DecimalToIntegerScale
+        {
+<#      for (int i = 0; i < decimalColumns.Count; i++) {  #>
+            public readonly static int <#= decimalColumns[i].Name #> = <#= decimalColumns[i].DecimalToIntegerScale #>;
+<#      } #>
+        }
+<#  } #>
     }
 
     public partial interface I<#= EntitySetting.Name #>Repository

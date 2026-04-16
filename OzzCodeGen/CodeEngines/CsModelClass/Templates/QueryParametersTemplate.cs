@@ -115,8 +115,8 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
   }
     else
     {
-        var searchableSimples = EntitySetting.SearchableSimpleProperties.Where(p => !p.IsDateTime && !p.IsDecimalNumeric).ToList();
-        var searchableMinMaxProperties = EntitySetting.SearchableSimpleProperties.Where(p => p.IsDateTime || p.IsDecimalNumeric).ToList();
+        var searchableSimples = EntitySetting.SearchableSimpleProperties.Where(p => !p.IsDateTime && !p.IsFractionalNumeric).ToList();
+        var searchableMinMaxProperties = EntitySetting.SearchableSimpleProperties.Where(p => p.IsDateTime || p.IsFractionalNumeric).ToList();
         
             
             #line default

@@ -14,7 +14,7 @@ public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col, s
     if (isTimeStamp) {#>
     command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", nowUtc.ToString("O"));
 <#+ } else if (col.IsNullableString ){#>
-    AddNullableTextParameter(command, "@<#= col.Name.ToCamelCase() #>", <#= value #>);
+    command.AddNullableParameter("@<#= col.Name.ToCamelCase() #>", <#= value #>);
 <#+ } else if (col.IsBoolean) { #>
     command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", <#= value #> ? 1 : 0);
 <#+ } else if (!string.IsNullOrEmpty(enumName)) {#>

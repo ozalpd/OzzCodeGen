@@ -44,15 +44,6 @@ namespace <#= CodeEngine.NamespaceName #>
         protected readonly MetadataRepository _metadataRepository;
         protected readonly string _tableName;
 
-        protected static void AddNullableTextParameter(SqliteCommand command, string parameterName, string? value)
-        {
-            var parameter = command.CreateParameter();
-            parameter.ParameterName = parameterName;
-            parameter.SqliteType = SqliteType.Text;
-            parameter.Value = value is null ? DBNull.Value : value;
-            command.Parameters.Add(parameter);
-        }
-
         protected static void ExecuteScript(SqliteConnection connection, string scriptFileName)
         {
             var scriptPath = Path.Combine(ScriptsDirectory, scriptFileName);

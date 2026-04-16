@@ -24,9 +24,9 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.UI
             HiddenColumns.Add("HtmlEncode");
             HiddenColumns.Add("IsSimple");
             HiddenColumns.Add("IsString");
-            HiddenColumns.Add("IsIntNumeric");
-            HiddenColumns.Add("IsDecimalNumeric");
+            HiddenColumns.Add("IsIntegerNumeric");
             HiddenColumns.Add("IsNullableString");
+            HiddenColumns.Add("IsFractionalNumeric");
             HiddenColumns.Add("IsCollection");
             HiddenColumns.Add("IsNullable");
             HiddenColumns.Add("IsComplex");

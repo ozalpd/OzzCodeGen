@@ -1,21 +1,17 @@
-using OzzCodeGen.CodeEngines.CSharp;
 using OzzCodeGen.CodeEngines.CsModelClass;
 using OzzCodeGen.CodeEngines.CsSqliteRepository.Templates;
 using OzzCodeGen.CodeEngines.CsSqliteRepository.UI;
 using OzzCodeGen.CodeEngines.Storage;
-using OzzCodeGen.CodeEngines.TechDocument;
 using OzzCodeGen.Definitions;
 using OzzCodeGen.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Serialization;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OzzCodeGen.CodeEngines.CsSqliteRepository;
 
@@ -29,6 +25,8 @@ public class CSharpSqliteRepositoryEngine : BaseCodeEngine
     public static string DefaultFileName => "CsSqliteRepositoryEngine.settings";
 
     public override string ProjectTypeName => "C# SQLite Repository Generator";
+
+    public readonly string SqliteExtensionsClassName = "SqliteExtensions";
 
     public override string GetDefaultFileName()
     {
@@ -185,7 +183,6 @@ public class CSharpSqliteRepositoryEngine : BaseCodeEngine
     private string _baseRepositoryClassName;
 
 
-
     protected override void OnEntitySettingsChanged()
     {
         var entities = new List<SqliteRepositoryEntitySetting>();
@@ -274,6 +271,7 @@ public class CSharpSqliteRepositoryEngine : BaseCodeEngine
         }
 
         var allWritten = true;
+        allWritten = RenderTemplate(new CSharpSqliteExtensionsTemplate(this)) & allWritten;
         allWritten = RenderTemplate(new CSharpSqliteBaseRepositoryTemplate(this)) & allWritten;
         allWritten = RenderTemplate(new CSharpSqliteMetadataRepositoryTemplate(this)) & allWritten;
 

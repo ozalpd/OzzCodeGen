@@ -17,6 +17,7 @@ public partial class SqliteRepositoryEngineUI : AbstractEngineUI
         ColumnWidths.Add("IsUniqueIndexed", 48);
         ColumnWidths.Add("SingleColumnUpdate", 48);
         ColumnWidths.Add("IsRepositoryColumn", 48);
+        ColumnWidths.Add("DecimalToIntegerScale", 64);
 
         HiddenColumns.Add("CodeEngine");
         HiddenColumns.Add("HasCustomAttributes");
@@ -31,9 +32,9 @@ public partial class SqliteRepositoryEngineUI : AbstractEngineUI
         //HiddenColumns.Add("IsRepositoryColumn");
         HiddenColumns.Add("IsSimple");
         HiddenColumns.Add("IsString");
-        HiddenColumns.Add("IsIntNumeric");
-        HiddenColumns.Add("IsDecimalNumeric");
+        HiddenColumns.Add("IsIntegerNumeric");
         HiddenColumns.Add("IsNullableString");
+        HiddenColumns.Add("IsFractionalNumeric");
         HiddenColumns.Add("IsCollection");
         HiddenColumns.Add("IsNullable");
         HiddenColumns.Add("IsComplex");

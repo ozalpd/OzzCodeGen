@@ -58,10 +58,10 @@ namespace OzzCodeGen.CodeEngines.CSharp
             if (IsNullableString)
                 return $"{Name} ?? string.Empty";
 
-            if (IsNullable && IsDecimalNumeric)
+            if (IsNullable && IsFractionalNumeric)
                 return $"{Name} ?? 0m";
 
-            if (IsNullable && IsIntNumeric)
+            if (IsNullable && IsIntegerNumeric)
                 return $"{Name} ?? 0";
 
             if (IsNullable && IsBoolean)

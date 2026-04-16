@@ -33,9 +33,9 @@ public partial class StorageEngineUI : AbstractEngineUI
         HiddenColumns.Add("ForeignTables");
         HiddenColumns.Add("Properties");
         HiddenColumns.Add("CodeEngine");
-        HiddenColumns.Add("IsIntNumeric");
-        HiddenColumns.Add("IsDecimalNumeric");
+        HiddenColumns.Add("IsIntegerNumeric");
         HiddenColumns.Add("IsNullableString");
+        HiddenColumns.Add("IsFractionalNumeric");
         HiddenColumns.Add("IsCollection");
         HiddenColumns.Add("IsNullable");
         HiddenColumns.Add("IsComplex");

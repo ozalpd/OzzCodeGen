@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.20] - 2026-04-16
+
+### Added
+- Added `SqliteExtensions` with reusable extension methods for nullable and scaled decimal SQLite parameter handling in generated repositories.
+- Added `DecimalToIntegerScale` to SQLite repository property settings and exposed it in the WPF UI.
+- Added generation of a `DecimalToIntegerScale` struct for entities that contain decimal columns.
+
+### Changed
+- Replaced `AddNullableTextParameter` usage with the new SQLite extension methods throughout repository templates and generated code.
+- Renamed `IsDecimalNumeric` to `IsFractionalNumeric` and `IsIntNumeric` to `IsIntegerNumeric` for clarity and consistency.
+- Updated T4 templates, generated code, and project files to support the new decimal-scale and SQLite-extension behavior.
+- Bumped `OzzCodeGen` version to `2.2.20`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.20`.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.19] - 2026-04-14
 
 ### Added
