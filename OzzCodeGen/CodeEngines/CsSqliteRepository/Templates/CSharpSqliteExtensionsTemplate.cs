@@ -53,118 +53,229 @@ namespace ");
             this.Write(".Extensions\r\n{\r\n    /// <summary>\r\n    /// Extension methods for <see cref=\"Sqlit" +
                     "eCommand\"/> to simplify adding parameters, especially nullable ones.\r\n    /// </" +
                     "summary>\r\n    public static class SqliteExtensions\r\n    {\r\n        /// <summary>" +
-                    "\r\n        /// Adds a nullable decimal parameter as a scaled integer (<see cref=\"" +
-                    "SqliteType.Integer\"/>) to the specified\r\n        /// <see cref=\"SqliteCommand\"/>" +
-                    ".\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// The decimal value " +
-                    "is multiplied by 10 raised to <paramref name=\"scale\"/> before being assigned to " +
-                    "the\r\n        /// parameter. For example, with scale 4, 123.66 is stored as 12366" +
-                    "00. Values less than 1 are treated as 1.\r\n        /// </remarks>\r\n        /// <p" +
-                    "aram name=\"command\">The <see cref=\"SqliteCommand\"/> to which the parameter will " +
-                    "be added.</param>\r\n        /// <param name=\"parameterName\">The name of the param" +
-                    "eter to add.</param>\r\n        /// <param name=\"value\">The nullable decimal value" +
-                    " to convert and assign. If null, the parameter value is set to null.</param>\r\n  " +
-                    "      /// <param name=\"scale\">The base-10 scale used for decimal-to-integer conv" +
-                    "ersion.</param>\r\n        public static void AddDecimalToIntegerParameter(this Sq" +
-                    "liteCommand command, string parameterName, decimal? value, int scale)\r\n        {" +
-                    "\r\n            if (scale < 1)\r\n            {\r\n                throw new ArgumentO" +
-                    "utOfRangeException(nameof(scale), scale, \"Scale must be greater than or equal to" +
-                    " 1.\");\r\n            }\r\n\r\n            var parameter = command.GetParameter(parame" +
-                    "terName, SqliteType.Integer);\r\n            parameter.Value = value.HasValue ? (l" +
-                    "ong)(value.Value * (long)Math.Pow(10, scale)) : null;\r\n            command.Param" +
-                    "eters.Add(parameter);\r\n        }\r\n\r\n        /// <summary>\r\n        /// Adds a nu" +
-                    "llable 64-bit integer parameter to the specified <see cref=\"SqliteCommand\"/>.\r\n " +
-                    "       /// </summary>\r\n        /// <remarks>This method simplifies adding parame" +
-                    "ters that may have null values to a SQLite\r\n        /// command, ensuring that n" +
-                    "ulls are correctly represented as <see cref=\"DBNull.Value\"/> in the\r\n        ///" +
-                    " database.</remarks>\r\n        /// <param name=\"command\">The <see cref=\"SqliteCom" +
+                    "\r\n        /// Adds a non-nullable DateTime parameter as a text representation to" +
+                    " the specified <see cref=\"SqliteCommand\"/>.\r\n        /// </summary>\r\n        ///" +
+                    " <param name=\"command\">The <see cref=\"SqliteCommand\"/> to which the parameter wi" +
+                    "ll be added. Cannot be null.</param>\r\n        /// <param name=\"parameterName\">Th" +
+                    "e name of the parameter to add. Must not be null or empty.</param>\r\n        /// " +
+                    "<param name=\"value\">The DateTime value to convert and assign.</param>\r\n        p" +
+                    "ublic static void AddDateTimeToTextParameter(this SqliteCommand command, string " +
+                    "parameterName, DateTime value)\r\n        {\r\n            var parameter = command.G" +
+                    "etParameter(parameterName, SqliteType.Text);\r\n            parameter.Value = valu" +
+                    "e.ToUniversalTime().ToString(\"O\");\r\n            command.Parameters.Add(parameter" +
+                    ");\r\n        }\r\n\r\n        /// <summary>\r\n        /// Adds a nullable DateTime par" +
+                    "ameter as a text representation to the specified <see cref=\"SqliteCommand\"/>.\r\n " +
+                    "       /// </summary>\r\n        /// <param name=\"command\">The <see cref=\"SqliteCo" +
+                    "mmand\"/> to which the parameter will be added. Cannot be null.</param>\r\n        " +
+                    "/// <param name=\"parameterName\">The name of the parameter to add. Must not be nu" +
+                    "ll or empty.</param>\r\n        /// <param name=\"value\">The nullable DateTime valu" +
+                    "e to convert and assign. If null, the parameter value is set to null.</param>\r\n " +
+                    "       public static void AddDateTimeToTextParameter(this SqliteCommand command," +
+                    " string parameterName, DateTime? value)\r\n        {\r\n            if (value.HasVal" +
+                    "ue)\r\n            {\r\n                command.AddDateTimeToTextParameter(parameter" +
+                    "Name, value.Value);\r\n            }\r\n            else\r\n            {\r\n           " +
+                    "     command.AddNullParameter(parameterName);\r\n            }\r\n        }\r\n\r\n     " +
+                    "   /// <summary>\r\n        /// Adds a nullable decimal parameter as a scaled inte" +
+                    "ger (<see cref=\"SqliteType.Integer\"/>) to the specified\r\n        /// <see cref=\"" +
+                    "SqliteCommand\"/>.\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// Th" +
+                    "e decimal value is multiplied by 10 raised to <paramref name=\"scale\"/> before be" +
+                    "ing assigned to the\r\n        /// parameter. For example, with scale 4, 123.66 is" +
+                    " stored as 1236600. Values less than 1 are treated as 1.\r\n        /// </remarks>" +
+                    "\r\n        /// <param name=\"command\">The <see cref=\"SqliteCommand\"/> to which the" +
+                    " parameter will be added.</param>\r\n        /// <param name=\"parameterName\">The n" +
+                    "ame of the parameter to add.</param>\r\n        /// <param name=\"value\">The nullab" +
+                    "le decimal value to convert and assign. If null, the parameter value is set to n" +
+                    "ull.</param>\r\n        /// <param name=\"scale\">The base-10 scale used for decimal" +
+                    "-to-integer conversion.</param>\r\n        public static void AddDecimalToIntegerP" +
+                    "arameter(this SqliteCommand command, string parameterName, decimal? value, int s" +
+                    "cale)\r\n        {\r\n            if (scale < 1)\r\n                throw new Argument" +
+                    "OutOfRangeException(nameof(scale), scale, \"Scale must be greater than or equal t" +
+                    "o 1.\");\r\n\r\n            if (value.HasValue)\r\n            {\r\n                comma" +
+                    "nd.AddDecimalToIntegerParameter(parameterName, value.Value, scale);\r\n           " +
+                    " }\r\n            else\r\n            {\r\n                command.AddNullParameter(pa" +
+                    "rameterName);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// Ad" +
+                    "ds a parameter to the specified <see cref=\"SqliteCommand\"/> by converting the gi" +
+                    "ven decimal value to an\r\n        /// integer representation using the specified " +
+                    "scale.\r\n        /// </summary>\r\n        /// <remarks>This method is typically us" +
+                    "ed to store decimal values as scaled integers in SQLite\r\n        /// databases, " +
+                    "preserving precision by multiplying the value by 10 raised to the specified scal" +
+                    "e.</remarks>\r\n        /// <param name=\"command\">The <see cref=\"SqliteCommand\"/> " +
+                    "to which the parameter will be added. Cannot be null.</param>\r\n        /// <para" +
+                    "m name=\"parameterName\">The name of the parameter to add. Cannot be null or empty" +
+                    ".</param>\r\n        /// <param name=\"value\">The decimal value to convert and add " +
+                    "as a parameter.</param>\r\n        /// <param name=\"scale\">The number of decimal p" +
+                    "laces to use when scaling the value for integer storage. Must be zero or greater" +
+                    ".</param>\r\n        public static void AddDecimalToIntegerParameter(this SqliteCo" +
+                    "mmand command, string parameterName, decimal value, int scale)\r\n        {\r\n     " +
+                    "       if (scale < 1)\r\n                throw new ArgumentOutOfRangeException(nam" +
+                    "eof(scale), scale, \"Scale must be greater than or equal to 1.\");\r\n\r\n            " +
+                    "var parameter = command.GetParameter(parameterName, SqliteType.Integer);\r\n      " +
+                    "      parameter.Value = (long)(value * (long)Math.Pow(10, scale));\r\n            " +
+                    "command.Parameters.Add(parameter);\r\n        }\r\n\r\n        /// <summary>\r\n        " +
+                    "/// Adds a nullable decimal as a text parameter to the specified <see cref=\"Sqli" +
+                    "teCommand\"/>. If the value is null, the\r\n        /// parameter is set to <see la" +
+                    "ngword=\"DBNull.Value\"/>; otherwise, the decimal value is assigned.\r\n        /// " +
+                    "</summary>\r\n        /// <remarks>The decimal value is added as a text parameter " +
+                    "to preserve precision when storing in SQLite.</remarks>\r\n        /// <param name" +
+                    "=\"command\">The <see cref=\"SqliteCommand\"/> to which the parameter will be added." +
+                    "</param>\r\n        /// <param name=\"parameterName\">The name of the parameter to a" +
+                    "dd to the command.</param>\r\n        /// <param name=\"value\">The nullable decimal" +
+                    " value to assign to the parameter. If null, the parameter is set to <see\r\n      " +
+                    "  /// langword=\"DBNull.Value\"/>.</param>\r\n        public static void AddDecimalT" +
+                    "oTextParameter(this SqliteCommand command, string parameterName, decimal? value)" +
+                    "\r\n        {\r\n            if (value.HasValue)\r\n            {\r\n                com" +
+                    "mand.AddParameter(parameterName, value.Value.ToString(CultureInfo.InvariantCultu" +
+                    "re));\r\n            }\r\n            else\r\n            {\r\n                command.A" +
+                    "ddNullParameter(parameterName);\r\n            }\r\n        }\r\n\r\n        /// <summar" +
+                    "y>\r\n        /// Adds a decimal value as a text parameter to the specified Sqlite" +
+                    "Command.\r\n        /// </summary>\r\n        /// <remarks>The decimal value is adde" +
+                    "d as a text parameter to preserve precision when storing in\r\n        /// SQLite." +
+                    " This method is a convenience overload for non-nullable decimal values.</remarks" +
+                    ">\r\n        /// <param name=\"command\">The SqliteCommand to which the parameter wi" +
+                    "ll be added. Cannot be null.</param>\r\n        /// <param name=\"parameterName\">Th" +
+                    "e name of the parameter to add. Must not be null or empty.</param>\r\n        /// " +
+                    "<param name=\"value\">The decimal value to assign to the parameter.</param>\r\n     " +
+                    "   public static void AddDecimalToTextParameter(this SqliteCommand command, stri" +
+                    "ng parameterName, decimal value)\r\n        {\r\n            AddDecimalToTextParamet" +
+                    "er(command, parameterName, (decimal?)value);\r\n        }\r\n\r\n        /// <summary>" +
+                    "\r\n        /// Retrieves a nullable decimal value from the specified <see cref=\"S" +
+                    "qliteDataReader\"/> at the given ordinal.\r\n        /// </summary>\r\n        /// <p" +
+                    "aram name=\"reader\">The <see cref=\"SqliteDataReader\"/> from which to retrieve the" +
+                    " value.</param>\r\n        /// <param name=\"ordinal\">The zero-based column ordinal" +
+                    ".</param>\r\n        /// <returns>The nullable decimal value, or null if the colum" +
+                    "n is DBNull.</returns>\r\n        public static decimal? GetNullableDecimal(this S" +
+                    "qliteDataReader reader, int ordinal)\r\n        {\r\n            if (reader.IsDBNull" +
+                    "(ordinal))\r\n            {\r\n                return null;\r\n            }\r\n        " +
+                    "    var value = reader.GetString(ordinal);\r\n            if (decimal.TryParse(val" +
+                    "ue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))\r\n      " +
+                    "      {\r\n                return result;\r\n            }\r\n            throw new Fo" +
+                    "rmatException($\"The value \'{value}\' at ordinal {ordinal} cannot be parsed as a d" +
+                    "ecimal.\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// Adds a nullable doub" +
+                    "le parameter to the specified <see cref=\"SqliteCommand\"/> as a parameter of type" +
+                    " <see\r\n        /// cref=\"SqliteType.Real\"/>. If the value is null, the parameter" +
+                    " is set to <see cref=\"DBNull.Value\"/>.\r\n        /// </summary>\r\n        /// <rem" +
+                    "arks>This extension method simplifies adding parameters that may have null value" +
+                    "s to a\r\n        /// SQLite command, ensuring correct handling of database nulls." +
+                    "</remarks>\r\n        /// <param name=\"command\">The <see cref=\"SqliteCommand\"/> to" +
+                    " which the parameter will be added. Cannot be null.</param>\r\n        /// <param " +
+                    "name=\"parameterName\">The name of the parameter to add. Cannot be null or empty.<" +
+                    "/param>\r\n        /// <param name=\"value\">The nullable double value to assign to " +
+                    "the parameter. If null, the parameter value is set to <see\r\n        /// cref=\"DB" +
+                    "Null.Value\"/>.</param>\r\n        public static void AddNullableParameter(this Sql" +
+                    "iteCommand command, string parameterName, double? value)\r\n        {\r\n           " +
+                    " var parameter = command.GetParameter(parameterName, SqliteType.Real);\r\n        " +
+                    "    parameter.Value = value is null ? DBNull.Value : value;\r\n            command" +
+                    ".Parameters.Add(parameter);\r\n        }\r\n\r\n        /// <summary>\r\n        /// Add" +
+                    "s a nullable text parameter to the specified <see cref=\"SqliteCommand\"/>. If the" +
+                    " value is null, the\r\n        /// parameter is set to <see cref=\"DBNull.Value\"/>;" +
+                    " otherwise, it is set to the provided string value.\r\n        /// </summary>\r\n   " +
+                    "     /// <remarks>This method simplifies adding parameters that may have null va" +
+                    "lues, ensuring correct\r\n        /// handling of database NULLs in SQLite command" +
+                    "s.</remarks>\r\n        /// <param name=\"command\">The <see cref=\"SqliteCommand\"/> " +
+                    "to which the parameter will be added. Cannot be null.</param>\r\n        /// <para" +
+                    "m name=\"parameterName\">The name of the parameter to add. Must not be null or emp" +
+                    "ty.</param>\r\n        /// <param name=\"value\">The string value to assign to the p" +
+                    "arameter, or null to represent a database NULL.</param>\r\n        public static v" +
+                    "oid AddNullableParameter(this SqliteCommand command, string parameterName, strin" +
+                    "g? value)\r\n        {\r\n            if (string.IsNullOrEmpty(value))\r\n            " +
+                    "{\r\n                command.AddNullParameter(parameterName);\r\n            }\r\n    " +
+                    "        else\r\n            {\r\n                command.AddParameter(parameterName," +
+                    " value);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// Adds a " +
+                    "non-nullable boolean parameter to the specified <see cref=\"SqliteCommand\"/>.\r\n  " +
+                    "      /// </summary>\r\n        /// <param name=\"command\">The <see cref=\"SqliteCom" +
                     "mand\"/> to which the parameter will be added. Cannot be null.</param>\r\n        /" +
                     "// <param name=\"parameterName\">The name of the parameter to add. Cannot be null " +
-                    "or empty.</param>\r\n        /// <param name=\"value\">The nullable 64-bit integer v" +
-                    "alue to assign to the parameter. If null, the parameter value is set to <see\r\n  " +
-                    "      /// cref=\"DBNull.Value\"/>.</param>\r\n        public static void AddNullable" +
-                    "Parameter(this SqliteCommand command, string parameterName, long? value)\r\n      " +
-                    "  {\r\n            var parameter = command.GetParameter(parameterName, SqliteType." +
-                    "Integer);\r\n            parameter.Value = value is null ? DBNull.Value : value;\r\n" +
-                    "            command.Parameters.Add(parameter);\r\n        }\r\n\r\n        /// <summar" +
-                    "y>\r\n        /// Adds a nullable integer parameter to the specified <see cref=\"Sq" +
-                    "liteCommand\"/>. If the value is null, the\r\n        /// parameter is set to <see " +
-                    "langword=\"DBNull.Value\"/>; otherwise, the integer value is assigned.\r\n        //" +
-                    "/ </summary>\r\n        /// <param name=\"command\">The <see cref=\"SqliteCommand\"/> " +
-                    "to which the parameter will be added.</param>\r\n        /// <param name=\"paramete" +
-                    "rName\">The name of the parameter to add to the command.</param>\r\n        /// <pa" +
-                    "ram name=\"value\">The nullable integer value to assign to the parameter. If null," +
-                    " the parameter is set to <see\r\n        /// langword=\"DBNull.Value\"/>.</param>\r\n " +
-                    "       public static void AddNullableParameter(this SqliteCommand command, strin" +
-                    "g parameterName, int? value)\r\n        {\r\n            AddNullableParameter(comman" +
-                    "d, parameterName, (long?)value);\r\n        }\r\n\r\n        /// <summary>\r\n        //" +
-                    "/ Adds a nullable decimal parameter to the specified <see cref=\"SqliteCommand\"/>" +
-                    ". If the value is null, the\r\n        /// parameter is set to <see langword=\"DBNu" +
-                    "ll.Value\"/>; otherwise, the decimal value is assigned.\r\n        /// </summary>\r\n" +
-                    "        /// <param name=\"command\">The <see cref=\"SqliteCommand\"/> to which the p" +
-                    "arameter will be added.</param>\r\n        /// <param name=\"parameterName\">The nam" +
-                    "e of the parameter to add to the command.</param>\r\n        /// <param name=\"valu" +
-                    "e\">The nullable decimal value to assign to the parameter. If null, the parameter" +
-                    " is set to <see\r\n        /// langword=\"DBNull.Value\"/>.</param>\r\n        public " +
-                    "static void AddNullableParameter(this SqliteCommand command, string parameterNam" +
-                    "e, decimal? value)\r\n        {\r\n            var parameter = command.GetParameter(" +
-                    "parameterName, SqliteType.Text);\r\n            parameter.Value = value.HasValue\r\n" +
-                    "                ? value.Value.ToString(CultureInfo.InvariantCulture)\r\n          " +
-                    "      : DBNull.Value;\r\n\r\n            command.Parameters.Add(parameter);\r\n       " +
-                    " }\r\n\r\n        /// <summary>\r\n        /// Retrieves a nullable decimal value from" +
-                    " the specified <see cref=\"SqliteDataReader\"/> at the given ordinal.\r\n        ///" +
-                    " </summary>\r\n        /// <param name=\"reader\">The <see cref=\"SqliteDataReader\"/>" +
-                    " from which to retrieve the value.</param>\r\n        /// <param name=\"ordinal\">Th" +
-                    "e zero-based column ordinal.</param>\r\n        /// <returns>The nullable decimal " +
-                    "value, or null if the column is DBNull.</returns>\r\n        public static decimal" +
-                    "? GetNullableDecimal(this SqliteDataReader reader, int ordinal)\r\n        {\r\n    " +
-                    "        if (reader.IsDBNull(ordinal))\r\n            {\r\n                return nul" +
-                    "l;\r\n            }\r\n            var value = reader.GetString(ordinal);\r\n         " +
-                    "   if (decimal.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, o" +
-                    "ut decimal result))\r\n            {\r\n                return result;\r\n            " +
-                    "}\r\n            throw new FormatException($\"The value \'{value}\' at ordinal {ordin" +
-                    "al} cannot be parsed as a decimal.\");\r\n        }\r\n\r\n        /// <summary>\r\n     " +
-                    "   /// Adds a nullable double parameter to the specified <see cref=\"SqliteComman" +
-                    "d\"/> as a parameter of type <see\r\n        /// cref=\"SqliteType.Real\"/>. If the v" +
-                    "alue is null, the parameter is set to <see cref=\"DBNull.Value\"/>.\r\n        /// <" +
-                    "/summary>\r\n        /// <remarks>This extension method simplifies adding paramete" +
-                    "rs that may have null values to a\r\n        /// SQLite command, ensuring correct " +
-                    "handling of database nulls.</remarks>\r\n        /// <param name=\"command\">The <se" +
-                    "e cref=\"SqliteCommand\"/> to which the parameter will be added. Cannot be null.</" +
-                    "param>\r\n        /// <param name=\"parameterName\">The name of the parameter to add" +
-                    ". Cannot be null or empty.</param>\r\n        /// <param name=\"value\">The nullable" +
-                    " double value to assign to the parameter. If null, the parameter value is set to" +
-                    " <see\r\n        /// cref=\"DBNull.Value\"/>.</param>\r\n        public static void Ad" +
-                    "dNullableParameter(this SqliteCommand command, string parameterName, double? val" +
-                    "ue)\r\n        {\r\n            var parameter = command.GetParameter(parameterName, " +
-                    "SqliteType.Real);\r\n            parameter.Value = value is null ? DBNull.Value : " +
-                    "value;\r\n            command.Parameters.Add(parameter);\r\n        }\r\n\r\n        ///" +
-                    " <summary>\r\n        /// Adds a nullable text parameter to the specified <see cre" +
-                    "f=\"SqliteCommand\"/>. If the value is null, the\r\n        /// parameter is set to " +
-                    "<see cref=\"DBNull.Value\"/>; otherwise, it is set to the provided string value.\r\n" +
-                    "        /// </summary>\r\n        /// <remarks>This method simplifies adding param" +
-                    "eters that may have null values, ensuring correct\r\n        /// handling of datab" +
-                    "ase NULLs in SQLite commands.</remarks>\r\n        /// <param name=\"command\">The <" +
+                    "or empty.</param>\r\n        /// <param name=\"value\">The boolean value to assign t" +
+                    "o the parameter.</param>\r\n        public static void AddParameter(this SqliteCom" +
+                    "mand command, string parameterName, bool value)\r\n        {\r\n            AddParam" +
+                    "eter(command, parameterName, (long)(value ? 1 : 0));\r\n        }\r\n\r\n        /// <" +
+                    "summary>\r\n        /// Adds a nullable boolean parameter to the specified <see cr" +
+                    "ef=\"SqliteCommand\"/>. If the value is null, the parameter is set to <see cref=\"D" +
+                    "BNull.Value\"/>.\r\n        /// </summary>\r\n        /// <param name=\"command\">The <" +
                     "see cref=\"SqliteCommand\"/> to which the parameter will be added. Cannot be null." +
                     "</param>\r\n        /// <param name=\"parameterName\">The name of the parameter to a" +
-                    "dd. Must not be null or empty.</param>\r\n        /// <param name=\"value\">The stri" +
-                    "ng value to assign to the parameter, or null to represent a database NULL.</para" +
-                    "m>\r\n        public static void AddNullableParameter(this SqliteCommand command, " +
-                    "string parameterName, string? value)\r\n        {\r\n            var parameter = com" +
-                    "mand.GetParameter(parameterName, SqliteType.Text);\r\n            parameter.Value " +
-                    "= value is null ? DBNull.Value : value;\r\n            command.Parameters.Add(para" +
-                    "meter);\r\n        }\r\n\r\n        /// <summary>\r\n        /// Creates a new <see cref" +
-                    "=\"SqliteParameter\"/> with the specified name and type for the given <see\r\n      " +
-                    "  /// cref=\"SqliteCommand\"/>.\r\n        /// </summary>\r\n        /// <param name=\"" +
-                    "command\">The <see cref=\"SqliteCommand\"/> to which the parameter will be added.</" +
-                    "param>\r\n        /// <param name=\"parameterName\">The name to assign to the parame" +
-                    "ter.</param>\r\n        /// <param name=\"paramType\">The SQLite data type to assign" +
-                    " to the parameter.</param>\r\n        /// <returns>A new <see cref=\"SqliteParamete" +
-                    "r\"/> instance with the specified name and type.</returns>\r\n        public static" +
-                    " SqliteParameter GetParameter(this SqliteCommand command, string parameterName, " +
-                    "SqliteType paramType)\r\n        {\r\n            var parameter = command.CreatePara" +
-                    "meter();\r\n            parameter.ParameterName = parameterName;\r\n            para" +
-                    "meter.SqliteType = paramType;\r\n\r\n            return parameter;\r\n        }\r\n    }" +
-                    "\r\n}\r\n");
+                    "dd. Cannot be null or empty.</param>\r\n        /// <param name=\"value\">The nullab" +
+                    "le boolean value to assign to the parameter. If null, the parameter value is set" +
+                    " to <see cref=\"DBNull.Value\"/>.</param>\r\n        public static void AddParameter" +
+                    "(this SqliteCommand command, string parameterName, bool? value)\r\n        {\r\n    " +
+                    "        if (value.HasValue)\r\n            {\r\n                command.AddParameter" +
+                    "(parameterName, value.Value);\r\n            }\r\n            else\r\n            {\r\n " +
+                    "               command.AddNullParameter(parameterName);\r\n            }\r\n        " +
+                    "}\r\n\r\n        /// <summary>\r\n        /// Adds a non-nullable 64-bit integer param" +
+                    "eter to the specified <see cref=\"SqliteCommand\"/>.\r\n        /// </summary>\r\n    " +
+                    "    /// <param name=\"command\">The <see cref=\"SqliteCommand\"/> to which the param" +
+                    "eter will be added. Cannot be null.</param>\r\n        /// <param name=\"parameterN" +
+                    "ame\">The name of the parameter to add. Cannot be null or empty.</param>\r\n       " +
+                    " /// <param name=\"value\">The 64-bit integer value to assign to the parameter.</p" +
+                    "aram>\r\n        public static void AddParameter(this SqliteCommand command, strin" +
+                    "g parameterName, long value)\r\n        {\r\n            var parameter = command.Get" +
+                    "Parameter(parameterName, SqliteType.Integer);\r\n            parameter.Value = val" +
+                    "ue;\r\n            command.Parameters.Add(parameter);\r\n        }\r\n\r\n\r\n        /// " +
+                    "<summary>\r\n        /// Adds a nullable 64-bit integer parameter to the specified" +
+                    " <see cref=\"SqliteCommand\"/>.\r\n        /// </summary>\r\n        /// <remarks>This" +
+                    " method simplifies adding parameters that may have null values to a SQLite\r\n    " +
+                    "    /// command, ensuring that nulls are correctly represented as <see cref=\"DBN" +
+                    "ull.Value\"/> in the\r\n        /// database.</remarks>\r\n        /// <param name=\"c" +
+                    "ommand\">The <see cref=\"SqliteCommand\"/> to which the parameter will be added. Ca" +
+                    "nnot be null.</param>\r\n        /// <param name=\"parameterName\">The name of the p" +
+                    "arameter to add. Cannot be null or empty.</param>\r\n        /// <param name=\"valu" +
+                    "e\">The nullable 64-bit integer value to assign to the parameter. If null, the pa" +
+                    "rameter value is set to <see\r\n        /// cref=\"DBNull.Value\"/>.</param>\r\n      " +
+                    "  public static void AddParameter(this SqliteCommand command, string parameterNa" +
+                    "me, long? value)\r\n        {\r\n            if (value.HasValue)\r\n            {\r\n   " +
+                    "             command.AddParameter(parameterName, value.Value);\r\n            }\r\n " +
+                    "           else\r\n            {\r\n                command.AddNullParameter(paramet" +
+                    "erName);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// Adds a " +
+                    "non-nullable integer parameter to the specified <see cref=\"SqliteCommand\"/>. The" +
+                    " parameter value is set to the provided integer value.\r\n        /// </summary>\r\n" +
+                    "        /// <param name=\"command\">The <see cref=\"SqliteCommand\"/> to which the p" +
+                    "arameter will be added.</param>\r\n        /// <param name=\"parameterName\">The nam" +
+                    "e of the parameter to add. Cannot be null or empty.</param>\r\n        /// <param " +
+                    "name=\"value\">The integer value to assign to the parameter.</param>\r\n        publ" +
+                    "ic static void AddParameter(this SqliteCommand command, string parameterName, in" +
+                    "t value)\r\n        {\r\n            AddParameter(command, parameterName, (long)valu" +
+                    "e);\r\n        }\r\n\r\n        /// <summary>\r\n        /// Adds a nullable integer par" +
+                    "ameter to the specified <see cref=\"SqliteCommand\"/>. If the value is null, the\r\n" +
+                    "        /// parameter is set to <see langword=\"DBNull.Value\"/>; otherwise, the i" +
+                    "nteger value is assigned.\r\n        /// </summary>\r\n        /// <param name=\"comm" +
+                    "and\">The <see cref=\"SqliteCommand\"/> to which the parameter will be added.</para" +
+                    "m>\r\n        /// <param name=\"parameterName\">The name of the parameter to add to " +
+                    "the command.</param>\r\n        /// <param name=\"value\">The nullable integer value" +
+                    " to assign to the parameter. If null, the parameter is set to <see\r\n        /// " +
+                    "langword=\"DBNull.Value\"/>.</param>\r\n        public static void AddParameter(this" +
+                    " SqliteCommand command, string parameterName, int? value)\r\n        {\r\n          " +
+                    "  AddParameter(command, parameterName, (long?)value);\r\n        }\r\n\r\n        /// " +
+                    "<summary>\r\n        /// Adds a parameter with a null value to the specified <see " +
+                    "cref=\"SqliteCommand\"/>.\r\n        /// </summary>\r\n        /// <param name=\"comman" +
+                    "d\">The <see cref=\"SqliteCommand\"/> to which the parameter will be added. Cannot " +
+                    "be null.</param>\r\n        /// <param name=\"parameterName\">The name of the parame" +
+                    "ter to add. Must not be null or empty.</param>\r\n        public static void AddNu" +
+                    "llParameter(this SqliteCommand command, string parameterName)\r\n        {\r\n      " +
+                    "      var parameter = command.GetParameter(parameterName, SqliteType.Text);\r\n   " +
+                    "         parameter.Value = DBNull.Value;\r\n            command.Parameters.Add(par" +
+                    "ameter);\r\n        }\r\n\r\n        /// <summary>\r\n        /// Adds a non-nullable te" +
+                    "xt parameter to the specified <see cref=\"SqliteCommand\"/>. The parameter value i" +
+                    "s set to the provided string value.\r\n        /// </summary>\r\n        /// <param " +
+                    "name=\"command\">The <see cref=\"SqliteCommand\"/> to which the parameter will be ad" +
+                    "ded. Cannot be null.</param>\r\n        /// <param name=\"parameterName\">The name o" +
+                    "f the parameter to add. Must not be null or empty.</param>\r\n        /// <param n" +
+                    "ame=\"value\">The string value to assign to the parameter.</param>\r\n        public" +
+                    " static void AddParameter(this SqliteCommand command, string parameterName, stri" +
+                    "ng value)\r\n        {\r\n            var parameter = command.GetParameter(parameter" +
+                    "Name, SqliteType.Text);\r\n            parameter.Value = value;\r\n            comma" +
+                    "nd.Parameters.Add(parameter);\r\n        }\r\n\r\n        /// <summary>\r\n        /// C" +
+                    "reates a new <see cref=\"SqliteParameter\"/> with the specified name and type for " +
+                    "the given <see\r\n        /// cref=\"SqliteCommand\"/>.\r\n        /// </summary>\r\n   " +
+                    "     /// <param name=\"command\">The <see cref=\"SqliteCommand\"/> to which the para" +
+                    "meter will be added.</param>\r\n        /// <param name=\"parameterName\">The name t" +
+                    "o assign to the parameter.</param>\r\n        /// <param name=\"paramType\">The SQLi" +
+                    "te data type to assign to the parameter.</param>\r\n        /// <returns>A new <se" +
+                    "e cref=\"SqliteParameter\"/> instance with the specified name and type.</returns>\r" +
+                    "\n        public static SqliteParameter GetParameter(this SqliteCommand command, " +
+                    "string parameterName, SqliteType paramType)\r\n        {\r\n            var paramete" +
+                    "r = command.CreateParameter();\r\n            parameter.ParameterName = parameterN" +
+                    "ame;\r\n            parameter.SqliteType = paramType;\r\n\r\n            return parame" +
+                    "ter;\r\n        }\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

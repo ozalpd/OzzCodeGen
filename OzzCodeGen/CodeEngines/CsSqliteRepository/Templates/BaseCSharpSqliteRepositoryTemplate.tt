@@ -11,14 +11,29 @@
 public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col, string value, bool isTimeStamp = false)
 {
     string enumName = col.GetEnumTypeName();
+    int decScale = col.DecimalToIntegerScale;
+    bool isNullable = col.IsNullable;
+    bool isIntOrBool = col.IsIntegerNumeric || col.IsBoolean;
     if (isTimeStamp) {#>
-    command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", nowUtc.ToString("O"));
+    command.AddDateTimeToTextParameter("@<#= col.Name.ToCamelCase() #>", DateTime.Now);
+<#+ } else if (!string.IsNullOrEmpty(enumName)) {#>
+    command.AddParameter("@<#= col.Name.ToCamelCase() #>", (<#= col.PropertyDefinition.TypeName #>)<#= value #>);
+<#+ } else if (col.IsDateTime ){#>
+    command.AddDateTimeToTextParameter("@<#= col.Name.ToCamelCase() #>", <#= value #>);
 <#+ } else if (col.IsNullableString ){#>
     command.AddNullableParameter("@<#= col.Name.ToCamelCase() #>", <#= value #>);
-<#+ } else if (col.IsBoolean) { #>
-    command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", <#= value #> ? 1 : 0);
-<#+ } else if (!string.IsNullOrEmpty(enumName)) {#>
-    command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", (<#= col.PropertyDefinition.TypeName #>)<#= value #>);
+<#+ } else if (col.IsString || isIntOrBool){#>
+    command.AddParameter("@<#= col.Name.ToCamelCase() #>", <#= value #>);
+<#+ } else if (col.IsDouble && isNullable) { #>
+    command.AddNullableParameter("@<#= col.Name.ToCamelCase() #>", <#= value #>);
+<#+ } else if (col.IsFloat && isNullable) { #>
+    command.AddNullableParameter("@<#= col.Name.ToCamelCase() #>", (double?)<#= value #>);
+<#+ } else if (col.IsDecimal && decScale > 0 ){#>
+    command.AddDecimalToIntegerParameter("@<#= col.Name.ToCamelCase() #>",
+                                        <#= value #>,
+                                        DecimalToIntegerScale.<#= col.Name #>);
+<#+ } else if (col.IsDecimal ){#>
+    command.AddDecimalToTextParameter("@<#= col.Name.ToCamelCase() #>", <#= value #>);
 <#+ } else {#>
     command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", <#= value #>);
 <#+ }

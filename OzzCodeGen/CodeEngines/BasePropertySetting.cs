@@ -110,6 +110,20 @@ namespace OzzCodeGen.CodeEngines
         public bool IsDecimal => PropertyDefinition.TypeName.Equals("decimal", StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
+        /// Gets a value indicating whether the property type is a double-precision floating-point number.
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool IsDouble => PropertyDefinition.TypeName.Equals("double", StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// Gets a value indicating whether the property type is a single-precision floating-point number.
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool IsFloat => PropertyDefinition.TypeName.Equals("float", StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>
         /// Gets a value indicating whether the property is a fractional numeric type like <see langword="float"/>, <see langword="double"/>, or <see langword="decimal"/>.
         /// </summary>
         /// <remarks>
@@ -117,7 +131,7 @@ namespace OzzCodeGen.CodeEngines
         /// </remarks>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsFractionalNumeric => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeDecimalNumeric();
+        public bool IsFractionalNumeric => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsFractionalNumeric();
 
         /// <summary>
         /// Gets a value indicating whether the property is of an integer numeric type.
@@ -127,7 +141,7 @@ namespace OzzCodeGen.CodeEngines
         /// to determine if integer-specific logic should be applied.</remarks>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsIntegerNumeric => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeIntNumeric();
+        public bool IsIntegerNumeric => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeIntegerNumeric();
 
 
         [XmlIgnore]

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.21] - 2026-04-17
+
+### Added
+- Added `IsDouble` and `IsFloat` properties to `BasePropertySetting` for fine-grained numeric type checks.
+- Added `IsInteger` and `IsText` properties to `StorageColumnSetting` for clearer column-type detection.
+- Expanded `SqliteExtensions` with overloads for `DateTime`, `bool`, integer, and string parameters (both nullable and non-nullable).
+- Enhanced `SqliteRepositoryPropertySetting` with new column type helpers and improved XML documentation.
+
+### Changed
+- Renamed numeric type detection methods for clarity: `IsTypeIntNumeric` → `IsTypeIntegerNumeric` and updated all usages across templates and settings.
+- Refactored SQLite repository templates to use the new type-safe `SqliteCommand` extension methods throughout.
+- Improved handling of decimal-to-integer and decimal-to-text conversions in generated repository code.
+- Bumped `OzzCodeGen` version to `2.2.21`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.21`.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
+### Fixed
+- Minor code cleanup for maintainability across repository templates and property settings.
+
 ## [2.2.20] - 2026-04-16
 
 ### Added

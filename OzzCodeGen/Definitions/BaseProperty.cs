@@ -235,13 +235,13 @@ namespace OzzCodeGen.Definitions
             return p.IsTypeNumeric();
         }
 
-        public static bool IsTypeDecimalNumeric(string typeName)
+        public static bool IsFractionalNumeric(string typeName)
         {
             return typeName.Contains("decimal") || typeName.Contains("float") ||
                    typeName.Contains("double");
         }
 
-        public static bool IsTypeIntNumeric(string typeName)
+        public static bool IsTypeIntegerNumeric(string typeName)
         {
             return typeName.ToLowerInvariant().Contains("int") || typeName.Contains("uint") ||
                    typeName.Contains("short") || typeName.Contains("ushort") ||
@@ -251,8 +251,7 @@ namespace OzzCodeGen.Definitions
 
         public static bool IsTypeNumeric(string typeName)
         {
-            return IsTypeIntNumeric(typeName) || IsTypeDecimalNumeric(typeName) ||
-                   typeName.Contains("byte") || typeName.Contains("sbyte");
+            return IsTypeIntegerNumeric(typeName) || IsFractionalNumeric(typeName);
         }
 
 

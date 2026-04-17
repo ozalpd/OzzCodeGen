@@ -156,11 +156,11 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             if (propDef == null || string.IsNullOrEmpty(ResourceName))
                 return string.Empty;
 
-            if (propDef.IsTypeIntNumeric())
+            if (propDef.IsTypeIntegerNumeric())
             {
                 return "RangeInt";
             }
-            else if (propDef.IsTypeDecimalNumeric())
+            else if (propDef.IsFractionalNumeric())
             {
                 return "RangeDecimal";
             }

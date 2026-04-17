@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.Storage
 {
@@ -89,6 +91,46 @@ namespace OzzCodeGen.CodeEngines.Storage
         }
         private bool _indexed;
 
+        /// <summary>
+        /// Gets a value indicating whether the data type represents an integer type.
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool IsInteger
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(DataType))
+                    return false;
+
+                return DataType.IndexOf("int", StringComparison.InvariantCultureIgnoreCase) >= 0
+                    || DataType.IndexOf("integer", StringComparison.InvariantCultureIgnoreCase) >= 0
+                    || DataType.IndexOf("bigint", StringComparison.InvariantCultureIgnoreCase) >= 0
+                    || DataType.IndexOf("smallint", StringComparison.InvariantCultureIgnoreCase) >= 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the data type represents a text or character-based type.
+        /// </summary>
+        /// <remarks>This property returns <see langword="true"/> if the underlying data type contains a
+        /// substring such as "char", "text", "nchar", or "ntext", regardless of case. Use this property to determine if
+        /// the property should be treated as a textual field for code generation or validation purposes.</remarks>
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool IsText
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(DataType))
+                    return false;
+
+                return DataType.IndexOf("char", StringComparison.InvariantCultureIgnoreCase) >= 0
+                    || DataType.IndexOf("text", StringComparison.InvariantCultureIgnoreCase) >= 0
+                    || DataType.IndexOf("nchar", StringComparison.InvariantCultureIgnoreCase) >= 0
+                    || DataType.IndexOf("ntext", StringComparison.InvariantCultureIgnoreCase) >= 0;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether this column has a unique constraint.

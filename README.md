@@ -3,14 +3,24 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.20`
-- `OzzCodeGen.Wpf`: `2.2.20`
+- `OzzCodeGen`: `2.2.21`
+- `OzzCodeGen.Wpf`: `2.2.21`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
+## Latest Highlights (2.2.21)
+- Added `IsDouble` and `IsFloat` properties to `BasePropertySetting` for fine-grained numeric type checks.
+- Added `IsInteger` and `IsText` properties to `StorageColumnSetting` for clearer column-type detection.
+- Expanded `SqliteExtensions` with overloads for `DateTime`, `bool`, integer, and string parameters (nullable and non-nullable).
+- Enhanced `SqliteRepositoryPropertySetting` with new column type helpers and improved documentation.
+- Renamed `IsTypeIntNumeric` → `IsTypeIntegerNumeric` and updated all usages for consistency.
+- Refactored SQLite repository templates to use new type-safe `SqliteCommand` extension methods.
+- Improved decimal-to-integer and decimal-to-text conversion handling in generated repositories.
+- Bumped `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.2.21`.
 
 ## Latest Highlights (2.2.20)
 - Added `SqliteExtensions` for reusable nullable and scaled decimal SQLite parameter handling in generated repositories.
@@ -46,39 +56,6 @@ See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 - Introduced `GetRepositoryName` and `HasThisKindOfRepository` helpers for more robust repository-name resolution and dependency checks.
 - Updated template logic to inject repository dependencies only when needed, improving generated constructor parameter generation.
 - Updated `CSharpSqliteRepositoryTemplate.cs` and `CSharpSqliteRepositoryTemplate.tt` to generate repository interfaces as `partial`, enabling extension across multiple files.
-
-## Latest Highlights (2.2.15)
-- Added `OnLoaded` partial-method generation after entity materialization to improve repository extensibility.
-- Improved autoload logic to skip self references and `ICollection<>` types, preventing recursive loading.
-- Enhanced repository-name resolution for `Dto` suffixes and `ICollection<>` wrappers.
-- Limited generated autoload behavior to complex/navigation properties only.
-- Improved null/empty checks and autoload handling in generated `GetAllAsync` and `GetByPKeyAsync` methods.
-- Standardized generated partial hooks for `OnLoaded`, `OnCreated`, and `OnUpdated`.
-- Applied small formatting and readability improvements across repository templates.
-
-## Latest Highlights (2.2.14)
-- Improved T-SQL index generation in `CreateTSqlTable.part.cs` to correctly format index columns ending with ` Desc` as descending columns.
-- Added case-insensitive matching for ` Desc` suffix handling in index-column parsing.
-- Corrected generated SQL syntax for descending index columns.
-
-## Latest Highlights (2.2.13)
-- Added `CompositeIndexColumns` and related storage settings to support multi-column/composite index generation.
-- Updated T-SQL and SQLite templates to generate composite indexes and refactored index-generation flow.
-- Improved storage settings code with clearer method structure, expanded XML documentation, and broader `nameof(...)` property-change usage.
-- Refined `StorageEntitySetting` for cleaner inheritance and maintainability.
-- Cleaned up `StorageEngineUI` and `SqliteRepositoryEngineUI` by hiding more technical columns and improving `IsLoadingFromFile` handling.
-- Reduced `Namespace` column width in `MainWindow.xaml` for better layout balance.
-- Applied general cleanup and documentation improvements.
-
-## Latest Highlights (2.2.12)
-- Increased `MainWindow` height from `640` to `832`.
-- Restructured the **Entities** tab layout in `MainWindow.xaml` for better usability.
-- Rebalanced column definitions to give more space to entity and property grids.
-- Moved `grdEntities` and `grdProperties` sections into two-column `Grid` containers.
-- Increased selected `DataGrid` column widths to improve readability.
-- Removed redundant `StackPanel` containers and obsolete row-definition usage in the Entities tab.
-- Increased max width limits for main Entities-tab grids to `1280`.
-
 
 ## UI Icons
 - Icon set: **Bootstrap Icons v1.13.1**

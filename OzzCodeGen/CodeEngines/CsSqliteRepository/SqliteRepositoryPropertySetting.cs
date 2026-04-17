@@ -1,12 +1,20 @@
 using OzzCodeGen.CodeEngines.CSharp;
 using OzzCodeGen.CodeEngines.Storage;
-using System;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.CsSqliteRepository;
 
+/// <summary>
+/// Provides configuration settings for a property within a generated SQLite repository entity, including column
+/// mapping, autoload behavior, update method generation, and storage-specific options.
+/// </summary>
+/// <remarks>This class is used by the SQLite repository code generation engine to control how individual
+/// properties are mapped to database columns and how they participate in repository operations. It supports advanced
+/// features such as automatic loading of navigation properties, per-column update methods, decimal-to-integer scaling
+/// for precise storage, and unique index detection. Most settings are relevant only for simple, string, or complex
+/// properties, and some options may have no effect depending on the property type or storage mapping.</remarks>
 public class SqliteRepositoryPropertySetting : BaseCSharpPropertySetting
 {
     /// <summary>
@@ -87,7 +95,7 @@ public class SqliteRepositoryPropertySetting : BaseCSharpPropertySetting
     {
         get { return _decimalScale; }
         set
-        { 
+        {
             int newValue = 0;
             if (IsLoadingFromFile || IsDecimal)
             {
@@ -118,7 +126,14 @@ public class SqliteRepositoryPropertySetting : BaseCSharpPropertySetting
     private bool _singleColumnUpdate;
 
 
-
+    /// <summary>
+    /// Gets the property setting that represents the foreign key for this repository property, if one exists.
+    /// </summary>
+    /// <remarks>This method searches for a property within the associated entity settings whose name matches
+    /// the foreign key name. If no matching property is found or the foreign key name is not defined, the method
+    /// returns <see langword="null"/>.</remarks>
+    /// <returns>A <see cref="SqliteRepositoryPropertySetting"/> representing the foreign key property if found; otherwise, <see
+    /// langword="null"/>.</returns>
     public SqliteRepositoryPropertySetting? GetForeignKeyProperty()
     {
         string fkeyName = GetForeignKeyName();
@@ -129,18 +144,50 @@ public class SqliteRepositoryPropertySetting : BaseCSharpPropertySetting
         return entitySetting?.Properties.FirstOrDefault(p => p.Name.Equals(fkeyName));
     }
 
+    /// <summary>
+    /// Gets the fully qualified name of the corresponding Common Language Runtime (CLR) type for this model property.
+    /// </summary>
     [XmlIgnore]
     [JsonIgnore]
     public string ClrTypeName => GetTypeName();
 
+    /// <summary>
+    /// Gets a value indicating whether the property is included as a column in the generated repository.
+    /// </summary>
     [XmlIgnore]
     [JsonIgnore]
     public bool IsRepositoryColumn => IsSimpleOrString;
 
+    /// <summary>
+    /// Gets a value indicating whether the associated storage column is treated as an integer type in the repository.
+    /// </summary>
+    [XmlIgnore]
+    [JsonIgnore]
+    public bool IsRepositoryIntegerColumn => StorageColumnSetting?.IsInteger == true;
+
+    /// <summary>
+    /// Gets a value indicating whether the associated storage column is treated as a text column in the repository.
+    /// </summary>
+    [XmlIgnore]
+    [JsonIgnore]
+    public bool IsRepositoryTextColumn => StorageColumnSetting?.IsText == true;
+
+    /// <summary>
+    /// Gets a value indicating whether the column is configured as a unique index.
+    /// </summary>
+    /// <remarks>A column is considered uniquely indexed if both the index and unique constraints are set in
+    /// the associated storage column settings. This property is typically used to determine whether the column enforces
+    /// uniqueness at the database level.</remarks>
     [XmlIgnore]
     [JsonIgnore]
     public bool IsUniqueIndexed => StorageColumnSetting?.Indexed == true && StorageColumnSetting?.Unique == true;
 
+    /// <summary>
+    /// Gets the storage-specific column settings associated with this property, if available.
+    /// </summary>
+    /// <remarks>This property returns the corresponding storage column settings when the property is a simple
+    /// or string type and a matching storage entity property exists. The value is determined based on the current
+    /// entity and property context and may be null if no storage mapping is found.</remarks>
     [XmlIgnore]
     [JsonIgnore]
     public StorageColumnSetting? StorageColumnSetting

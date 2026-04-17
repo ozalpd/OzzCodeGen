@@ -182,7 +182,7 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
         if (property.PropertyDefinition is not SimpleProperty simpleProperty)
             return false;
 
-        return simpleProperty.IsStoreGenerated || simpleProperty.IsTypeIntNumeric();
+        return simpleProperty.IsStoreGenerated || simpleProperty.IsTypeIntegerNumeric();
     }
 
     protected virtual bool IsReadOnlyColumn(SqliteRepositoryPropertySetting property)
@@ -342,7 +342,13 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
     {
         PushIndent("    ");
         PushIndent("    ");
-        bool hasTimeStamp = model.Columns.Any(c => c.Name == model.CreatedAtCol?.Name || c.Name == model.UpdatedAtCol?.Name);
+
+        // For now, we pass DateTime.Now directly then it is converted UTC. This can be made configurable in the future if needed.
+        bool useNowUTC = false;
+        bool hasTimeStamp = useNowUTC
+                         && model.Columns
+                                 .Any(c => c.Name == model.CreatedAtCol?.Name
+                                        || c.Name == model.UpdatedAtCol?.Name);
         if (hasTimeStamp)
         {
             PushIndent("    ");

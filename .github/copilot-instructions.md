@@ -92,6 +92,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
   - `{Language}{Purpose}ValidatorTemplate` – e.g., `CSharpValidatorTemplate`, `RustValidatorTemplate`
 - **Folder and namespace naming:** Prefer folder and namespace names that are as short as possible while still understandable; for example, prefer `CsSqliteRepository` over `CSharpSqliteRepository`.
 - **Property names:** Use clear category-style names for helper flags and generated-setting properties, such as `IsSearchParameter`, `IsFractionalNumeric`, and `IsIntegerNumeric`, instead of ambiguous names like `IsDecimalNumeric`.
+- **Naming conventions for numeric type helper properties:** Use `IsDecimal` for the C# `decimal` type specifically, `IsFractionalNumeric` for `float`/`double`/`decimal`, `IsIntegerNumeric` for integer types, `IsDouble` for `double`, and `IsFloat` for `float`.
 
 ## Extending This Repo
 - **Add a model provider:** Implement `IModelProvider`, wire UI selection, and set `CodeGenProject.ModelProvider`. Provide `SelectSource()` for source picking and `RefreshDataModel()` for schema sync.
@@ -107,7 +108,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - Implement `GetTemplateList()` explicitly so template selection is clear even when the engine currently has only one effective output path.
 - Keep output paths relative to `CodeGenProject.TargetSolutionDir` by using `TargetFolder`/`TargetDirectory` patterns instead of absolute persisted paths.
 - If the engine uses T4 templates, include the `.tt` and generated companions in `OzzCodeGen.csproj` with the same `DependentUpon` pattern used by existing engines. Scaffolded `.tt` files are acceptable while generation behavior is still being completed.
-- For SQLite repository generation, keep timestamp behavior explicit: set configured `CreatedAt`/`UpdatedAt` columns during insert/update generation, prevent `CreatedAt` from being updated after insert, use property-level flags such as `CheckIfAltered`, `SingleColumnUpdate`, `AutoLoad`, and `DecimalToIntegerScale` when generating update/load logic, preserve extensibility hooks such as partial `OnLoaded`/`OnCreated`/`OnUpdated` methods, autoload only complex/navigation properties, skip self and `ICollection<>` references to avoid recursion, keep safe value expressions for nullable foreign keys/types in generated SQL parameter logic, prefer `SqliteExtensions` helpers over ad-hoc parameter helpers such as `AddNullableTextParameter`, and keep helper-based method generation consistent across `GetAll`, `GetByPKey`, `GetByUnique`, and foreign-key query methods.
+- For SQLite repository generation, keep timestamp behavior explicit: set configured `CreatedAt`/`UpdatedAt` columns during insert/update generation, prevent `CreatedAt` from being updated after insert, use property-level flags such as `CheckIfAltered`, `SingleColumnUpdate`, `AutoLoad`, and `DecimalToIntegerScale` when generating update/load logic, preserve extensibility hooks such as partial `OnLoaded`/`OnCreated`/`OnUpdated` methods, autoload only complex/navigation properties, skip self and `ICollection<>` references to avoid recursion, keep safe value expressions for nullable foreign keys/types in generated SQL parameter logic, prefer `SqliteExtensions` helpers over ad-hoc parameter helpers such as `AddNullableTextParameter`, expand `SqliteExtensions` with overloads for `DateTime`, `bool`, integer, and string parameters (nullable and non-nullable), and keep helper-based method generation consistent across `GetAll`, `GetByPKey`, `GetByUnique`, and foreign-key query methods.
 - For storage DDL generation, keep index generation helpers centralized and ensure both MSSQL and SQLite templates support composite-index fields consistently.
 
 ## Testing Strategy
@@ -131,7 +132,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - Tests are not present; rely on manual verification via WPF apps.
 - Project files use SDK-style `.csproj` format targeting .NET 10. Current Windows projects target `net10.0-windows10.0.19041.0`; assembly metadata (`Version`, `Copyright`, `Company`, `Product`, `Description`) is declared directly in each `.csproj`.
 - Current version alignment:
-  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.2.20`
+  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.2.21`
   - `OzzLocalization` and `OzzLocalization.Wpf`: `2.1.6`
 - Versioning policy:
   - `OzzLocalization` and `OzzLocalization.Wpf` are expected to change infrequently and should normally advance with small monotonic patch increments (for example `2.1.6` -> `2.1.7` -> `2.1.8`) unless there is a real feature-driven or breaking-change reason to change minor or major versions.

@@ -10,7 +10,7 @@ namespace OzzCodeGen.Definitions
             get
             {
                 if (string.IsNullOrWhiteSpace(_enumTypeName)
-                    || !IsTypeIntNumeric()) //sadece tamsayı
+                    || !IsTypeIntegerNumeric()) //sadece tamsayı
                     return string.Empty;
 
                 return _enumTypeName;
@@ -102,9 +102,9 @@ namespace OzzCodeGen.Definitions
             return dependent.FirstOrDefault();
         }
 
-        public bool IsTypeDecimalNumeric()
+        public bool IsFractionalNumeric()
         {
-            return IsTypeDecimalNumeric(TypeName);
+            return IsFractionalNumeric(TypeName);
         }
 
         public override bool IsTypeNullable()
@@ -112,9 +112,9 @@ namespace OzzCodeGen.Definitions
             return IsTypeNullable(TypeName);
         }
 
-        public bool IsTypeIntNumeric()
+        public bool IsTypeIntegerNumeric()
         {
-            return IsTypeIntNumeric(TypeName);
+            return IsTypeIntegerNumeric(TypeName);
         }
 
         public override bool IsTypeNumeric()
