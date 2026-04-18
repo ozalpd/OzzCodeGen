@@ -1,4 +1,5 @@
 using OzzCodeGen.CodeEngines.CSharp;
+using OzzCodeGen.CodeEngines.CsModelClass;
 using OzzCodeGen.CodeEngines.Storage;
 using OzzCodeGen.Definitions;
 using OzzUtils;
@@ -22,6 +23,109 @@ public class SqliteRepositoryEntitySetting : BaseCSharpEntitySetting<SqliteRepos
         return CodeEngine;
     }
 
+    /// <summary>
+    /// Gets the model class entity settings associated with this entity, if available.
+    /// </summary>
+    /// <remarks>This property returns the corresponding model class entity settings from the model class code engine,
+    /// based on the entity's name. If the settings are not available or the code engine is not initialized, the property
+    /// returns null.</remarks>
+    [XmlIgnore]
+    [JsonIgnore]
+    public ModelClassEntitySetting ModelClassEntitySetting
+    {
+        get
+        {
+            if (_modelClassEntity == null && CodeEngine?.ModelClassCodeEngine != null)
+            {
+                _modelClassEntity = CodeEngine.ModelClassCodeEngine.Entities.FirstOrDefault(e => e.Name == Name);
+            }
+
+            return _modelClassEntity;
+        }
+    }
+    private ModelClassEntitySetting _modelClassEntity;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether paged query methods should be generated.
+    /// </summary>
+    /// <remarks>When enabled, the code generator will include methods that support retrieving data in pages,
+    /// which is useful for large datasets or implementing pagination in user interfaces.</remarks>
+    public bool GenerateGetPaged
+    {
+        set
+        {
+            _generateGetPaged = value;
+            RaisePropertyChanged(nameof(GenerateGetPaged));
+        }
+        get
+        {
+            return _generateGetPaged;
+        }
+    }
+    private bool _generateGetPaged;
+
+    /// <summary>
+    /// Gets a value indicating whether query parameter classes should be generated for the current entity based on its
+    /// settings and searchable properties.
+    /// </summary>
+    /// <remarks>Query parameter generation is enabled when the entity's model class settings specify that
+    /// query parameters should be generated and there is at least one searchable property, either as a simple search
+    /// field or as a range field. This property is typically used by code generation engines to determine whether to
+    /// emit query parameter classes for filtering or searching scenarios.</remarks>
+    [XmlIgnore]
+    [JsonIgnore]
+    public bool HasSearchableProperties
+    {
+        get
+        {
+            return ModelClassEntitySetting?.GenerateQueryParam == true
+                && (SearchableNonRangeProperties.Any() || SearchableRangeProperties.Any());
+        }
+    }
+
+    /// <summary>
+    /// Gets an enumerable collection of model properties that are searchable and not used for range-based filtering.
+    /// </summary>
+    /// <remarks>This property returns only those properties that are considered searchable but do not
+    /// represent minimum or maximum values for range queries. If the associated model class entity setting is not
+    /// available, the collection will be empty.</remarks>
+    [XmlIgnore]
+    [JsonIgnore]
+    public IEnumerable<ModelPropertySetting> SearchableNonRangeProperties
+    {
+        get
+        {
+            if (ModelClassEntitySetting != null)
+                return ModelClassEntitySetting.SearchableNonRangeProperties;
+            else
+                return Enumerable.Empty<ModelPropertySetting>();
+        }
+    }
+
+    /// <summary>
+    /// Gets the collection of model properties that support range-based search operations.
+    /// </summary>
+    /// <remarks>This property returns only those properties that are configured to allow searching by a
+    /// range, such as minimum and maximum values. If no such properties are defined, the collection is empty.</remarks>
+    [XmlIgnore]
+    [JsonIgnore]
+    public IEnumerable<ModelPropertySetting> SearchableRangeProperties
+    {
+        get
+        {
+            if (ModelClassEntitySetting != null)
+                return ModelClassEntitySetting.SearchableRangeProperties;
+            else
+                return Enumerable.Empty<ModelPropertySetting>();
+        }
+    }
+
+    /// <summary>
+    /// Gets the storage-specific settings associated with this entity, if available.
+    /// </summary>
+    /// <remarks>This property returns the corresponding storage entity settings from the storage code engine,
+    /// based on the entity's name. If no matching settings are found or the storage code engine is not available, the
+    /// property returns null.</remarks>
     [XmlIgnore]
     [JsonIgnore]
     public StorageEntitySetting StorageEntitySetting
@@ -38,6 +142,11 @@ public class SqliteRepositoryEntitySetting : BaseCSharpEntitySetting<SqliteRepos
     }
     private StorageEntitySetting _storageEntitySetting;
 
+    /// <summary>
+    /// Gets or sets the name of the database table associated with the entity.
+    /// </summary>
+    /// <remarks>If not explicitly set, the table name is determined by the associated storage entity setting.
+    /// If no storage entity setting is available, the pluralized form of the entity's name is used.</remarks>
     public string TableName
     {
         get
@@ -140,7 +249,12 @@ public class SqliteRepositoryEntitySetting : BaseCSharpEntitySetting<SqliteRepos
         return $"ORDER BY [{pk.ColumnName}]";
     }
 
-
+    /// <summary>
+    /// Gets or sets the SQL ORDER BY clause used to determine the sorting of query results.
+    /// </summary>
+    /// <remarks>When setting this property, the value is automatically normalized to ensure it begins with
+    /// "ORDER BY". If the value does not start with "ORDER BY", it is prepended automatically. Leading and trailing
+    /// whitespace is trimmed. If the value is null, it is treated as an empty string.</remarks>
     public string OrderByClause
     {
         get

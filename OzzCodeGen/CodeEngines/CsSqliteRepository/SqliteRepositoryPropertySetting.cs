@@ -1,5 +1,6 @@
 using OzzCodeGen.CodeEngines.CSharp;
 using OzzCodeGen.CodeEngines.Storage;
+using System;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
@@ -93,7 +94,6 @@ public class SqliteRepositoryPropertySetting : BaseCSharpPropertySetting
     /// </remarks>
     public int DecimalToIntegerScale
     {
-        get { return _decimalScale; }
         set
         {
             int newValue = 0;
@@ -107,8 +107,20 @@ public class SqliteRepositoryPropertySetting : BaseCSharpPropertySetting
                 RaisePropertyChanged(nameof(DecimalToIntegerScale));
             }
         }
+        get
+        {
+            if (!_decimalScale.HasValue)
+            {
+                bool isStorageIntType = IsDecimal &&
+                                        StorageColumnSetting?.DataType
+                                       .StartsWith("INT", StringComparison.OrdinalIgnoreCase) == true;
+
+                _decimalScale = isStorageIntType ? 4 : 0;
+            }
+            return _decimalScale.Value;
+        }
     }
-    private int _decimalScale;
+    private int? _decimalScale;
 
 
     /// <summary>

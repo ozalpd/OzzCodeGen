@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.22] - 2026-04-18
+
+### Added
+- Added paged query method generation (`GetPagedAsync`) to C# SQLite repository code generation, leveraging per-entity query parameter classes.
+- Added WPF UI toggle per entity to enable/disable paged query generation (`GeneratePaged` property).
+- Enhanced repository templates with modular autoloading and parameter handling for improved flexibility in query construction.
+
+### Changed
+- Refactored SQLite repository templates to better support modular parameter generation and filtering logic.
+- Improved extensibility for future search and filter feature enhancements.
+- Bumped `OzzCodeGen` version to `2.2.22`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.22`.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.21] - 2026-04-17
 
 ### Added

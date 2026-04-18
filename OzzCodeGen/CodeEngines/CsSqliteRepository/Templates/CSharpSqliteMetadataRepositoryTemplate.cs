@@ -74,69 +74,69 @@ namespace ");
                     "stance == null)\r\n            {\r\n                _instance = new MetadataReposito" +
                     "ry(databasePath);\r\n            }\r\n            return _instance;\r\n        }\r\n    " +
                     "    private static MetadataRepository? _instance;\r\n\r\n        public string Conne" +
-                    "ctionString {  get { return _connectionString; } }\r\n        private readonly str" +
-                    "ing _connectionString;\r\n\r\n        private void InitializeDatabase()\r\n        {\r\n" +
-                    "            using var connection = new SqliteConnection(_connectionString);\r\n   " +
-                    "         connection.Open();\r\n\r\n            var metadataCommand = connection.Crea" +
-                    "teCommand();\r\n            metadataCommand.CommandText = @\"\r\n                    " +
-                    "CREATE TABLE IF NOT EXISTS DatabaseMetadata (\r\n                        Id INTEGE" +
-                    "R PRIMARY KEY CHECK (Id = 1),\r\n                        LastUpdateUtc TEXT NULL\r\n" +
-                    "                    );\r\n\r\n                    INSERT INTO DatabaseMetadata (Id, " +
-                    "LastUpdateUtc)\r\n                    VALUES (1, @lastUpdateUtc)\r\n                " +
-                    "    ON CONFLICT(Id) DO NOTHING;\";\r\n            metadataCommand.Parameters.AddWit" +
-                    "hValue(\"@lastUpdateUtc\", string.Empty);\r\n            metadataCommand.ExecuteNonQ" +
-                    "uery();\r\n\r\n            var readMetadataCommand = connection.CreateCommand();\r\n  " +
-                    "          readMetadataCommand.CommandText = \"SELECT LastUpdateUtc FROM DatabaseM" +
-                    "etadata WHERE Id = 1\";\r\n            var lastUpdateUtc = readMetadataCommand.Exec" +
-                    "uteScalar() as string;\r\n            LastUpdateTime = ToLocalDateTime(lastUpdateU" +
-                    "tc);\r\n        }\r\n\r\n        /// <summary>\r\n        /// Gets the last data update " +
-                    "time in local time.\r\n        /// </summary>\r\n        public DateTime? LastUpdate" +
-                    "Time { get; private set; }\r\n\r\n        /// <summary>\r\n        /// Gets the last d" +
-                    "atabase update time in UTC.\r\n        /// </summary>\r\n        /// <returns>The la" +
-                    "st update time, or null if never updated.</returns>\r\n        public async Task<D" +
-                    "ateTime?> GetLastUpdateTimeUtcAsync()\r\n        {\r\n            using var connecti" +
-                    "on = new SqliteConnection(_connectionString);\r\n            await connection.Open" +
-                    "Async();\r\n\r\n            var command = connection.CreateCommand();\r\n            c" +
-                    "ommand.CommandText = \"SELECT LastUpdateUtc FROM DatabaseMetadata WHERE Id = 1\";\r" +
-                    "\n\r\n            var result = await command.ExecuteScalarAsync() as string;\r\n\r\n   " +
-                    "         if (string.IsNullOrWhiteSpace(result))\r\n            {\r\n                " +
-                    "return null;\r\n            }\r\n\r\n            if (DateTime.TryParse(result, Culture" +
-                    "Info.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToU" +
-                    "niversal, out var utcTime))\r\n            {\r\n                return utcTime;\r\n   " +
-                    "         }\r\n\r\n            return null;\r\n        }\r\n\r\n        /// <summary>\r\n    " +
-                    "    /// Saves the current UTC time as the last database update time.\r\n        //" +
-                    "/ </summary>\r\n        /// <param name=\"connection\">The SQLite connection to use " +
-                    "for the update.</param>\r\n        /// <returns>A task representing the asynchrono" +
-                    "us operation.</returns>\r\n        public async Task SaveLastUpdateUtcAsync(Sqlite" +
-                    "Connection connection)\r\n        {\r\n            var nowUtc = DateTimeOffset.UtcNo" +
-                    "w;\r\n\r\n            var metadataCommand = connection.CreateCommand();\r\n           " +
-                    " metadataCommand.CommandText = @\"\r\n                    UPDATE DatabaseMetadata\r\n" +
-                    "                    SET LastUpdateUtc = @lastUpdateUtc\r\n                    WHER" +
-                    "E Id = 1\";\r\n            metadataCommand.Parameters.AddWithValue(\"@lastUpdateUtc\"" +
-                    ", nowUtc.ToString(\"O\"));\r\n\r\n            await metadataCommand.ExecuteNonQueryAsy" +
-                    "nc();\r\n            LastUpdateTime = nowUtc.ToLocalTime().DateTime;\r\n        }\r\n\r" +
-                    "\n        /// <summary>\r\n        /// Gets the last database update time in local " +
-                    "time.\r\n        /// </summary>\r\n        /// <returns>The last update time in loca" +
-                    "l time, or null if never updated.</returns>\r\n        public async Task<DateTime?" +
-                    "> GetLastUpdateTimeAsync()\r\n        {\r\n            var utcTime = await GetLastUp" +
-                    "dateTimeUtcAsync();\r\n            return utcTime?.ToLocalTime();\r\n        }\r\n\r\n  " +
-                    "      private static DateTime? ToLocalDateTime(string? utcValue)\r\n        {\r\n   " +
-                    "         DateTime? dateTime = null;\r\n            if (DateTimeOffset.TryParse(utc" +
-                    "Value, out var parsedUtc))\r\n                dateTime = parsedUtc.ToLocalTime().D" +
-                    "ateTime;\r\n\r\n            return dateTime;\r\n        }\r\n    }\r\n\r\n    /// <summary>\r" +
-                    "\n    /// Repository interface for accessing database metadata.\r\n    /// </summar" +
-                    "y>\r\n    public interface IMetadataRepository\r\n    {\r\n        /// <summary>\r\n    " +
-                    "    /// Gets the last database update time in UTC.\r\n        /// </summary>\r\n    " +
-                    "    /// <returns>The last update time, or null if never updated.</returns>\r\n    " +
-                    "    Task<DateTime?> GetLastUpdateTimeUtcAsync();\r\n\r\n        /// <summary>\r\n     " +
-                    "   /// Gets the last database update time in local time.\r\n        /// </summary>" +
-                    "\r\n        /// <returns>The last update time in local time, or null if never upda" +
-                    "ted.</returns>\r\n        Task<DateTime?> GetLastUpdateTimeAsync();\r\n\r\n        ///" +
-                    " <summary>\r\n        /// Saves the current UTC time as the last database update t" +
-                    "ime.\r\n        /// </summary>\r\n        /// <param name=\"connection\">The SQLite co" +
-                    "nnection to use for the update.</param>\r\n        /// <returns>A task representin" +
-                    "g the asynchronous operation.</returns>\r\n        Task SaveLastUpdateUtcAsync(Sql" +
-                    "iteConnection connection);\r\n    }\r\n}");
+                    "ctionString { get { return _connectionString; } }\r\n        private readonly stri" +
+                    "ng _connectionString;\r\n\r\n        private void InitializeDatabase()\r\n        {\r\n " +
+                    "           using var connection = new SqliteConnection(_connectionString);\r\n    " +
+                    "        connection.Open();\r\n\r\n            var metadataCommand = connection.Creat" +
+                    "eCommand();\r\n            metadataCommand.CommandText = @\"\r\n                    C" +
+                    "REATE TABLE IF NOT EXISTS DatabaseMetadata (\r\n                        Id INTEGER" +
+                    " PRIMARY KEY CHECK (Id = 1),\r\n                        LastUpdateUtc TEXT NULL\r\n " +
+                    "                   );\r\n\r\n                    INSERT INTO DatabaseMetadata (Id, L" +
+                    "astUpdateUtc)\r\n                    VALUES (1, @lastUpdateUtc)\r\n                 " +
+                    "   ON CONFLICT(Id) DO NOTHING;\";\r\n            metadataCommand.Parameters.AddWith" +
+                    "Value(\"@lastUpdateUtc\", string.Empty);\r\n            metadataCommand.ExecuteNonQu" +
+                    "ery();\r\n\r\n            var readMetadataCommand = connection.CreateCommand();\r\n   " +
+                    "         readMetadataCommand.CommandText = \"SELECT LastUpdateUtc FROM DatabaseMe" +
+                    "tadata WHERE Id = 1\";\r\n            var lastUpdateUtc = readMetadataCommand.Execu" +
+                    "teScalar() as string;\r\n            LastUpdateTime = ToLocalDateTime(lastUpdateUt" +
+                    "c);\r\n        }\r\n\r\n        /// <summary>\r\n        /// Gets the last data update t" +
+                    "ime in local time.\r\n        /// </summary>\r\n        public DateTime? LastUpdateT" +
+                    "ime { get; private set; }\r\n\r\n        /// <summary>\r\n        /// Gets the last da" +
+                    "tabase update time in UTC.\r\n        /// </summary>\r\n        /// <returns>The las" +
+                    "t update time, or null if never updated.</returns>\r\n        public async Task<Da" +
+                    "teTime?> GetLastUpdateTimeUtcAsync()\r\n        {\r\n            using var connectio" +
+                    "n = new SqliteConnection(_connectionString);\r\n            await connection.OpenA" +
+                    "sync();\r\n\r\n            var command = connection.CreateCommand();\r\n            co" +
+                    "mmand.CommandText = \"SELECT LastUpdateUtc FROM DatabaseMetadata WHERE Id = 1\";\r\n" +
+                    "\r\n            var result = await command.ExecuteScalarAsync() as string;\r\n\r\n    " +
+                    "        if (string.IsNullOrWhiteSpace(result))\r\n            {\r\n                r" +
+                    "eturn null;\r\n            }\r\n\r\n            if (DateTime.TryParse(result, CultureI" +
+                    "nfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUn" +
+                    "iversal, out var utcTime))\r\n            {\r\n                return utcTime;\r\n    " +
+                    "        }\r\n\r\n            return null;\r\n        }\r\n\r\n        /// <summary>\r\n     " +
+                    "   /// Saves the current UTC time as the last database update time.\r\n        ///" +
+                    " </summary>\r\n        /// <param name=\"connection\">The SQLite connection to use f" +
+                    "or the update.</param>\r\n        /// <returns>A task representing the asynchronou" +
+                    "s operation.</returns>\r\n        public async Task SaveLastUpdateUtcAsync(SqliteC" +
+                    "onnection connection)\r\n        {\r\n            var nowUtc = DateTimeOffset.UtcNow" +
+                    ";\r\n\r\n            var metadataCommand = connection.CreateCommand();\r\n            " +
+                    "metadataCommand.CommandText = @\"\r\n                    UPDATE DatabaseMetadata\r\n " +
+                    "                   SET LastUpdateUtc = @lastUpdateUtc\r\n                    WHERE" +
+                    " Id = 1\";\r\n            metadataCommand.Parameters.AddWithValue(\"@lastUpdateUtc\"," +
+                    " nowUtc.ToString(\"O\"));\r\n\r\n            await metadataCommand.ExecuteNonQueryAsyn" +
+                    "c();\r\n            LastUpdateTime = nowUtc.ToLocalTime().DateTime;\r\n        }\r\n\r\n" +
+                    "        /// <summary>\r\n        /// Gets the last database update time in local t" +
+                    "ime.\r\n        /// </summary>\r\n        /// <returns>The last update time in local" +
+                    " time, or null if never updated.</returns>\r\n        public async Task<DateTime?>" +
+                    " GetLastUpdateTimeAsync()\r\n        {\r\n            var utcTime = await GetLastUpd" +
+                    "ateTimeUtcAsync();\r\n            return utcTime?.ToLocalTime();\r\n        }\r\n\r\n   " +
+                    "     private static DateTime? ToLocalDateTime(string? utcValue)\r\n        {\r\n    " +
+                    "        DateTime? dateTime = null;\r\n            if (DateTimeOffset.TryParse(utcV" +
+                    "alue, out var parsedUtc))\r\n                dateTime = parsedUtc.ToLocalTime().Da" +
+                    "teTime;\r\n\r\n            return dateTime;\r\n        }\r\n    }\r\n\r\n    /// <summary>\r\n" +
+                    "    /// Repository interface for accessing database metadata.\r\n    /// </summary" +
+                    ">\r\n    public interface IMetadataRepository\r\n    {\r\n        /// <summary>\r\n     " +
+                    "   /// Gets the last database update time in UTC.\r\n        /// </summary>\r\n     " +
+                    "   /// <returns>The last update time, or null if never updated.</returns>\r\n     " +
+                    "   Task<DateTime?> GetLastUpdateTimeUtcAsync();\r\n\r\n        /// <summary>\r\n      " +
+                    "  /// Gets the last database update time in local time.\r\n        /// </summary>\r" +
+                    "\n        /// <returns>The last update time in local time, or null if never updat" +
+                    "ed.</returns>\r\n        Task<DateTime?> GetLastUpdateTimeAsync();\r\n\r\n        /// " +
+                    "<summary>\r\n        /// Saves the current UTC time as the last database update ti" +
+                    "me.\r\n        /// </summary>\r\n        /// <param name=\"connection\">The SQLite con" +
+                    "nection to use for the update.</param>\r\n        /// <returns>A task representing" +
+                    " the asynchronous operation.</returns>\r\n        Task SaveLastUpdateUtcAsync(Sqli" +
+                    "teConnection connection);\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

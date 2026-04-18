@@ -1,3 +1,5 @@
+using OzzCodeGen.CodeEngines.CsModelClass;
+using OzzCodeGen.CodeEngines.CsModelClass.UI;
 using OzzCodeGen.Definitions;
 using OzzUtils;
 using System;
@@ -30,6 +32,17 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
     {
         var pkey = GetPrimaryKey();
         var unique = GetUniqueIndexed();
+        ModelClassEntitySetting modelEntity = EntitySetting.ModelClassEntitySetting;
+        CSharpModelClassCodeEngine modelClassEngine = modelEntity?.CodeEngine as CSharpModelClassCodeEngine;
+        string queryParamClassName = string.Empty;
+        if (modelEntity != null && modelClassEngine != null)
+            queryParamClassName = modelEntity.GenerateQueryParam
+                                ? $"{EntitySetting.Name}{modelClassEngine.QueryParamClassName}"
+                                : modelClassEngine.QueryParamClassName;
+        bool hasIsActive = EntitySetting.HasIsActiveProperty();
+        bool needIsActive = hasIsActive
+                         && EntitySetting.SearchableNonRangeProperties
+                                         .Count(p => p.Name.Equals("IsActive", StringComparison.InvariantCultureIgnoreCase)) == 0;
         switch (methodType)
         {
             case MethodType.Create:
@@ -56,8 +69,14 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
 
             case MethodType.GetByForeignKey:
                 if (column != null)
-                    return $"Task<IReadOnlyList<{EntitySetting.Name}>> GetBy{column.Name}Async({column.GetTypeName()} {column.Name.ToCamelCase()}{(EntitySetting.HasIsActiveProperty() ? ", bool? isActive = null" : "")})";
+                    return $"Task<IReadOnlyList<{EntitySetting.Name}>> GetBy{column.Name}Async({column.GetTypeName()} {column.Name.ToCamelCase()}{(hasIsActive ? ", bool? isActive = null" : "")})";
                 break;
+
+            case MethodType.GetPaged:
+                if (string.IsNullOrWhiteSpace(queryParamClassName))
+                    return $"Task<IReadOnlyList<{EntitySetting.Name}>> GetPagedAsync(int pageNumber, int pageSize, string sortBy = null, bool ascending = true{(hasIsActive ? ", bool? isActive = null" : "")})";
+                else
+                    return $"Task<IReadOnlyList<{EntitySetting.Name}>> GetPagedAsync({queryParamClassName} queryParameters{(needIsActive ? ", bool? isActive = null" : "")})";
 
             case MethodType.UpdateEntity:
                 return $"Task<bool> UpdateAsync({EntitySetting.Name} {EntitySetting.Name.ToCamelCase()})";
@@ -372,6 +391,13 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
         PopIndent();
         PopIndent();
     }
+
+    public void WriteSingleColumnAndParameter(string colName, string value, bool isTimeStamp = false, string suffix = "")
+    {
+        var col = EntitySetting.GetInheritedIncludedProperties().FirstOrDefault(p => p.ColumnName == colName);
+        if (col != null)
+            WriteSingleColumnAndParameter(col, value, isTimeStamp, suffix);
+    }
 }
 
 public enum MethodType
@@ -380,6 +406,7 @@ public enum MethodType
     DeleteByPKey,
     DeleteByUniqueIndex,
     GetAll,
+    GetPaged,
     GetByPKey,
     GetByUnique,
     GetByForeignKey,

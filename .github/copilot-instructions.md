@@ -132,7 +132,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - Tests are not present; rely on manual verification via WPF apps.
 - Project files use SDK-style `.csproj` format targeting .NET 10. Current Windows projects target `net10.0-windows10.0.19041.0`; assembly metadata (`Version`, `Copyright`, `Company`, `Product`, `Description`) is declared directly in each `.csproj`.
 - Current version alignment:
-  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.2.21`
+  - `OzzCodeGen` and `OzzCodeGen.Wpf`: `2.2.22`
   - `OzzLocalization` and `OzzLocalization.Wpf`: `2.1.6`
 - Versioning policy:
   - `OzzLocalization` and `OzzLocalization.Wpf` are expected to change infrequently and should normally advance with small monotonic patch increments (for example `2.1.6` -> `2.1.7` -> `2.1.8`) unless there is a real feature-driven or breaking-change reason to change minor or major versions.

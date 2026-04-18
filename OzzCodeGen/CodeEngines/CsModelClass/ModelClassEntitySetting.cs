@@ -38,7 +38,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             get
             {
                 if (_searchableProperties == null)
-                    _searchableProperties = GetInheritedIncludedProperties().OfType<ModelPropertySetting>()
+                    _searchableProperties = GetInheritedProperties().OfType<ModelPropertySetting>()
                                                            .Where(p => p.IsSearchParameter)
                                                            .OrderBy(p => p.PropertyDefinition.DisplayOrder);
                 return _searchableProperties;
@@ -53,6 +53,16 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
                 return SearchableProperties.Where(p => p.IsComplex)
                                            .OrderBy(p => p.PropertyDefinition.DisplayOrder);
             }
+        }
+
+        public IEnumerable<ModelPropertySetting> SearchableNonRangeProperties
+        {
+            get { return SearchableSimpleProperties.Where(p => !p.IsDateTime && !p.IsFractionalNumeric); }
+        }
+
+        public IEnumerable<ModelPropertySetting> SearchableRangeProperties
+        {
+            get { return SearchableSimpleProperties.Where(p => p.IsDateTime || p.IsFractionalNumeric); }
         }
 
         public IEnumerable<ModelPropertySetting> SearchableSimpleProperties

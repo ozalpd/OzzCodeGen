@@ -3,14 +3,21 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.21`
-- `OzzCodeGen.Wpf`: `2.2.21`
+- `OzzCodeGen`: `2.2.22`
+- `OzzCodeGen.Wpf`: `2.2.22`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
+## Latest Highlights (2.2.22)
+- Added paged query method generation (`GetPagedAsync`) to C# SQLite repository code generation with per-entity query parameters.
+- Added per-entity WPF UI toggle for paged query generation (`GeneratePaged` property).
+- Refactored SQLite repository templates with modular autoloading and parameter handling for improved flexibility.
+- Enhanced extensibility for future search and filter features.
+- Bumped `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.2.22`.
 
 ## Latest Highlights (2.2.21)
 - Added `IsDouble` and `IsFloat` properties to `BasePropertySetting` for fine-grained numeric type checks.

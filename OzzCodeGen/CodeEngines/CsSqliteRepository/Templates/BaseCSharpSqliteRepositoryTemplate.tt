@@ -8,7 +8,7 @@
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzUtils" #>
 <#+ 
-public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col, string value, bool isTimeStamp = false)
+public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col, string value, bool isTimeStamp = false, string suffix = "")
 {
     string enumName = col.GetEnumTypeName();
     int decScale = col.DecimalToIntegerScale;
@@ -17,25 +17,25 @@ public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col, s
     if (isTimeStamp) {#>
     command.AddDateTimeToTextParameter("@<#= col.Name.ToCamelCase() #>", DateTime.Now);
 <#+ } else if (!string.IsNullOrEmpty(enumName)) {#>
-    command.AddParameter("@<#= col.Name.ToCamelCase() #>", (<#= col.PropertyDefinition.TypeName #>)<#= value #>);
+    command.AddParameter("@<#= col.Name.ToCamelCase() #><#= suffix #>", (<#= col.PropertyDefinition.TypeName #>)<#= value #>);
 <#+ } else if (col.IsDateTime ){#>
-    command.AddDateTimeToTextParameter("@<#= col.Name.ToCamelCase() #>", <#= value #>);
+    command.AddDateTimeToTextParameter("@<#= col.Name.ToCamelCase() #><#= suffix #>", <#= value #>);
 <#+ } else if (col.IsNullableString ){#>
-    command.AddNullableParameter("@<#= col.Name.ToCamelCase() #>", <#= value #>);
+    command.AddNullableParameter("@<#= col.Name.ToCamelCase() #><#= suffix #>", <#= value #>);
 <#+ } else if (col.IsString || isIntOrBool){#>
-    command.AddParameter("@<#= col.Name.ToCamelCase() #>", <#= value #>);
+    command.AddParameter("@<#= col.Name.ToCamelCase() #><#= suffix #>", <#= value #>);
 <#+ } else if (col.IsDouble && isNullable) { #>
-    command.AddNullableParameter("@<#= col.Name.ToCamelCase() #>", <#= value #>);
+    command.AddNullableParameter("@<#= col.Name.ToCamelCase() #><#= suffix #>", <#= value #>);
 <#+ } else if (col.IsFloat && isNullable) { #>
-    command.AddNullableParameter("@<#= col.Name.ToCamelCase() #>", (double?)<#= value #>);
+    command.AddNullableParameter("@<#= col.Name.ToCamelCase() #><#= suffix #>", (double?)<#= value #>);
 <#+ } else if (col.IsDecimal && decScale > 0 ){#>
-    command.AddDecimalToIntegerParameter("@<#= col.Name.ToCamelCase() #>",
+    command.AddDecimalToIntegerParameter("@<#= col.Name.ToCamelCase() #><#= suffix #>",
                                         <#= value #>,
                                         DecimalToIntegerScale.<#= col.Name #>);
 <#+ } else if (col.IsDecimal ){#>
-    command.AddDecimalToTextParameter("@<#= col.Name.ToCamelCase() #>", <#= value #>);
+    command.AddDecimalToTextParameter("@<#= col.Name.ToCamelCase() #><#= suffix #>", <#= value #>);
 <#+ } else {#>
-    command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #>", <#= value #>);
+    command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #><#= suffix #>", <#= value #>);// Fallback for other types, relying on ADO.NET's type inference.
 <#+ }
 } #>
 <#+ 

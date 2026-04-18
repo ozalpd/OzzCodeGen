@@ -115,8 +115,8 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
   }
     else
     {
-        var searchableSimples = EntitySetting.SearchableSimpleProperties.Where(p => !p.IsDateTime && !p.IsFractionalNumeric).ToList();
-        var searchableMinMaxProperties = EntitySetting.SearchableSimpleProperties.Where(p => p.IsDateTime || p.IsFractionalNumeric).ToList();
+        var nonRangeProperties = EntitySetting.SearchableNonRangeProperties.ToList();
+        var rangeProperties = EntitySetting.SearchableRangeProperties.ToList();
         
             
             #line default
@@ -241,7 +241,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
             this.Write("QueryParams)\r\n            {\r\n");
             
             #line 137 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-  foreach (var property in searchableSimples) { 
+  foreach (var property in nonRangeProperties) { 
             
             #line default
             #line hidden
@@ -275,7 +275,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
             #line hidden
             
             #line 140 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-  foreach (var item in searchableMinMaxProperties) { 
+  foreach (var item in rangeProperties) { 
             
             #line default
             #line hidden
@@ -331,7 +331,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
             this.Write("            }\r\n        }\r\n\r\n");
             
             #line 147 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-  foreach (var property in searchableSimples) { 
+  foreach (var property in nonRangeProperties) { 
             
             #line default
             #line hidden
@@ -352,13 +352,8 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
             this.Write(" { get; set; }\r\n");
             
             #line 149 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-    } 
-            
-            #line default
-            #line hidden
-            
-            #line 150 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-  foreach (var item in searchableMinMaxProperties) { 
+    }
+    foreach (var item in rangeProperties) { 
             
             #line default
             #line hidden
@@ -402,7 +397,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
                     "nySearchCriteria) return true;\r\n\r\n");
             
             #line 160 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-  foreach (var property in searchableSimples) { 
+  foreach (var property in nonRangeProperties) { 
             
             #line default
             #line hidden
@@ -422,7 +417,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
             #line hidden
             
             #line 163 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-  foreach (var property in searchableMinMaxProperties) { 
+  foreach (var property in rangeProperties) { 
             
             #line default
             #line hidden

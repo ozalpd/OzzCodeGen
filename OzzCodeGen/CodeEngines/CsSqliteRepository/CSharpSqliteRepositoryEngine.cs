@@ -144,6 +144,12 @@ public class CSharpSqliteRepositoryEngine : BaseCodeEngine
     }
     private CSharpModelClassCodeEngine _modelClassEngine;
 
+    [XmlIgnore]
+    [JsonIgnore]
+    public string QueryParamNamespaceName
+    {
+        get { return ModelClassCodeEngine?.QueryParamNamespaceName ?? string.Empty; }
+    }
 
     public string MetadataRepositoryName
     {

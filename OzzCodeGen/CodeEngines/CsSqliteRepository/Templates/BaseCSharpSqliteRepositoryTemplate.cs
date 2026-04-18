@@ -37,7 +37,7 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
         
         #line 10 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
  
-public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col, string value, bool isTimeStamp = false)
+public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col, string value, bool isTimeStamp = false, string suffix = "")
 {
     string enumName = col.GetEnumTypeName();
     int decScale = col.DecimalToIntegerScale;
@@ -84,6 +84,13 @@ this.Write("    command.AddParameter(\"@");
         
         #line 20 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(col.Name.ToCamelCase()));
+
+        
+        #line default
+        #line hidden
+        
+        #line 20 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(suffix));
 
         
         #line default
@@ -145,6 +152,13 @@ this.Write(this.ToStringHelper.ToStringWithCulture(col.Name.ToCamelCase()));
         #line hidden
         
         #line 22 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(suffix));
+
+        
+        #line default
+        #line hidden
+        
+        #line 22 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
 this.Write("\", ");
 
         
@@ -180,6 +194,13 @@ this.Write("    command.AddNullableParameter(\"@");
         
         #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(col.Name.ToCamelCase()));
+
+        
+        #line default
+        #line hidden
+        
+        #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(suffix));
 
         
         #line default
@@ -227,6 +248,13 @@ this.Write(this.ToStringHelper.ToStringWithCulture(col.Name.ToCamelCase()));
         #line hidden
         
         #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(suffix));
+
+        
+        #line default
+        #line hidden
+        
+        #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
 this.Write("\", ");
 
         
@@ -262,6 +290,13 @@ this.Write("    command.AddNullableParameter(\"@");
         
         #line 28 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(col.Name.ToCamelCase()));
+
+        
+        #line default
+        #line hidden
+        
+        #line 28 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(suffix));
 
         
         #line default
@@ -309,6 +344,13 @@ this.Write(this.ToStringHelper.ToStringWithCulture(col.Name.ToCamelCase()));
         #line hidden
         
         #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(suffix));
+
+        
+        #line default
+        #line hidden
+        
+        #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
 this.Write("\", (double?)");
 
         
@@ -344,6 +386,13 @@ this.Write("    command.AddDecimalToIntegerParameter(\"@");
         
         #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(col.Name.ToCamelCase()));
+
+        
+        #line default
+        #line hidden
+        
+        #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(suffix));
 
         
         #line default
@@ -405,6 +454,13 @@ this.Write(this.ToStringHelper.ToStringWithCulture(col.Name.ToCamelCase()));
         #line hidden
         
         #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(suffix));
+
+        
+        #line default
+        #line hidden
+        
+        #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
 this.Write("\", ");
 
         
@@ -446,6 +502,13 @@ this.Write(this.ToStringHelper.ToStringWithCulture(col.Name.ToCamelCase()));
         #line hidden
         
         #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(suffix));
+
+        
+        #line default
+        #line hidden
+        
+        #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
 this.Write("\", ");
 
         
@@ -460,7 +523,7 @@ this.Write(this.ToStringHelper.ToStringWithCulture(value));
         #line hidden
         
         #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
-this.Write(");\r\n");
+this.Write(");// Fallback for other types, relying on ADO.NET\'s type inference.\r\n");
 
         
         #line default

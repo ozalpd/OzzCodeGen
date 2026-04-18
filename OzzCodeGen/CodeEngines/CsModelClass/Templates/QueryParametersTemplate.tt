@@ -112,8 +112,8 @@ namespace <#= NamespaceName #>
 <#  }
     else
     {
-        var searchableSimples = EntitySetting.SearchableSimpleProperties.Where(p => !p.IsDateTime && !p.IsFractionalNumeric).ToList();
-        var searchableMinMaxProperties = EntitySetting.SearchableSimpleProperties.Where(p => p.IsDateTime || p.IsFractionalNumeric).ToList();
+        var nonRangeProperties = EntitySetting.SearchableNonRangeProperties.ToList();
+        var rangeProperties = EntitySetting.SearchableRangeProperties.ToList();
         #>
 using <#= CodeEngine.NamespaceName #>;
 
@@ -134,20 +134,20 @@ namespace <#= NamespaceName #>
         {
             if (queryParameters != null && queryParameters is <#= EntitySetting.Name #><#= CodeEngine.QueryParamClassName #> <#= EntitySetting.Name.ToCamelCase() #>QueryParams)
             {
-<#  foreach (var property in searchableSimples) { #>
+<#  foreach (var property in nonRangeProperties) { #>
                 <#= property.Name #> = <#= EntitySetting.Name.ToCamelCase() #>QueryParams.<#= property.Name #>;
 <#    } #>
-<#  foreach (var item in searchableMinMaxProperties) { #>
+<#  foreach (var item in rangeProperties) { #>
                 <#= item.Name #>Min = <#= EntitySetting.Name.ToCamelCase() #>QueryParams.<#= item.Name #>Min;
                 <#= item.Name #>Max = <#= EntitySetting.Name.ToCamelCase() #>QueryParams.<#= item.Name #>Max;
 <#    } #>
             }
         }
 
-<#  foreach (var property in searchableSimples) { #>
+<#  foreach (var property in nonRangeProperties) { #>
         public <#= property.GetTypeName(getReturnType:true) #>? <#= property.Name #> { get; set; }
-<#    } #>
-<#  foreach (var item in searchableMinMaxProperties) { #>
+<#    }
+    foreach (var item in rangeProperties) { #>
         public <#= item.GetNullableTypeName() #> <#= item.Name #>Min { get; set; }
         public <#= item.GetNullableTypeName() #> <#= item.Name #>Max { get; set; }
 <#  } #>
@@ -157,10 +157,10 @@ namespace <#= NamespaceName #>
             _hasAnySearchCriteria = base.HasAnySearchCriteria();        
             if (_hasAnySearchCriteria) return true;
 
-<#  foreach (var property in searchableSimples) { #>
+<#  foreach (var property in nonRangeProperties) { #>
             _hasAnySearchCriteria = _hasAnySearchCriteria || <#= property.Name #>.HasValue;
 <#    } #>
-<#  foreach (var property in searchableMinMaxProperties) { #>
+<#  foreach (var property in rangeProperties) { #>
             _hasAnySearchCriteria = _hasAnySearchCriteria || <#= property.Name #>Min.HasValue || <#= property.Name #>Max.HasValue;
 <#    } #>
 
