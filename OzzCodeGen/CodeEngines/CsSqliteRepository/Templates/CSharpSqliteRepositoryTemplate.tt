@@ -372,9 +372,8 @@ namespace <#= CodeEngine.NamespaceName #>
             var <#= EntitySetting.Name.ToCamelCase() #> = new <#= EntitySetting.Name #>
             {
 <#  for (int i = 0; i < repositoryColumns.Count; i++) {  #>
-                <#= repositoryColumns[i].Name #> = <#= GetMappingExpression(repositoryColumns[i], $"ColNrs.{repositoryColumns[i].Name}", "reader") #><# if (i+1 < repositoryColumns.Count) { #>,<#    } #> 
+                <#= repositoryColumns[i].Name #> = <#= GetMappingExpression(repositoryColumns[i], $"ColNrs.{repositoryColumns[i].Name}", i+1 < repositoryColumns.Count, "reader") #>
 <#  } #>
-
             };
 
             return <#= EntitySetting.Name.ToCamelCase() #>;

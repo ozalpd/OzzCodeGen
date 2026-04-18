@@ -138,26 +138,6 @@ namespace <#= CodeEngine.NamespaceName #>.Extensions
         }
 
         /// <summary>
-        /// Retrieves a nullable decimal value from the specified <see cref="SqliteDataReader"/> at the given ordinal.
-        /// </summary>
-        /// <param name="reader">The <see cref="SqliteDataReader"/> from which to retrieve the value.</param>
-        /// <param name="ordinal">The zero-based column ordinal.</param>
-        /// <returns>The nullable decimal value, or null if the column is DBNull.</returns>
-        public static decimal? GetNullableDecimal(this SqliteDataReader reader, int ordinal)
-        {
-            if (reader.IsDBNull(ordinal))
-            {
-                return null;
-            }
-            var value = reader.GetString(ordinal);
-            if (decimal.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
-            {
-                return result;
-            }
-            throw new FormatException($"The value '{value}' at ordinal {ordinal} cannot be parsed as a decimal.");
-        }
-
-        /// <summary>
         /// Adds a nullable double parameter to the specified <see cref="SqliteCommand"/> as a parameter of type <see
         /// cref="SqliteType.Real"/>. If the value is null, the parameter is set to <see cref="DBNull.Value"/>.
         /// </summary>
@@ -307,6 +287,47 @@ namespace <#= CodeEngine.NamespaceName #>.Extensions
             var parameter = command.GetParameter(parameterName, SqliteType.Text);
             parameter.Value = value;
             command.Parameters.Add(parameter);
+        }
+        
+        /// <summary>
+        /// Converts a scaled integer value from the specified column in the data reader to a nullable decimal.
+        /// </summary>
+        /// <remarks>Use this method to read decimal values that are stored as scaled integers in the
+        /// database. The method divides the integer value by 10 raised to the specified scale to obtain the original
+        /// decimal value.</remarks>
+        /// <param name="reader">The SqliteDataReader instance from which to retrieve the value.</param>
+        /// <param name="ordinal">The zero-based column ordinal of the value to convert.</param>
+        /// <param name="scale">The number of decimal places by which the integer value is scaled.</param>
+        /// <returns>A nullable decimal representing the unscaled value from the specified column, or null if the column is
+        /// DBNull.</returns>
+        public static decimal? GetDecimalFromInteger(this SqliteDataReader reader, int ordinal, int scale)
+        {
+            if (reader.IsDBNull(ordinal))
+            {
+                return null;
+            }
+            var value = reader.GetInt64(ordinal);
+            return value / (decimal)Math.Pow(10, scale);
+        }
+
+        /// <summary>
+        /// Retrieves a nullable decimal value from the specified <see cref="SqliteDataReader"/> at the given ordinal.
+        /// </summary>
+        /// <param name="reader">The <see cref="SqliteDataReader"/> from which to retrieve the value.</param>
+        /// <param name="ordinal">The zero-based column ordinal.</param>
+        /// <returns>The nullable decimal value, or null if the column is DBNull.</returns>
+        public static decimal? GetDecimalFromText(this SqliteDataReader reader, int ordinal)
+        {
+            if (reader.IsDBNull(ordinal))
+            {
+                return null;
+            }
+            var value = reader.GetString(ordinal);
+            if (decimal.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+            {
+                return result;
+            }
+            throw new FormatException($"The value '{value}' at ordinal {ordinal} cannot be parsed as a decimal.");
         }
 
         /// <summary>

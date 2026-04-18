@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.23] - 2026-04-18
+
+### Changed
+- Replaced `GetNullableDecimal` with `GetDecimalFromInteger` and `GetDecimalFromText` helpers in `CSharpSqliteExtensionsTemplate` for clearer and more robust decimal mapping.
+- Refactored `GetMappingExpression` in repository templates to use the new decimal helpers and accept a `needsComma` parameter for improved formatting.
+- Updated SQLite repository templates to use the improved mapping and formatting logic throughout.
+- No business logic changes; generated code is clearer and more robust for decimal handling.
+- Bumped `OzzCodeGen` version to `2.2.23`.
+- Bumped `OzzCodeGen.Wpf` version to `2.2.23`.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.22] - 2026-04-18
 
 ### Added

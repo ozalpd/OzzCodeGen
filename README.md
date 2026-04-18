@@ -3,14 +3,21 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.22`
-- `OzzCodeGen.Wpf`: `2.2.22`
+- `OzzCodeGen`: `2.2.23`
+- `OzzCodeGen.Wpf`: `2.2.23`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
+## Latest Highlights (2.2.23)
+- Replaced `GetNullableDecimal` with `GetDecimalFromInteger` and `GetDecimalFromText` helpers in `CSharpSqliteExtensionsTemplate` for clearer decimal mapping.
+- Refactored `GetMappingExpression` to use new decimal helpers and accept a `needsComma` parameter for improved formatting.
+- Updated SQLite repository templates to use improved mapping and formatting logic throughout.
+- No business logic changes; generated code is clearer and more robust for decimal handling.
+- Bumped `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.2.23`.
 
 ## Latest Highlights (2.2.22)
 - Added paged query method generation (`GetPagedAsync`) to C# SQLite repository code generation with per-entity query parameters.
@@ -48,21 +55,6 @@ See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 - Refactored model-class templates/code to support both base and derived `QueryParameters` generation paths.
 - Updated filtering inclusion control to use `IsSearchParameter` for generated SQL/LINQ `WHERE` behavior.
 - Improved naming consistency and refreshed related documentation.
-
-## Latest Highlights (2.2.17)
-- Added `QueryParameters` helper-class generation (paging/search) in the C# Model Class engine.
-- Added QueryParameters template/config support with namespace and target-folder configuration in the WPF UI.
-- Added `OnInitialized` partial methods in generated SQLite repositories for initialization extensibility.
-- Improved code quality with broader `nameof(...)` usage in property notifications.
-- Hid more technical columns in property-grid views and refactored validator-template logic.
-- Applied minor UI/layout usability improvements and wired new templates into project files.
-
-## Latest Highlights (2.2.16)
-- Refactored repository code generation to improve autoload-property and repository-dependency handling.
-- Added caching for autoload and foreign-key properties in `SqliteRepositoryEntitySetting`.
-- Introduced `GetRepositoryName` and `HasThisKindOfRepository` helpers for more robust repository-name resolution and dependency checks.
-- Updated template logic to inject repository dependencies only when needed, improving generated constructor parameter generation.
-- Updated `CSharpSqliteRepositoryTemplate.cs` and `CSharpSqliteRepositoryTemplate.tt` to generate repository interfaces as `partial`, enabling extension across multiple files.
 
 ## UI Icons
 - Icon set: **Bootstrap Icons v1.13.1**

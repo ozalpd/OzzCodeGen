@@ -234,11 +234,11 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
         return string.Join(", ", properties.Select(p => $"@{p.ColumnName.ToCamelCase()}"));
     }
 
-    protected string GetMappingExpression(SqliteRepositoryPropertySetting property, string ordinalNr, string readerName = "reader")
+    protected string GetMappingExpression(SqliteRepositoryPropertySetting property, string ordinalNr, bool needsComma, string readerName = "reader")
     {
         var sp = property.PropertyDefinition as SimpleProperty;
         bool isEnum = sp != null && !string.IsNullOrWhiteSpace(sp.EnumTypeName);
-        bool isNullable = sp != null && sp.IsNullable;
+        bool isNullable = property.IsNullable;
 
         var sb = new StringBuilder();
         if (isNullable)
@@ -246,7 +246,9 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
             sb.Append(readerName);
             sb.Append(".IsDBNull(");
             sb.Append(ordinalNr);
-            sb.Append(") ? null : ");
+            sb.Append(") ? null\r\n");
+            AppendAlignmentSpaces(property, sb);
+            sb.Append(": ");
         }
 
         if (isEnum)
@@ -256,6 +258,76 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
             sb.Append(")");
         }
 
+        bool didCatch = false;
+        var storageCol = property.StorageColumnSetting;
+        if (property.IsDecimal && storageCol != null)
+        {
+            if (storageCol.IsText)
+            {
+                sb.Append(readerName);
+                sb.Append(".GetDecimalFromText(");
+                sb.Append(ordinalNr);
+                sb.Append(')');
+                didCatch = true;
+            }
+            else if (storageCol.IsInteger && property.DecimalToIntegerScale > 0)
+            {
+                sb.Append(readerName);
+                sb.Append(".GetDecimalFromInteger(");
+                sb.Append(ordinalNr);
+                sb.Append(",\r\n");
+                AppendAlignmentSpaces(property, sb);
+                sb.Append(' ', 16);
+                sb.Append("DecimalToIntegerScale.");
+                sb.Append(property.Name);
+                sb.Append(')');
+                didCatch = true;
+            }
+
+            if (didCatch)
+            {
+                if (!isNullable)
+                    sb.Append(" ?? 0m");
+
+                if (needsComma)
+                    sb.Append(',');
+
+                return sb.ToString();
+            }
+        }
+
+        AppendReaderGetByType(property, readerName, isEnum, sb);
+        sb.Append(ordinalNr);
+        sb.Append(')');
+
+        var typeName = GetNonNullableTypeName(property).ToLowerInvariant();
+        if (typeName.Equals("bool"))
+        {
+            sb.Append(" == 1");
+        }
+        else if (typeName.Equals("date") || typeName.Equals("datetime"))
+        {
+            sb.Append(')');
+            if (!isNullable)
+            {
+                sb.Append(" ?? DateTime.MinValue");
+            }
+        }
+        if (needsComma)
+            sb.Append(',');
+
+        return sb.ToString();
+    }
+
+    private static void AppendAlignmentSpaces(SqliteRepositoryPropertySetting property, StringBuilder sb)
+    {
+        //append number of spaces for alignment with non-nullable mappings
+        sb.Append(' ', property.Name.Length);
+        sb.Append(' ', 17);
+    }
+
+    private bool AppendReaderGetByType(SqliteRepositoryPropertySetting property, string readerName, bool isEnum, StringBuilder sb)
+    {
         var typeName = GetNonNullableTypeName(property).ToLowerInvariant();
         if (typeName.Equals("date") || typeName.Equals("datetime"))
         {
@@ -306,23 +378,7 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
             didCatch = true;
         }
 
-        sb.Append(ordinalNr);
-        sb.Append(')');
-
-        if (typeName.Equals("bool"))
-        {
-            sb.Append(" == 1");
-        }
-        else if (typeName.Equals("date") || typeName.Equals("datetime"))
-        {
-            sb.Append(')');
-            if (!isNullable)
-            {
-                sb.Append(" ?? DateTime.MinValue");
-            }
-        }
-
-        return sb.ToString();
+        return didCatch;
     }
 
     protected static string GetConvertMethodName(string typeName)
