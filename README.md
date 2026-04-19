@@ -3,14 +3,21 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.2.23`
-- `OzzCodeGen.Wpf`: `2.2.23`
+- `OzzCodeGen`: `2.3.0`
+- `OzzCodeGen.Wpf`: `2.3.0`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
+## Latest Highlights (2.3.0)
+- Added new `Wpf_Mvvm_View_ViewModel_Generator` (`WpfMvvmCodeEngine`) to generate WPF Create/Edit Views, ViewModels, and Commands.
+- Added MVVM infrastructure generation support (`InfrastructureFolder`) for shared base/contracts output.
+- `InfrastructureFolder` is intentionally platform-agnostic so the generated base/contracts can be reused by future engines (for example, MAUI) with minimal duplication.
+- Added XAML-based `WpfMvvmEngineUI` (`AbstractEngineUI`-based) with namespace/folder configuration fields.
+- Bumped `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.3.0`.
 
 ## Latest Highlights (2.2.23)
 - Replaced `GetNullableDecimal` with `GetDecimalFromInteger` and `GetDecimalFromText` helpers in `CSharpSqliteExtensionsTemplate` for clearer decimal mapping.
@@ -186,6 +193,7 @@ Engines check `Project.TargetPlatform` to adapt generated code. For example, `Me
 |---|---|---|
 | `CS_Model_Class_Generator` | Generates C# model classes (primary path) using `CSharpModelClassTemplate`/`BaseCSharpModelClassTemplate`. | ✅ Active |
 | `CS_Sqlite_Repository_Generator` | Generates C# SQLite repository classes using the `CsSqliteRepository` engine stack, including `SqliteExtensions`-based nullable/scaled decimal handling and per-property `DecimalToIntegerScale` support. | ✅ Active |
+| `Wpf_Mvvm_View_ViewModel_Generator` | Generates WPF MVVM Create/Edit Views, ViewModels, and Commands; includes `InfrastructureFolder` output. This folder is intentionally platform-agnostic so the generated base/contracts can be reused by future engines (for example, MAUI) with minimal duplication. | ✅ Active |
 | `Metadata_Class_Generator` | Generates metadata/validation attribute classes (legacy compatibility path). | ✅ Active |
 | `AspNetMvc_Controller_View_Generator` | Generates ASP.NET MVC controllers and Razor views. | ✅ Active |
 | `T-Sql_Scripts_Generator` | Generates T-SQL DDL scripts. | ✅ Active |

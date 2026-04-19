@@ -15,8 +15,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Border BorderBrush="#FF9090AF" Padding="2" Margin="2">
-        <Grid Background="#FFD8E8FF">
+    <Border BorderBrush="#FF9090AF" Background="#FFD8E8FF" Padding="2" Margin="2">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120" />
                 <ColumnDefinition Width="160"/>
@@ -27,71 +27,68 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="28"/>
-                <RowDefinition Height="28"/>
-                <RowDefinition Height="28"/>
-                <RowDefinition Height="28"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Button x:Name="btnRenderTemplate"
                     Content="Render Template"
-                    Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="4,4,0,2"
+                    Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="4"
                     Click="btnRenderTemplate_Click"/>
 
             <Button x:Name="btnRefresh"
                     Content="Refresh"
-                    Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Margin="4,4,0,2"
+                    Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Margin="4"
                     Click="btnRefresh_Click"/>
 
             <CheckBox Content="All Entities"
                   IsChecked="{Binding RenderAllEntities}"
                   ToolTip="Render for every entity in the model."
-                  Grid.Column="1" VerticalAlignment="Center" Margin="8,4,0,0"/>
+                  Grid.Column="1" VerticalAlignment="Center" Margin="4,0,0,0"/>
 
-            <CheckBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="8,0,0,0"
+            <CheckBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="4,0,0,0"
                   Content="Overwrite Existing Files"
                   IsChecked="{Binding OverwriteExisting}"/>
 
-            <CheckBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Margin="8,4,0,0"
+            <CheckBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Margin="4,0,0,0"
                       Content="Generate for DTO"
                       ToolTip="Generate metadata classes for DataTranferObjects"
                       IsChecked="{Binding GenerateForDTO}"/>
 
-            <CheckBox Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="8,4,0,0"
-                      Content="Use Resx Resource"
-                      ToolTip="Use resx resource files for error messages and display names instead of hard coded strings"
-                      IsChecked="{Binding UseResourceFiles}"/>
-            <CheckBox Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Margin="0,4,0,0"
+            
+            <CheckBox Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Margin="0"
                       Content="Generate Annotations"
                       ToolTip="Generate annotations for the metadata classes"
                       IsChecked="{Binding GenAnnotations}"/>
 
-            <CheckBox Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Margin="0,4,0,0"
+            <CheckBox Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Margin="0"
                       Content="Generate Validator"
                       ToolTip="Generate a validator class for all the entities"
                       IsChecked="{Binding GenerateValidator}"/>
 
-            <CheckBox Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" Margin="0,4,0,0"
-                      Content="Generate QueryParameters"
-                      ToolTip="Generate a QueryParameters class"
-                      IsChecked="{Binding GenerateQueryParam}"/>
+            <CheckBox Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" Margin="0"
+                      Content="Use Resx Resource"
+                      ToolTip="Use resx resource files for error messages and display names instead of hard coded strings"
+                      IsChecked="{Binding UseResourceFiles}"/>
 
-            <CheckBox Grid.Column="2" Grid.Row="3" VerticalAlignment="Center" Margin="0,4,0,0"
+            <CheckBox Grid.Column="2" Grid.Row="3" VerticalAlignment="Center" Margin="0"
                       Content="Generate XML Doc"
                       ToolTip="Generate XML documentation for the metadata classes"
                       IsChecked="{Binding GenerateXmlDoc}"/>
 
 
 
-            <TextBlock Grid.Column="3" Grid.Row="0" Margin="4,2,0,0"
+            <TextBlock Grid.Column="3" Grid.Row="0" Margin="4,0,0,0"
                        Text="Model Namespace:"
                        VerticalAlignment="Center"/>
             <TextBox Grid.Column="4" Grid.Row="0"
                      Text="{Binding NamespaceName, Mode=TwoWay}"
                      Style="{StaticResource textBoxStyle}"/>
 
-            <TextBlock Grid.Column="3" Grid.Row="1" Margin="4,2,0,0"
+            <TextBlock Grid.Column="3" Grid.Row="1" Margin="4,0,0,0"
                        Text="Validator Namespace:"
                        ToolTip="Namespace of Generated Validator Class"
                        VerticalAlignment="Center"/>
@@ -100,7 +97,7 @@
                      ToolTip="Namespace of Generated Validator Class"
                      Style="{StaticResource textBoxStyle}"/>
 
-            <TextBlock Grid.Column="3" Grid.Row="2" Margin="4,2,0,0"
+            <TextBlock Grid.Column="3" Grid.Row="2" Margin="4,0,0,0"
                        Text="QueryParameters Namespace:"
                        ToolTip="Namespace of Generated QueryParameters Class"
                        VerticalAlignment="Center"/>
@@ -109,7 +106,7 @@
                      ToolTip="Namespace of Generated QueryParameters Class"
                      Style="{StaticResource textBoxStyle}"/>
 
-            <TextBlock Grid.Column="3" Grid.Row="3" Margin="4,2,0,0"
+            <TextBlock Grid.Column="3" Grid.Row="3" Margin="4,0,0,0"
                        Text="Custom Attrib. Namespace:"
                        ToolTip="Namespace of Custom Attributes"
                        VerticalAlignment="Center"/>
@@ -119,7 +116,7 @@
                      Style="{StaticResource textBoxStyle}"/>
 
 
-            <TextBlock Grid.Column="5" Grid.Row="0" Margin="4,2,0,0"
+            <TextBlock Grid.Column="5" Grid.Row="0" Margin="4,0,0,0"
                        Text="Target Model Folder:"
                        ToolTip="Target folder for generated model class files"
                        VerticalAlignment="Center"/>
@@ -130,7 +127,7 @@
 
             <TextBlock Text="Target Validator Folder:"
                    ToolTip="Target folder for generated validator class file"
-                   Grid.Column="5" Grid.Row="1" Margin="4,2,0,0" VerticalAlignment="Center"/>
+                   Grid.Column="5" Grid.Row="1" Margin="4,0,0,0" VerticalAlignment="Center"/>
             <TextBox Grid.Column="6" Grid.Row="1"
                      Text="{Binding ValidatorFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetValidatorDirectory}"
@@ -138,7 +135,7 @@
 
             <TextBlock Text="Target QueryParameters Folder:"
                    ToolTip="Target folder for generated QueryParameters class file"
-                   Grid.Column="5" Grid.Row="2" Margin="4,2,0,0" VerticalAlignment="Center"/>
+                   Grid.Column="5" Grid.Row="2" Margin="4,0,0,0" VerticalAlignment="Center"/>
             <TextBox Grid.Column="6" Grid.Row="2"
                      Text="{Binding QueryParamFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetQueryParamDirectory}"
@@ -146,7 +143,7 @@
 
 
 
-            <Grid Grid.Row="4" Grid.ColumnSpan="7" Margin="4">
+            <Grid Grid.Row="4" Grid.ColumnSpan="7" Margin="4,4,4,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" MaxWidth="480"/>
                     <ColumnDefinition Width="2*"/>

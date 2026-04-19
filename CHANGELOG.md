@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.3.0] - 2026-04-19
+
+### Added
+- Added new `Wpf_Mvvm_View_ViewModel_Generator` (`WpfMvvmCodeEngine`) for generating WPF MVVM artifacts:
+  - Create/Edit XAML Views
+  - Create/Edit ViewModels
+  - Commands classes
+- Added shared MVVM infrastructure generation (`InfrastructureFolder`) including base classes and contracts.
+- Added new engine UI (`WpfMvvmEngineUI`) as a XAML `UserControl` inheriting from `AbstractEngineUI` with configuration fields for View/ViewModel/Commands namespaces and folders.
+
+### Changed
+- Added XML documentation/comments clarifying infrastructure generation behavior in `WpfMvvmCodeEngine`.
+- `InfrastructureFolder` documentation now explicitly states:
+  - "This folder is intentionally platform-agnostic so the generated base/contracts can be reused by future engines (for example, MAUI) with minimal duplication."
+- Bumped `OzzCodeGen` version to `2.3.0`.
+- Bumped `OzzCodeGen.Wpf` version to `2.3.0`.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
 ## [2.2.23] - 2026-04-18
 
 ### Changed
@@ -20,7 +39,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - Added paged query method generation (`GetPagedAsync`) to C# SQLite repository code generation, leveraging per-entity query parameter classes.
 - Added WPF UI toggle per entity to enable/disable paged query generation (`GeneratePaged` property).
-- Enhanced repository templates with modular autoloading and parameter handling for improved flexibility in query construction.
+- Enhanced repository templates with modular autoloading and parameter handling for improved flexibility.
 
 ### Changed
 - Refactored SQLite repository templates to better support modular parameter generation and filtering logic.

@@ -5,6 +5,7 @@ using OzzCodeGen.CodeEngines.Localization;
 using OzzCodeGen.CodeEngines.Storage;
 using OzzCodeGen.CodeEngines.Metadata;
 using OzzCodeGen.CodeEngines.CsModelClass;
+using OzzCodeGen.CodeEngines.WpfMvvm;
 using System;
 
 namespace OzzCodeGen.CodeEngines
@@ -13,6 +14,7 @@ namespace OzzCodeGen.CodeEngines
     {
         public const string CsModelClassCodeEngineId = "CS_Model_Class_Generator";
         public const string CSharpSqliteRepositoryEngineId = "CS_Sqlite_Repository_Generator";
+        public const string WpfMvvmCodeEngineId = "Wpf_Mvvm_View_ViewModel_Generator";
 
         public const string TSqlScriptsId = "T-Sql_Scripts_Generator";
         public const string SqliteScriptsId = "Sqlite_Scripts_Generator";
@@ -38,6 +40,9 @@ namespace OzzCodeGen.CodeEngines
 
                 case CSharpSqliteRepositoryEngineId:
                     return new CSharpSqliteRepositoryEngine();
+
+                case WpfMvvmCodeEngineId:
+                    return new WpfMvvmCodeEngine();
 
                 case MetadataCodeEngineId:
                     return new MetadataCodeEngine();
@@ -89,6 +94,10 @@ namespace OzzCodeGen.CodeEngines
                 case CSharpSqliteRepositoryEngineId:
                     fileName = Path.Combine(Directory, CSharpSqliteRepositoryEngine.DefaultFileName);
                     return CSharpSqliteRepositoryEngine.OpenFile(fileName);
+
+                case WpfMvvmCodeEngineId:
+                    fileName = Path.Combine(Directory, WpfMvvmCodeEngine.DefaultFileName);
+                    return WpfMvvmCodeEngine.OpenFile(fileName);
 
                 case MetadataCodeEngineId:
                     fileName = Path.Combine(Directory, Metadata.MetadataCodeEngine.DefaultFileName);

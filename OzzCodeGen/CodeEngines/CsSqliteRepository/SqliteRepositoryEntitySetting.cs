@@ -217,7 +217,6 @@ public class SqliteRepositoryEntitySetting : BaseCSharpEntitySetting<SqliteRepos
     private string _fileNameSeed;
 
 
-
     private string GetDefaultOrderByClause()
     {
         var displayOrderProperty = GetInheritedIncludedProperties()
@@ -283,6 +282,59 @@ public class SqliteRepositoryEntitySetting : BaseCSharpEntitySetting<SqliteRepos
         }
     }
     private string _orderByClause;
+
+    /// <summary>
+    /// Time stamp property name for creation time of the entity
+    /// </summary>
+    public string CreatedAtName
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_createdAtProptyName)
+                && GetInheritedIncludedProperties().Any(p => p.PropertyDefinition.Name == _defaultCreatedAtProptyName))
+                _createdAtProptyName = _defaultCreatedAtProptyName;
+
+            return _createdAtProptyName;
+        }
+        set
+        {
+            if (_createdAtProptyName == value) return;
+            _createdAtProptyName = value != null ? value.Replace(" ", "") : string.Empty;
+            RaisePropertyChanged("CreatedAtName");
+        }
+    }
+    private string _createdAtProptyName;
+    // Default time stamp property name for creation time of the entity
+    // CreateDate name is used in TSqlScriptsEngine for same puprpose to generate table and set value in insert stored procedure,
+    // for preventing complications we use CreatedAt as default value for CreatedAtProperty.
+    private static readonly string _defaultCreatedAtProptyName = "CreatedAt";
+
+    /// <summary>
+    /// Property name for update time of the entity
+    /// </summary>
+    public string UpdatedAtName
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_updatedAtProptyName)
+                && GetInheritedIncludedProperties().Any(p => p.PropertyDefinition.Name == _defaultModifiedAtProptyName))
+                _updatedAtProptyName = _defaultModifiedAtProptyName;
+
+            return _updatedAtProptyName;
+        }
+        set
+        {
+            if (_updatedAtProptyName == value) return;
+            _updatedAtProptyName = value != null ? value.Replace(" ", "") : string.Empty;
+            RaisePropertyChanged("UpdatedAtName");
+        }
+    }
+    private string _updatedAtProptyName;
+    // Default time stamp property name for update time of the entity
+    // ModifyDate name is used in TSqlScriptsEngine for same puprpose to generate table and set value in update stored procedure,
+    // for preventing complications we use UpdatedAt as default value for UpdatedAtName.
+    private static readonly string _defaultModifiedAtProptyName = "UpdatedAt";
+
 
     public IEnumerable<SqliteRepositoryPropertySetting> GetAutoLoadProperties()
     {

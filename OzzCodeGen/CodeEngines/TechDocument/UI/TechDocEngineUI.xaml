@@ -17,8 +17,8 @@
             <Setter Property="Margin" Value="0,4,4,0"/>
         </Style>
     </UserControl.Resources>
-    <Border BorderBrush="#FFBE40FC" Padding="2" Margin="2">
-        <Grid Background="#FFBE4CFC">
+    <Border BorderBrush="#FFBE40FC" Background="#FFDEC0FF" Padding="2" Margin="2">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="128" />
                 <ColumnDefinition Width="160"/>

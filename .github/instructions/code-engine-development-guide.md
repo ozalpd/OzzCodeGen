@@ -14,6 +14,7 @@ For stable repo-wide rules, see `.github/copilot-instructions.md` first.
 ## Good Reference Implementations
 Start by comparing with one or more existing engines:
 - `OzzCodeGen/CodeEngines/CsModelClass/CSharpModelClassCodeEngine.cs`
+- `OzzCodeGen/CodeEngines/WpfMvvm/WpfMvvmCodeEngine.cs`
 - `OzzCodeGen/CodeEngines/Localization/ResxEngine.cs`
 - `OzzCodeGen/CodeEngines/Metadata/MetadataCodeEngine.cs`
 - `OzzCodeGen/CodeEngines/TechDocument/TechDocumentEngine.cs`
@@ -26,6 +27,7 @@ Start by comparing with one or more existing engines:
 - Put templates under `OzzCodeGen/CodeEngines/<EngineName>/Templates/`.
 - Prefer language-first template names such as `CSharpModelClassTemplate` or `TypeScriptModelClassTemplate`.
 - Prefix base classes with `Base` when introducing reusable engine-specific abstractions.
+- When an engine can share generated infrastructure with future engines (for example MVVM base/contracts), place that output in a dedicated folder setting (for example `InfrastructureFolder`) instead of mixing it with platform-specific View/ViewModel outputs.
 
 ## Required Engine Registration Checklist
 A new engine is not complete until all of the following are wired:
@@ -85,6 +87,8 @@ Use the existing pattern:
 - render into `TargetDirectory`
 
 If the engine needs an additional output location, follow the same relative-folder pattern used by `ValidatorFolder` and `TargetValidatorDirectory` in `CSharpModelClassCodeEngine`.
+
+For shared generated infrastructure (for example MVVM base classes/contracts), keep a separate relative folder setting (for example `InfrastructureFolder`) and document the intent clearly. This folder is intentionally platform-agnostic so the generated base/contracts can be reused by future engines (for example, MAUI) with minimal duplication.
 
 ## WPF UI Integration Checklist
 The host expects engines to expose a `UserControl` through `UiControl` and `GetUiControl()`.
