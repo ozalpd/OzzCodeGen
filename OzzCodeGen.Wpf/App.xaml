@@ -26,9 +26,10 @@
             </Style>
             <Style x:Key="selectedCodeEngineTextBlock" TargetType="{x:Type TextBlock}">
                 <Setter Property="Height" Value="24" />
-                <Setter Property="Background" Value="#FFC8C8C8" />
-                <Setter Property="FontSize" Value="18" />
-                <Setter Property="Padding" Value="4,0,4,0" />
+                <Setter Property="Background" Value="#FF808080" />
+                <Setter Property="Foreground" Value="#FFF0F8F8" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Padding" Value="4,0,4,2" />
             </Style>
             <Style x:Key="CellRightAlign">
                 <Setter Property="Control.HorizontalAlignment" Value="Stretch" />

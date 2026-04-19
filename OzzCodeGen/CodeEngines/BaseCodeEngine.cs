@@ -185,7 +185,10 @@ namespace OzzCodeGen.CodeEngines
                 if (_templates == null)
                 {
                     _templates = GetTemplateList();
-                    SelectedTemplate = _templates.FirstOrDefault();
+                    if (string.IsNullOrWhiteSpace(SelectedTemplate) && _templates.Count > 0)
+                    {
+                        SelectedTemplate = _templates.FirstOrDefault();
+                    }
                 }
                 return _templates;
             }
@@ -318,7 +321,8 @@ namespace OzzCodeGen.CodeEngines
             }
             set
             {
-                if (_selectedTemplate == value) return;
+                if (_selectedTemplate == value)
+                    return;
                 _selectedTemplate = value;
                 RaisePropertyChanged("SelectedTemplate");
             }

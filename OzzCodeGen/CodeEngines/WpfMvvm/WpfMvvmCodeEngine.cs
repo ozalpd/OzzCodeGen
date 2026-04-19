@@ -34,6 +34,7 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
     public override List<string> GetTemplateList()
     {
+        SelectedTemplate = wpfViewModelsTemplate;
         return new List<string>
         {
             wpfCommandsTemplate,
@@ -43,8 +44,8 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
             wpfAllTemplates
         };
     }
-    private const string wpfCommandsTemplate = "Commands";
-    private const string wpfViewModelsTemplate = "ViewModels";
+    private const string wpfCommandsTemplate = "WPF Commands";
+    private const string wpfViewModelsTemplate = "WPF ViewModels";
     private const string wpfViewsTemplate = "WPF Views";
     private const string wpfViewAndVmTemplates = "WPF Views + ViewModels";
     private const string wpfAllTemplates = "WPF Views + ViewModels + Commands";

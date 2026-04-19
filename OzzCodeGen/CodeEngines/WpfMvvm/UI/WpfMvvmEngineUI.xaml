@@ -15,12 +15,12 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border BorderBrush="#FF9090AF" Background="#FF9AD1E4" Padding="2" Margin="2">
+    <Border BorderBrush="#FF9090AF" Background="#FFFFE19F" Padding="2" Margin="2">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120" />
-                <ColumnDefinition Width="180" />
-                <ColumnDefinition Width="180" />
+                <ColumnDefinition Width="144" />
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="172" />
                 <ColumnDefinition Width="190" />
                 <ColumnDefinition Width="172" />
@@ -33,88 +33,107 @@
                 <RowDefinition Height="26"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <Grid Grid.RowSpan="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="42"/>
+                    <RowDefinition Height="36"/>
+                    <RowDefinition Height="26"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="btnRenderTemplate"
+                        Content="Render Template"
+                        Grid.Column="0" Grid.Row="0" Margin="4,0,0,4"
+                        Click="btnRenderTemplate_Click" Background="#FFFDEBC4"/>
 
-            <Button x:Name="btnRenderTemplate"
-                    Content="Render Template"
-                    Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="4,4,0,2"
-                    Click="btnRenderTemplate_Click"/>
+                <Button x:Name="btnRenderAllTemplates"
+                        Content="Render All Templates"
+                        Grid.Column="0" Grid.Row="1" Margin="4,0,0,4"
+                        Click="btnRenderAllTemplates_Click" Background="#FFFDEBC4"/>
 
-            <Button x:Name="btnRefresh"
-                    Content="Refresh"
-                    Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"  Margin="4,6,0,6"
-                    Click="btnRefresh_Click"/>
+                <Button x:Name="btnRefresh"
+                        Content="Refresh"
+                        Grid.Column="0" Grid.Row="2"  Margin="4,0,0,0"
+                        Click="btnRefresh_Click" Background="#FFFDEBC4"/>
+            </Grid>
+                      
+            <TextBlock Grid.Column="1" Text="Template:" VerticalAlignment="Center" Margin="8,0,0,0"/>
+            <ComboBox Grid.Column="2" Grid.ColumnSpan="2"
+                      Margin="4,0,24,0"
+                      ItemsSource="{Binding Templates}"
+                      SelectedItem="{Binding SelectedTemplate, Mode=TwoWay}"/>
 
-            <CheckBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="8,4,0,0"
+            <CheckBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Center" Margin="8,4,0,0"
                       Content="All Entities"
                       ToolTip="Render for every entity in the model."
                       IsChecked="{Binding RenderAllEntities}"/>
 
-            <CheckBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="8,0,0,0"
+            <CheckBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Center" Margin="8,0,0,0"
                       Content="Overwrite Existing Files"
                       IsChecked="{Binding OverwriteExisting}"/>
 
-            <CheckBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Margin="8,4,0,0"
+            <CheckBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" VerticalAlignment="Center" Margin="8,4,0,0"
                       Content="Use Resx Resource"
                       IsChecked="{Binding UseResourceFiles}"/>
 
-            <TextBlock Grid.Column="3" Grid.Row="0" Margin="4,2,0,0"
+
+            <TextBlock Grid.Column="3" Grid.Row="1" Margin="4,2,0,0"
                        Text="View Namespace:"
                        ToolTip="Namespace for generated views."
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="4" Grid.Row="0"
+            <TextBox Grid.Column="4" Grid.Row="1"
                      Text="{Binding ViewNamespaceName, Mode=TwoWay}"
                      ToolTip="Namespace for generated views."
-                     Style="{StaticResource textBoxStyle}" Background="#FFE0F0FF"/>
+                     Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
 
-            <TextBlock Grid.Column="3" Grid.Row="1" Margin="4,2,0,0"
+            <TextBlock Grid.Column="3" Grid.Row="2" Margin="4,2,0,0"
                        Text="ViewModel Namespace:"
                        ToolTip="Namespace for generated view models."
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="4" Grid.Row="1"
+            <TextBox Grid.Column="4" Grid.Row="2"
                      Text="{Binding ViewModelNamespaceName, Mode=TwoWay}"
                      ToolTip="Namespace for generated view models."
-                     Style="{StaticResource textBoxStyle}" Background="#FFE0F0FF"/>
+                     Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
 
-            <TextBlock Grid.Column="3" Grid.Row="2" Margin="4,2,0,0"
+            <TextBlock Grid.Column="3" Grid.Row="3" Margin="4,2,0,0"
                        Text="Commands Namespace:"
                        ToolTip="Namespace for generated commands."
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="4" Grid.Row="2"
+            <TextBox Grid.Column="4" Grid.Row="3"
                      Text="{Binding CommandNamespaceName, Mode=TwoWay}"
                      ToolTip="Namespace for generated commands."
-                     Style="{StaticResource textBoxStyle}" Background="#FFE0F0FF"/>
+                     Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
+                     
 
             <TextBlock Grid.Column="5" Grid.Row="0" Margin="4,2,0,0"
-                       Text="Target View Folder:"
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="6" Grid.Row="0"
-                     Text="{Binding ViewFolder, Mode=TwoWay}"
-                     ToolTip="{Binding TargetViewDirectory}"
-                     Style="{StaticResource textBoxStyle}" Background="#FFE0F0FF"/>
-
-            <TextBlock Grid.Column="5" Grid.Row="1" Margin="4,2,0,0"
-                       Text="Target ViewModel Folder:"
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="6" Grid.Row="1"
-                     Text="{Binding ViewModelFolder, Mode=TwoWay}"
-                     ToolTip="{Binding TargetViewModelDirectory}"
-                     Style="{StaticResource textBoxStyle}" Background="#FFE0F0FF"/>
-
-            <TextBlock Grid.Column="5" Grid.Row="2" Margin="4,2,0,0"
-                       Text="Target Commands Folder:"
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="6" Grid.Row="2"
-                     Text="{Binding CommandFolder, Mode=TwoWay}"
-                     ToolTip="{Binding TargetCommandDirectory}"
-                     Style="{StaticResource textBoxStyle}" Background="#FFE0F0FF"/>
-
-            <TextBlock Grid.Column="5" Grid.Row="3" Margin="4,2,0,0"
                        Text="Target Infrastructure Folder:"
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="6" Grid.Row="3"
+            <TextBox Grid.Column="6" Grid.Row="0"
                      Text="{Binding InfrastructureFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetInfrastructureDirectory}"
-                     Style="{StaticResource textBoxStyle}" Background="#FFE0F0FF"/>
+                     Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
+
+            <TextBlock Grid.Column="5" Grid.Row="1" Margin="4,2,0,0"
+                       Text="Target View Folder:"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="6" Grid.Row="1"
+                     Text="{Binding ViewFolder, Mode=TwoWay}"
+                     ToolTip="{Binding TargetViewDirectory}"
+                     Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
+
+            <TextBlock Grid.Column="5" Grid.Row="2" Margin="4,2,0,0"
+                       Text="Target ViewModel Folder:"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="6" Grid.Row="2"
+                     Text="{Binding ViewModelFolder, Mode=TwoWay}"
+                     ToolTip="{Binding TargetViewModelDirectory}"
+                     Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
+
+            <TextBlock Grid.Column="5" Grid.Row="3" Margin="4,2,0,0"
+                       Text="Target Commands Folder:"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="6" Grid.Row="3"
+                     Text="{Binding CommandFolder, Mode=TwoWay}"
+                     ToolTip="{Binding TargetCommandDirectory}"
+                     Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
 
             <Grid Grid.Row="4" Grid.ColumnSpan="7" Margin="4">
                 <Grid.ColumnDefinitions>
@@ -122,7 +141,7 @@
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
 
-                <DataGrid x:Name="grdEntitySettings" Background="#FFE0F0FF"
+                <DataGrid x:Name="grdEntitySettings" Background="#FFFDEBC4"
                           ItemsSource="{Binding Entities, Mode=TwoWay}"
                           SelectedItem="{Binding CurrentEntitySetting, Mode=TwoWay}"
                           CanUserDeleteRows="False"
@@ -139,7 +158,7 @@
                 <GridSplitter Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" ResizeDirection="Columns"/>
 
                 <Grid Grid.Column="1" Margin="8,0,0,0" DataContext="{Binding SelectedItem, ElementName=grdEntitySettings}">
-                    <DataGrid x:Name="grdPropertySettings" Background="#FFE0F0FF"
+                    <DataGrid x:Name="grdPropertySettings" Background="#FFFDEBC4"
                               ItemsSource="{Binding Properties, Mode=TwoWay}"
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"

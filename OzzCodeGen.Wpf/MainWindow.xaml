@@ -697,9 +697,6 @@
                                 <ComboBox x:Name="cboCodeEngines" Width="180" Height="24" Margin="4,0,4,0"
                                           ToolTip="Engine for Target Application"
                                           SelectionChanged="cboCodeEngines_SelectionChanged" />
-                                <!--
-                                <TextBlock Text="Selected Application Engine: "
-                                           Style="{StaticResource selectedCodeEngineTextBlock}"/>-->
                                 <TextBlock Text="{Binding ProjectTypeName, Mode=OneWay}" 
                                            Width="600"
                                            Style="{StaticResource selectedCodeEngineTextBlock}"/>
