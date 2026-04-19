@@ -229,6 +229,16 @@ Engines check `Project.TargetPlatform` to adapt generated code. For example, `Me
   - `OzzCodeGen/CodeEngines/CsSqliteRepository/Templates/CSharpSqliteBaseRepositoryTemplate.part.cs`
   - `OzzCodeGen/CodeEngines/CsSqliteRepository/Templates/CSharpSqliteRepositoryTemplate.tt`
   - `OzzCodeGen/CodeEngines/CsSqliteRepository/Templates/CSharpSqliteRepositoryTemplate.part.cs`
+- WPF MVVM stack (shared base in `Mvvm/`, WPF-specific in `WpfMvvm/`):
+  - `OzzCodeGen/CodeEngines/Mvvm/BaseMvvmCodeEngine.cs` (platform-agnostic base)
+  - `OzzCodeGen/CodeEngines/Mvvm/BaseMvvmEntitySetting.cs`
+  - `OzzCodeGen/CodeEngines/Mvvm/BaseMvvmPropertySetting.cs`
+  - `OzzCodeGen/CodeEngines/WpfMvvm/WpfMvvmCodeEngine.cs`
+  - `OzzCodeGen/CodeEngines/WpfMvvm/Templates/WpfMvvmViewXamlTemplate.cs`
+  - `OzzCodeGen/CodeEngines/WpfMvvm/Templates/WpfMvvmViewModelTemplate.cs`
+  - `OzzCodeGen/CodeEngines/WpfMvvm/Templates/WpfMvvmCommandsTemplate.cs`
+  - `OzzCodeGen/CodeEngines/WpfMvvm/Templates/MvvmBaseClassesTemplate.cs` (infrastructure)
+  - `OzzCodeGen/CodeEngines/WpfMvvm/Templates/MvvmContractsTemplate.cs` (infrastructure)
 - Metadata compatibility stack:
   - `OzzCodeGen/CodeEngines/Metadata/MetadataCodeEngine.cs`
 - Project orchestration: see `OzzCodeGen/CodeGenProject.cs`.

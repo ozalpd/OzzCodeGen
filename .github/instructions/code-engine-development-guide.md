@@ -55,6 +55,11 @@ A typical engine class should provide these members or equivalent behavior:
 
 Most new engines should inherit from an existing base class when possible instead of starting directly from `BaseCodeEngine`.
 
+Available base classes:
+- `BaseModelClassCodeEngine` – for engines that generate C# model/metadata classes with property-level settings.
+- `BaseMvvmCodeEngine` – for engines that generate MVVM views, ViewModels, and commands. Platform-agnostic; extend for WPF, MAUI, etc.
+- `BaseCodeEngine` – use directly only when no specialized base fits.
+
 ## Serialization Checklist
 Project and engine settings are XML-serialized. Treat serialization as a first-class requirement.
 
@@ -114,6 +119,7 @@ Checklist:
 - If the engine depends on metadata from another engine (e.g., `CsSqliteRepository` reads table/key info from `SqliteScriptsEngine`), cache the reference with `[XmlIgnore]` and `[JsonIgnore]` and use `Project.GetCodeEngine()` to resolve it lazily.
 
 For model-class-style engines, study `BaseModelClassCodeEngine` before introducing new sync logic.
+For MVVM-style engines (views, ViewModels, commands), study `BaseMvvmCodeEngine` and `WpfMvvmCodeEngine` before introducing new sync logic.
 
 ## Template Checklist
 If the engine generates files through templates:
