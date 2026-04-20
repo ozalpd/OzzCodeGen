@@ -137,6 +137,7 @@ namespace OzzCodeGen.CodeEngines
             }
         }
         string _targetFolder;
+
         protected virtual void OnTargetDirectoryChanging() { }
         protected virtual void OnTargetDirectoryChanged()
         {

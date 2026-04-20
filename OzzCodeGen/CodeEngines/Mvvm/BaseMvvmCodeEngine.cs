@@ -134,19 +134,15 @@ public abstract class BaseMvvmCodeEngine : BaseCodeEngine
         {
             if (Project != null && string.IsNullOrWhiteSpace(InfrastructureFolder))
             {
-                return 
+                return
                     $@"If this is empty or whitespace, generated base/contracts will be placed in the related folders,
 for Views: {TargetViewDirectory},
 for ViewModels: {TargetViewModelDirectory},
 for Commands: {TargetCommandDirectory}";
             }
-            else if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
-            {
-                return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, InfrastructureFolder));
-            }
             else
             {
-                return string.Empty;
+                return Path.GetFullPath(Path.Combine(TargetDirectory, InfrastructureFolder));
             }
         }
     }
@@ -158,14 +154,7 @@ for Commands: {TargetCommandDirectory}";
     {
         get
         {
-            if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
-            {
-                return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, ViewFolder));
-            }
-            else
-            {
-                return string.Empty;
-            }
+            return Path.GetFullPath(Path.Combine(TargetDirectory, ViewFolder));
         }
     }
 
@@ -176,14 +165,7 @@ for Commands: {TargetCommandDirectory}";
     {
         get
         {
-            if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
-            {
-                return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, ViewModelFolder));
-            }
-            else
-            {
-                return string.Empty;
-            }
+            return Path.GetFullPath(Path.Combine(TargetDirectory, ViewModelFolder));
         }
     }
 
