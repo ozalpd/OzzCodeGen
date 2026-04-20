@@ -33,7 +33,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public override List<string> DefaultUsingNamespaceList()
         {
-            var namespaeces = new List<string>()
+            var namespaces = new List<string>()
             {
                 "System",
                 //"System.Linq",
@@ -47,11 +47,11 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             var modelClassEngine = CodeEngine.ModelClassCodeEngine;
             if (modelClassEngine != null)
             {
-                namespaeces.Add(modelClassEngine.NamespaceName);
-                namespaeces.Add(modelClassEngine.ValidatorNamespaceName);
+                namespaces.Add(modelClassEngine.NamespaceName);
+                namespaces.Add(modelClassEngine.ValidatorNamespaceName);
             }
 
-            return namespaeces.OrderBy(ns => ns).ToList();
+            return namespaces.OrderBy(ns => ns).ToList();
         }
     }
 }

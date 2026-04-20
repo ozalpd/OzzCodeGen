@@ -107,6 +107,7 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         if (renderAll || SelectedTemplate == wpfViewModelsTemplate || SelectedTemplate == wpfViewAndVmTemplates)
         {
             allWritten &= RenderViewModels(entitySetting);
+            allWritten &= RenderBaseViewModels();
         }
 
         if (renderAll || SelectedTemplate == wpfViewsTemplate || SelectedTemplate == wpfViewAndVmTemplates)
@@ -129,6 +130,24 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         var template = new WpfMvvmCommandsTemplate(entitySetting);
         var fileName = Path.Combine(TargetDirectory, CommandFolder, template.GetDefaultFileName());
         return template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
+    }
+
+    private bool RenderBaseViewModels()
+    {
+        bool allWritten = true;
+        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, BaseViewModelTypes.BaseViewModel));
+        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, BaseViewModelTypes.DataErrorInfoVM));
+        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, BaseViewModelTypes.CreateEditVM));
+        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, BaseViewModelTypes.CollectionVM));
+
+        return allWritten;
+    }
+
+    private bool RenderBaseVM(CSharpWpfBaseVmTemplate baseVmTemplate)
+    {
+        string baseVmFolder = string.IsNullOrWhiteSpace(InfrastructureFolder) ? ViewModelFolder : InfrastructureFolder;
+        var baseVmFileName = Path.Combine(TargetDirectory, baseVmFolder, baseVmTemplate.GetDefaultFileName());
+        return baseVmTemplate.WriteToFile(baseVmFileName, OverwriteExisting);
     }
 
     private bool RenderViewModels(WpfMvvmEntitySetting entitySetting)

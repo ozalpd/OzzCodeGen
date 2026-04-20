@@ -45,12 +45,13 @@ public abstract class BaseMvvmCodeEngine : BaseCodeEngine
     /// Relative folder (under <see cref="BaseCodeEngine.TargetDirectory"/>) where shared MVVM infrastructure files are generated.
     /// </summary>
     /// <remarks>
-    /// This folder is intentionally platform-agnostic so the generated base/contracts can be reused by future engines
-    /// (for example, MAUI) with minimal duplication.
+    /// This folder is intentionally platform-agnostic so the generated base/contracts can be reused by future engines (for example, MAUI)
+    /// with minimal duplication. If set to empty or whitespace, generated base/contracts will be placed in the related commands, views or
+    /// view models folder.
     /// </remarks>
     public string InfrastructureFolder
     {
-        get { return _infrastructureFolder ?? "Mvvm"; }
+        get { return _infrastructureFolder ?? "MvvmInfrastructure"; }
         set
         {
             if (_infrastructureFolder == value) return;
@@ -131,7 +132,15 @@ public abstract class BaseMvvmCodeEngine : BaseCodeEngine
     {
         get
         {
-            if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
+            if (Project != null && string.IsNullOrWhiteSpace(InfrastructureFolder))
+            {
+                return 
+                    $@"If this is empty or whitespace, generated base/contracts will be placed in the related folders,
+for Views: {TargetViewDirectory},
+for ViewModels: {TargetViewModelDirectory},
+for Commands: {TargetCommandDirectory}";
+            }
+            else if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
             {
                 return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, InfrastructureFolder));
             }
