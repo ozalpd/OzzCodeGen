@@ -109,7 +109,7 @@
                 <Grid Grid.Column="2" Margin="0"
                       DataContext="{Binding SelectedItem, ElementName=grdEntitySettings}">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*" MinWidth="180"/>
+                        <ColumnDefinition Width="2*" MinWidth="180"/>
                         <ColumnDefinition Width="6"/>
                         <ColumnDefinition Width="5*" MinWidth="220"/>
                     </Grid.ColumnDefinitions>

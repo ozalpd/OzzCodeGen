@@ -1,17 +1,32 @@
-﻿namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {
     public partial class CSharpWpfViewModelTemplate
     {
-        public CSharpWpfViewModelTemplate(WpfMvvmEntitySetting entitySetting, bool isEdit) : base(entitySetting.CodeEngine as WpfMvvmCodeEngine, entitySetting)
+        public CSharpWpfViewModelTemplate(WpfMvvmEntitySetting entitySetting, bool isEdit)
+            : base(entitySetting.CodeEngine as WpfMvvmCodeEngine, entitySetting, isEdit)
         {
-            IsEdit = isEdit;
+
         }
 
-        public bool IsEdit { get; }
+        public string GetClassName()
+        {
+            return $"{EntitySetting.Name}{(IsEdit ? "Edit" : "Create")}VM";
+        }
 
         public override string GetDefaultFileName()
         {
-            return $"{EntitySetting.Name}{(IsEdit ? "Edit" : "Create")}ViewModel.cs";
+            if (string.IsNullOrWhiteSpace(EntitySetting.SubFolder))
+                return $"{GetClassName()}.cs";
+
+            return $"{EntitySetting.SubFolder}\\{GetClassName()}.cs";
+        }
+
+        public override IEnumerable<WpfMvvmPropertySetting> GetIncludedProperties()
+        {
+            return base.GetIncludedProperties().Where(p => p.IncludeInViewModel);
         }
     }
 }

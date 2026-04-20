@@ -1,3 +1,4 @@
+using OzzCodeGen.CodeEngines.CsSqliteRepository;
 using OzzCodeGen.CodeEngines.Mvvm;
 using OzzCodeGen.CodeEngines.WpfMvvm.Templates;
 using OzzCodeGen.CodeEngines.WpfMvvm.UI;
@@ -156,15 +157,15 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
         if (entitySetting.GenerateCreateView)
         {
-            var template = new WpfMvvmViewXamlTemplate(entitySetting, isEdit: false);
-            var fileName = Path.Combine(TargetDirectory, ViewFolder, template.GetDefaultFileName());
-            allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
+            //var template = new WpfMvvmViewXamlTemplate(entitySetting, isEdit: false);
+            //var fileName = Path.Combine(TargetDirectory, ViewFolder, template.GetDefaultFileName());
+            //allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
         }
         if (entitySetting.GenerateEditView)
         {
-            var template = new WpfMvvmViewXamlTemplate(entitySetting, isEdit: true);
-            var fileName = Path.Combine(TargetDirectory, ViewFolder, template.GetDefaultFileName());
-            allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
+            //var template = new WpfMvvmViewXamlTemplate(entitySetting, isEdit: true);
+            //var fileName = Path.Combine(TargetDirectory, ViewFolder, template.GetDefaultFileName());
+            //allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
         }
         return allWritten;
     }
@@ -243,6 +244,15 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
     public static WpfMvvmCodeEngine OpenFile(string fileName)
     {
-        return GetInstanceFromFile(fileName, typeof(WpfMvvmCodeEngine)) as WpfMvvmCodeEngine;
+        var instance = GetInstanceFromFile(fileName, typeof(WpfMvvmCodeEngine)) as WpfMvvmCodeEngine;
+        foreach (var setting in instance.EntitySettings.OfType<WpfMvvmEntitySetting>())
+        {
+            foreach (var prop in setting.Properties)
+            {
+                prop.IsLoadingFromFile = false;
+            }
+        }
+
+        return instance;
     }
 }

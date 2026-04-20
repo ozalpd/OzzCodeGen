@@ -91,7 +91,7 @@ namespace OzzCodeGen.CodeEngines
         /// <returns></returns>
         public T GetForeignDependentProperty(T property)
         {
-            if (property == null || !property.IsForeignKey())
+            if (property == null || !property.IsForeignKey)
                 return null;
             
             return GetInheritedComplexProperties()

@@ -17,7 +17,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             {
                 if (!_useInSearch.HasValue)
                 {
-                    _useInSearch = IsForeignKey() ||
+                    _useInSearch = IsForeignKey ||
                         (PropertyDefinition.IsTypeString() &&
                         ((StringProperty)PropertyDefinition).MaxLength < 257);
                 }

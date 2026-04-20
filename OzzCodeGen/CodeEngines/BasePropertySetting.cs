@@ -133,6 +133,11 @@ namespace OzzCodeGen.CodeEngines
         [JsonIgnore]
         public bool IsFractionalNumeric => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsFractionalNumeric();
 
+
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool IsImmutable => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsImmutable;
+
         /// <summary>
         /// Gets a value indicating whether the property is of an integer numeric type.
         /// </summary>
@@ -153,39 +158,21 @@ namespace OzzCodeGen.CodeEngines
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsSimpleOrString
-        {
-            get
-            {
-                return PropertyDefinition is SimpleProperty || PropertyDefinition is StringProperty;
-            }
-        }
+        public bool IsSimpleOrString => PropertyDefinition is SimpleProperty || PropertyDefinition is StringProperty;
 
         /// <summary>
         /// Gets a value indicating whether the property definition represents a simple property.
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsSimple
-        {
-            get
-            {
-                return PropertyDefinition is SimpleProperty;
-            }
-        }
+        public bool IsSimple => PropertyDefinition is SimpleProperty;
 
         /// <summary>
         /// Gets a value indicating whether the property is defined as a string type.
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsString
-        {
-            get
-            {
-                return PropertyDefinition is StringProperty;
-            }
-        }
+        public bool IsString => PropertyDefinition is StringProperty;
 
         /// <summary>
         /// Gets a value indicating whether the property is of type string and is nullable.
@@ -196,28 +183,14 @@ namespace OzzCodeGen.CodeEngines
 
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsBoolean
-        {
-            get
-            {
-                return PropertyDefinition is SimpleProperty &&
-                    ((SimpleProperty)PropertyDefinition).IsTypeBoolean();
-            }
-        }
+        public bool IsBoolean => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeBoolean();
 
         /// <summary>
         /// Gets a value indicating whether the property is of type DateTime.
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsDateTime
-        {
-            get
-            {
-                return PropertyDefinition is SimpleProperty &&
-                    ((SimpleProperty)PropertyDefinition).IsTypeDateTime();
-            }
-        }
+        public bool IsDateTime => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeDateTime();
 
         public string GetNullableTypeName()
         {
@@ -228,25 +201,17 @@ namespace OzzCodeGen.CodeEngines
         /// Determines whether the property represents a foreign key relationship.
         /// </summary>
         /// <returns>true if the property is a foreign key; otherwise, false.</returns>
-        public bool IsForeignKey()
-        {
-            return PropertyDefinition is SimpleProperty &&
-                    ((SimpleProperty)PropertyDefinition).IsForeignKey;
-        }
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool IsForeignKey => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsForeignKey;
 
         /// <summary>
         /// Gets a value indicating whether the property is a key.
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsKey
-        {
-            get
-            {
-                return PropertyDefinition is SimpleProperty &&
-                    ((SimpleProperty)PropertyDefinition).IsKey;
-            }
-        }
+        public bool IsKey => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsKey;
+
 
         public string FormatComment(string lineBegins, int maxLineWidth = 76)
         {

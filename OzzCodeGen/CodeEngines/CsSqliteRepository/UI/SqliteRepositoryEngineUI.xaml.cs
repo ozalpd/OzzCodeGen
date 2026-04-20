@@ -28,8 +28,11 @@ public partial class SqliteRepositoryEngineUI : AbstractEngineUI
         HiddenColumns.Add("StorageColumnSetting");
 
         HiddenColumns.Add("ClrTypeName");
+        HiddenColumns.Add("IsFloat");
+        HiddenColumns.Add("IsDouble");
         HiddenColumns.Add("IsSimple");
         HiddenColumns.Add("IsString");
+        HiddenColumns.Add("IsDecimal");
         HiddenColumns.Add("IsComplex");
         HiddenColumns.Add("IsBoolean");
         HiddenColumns.Add("IsDateTime");
@@ -40,7 +43,9 @@ public partial class SqliteRepositoryEngineUI : AbstractEngineUI
         HiddenColumns.Add("IsLoadingFromFile");
         //HiddenColumns.Add("IsRepositoryColumn");
         HiddenColumns.Add("IsFractionalNumeric");
+        HiddenColumns.Add("IsRepositoryTextColumn");
         HiddenColumns.Add("SearchableRangeProperties");
+        HiddenColumns.Add("IsRepositoryIntegerColumn");
         HiddenColumns.Add("SearchableNonRangeProperties");
 
         EntitiesDataGrid = grdEntitySettings;

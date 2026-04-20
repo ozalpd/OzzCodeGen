@@ -5,7 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="OzzUtils" #>
 <# 
-var fkeyProperties = Entity.GetInheritedIncludedProperties().Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
+var fkeyProperties = Entity.GetInheritedIncludedProperties().Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey);
 var pkeyProperty = Entity.GetPrimaryKey();
 string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
 
@@ -50,7 +50,7 @@ WriteUsingNamespaces(); #>
 <# foreach (var property in properties) { #>
 <# if (property.PropertyDefinition.TypeName=="decimal") { #>
             //$('#<#= property.Name #>').val(fixDecimalVal(ui.item.<#= property.Name #>));
-<# } else if (property.IsForeignKey()) { #>
+<# } else if (property.IsForeignKey) { #>
             //setSelectListID('#<#= property.Name #> > option', ui.item.<#= property.Name #>);
 <# } else { #>
             //$('#<#= property.Name #>').val(ui.item.<#= property.Name #>);

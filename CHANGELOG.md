@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [2.3.0] - 2026-04-19
+## [2.3.0] - 2026-04-20
 
 ### Added
 - Added new `Wpf_Mvvm_View_ViewModel_Generator` (`WpfMvvmCodeEngine`) for generating WPF MVVM artifacts:
@@ -12,11 +12,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - Commands classes
 - Added shared MVVM infrastructure generation (`InfrastructureFolder`) including base classes and contracts.
 - Added new engine UI (`WpfMvvmEngineUI`) as a XAML `UserControl` inheriting from `AbstractEngineUI` with configuration fields for View/ViewModel/Commands namespaces and folders.
+- Added `DefaultValue` and `FormatDefaultValue()` to MVVM property settings for typed C# literal generation.
+- Added `IsReadOnlyInCreate` and `IsReadOnlyInEdit` properties to `BaseMvvmPropertySetting` for read-only logic in generated ViewModels.
+- Added `ValueConstraint` property to MVVM property settings for enforcing string casing, numeric ranges, and similar input rules.
+- Added namespace and subfolder helper properties to MVVM entity/property settings.
+- Added repository name helpers to `WpfMvvmEngineUI` and per-entity View/ViewModel include toggles.
 
 ### Changed
-- Added XML documentation/comments clarifying infrastructure generation behavior in `WpfMvvmCodeEngine`.
-- `InfrastructureFolder` documentation now explicitly states:
-  - "This folder is intentionally platform-agnostic so the generated base/contracts can be reused by future engines (for example, MAUI) with minimal duplication."
+- Changed `IsForeignKey` from a method to a property in property settings; updated all usages.
+- Refactored `BasePropertySetting` to use expression-bodied members for type-check properties.
+- Rewrote the WPF ViewModel T4 template with improved default-value and read-only logic; removed the old `.cs`-based template files.
+- Enhanced `WpfMvvmEngineUI` property grid layout for better usability.
+- Updated DataGrid hidden columns and column widths in WPF MVVM and SQLite repository UIs.
+- Improved namespace/using generation and applied general code cleanup.
+- Added XML documentation clarifying `InfrastructureFolder` platform-agnostic intent for future engine reuse (e.g., MAUI).
 - Bumped `OzzCodeGen` version to `2.3.0`.
 - Bumped `OzzCodeGen.Wpf` version to `2.3.0`.
 - Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.

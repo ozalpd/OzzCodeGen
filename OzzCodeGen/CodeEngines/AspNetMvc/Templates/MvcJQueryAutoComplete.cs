@@ -32,7 +32,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
             
             #line 7 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
  
-var fkeyProperties = Entity.GetInheritedIncludedProperties().Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
+var fkeyProperties = Entity.GetInheritedIncludedProperties().Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey);
 var pkeyProperty = Entity.GetPrimaryKey();
 string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
 
@@ -158,7 +158,7 @@ WriteUsingNamespaces();
             this.Write("));\r\n");
             
             #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcJQueryAutoComplete.tt"
- } else if (property.IsForeignKey()) { 
+ } else if (property.IsForeignKey) { 
             
             #line default
             #line hidden

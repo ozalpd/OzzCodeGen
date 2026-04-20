@@ -5,7 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="OzzUtils" #>
 <# 
-var fkeyProperties = Entity.GetInheritedIncludedProperties().Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
+var fkeyProperties = Entity.GetInheritedIncludedProperties().Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey);
 var pkeyProperty = Entity.GetPrimaryKey();
 string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
 

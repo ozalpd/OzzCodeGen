@@ -15,7 +15,7 @@ var collectionProperties = Entity.GetInheritedCollectionProperties();
 var pkeyProperty = Entity.GetPrimaryKey();
 string pKey = pkeyProperty == null ? "Id" : pkeyProperty.Name;
 
-var fkeyProperties = Entity.DisplayColumns.Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
+var fkeyProperties = Entity.DisplayColumns.Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey);
 
 var strongForeignEntity = Entity.StrongForeignEntity;
 var strongProperty = Entity.StrongForeignKeyProperty;

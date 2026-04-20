@@ -1,6 +1,4 @@
 using OzzCodeGen.CodeEngines.CsModelClass;
-using OzzCodeGen.CodeEngines.CsSqliteRepository;
-using OzzCodeGen.CodeEngines.Storage;
 using OzzCodeGen.Definitions;
 using System;
 using System.IO;
@@ -14,6 +12,8 @@ namespace OzzCodeGen.CodeEngines.Mvvm;
 public abstract class BaseMvvmCodeEngine : BaseCodeEngine
 {
     protected abstract BaseMvvmPropertySetting CreatePropertySetting();
+
+    public readonly string AbstractCreateEditViewModelName = "AbstractCreateEditVM";
 
     public string CommandFolder
     {

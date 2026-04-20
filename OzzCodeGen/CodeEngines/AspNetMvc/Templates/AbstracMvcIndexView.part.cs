@@ -83,7 +83,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
 
             var fkeys = Entity
                         .GetInheritedIncludedProperties()
-                        .Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey());
+                        .Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey);
 
             foreach (var item in Entity.GetInheritedComplexProperties())
             {

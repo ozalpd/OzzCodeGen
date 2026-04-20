@@ -153,7 +153,7 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
 
     protected IEnumerable<SqliteRepositoryPropertySetting> GetForeignKeyProperties()
     {
-        return GetRepositoryProperties().Where(p => p.IsForeignKey());
+        return GetRepositoryProperties().Where(p => p.IsForeignKey);
     }
 
     protected IEnumerable<SqliteRepositoryPropertySetting> GetInsertProperties()

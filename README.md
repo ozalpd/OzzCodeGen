@@ -14,9 +14,13 @@ See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 
 ## Latest Highlights (2.3.0)
 - Added new `Wpf_Mvvm_View_ViewModel_Generator` (`WpfMvvmCodeEngine`) to generate WPF Create/Edit Views, ViewModels, and Commands.
-- Added MVVM infrastructure generation support (`InfrastructureFolder`) for shared base/contracts output.
-- `InfrastructureFolder` is intentionally platform-agnostic so the generated base/contracts can be reused by future engines (for example, MAUI) with minimal duplication.
-- Added XAML-based `WpfMvvmEngineUI` (`AbstractEngineUI`-based) with namespace/folder configuration fields.
+- Added MVVM infrastructure generation support (`InfrastructureFolder`) for shared base/contracts output, intentionally platform-agnostic for future reuse (e.g., MAUI).
+- Added `DefaultValue`, `FormatDefaultValue()`, `IsReadOnlyInCreate`/`IsReadOnlyInEdit`, and `ValueConstraint` to MVVM entity/property settings.
+- Added namespace/subfolder helpers and repository name support to MVVM engine settings and `WpfMvvmEngineUI`.
+- Rewrote WPF ViewModel T4 template with improved default-value and read-only logic; removed old `.cs`-based templates.
+- Changed `IsForeignKey` from a method to a property; refactored `BasePropertySetting` to use expression-bodied type-check properties.
+- Enhanced `WpfMvvmEngineUI` with per-entity View/ViewModel toggles and improved property grid layout.
+- Updated DataGrid hidden columns and widths in WPF MVVM and SQLite repository UIs.
 - Bumped `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.3.0`.
 
 ## Latest Highlights (2.2.23)
