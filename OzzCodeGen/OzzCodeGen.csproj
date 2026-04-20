@@ -225,6 +225,14 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>TechDocTemplate.tt</DependentUpon>
 		</Compile>
+		<Compile Update="CodeEngines\WpfMvvm\Templates\CSharpWpfViewModelTemplate.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>CSharpWpfViewModelTemplate.tt</DependentUpon>
+		</Compile>
+		<Compile Update="CodeEngines\WpfMvvm\UI\WpfMvvmEngineUI.cs">
+			<DependentUpon>WpfMvvmEngineUI.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -344,6 +352,9 @@
 		</None>
 		<None Update="CodeEngines\TechDocument\Templates\TechDocTemplate.tt">
 			<LastGenOutput>TechDocTemplate.cs</LastGenOutput>
+		</None>
+		<None Update="CodeEngines\WpfMvvm\Templates\CSharpWpfViewModelTemplate.tt">
+		  <LastGenOutput>CSharpWpfViewModelTemplate.cs</LastGenOutput>
 		</None>
 	</ItemGroup>
 

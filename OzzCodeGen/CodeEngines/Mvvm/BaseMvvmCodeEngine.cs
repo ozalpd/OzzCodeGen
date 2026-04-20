@@ -1,3 +1,6 @@
+using OzzCodeGen.CodeEngines.CsModelClass;
+using OzzCodeGen.CodeEngines.CsSqliteRepository;
+using OzzCodeGen.CodeEngines.Storage;
 using OzzCodeGen.Definitions;
 using System;
 using System.IO;
@@ -11,24 +14,6 @@ namespace OzzCodeGen.CodeEngines.Mvvm;
 public abstract class BaseMvvmCodeEngine : BaseCodeEngine
 {
     protected abstract BaseMvvmPropertySetting CreatePropertySetting();
-
-
-    [XmlIgnore]
-    [JsonIgnore]
-    public string TargetCommandDirectory
-    {
-        get
-        {
-            if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
-            {
-                return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, CommandFolder));
-            }
-            else
-            {
-                return string.Empty;
-            }
-        }
-    }
 
     public string CommandFolder
     {
@@ -54,24 +39,6 @@ public abstract class BaseMvvmCodeEngine : BaseCodeEngine
         }
     }
     private string _commandNamespaceName;
-
-
-    [XmlIgnore]
-    [JsonIgnore]
-    public string TargetInfrastructureDirectory
-    {
-        get
-        {
-            if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
-            {
-                return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, InfrastructureFolder));
-            }
-            else
-            {
-                return string.Empty;
-            }
-        }
-    }
 
 
     /// <summary>
@@ -127,17 +94,53 @@ public abstract class BaseMvvmCodeEngine : BaseCodeEngine
     }
     private string _mvvmNamespaceName;
 
-    public bool UseResourceFiles
+    public string RepositoryNamespaceName
     {
-        get { return _useResourceFiles ?? false; }
+        get { return _repositoryNamespaceName ?? $"{Project.NamespaceName}.Repositories"; }
         set
         {
-            if (_useResourceFiles == value) return;
-            _useResourceFiles = value;
-            RaisePropertyChanged(nameof(UseResourceFiles));
+            if (_repositoryNamespaceName == value) return;
+            _repositoryNamespaceName = value;
+            RaisePropertyChanged(nameof(RepositoryNamespaceName));
         }
     }
-    private bool? _useResourceFiles;
+    private string _repositoryNamespaceName;
+
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public string TargetCommandDirectory
+    {
+        get
+        {
+            if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
+            {
+                return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, CommandFolder));
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+    }
+
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public string TargetInfrastructureDirectory
+    {
+        get
+        {
+            if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
+            {
+                return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, InfrastructureFolder));
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+    }
 
 
     [XmlIgnore]
@@ -156,6 +159,36 @@ public abstract class BaseMvvmCodeEngine : BaseCodeEngine
             }
         }
     }
+
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public string TargetViewModelDirectory
+    {
+        get
+        {
+            if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
+            {
+                return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, ViewModelFolder));
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+    }
+
+    public bool UseResourceFiles
+    {
+        get { return _useResourceFiles ?? false; }
+        set
+        {
+            if (_useResourceFiles == value) return;
+            _useResourceFiles = value;
+            RaisePropertyChanged(nameof(UseResourceFiles));
+        }
+    }
+    private bool? _useResourceFiles;
 
     public string ViewFolder
     {
@@ -178,27 +211,10 @@ public abstract class BaseMvvmCodeEngine : BaseCodeEngine
             if (_viewModelFolder == value) return;
             _viewModelFolder = value;
             RaisePropertyChanged(nameof(ViewModelFolder));
+            RaisePropertyChanged(nameof(TargetViewModelDirectory));
         }
     }
     private string _viewModelFolder;
-
-
-    [XmlIgnore]
-    [JsonIgnore]
-    public string TargetViewModelDirectory
-    {
-        get
-        {
-            if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
-            {
-                return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, ViewModelFolder));
-            }
-            else
-            {
-                return string.Empty;
-            }
-        }
-    }
 
     public string ViewModelNamespaceName
     {
@@ -220,10 +236,30 @@ public abstract class BaseMvvmCodeEngine : BaseCodeEngine
             if (_viewNamespaceName == value) return;
             _viewNamespaceName = value;
             RaisePropertyChanged(nameof(ViewNamespaceName));
-            RaisePropertyChanged(nameof(TargetViewModelDirectory));
         }
     }
     private string _viewNamespaceName;
+
+
+
+    /// <summary>
+    /// Model class code engine is used to get information about the model classes, such as validator class, which can be used in the repository templates.
+    /// </summary>
+    [XmlIgnore]
+    [JsonIgnore]
+    public CSharpModelClassCodeEngine ModelClassCodeEngine
+    {
+        get
+        {
+            if (_modelClassEngine == null && Project != null)
+            {
+                _modelClassEngine = Project.GetCodeEngine(EngineTypes.CsModelClassCodeEngineId) as CSharpModelClassCodeEngine;
+            }
+            return _modelClassEngine;
+        }
+    }
+    private CSharpModelClassCodeEngine _modelClassEngine;
+
 
     protected virtual BaseMvvmPropertySetting GetDefaultPropertySetting(BaseProperty property, BaseEntitySetting setting)
     {

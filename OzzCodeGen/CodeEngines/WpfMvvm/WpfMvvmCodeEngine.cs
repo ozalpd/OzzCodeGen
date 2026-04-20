@@ -95,48 +95,77 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         Entities = EntitySettings?.OfType<WpfMvvmEntitySetting>().ToList() ?? new List<WpfMvvmEntitySetting>();
     }
 
-    private bool RenderEntity(WpfMvvmEntitySetting entitySetting)
+    private bool RenderEntity(WpfMvvmEntitySetting entitySetting, bool renderAll)
     {
         if (entitySetting == null)
             return false;
 
         bool allWritten = true;
+        renderAll = renderAll || SelectedTemplate == wpfAllTemplates;
 
-        if (entitySetting.GenerateCreateView)
+        if (renderAll || SelectedTemplate == wpfViewModelsTemplate || SelectedTemplate == wpfViewAndVmTemplates)
         {
-            var template = new WpfMvvmViewXamlTemplate(entitySetting, false);
-            var fileName = Path.Combine(TargetDirectory, ViewFolder, template.GetDefaultFileName());
-            allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
+            allWritten &= RenderViewModels(entitySetting);
         }
 
-        if (entitySetting.GenerateEditView)
+        if (renderAll || SelectedTemplate == wpfViewsTemplate || SelectedTemplate == wpfViewAndVmTemplates)
         {
-            var template = new WpfMvvmViewXamlTemplate(entitySetting, true);
-            var fileName = Path.Combine(TargetDirectory, ViewFolder, template.GetDefaultFileName());
-            allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
+            allWritten &= RenderViews(entitySetting);
         }
+
+        if (renderAll || SelectedTemplate == wpfCommandsTemplate)
+        {
+            allWritten &= RenderCommands(entitySetting);
+        }
+
+        return allWritten;
+    }
+
+    private bool RenderCommands(WpfMvvmEntitySetting entitySetting)
+    {
+        if (!entitySetting.GenerateCommands)
+            return true;
+        var template = new WpfMvvmCommandsTemplate(entitySetting);
+        var fileName = Path.Combine(TargetDirectory, CommandFolder, template.GetDefaultFileName());
+        return template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
+    }
+
+    private bool RenderViewModels(WpfMvvmEntitySetting entitySetting)
+    {
+        bool allWritten = true;
 
         if (entitySetting.GenerateCreateViewModel)
         {
-            var template = new WpfMvvmViewModelTemplate(entitySetting, false);
+            var template = new CSharpWpfViewModelTemplate(entitySetting, isEdit: false);
             var fileName = Path.Combine(TargetDirectory, ViewModelFolder, template.GetDefaultFileName());
             allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
         }
 
         if (entitySetting.GenerateEditViewModel)
         {
-            var template = new WpfMvvmViewModelTemplate(entitySetting, true);
+            var template = new CSharpWpfViewModelTemplate(entitySetting, isEdit: true);
             var fileName = Path.Combine(TargetDirectory, ViewModelFolder, template.GetDefaultFileName());
             allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
         }
+        return allWritten;
+    }
 
-        if (entitySetting.GenerateCommands)
+    private bool RenderViews(WpfMvvmEntitySetting entitySetting)
+    {
+        bool allWritten = true;
+
+        if (entitySetting.GenerateCreateView)
         {
-            var template = new WpfMvvmCommandsTemplate(entitySetting);
-            var fileName = Path.Combine(TargetDirectory, CommandFolder, template.GetDefaultFileName());
+            var template = new WpfMvvmViewXamlTemplate(entitySetting, isEdit: false);
+            var fileName = Path.Combine(TargetDirectory, ViewFolder, template.GetDefaultFileName());
             allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
         }
-
+        if (entitySetting.GenerateEditView)
+        {
+            var template = new WpfMvvmViewXamlTemplate(entitySetting, isEdit: true);
+            var fileName = Path.Combine(TargetDirectory, ViewFolder, template.GetDefaultFileName());
+            allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
+        }
         return allWritten;
     }
 
@@ -165,31 +194,37 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         return allWritten;
     }
 
-    public override bool RenderSelectedTemplate()
+    private bool RenderSelectedOrAll(bool renderAll)
     {
         if (!string.IsNullOrEmpty(Project?.SearchString))
         {
             Project.SearchString = string.Empty;
         }
 
-        bool allWritten = RenderInfrastructure();
+        bool allWritten = true;
+        //  allWritten &= RenderInfrastructure();
 
         if (RenderAllEntities)
         {
             foreach (var setting in EntitySettings.OfType<WpfMvvmEntitySetting>().Where(e => !e.Exclude))
             {
-                allWritten &= RenderEntity(setting);
+                allWritten &= RenderEntity(setting, renderAll);
             }
 
             return allWritten;
         }
 
-        return RenderEntity(CurrentEntitySetting as WpfMvvmEntitySetting) && allWritten;
+        return RenderEntity(CurrentEntitySetting as WpfMvvmEntitySetting, renderAll) && allWritten;
+    }
+
+    public override bool RenderSelectedTemplate()
+    {
+        return RenderSelectedOrAll(false);
     }
 
     public override bool RenderAllTemplates()
     {
-        throw new NotImplementedException("There is only one template in this code engine!");
+        return RenderSelectedOrAll(true);
     }
 
     protected override UserControl GetUiControl()
