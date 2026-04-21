@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OzzCodeGen.CodeEngines
+﻿namespace OzzCodeGen.CodeEngines
 {
     public abstract class BaseAppInfraCodeEngine : BaseCodeEngine
     {

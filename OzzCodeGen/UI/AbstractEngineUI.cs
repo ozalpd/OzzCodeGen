@@ -57,7 +57,7 @@ namespace OzzCodeGen.UI
         {
             get
             {
-                if(_columnWidths==null)
+                if (_columnWidths == null)
                     _columnWidths = new Dictionary<string, short>();
                 return _columnWidths;
             }
@@ -99,7 +99,15 @@ namespace OzzCodeGen.UI
                 if (ColumnWidths.ContainsKey(c.Header.ToString()))
                     c.Width = ColumnWidths[c.Header.ToString()];
 
-                c.Header = c.Header.ToString().PascalCaseToTitleCase();
+                string header = c.Header.ToString();
+                if (header != null)
+                {
+                    if (header.Length > "Generate".Length + 1 && header.StartsWith("Generate"))
+                    {
+                        header = header.Substring("Generate".Length);
+                    }
+                    c.Header = header.PascalCaseToTitleCase();
+                }
             }
             int i = 0;
             DataGridTools.ReorderDataGridColumn(dataGrid, "Name", i);

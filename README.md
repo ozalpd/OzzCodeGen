@@ -19,6 +19,8 @@ See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 - Added `RenderBaseViewModels` to generate all base ViewModel classes: `AbstractViewModel`, `AbstractDataErrorInfoVM`, `AbstractCreateEditVM`, and `AbstractCollectionVM`.
 - Added `CSharpWpfBaseVmTemplate.tt` and generated `.cs`/`.part.cs` files for base ViewModel and `IIsDirty` interface generation.
 - Added `DefaultValue`, `FormatDefaultValue()`, `IsReadOnlyInCreate`/`IsReadOnlyInEdit`, and `ValueConstraint` to MVVM entity/property settings.
+- Added `GenerateLookupService` to `BaseMvvmEntitySetting` for per-entity lookup-service generation control.
+- Added `ServiceNamespaceName` and `ServiceFolder` to `BaseMvvmCodeEngine` for service output namespace/folder configuration.
 - Added namespace/subfolder helpers and repository name support to MVVM engine settings and `WpfMvvmEngineUI`.
 - Rewrote WPF ViewModel T4 template with improved default-value and read-only logic; removed old `.cs`-based templates.
 - Changed `IsForeignKey` from a method to a property; refactored `BasePropertySetting` to use expression-bodied type-check properties.

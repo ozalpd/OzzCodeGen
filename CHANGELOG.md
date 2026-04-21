@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Added `IsReadOnlyInCreate` and `IsReadOnlyInEdit` properties to `BaseMvvmPropertySetting` for read-only logic in generated ViewModels.
 - Added `ValueConstraint` property to MVVM property settings for enforcing string casing, numeric ranges, and similar input rules.
 - Added namespace and subfolder helper properties to MVVM entity/property settings.
+- Added `GenerateLookupService` to `BaseMvvmEntitySetting` for per-entity lookup-service generation control.
+- Added `ServiceNamespaceName` and `ServiceFolder` to `BaseMvvmCodeEngine` for service output namespace/folder configuration.
 - Added repository name helpers to `WpfMvvmEngineUI` and per-entity View/ViewModel include toggles.
 - Added `RenderBaseViewModels` in `WpfMvvmCodeEngine` to generate all base ViewModel classes (`AbstractViewModel`, `AbstractDataErrorInfoVM`, `AbstractCreateEditVM`, `AbstractCollectionVM`).
 - Added `CSharpWpfBaseVmTemplate.tt` and generated `.cs`/`.part.cs` files for base ViewModel and `IIsDirty` interface generation.

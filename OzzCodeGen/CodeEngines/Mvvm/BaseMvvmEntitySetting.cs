@@ -23,6 +23,19 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     [JsonIgnore]
     public IEnumerable<BaseMvvmPropertySetting> MvvmProperties => Properties.Cast<BaseMvvmPropertySetting>();
 
+
+    public bool GenerateCommands
+    {
+        get { return _generateCommands ?? true; }
+        set
+        {
+            if (_generateCommands == value) return;
+            _generateCommands = value;
+            RaisePropertyChanged(nameof(GenerateCommands));
+        }
+    }
+    private bool? _generateCommands;
+
     public bool GenerateCreateView
     {
         get { return _generateCreateView ?? true; }
@@ -71,17 +84,18 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     }
     private bool? _generateEditViewModel;
 
-    public bool GenerateCommands
+    public bool GenerateLookupService
     {
-        get { return _generateCommands ?? true; }
+        get { return _generateLookupService ?? false; }
         set
         {
-            if (_generateCommands == value) return;
-            _generateCommands = value;
-            RaisePropertyChanged(nameof(GenerateCommands));
+            if (_generateLookupService == value) return;
+            _generateLookupService = value;
+            RaisePropertyChanged(nameof(GenerateLookupService));
         }
     }
-    private bool? _generateCommands;
+    private bool? _generateLookupService;
+
 
     public string GetCommandsNamespaceName()
     {

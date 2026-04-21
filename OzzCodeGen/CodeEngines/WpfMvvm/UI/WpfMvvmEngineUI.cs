@@ -37,6 +37,7 @@ public partial class WpfMvvmEngineUI : AbstractEngineUI
         ColumnWidths["GenerateEditView"] = 72;
         ColumnWidths["GenerateCreateViewModel"] = 72;
         ColumnWidths["GenerateEditViewModel"] = 72;
+        ColumnWidths["GenerateLookupService"] = 80;
         ColumnWidths["GenerateCommands"] = 80;
         ColumnWidths["IncludeInView"] = 110;
         ColumnWidths["IncludeInViewModel"] = 110;

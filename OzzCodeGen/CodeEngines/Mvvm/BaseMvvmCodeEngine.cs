@@ -53,23 +53,35 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
     }
     private string _repositoryNamespaceName;
 
+    public string ServiceFolder
+    {
+        get { return _ServiceFolder ?? "Services"; }
+        set
+        {
+            if (_ServiceFolder == value) return;
+            _ServiceFolder = value;
+            RaisePropertyChanged(nameof(ServiceFolder));
+            RaisePropertyChanged(nameof(TargetServiceDirectory));
+        }
+    }
+    private string _ServiceFolder;
+
+    public string ServiceNamespaceName
+    {
+        get { return _ServiceNamespaceName ?? $"{Project.NamespaceName}.Services"; }
+        set
+        {
+            if (_ServiceNamespaceName == value) return;
+            _ServiceNamespaceName = value;
+            RaisePropertyChanged(nameof(ServiceNamespaceName));
+        }
+    }
+    private string _ServiceNamespaceName;
+
 
     [XmlIgnore]
     [JsonIgnore]
-    public string TargetCommandDirectory
-    {
-        get
-        {
-            if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
-            {
-                return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, CommandFolder));
-            }
-            else
-            {
-                return string.Empty;
-            }
-        }
-    }
+    public string TargetCommandDirectory => Path.GetFullPath(Path.Combine(TargetDirectory, CommandFolder));
 
 
     [XmlIgnore]
@@ -96,24 +108,15 @@ for Commands: {TargetCommandDirectory}";
 
     [XmlIgnore]
     [JsonIgnore]
-    public string TargetViewDirectory
-    {
-        get
-        {
-            return Path.GetFullPath(Path.Combine(TargetDirectory, ViewFolder));
-        }
-    }
-
+    public string TargetServiceDirectory => Path.GetFullPath(Path.Combine(TargetDirectory, ServiceFolder));
 
     [XmlIgnore]
     [JsonIgnore]
-    public string TargetViewModelDirectory
-    {
-        get
-        {
-            return Path.GetFullPath(Path.Combine(TargetDirectory, ViewModelFolder));
-        }
-    }
+    public string TargetViewDirectory => Path.GetFullPath(Path.Combine(TargetDirectory, ViewFolder));
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public string TargetViewModelDirectory => Path.GetFullPath(Path.Combine(TargetDirectory, ViewModelFolder));
 
     public bool UseResourceFiles
     {
