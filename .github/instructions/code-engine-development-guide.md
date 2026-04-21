@@ -57,8 +57,11 @@ Most new engines should inherit from an existing base class when possible instea
 
 Available base classes:
 - `BaseModelClassCodeEngine` – for engines that generate C# model/metadata classes with property-level settings.
+- `BaseAppInfraCodeEngine` – for app-language engines (for example C#/TypeScript style generators) that need shared `InfrastructureFolder`/`TargetInfrastructureDirectory` behavior.
 - `BaseMvvmCodeEngine` – for engines that generate MVVM views, ViewModels, and commands. Platform-agnostic; extend for WPF, MAUI, etc.
 - `BaseCodeEngine` – use directly only when no specialized base fits.
+
+Use `BaseAppInfraCodeEngine` when the engine generates shared app-layer infrastructure output. Avoid it for engines that do not generate app-layer infrastructure (for example `CSharpModelClassCodeEngine`, `ResxEngine`, and SQL script engines).
 
 ## Serialization Checklist
 Project and engine settings are XML-serialized. Treat serialization as a first-class requirement.

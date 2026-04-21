@@ -18,7 +18,7 @@ public class WpfMvvmCommandsTemplate : AbstractTemplate
 
     public override string TransformText()
     {
-        return $"using {_codeEngine.MvvmNamespaceName};\n"
+        return $"using {_codeEngine.BaseClassNamespaceName};\n"
              + "using System;\n"
              + "using System.Threading.Tasks;\n\n"
              + $"namespace {_codeEngine.CommandNamespaceName};\n\n"

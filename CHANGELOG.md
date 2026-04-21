@@ -23,6 +23,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 - Changed `IsForeignKey` from a method to a property in property settings; updated all usages.
 - Refactored `BasePropertySetting` to use expression-bodied members for type-check properties.
+- Introduced `BaseAppInfraCodeEngine` to centralize infrastructure-folder-related behavior for app-language engines.
+- Updated `BaseMvvmCodeEngine` and `CSharpSqliteRepositoryEngine` to derive from `BaseAppInfraCodeEngine`.
 - Rewrote the WPF ViewModel T4 template with improved default-value and read-only logic; removed the old `.cs`-based template files.
 - Enhanced `WpfMvvmEngineUI` property grid layout for better usability.
 - Updated DataGrid hidden columns and column widths in WPF MVVM and SQLite repository UIs.

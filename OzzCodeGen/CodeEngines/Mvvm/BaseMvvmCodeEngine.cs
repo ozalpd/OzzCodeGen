@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.Mvvm;
 
-public abstract class BaseMvvmCodeEngine : BaseCodeEngine
+public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
 {
     protected abstract BaseMvvmPropertySetting CreatePropertySetting();
 
@@ -40,60 +40,6 @@ public abstract class BaseMvvmCodeEngine : BaseCodeEngine
     }
     private string _commandNamespaceName;
 
-
-    /// <summary>
-    /// Relative folder (under <see cref="BaseCodeEngine.TargetDirectory"/>) where shared MVVM infrastructure files are generated.
-    /// </summary>
-    /// <remarks>
-    /// This folder is intentionally platform-agnostic so the generated base/contracts can be reused by future engines (for example, MAUI)
-    /// with minimal duplication. If set to empty or whitespace, generated base/contracts will be placed in the related commands, views or
-    /// view models folder.
-    /// </remarks>
-    public string InfrastructureFolder
-    {
-        get { return _infrastructureFolder ?? "MvvmInfrastructure"; }
-        set
-        {
-            if (_infrastructureFolder == value) return;
-            _infrastructureFolder = value;
-            RaisePropertyChanged(nameof(InfrastructureFolder));
-            RaisePropertyChanged(nameof(TargetInfrastructureDirectory));
-        }
-    }
-    private string _infrastructureFolder;
-
-    /// <summary>
-    /// Namespace for generated MVVM contract interfaces (for example <c>IViewModel</c>, <c>IAsyncCommand</c>, <c>INavigationService</c>).
-    /// </summary>
-    /// <remarks>
-    /// Defaults to <c>{MvvmNamespaceName}.Contracts</c>.
-    /// </remarks>
-    public string MvvmContractsNamespaceName
-    {
-        get { return _mvvmContractsNamespaceName ?? $"{MvvmNamespaceName}.Contracts"; }
-        set
-        {
-            if (_mvvmContractsNamespaceName == value) return;
-            _mvvmContractsNamespaceName = value;
-            RaisePropertyChanged(nameof(MvvmContractsNamespaceName));
-        }
-    }
-    private string _mvvmContractsNamespaceName;
-
-    /// <summary>
-    /// Namespace for generated shared MVVM infrastructure types (for example <c>ViewModelBase</c>, <c>RelayCommand</c>, <c>AsyncRelayCommand</c>).
-    /// </summary>
-    public string MvvmNamespaceName
-    {
-        get { return _mvvmNamespaceName ?? $"{Project.NamespaceName}.Mvvm"; }
-        set
-        {
-            if (_mvvmNamespaceName == value) return;
-            _mvvmNamespaceName = value;
-            RaisePropertyChanged(nameof(MvvmNamespaceName));
-        }
-    }
-    private string _mvvmNamespaceName;
 
     public string RepositoryNamespaceName
     {
@@ -128,11 +74,11 @@ public abstract class BaseMvvmCodeEngine : BaseCodeEngine
 
     [XmlIgnore]
     [JsonIgnore]
-    public string TargetInfrastructureDirectory
+    public override string TargetInfrastructureDirectory
     {
         get
         {
-            if (Project != null && string.IsNullOrWhiteSpace(InfrastructureFolder))
+            if (string.IsNullOrWhiteSpace(InfrastructureFolder))
             {
                 return
                     $@"If this is empty or whitespace, generated base/contracts will be placed in the related folders,
