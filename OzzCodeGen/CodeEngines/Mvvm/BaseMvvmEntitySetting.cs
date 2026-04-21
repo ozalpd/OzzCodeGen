@@ -121,6 +121,19 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
         return $"{CodeEngine.ViewModelNamespaceName}.{SubFolder}";
     }
 
+    [XmlIgnore]
+    [JsonIgnore]
+    public string RepositoryInstanceName
+    {
+        get
+        {
+            if (RepositoryName.StartsWith("I"))
+                return RepositoryName.Substring(1).ToCamelCase();
+
+            return RepositoryName.ToCamelCase();
+        }
+    }
+
     /// <summary>
     /// Name of the repository interface or repository class for this entity.
     /// </summary>

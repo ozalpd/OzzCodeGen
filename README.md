@@ -13,7 +13,9 @@ OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 
 ## Latest Highlights (2.3.0)
-- Added new `Wpf_Mvvm_View_ViewModel_Generator` (`WpfMvvmCodeEngine`) to generate WPF Create/Edit Views, ViewModels, and Commands.
+- Added new `Wpf_Mvvm_View_ViewModel_Generator` (`WpfMvvmCodeEngine`) to generate WPF Create/Edit Views, ViewModels, Commands, and per-entity Lookup Services.
+- Added `CSharpLookupServiceTemplate.tt` for auto-generating lookup service interfaces and implementations with design-time/test stubs.
+- Added `RepositoryInstanceName` to `BaseMvvmEntitySetting` for consistent DI naming in generated services.
 - Added MVVM infrastructure generation support (`InfrastructureFolder`) for shared base/contracts output, intentionally platform-agnostic for future reuse (e.g., MAUI).
 - Clarified `InfrastructureFolder` placement logic and `TargetInfrastructureDirectory` behavior when the folder is empty/whitespace.
 - Added `RenderBaseViewModels` to generate all base ViewModel classes: `AbstractViewModel`, `AbstractDataErrorInfoVM`, `AbstractCreateEditVM`, and `AbstractCollectionVM`.
@@ -22,12 +24,17 @@ See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 - Added `GenerateLookupService` to `BaseMvvmEntitySetting` for per-entity lookup-service generation control.
 - Added `ServiceNamespaceName` and `ServiceFolder` to `BaseMvvmCodeEngine` for service output namespace/folder configuration.
 - Added namespace/subfolder helpers and repository name support to MVVM engine settings and `WpfMvvmEngineUI`.
+- Extended `BaseCSharpWpfMvvmTemplate` with `isInterface` parameter support for flexible interface/implementation generation.
 - Rewrote WPF ViewModel T4 template with improved default-value and read-only logic; removed old `.cs`-based templates.
 - Changed `IsForeignKey` from a method to a property; refactored `BasePropertySetting` to use expression-bodied type-check properties.
+- Improved visual consistency across WPF engine UIs by standardizing button/DataGrid backgrounds, reducing control heights, and simplifying folder labels.
+- Updated `AbstractEngineUI` to shorten "ViewModel" column headers to "VM".
 - Enhanced `WpfMvvmEngineUI` with per-entity View/ViewModel toggles and improved property grid layout.
 - Updated DataGrid hidden columns and widths in WPF MVVM and SQLite repository UIs.
-- Updated `.csproj` to include the new WPF base ViewModel template and generated files.
-- Fixed variable naming in `BaseCSharpWpfMvvmTemplate.cs`.
+- Updated `.csproj` to include the new WPF base ViewModel and lookup service templates and generated files.
+- Default namespace logic for infrastructure/contracts now consistently uses `Project.NamespaceName`.
+- Minor parameter refactoring in `CSharpWpfViewModelTemplate` for consistency and clarity.
+- Fixed infrastructure directory resolution and variable naming issues.
 - Bumped `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.3.0`.
 
 ## Latest Highlights (2.2.23)

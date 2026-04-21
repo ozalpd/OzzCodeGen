@@ -6,7 +6,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
     public partial class CSharpWpfViewModelTemplate
     {
         public CSharpWpfViewModelTemplate(WpfMvvmEntitySetting entitySetting, bool isEdit)
-            : base(entitySetting.CodeEngine as WpfMvvmCodeEngine, entitySetting, isEdit)
+            : base(entitySetting.CodeEngine as WpfMvvmCodeEngine, entitySetting, isEdit: isEdit)
         {
 
         }

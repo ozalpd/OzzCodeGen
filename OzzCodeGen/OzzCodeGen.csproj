@@ -225,6 +225,11 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>TechDocTemplate.tt</DependentUpon>
 		</Compile>
+		<Compile Update="CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>CSharpLookupServiceTemplate.tt</DependentUpon>
+		</Compile>
 		<Compile Update="CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.cs">
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
@@ -357,6 +362,9 @@
 		</None>
 		<None Update="CodeEngines\TechDocument\Templates\TechDocTemplate.tt">
 			<LastGenOutput>TechDocTemplate.cs</LastGenOutput>
+		</None>
+		<None Update="CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt">
+		  <LastGenOutput>CSharpLookupServiceTemplate.cs</LastGenOutput>
 		</None>
 		<None Update="CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.tt">
 		  <LastGenOutput>CSharpWpfBaseVmTemplate.cs</LastGenOutput>

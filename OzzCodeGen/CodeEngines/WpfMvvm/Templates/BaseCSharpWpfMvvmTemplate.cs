@@ -6,18 +6,27 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {
     public abstract class BaseCSharpWpfMvvmTemplate : BaseCSharpMvvmTemplate
     {
-        protected BaseCSharpWpfMvvmTemplate(WpfMvvmCodeEngine codeEngine, WpfMvvmEntitySetting entitySetting = null, bool isEdit = false)
+        protected BaseCSharpWpfMvvmTemplate(WpfMvvmCodeEngine codeEngine, WpfMvvmEntitySetting entitySetting = null, bool isEdit = false, bool isInterface = false)
         {
             CodeEngine = codeEngine;
             EntitySetting = entitySetting;
             IsEdit = isEdit;
+            IsInterface = isInterface;
         }
 
         public WpfMvvmCodeEngine CodeEngine { get; }
 
         public WpfMvvmEntitySetting EntitySetting { get; }
 
+        /// <summary>
+        /// If true, it indicates the template is for edit view model, otherwise it's for create view model. This can be used to determine the class name and included properties.
+        /// </summary>
         public bool IsEdit { get; }
+
+        /// <summary>
+        /// If true, it indicates the template is for an interface, otherwise it's for a class.
+        /// </summary>
+        public bool IsInterface { get; }
 
         public virtual IEnumerable<WpfMvvmPropertySetting> GetIncludedProperties()
         {

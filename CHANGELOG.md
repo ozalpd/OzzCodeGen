@@ -10,23 +10,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - Create/Edit XAML Views
   - Create/Edit ViewModels
   - Commands classes
+  - Lookup service interfaces and implementations (when enabled per entity)
 - Added shared MVVM infrastructure generation (`InfrastructureFolder`) including base classes and contracts.
-- Added new engine UI (`WpfMvvmEngineUI`) as a XAML `UserControl` inheriting from `AbstractEngineUI` with configuration fields for View/ViewModel/Commands namespaces and folders.
+- Added new engine UI (`WpfMvvmEngineUI`) as a XAML `UserControl` inheriting from `AbstractEngineUI` with configuration fields for View/ViewModel/Commands/Service namespaces and folders.
 - Added `DefaultValue` and `FormatDefaultValue()` to MVVM property settings for typed C# literal generation.
 - Added `IsReadOnlyInCreate` and `IsReadOnlyInEdit` properties to `BaseMvvmPropertySetting` for read-only logic in generated ViewModels.
 - Added `ValueConstraint` property to MVVM property settings for enforcing string casing, numeric ranges, and similar input rules.
 - Added namespace and subfolder helper properties to MVVM entity/property settings.
 - Added `GenerateLookupService` to `BaseMvvmEntitySetting` for per-entity lookup-service generation control.
+- Added `RepositoryInstanceName` to `BaseMvvmEntitySetting` for consistent dependency-injection naming in generated services.
 - Added `ServiceNamespaceName` and `ServiceFolder` to `BaseMvvmCodeEngine` for service output namespace/folder configuration.
 - Added repository name helpers to `WpfMvvmEngineUI` and per-entity View/ViewModel include toggles.
 - Added `RenderBaseViewModels` in `WpfMvvmCodeEngine` to generate all base ViewModel classes (`AbstractViewModel`, `AbstractDataErrorInfoVM`, `AbstractCreateEditVM`, `AbstractCollectionVM`).
 - Added `CSharpWpfBaseVmTemplate.tt` and generated `.cs`/`.part.cs` files for base ViewModel and `IIsDirty` interface generation.
+- Added `CSharpLookupServiceTemplate.tt` and generated `.cs`/`.part.cs` files to auto-generate lookup service interfaces and implementations for WPF MVVM entities, including design-time/test stubs.
 
 ### Changed
 - Changed `IsForeignKey` from a method to a property in property settings; updated all usages.
 - Refactored `BasePropertySetting` to use expression-bodied members for type-check properties.
 - Introduced `BaseAppInfraCodeEngine` to centralize infrastructure-folder-related behavior for app-language engines.
 - Updated `BaseMvvmCodeEngine` and `CSharpSqliteRepositoryEngine` to derive from `BaseAppInfraCodeEngine`.
+- Extended `BaseCSharpWpfMvvmTemplate` with `isInterface` parameter support for flexible interface/implementation generation.
+- Updated `WpfMvvmCodeEngine` to emit lookup services when enabled per entity.
 - Rewrote the WPF ViewModel T4 template with improved default-value and read-only logic; removed the old `.cs`-based template files.
 - Improved visual consistency across WPF engine UIs by standardizing button/DataGrid backgrounds, reducing control heights, and simplifying folder labels.
 - Updated `AbstractEngineUI` to shorten "ViewModel" column headers to "VM".
@@ -37,7 +42,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Clarified `InfrastructureFolder` placement logic for base/contracts generation.
 - Updated `TargetInfrastructureDirectory` behavior/documentation to describe output when `InfrastructureFolder` is empty or whitespace.
 - Default namespace logic for infrastructure/contracts now consistently uses `Project.NamespaceName`.
-- Updated `.csproj` template wiring to include new WPF base ViewModel template and generated files.
+- Updated `.csproj` template wiring to include new WPF base ViewModel and lookup service templates and generated files.
+- Minor parameter refactoring in `CSharpWpfViewModelTemplate` for consistency and clarity.
 - Added XML documentation clarifying `InfrastructureFolder` platform-agnostic intent for future engine reuse (e.g., MAUI).
 - Bumped `OzzCodeGen` version to `2.3.0`.
 - Bumped `OzzCodeGen.Wpf` version to `2.3.0`.

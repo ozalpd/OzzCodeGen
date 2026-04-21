@@ -150,6 +150,12 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         return baseVmTemplate.WriteToFile(baseVmFileName, OverwriteExisting);
     }
 
+    private bool RenderTemplate(BaseCSharpWpfMvvmTemplate template, string subFolder)
+    {
+        var fileName = Path.Combine(TargetDirectory, subFolder, template.GetDefaultFileName());
+        return template.WriteToFile(fileName, OverwriteExisting);
+    }
+
     private bool RenderViewModels(WpfMvvmEntitySetting entitySetting)
     {
         bool allWritten = true;
@@ -157,16 +163,23 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         if (entitySetting.GenerateCreateViewModel)
         {
             var template = new CSharpWpfViewModelTemplate(entitySetting, isEdit: false);
-            var fileName = Path.Combine(TargetDirectory, ViewModelFolder, template.GetDefaultFileName());
-            allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
+            allWritten &= RenderTemplate(template, ViewModelFolder);
         }
 
         if (entitySetting.GenerateEditViewModel)
         {
             var template = new CSharpWpfViewModelTemplate(entitySetting, isEdit: true);
-            var fileName = Path.Combine(TargetDirectory, ViewModelFolder, template.GetDefaultFileName());
-            allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
+            allWritten &= RenderTemplate(template, ViewModelFolder);
         }
+
+        if (entitySetting.GenerateLookupService)
+        {
+            var template = new CSharpLookupServiceTemplate(entitySetting, isInterface: true);
+            allWritten &= RenderTemplate(template, ServiceFolder);
+            template = new CSharpLookupServiceTemplate(entitySetting, isInterface: false);
+            allWritten &= RenderTemplate(template, ServiceFolder);
+        }
+
         return allWritten;
     }
 
