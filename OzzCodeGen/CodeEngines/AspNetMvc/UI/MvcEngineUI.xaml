@@ -7,7 +7,7 @@
                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                         xmlns:Converters="clr-namespace:OzzUtils.Wpf.Converters;assembly=OzzUtils"
-                        mc:Ignorable="d" d:DesignHeight="720" d:DesignWidth="1024">
+                        mc:Ignorable="d" d:DesignHeight="620" d:DesignWidth="1024">
     <UserControl.Resources>
         <ObjectDataProvider x:Key="mvcViewTypes" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -324,12 +324,14 @@
 
         <!-- TopBar Buttons -->
         <Button Name="btnRefresh" Content="Refresh"
+                Background="#FFE6F4FF"
                 Grid.Row="0" Grid.Column="0"
                 Style="{StaticResource topbarButtons}"
                 Click="btnRefresh_Click"/>
 
         <Button Name="btnRenderAllTemplates"
-                Content="Render All Templates" 
+                Content="Render All Templates"
+                Background="#FFE6F4FF"
                 IsEnabled="{Binding CanRender}"
                 Grid.Row="1" Grid.Column="0"
                 Style="{StaticResource topbarButtons}"
@@ -337,6 +339,7 @@
 
         <Button Name="btnRenderTemplate"
                 Content="Render Template"
+                Background="#FFE6F4FF"
                 IsEnabled="{Binding CanRender}"
                 Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"
                 Style="{StaticResource topbarButtons}"

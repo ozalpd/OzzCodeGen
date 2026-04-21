@@ -199,7 +199,7 @@ public class CSharpSqliteRepositoryEngine : BaseAppInfraCodeEngine
             }
             else
             {
-                return Path.GetFullPath(Path.Combine(TargetDirectory, InfrastructureFolder));
+                return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, InfrastructureFolder));
             }
         }
     }

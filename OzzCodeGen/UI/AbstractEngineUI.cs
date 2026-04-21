@@ -106,6 +106,10 @@ namespace OzzCodeGen.UI
                     {
                         header = header.Substring("Generate".Length);
                     }
+                    if (header.Length > "ViewModel".Length + 1 && header.EndsWith("ViewModel"))
+                    {
+                        header = header.Substring(0, header.Length - "ViewModel".Length) + "VM";
+                    }
                     c.Header = header.PascalCaseToTitleCase();
                 }
             }

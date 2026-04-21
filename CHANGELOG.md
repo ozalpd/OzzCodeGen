@@ -28,11 +28,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Introduced `BaseAppInfraCodeEngine` to centralize infrastructure-folder-related behavior for app-language engines.
 - Updated `BaseMvvmCodeEngine` and `CSharpSqliteRepositoryEngine` to derive from `BaseAppInfraCodeEngine`.
 - Rewrote the WPF ViewModel T4 template with improved default-value and read-only logic; removed the old `.cs`-based template files.
+- Improved visual consistency across WPF engine UIs by standardizing button/DataGrid backgrounds, reducing control heights, and simplifying folder labels.
+- Updated `AbstractEngineUI` to shorten "ViewModel" column headers to "VM".
 - Enhanced `WpfMvvmEngineUI` property grid layout for better usability.
+- Commented out future infrastructure settings in `WpfMvvmEngineUI`.
 - Updated DataGrid hidden columns and column widths in WPF MVVM and SQLite repository UIs.
 - Improved namespace/using generation and applied general code cleanup.
 - Clarified `InfrastructureFolder` placement logic for base/contracts generation.
 - Updated `TargetInfrastructureDirectory` behavior/documentation to describe output when `InfrastructureFolder` is empty or whitespace.
+- Default namespace logic for infrastructure/contracts now consistently uses `Project.NamespaceName`.
 - Updated `.csproj` template wiring to include new WPF base ViewModel template and generated files.
 - Added XML documentation clarifying `InfrastructureFolder` platform-agnostic intent for future engine reuse (e.g., MAUI).
 - Bumped `OzzCodeGen` version to `2.3.0`.
@@ -41,6 +45,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
 
 ### Fixed
+- Fixed infrastructure directory resolution in `BaseAppInfraCodeEngine`, `BaseMvvmCodeEngine`, and `CSharpSqliteRepositoryEngine` to use `Project.TargetSolutionDir`.
 - Fixed variable naming in `BaseCSharpWpfMvvmTemplate.cs`.
 
 ## [2.2.23] - 2026-04-18
@@ -99,7 +104,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - Replaced `AddNullableTextParameter` usage with the new SQLite extension methods throughout repository templates and generated code.
-- Renamed `IsDecimalNumeric` to `IsFractionalNumeric` and `IsIntNumeric" to `IsIntegerNumeric` for clarity and consistency.
+- Renamed `IsDecimalNumeric` to `IsFractionalNumeric` and `IsIntNumeric` to `IsIntegerNumeric` for clarity and consistency.
 - Updated T4 templates, generated code, and project files to support the new decimal-scale and SQLite-extension behavior.
 - Bumped `OzzCodeGen` version to `2.2.20`.
 - Bumped `OzzCodeGen.Wpf` version to `2.2.20`.

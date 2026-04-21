@@ -7,7 +7,7 @@
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                         xmlns:converter="clr-namespace:OzzUtils.Wpf.Converters;assembly=OzzUtils"
                         xmlns:storage="clr-namespace:OzzCodeGen.CodeEngines.Storage"
-                        mc:Ignorable="d" d:DesignHeight="520" d:DesignWidth="980">
+                        mc:Ignorable="d" d:DesignHeight="420" d:DesignWidth="980">
     <UserControl.Resources>
         <ObjectDataProvider x:Key="sprocGeneration" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -54,13 +54,16 @@
 
             <Button Name="btnRefresh" Content="Refresh" 
                     Grid.Row="0" Grid.Column="0"
+                    Background="#FFFFF4D4"
                     Click="btnRefresh_Click"/>
             <Button Name="btnRenderTemplate" Content="Render"
                     ToolTip="Render Selected Template"
+                    Background="#FFFFF4D4"
                     Grid.Column="0" Grid.Row="1"
                     Click="btnRenderTemplate_Click"/>
             <Button Name="btnCreateDB" Content="Create DB"
                     ToolTip="Render all tables and CreateDB batch file"
+                    Background="#FFFFF4D4"
                     Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"
                     Click="btnCreateDB_Click"/>
 

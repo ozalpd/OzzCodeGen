@@ -35,7 +35,10 @@
             </Grid.RowDefinitions>
 
             <Button x:Name="btnRenderTemplate" Content="Render Template"
-                    HorizontalAlignment="Left" Width="120" Grid.RowSpan="2" Margin="4,4,0,2"
+                    HorizontalAlignment="Left"
+                    Background="#FFE6F4FF"
+                    IsEnabled="{Binding CanRender}"
+                    Width="120" Grid.RowSpan="2" Margin="4,4,0,2"
                     Click="btnRenderTemplate_Click"/>
 
             <CheckBox Content="All Entities"
@@ -44,7 +47,9 @@
                       Grid.Column="1" VerticalAlignment="Center" Margin="8,4,0,0"/>
 
             <Button x:Name="btnRefresh" Content="Refresh"
-                    HorizontalAlignment="Left" Width="120" Grid.Row="2" Margin="4,4,0,2"
+                    HorizontalAlignment="Left"
+                    Background="#FFE6F4FF"
+                    Width="120" Grid.Row="2" Margin="4,4,0,2"
                     Click="btnRefresh_Click"/>
 
             <CheckBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="8,0,0,0"

@@ -46,17 +46,21 @@
                 <Button x:Name="btnRenderTemplate"
                         Content="Render Template"
                         Grid.Column="0" Grid.Row="0" Margin="4,0,0,4"
-                        Click="btnRenderTemplate_Click" Background="#FFFDEBC4"/>
+                        IsEnabled="{Binding CanRender}"
+                        Click="btnRenderTemplate_Click"
+                        Background="#FFFDEBC4"/>
 
                 <Button x:Name="btnRenderAllTemplates"
                         Content="Render All Templates"
                         Grid.Column="0" Grid.Row="1" Margin="4,0,0,4"
-                        Click="btnRenderAllTemplates_Click" Background="#FFFDEBC4"/>
+                        Click="btnRenderAllTemplates_Click"
+                        Background="#FFFDEBC4"/>
 
                 <Button x:Name="btnRefresh"
                         Content="Refresh"
                         Grid.Column="0" Grid.Row="2"  Margin="4,0,0,0"
-                        Click="btnRefresh_Click" Background="#FFFDEBC4"/>
+                        Click="btnRefresh_Click"
+                        Background="#FFFDEBC4"/>
             </Grid>
                       
             <TextBlock Grid.Column="1" Text="Template:" VerticalAlignment="Center" Margin="8,0,0,0"/>
@@ -87,21 +91,36 @@
                      ToolTip="{Binding TargetDirectory}"
                      Style="{StaticResource textBoxStyle}" Margin="4,0"
                      Background="#FFFFFAED"/>
-
+                     
+            <!-- The Contracts Namespace and Repository Namespace are intentionally placed in the middle to align with the Target Folder, as they are more closely related to the infrastructure layer.
             <TextBlock Grid.Column="4" Grid.Row="1" Margin="4,2,0,0"
-                       Text="Target Infrastructure Folder:"
+                       Text="Contracts Namespace:"
+                       ToolTip="Namespace for generated infrastructure contracts."
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="1"
-                     Text="{Binding InfrastructureFolder, Mode=TwoWay}"
-                     ToolTip="{Binding TargetInfrastructureDirectory}"
+            <TextBox Grid.Column="5" Grid.Row="1"
+                     Text="{Binding ContractsNamespaceName, Mode=TwoWay}"
+                     ToolTip="Namespace for generated infrastructure contracts."
                      Style="{StaticResource textBoxStyle}" Margin="4,0"
                      Background="#FFFFFAED"/>
 
             <TextBlock Grid.Column="4" Grid.Row="2" Margin="4,2,0,0"
+                       Text="Target Infrastructure Folder:"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="2"
+                     Text="{Binding InfrastructureFolder, Mode=TwoWay}"
+                     ToolTip="{Binding TargetInfrastructureDirectory}"
+                     Style="{StaticResource textBoxStyle}" Margin="4,0"
+                     Background="#FFFFFAED"/>
+             We will implement infrastructure settings later closing these elements until that time.
+             We can also consider adding a separate section for infrastructure settings when we need to
+             implement infrastructure-related code generation features.
+             -->
+
+            <TextBlock Grid.Column="4" Grid.Row="3" Margin="4,2,0,0"
                        Text="Repository Namespace:"
                        ToolTip="Namespace for generated repository."
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="5" Grid.Row="2"
+            <TextBox Grid.Column="5" Grid.Row="3"
                      Text="{Binding RepositoryNamespaceName, Mode=TwoWay}"
                      ToolTip="Namespace for generated repository."
                      Style="{StaticResource textBoxStyle}" Margin="4,0"
@@ -147,14 +166,14 @@
             
 
             <TextBlock Grid.Column="9" Grid.Row="0" Margin="4,2,0,0"
-                       Text="Target Commands Folder:"
+                       Text="Commands Folder:"
                        VerticalAlignment="Center"/>
             <TextBox Grid.Column="10" Grid.Row="0"
                      Text="{Binding CommandFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetCommandDirectory}"
                      Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
             <TextBlock Grid.Column="9" Grid.Row="1" Margin="4,2,0,0"
-                       Text="Target ViewModel Folder:"
+                       Text="ViewModel Folder:"
                        VerticalAlignment="Center"/>
             <TextBox Grid.Column="10" Grid.Row="1"
                      Text="{Binding ViewModelFolder, Mode=TwoWay}"
@@ -162,7 +181,7 @@
                      Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
 
             <TextBlock Grid.Column="9" Grid.Row="2" Margin="4,2,0,0"
-                       Text="Target View Folder:"
+                       Text="View Folder:"
                        VerticalAlignment="Center"/>
             <TextBox Grid.Column="10" Grid.Row="2"
                      Text="{Binding ViewFolder, Mode=TwoWay}"
@@ -170,7 +189,7 @@
                      Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
 
             <TextBlock Grid.Column="9" Grid.Row="3" Margin="4,2,0,0"
-                       Text="Target Service Folder:"
+                       Text="Service Folder:"
                        VerticalAlignment="Center"/>
             <TextBox Grid.Column="10" Grid.Row="3"
                      Text="{Binding ServiceFolder, Mode=TwoWay}"
@@ -180,7 +199,7 @@
 
             <Grid Grid.Row="4" Grid.ColumnSpan="11" Margin="4">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" MaxWidth="720"/>
+                    <ColumnDefinition Width="*" MaxWidth="832"/>
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
 

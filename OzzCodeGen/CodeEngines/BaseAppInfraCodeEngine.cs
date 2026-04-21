@@ -7,7 +7,7 @@
         /// </summary>
         public string BaseClassNamespaceName
         {
-            get { return _baseNamespaceName ?? $"{NamespaceName}.Infra"; }
+            get { return _baseNamespaceName ?? $"{Project.NamespaceName}.Infra"; }
             set
             {
                 if (_baseNamespaceName == value) return;
@@ -25,7 +25,7 @@
         /// </remarks>
         public string ContractsNamespaceName
         {
-            get { return _contractsNamespaceName ?? $"{NamespaceName}.Infra"; }
+            get { return _contractsNamespaceName ?? $"{Project.NamespaceName}.Infra"; }
             set
             {
                 if (_contractsNamespaceName == value) return;
@@ -36,7 +36,7 @@
         private string _contractsNamespaceName;
 
         /// <summary>
-        /// Relative folder (under <see cref="BaseCodeEngine.TargetDirectory"/>) where shared MVVM infrastructure files are generated.
+        /// Relative folder (under <see cref="BaseCodeEngine.TargetDirectory"/>) where shared infrastructure files are generated.
         /// </summary>
         /// <remarks>
         /// This folder is intentionally platform-agnostic so the generated base/contracts can be reused by future engines (for example, MAUI)
