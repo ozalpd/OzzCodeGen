@@ -92,13 +92,13 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
             return namespaces;
         }
-    }
 
-    public enum BaseViewModelTypes
-    {
-        BaseViewModel,
-        DataErrorInfoVM,
-        CollectionVM,
-        CreateEditVM
+        public enum BaseViewModelTypes
+        {
+            BaseViewModel,
+            DataErrorInfoVM,
+            CollectionVM,
+            CreateEditVM
+        }
     }
 }

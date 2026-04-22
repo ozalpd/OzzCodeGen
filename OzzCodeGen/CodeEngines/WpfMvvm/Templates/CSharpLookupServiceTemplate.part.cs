@@ -1,26 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {
     public partial class CSharpLookupServiceTemplate
     {
-        public CSharpLookupServiceTemplate(WpfMvvmEntitySetting entitySetting, bool isInterface)
-            : base(entitySetting.CodeEngine as WpfMvvmCodeEngine, entitySetting, isInterface: isInterface)
+        public CSharpLookupServiceTemplate(WpfMvvmEntitySetting entitySetting, LookupServiceTemplateType templateType)
+            : base(entitySetting.CodeEngine as WpfMvvmCodeEngine, entitySetting, isInterface: templateType == LookupServiceTemplateType.Interface)
         {
-
+            TemplateType = templateType;
         }
 
-        public string GetClassName()
+        public string GetClassName(LookupServiceTemplateType? templateType = null)
         {
-            return $"{(IsInterface ? "I" : "")}{EntitySetting.Name}LookupService";
+            var templType = templateType ?? TemplateType;
+            switch (templType)
+            {
+                case LookupServiceTemplateType.Interface:
+                    return $"I{EntitySetting.Name}LookupService";
+
+                case LookupServiceTemplateType.DesignTimeClass:
+                    return $"{EntitySetting.Name}MockLookupService";
+
+                case LookupServiceTemplateType.RunTimeClass:
+                    return $"{EntitySetting.Name}LookupService";
+
+                default:
+                    return $"{EntitySetting.Name}LookupService";
+            }
         }
 
         public string GetDeclaration()
         {
-            return $"{(IsInterface ? "interface" : "class")} {GetClassName()}{(IsInterface ? "" : $" : I{GetClassName()}")}";
+            return $"{(IsInterface ? "interface" : "class")} {GetClassName()}{(IsInterface ? "" : $" : {GetClassName(LookupServiceTemplateType.Interface)}")}";
         }
 
         public override string GetDefaultFileName()
@@ -41,6 +53,15 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                 namespaces.Add(CodeEngine.RepositoryNamespaceName);
             }
             return namespaces.OrderBy(ns => ns).ToList();
+        }
+
+        public LookupServiceTemplateType TemplateType { get; }
+
+        public enum LookupServiceTemplateType
+        {
+            Interface,
+            DesignTimeClass,
+            RunTimeClass
         }
     }
 }

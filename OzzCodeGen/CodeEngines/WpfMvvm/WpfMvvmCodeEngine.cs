@@ -135,10 +135,10 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
     private bool RenderBaseViewModels()
     {
         bool allWritten = true;
-        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, BaseViewModelTypes.BaseViewModel));
-        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, BaseViewModelTypes.DataErrorInfoVM));
-        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, BaseViewModelTypes.CreateEditVM));
-        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, BaseViewModelTypes.CollectionVM));
+        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, CSharpWpfBaseVmTemplate.BaseViewModelTypes.BaseViewModel));
+        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, CSharpWpfBaseVmTemplate.BaseViewModelTypes.DataErrorInfoVM));
+        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, CSharpWpfBaseVmTemplate.BaseViewModelTypes.CreateEditVM));
+        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, CSharpWpfBaseVmTemplate.BaseViewModelTypes.CollectionVM));
 
         return allWritten;
     }
@@ -174,9 +174,9 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
         if (entitySetting.GenerateLookupService)
         {
-            var template = new CSharpLookupServiceTemplate(entitySetting, isInterface: true);
+            var template = new CSharpLookupServiceTemplate(entitySetting, CSharpLookupServiceTemplate.LookupServiceTemplateType.Interface);
             allWritten &= RenderTemplate(template, ServiceFolder);
-            template = new CSharpLookupServiceTemplate(entitySetting, isInterface: false);
+            template = new CSharpLookupServiceTemplate(entitySetting, CSharpLookupServiceTemplate.LookupServiceTemplateType.RunTimeClass);
             allWritten &= RenderTemplate(template, ServiceFolder);
         }
 

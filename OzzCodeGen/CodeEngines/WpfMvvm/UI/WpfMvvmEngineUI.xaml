@@ -92,29 +92,27 @@
                      Style="{StaticResource textBoxStyle}" Margin="4,0"
                      Background="#FFFFFAED"/>
                      
-            <!-- The Contracts Namespace and Repository Namespace are intentionally placed in the middle to align with the Target Folder, as they are more closely related to the infrastructure layer.
-            <TextBlock Grid.Column="4" Grid.Row="1" Margin="4,2,0,0"
-                       Text="Contracts Namespace:"
-                       ToolTip="Namespace for generated infrastructure contracts."
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="5" Grid.Row="1"
-                     Text="{Binding ContractsNamespaceName, Mode=TwoWay}"
-                     ToolTip="Namespace for generated infrastructure contracts."
-                     Style="{StaticResource textBoxStyle}" Margin="4,0"
-                     Background="#FFFFFAED"/>
+            <!-- The Contracts Namespace and Repository Namespace are intentionally placed in the middle to align with the Target Folder, as they are more closely related to the infrastructure layer. -->
 
-            <TextBlock Grid.Column="4" Grid.Row="2" Margin="4,2,0,0"
+            <TextBlock Grid.Column="4" Grid.Row="1" Margin="4,2,0,0"
                        Text="Target Infrastructure Folder:"
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="2"
+            <TextBox Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="1"
                      Text="{Binding InfrastructureFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetInfrastructureDirectory}"
                      Style="{StaticResource textBoxStyle}" Margin="4,0"
                      Background="#FFFFFAED"/>
-             We will implement infrastructure settings later closing these elements until that time.
-             We can also consider adding a separate section for infrastructure settings when we need to
-             implement infrastructure-related code generation features.
-             -->
+            <TextBlock Grid.Column="4" Grid.Row="2" Margin="4,2,0,0"
+                       Text="Infrastructure Namespace:"
+                       ToolTip="Namespace for generated infrastructure contracts."
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="5" Grid.Row="2"
+                     Text="{Binding ContractsNamespaceName, Mode=TwoWay}"
+                     ToolTip="Namespace for generated infrastructure contracts."
+                     Style="{StaticResource textBoxStyle}" Margin="4,0"
+                     Background="#FFFFFAED"/>
+            
+            
 
             <TextBlock Grid.Column="4" Grid.Row="3" Margin="4,2,0,0"
                        Text="Repository Namespace:"

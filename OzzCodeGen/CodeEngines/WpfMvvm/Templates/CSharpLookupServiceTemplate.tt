@@ -41,11 +41,12 @@ namespace <#= CodeEngine.ServiceNamespaceName #>
     }
 
     /// <summary>
-    /// Provides a no-op implementation of the I interface that returns an empty list of <#= EntitySetting.Name.Pluralize().ToCamelCase() #>.
+    /// Provides a no-op implementation of the <#= GetClassName(LookupServiceTemplateType.Interface) #> interface that returns an empty or
+    /// mock list of <#= EntitySetting.Name.Pluralize().ToCamelCase() #>.
     /// </summary>
-    /// <remarks>This implementation can be used in scenarios where <#= EntitySetting.Name.ToCamelCase() #> lookup functionality is optional or not
-    /// required, such as in design time, in testing or when no <#= EntitySetting.RepositoryName #> are configured.</remarks>
-    internal sealed partial class Empty<#= GetClassName() #> : I<#= GetClassName() #>
+    /// <remarks>This implementation can be used in scenarios where <#= EntitySetting.Name.ToCamelCase() #> lookup functionality is optional or
+    /// not required, such as in design time, in testing or when no <#= EntitySetting.RepositoryName #> are configured.</remarks>
+    public sealed partial class <#= GetClassName(LookupServiceTemplateType.DesignTimeClass) #> : <#= GetClassName(LookupServiceTemplateType.Interface) #>
     {
         public Task<IReadOnlyList<<#= EntitySetting.Name #>>> Get<#= EntitySetting.Name.Pluralize() #>Async(<#= EntitySetting.HasIsActiveProperty() ? "bool isActive" : "" #>)
         {

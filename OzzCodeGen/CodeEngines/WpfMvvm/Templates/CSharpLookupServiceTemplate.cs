@@ -195,9 +195,16 @@ namespace ");
             #line default
             #line hidden
             this.Write(".ToList();\r\n        }\r\n    }\r\n\r\n    /// <summary>\r\n    /// Provides a no-op imple" +
-                    "mentation of the I interface that returns an empty list of ");
+                    "mentation of the ");
             
             #line 44 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName(LookupServiceTemplateType.Interface)));
+            
+            #line default
+            #line hidden
+            this.Write(" interface that returns an empty or\r\n    /// mock list of ");
+            
+            #line 45 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize().ToCamelCase()));
             
             #line default
@@ -205,85 +212,85 @@ namespace ");
             this.Write(".\r\n    /// </summary>\r\n    /// <remarks>This implementation can be used in scenar" +
                     "ios where ");
             
-            #line 46 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 47 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
-            this.Write(" lookup functionality is optional or not\r\n    /// required, such as in design tim" +
+            this.Write(" lookup functionality is optional or\r\n    /// not required, such as in design tim" +
                     "e, in testing or when no ");
             
-            #line 47 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 48 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryName));
             
             #line default
             #line hidden
-            this.Write(" are configured.</remarks>\r\n    internal sealed partial class Empty");
+            this.Write(" are configured.</remarks>\r\n    public sealed partial class ");
             
-            #line 48 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
+            #line 49 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName(LookupServiceTemplateType.DesignTimeClass)));
             
             #line default
             #line hidden
-            this.Write(" : I");
+            this.Write(" : ");
             
-            #line 48 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
+            #line 49 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName(LookupServiceTemplateType.Interface)));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n        public Task<IReadOnlyList<");
             
-            #line 50 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(">> Get");
             
-            #line 50 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize()));
             
             #line default
             #line hidden
             this.Write("Async(");
             
-            #line 50 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.HasIsActiveProperty() ? "bool isActive" : ""));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n            var ");
             
-            #line 52 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize().ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" = new List<");
             
-            #line 52 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(">();\r\n            FillMockData(");
             
-            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize().ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n            return Task.FromResult<IReadOnlyList<");
             
-            #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 55 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(">>(");
             
-            #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 55 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize().ToCamelCase()));
             
             #line default
@@ -291,7 +298,7 @@ namespace ");
             this.Write(");\r\n        }\r\n\r\n        /// <summary>\r\n        /// Populates the specified list " +
                     "with mock ");
             
-            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 59 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
@@ -301,7 +308,7 @@ namespace ");
         /// <remarks>This method is intended for use in test scenarios or when sample data is required.
         /// The implementation should ensure that the provided list is filled with representative ");
             
-            #line 61 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 62 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
@@ -309,14 +316,14 @@ namespace ");
             this.Write(" objects as\r\n        /// needed by the caller.</remarks>\r\n        /// <param name" +
                     "=\"");
             
-            #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 64 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize().ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("\">The list of <see cref=\"");
             
-            #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 64 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
@@ -324,21 +331,21 @@ namespace ");
             this.Write("\"/> objects to populate with mock data. Must not be null.</param>\r\n        partia" +
                     "l void FillMockData(List<");
             
-            #line 64 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write("> ");
             
-            #line 64 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize().ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(");\r\n    }\r\n");
             
-            #line 66 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            #line 67 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
   } 
             
             #line default
