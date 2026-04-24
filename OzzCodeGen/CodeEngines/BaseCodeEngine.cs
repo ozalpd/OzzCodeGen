@@ -86,7 +86,7 @@ namespace OzzCodeGen.CodeEngines
             {
                 if (_language == value) return;
                 _language = value;
-                RaisePropertyChanged("Language");
+                RaisePropertyChanged(nameof(Language));
             }
         }
         private TargetLanguage _language;
@@ -108,7 +108,7 @@ namespace OzzCodeGen.CodeEngines
             {
                 if (_namespaceName == value) return;
                 _namespaceName = value;
-                RaisePropertyChanged("NamespaceName");
+                RaisePropertyChanged(nameof(NamespaceName));
             }
         }
         private string _namespaceName;
@@ -132,7 +132,7 @@ namespace OzzCodeGen.CodeEngines
                 if (_targetFolder == value) return;
                 OnTargetDirectoryChanging();
                 _targetFolder = value;
-                RaisePropertyChanged("TargetFolder");
+                RaisePropertyChanged(nameof(TargetFolder));
                 OnTargetDirectoryChanged();
             }
         }
@@ -141,7 +141,7 @@ namespace OzzCodeGen.CodeEngines
         protected virtual void OnTargetDirectoryChanging() { }
         protected virtual void OnTargetDirectoryChanged()
         {
-            RaisePropertyChanged("TargetDirectory");
+            RaisePropertyChanged(nameof(TargetDirectory));
         }
         public abstract string GetDefaultTargetFolder();
 
@@ -171,7 +171,7 @@ namespace OzzCodeGen.CodeEngines
             {
                 if (_overwriteExisting == value) return;
                 _overwriteExisting = value;
-                RaisePropertyChanged("OverwriteExisting");
+                RaisePropertyChanged(nameof(OverwriteExisting));
             }
         }
         private bool _overwriteExisting;
@@ -196,7 +196,7 @@ namespace OzzCodeGen.CodeEngines
             set
             {
                 _templates = value;
-                RaisePropertyChanged("Templates");
+                RaisePropertyChanged(nameof(Templates));
             }
         }
         private List<string> _templates;
@@ -209,7 +209,7 @@ namespace OzzCodeGen.CodeEngines
                 if (_entitySettings == value) return;
                 OnEntitySettingsChanging();
                 _entitySettings = value;
-                RaisePropertyChanged("EntitySettings");
+                RaisePropertyChanged(nameof(EntitySettings));
                 OnEntitySettingsChanged();
             }
         }
@@ -230,7 +230,7 @@ namespace OzzCodeGen.CodeEngines
                 if (_currentEntitySetting == value) return;
                 OnCurrentEntitySettingChanging();
                 _currentEntitySetting = value;
-                RaisePropertyChanged("CurrentEntitySetting");
+                RaisePropertyChanged(nameof(CurrentEntitySetting));
                 OnCurrentEntitySettingChanged();
                 CanRender = (RenderAllEntities || CurrentEntitySetting != null) && !string.IsNullOrEmpty(SelectedTemplate);
             }
@@ -245,7 +245,7 @@ namespace OzzCodeGen.CodeEngines
             set
             {
                 _renderAll = value;
-                RaisePropertyChanged("RenderAllEntities");
+                RaisePropertyChanged(nameof(RenderAllEntities));
                 CanRender = (RenderAllEntities || CurrentEntitySetting != null) && !string.IsNullOrEmpty(SelectedTemplate);
             }
         }
@@ -260,7 +260,7 @@ namespace OzzCodeGen.CodeEngines
             set
             {
                 _canRender = value;
-                RaisePropertyChanged("CanRender");
+                RaisePropertyChanged(nameof(CanRender));
             }
         }
         private bool _canRender;
@@ -325,7 +325,7 @@ namespace OzzCodeGen.CodeEngines
                 if (_selectedTemplate == value)
                     return;
                 _selectedTemplate = value;
-                RaisePropertyChanged("SelectedTemplate");
+                RaisePropertyChanged(nameof(SelectedTemplate));
             }
         }
         private string _selectedTemplate;

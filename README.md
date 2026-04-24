@@ -17,7 +17,12 @@ See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 - Added `CSharpLookupServiceTemplate.tt` for auto-generating lookup service interfaces and implementations with design-time/test stubs.
 - Added `RepositoryInstanceName` to `BaseMvvmEntitySetting` for consistent DI naming in generated services.
 - Added MVVM infrastructure generation support (`InfrastructureFolder`) for shared base/contracts output, intentionally platform-agnostic for future reuse (e.g., MAUI).
-- Clarified `InfrastructureFolder` placement logic and `TargetInfrastructureDirectory` behavior when the folder is empty/whitespace.
+- Refactored infra/runtime folder handling: when `InfrastructureFolder` is empty, base classes/interfaces render to target ViewModels/Services folders; when set, they render to `InfrastructureFolder/ViewModels` and `InfrastructureFolder/Services`.
+- Made `TargetInfrastructureDirectory` virtual in `BaseAppInfraCodeEngine` and centralized its path-selection logic.
+- Added `GetNamespace()` to templates for correct infrastructure/runtime namespace selection.
+- Updated `DefaultUsingNamespaceList()` to include contracts namespace when infrastructure output is separated.
+- Adjusted `WpfMvvmCodeEngine` to write infrastructure/runtime files into the correct output directories.
+- Added `GetFolderToNamespace` helper and cleaned up usings in `CsClassBase.part.cs`.
 - Added `RenderBaseViewModels` to generate all base ViewModel classes: `AbstractViewModel`, `AbstractDataErrorInfoVM`, `AbstractCreateEditVM`, and `AbstractCollectionVM`.
 - Added `CSharpWpfBaseVmTemplate.tt` and generated `.cs`/`.part.cs` files for base ViewModel and `IIsDirty` interface generation.
 - Added `DefaultValue`, `FormatDefaultValue()`, `IsReadOnlyInCreate`/`IsReadOnlyInEdit`, and `ValueConstraint` to MVVM entity/property settings.
@@ -34,7 +39,7 @@ See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 - Updated `.csproj` to include the new WPF base ViewModel and lookup service templates and generated files.
 - Default namespace logic for infrastructure/contracts now consistently uses `Project.NamespaceName`.
 - Minor parameter refactoring in `CSharpWpfViewModelTemplate` for consistency and clarity.
-- Fixed infrastructure directory resolution and variable naming issues.
+- Fixed infrastructure directory resolution, infra/runtime namespace separation edge cases, and variable naming issues.
 - Bumped `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.3.0`.
 
 ## Latest Highlights (2.2.23)

@@ -186,23 +186,6 @@ public class CSharpSqliteRepositoryEngine : BaseAppInfraCodeEngine
             RaisePropertyChanged(nameof(BaseRepositoryClassName));
         }
     }
-
-    [XmlIgnore]
-    [JsonIgnore]
-    public override string TargetInfrastructureDirectory
-    {
-        get
-        {
-            if (string.IsNullOrWhiteSpace(InfrastructureFolder))
-            {
-                return $"If this is empty or whitespace, generated base/contracts will be placed in the target folder,\r\n{TargetDirectory}";
-            }
-            else
-            {
-                return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, InfrastructureFolder));
-            }
-        }
-    }
     private string _baseRepositoryClassName;
 
 

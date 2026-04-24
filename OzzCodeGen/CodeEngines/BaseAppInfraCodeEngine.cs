@@ -1,4 +1,8 @@
-﻿namespace OzzCodeGen.CodeEngines
+﻿using System.IO;
+using System.Text.Json.Serialization;
+using System.Xml.Serialization;
+
+namespace OzzCodeGen.CodeEngines
 {
     public abstract class BaseAppInfraCodeEngine : BaseCodeEngine
     {
@@ -56,6 +60,25 @@
         }
         private string _infrastructureFolder;
 
-        public abstract string TargetInfrastructureDirectory { get; }
+        [XmlIgnore]
+        [JsonIgnore]
+        public virtual string TargetInfrastructureDirectory
+        {
+            get
+            {
+                if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir) && string.IsNullOrEmpty(InfrastructureFolder))
+                {
+                    return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, TargetFolder));
+                }
+                else if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
+                {
+                    return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, InfrastructureFolder));
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
     }
 }

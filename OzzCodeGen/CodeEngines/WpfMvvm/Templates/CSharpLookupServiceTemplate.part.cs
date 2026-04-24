@@ -40,6 +40,16 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             return $"{GetClassName()}.cs";
         }
 
+        public string GetNamespace()
+        {
+            if (TemplateType == LookupServiceTemplateType.RunTimeClass || string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
+            {
+                return CodeEngine.ServiceNamespaceName;
+            }
+            return $"{CodeEngine.ContractsNamespaceName}.{GetFolderToNamespace(CodeEngine.ServiceFolder)}";
+        }
+
+
         public override List<string> DefaultUsingNamespaceList()
         {
             var namespaces = new List<string>();
@@ -51,6 +61,10 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             if (!IsInterface)
             {
                 namespaces.Add(CodeEngine.RepositoryNamespaceName);
+            }
+            if (TemplateType == LookupServiceTemplateType.RunTimeClass && !string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
+            {
+                namespaces.Add($"{CodeEngine.ContractsNamespaceName}.{GetFolderToNamespace(CodeEngine.ServiceFolder)}");
             }
             return namespaces.OrderBy(ns => ns).ToList();
         }

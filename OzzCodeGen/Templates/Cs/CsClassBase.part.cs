@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace OzzCodeGen.Templates.Cs
 {
@@ -23,5 +20,11 @@ namespace OzzCodeGen.Templates.Cs
             };
         }
 
+        protected string GetFolderToNamespace(string folder)
+        {
+            if (string.IsNullOrWhiteSpace(folder))
+                return string.Empty;
+            return folder.Replace("/", ".").Replace("\\", ".");
+        }
     }
 }

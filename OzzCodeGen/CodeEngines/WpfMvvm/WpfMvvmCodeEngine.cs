@@ -145,14 +145,13 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
     private bool RenderBaseVM(CSharpWpfBaseVmTemplate baseVmTemplate)
     {
-        string baseVmFolder = string.IsNullOrWhiteSpace(InfrastructureFolder) ? ViewModelFolder : InfrastructureFolder;
-        var baseVmFileName = Path.Combine(TargetDirectory, baseVmFolder, baseVmTemplate.GetDefaultFileName());
+        var baseVmFileName = Path.Combine(TargetInfrastructureDirectory, ViewModelFolder, baseVmTemplate.GetDefaultFileName());
         return baseVmTemplate.WriteToFile(baseVmFileName, OverwriteExisting);
     }
 
-    private bool RenderTemplate(BaseCSharpWpfMvvmTemplate template, string subFolder)
+    private bool RenderTemplate(BaseCSharpWpfMvvmTemplate template, string targetDir, string subFolder)
     {
-        var fileName = Path.Combine(TargetDirectory, subFolder, template.GetDefaultFileName());
+        var fileName = Path.Combine(targetDir, subFolder, template.GetDefaultFileName());
         return template.WriteToFile(fileName, OverwriteExisting);
     }
 
@@ -163,21 +162,21 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         if (entitySetting.GenerateCreateViewModel)
         {
             var template = new CSharpWpfViewModelTemplate(entitySetting, isEdit: false);
-            allWritten &= RenderTemplate(template, ViewModelFolder);
+            allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
         }
 
         if (entitySetting.GenerateEditViewModel)
         {
             var template = new CSharpWpfViewModelTemplate(entitySetting, isEdit: true);
-            allWritten &= RenderTemplate(template, ViewModelFolder);
+            allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
         }
 
         if (entitySetting.GenerateLookupService)
         {
             var template = new CSharpLookupServiceTemplate(entitySetting, CSharpLookupServiceTemplate.LookupServiceTemplateType.Interface);
-            allWritten &= RenderTemplate(template, ServiceFolder);
+            allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, ServiceFolder);
             template = new CSharpLookupServiceTemplate(entitySetting, CSharpLookupServiceTemplate.LookupServiceTemplateType.RunTimeClass);
-            allWritten &= RenderTemplate(template, ServiceFolder);
+            allWritten &= RenderTemplate(template, TargetDirectory, ServiceFolder);
         }
 
         return allWritten;

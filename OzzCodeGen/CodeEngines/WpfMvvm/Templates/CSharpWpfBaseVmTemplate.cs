@@ -51,7 +51,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 namespace ");
             
             #line 21 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.ViewModelNamespaceName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetNamespace()));
             
             #line default
             #line hidden

@@ -28,5 +28,31 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         {
             return base.GetIncludedProperties().Where(p => p.IncludeInViewModel);
         }
+
+
+        public override List<string> DefaultUsingNamespaceList()
+        {
+            var namespaces = new List<string>()
+            {
+                "System",
+                //"System.Linq",
+                //"System.Collections",
+                //"System.Collections.Generic",
+                //"System.Collections.ObjectModel",
+                //"System.ComponentModel",
+                //"System.ComponentModel.DataAnnotations",
+                CodeEngine.RepositoryNamespaceName
+            };
+            var modelClassEngine = CodeEngine.ModelClassCodeEngine;
+            if (modelClassEngine != null)
+            {
+                namespaces.Add(modelClassEngine.NamespaceName);
+            }
+            if (!string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
+            {
+                namespaces.Add($"{CodeEngine.ContractsNamespaceName}.{GetFolderToNamespace(CodeEngine.ViewModelFolder)}");
+            }
+            return namespaces.OrderBy(ns => ns).ToList();
+        }
     }
 }

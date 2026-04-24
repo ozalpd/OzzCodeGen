@@ -49,7 +49,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 namespace ");
             
             #line 19 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.ServiceNamespaceName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetNamespace()));
             
             #line default
             #line hidden

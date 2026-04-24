@@ -30,6 +30,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Refactored `BasePropertySetting` to use expression-bodied members for type-check properties.
 - Introduced `BaseAppInfraCodeEngine` to centralize infrastructure-folder-related behavior for app-language engines.
 - Updated `BaseMvvmCodeEngine` and `CSharpSqliteRepositoryEngine` to derive from `BaseAppInfraCodeEngine`.
+- Refactored infrastructure/runtime folder handling so when `InfrastructureFolder` is empty, base classes/interfaces render into target ViewModels/Services folders; when set, they render into `InfrastructureFolder/ViewModels` and `InfrastructureFolder/Services`.
+- Made `TargetInfrastructureDirectory` virtual and moved path-selection logic to `BaseAppInfraCodeEngine`.
+- Added `GetNamespace()` to templates for correct infrastructure/runtime namespace selection.
+- Updated `DefaultUsingNamespaceList()` to include contracts namespace when infrastructure output is separated.
+- Adjusted `WpfMvvmCodeEngine` to write infrastructure/runtime files into the correct directories.
+- Added `GetFolderToNamespace` helper and cleaned up usings in `CsClassBase.part.cs`.
 - Extended `BaseCSharpWpfMvvmTemplate` with `isInterface` parameter support for flexible interface/implementation generation.
 - Updated `WpfMvvmCodeEngine` to emit lookup services when enabled per entity.
 - Rewrote the WPF ViewModel T4 template with improved default-value and read-only logic; removed the old `.cs`-based template files.
@@ -52,6 +58,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 - Fixed infrastructure directory resolution in `BaseAppInfraCodeEngine`, `BaseMvvmCodeEngine`, and `CSharpSqliteRepositoryEngine` to use `Project.TargetSolutionDir`.
+- Fixed namespace/runtime separation edge cases in template using/namespace generation when infrastructure output is split.
 - Fixed variable naming in `BaseCSharpWpfMvvmTemplate.cs`.
 
 ## [2.2.23] - 2026-04-18

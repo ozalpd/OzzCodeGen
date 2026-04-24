@@ -18,7 +18,7 @@
 //     so manual changes should be made in another partial class file.
 //
 //----------------------------------------------------------------------------------
-namespace <#= CodeEngine.ViewModelNamespaceName #>
+namespace <#= GetNamespace() #>
 {
     <#= GetClassDeclaration() #>
 <#  if (BaseType == BaseViewModelTypes.BaseViewModel) // AbstractViewModel ↓

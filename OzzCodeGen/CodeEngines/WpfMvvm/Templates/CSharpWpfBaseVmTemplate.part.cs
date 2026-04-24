@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using static OzzCodeGen.CodeEngines.WpfMvvm.Templates.CSharpLookupServiceTemplate;
 
 namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {
@@ -63,6 +64,15 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         }
 
         public override string GetDefaultFileName() => $"{GetClassName()}.cs";
+
+        public string GetNamespace()
+        {
+            if (string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
+            {
+                return CodeEngine.ViewModelNamespaceName;
+            }
+            return $"{CodeEngine.ContractsNamespaceName}.{GetFolderToNamespace(CodeEngine.ViewModelFolder)}";
+        }
 
         public override List<string> DefaultUsingNamespaceList()
         {

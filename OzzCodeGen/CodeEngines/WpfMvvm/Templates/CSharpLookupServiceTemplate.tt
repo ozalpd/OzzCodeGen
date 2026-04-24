@@ -16,7 +16,7 @@
 //     so manual changes should be made in another partial class file.
 //
 //----------------------------------------------------------------------------------
-namespace <#= CodeEngine.ServiceNamespaceName #>
+namespace <#= GetNamespace() #>
 {
     public partial <#= GetDeclaration() #>
 <#  if (IsInterface) // Interface ↓
