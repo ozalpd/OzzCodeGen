@@ -17,6 +17,25 @@ namespace OzzCodeGen.CodeEngines.Localization.UI
             InitializeComponent();
 
             HiddenColumns.Add("Properties");
+            HiddenColumns.Add("IsKey");
+            HiddenColumns.Add("IsFloat");
+            HiddenColumns.Add("IsDouble");
+            HiddenColumns.Add("IsSimple");
+            HiddenColumns.Add("IsString");
+            HiddenColumns.Add("IsDecimal");
+            HiddenColumns.Add("IsComplex");
+            HiddenColumns.Add("IsBoolean");
+            HiddenColumns.Add("IsDateTime");
+            HiddenColumns.Add("IsNullable");
+            HiddenColumns.Add("IsImmutable");
+            HiddenColumns.Add("IsForeignKey");
+            HiddenColumns.Add("IsCollection");
+            HiddenColumns.Add("IsIntegerNumeric");
+            HiddenColumns.Add("IsNullableString");
+            //HiddenColumns.Add("IsLoadingFromFile");
+            HiddenColumns.Add("IsFractionalNumeric");
+            HiddenColumns.Add("IsRepositoryTextColumn");
+
             ColumnWidths["BaseTypeName"] = 120;
             ColumnWidths["Name"] = 120;
             ColumnWidths.Add("BaseType", 120);

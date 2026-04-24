@@ -92,14 +92,16 @@ namespace OzzCodeGen.CodeEngines
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsCollection => PropertyDefinition is CollectionProperty;
+        public bool IsCollection => PropertyDefinition != null
+                                 && PropertyDefinition is CollectionProperty;
 
         /// <summary>
         /// Gets a value indicating whether the property represents a complex type (i.e., a non-primitive, non-string type).
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsComplex => PropertyDefinition is ComplexProperty;
+        public bool IsComplex => PropertyDefinition != null
+                              && PropertyDefinition is ComplexProperty;
 
 
         /// <summary>
@@ -107,21 +109,24 @@ namespace OzzCodeGen.CodeEngines
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsDecimal => PropertyDefinition.TypeName.Equals("decimal", StringComparison.OrdinalIgnoreCase);
+        public bool IsDecimal => PropertyDefinition != null
+                              && PropertyDefinition.TypeName.Equals("decimal", StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
         /// Gets a value indicating whether the property type is a double-precision floating-point number.
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsDouble => PropertyDefinition.TypeName.Equals("double", StringComparison.OrdinalIgnoreCase);
+        public bool IsDouble => PropertyDefinition != null
+                             && PropertyDefinition.TypeName.Equals("double", StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
         /// Gets a value indicating whether the property type is a single-precision floating-point number.
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsFloat => PropertyDefinition.TypeName.Equals("float", StringComparison.OrdinalIgnoreCase);
+        public bool IsFloat => PropertyDefinition != null
+                            && PropertyDefinition.TypeName.Equals("float", StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
         /// Gets a value indicating whether the property is a fractional numeric type like <see langword="float"/>, <see langword="double"/>, or <see langword="decimal"/>.
@@ -136,7 +141,8 @@ namespace OzzCodeGen.CodeEngines
 
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsImmutable => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsImmutable;
+        public bool IsImmutable => PropertyDefinition != null
+                                && PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsImmutable;
 
         /// <summary>
         /// Gets a value indicating whether the property is of an integer numeric type.
@@ -146,51 +152,59 @@ namespace OzzCodeGen.CodeEngines
         /// to determine if integer-specific logic should be applied.</remarks>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsIntegerNumeric => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeIntegerNumeric();
+        public bool IsIntegerNumeric => PropertyDefinition != null
+                                     && PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeIntegerNumeric();
 
 
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsNullable => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsNullable;
+        public bool IsNullable => PropertyDefinition != null
+                               && PropertyDefinition  is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsNullable;
 
         /// <summary>
         /// Gets a value indicating whether the property definition represents a simple or string property.
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsSimpleOrString => PropertyDefinition is SimpleProperty || PropertyDefinition is StringProperty;
+        public bool IsSimpleOrString => PropertyDefinition != null
+                                     && PropertyDefinition is SimpleProperty || PropertyDefinition is StringProperty;
 
         /// <summary>
         /// Gets a value indicating whether the property definition represents a simple property.
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsSimple => PropertyDefinition is SimpleProperty;
+        public bool IsSimple => PropertyDefinition != null
+                             && PropertyDefinition is SimpleProperty;
 
         /// <summary>
         /// Gets a value indicating whether the property is defined as a string type.
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsString => PropertyDefinition is StringProperty;
+        public bool IsString => PropertyDefinition != null
+                             && PropertyDefinition is StringProperty;
 
         /// <summary>
         /// Gets a value indicating whether the property is of type string and is nullable.
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsNullableString => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsNullable && PropertyDefinition.IsTypeString();
+        public bool IsNullableString => PropertyDefinition != null
+                                     && PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsNullable && PropertyDefinition.IsTypeString();
 
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsBoolean => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeBoolean();
+        public bool IsBoolean => PropertyDefinition != null
+                              && PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeBoolean();
 
         /// <summary>
         /// Gets a value indicating whether the property is of type DateTime.
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        public bool IsDateTime => PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeDateTime();
+        public bool IsDateTime => PropertyDefinition != null
+                               && PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsTypeDateTime();
 
         public string GetNullableTypeName()
         {
