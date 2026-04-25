@@ -15,6 +15,12 @@ See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 ## Latest Highlights (2.3.0)
 - Added new `Wpf_Mvvm_View_ViewModel_Generator` (`WpfMvvmCodeEngine`) to generate WPF Create/Edit Views, ViewModels, Commands, and per-entity Lookup Services.
 - Added `CSharpLookupServiceTemplate.tt` for auto-generating lookup service interfaces and implementations with design-time/test stubs.
+- Added detailed XML documentation generation for generated lookup service interfaces and classes.
+- Refactored lookup-service template flow to use explicit `TemplateType` branches.
+- Lookup-service design-time classes are now generated as `partial` (not `sealed`) for extensibility.
+- Refined lookup-service runtime namespace imports so usings are emitted only when needed.
+- Improved lookup-service overwrite behavior to respect per-entity generation flags.
+- Lookup-service interface and design-time class generation now always runs for lookup services.
 - Added `RepositoryInstanceName` to `BaseMvvmEntitySetting` for consistent DI naming in generated services.
 - Added MVVM infrastructure generation support (`InfrastructureFolder`) for shared base/contracts output, intentionally platform-agnostic for future reuse (e.g., MAUI).
 - Refactored infra/runtime folder handling: when `InfrastructureFolder` is empty, base classes/interfaces render to target ViewModels/Services folders; when set, they render to `InfrastructureFolder/ViewModels` and `InfrastructureFolder/Services`.

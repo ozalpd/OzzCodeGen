@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Added `RenderBaseViewModels` in `WpfMvvmCodeEngine` to generate all base ViewModel classes (`AbstractViewModel`, `AbstractDataErrorInfoVM`, `AbstractCreateEditVM`, `AbstractCollectionVM`).
 - Added `CSharpWpfBaseVmTemplate.tt` and generated `.cs`/`.part.cs` files for base ViewModel and `IIsDirty` interface generation.
 - Added `CSharpLookupServiceTemplate.tt` and generated `.cs`/`.part.cs` files to auto-generate lookup service interfaces and implementations for WPF MVVM entities, including design-time/test stubs.
+- Added detailed XML documentation generation for lookup service interfaces and classes.
 
 ### Changed
 - Changed `IsForeignKey` from a method to a property in property settings; updated all usages.
@@ -60,6 +61,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Fixed infrastructure directory resolution in `BaseAppInfraCodeEngine`, `BaseMvvmCodeEngine`, and `CSharpSqliteRepositoryEngine` to use `Project.TargetSolutionDir`.
 - Fixed namespace/runtime separation edge cases in template using/namespace generation when infrastructure output is split.
 - Fixed variable naming in `BaseCSharpWpfMvvmTemplate.cs`.
+- Fixed lookup-service generation edge cases around conditional usings and overwrite decisions.
 
 ## [2.2.23] - 2026-04-18
 

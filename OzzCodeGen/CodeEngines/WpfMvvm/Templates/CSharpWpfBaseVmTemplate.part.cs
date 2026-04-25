@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using static OzzCodeGen.CodeEngines.WpfMvvm.Templates.CSharpLookupServiceTemplate;
 
 namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {

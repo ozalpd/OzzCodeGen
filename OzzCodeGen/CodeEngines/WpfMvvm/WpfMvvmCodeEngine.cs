@@ -151,8 +151,9 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
     private bool RenderTemplate(BaseCSharpWpfMvvmTemplate template, string targetDir, string subFolder)
     {
+        bool overwrite = OverwriteExisting || (template.EntitySetting != null && template.EntitySetting.OverwriteExisting);
         var fileName = Path.Combine(targetDir, subFolder, template.GetDefaultFileName());
-        return template.WriteToFile(fileName, OverwriteExisting);
+        return template.WriteToFile(fileName, overwrite);
     }
 
     private bool RenderViewModels(WpfMvvmEntitySetting entitySetting)
@@ -175,6 +176,9 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         {
             var template = new CSharpLookupServiceTemplate(entitySetting, CSharpLookupServiceTemplate.LookupServiceTemplateType.Interface);
             allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, ServiceFolder);
+            template = new CSharpLookupServiceTemplate(entitySetting, CSharpLookupServiceTemplate.LookupServiceTemplateType.DesignTimeClass);
+            allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, ServiceFolder);
+
             template = new CSharpLookupServiceTemplate(entitySetting, CSharpLookupServiceTemplate.LookupServiceTemplateType.RunTimeClass);
             allWritten &= RenderTemplate(template, TargetDirectory, ServiceFolder);
         }

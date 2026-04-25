@@ -58,13 +58,14 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             {
                 namespaces.Add(modelClassEngine.NamespaceName);
             }
-            if (!IsInterface)
+            if (TemplateType == LookupServiceTemplateType.RunTimeClass)
             {
+                // For runtime class, we need the repository namespace for the repository interface reference
                 namespaces.Add(CodeEngine.RepositoryNamespaceName);
-            }
-            if (TemplateType == LookupServiceTemplateType.RunTimeClass && !string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
-            {
-                namespaces.Add($"{CodeEngine.ContractsNamespaceName}.{GetFolderToNamespace(CodeEngine.ServiceFolder)}");
+
+                // If infrastructure folder is specified, then we need to add the service namespace for the interface reference
+                if (!string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
+                    namespaces.Add($"{CodeEngine.ContractsNamespaceName}.{GetFolderToNamespace(CodeEngine.ServiceFolder)}");
             }
             return namespaces.OrderBy(ns => ns).ToList();
         }

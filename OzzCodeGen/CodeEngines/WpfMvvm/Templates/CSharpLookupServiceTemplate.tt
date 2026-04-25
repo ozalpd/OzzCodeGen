@@ -18,13 +18,26 @@
 //----------------------------------------------------------------------------------
 namespace <#= GetNamespace() #>
 {
-    public partial <#= GetDeclaration() #>
 <#  if (IsInterface) // Interface ↓
     { #>
+    /// <summary>
+    /// Defines a service for retrieving <#= EntitySetting.Name.ToCamelCase() #> information for use in lookup scenarios.
+    /// </summary>
+    /// <remarks>Implementations of this interface provide access to <#= EntitySetting.Name.ToCamelCase() #> data, typically for populating
+    /// selection lists or validating <#= EntitySetting.Name.ToCamelCase() #> references in the application. Methods are asynchronous to support data
+    /// sources that may require I/O operations, such as databases or remote services.</remarks>
+    public partial <#= GetDeclaration() #>
     {
         Task<IReadOnlyList<<#= EntitySetting.Name #>>> Get<#= EntitySetting.Name.Pluralize() #>Async(<#= EntitySetting.HasIsActiveProperty() ? "bool isActive" : "" #>);
     }
-<#  } else { // Implementations ↓ #>
+<#  } else if (TemplateType==LookupServiceTemplateType.RunTimeClass) { // RunTime Implementation ↓ #>
+    /// <summary>
+    /// Provides <#= EntitySetting.Name.ToCamelCase() #> lookup functionality using an underlying <#= EntitySetting.Name.ToCamelCase() #> repository.
+    /// </summary>
+    /// <remarks>This service is intended for retrieving <#= EntitySetting.Name.ToCamelCase() #> data, typically for populating UI selection
+    /// lists or performing <#= EntitySetting.Name.ToCamelCase() #>-related lookups. It abstracts the data access layer, allowing consumers to retrieve
+    /// <#= EntitySetting.Name.ToCamelCase() #> information without depending directly on repository implementations.</remarks>
+    public partial <#= GetDeclaration() #>
     {
         private readonly <#= EntitySetting.RepositoryName #> _<#= EntitySetting.RepositoryInstanceName #>;
 
@@ -39,14 +52,14 @@ namespace <#= GetNamespace() #>
             return <#= EntitySetting.Name.Pluralize().ToCamelCase() #>.ToList();
         }
     }
-
+<#  } else if (TemplateType==LookupServiceTemplateType.DesignTimeClass) { // DesignTime Implementation ↓ #>
     /// <summary>
     /// Provides a no-op implementation of the <#= GetClassName(LookupServiceTemplateType.Interface) #> interface that returns an empty or
     /// mock list of <#= EntitySetting.Name.Pluralize().ToCamelCase() #>.
     /// </summary>
     /// <remarks>This implementation can be used in scenarios where <#= EntitySetting.Name.ToCamelCase() #> lookup functionality is optional or
     /// not required, such as in design time, in testing or when no <#= EntitySetting.RepositoryName #> are configured.</remarks>
-    public sealed partial class <#= GetClassName(LookupServiceTemplateType.DesignTimeClass) #> : <#= GetClassName(LookupServiceTemplateType.Interface) #>
+    public partial class <#= GetClassName(LookupServiceTemplateType.DesignTimeClass) #> : <#= GetClassName(LookupServiceTemplateType.Interface) #>
     {
         public Task<IReadOnlyList<<#= EntitySetting.Name #>>> Get<#= EntitySetting.Name.Pluralize() #>Async(<#= EntitySetting.HasIsActiveProperty() ? "bool isActive" : "" #>)
         {
