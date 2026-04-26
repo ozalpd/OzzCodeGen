@@ -5,6 +5,8 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzCodeGen.CodeEngines" #>
+<#@ import namespace="OzzCodeGen.CodeEngines.CsDbRepository" #>
+<#@ import namespace="OzzCodeGen.CodeEngines.CsDbRepository.Templates" #>
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzUtils" #>
 //----------------------------------------------------------------------------------
@@ -14,7 +16,6 @@
 //     so manual changes should be made in another partial class file.
 //
 //----------------------------------------------------------------------------------
-using Microsoft.Data.Sqlite;
 <#  var modelClassEngine = CodeEngine.ModelClassCodeEngine;
     var repositoryColumns = EntitySetting.GetRepositoryColumns().ToList();
     var decimalColumns = repositoryColumns.Where(c => c.IsDecimal).ToList();
@@ -33,13 +34,7 @@ using Microsoft.Data.Sqlite;
     var fkeyColumns = GetForeignKeyProperties().ToList();
     var singleUpdCols = GetSingleUpdateProperties().ToList();
     string memberSignature = string.Empty; #>
-<#  if (EntitySetting.GenerateGetPaged && !string.IsNullOrWhiteSpace(CodeEngine.QueryParamNamespaceName)) { #>
-using <#= CodeEngine.QueryParamNamespaceName #>;
-<#    } #>
-<#    if (modelClassEngine != null && modelClassEngine.GenerateValidator) { #>
-using <#= modelClassEngine.NamespaceName #>;
-<#    } #>
-using <#= CodeEngine.NamespaceName #>.Extensions;
+<#  WriteUsingNamespaces(); #>
 
 namespace <#= CodeEngine.NamespaceName #>
 {
@@ -107,11 +102,11 @@ namespace <#= CodeEngine.NamespaceName #>
     } #>
 <#  WriteGetMulipleRecordsMethod(); // GetAllAsync #>
 <#  foreach (var fkey in fkeyColumns) {
-        WriteGetMulipleRecordsMethod(fkey);#>
+        WriteGetMulipleRecordsMethod(fkey as SqliteRepositoryPropertySetting);#>
         
 <#    } #>
-<#  WriteGetSingleRecordMethod(pkey); // GetByPKeyAsync #>
-<#  WriteGetSingleRecordMethod(unique); // GetByUniqueAsync #>
+<#  WriteGetSingleRecordMethod(pkey as SqliteRepositoryPropertySetting); // GetByPKeyAsync #>
+<#  WriteGetSingleRecordMethod(unique as SqliteRepositoryPropertySetting); // GetByUniqueAsync #>
         partial void OnLoaded(<#= EntitySetting.Name #> <#= EntitySetting.Name.ToCamelCase() #>);
         
 <#    // GetPaged Method
@@ -410,13 +405,15 @@ namespace <#= CodeEngine.NamespaceName #>
         }
 <#  } #>
     }
+<#  if (!CodeEngine.HasDifferentFolderForContracts) { #>
 
     public partial interface I<#= EntitySetting.Name #>Repository
     {
-<#  foreach(var signature in SignatureList) { #>
+<#      foreach(var signature in SignatureList) { #>
         <#= signature #>;
-<#  } #>
+<#      } #>
     }
+<#  } #>
 }
 <#+
 public void WriteToDictionaryLines(){
@@ -438,7 +435,7 @@ public void WriteFromDictionaryLines(){
     var autoloadCols = GetAutoLoadProperties().ToList();#>
 <#+ if (autoloadCols.Count > 0) {
         foreach (var prop in autoloadCols.Where(p => p.IsComplex)) {
-            var propFKey = prop.GetForeignKeyProperty();
+            var propFKey = prop.GetForeignKeyProperty() as SqliteRepositoryPropertySetting;
             string propTypeName = prop.GetTypeName(getReturnType: true);
             string autoPKeyName = GetEntityPKeyName(propTypeName); #>
                 if (<#= propTypeName.Pluralize().ToCamelCase() #>By<#= autoPKeyName #>.TryGetValue(<#= EntitySetting.Name.ToCamelCase() #>.<#= propFKey.GetSafeValueExpr() #>, out var <#= prop.Name.ToCamelCase() #>))

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.3.1] - 2026-04-26
+
+### Added
+- Introduced `CsDbRepository` base classes for repository code generation.
+- Added support for generating repository contracts into separate folders and namespaces.
+
+### Changed
+- Refactored SQLite repository engine and templates to use the new `CsDbRepository` abstractions.
+- Updated WPF repository-related UIs and templates to clarify infrastructure and contract settings.
+- Improved namespace handling across repository code generation.
+- Applied repository code generation cleanup and refactoring for maintainability.
+- Bumped `OzzCodeGen` version to `2.3.1`.
+- Bumped `OzzCodeGen.Wpf` version to `2.3.1`.
+- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
+- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
+
+### Removed
+- Removed obsolete MVVM base class template.
+
 ## [2.3.0] - 2026-04-20
 
 ### Added

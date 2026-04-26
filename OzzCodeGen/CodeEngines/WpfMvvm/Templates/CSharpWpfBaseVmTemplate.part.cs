@@ -70,7 +70,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             {
                 return CodeEngine.ViewModelNamespaceName;
             }
-            return $"{CodeEngine.ContractsNamespaceName}.{GetFolderToNamespace(CodeEngine.ViewModelFolder)}";
+            return $"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.ViewModelFolder)}";
         }
 
         public override List<string> DefaultUsingNamespaceList()

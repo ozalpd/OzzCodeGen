@@ -3,14 +3,22 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.3.0`
-- `OzzCodeGen.Wpf`: `2.3.0`
+- `OzzCodeGen`: `2.3.1`
+- `OzzCodeGen.Wpf`: `2.3.1`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
+## Latest Highlights (2.3.1)
+- Introduced `CsDbRepository` base classes for repository code generation and refactored SQLite repository generation to use the new abstractions.
+- Added support for generating repository contracts into separate folders and namespaces.
+- Updated repository-related WPF UIs and templates to clarify infrastructure and contract settings.
+- Improved namespace handling and applied code cleanup across repository code generation.
+- Removed obsolete MVVM base class template.
+- Bumped `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.3.1`.
 
 ## Latest Highlights (2.3.0)
 - Added new `Wpf_Mvvm_View_ViewModel_Generator` (`WpfMvvmCodeEngine`) to generate WPF Create/Edit Views, ViewModels, Commands, and per-entity Lookup Services.
@@ -100,7 +108,7 @@ See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 - Geometry resources are stored in `OzzCodeGen/Resources/BootstrapIcons.xaml`.
 
 ## Prerequisites
-- **.NET 10 SDK** – Download from [dotnet.microsoft.com](https://dotnet.microsoft.com/download/dotnet/10.0)
+- **.NET 10 SDK** – Download from [dotneteurope.com](https://dotnet.microsoft.com/download/dotnet/10.0)
 - **Visual Studio 2026** (or later) with WPF and C# workloads, or **Visual Studio Code** with C# extensions
 - **Git** (optional, for cloning the repository)
 

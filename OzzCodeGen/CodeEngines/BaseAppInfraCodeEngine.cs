@@ -21,23 +21,33 @@ namespace OzzCodeGen.CodeEngines
         }
         private string _baseNamespaceName;
 
+
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool HasDifferentNamespaceForContracts => HasDifferentFolderForContracts && !string.IsNullOrWhiteSpace(InfrastructureNamespaceName)
+                                                      && !string.Equals(BaseClassNamespaceName, InfrastructureNamespaceName, System.StringComparison.InvariantCulture);
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool HasDifferentFolderForContracts => !string.IsNullOrWhiteSpace(InfrastructureFolder)
+                                                   && !string.Equals(TargetFolder, InfrastructureFolder, System.StringComparison.InvariantCulture);
+
         /// <summary>
-        /// Namespace for generated MVVM contract interfaces (for example <c>IViewModel</c>, <c>IAsyncCommand</c>, <c>INavigationService</c>).
+        /// Namespace for generated base classes or contract interfaces (for example <c>IViewModel</c>, <c>IAsyncCommand</c>, <c>INavigationService</c>).
         /// </summary>
         /// <remarks>
         /// Defaults to <c>{MvvmNamespaceName}.Contracts</c>.
         /// </remarks>
-        public string ContractsNamespaceName
+        public string InfrastructureNamespaceName
         {
-            get { return _contractsNamespaceName ?? $"{Project.NamespaceName}.Infra"; }
+            get { return _infrastructureNamespaceName ?? $"{Project.NamespaceName}.Infra"; }
             set
             {
-                if (_contractsNamespaceName == value) return;
-                _contractsNamespaceName = value;
-                RaisePropertyChanged(nameof(ContractsNamespaceName));
+                if (_infrastructureNamespaceName == value) return;
+                _infrastructureNamespaceName = value;
+                RaisePropertyChanged(nameof(InfrastructureNamespaceName));
             }
         }
-        private string _contractsNamespaceName;
+        private string _infrastructureNamespaceName;
 
         /// <summary>
         /// Relative folder (under <see cref="BaseCodeEngine.TargetDirectory"/>) where shared infrastructure files are generated.

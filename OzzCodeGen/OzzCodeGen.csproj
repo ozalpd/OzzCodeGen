@@ -11,10 +11,10 @@
 		<RootNamespace>OzzCodeGen</RootNamespace>
 		<AssemblyName>OzzCodeGen</AssemblyName>
 
-		<Version>2.3.0</Version>
-		<AssemblyVersion>2.3.0.0</AssemblyVersion>
-		<FileVersion>2.3.0.0</FileVersion>
-		<InformationalVersion>2.3.0</InformationalVersion>
+		<Version>2.3.1</Version>
+		<AssemblyVersion>2.3.1.0</AssemblyVersion>
+		<FileVersion>2.3.1.0</FileVersion>
+		<InformationalVersion>2.3.1</InformationalVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -124,6 +124,11 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>MvcViewSnippets.tt</DependentUpon>
+		</Compile>
+		<Compile Update="CodeEngines\CsDbRepository\Templates\CsDbRepositoryContractsTemplate.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>CsDbRepositoryContractsTemplate.tt</DependentUpon>
 		</Compile>
 		<Compile Update="CodeEngines\CsModelClass\Templates\CSharpModelClassTemplate.cs">
 		  <DesignTime>True</DesignTime>
@@ -240,9 +245,6 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>CSharpWpfViewModelTemplate.tt</DependentUpon>
 		</Compile>
-		<Compile Update="CodeEngines\WpfMvvm\UI\WpfMvvmEngineUI.cs">
-			<DependentUpon>WpfMvvmEngineUI.xaml</DependentUpon>
-		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -302,6 +304,9 @@
 		</None>
 		<None Update="CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt">
 			<LastGenOutput>MvcViewSnippets.cs</LastGenOutput>
+		</None>
+		<None Update="CodeEngines\CsDbRepository\Templates\CsDbRepositoryContractsTemplate.tt">
+		  <LastGenOutput>CsDbRepositoryContractsTemplate.cs</LastGenOutput>
 		</None>
 		<None Update="CodeEngines\CsModelClass\Templates\CSharpModelClassTemplate.tt">
 		  <LastGenOutput>CSharpModelClassTemplate.cs</LastGenOutput>

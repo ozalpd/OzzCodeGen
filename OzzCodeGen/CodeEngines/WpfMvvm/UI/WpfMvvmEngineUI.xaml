@@ -107,8 +107,8 @@
                        ToolTip="Namespace for generated infrastructure contracts."
                        VerticalAlignment="Center"/>
             <TextBox Grid.Column="5" Grid.Row="2"
-                     Text="{Binding ContractsNamespaceName, Mode=TwoWay}"
-                     ToolTip="Namespace for generated infrastructure contracts."
+                     Text="{Binding InfrastructureNamespaceName, Mode=TwoWay}"
+                     ToolTip="Namespace for generated infrastructure contracts or base classes."
                      Style="{StaticResource textBoxStyle}" Margin="4,0"
                      Background="#FFFFFAED"/>
             

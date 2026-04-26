@@ -1,5 +1,5 @@
+using OzzCodeGen.CodeEngines.CsDbRepository;
 using OzzCodeGen.CodeEngines.CsModelClass;
-using OzzCodeGen.CodeEngines.CsModelClass.UI;
 using OzzCodeGen.Definitions;
 using OzzUtils;
 using System;
@@ -9,89 +9,13 @@ using System.Text;
 
 namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates;
 
-public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTemplate
+public abstract partial class BaseCSharpSqliteRepositoryTemplate
 {
-    protected BaseCSharpSqliteRepositoryTemplate(CSharpSqliteRepositoryEngine codeEngine, SqliteRepositoryEntitySetting entitySetting = null)
-    {
-        CodeEngine = codeEngine;
-        EntitySetting = entitySetting;
-    }
+    protected BaseCSharpSqliteRepositoryTemplate(CSharpSqliteRepositoryEngine codeEngine, SqliteRepositoryEntitySetting entitySetting = null) : base(codeEngine, entitySetting) { }
 
-    protected CSharpSqliteRepositoryEngine CodeEngine { get; }
-    protected SqliteRepositoryEntitySetting EntitySetting { get; }
+    public override CSharpSqliteRepositoryEngine CodeEngine => (CSharpSqliteRepositoryEngine)base.CodeEngine;
+    public override SqliteRepositoryEntitySetting EntitySetting => (SqliteRepositoryEntitySetting)base.EntitySetting;
 
-    protected List<string> SignatureList = new List<string>();
-
-    protected void AddSignature(string signature)
-    {
-        if (!SignatureList.Contains(signature))
-            SignatureList.Add(signature);
-    }
-
-    protected string GetSignature(MethodType methodType, SqliteRepositoryPropertySetting column = null)
-    {
-        var pkey = GetPrimaryKey();
-        var unique = GetUniqueIndexed();
-        ModelClassEntitySetting modelEntity = EntitySetting.ModelClassEntitySetting;
-        CSharpModelClassCodeEngine modelClassEngine = modelEntity?.CodeEngine as CSharpModelClassCodeEngine;
-        string queryParamClassName = string.Empty;
-        if (modelEntity != null && modelClassEngine != null)
-            queryParamClassName = modelEntity.GenerateQueryParam
-                                ? $"{EntitySetting.Name}{modelClassEngine.QueryParamClassName}"
-                                : modelClassEngine.QueryParamClassName;
-        bool hasIsActive = EntitySetting.HasIsActiveProperty();
-        bool needIsActive = hasIsActive
-                         && EntitySetting.SearchableNonRangeProperties
-                                         .Count(p => p.Name.Equals("IsActive", StringComparison.InvariantCultureIgnoreCase)) == 0;
-        switch (methodType)
-        {
-            case MethodType.Create:
-                return $"Task<{pkey.GetTypeName()}> CreateAsync({EntitySetting.Name} {EntitySetting.Name.ToCamelCase()})";
-
-            case MethodType.DeleteByPKey:
-                return $"Task<bool> DeleteAsync({pkey.GetTypeName()} {pkey.Name.ToCamelCase()})";
-
-            case MethodType.DeleteByUniqueIndex:
-                if (unique != null)
-                    return $"Task<bool> DeleteAsync({unique.GetTypeName()} {unique.Name.ToCamelCase()})";
-                break;
-
-            case MethodType.GetAll:
-                return $"Task<IReadOnlyList<{EntitySetting.Name}>> GetAllAsync({(EntitySetting.HasIsActiveProperty() ? "bool? isActive = null" : "")})";
-
-            case MethodType.GetByPKey:
-                return $"Task<{EntitySetting.GetTypeName(isNullable: true)}> GetBy{pkey.Name}Async({pkey.GetTypeName()}? {pkey.Name.ToCamelCase()})";
-
-            case MethodType.GetByUnique:
-                if (unique != null)
-                    return $"Task<{EntitySetting.GetTypeName(isNullable: true)}> GetBy{unique.Name}Async({unique.GetTypeName()}? {unique.Name.ToCamelCase()})";
-                break;
-
-            case MethodType.GetByForeignKey:
-                if (column != null)
-                    return $"Task<IReadOnlyList<{EntitySetting.Name}>> GetBy{column.Name}Async({column.GetTypeName()} {column.Name.ToCamelCase()}{(hasIsActive ? ", bool? isActive = null" : "")})";
-                break;
-
-            case MethodType.GetPaged:
-                if (string.IsNullOrWhiteSpace(queryParamClassName))
-                    return $"Task<IReadOnlyList<{EntitySetting.Name}>> GetPagedAsync(int pageNumber, int pageSize, string sortBy = null, bool ascending = true{(hasIsActive ? ", bool? isActive = null" : "")})";
-                else
-                    return $"Task<IReadOnlyList<{EntitySetting.Name}>> GetPagedAsync({queryParamClassName} queryParameters{(needIsActive ? ", bool? isActive = null" : "")})";
-
-            case MethodType.UpdateEntity:
-                return $"Task<bool> UpdateAsync({EntitySetting.Name} {EntitySetting.Name.ToCamelCase()})";
-
-            case MethodType.UpdateSingleColumnById:
-                if (column != null)
-                    return $"Task<bool> Update{column.Name}Async({pkey.GetTypeName()} {pkey.Name.ToCamelCase()}, {column.GetTypeName()} {column.Name.ToCamelCase()})";
-                break;
-
-            default:
-                break;
-        }
-
-        return string.Empty;
-    }
 
     protected IEnumerable<SqliteRepositoryPropertySetting> GetRepositoryProperties()
     {
@@ -114,7 +38,10 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
 
     protected SqliteRepositoryEntitySetting? GetEntityByName(string entityName)
     {
-        var entity = CodeEngine.Entities.FirstOrDefault(e => e.Name == entityName);
+        var entity = CodeEngine.Entities
+                               .Where(e => e is SqliteRepositoryEntitySetting && e.Name == entityName)
+                               .OfType<SqliteRepositoryEntitySetting>()
+                               .FirstOrDefault();
         return entity;
     }
 
@@ -129,7 +56,12 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
         return keyProperty?.Name ?? string.Empty;
     }
 
-    protected SqliteRepositoryPropertySetting GetPrimaryKey()
+    protected override ModelClassEntitySetting GetModelClassEntitySetting()
+    {
+        return EntitySetting.ModelClassEntitySetting;
+    }
+    
+    protected override BaseCsDbRepositoryPropertySetting GetPrimaryKey()
     {
         return GetRepositoryProperties().FirstOrDefault(p => p.IsKey);
     }
@@ -141,17 +73,22 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
                     .FirstOrDefault(p => p.ColumnName.Equals(updatedAtColName, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    protected SqliteRepositoryPropertySetting GetUniqueIndexed()
+    protected override BaseCsDbRepositoryPropertySetting GetUniqueIndexed()
     {
         return GetRepositoryProperties().FirstOrDefault(p => p.IsUniqueIndexed && !p.IsKey);
     }
 
-    protected IEnumerable<SqliteRepositoryPropertySetting> GetAutoLoadProperties()
+    protected override IEnumerable<BaseCsDbRepositoryPropertySetting> GetAutoLoadProperties()
     {
         return EntitySetting.GetAutoLoadProperties();
     }
 
-    protected IEnumerable<SqliteRepositoryPropertySetting> GetForeignKeyProperties()
+    protected override string GetEntityTypeName(bool isNullable)
+    {
+        return EntitySetting.GetTypeName(isNullable);
+    }
+
+    protected override IEnumerable<BaseCsDbRepositoryPropertySetting> GetForeignKeyProperties()
     {
         return GetRepositoryProperties().Where(p => p.IsForeignKey);
     }
@@ -164,6 +101,11 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
     protected IEnumerable<SqliteRepositoryPropertySetting> GetNonUpdateProperties()
     {
         return GetRepositoryProperties().Where(p => !p.IsKey && IsReadOnlyColumn(p));
+    }
+
+    protected override IEnumerable<ModelPropertySetting> GetSearchableNonRangeProperties()
+    {
+        return EntitySetting.SearchableNonRangeProperties;
     }
 
     protected IEnumerable<SqliteRepositoryPropertySetting> GetSingleUpdateProperties()
@@ -191,6 +133,11 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
     protected string GetRepositoryName(string entityName)
     {
         return EntitySetting.GetRepositoryName(entityName);
+    }
+
+    protected override bool HasIsActiveProperty()
+    {
+        return EntitySetting.HasIsActiveProperty();
     }
 
     protected virtual bool ShouldSkipInsert(SqliteRepositoryPropertySetting property)
@@ -400,7 +347,7 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
         };
     }
 
-    public void WriteColumnsAndParameters(IEnumerable<SqliteRepositoryPropertySetting> columns, SqliteRepositoryPropertySetting? pkey = null, SqliteRepositoryPropertySetting? createdAtCol = null, SqliteRepositoryPropertySetting? updatedAtCol = null)
+    public void WriteColumnsAndParameters(IEnumerable<BaseCsDbRepositoryPropertySetting> columns, BaseCsDbRepositoryPropertySetting? pkey = null, BaseCsDbRepositoryPropertySetting? createdAtCol = null, BaseCsDbRepositoryPropertySetting? updatedAtCol = null)
     {
         var model = new WriteColumnsModel
         {
@@ -432,7 +379,7 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
         }
         string val = string.Empty;
         if (model.PKey != null)
-            WriteSingleColumnAndParameter(model.PKey, model.PKeyValue);
+            WriteSingleColumnAndParameter(model.PKey as SqliteRepositoryPropertySetting, model.PKeyValue);
 
         var columns = model.Columns.ToList();
         var valueList = model.ValueList;
@@ -442,7 +389,7 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
             var col = columns[i];
             val = valueList.Count > i ? valueList[i] : $"{EntitySetting.Name.ToCamelCase()}.{col.Name}";
             bool isTimeStamp = col.Name == model.CreatedAtCol?.Name || col.Name == model.UpdatedAtCol?.Name;
-            WriteSingleColumnAndParameter(col, val, isTimeStamp);
+            WriteSingleColumnAndParameter(col as SqliteRepositoryPropertySetting, val, isTimeStamp);
         }
         PopIndent();
         PopIndent();
@@ -452,22 +399,8 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate : AbstractTempl
     {
         var col = EntitySetting.GetInheritedIncludedProperties().FirstOrDefault(p => p.ColumnName == colName);
         if (col != null)
-            WriteSingleColumnAndParameter(col, value, isTimeStamp, suffix);
+            WriteSingleColumnAndParameter(col as SqliteRepositoryPropertySetting, value, isTimeStamp, suffix);
     }
-}
-
-public enum MethodType
-{
-    Create,
-    DeleteByPKey,
-    DeleteByUniqueIndex,
-    GetAll,
-    GetPaged,
-    GetByPKey,
-    GetByUnique,
-    GetByForeignKey,
-    UpdateEntity,
-    UpdateSingleColumnById,
 }
 
 public class WriteColumnsModel
@@ -475,13 +408,13 @@ public class WriteColumnsModel
     public WriteColumnsModel()
     {
         ValueList = new List<string>();
-        Columns = new List<SqliteRepositoryPropertySetting>();
+        Columns = new List<BaseCsDbRepositoryPropertySetting>();
     }
 
-    public List<SqliteRepositoryPropertySetting> Columns { get; set; }
-    public SqliteRepositoryPropertySetting? PKey { get; set; }
+    public List<BaseCsDbRepositoryPropertySetting> Columns { get; set; }
+    public BaseCsDbRepositoryPropertySetting? PKey { get; set; }
     public string PKeyValue { get; set; }
-    public SqliteRepositoryPropertySetting? CreatedAtCol { get; set; }
-    public SqliteRepositoryPropertySetting? UpdatedAtCol { get; set; }
+    public BaseCsDbRepositoryPropertySetting? CreatedAtCol { get; set; }
+    public BaseCsDbRepositoryPropertySetting? UpdatedAtCol { get; set; }
     public List<string> ValueList { get; private set; }
 }

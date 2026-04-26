@@ -222,11 +222,6 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         var contractFileName = Path.Combine(TargetDirectory, InfrastructureFolder, "Contracts", contractTemplate.GetDefaultFileName());
         allWritten &= contractTemplate.WriteToFile(contractFileName, OverwriteExisting);
 
-        // Shared base MVVM implementation (ViewModelBase + RelayCommand + AsyncRelayCommand).
-        var baseTemplate = new MvvmBaseClassesTemplate(this);
-        var baseFileName = Path.Combine(TargetDirectory, InfrastructureFolder, baseTemplate.GetDefaultFileName());
-        allWritten &= baseTemplate.WriteToFile(baseFileName, OverwriteExisting);
-
         return allWritten;
     }
 

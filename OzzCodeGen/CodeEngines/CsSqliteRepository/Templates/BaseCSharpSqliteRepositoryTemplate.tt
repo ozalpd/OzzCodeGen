@@ -1,10 +1,12 @@
-﻿<#@ template language="C#" inherits="AbstractTemplate"#>
+﻿<#@ template language="C#" inherits="BaseCsDbRepositoryTemplate"#>
 <#@ assembly name="System.Core" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzCodeGen.CodeEngines" #>
+<#@ import namespace="OzzCodeGen.CodeEngines.CsDbRepository" #>
+<#@ import namespace="OzzCodeGen.CodeEngines.CsDbRepository.Templates" #>
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzUtils" #>
 <#+ 
@@ -39,7 +41,7 @@ public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col, s
 <#+ }
 } #>
 <#+ 
-public void WriteGetByResult(IEnumerable<SqliteRepositoryPropertySetting> autoloadCols, IEnumerable<string> autoloadTypeNames){
+public void WriteGetByResult(IEnumerable<BaseCsDbRepositoryPropertySetting> autoloadCols, IEnumerable<string> autoloadTypeNames){
     var pkey = GetPrimaryKey();
     var selfAutoloadCols = autoloadCols.Where(p => p.GetTypeName(getReturnType: true) == EntitySetting.Name);
 #>

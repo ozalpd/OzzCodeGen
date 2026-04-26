@@ -50,7 +50,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             }
             if (!string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
             {
-                namespaces.Add($"{CodeEngine.ContractsNamespaceName}.{GetFolderToNamespace(CodeEngine.ViewModelFolder)}");
+                namespaces.Add($"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.ViewModelFolder)}");
             }
             return namespaces.OrderBy(ns => ns).ToList();
         }

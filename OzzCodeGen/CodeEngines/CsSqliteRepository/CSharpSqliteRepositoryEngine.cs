@@ -1,7 +1,6 @@
-using OzzCodeGen.CodeEngines.CsModelClass;
+using OzzCodeGen.CodeEngines.CsDbRepository;
 using OzzCodeGen.CodeEngines.CsSqliteRepository.Templates;
 using OzzCodeGen.CodeEngines.CsSqliteRepository.UI;
-using OzzCodeGen.CodeEngines.Storage;
 using OzzCodeGen.Definitions;
 using OzzCodeGen.Utilities;
 using System;
@@ -16,8 +15,14 @@ using System.Xml.Serialization;
 namespace OzzCodeGen.CodeEngines.CsSqliteRepository;
 
 [XmlInclude(typeof(SqliteRepositoryEntitySetting))]
-public class CSharpSqliteRepositoryEngine : BaseAppInfraCodeEngine
+public class CSharpSqliteRepositoryEngine : BaseCsDbRepositoryEngine<SqliteRepositoryPropertySetting>
 {
+    public CSharpSqliteRepositoryEngine()
+    {
+        //If SelectedTemplate is not set, CanRender is set to false and Render button is disabled.
+        SelectedTemplate = repoClass;
+    }
+
     public override string EngineId => EngineTypes.CSharpSqliteRepositoryEngineId;
 
     [XmlIgnore]
@@ -79,119 +84,9 @@ public class CSharpSqliteRepositoryEngine : BaseAppInfraCodeEngine
         return repositoryProperty;
     }
 
-    protected string GetRepositoryName(string entityName)
-    {
-        return $"{entityName}Repository";
-    }
-
-    [XmlIgnore]
-    [JsonIgnore]
-    public List<SqliteRepositoryEntitySetting> Entities
-    {
-        get
-        {
-            if (Project == null || string.IsNullOrEmpty(Project.SearchString))
-                return _entities;
-
-            var result = _entities
-                .Where(e => e.Name.StartsWith(Project.SearchString, StringComparison.InvariantCultureIgnoreCase)
-                    || e.Properties.Any(p => p.Name.StartsWith(Project.SearchString, StringComparison.InvariantCultureIgnoreCase)));
-            return result.ToList();
-        }
-        set
-        {
-            if (_entities == value) return;
-            _entities = value;
-            RaisePropertyChanged(nameof(Entities));
-        }
-    }
-    private List<SqliteRepositoryEntitySetting> _entities;
-
-    /// <summary>
-    /// Storage code engine is used to get information about the storage, such as table and column names, which can be used in the repository templates.
-    /// It is not serialized because it is retrieved from the project when needed.
-    /// </summary>
-    [XmlIgnore]
-    [JsonIgnore]
-    public SqliteScriptsEngine StorageCodeEngine
-    {
-        get
-        {
-            if (_storageCodeEngine == null && Project != null)
-            {
-                _storageCodeEngine = Project.GetCodeEngine(EngineTypes.SqliteScriptsId) as SqliteScriptsEngine;
-            }
-            return _storageCodeEngine;
-        }
-    }
-    private SqliteScriptsEngine _storageCodeEngine;
-
-    /// <summary>
-    /// Model class code engine is used to get information about the model classes, such as validator class, which can be used in the repository templates.
-    /// </summary>
-    [XmlIgnore]
-    [JsonIgnore]
-    public CSharpModelClassCodeEngine ModelClassCodeEngine
-    {
-        get
-        {
-            if (_modelClassEngine == null && Project != null)
-            {
-                _modelClassEngine = Project.GetCodeEngine(EngineTypes.CsModelClassCodeEngineId) as CSharpModelClassCodeEngine;
-            }
-            return _modelClassEngine;
-        }
-    }
-    private CSharpModelClassCodeEngine _modelClassEngine;
-
-    [XmlIgnore]
-    [JsonIgnore]
-    public string QueryParamNamespaceName
-    {
-        get { return ModelClassCodeEngine?.QueryParamNamespaceName ?? string.Empty; }
-    }
-
-    public string MetadataRepositoryName
-    {
-        get
-        {
-            if (string.IsNullOrWhiteSpace(_metadataName))
-            {
-                _metadataName = "MetadataRepository";
-            }
-            return _metadataName;
-        }
-        set
-        {
-            if (_metadataName == value) return;
-            _metadataName = value;
-            RaisePropertyChanged(nameof(MetadataRepositoryName));
-        }
-    }
-    private string _metadataName;
-
-
-    public string BaseRepositoryClassName
-    {
-        get
-        {
-            if (string.IsNullOrWhiteSpace(_baseRepositoryClassName))
-                _baseRepositoryClassName = "BaseDatabaseRepository";
-            return _baseRepositoryClassName;
-        }
-        set
-        {
-            if (_baseRepositoryClassName == value) return;
-            _baseRepositoryClassName = value;
-            RaisePropertyChanged(nameof(BaseRepositoryClassName));
-        }
-    }
-    private string _baseRepositoryClassName;
-
-
     protected override void OnEntitySettingsChanged()
     {
-        var entities = new List<SqliteRepositoryEntitySetting>();
+        var entities = new List<BaseCsDbRepositoryEntitySetting<SqliteRepositoryPropertySetting>>();
         if (EntitySettings != null)
         {
             foreach (SqliteRepositoryEntitySetting item in EntitySettings)
@@ -200,6 +95,7 @@ public class CSharpSqliteRepositoryEngine : BaseAppInfraCodeEngine
             }
         }
         Entities = entities;
+        CanRender = CurrentEntitySetting != null;
     }
 
     protected override void RefreshSetting(BaseEntitySetting setting, EntityDefinition entity, bool cleanRemovedItems)

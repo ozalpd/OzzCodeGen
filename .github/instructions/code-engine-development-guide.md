@@ -14,6 +14,7 @@ For stable repo-wide rules, see `.github/copilot-instructions.md` first.
 ## Good Reference Implementations
 Start by comparing with one or more existing engines:
 - `OzzCodeGen/CodeEngines/CsModelClass/CSharpModelClassCodeEngine.cs`
+- `OzzCodeGen/CodeEngines/CsSqliteRepository/CSharpSqliteRepositoryEngine.cs` ← repository engine reference
 - `OzzCodeGen/CodeEngines/WpfMvvm/WpfMvvmCodeEngine.cs`
 - `OzzCodeGen/CodeEngines/Localization/ResxEngine.cs`
 - `OzzCodeGen/CodeEngines/Metadata/MetadataCodeEngine.cs`
@@ -24,6 +25,7 @@ Start by comparing with one or more existing engines:
 - Prefer folder and namespace names that are as short as possible while still understandable. For example, prefer `CsSqliteRepository` over `CSharpSqliteRepository`.
 - Put the main engine class in that folder.
 - Put WPF engine UI under `OzzCodeGen/CodeEngines/<EngineName>/UI/`.
+- Name the XAML code-behind file to match the XAML file exactly, for example `WpfMvvmEngineUI.xaml.cs` not `WpfMvvmEngineUI.cs`, so Visual Studio nests it correctly under the XAML file.
 - Put templates under `OzzCodeGen/CodeEngines/<EngineName>/Templates/`.
 - Prefer language-first template names such as `CSharpModelClassTemplate` or `TypeScriptModelClassTemplate`.
 - Prefix base classes with `Base` when introducing reusable engine-specific abstractions.
@@ -63,6 +65,8 @@ Available base classes:
 
 Use `BaseAppInfraCodeEngine` when the engine generates shared app-layer infrastructure output. Avoid it for engines that do not generate app-layer infrastructure (for example `CSharpModelClassCodeEngine`, `ResxEngine`, and SQL script engines).
 
+For repository engines, build on the shared abstractions in `OzzCodeGen/CodeEngines/CsDbRepository/` rather than starting from scratch. `CSharpSqliteRepositoryEngine` derives from `BaseAppInfraCodeEngine` and uses `CsDbRepository` base classes as its foundation — study it before adding a new repository engine.
+
 ## Serialization Checklist
 Project and engine settings are XML-serialized. Treat serialization as a first-class requirement.
 
@@ -97,6 +101,8 @@ Use the existing pattern:
 If the engine needs an additional output location, follow the same relative-folder pattern used by `ValidatorFolder` and `TargetValidatorDirectory` in `CSharpModelClassCodeEngine`.
 
 For shared generated infrastructure (for example MVVM base classes/contracts), keep a separate relative folder setting (for example `InfrastructureFolder`) and document the intent clearly. This folder is intentionally platform-agnostic so the generated base/contracts can be reused by future engines (for example, MAUI) with minimal duplication.
+
+For repository engines, if contracts (interfaces) are generated separately from implementations, use a dedicated relative folder setting (for example `ContractsFolder`) and derive its namespace consistently. Keep folder/namespace resolution logic centralized — do not scatter it across templates, engine, and UI independently.
 
 ## WPF UI Integration Checklist
 The host expects engines to expose a `UserControl` through `UiControl` and `GetUiControl()`.
@@ -183,6 +189,7 @@ Use this order to reduce rework:
 - Adding templates without updating `OzzCodeGen.csproj` for T4-related files.
 - Changing engine settings without checking save/reopen behavior.
 - Replacing established base-class refresh logic with custom code unnecessarily.
+- For repository engines: bypassing `CsDbRepository` shared base classes and duplicating helper logic instead.
 
 ## Short Pre-PR Checklist
 Before considering engine work done, confirm:

@@ -46,7 +46,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             {
                 return CodeEngine.ServiceNamespaceName;
             }
-            return $"{CodeEngine.ContractsNamespaceName}.{GetFolderToNamespace(CodeEngine.ServiceFolder)}";
+            return $"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.ServiceFolder)}";
         }
 
 
@@ -65,7 +65,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
                 // If infrastructure folder is specified, then we need to add the service namespace for the interface reference
                 if (!string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
-                    namespaces.Add($"{CodeEngine.ContractsNamespaceName}.{GetFolderToNamespace(CodeEngine.ServiceFolder)}");
+                    namespaces.Add($"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.ServiceFolder)}");
             }
             return namespaces.OrderBy(ns => ns).ToList();
         }

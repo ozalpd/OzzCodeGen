@@ -32,15 +32,16 @@ public partial class WpfMvvmEngineUI : AbstractEngineUI
         HiddenColumns.Add("MvvmEntitySetting");
         HiddenColumns.Add("IsLoadingFromFile");
         HiddenColumns.Add("IsFractionalNumeric");
+        HiddenColumns.Add("RepositoryInstanceName");
 
-        ColumnWidths["GenerateCreateView"] = 72;
+        ColumnWidths["GenerateCreateView"] = 80;
         ColumnWidths["GenerateEditView"] = 72;
         ColumnWidths["GenerateCreateViewModel"] = 72;
-        ColumnWidths["GenerateEditViewModel"] = 72;
+        ColumnWidths["GenerateEditViewModel"] = 64;
         ColumnWidths["GenerateLookupService"] = 80;
         ColumnWidths["GenerateCommands"] = 80;
-        ColumnWidths["IncludeInView"] = 110;
-        ColumnWidths["IncludeInViewModel"] = 110;
+        ColumnWidths["IncludeInView"] = 80;
+        ColumnWidths["IncludeInViewModel"] = 64;
         ColumnWidths["IsReadOnly"] = 80;
 
         EntitiesDataGrid = grdEntitySettings;

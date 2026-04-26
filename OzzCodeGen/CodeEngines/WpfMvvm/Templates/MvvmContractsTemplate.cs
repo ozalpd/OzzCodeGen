@@ -18,7 +18,7 @@ public class MvvmContractsTemplate : AbstractTemplate
     {
         return "using System.Threading.Tasks;\n"
              + "using System.Windows.Input;\n\n"
-             + $"namespace {_codeEngine.ContractsNamespaceName};\n\n"
+             + $"namespace {_codeEngine.InfrastructureNamespaceName};\n\n"
              + "public interface IViewModel\n"
              + "{\n"
              + "    Task InitializeAsync(object parameter = null);\n"
