@@ -3,14 +3,22 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.3.1`
-- `OzzCodeGen.Wpf`: `2.3.1`
+- `OzzCodeGen`: `2.3.2`
+- `OzzCodeGen.Wpf`: `2.3.2`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
+
+## Latest Highlights (2.3.2)
+- Renamed `ServiceFolder`/`ServiceNamespaceName` to `LookupFolder`/`LookupNamespaceName` in `BaseMvvmCodeEngine` for clarity.
+- Added `PutLookupInInfra` property to control whether lookup services are placed in the infrastructure folder.
+- Introduced `RepoContractNamespaceName` for explicit repository contract namespace configuration.
+- Updated `CSharpLookupServiceTemplate` and `WpfMvvmEngineUI` bindings to use the new properties.
+- Improved namespace logic for lookup service output based on infrastructure placement.
+- Bumped `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.3.2`.
 
 ## Latest Highlights (2.3.1)
 - Introduced `CsDbRepository` base classes for repository code generation and refactored SQLite repository generation to use the new abstractions.
@@ -87,18 +95,6 @@ See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 - Replaced `AddNullableTextParameter` usage in repository templates and generated code with SQLite extension methods.
 - Renamed `IsDecimalNumeric`/`IsIntNumeric` to `IsFractionalNumeric`/`IsIntegerNumeric` for clearer intent.
 - Bumped `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.2.20`.
-
-## Latest Highlights (2.2.19)
-- Refactored `QueryParametersTemplate` to better distinguish simple searchable properties from min/max date/numeric searchable properties.
-- Added `HasAnySearchCriteria()` virtual/override methods for more robust and extensible generated search detection.
-- Added partial-method support for custom `HasAnySearchCriteria()` logic extension.
-- Bumped `OzzCodeGen` and `OzzCodeGen.Wpf` to `2.2.19`.
-
-## Latest Highlights (2.2.18)
-- Added per-entity strongly-typed `QueryParameters` class generation support via `GenerateQueryParam`.
-- Refactored model-class templates/code to support both base and derived `QueryParameters` generation paths.
-- Updated filtering inclusion control to use `IsSearchParameter` for generated SQL/LINQ `WHERE` behavior.
-- Improved naming consistency and refreshed related documentation.
 
 ## UI Icons
 - Icon set: **Bootstrap Icons v1.13.1**

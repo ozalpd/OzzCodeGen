@@ -30,7 +30,12 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
 
     public string CommandNamespaceName
     {
-        get { return _commandNamespaceName ?? $"{Project.NamespaceName}.Commands"; }
+        get
+        {
+            if (string.IsNullOrEmpty(_commandFolder))
+                _commandNamespaceName = $"{NamespaceName}.{CommandFolder}";
+            return _commandNamespaceName;
+        }
         set
         {
             if (_commandNamespaceName == value) return;
@@ -40,7 +45,26 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
     }
     private string _commandNamespaceName;
 
+    /// <summary>
+    /// Repository contract namespace name.
+    /// </summary>
+    public string RepoContractNamespaceName
+    {
+        get { return _repoContractNamespaceName ?? $"{Project.NamespaceName}.RepositoryContracts"; }
+        set
+        {
+            if (_repoContractNamespaceName == value) return;
+            _repoContractNamespaceName = value;
+            RaisePropertyChanged(nameof(RepoContractNamespaceName));
+        }
+    }
+    private string _repoContractNamespaceName;
 
+    /// <summary>
+    /// Gets or sets the namespace name to use for generated repository classes.
+    /// </summary>
+    /// <remarks>If not explicitly set, the namespace defaults to the project's namespace with ".Repositories"
+    /// appended. Changing this property updates the namespace used for repository code generation.</remarks>
     public string RepositoryNamespaceName
     {
         get { return _repositoryNamespaceName ?? $"{Project.NamespaceName}.Repositories"; }
@@ -53,31 +77,43 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
     }
     private string _repositoryNamespaceName;
 
-    public string ServiceFolder
+    public string LookupFolder
     {
-        get { return _ServiceFolder ?? "Services"; }
+        get { return _lookupServiceFolder ?? "Services"; }
         set
         {
-            if (_ServiceFolder == value) return;
-            _ServiceFolder = value;
-            RaisePropertyChanged(nameof(ServiceFolder));
-            RaisePropertyChanged(nameof(TargetServiceDirectory));
+            if (_lookupServiceFolder == value) return;
+            _lookupServiceFolder = value;
+            RaisePropertyChanged(nameof(LookupFolder));
+            RaisePropertyChanged(nameof(TargetLookupDirectory));
         }
     }
-    private string _ServiceFolder;
+    private string _lookupServiceFolder;
 
-    public string ServiceNamespaceName
+    public string LookupNamespaceName
     {
-        get { return _ServiceNamespaceName ?? $"{Project.NamespaceName}.Services"; }
+        get
+        {
+            if (PutLookupInInfra)
+                return $"{InfrastructureNamespaceName}.{LookupFolder}";
+
+            return $"{NamespaceName}.{LookupFolder}";
+        }
+    }
+
+    public bool PutLookupInInfra
+    {
+        get { return _putLookupInInfra ?? false; }
         set
         {
-            if (_ServiceNamespaceName == value) return;
-            _ServiceNamespaceName = value;
-            RaisePropertyChanged(nameof(ServiceNamespaceName));
+            if (_putLookupInInfra == value) return;
+            _putLookupInInfra = value;
+            RaisePropertyChanged(nameof(PutLookupInInfra));
+            RaisePropertyChanged(nameof(LookupNamespaceName));
+            RaisePropertyChanged(nameof(TargetLookupDirectory));
         }
     }
-    private string _ServiceNamespaceName;
-
+    private bool? _putLookupInInfra;
 
     [XmlIgnore]
     [JsonIgnore]
@@ -108,7 +144,9 @@ for Commands: {TargetCommandDirectory}";
 
     [XmlIgnore]
     [JsonIgnore]
-    public string TargetServiceDirectory => Path.GetFullPath(Path.Combine(TargetDirectory, ServiceFolder));
+    public string TargetLookupDirectory => PutLookupInInfra
+                                          ? Path.GetFullPath(Path.Combine(TargetInfrastructureDirectory, LookupFolder))
+                                          : Path.GetFullPath(Path.Combine(TargetDirectory, LookupFolder));
 
     [XmlIgnore]
     [JsonIgnore]

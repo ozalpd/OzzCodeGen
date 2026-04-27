@@ -44,9 +44,9 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         {
             if (TemplateType == LookupServiceTemplateType.RunTimeClass || string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
             {
-                return CodeEngine.ServiceNamespaceName;
+                return CodeEngine.LookupNamespaceName;
             }
-            return $"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.ServiceFolder)}";
+            return $"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.LookupFolder)}";
         }
 
 
@@ -60,12 +60,11 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             }
             if (TemplateType == LookupServiceTemplateType.RunTimeClass)
             {
-                // For runtime class, we need the repository namespace for the repository interface reference
-                namespaces.Add(CodeEngine.RepositoryNamespaceName);
+                namespaces.Add(CodeEngine.RepoContractNamespaceName);
 
                 // If infrastructure folder is specified, then we need to add the service namespace for the interface reference
-                if (!string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
-                    namespaces.Add($"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.ServiceFolder)}");
+                if (!string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder) && !CodeEngine.PutLookupInInfra)
+                    namespaces.Add($"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.LookupFolder)}");
             }
             return namespaces.OrderBy(ns => ns).ToList();
         }

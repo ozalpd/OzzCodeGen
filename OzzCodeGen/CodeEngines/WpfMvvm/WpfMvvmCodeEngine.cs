@@ -175,12 +175,13 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         if (entitySetting.GenerateLookupService)
         {
             var template = new CSharpLookupServiceTemplate(entitySetting, CSharpLookupServiceTemplate.LookupServiceTemplateType.Interface);
-            allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, ServiceFolder);
+            allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, LookupFolder);
             template = new CSharpLookupServiceTemplate(entitySetting, CSharpLookupServiceTemplate.LookupServiceTemplateType.DesignTimeClass);
-            allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, ServiceFolder);
+            allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, LookupFolder);
 
+            string targetDir = PutLookupInInfra ? TargetInfrastructureDirectory : TargetDirectory;
             template = new CSharpLookupServiceTemplate(entitySetting, CSharpLookupServiceTemplate.LookupServiceTemplateType.RunTimeClass);
-            allWritten &= RenderTemplate(template, TargetDirectory, ServiceFolder);
+            allWritten &= RenderTemplate(template, targetDir, LookupFolder);
         }
 
         return allWritten;
