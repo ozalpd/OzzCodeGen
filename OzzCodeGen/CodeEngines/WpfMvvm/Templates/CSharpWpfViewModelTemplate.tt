@@ -74,5 +74,10 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
 <#      } #>
         }
 <#  } #>
+
+        public bool ValidateModel()
+        {
+            return ValidateModel(_<#= EntitySetting.Name.ToCamelCase() #>);
+        }
     }
 }

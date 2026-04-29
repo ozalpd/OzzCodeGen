@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [2.3.2] - 2026-04-26
+## [2.3.2] - 2026-04-27
 
 ### Added
 - Added `PutLookupInInfra` property to `BaseMvvmCodeEngine` to control whether lookup services are placed in the infrastructure folder.
@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Renamed `ServiceFolder` to `LookupFolder` and `ServiceNamespaceName` to `LookupNamespaceName` in `BaseMvvmCodeEngine` for clarity.
 - Updated `CSharpLookupServiceTemplate` and `WpfMvvmEngineUI` bindings to use the new property names.
 - Improved namespace logic for lookup service output based on infrastructure placement.
+- Added a public `ValidateModel()` method to generated WPF ViewModel classes, enabling direct validation of the backing model from the ViewModel.
 - Bumped `OzzCodeGen` version to `2.3.2`.
 - Bumped `OzzCodeGen.Wpf` version to `2.3.2`.
 - Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.

@@ -410,7 +410,15 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("    }\r\n}\r\n");
+            this.Write("\r\n        public bool ValidateModel()\r\n        {\r\n            return ValidateMode" +
+                    "l(_");
+            
+            #line 80 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpWpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n        }\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }
