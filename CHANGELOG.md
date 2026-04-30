@@ -15,7 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Enhance WpfMvvmEngineUI with toggles for Create/Edit/Delete command generation and reorganize namespace/folder UI.
 - Remove obsolete MvvmContractsTemplate and WpfMvvmCommandsTemplate.
 - Update CSharpLookupServiceTemplate to use shared LookupServiceTemplateType and centralized naming.
-- Minor code cleanups and property hiding improvements.
+- Enhances the ViewModel template to generate fields, collections, and async loading methods for foreign lookup entities.
+- Updates constructors to accept lookup services, adjusts using directives, and improves property generation for clarity and maintainability.
+- Refactors template logic for better modularity.
+
 
 ## [2.3.2] - 2026-04-27
 

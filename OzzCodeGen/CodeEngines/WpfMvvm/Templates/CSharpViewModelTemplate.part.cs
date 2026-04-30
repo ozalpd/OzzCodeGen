@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using OzzCodeGen.CodeEngines.Mvvm;
+using OzzUtils;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
@@ -29,20 +31,33 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             return base.GetIncludedProperties().Where(p => p.IncludeInViewModel);
         }
 
+        public string GetParamsDeclaration()
+        {
+            var sb = new System.Text.StringBuilder();
+            if (IsEdit)
+            {
+                sb.Append(EntitySetting.Name);
+                sb.Append(' ');
+                sb.Append(EntitySetting.Name.ToCamelCase());
+            }
+
+            var foreignLookupEntities = EntitySetting.GetForeignLookupEntities(IsEdit);
+            foreach (var lookupEntity in foreignLookupEntities)
+            {
+                if (sb.Length > 0)
+                    sb.Append(", ");
+
+                sb.Append(lookupEntity.GetLookupName(LookupServiceTemplateType.Interface));
+                sb.Append(' ');
+                sb.Append(lookupEntity.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase());
+            }
+
+            return sb.ToString();
+        }
 
         public override List<string> DefaultUsingNamespaceList()
         {
-            var namespaces = new List<string>()
-            {
-                "System",
-                //"System.Linq",
-                //"System.Collections",
-                //"System.Collections.Generic",
-                //"System.Collections.ObjectModel",
-                //"System.ComponentModel",
-                //"System.ComponentModel.DataAnnotations",
-                CodeEngine.RepositoryNamespaceName
-            };
+            var namespaces = new List<string>();
             var modelClassEngine = CodeEngine.ModelClassCodeEngine;
             if (modelClassEngine != null)
             {
@@ -51,6 +66,11 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             if (!string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
             {
                 namespaces.Add($"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.ViewModelFolder)}");
+            }
+            if (EntitySetting.GetForeignLookupEntities(IsEdit).Any())
+            {
+                namespaces.Add(GetLookupContractNamespace());
+                namespaces.Add("System.Collections.ObjectModel");
             }
             return namespaces.OrderBy(ns => ns).ToList();
         }

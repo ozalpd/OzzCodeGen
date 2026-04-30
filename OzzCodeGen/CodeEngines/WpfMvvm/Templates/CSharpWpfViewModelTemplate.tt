@@ -6,10 +6,12 @@
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzCodeGen.CodeEngines" #>
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
+<#@ import namespace="OzzCodeGen.CodeEngines.Mvvm" #>
 <#@ import namespace="OzzCodeGen.CodeEngines.Mvvm.Templates" #>
 <#@ import namespace="OzzUtils" #>
 <# 
     var properties = GetIncludedProperties().ToList();
+    var foreignLookupEntities = EntitySetting.GetForeignLookupEntities(IsEdit);
     WriteUsingNamespaces(); #>
 //----------------------------------------------------------------------------------
 //
@@ -23,21 +25,40 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
 {
     public partial class <#= GetClassName() #> : <#= CodeEngine.AbstractCreateEditViewModelName #>
     {
+<#  foreach (var lookupEntity in foreignLookupEntities) { #>
+        private readonly <#= lookupEntity.GetLookupName(LookupServiceTemplateType.Interface) #> _<#= lookupEntity.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase() #>;
+<#  } #>
         private <#= EntitySetting.Name #> _<#= EntitySetting.Name.ToCamelCase() #>;
         public <#= EntitySetting.Name #> <#= EntitySetting.Name #> => _<#= EntitySetting.Name.ToCamelCase() #>;
 
+        public <#= GetClassName() #>(<#= GetParamsDeclaration() #>)
+        {
+<#  foreach (var lookupEntity in foreignLookupEntities) { #>
+            _<#= lookupEntity.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase() #> = <#= lookupEntity.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase() #>;
+            <#= lookupEntity.Name.Pluralize() #> = new ObservableCollection<<#= lookupEntity.Name #>>();
+
+<#  } #>
 <#  if (IsEdit) { #>
-        public <#= GetClassName() #>(<#= EntitySetting.Name #> <#= EntitySetting.Name.ToCamelCase() #>)
-        {
             _<#= EntitySetting.Name.ToCamelCase() #> = <#= EntitySetting.Name.ToCamelCase() #>;
-        }
 <#  } else { #>
-        public <#= GetClassName() #>()
-        {
             _<#= EntitySetting.Name.ToCamelCase() #> = new <#= EntitySetting.Name #>();
 <#      foreach (var prop in EntitySetting.GetDefaultValuedProperties()) {#>
             <#= prop.Name #> = <#= prop.FormatDefaultValue() #>;
 <#    } #>
+<#  } #>
+        }
+<#  foreach (var lookupEntity in foreignLookupEntities) { #>
+           
+        public ObservableCollection<<#= lookupEntity.Name #>> <#= lookupEntity.Name.Pluralize() #> { get; }
+
+        public async Task Load<#= lookupEntity.Name.Pluralize() #>Async()
+        {
+            var items = await _<#= lookupEntity.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase() #>.Get<#= lookupEntity.Name.Pluralize() #>Async(<#= lookupEntity.HasIsActiveProperty() ? "isActive: true" : "" #>);
+            <#= lookupEntity.Name.Pluralize() #>.Clear();
+            foreach (var item in items)
+            {
+                <#= lookupEntity.Name.Pluralize() #>.Add(item);
+            }
         }
 <#  } #>
 
@@ -46,10 +67,12 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
         bool isReadOnly = IsEdit ? prop.IsReadOnlyInEdit : prop.IsReadOnlyInCreate;
 #>
 
+<#      if (isReadOnly) { #>
+            public <#= prop.GetTypeName() #> <#= prop.Name #> => _<#= EntitySetting.Name.ToCamelCase() #>.<#= prop.Name #>;
+<#      } else { #>
         public <#= prop.GetTypeName() #> <#= prop.Name #>
         {
             get { return _<#= EntitySetting.Name.ToCamelCase() #>.<#= prop.Name #>; }
-<#      if (!isReadOnly) { #>
             set
             {
 <#          if (prop.IsNullableString) { #>
@@ -71,8 +94,8 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
                 }
 <#          } #>
             }
-<#      } #>
         }
+<#      } #>
 <#  } #>
 
         public bool ValidateModel()
