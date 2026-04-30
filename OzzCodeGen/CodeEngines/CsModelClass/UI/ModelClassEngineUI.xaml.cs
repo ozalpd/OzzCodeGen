@@ -32,7 +32,11 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.UI
             HiddenColumns.Add("IsComplex");
             HiddenColumns.Add("IsBoolean");
             HiddenColumns.Add("IsDateTime");
+            HiddenColumns.Add("SearchableNonRangeProperties");
+            HiddenColumns.Add("SearchableSimpleProperties");
+            HiddenColumns.Add("SearchableRangeProperties");
             HiddenColumns.Add("MetadataEntitySetting");
+            HiddenColumns.Add("SearchableProperties");
             HiddenColumns.Add("IsLoadingFromFile");
             HiddenColumns.Add("ModelProperties");
             HiddenColumns.Add("Properties");

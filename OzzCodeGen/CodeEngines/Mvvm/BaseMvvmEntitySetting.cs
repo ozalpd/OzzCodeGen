@@ -24,17 +24,17 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     public IEnumerable<BaseMvvmPropertySetting> MvvmProperties => Properties.Cast<BaseMvvmPropertySetting>();
 
 
-    public bool GenerateCommands
+    public bool GenerateCreateCommand
     {
-        get { return _generateCommands ?? true; }
+        get { return _generateCreateCommand ?? true; }
         set
         {
-            if (_generateCommands == value) return;
-            _generateCommands = value;
-            RaisePropertyChanged(nameof(GenerateCommands));
+            if (_generateCreateCommand == value) return;
+            _generateCreateCommand = value;
+            RaisePropertyChanged(nameof(GenerateCreateCommand));
         }
     }
-    private bool? _generateCommands;
+    private bool? _generateCreateCommand;
 
     public bool GenerateCreateView
     {
@@ -72,6 +72,30 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     }
     private bool? _generateCreateViewModel;
 
+    public bool GenerateDeleteCommand
+    {
+        get { return _generateDeleteCommand ?? true; }
+        set
+        {
+            if (_generateDeleteCommand == value) return;
+            _generateDeleteCommand = value;
+            RaisePropertyChanged(nameof(GenerateDeleteCommand));
+        }
+    }
+    private bool? _generateDeleteCommand;
+
+    public bool GenerateEditCommand
+    {
+        get { return _generateEditCommand ?? true; }
+        set
+        {
+            if (_generateEditCommand == value) return;
+            _generateEditCommand = value;
+            RaisePropertyChanged(nameof(GenerateEditCommand));
+        }
+    }
+    private bool? _generateEditCommand;
+
     public bool GenerateEditViewModel
     {
         get { return _generateEditViewModel ?? true; }
@@ -95,6 +119,15 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
         }
     }
     private bool? _generateLookupService;
+
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public bool IsInCreateDialogService => GenerateCreateView && GenerateCreateCommand;
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public bool IsInEditDialogService => GenerateEditView && GenerateEditCommand;
 
 
     public string GetCommandsNamespaceName()
@@ -185,6 +218,24 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     public IEnumerable<TPropertySetting> GetDefaultValuedProperties()
     {
         return GetInheritedIncludedProperties().Where(p => !string.IsNullOrEmpty(p.DefaultValue));
+    }
+
+    public string GetLookupName(LookupServiceTemplateType templateType)
+    {
+        switch (templateType)
+        {
+            case LookupServiceTemplateType.Interface:
+                return $"I{Name}LookupService";
+
+            case LookupServiceTemplateType.DesignTimeClass:
+                return $"{Name}MockLookupService";
+
+            case LookupServiceTemplateType.RunTimeClass:
+                return $"{Name}LookupService";
+
+            default:
+                return $"{Name}LookupService";
+        }
     }
 
     public IEnumerable<TPropertySetting> GetStringProperties()

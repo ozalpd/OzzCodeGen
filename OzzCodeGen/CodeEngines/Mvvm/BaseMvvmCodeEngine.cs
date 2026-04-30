@@ -9,11 +9,21 @@ using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.Mvvm;
 
+public enum LookupServiceTemplateType
+{
+    Interface,
+    DesignTimeClass,
+    RunTimeClass
+}
+
 public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
 {
     protected abstract BaseMvvmPropertySetting CreatePropertySetting();
 
     public readonly string AbstractCreateEditViewModelName = "AbstractCreateEditVM";
+
+    public readonly string DialogServiceContract = "IWindowDialogService";
+    public readonly string DialogServiceClassName = "WindowDialogService";
 
     public string CommandFolder
     {
@@ -28,22 +38,9 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
     }
     private string _commandFolder;
 
-    public string CommandNamespaceName
-    {
-        get
-        {
-            if (string.IsNullOrEmpty(_commandFolder))
-                _commandNamespaceName = $"{NamespaceName}.{CommandFolder}";
-            return _commandNamespaceName;
-        }
-        set
-        {
-            if (_commandNamespaceName == value) return;
-            _commandNamespaceName = value;
-            RaisePropertyChanged(nameof(CommandNamespaceName));
-        }
-    }
-    private string _commandNamespaceName;
+    [XmlIgnore]
+    [JsonIgnore]
+    public string CommandNamespaceName => $"{NamespaceName}.{CommandFolder}";
 
     /// <summary>
     /// Repository contract namespace name.
@@ -90,6 +87,8 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
     }
     private string _lookupServiceFolder;
 
+    [XmlIgnore]
+    [JsonIgnore]
     public string LookupNamespaceName
     {
         get
@@ -114,6 +113,21 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
         }
     }
     private bool? _putLookupInInfra;
+
+    /// <summary>
+    /// Local services not infrastructure services.
+    /// </summary>
+    [XmlIgnore]
+    [JsonIgnore]
+    public string ServicesFolder => "Services";
+
+    /// <summary>
+    /// Gets the fully qualified namespace name for local services, excluding infrastructure services.
+    /// Local services not infrastructure services.
+    /// </summary>
+    [XmlIgnore]
+    [JsonIgnore]
+    public string ServicesNamespaceName => $"{NamespaceName}.{ServicesFolder}";
 
     [XmlIgnore]
     [JsonIgnore]
@@ -194,29 +208,13 @@ for Commands: {TargetCommandDirectory}";
     }
     private string _viewModelFolder;
 
-    public string ViewModelNamespaceName
-    {
-        get { return _viewModelNamespaceName ?? $"{Project.NamespaceName}.ViewModels"; }
-        set
-        {
-            if (_viewModelNamespaceName == value) return;
-            _viewModelNamespaceName = value;
-            RaisePropertyChanged(nameof(ViewModelNamespaceName));
-        }
-    }
-    private string _viewModelNamespaceName;
+    [XmlIgnore]
+    [JsonIgnore]
+    public string ViewModelNamespaceName => $"{NamespaceName}.ViewModels";
 
-    public string ViewNamespaceName
-    {
-        get { return _viewNamespaceName ?? $"{Project.NamespaceName}.Views"; }
-        set
-        {
-            if (_viewNamespaceName == value) return;
-            _viewNamespaceName = value;
-            RaisePropertyChanged(nameof(ViewNamespaceName));
-        }
-    }
-    private string _viewNamespaceName;
+    [XmlIgnore]
+    [JsonIgnore]
+    public string ViewNamespaceName => $"{NamespaceName}.Views";
 
 
 

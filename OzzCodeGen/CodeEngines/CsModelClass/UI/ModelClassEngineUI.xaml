@@ -34,10 +34,10 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+            <!-- has an issue => IsEnabled="{Binding CanRender}"-->
             <Button x:Name="btnRenderTemplate"
                     Content="Render Template"
                     Background="#FFE6F4FF"
-                    IsEnabled="{Binding CanRender}"
                     Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="4"
                     Click="btnRenderTemplate_Click"/>
 

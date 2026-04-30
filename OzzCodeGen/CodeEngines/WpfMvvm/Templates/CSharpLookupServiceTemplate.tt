@@ -6,6 +6,7 @@
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzCodeGen.CodeEngines" #>
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
+<#@ import namespace="OzzCodeGen.CodeEngines.Mvvm" #>
 <#@ import namespace="OzzCodeGen.CodeEngines.Mvvm.Templates" #>
 <#@ import namespace="OzzUtils" #>
 <#  WriteUsingNamespaces(); #>

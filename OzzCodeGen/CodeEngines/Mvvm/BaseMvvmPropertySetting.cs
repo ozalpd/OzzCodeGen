@@ -90,6 +90,20 @@ public abstract class BaseMvvmPropertySetting : BaseCSharpPropertySetting
     }
     private bool? _includeInViewModel;
 
+    public bool IsPreselectedInCreate
+    {
+        get { return _isPreselectInCreate; }
+        set
+        {
+            if (_isPreselectInCreate == value || !(IsLoadingFromFile || IsComplex))
+                return;
+
+            _isPreselectInCreate = value;
+            RaisePropertyChanged(nameof(IsPreselectedInCreate));
+        }
+    }
+    private bool _isPreselectInCreate;
+
     public bool IsReadOnlyInCreate
     {
         get

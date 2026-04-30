@@ -5,7 +5,7 @@
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:ui="clr-namespace:OzzCodeGen.UI"
                      mc:Ignorable="d"
-                     d:DesignHeight="460" d:DesignWidth="1800">
+                     d:DesignHeight="520" d:DesignWidth="1800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,14 +23,14 @@
                 <ColumnDefinition Width="96" />
                 <ColumnDefinition Width="96" />
                 <ColumnDefinition Width="160" />
-                <ColumnDefinition Width="190" />
+                <ColumnDefinition Width="180" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="160" />
-                <ColumnDefinition Width="190" />
-                <ColumnDefinition Width="160" />
-                <ColumnDefinition Width="190" />
-                <ColumnDefinition Width="160" />
-                <ColumnDefinition Width="190" />
+                <ColumnDefinition Width="166" />
+                <ColumnDefinition Width="180" />
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="180" />
+                <ColumnDefinition Width="180" />
+                <ColumnDefinition Width="180" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -92,7 +92,7 @@
             <TextBox Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="0"
                      Text="{Binding TargetFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetDirectory}"
-                     Style="{StaticResource textBoxStyle}" Margin="4,0"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
                      Background="#FFFFFAED"/>
 
 
@@ -101,7 +101,7 @@
                        VerticalAlignment="Center"/>
 			<TextBox Grid.Column="5" Grid.Row="1"
                      Text="{Binding NamespaceName, Mode=TwoWay}"
-                     Style="{StaticResource textBoxStyle}" Margin="4,0"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
                      Background="#FFFFFAED"/>
 			
 
@@ -111,7 +111,7 @@
             <TextBox Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="2"
                      Text="{Binding InfrastructureFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetInfrastructureDirectory}"
-                     Style="{StaticResource textBoxStyle}" Margin="4,0"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
                      Background="#FFFFFAED"/>
             <TextBlock Grid.Column="4" Grid.Row="3" Margin="4,2,0,0"
                        Text="Infrastructure Namespace:"
@@ -120,7 +120,7 @@
             <TextBox Grid.Column="5" Grid.Row="3"
                      Text="{Binding InfrastructureNamespaceName, Mode=TwoWay}"
                      ToolTip="Namespace for generated infrastructure contracts or base classes."
-                     Style="{StaticResource textBoxStyle}" Margin="4,0"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
                      Background="#FFFFFAED"/>
             
             
@@ -132,7 +132,7 @@
             <TextBox Grid.Column="8" Grid.Row="0"
                      Text="{Binding RepositoryNamespaceName, Mode=TwoWay}"
                      ToolTip="Namespace for repository implementations."
-                     Style="{StaticResource textBoxStyle}" Margin="4,0"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
                      Background="#FFFFFAED"/>
 
             <TextBlock Grid.Column="7" Grid.Row="1" Margin="4,2,0,0"
@@ -142,85 +142,52 @@
             <TextBox Grid.Column="8" Grid.Row="1"
                      Text="{Binding RepoContractNamespaceName, Mode=TwoWay}"
                      ToolTip="Namespace for repository contracts."
-                     Style="{StaticResource textBoxStyle}" Margin="4,0"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
                      Background="#FFFFFAED"/>
 
 
-            <CheckBox Grid.Column="8" Grid.Row="3" VerticalAlignment="Center" Margin="8,4,0,0"
+
+            <TextBlock Grid.Column="10" Grid.Row="0" Margin="4,2,0,0"
+                       Text="Commands Folder/Namespace:"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="11" Grid.Row="0"
+                     Text="{Binding CommandFolder, Mode=TwoWay}"
+                     ToolTip="{Binding TargetCommandDirectory}"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
+                     Background="#FFFFFAED"/>
+            <TextBlock Grid.Column="10" Grid.Row="1" Margin="4,2,0,0"
+                       Text="ViewModel Folder/Namespace:"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="11" Grid.Row="1"
+                     Text="{Binding ViewModelFolder, Mode=TwoWay}"
+                     ToolTip="{Binding TargetViewModelDirectory}"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
+                     Background="#FFFFFAED"/>
+
+            <TextBlock Grid.Column="10" Grid.Row="2" Margin="4,2,0,0"
+                       Text="View Folder/Namespace:"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="11" Grid.Row="2"
+                     Text="{Binding ViewFolder, Mode=TwoWay}"
+                     ToolTip="{Binding TargetViewDirectory}"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
+                     Background="#FFFFFAED"/>
+
+            <TextBlock Grid.Column="10" Grid.Row="3" Margin="4,2,0,0"
+                       Text="Lookup Service Folder:"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="11" Grid.Row="3"
+                     Text="{Binding LookupFolder, Mode=TwoWay}"
+                     ToolTip="{Binding TargetLookupDirectory}"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
+                     Background="#FFFFFAED"/>
+
+            <CheckBox Grid.Column="12" Grid.Row="3" VerticalAlignment="Center" Margin="8,4,0,0"
                       Content="Put Lookup in Infrastructure"
                       IsChecked="{Binding PutLookupInInfra}"/>
 
-            <TextBlock Grid.Column="11" Grid.Row="0" Margin="4,2,0,0"
-                       Text="Commands Namespace:"
-                       ToolTip="Namespace for generated commands."
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="12" Grid.Row="0"
-                     Text="{Binding CommandNamespaceName, Mode=TwoWay}"
-                     ToolTip="Namespace for generated commands."
-                     Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
 
-            <TextBlock Grid.Column="11" Grid.Row="1" Margin="4,2,0,0"
-                       Text="ViewModel Namespace:"
-                       ToolTip="Namespace for generated view models."
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="12" Grid.Row="1"
-                     Text="{Binding ViewModelNamespaceName, Mode=TwoWay}"
-                     ToolTip="Namespace for generated view models."
-                     Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
-
-            <TextBlock Grid.Column="11" Grid.Row="2" Margin="4,2,0,0"
-                       Text="View Namespace:"
-                       ToolTip="Namespace for generated views."
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="12" Grid.Row="2"
-                     Text="{Binding ViewNamespaceName, Mode=TwoWay}"
-                     ToolTip="Namespace for generated views."
-                     Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
-
-            <TextBlock Grid.Column="11" Grid.Row="3" Margin="4,2,0,0"
-                       Text="Service Namespace:"
-                       ToolTip="Namespace for generated services."
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="12" Grid.Row="3"
-                     Text="{Binding LookupNamespaceName, Mode=OneWay}"
-                     ToolTip="Namespace for generated services."
-                     Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
-
-            
-
-            <TextBlock Grid.Column="9" Grid.Row="0" Margin="4,2,0,0"
-                       Text="Commands Folder:"
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="10" Grid.Row="0"
-                     Text="{Binding CommandFolder, Mode=TwoWay}"
-                     ToolTip="{Binding TargetCommandDirectory}"
-                     Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
-            <TextBlock Grid.Column="9" Grid.Row="1" Margin="4,2,0,0"
-                       Text="ViewModel Folder:"
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="10" Grid.Row="1"
-                     Text="{Binding ViewModelFolder, Mode=TwoWay}"
-                     ToolTip="{Binding TargetViewModelDirectory}"
-                     Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
-
-            <TextBlock Grid.Column="9" Grid.Row="2" Margin="4,2,0,0"
-                       Text="View Folder:"
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="10" Grid.Row="2"
-                     Text="{Binding ViewFolder, Mode=TwoWay}"
-                     ToolTip="{Binding TargetViewDirectory}"
-                     Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
-
-            <TextBlock Grid.Column="9" Grid.Row="3" Margin="4,2,0,0"
-                       Text="Lookup Service Folder:"
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="10" Grid.Row="3"
-                     Text="{Binding LookupFolder, Mode=TwoWay}"
-                     ToolTip="{Binding TargetLookupDirectory}"
-                     Style="{StaticResource textBoxStyle}" Background="#FFFFFAED"/>
-
-
-            <Grid Grid.Row="4" Grid.ColumnSpan="13" Margin="4">
+            <Grid Grid.Row="4" Grid.ColumnSpan="14" Margin="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" MaxWidth="832"/>
                     <ColumnDefinition Width="2*"/>
@@ -257,8 +224,13 @@
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
+                        <RowDefinition Height="8"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
+                        <RowDefinition Height="8"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="8"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
@@ -280,33 +252,49 @@
                              Text="{Binding SubFolder, Mode=TwoWay}"
                              ToolTip="SubFolder for the entity, if this is empty or whitespace, generated files will be placed in the related folders."/>
 
+
+                    <CheckBox Grid.Row="5" VerticalAlignment="Center" Margin="4,0,0,0"
+                              Content="Generate Create Command"
+                              ToolTip="Generate a Create Command for the entity."
+                              IsChecked="{Binding GenerateCreateCommand}"/>
+
                     <CheckBox Grid.Row="6" VerticalAlignment="Center" Margin="4,0,0,0"
-                              Content="Generate Create ViewModel"
+                              Content="Generate Edit Command"
+                              ToolTip="Generate an Edit Command for the entity."
+                              IsChecked="{Binding GenerateEditCommand}"/>
+
+                    <CheckBox Grid.Row="7" VerticalAlignment="Center" Margin="4,0,0,0"
+                              Content="Generate Delete Command"
+                              ToolTip="Generate a Delete Command for the entity."
+                              IsChecked="{Binding GenerateDeleteCommand}"/>
+
+                    <CheckBox Grid.Row="9" VerticalAlignment="Center" Margin="4,0,0,0"
+                              Content="Generate Create VM"
                               ToolTip="Generate a Create ViewModel for the entity."
                               IsChecked="{Binding GenerateCreateViewModel}"/>
 
-                    <CheckBox Grid.Row="7" VerticalAlignment="Center" Margin="4,0,0,0"
-                              Content="Generate Edit ViewModel"
+                    <CheckBox Grid.Row="10" VerticalAlignment="Center" Margin="4,0,0,0"
+                              Content="Generate Edit VM"
                               ToolTip="Generate an Edit ViewModel for the entity."
                               IsChecked="{Binding GenerateEditViewModel}"/>
 
-                    <CheckBox Grid.Row="8" VerticalAlignment="Center" Margin="4,0,0,0"
+                    <CheckBox Grid.Row="12" VerticalAlignment="Center" Margin="4,0,0,0"
                               Content="Generate Create View"
                               ToolTip="Generate a Create View for the entity."
                               IsChecked="{Binding GenerateCreateView}"/>
 
-                    <CheckBox Grid.Row="9" VerticalAlignment="Center" Margin="4,0,0,0"
+                    <CheckBox Grid.Row="13" VerticalAlignment="Center" Margin="4,0,0,0"
                               Content="Generate Edit View"
                               ToolTip="Generate an Edit View for the entity."
                               IsChecked="{Binding GenerateEditView}"/>
 
-                    <CheckBox Grid.Row="10" VerticalAlignment="Center" Margin="4,0,0,0"
+                    <CheckBox Grid.Row="15" VerticalAlignment="Center" Margin="4,0,0,0"
                               Content="Generate Lookup Service"
                               IsChecked="{Binding GenerateLookupService}"/>
 
 
-                    <GridSplitter Grid.Column="1" Grid.RowSpan="16" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" ResizeDirection="Columns"/>
-                    <DataGrid x:Name="grdPropertySettings" Grid.Column="1" Grid.RowSpan="16" Margin="8,0,0,0" Background="#FFFDEBC4"
+                    <GridSplitter Grid.Column="1" Grid.RowSpan="22" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" ResizeDirection="Columns"/>
+                    <DataGrid x:Name="grdPropertySettings" Grid.Column="1" Grid.RowSpan="22" Margin="8,0,0,0" Background="#FFFDEBC4"
                               ItemsSource="{Binding Properties, Mode=TwoWay}"
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"

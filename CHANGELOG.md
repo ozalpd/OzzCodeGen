@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.3.3] - 2026-04-30
+
+### Added
+- Introduce `WpfDialogServcTemplate` for generating dialog service interfaces and implementations for entity create/edit dialogs.
+
+### Changed
+- Update WpfMvvmCodeEngine to generate dialog service files in the Services folder, replacing old commands template generation.
+- Refactor MVVM engine/entity settings: add dialog service naming, folder, and namespace properties; add flags for Create/Edit/Delete command generation; add IsInCreateDialogService/IsInEditDialogService.
+- Improve lookup service naming and dialog parameter generation.
+- Enhance WpfMvvmEngineUI with toggles for Create/Edit/Delete command generation and reorganize namespace/folder UI.
+- Remove obsolete MvvmContractsTemplate and WpfMvvmCommandsTemplate.
+- Update CSharpLookupServiceTemplate to use shared LookupServiceTemplateType and centralized naming.
+- Minor code cleanups and property hiding improvements.
+
 ## [2.3.2] - 2026-04-27
 
 ### Added
@@ -14,10 +28,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Updated `CSharpLookupServiceTemplate` and `WpfMvvmEngineUI` bindings to use the new property names.
 - Improved namespace logic for lookup service output based on infrastructure placement.
 - Added a public `ValidateModel()` method to generated WPF ViewModel classes, enabling direct validation of the backing model from the ViewModel.
-- Bumped `OzzCodeGen` version to `2.3.2`.
-- Bumped `OzzCodeGen.Wpf` version to `2.3.2`.
-- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
-- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
 
 ## [2.3.1] - 2026-04-26
 
@@ -30,10 +40,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Updated WPF repository-related UIs and templates to clarify infrastructure and contract settings.
 - Improved namespace handling across repository code generation.
 - Applied repository code generation cleanup and refactoring for maintainability.
-- Bumped `OzzCodeGen` version to `2.3.1`.
-- Bumped `OzzCodeGen.Wpf` version to `2.3.1`.
-- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
-- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
 
 ### Removed
 - Removed obsolete MVVM base class template.
@@ -87,10 +93,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Updated `.csproj` template wiring to include new WPF base ViewModel and lookup service templates and generated files.
 - Minor parameter refactoring in `CSharpWpfViewModelTemplate` for consistency and clarity.
 - Added XML documentation clarifying `InfrastructureFolder` platform-agnostic intent for future engine reuse (e.g., MAUI).
-- Bumped `OzzCodeGen` version to `2.3.0`.
-- Bumped `OzzCodeGen.Wpf` version to `2.3.0`.
-- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
-- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
 
 ### Fixed
 - Fixed infrastructure directory resolution in `BaseAppInfraCodeEngine`, `BaseMvvmCodeEngine`, and `CSharpSqliteRepositoryEngine` to use `Project.TargetSolutionDir`.
@@ -105,10 +107,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Refactored `GetMappingExpression` in repository templates to use the new decimal helpers and accept a `needsComma` parameter for improved formatting.
 - Updated SQLite repository templates to use the improved mapping and formatting logic throughout.
 - No business logic changes; generated code is clearer and more robust for decimal handling.
-- Bumped `OzzCodeGen` version to `2.2.23`.
-- Bumped `OzzCodeGen.Wpf` version to `2.2.23`.
-- Kept `OzzLocalization` version at `2.1.6` because there were no changes in this release.
-- Kept `OzzLocalization.Wpf` version at `2.1.6` because there were no changes in this release.
 
 ## [2.2.22] - 2026-04-18
 

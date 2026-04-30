@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using OzzCodeGen.CodeEngines.Mvvm;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
@@ -14,20 +15,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         public string GetClassName(LookupServiceTemplateType? templateType = null)
         {
             var templType = templateType ?? TemplateType;
-            switch (templType)
-            {
-                case LookupServiceTemplateType.Interface:
-                    return $"I{EntitySetting.Name}LookupService";
-
-                case LookupServiceTemplateType.DesignTimeClass:
-                    return $"{EntitySetting.Name}MockLookupService";
-
-                case LookupServiceTemplateType.RunTimeClass:
-                    return $"{EntitySetting.Name}LookupService";
-
-                default:
-                    return $"{EntitySetting.Name}LookupService";
-            }
+            return EntitySetting.GetLookupName(templType);
         }
 
         public string GetDeclaration()
@@ -70,12 +58,5 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         }
 
         public LookupServiceTemplateType TemplateType { get; }
-
-        public enum LookupServiceTemplateType
-        {
-            Interface,
-            DesignTimeClass,
-            RunTimeClass
-        }
     }
 }

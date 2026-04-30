@@ -1,6 +1,7 @@
 ﻿using OzzCodeGen.CodeEngines.Mvvm.Templates;
 using System.Collections.Generic;
 using System.Linq;
+using static OzzCodeGen.CodeEngines.WpfMvvm.Templates.CSharpLookupServiceTemplate;
 
 namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {
@@ -39,6 +40,15 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
             return includedProperties;
         }
+
+        public string GetLookupContractNamespace()
+        {
+            if (string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
+                return CodeEngine.LookupNamespaceName;
+
+            return $"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.LookupFolder)}";
+        }
+
 
         public override List<string> DefaultUsingNamespaceList()
         {

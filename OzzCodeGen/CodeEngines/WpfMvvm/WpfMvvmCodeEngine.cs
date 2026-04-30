@@ -125,10 +125,11 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
     private bool RenderCommands(WpfMvvmEntitySetting entitySetting)
     {
-        if (!entitySetting.GenerateCommands)
+        if (!entitySetting.GenerateEditCommand)
             return true;
-        var template = new WpfMvvmCommandsTemplate(entitySetting);
-        var fileName = Path.Combine(TargetDirectory, CommandFolder, template.GetDefaultFileName());
+        //var template = new WpfDialogServcTemplate(entitySetting);
+        var template = new WpfDialogServcTemplate(this, isInterface: true);
+        var fileName = Path.Combine(TargetDirectory, ServicesFolder, template.GetDefaultFileName());
         return template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
     }
 
@@ -174,13 +175,13 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
         if (entitySetting.GenerateLookupService)
         {
-            var template = new CSharpLookupServiceTemplate(entitySetting, CSharpLookupServiceTemplate.LookupServiceTemplateType.Interface);
+            var template = new CSharpLookupServiceTemplate(entitySetting, LookupServiceTemplateType.Interface);
             allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, LookupFolder);
-            template = new CSharpLookupServiceTemplate(entitySetting, CSharpLookupServiceTemplate.LookupServiceTemplateType.DesignTimeClass);
+            template = new CSharpLookupServiceTemplate(entitySetting, LookupServiceTemplateType.DesignTimeClass);
             allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, LookupFolder);
 
             string targetDir = PutLookupInInfra ? TargetInfrastructureDirectory : TargetDirectory;
-            template = new CSharpLookupServiceTemplate(entitySetting, CSharpLookupServiceTemplate.LookupServiceTemplateType.RunTimeClass);
+            template = new CSharpLookupServiceTemplate(entitySetting, LookupServiceTemplateType.RunTimeClass);
             allWritten &= RenderTemplate(template, targetDir, LookupFolder);
         }
 
@@ -203,26 +204,6 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
             //var fileName = Path.Combine(TargetDirectory, ViewFolder, template.GetDefaultFileName());
             //allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
         }
-        return allWritten;
-    }
-
-    /// <summary>
-    /// Renders shared MVVM infrastructure output for the engine.
-    /// </summary>
-    /// <remarks>
-    /// Infrastructure is rendered independently from per-entity files because these files are cross-cutting and reused by
-    /// all generated views/viewmodels/commands. This also keeps future platform engines (for example MAUI) aligned on the
-    /// same contracts and base classes.
-    /// </remarks>
-    private bool RenderInfrastructure()
-    {
-        bool allWritten = true;
-
-        // Shared contract interfaces consumed by generated ViewModels and commands.
-        var contractTemplate = new MvvmContractsTemplate(this);
-        var contractFileName = Path.Combine(TargetDirectory, InfrastructureFolder, "Contracts", contractTemplate.GetDefaultFileName());
-        allWritten &= contractTemplate.WriteToFile(contractFileName, OverwriteExisting);
-
         return allWritten;
     }
 
