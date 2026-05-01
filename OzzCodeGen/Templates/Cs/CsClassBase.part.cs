@@ -20,11 +20,28 @@ namespace OzzCodeGen.Templates.Cs
             };
         }
 
+        /// <summary>
+        /// Returns the C# accessibility modifier and partial keyword for the current type based on its visibility.
+        /// </summary>
+        /// <returns>A string containing either "public partial" if the type is public, or "internal partial"
+        /// if the type is internal.</returns>
+        public string GetAccessibility()
+        {
+            return IsPublic ? "public partial" : "internal partial";
+        }
+
+
         protected string GetFolderToNamespace(string folder)
         {
             if (string.IsNullOrWhiteSpace(folder))
                 return string.Empty;
             return folder.Replace("/", ".").Replace("\\", ".");
         }
+
+        /// <summary>
+        /// The generated class or interface will have public accessibility when IsPublic is true
+        /// and will have internal accessibility when IsPublic is false.
+        /// </summary>
+        public bool IsPublic { get; set; } = true;
     }
 }

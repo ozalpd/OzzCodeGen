@@ -1,4 +1,5 @@
 using OzzCodeGen.CodeEngines.CsModelClass;
+using OzzCodeGen.CodeEngines.Localization;
 using OzzCodeGen.Definitions;
 using System;
 using System.IO;
@@ -13,10 +14,13 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
 {
     protected abstract BaseMvvmPropertySetting CreatePropertySetting();
 
-    public readonly string AbstractCreateEditViewModelName = "AbstractCreateEditVM";
+    public readonly string BaseAsyncCommandName = "AbstractAsyncCommand";
+    public readonly string BaseCommandName = "AbstractCommand";
+    public readonly string BaseCreateEditViewModelName = "AbstractCreateEditVM";
 
     public readonly string DialogServiceContract = "IWindowDialogService";
     public readonly string DialogServiceClassName = "WindowDialogService";
+
 
     public string CommandFolder
     {
@@ -30,6 +34,12 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
         }
     }
     private string _commandFolder;
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public string BaseCommandNamespaceName => string.IsNullOrWhiteSpace(InfrastructureFolder)
+                                           ? $"{NamespaceName}.{CommandFolder}"
+                                           : $"{InfrastructureNamespaceName}.{CommandFolder}";
 
     [XmlIgnore]
     [JsonIgnore]
@@ -152,8 +162,8 @@ for Commands: {TargetCommandDirectory}";
     [XmlIgnore]
     [JsonIgnore]
     public string TargetLookupDirectory => PutLookupInInfra
-                                          ? Path.GetFullPath(Path.Combine(TargetInfrastructureDirectory, LookupFolder))
-                                          : Path.GetFullPath(Path.Combine(TargetDirectory, LookupFolder));
+                                         ? Path.GetFullPath(Path.Combine(TargetInfrastructureDirectory, LookupFolder))
+                                         : Path.GetFullPath(Path.Combine(TargetDirectory, LookupFolder));
 
     [XmlIgnore]
     [JsonIgnore]
@@ -228,6 +238,22 @@ for Commands: {TargetCommandDirectory}";
         }
     }
     private CSharpModelClassCodeEngine _modelClassEngine;
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public ResxEngine ResxEngine
+    {
+        get
+        {
+            if (_resxEngine == null && Project != null)
+            {
+                var engine = Project.GetCodeEngine(EngineTypes.LocalizationResxGenId);
+                _resxEngine = engine != null ? (ResxEngine)engine : null;
+            }
+            return _resxEngine;
+        }
+    }
+    private ResxEngine _resxEngine;
 
 
     protected virtual BaseMvvmPropertySetting GetDefaultPropertySetting(BaseProperty property, BaseEntitySetting setting)

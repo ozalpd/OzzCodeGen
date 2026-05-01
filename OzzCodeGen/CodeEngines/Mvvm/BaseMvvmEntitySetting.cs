@@ -282,6 +282,27 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
         return GetInheritedIncludedProperties().Where(p => !string.IsNullOrEmpty(p.DefaultValue));
     }
 
+    public string GetCommandName(MvvmTemplate templateType)
+    {
+        switch (templateType)
+        {
+            case MvvmTemplate.Create:
+                return $"{Name}CreateCommand";
+
+            case MvvmTemplate.Edit:
+                return $"{Name}EditCommand";
+
+            case MvvmTemplate.Delete:
+                return $"{Name}DeleteCommand";
+
+            case MvvmTemplate.Collection:
+                return $"{Name.Pluralize()}ManageCommand";
+
+            default:
+                return $"{Name}Command";
+        }
+    }
+
     public string GetLookupName(LookupTemplate templateType)
     {
         switch (templateType)
@@ -297,6 +318,49 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
 
             default:
                 return $"{Name}LookupService";
+        }
+    }
+
+    public string GetViewModelName(MvvmTemplate templateType)
+    {
+        switch (templateType)
+        {
+            case MvvmTemplate.Create:
+                return $"{Name}CreateVM";
+
+            case MvvmTemplate.Edit:
+                return $"{Name}EditVM";
+
+            case MvvmTemplate.Collection:
+                return $"{Name}CollectionVM";
+            default:
+                return $"{Name}ViewModel";
+        }
+    }
+
+    public string GetViewName(MvvmTemplate templateType)
+    {
+        switch (templateType)
+        {
+            case MvvmTemplate.Create:
+                // This will propbably be a dialog view, so we use the entity name followed by 'CreateView' to indicate that it's a view for creating an instance of the entity.
+                return $"{Name}CreateView";
+
+            case MvvmTemplate.Edit:
+                // This will propbably be a dialog view, so we use the entity name followed by 'EditView' to indicate that it's a view for editing an instance of the entity.
+                return $"{Name}EditView";
+
+            case MvvmTemplate.Delete:
+                // If we use a view for delete operations, we should mostly use a dialog view, so the entity name followed by 'DeleteView' indicates that it's a view for confirming the deletion of an instance of the entity.
+                return $"{Name}DeleteView";
+
+            case MvvmTemplate.Collection:
+                // For collection views, we typically use the pluralized form of the entity name to indicate that the view is for managing multiple instances of the entity.
+                // Name ends with 'Window' to indicate that it's a window view, which is common for collection views in MVVM applications.
+                return $"{Name.Pluralize()}Window";
+
+            default:
+                return $"{Name}Window";
         }
     }
 

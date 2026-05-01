@@ -57,6 +57,6 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             return namespaces.OrderBy(ns => ns).ToList();
         }
 
-        public LookupTemplate TemplateType { get; }
+        public new LookupTemplate TemplateType { get; }
     }
 }

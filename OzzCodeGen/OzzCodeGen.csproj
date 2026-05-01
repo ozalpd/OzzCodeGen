@@ -240,6 +240,11 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>WpfBaseVmTemplate.tt</DependentUpon>
 		</Compile>
+		<Compile Update="CodeEngines\WpfMvvm\Templates\WpfCommandTemplate.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>WpfCommandTemplate.tt</DependentUpon>
+		</Compile>
 		<Compile Update="CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.cs">
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
@@ -378,6 +383,9 @@
 		</None>
 		<None Update="CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt">
 		  <LastGenOutput>WpfBaseVmTemplate.cs</LastGenOutput>
+		</None>
+		<None Update="CodeEngines\WpfMvvm\Templates\WpfCommandTemplate.tt">
+		  <LastGenOutput>WpfCommandTemplate.cs</LastGenOutput>
 		</None>
 		<None Update="CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt">
 		  <LastGenOutput>WpfViewModelTemplate.cs</LastGenOutput>

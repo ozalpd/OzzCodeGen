@@ -1,4 +1,3 @@
-using OzzCodeGen.CodeEngines.CsSqliteRepository;
 using OzzCodeGen.CodeEngines.Mvvm;
 using OzzCodeGen.CodeEngines.WpfMvvm.Templates;
 using OzzCodeGen.CodeEngines.WpfMvvm.UI;
@@ -146,14 +145,24 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
             return true;
         bool allWritten = true;
 
-        var template = new WpfDialogServcTemplate(this, isInterface: true);
-        allWritten &= RenderTemplate(template, TargetDirectory, ServicesFolder);
-        template = new WpfDialogServcTemplate(this, isInterface: false);
-        allWritten &= RenderTemplate(template, TargetDirectory, ServicesFolder);
+        var svcTmplate = new WpfDialogServcTemplate(this, isInterface: true);
+        svcTmplate.IsPublic = false;
+        allWritten &= RenderTemplate(svcTmplate, TargetDirectory, ServicesFolder);
 
-        //TODO: Add command templates here
-        //CreateEditCommandTemplate, DeleteCommandTemplate, etc.
+        svcTmplate = new WpfDialogServcTemplate(this, isInterface: false);
+        svcTmplate.IsPublic = false;
+        allWritten &= RenderTemplate(svcTmplate, TargetDirectory, ServicesFolder);
 
+        //TODO: Add base command templates here
+        //
+
+        var template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Create);
+        template.IsPublic = false;
+        allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
+
+        template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Edit);
+        template.IsPublic = false;
+        allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
 
         return allWritten;
     }
@@ -171,25 +180,29 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
         if (entitySetting.GenerateCreateVM)
         {
-            var template = new WpfViewModelTemplate(entitySetting, isEdit: false);
+            var template = new WpfViewModelTemplate(entitySetting, MvvmTemplate.Create);
             allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
         }
 
         if (entitySetting.GenerateEditVM)
         {
-            var template = new WpfViewModelTemplate(entitySetting, isEdit: true);
+            var template = new WpfViewModelTemplate(entitySetting, MvvmTemplate.Edit);
             allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
         }
 
         if (entitySetting.GenerateLookupService)
         {
+            bool targetInfra = !string.IsNullOrEmpty(InfrastructureFolder);
             var template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.Interface);
+            template.IsPublic = targetInfra;
             allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, LookupFolder);
             template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.DesignTimeClass);
+            template.IsPublic = targetInfra;
             allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, LookupFolder);
 
             string targetDir = PutLookupInInfra ? TargetInfrastructureDirectory : TargetDirectory;
             template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.RunTimeClass);
+            template.IsPublic = PutLookupInInfra;
             allWritten &= RenderTemplate(template, targetDir, LookupFolder);
         }
 

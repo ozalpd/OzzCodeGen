@@ -27,3 +27,14 @@ public enum LookupTemplate
     RunTimeClass
 }
 
+/// <summary>
+/// Specifies the type of command, view model, or view to be generated, such as creating, editing, deleting, or
+/// managing a collection of items.
+/// </summary>
+public enum MvvmTemplate
+{
+    Create,
+    Edit,
+    Delete,
+    Collection
+}

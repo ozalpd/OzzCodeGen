@@ -37,7 +37,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             #line 11 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
  
     var properties = GetIncludedProperties().ToList();
-    var foreignLookupEntities = EntitySetting.GetForeignLookupEntities(IsEdit);
+    var foreignLookupEntities = GetForeignLookupEntities(IsEdit);
     WriteUsingNamespaces(); 
             
             #line default
@@ -67,7 +67,7 @@ namespace ");
             this.Write(" : ");
             
             #line 25 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.AbstractCreateEditViewModelName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.BaseCreateEditViewModelName));
             
             #line default
             #line hidden

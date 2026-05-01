@@ -26,42 +26,35 @@ public class WpfMvvmEntitySetting : BaseMvvmEntitySetting<WpfMvvmPropertySetting
 
     public IEnumerable<WpfMvvmEntitySetting> GetForeignLookupEntities(bool isForEdit = false)
     {
-        if (isForEdit && _foreignLookupForEdit != null)
-            return _foreignLookupForEdit;
-
-        if (!isForEdit && _foreignLookupEntities != null)
-            return _foreignLookupEntities;
-
         var complexproperties = Properties.Where(p => p.PropertyDefinition is ComplexProperty);
         var complexTypeNames = complexproperties.Select(p => p.GetTypeName(getReturnType: true))
                                                 .Distinct()
                                                 .ToList();
-        var complexTypeNamesForEdit = new List<string>();
-        foreach (var item in complexproperties)
+        if (isForEdit)
         {
-            string fkeyName = item.GetForeignKeyName();
-            var fkeyProp = Properties.FirstOrDefault(p => p.Name.Equals(fkeyName));
-            string typeName = fkeyProp != null && !fkeyProp.IsImmutable ? item.GetTypeName(getReturnType: true) : null;
-            if (typeName != null && !complexTypeNamesForEdit.Contains(typeName))
+            var complexTypeNamesForEdit = new List<string>();
+            foreach (var item in complexproperties)
             {
-                complexTypeNamesForEdit.Add(typeName);
+                string fkeyName = item.GetForeignKeyName();
+                var fkeyProp = Properties.FirstOrDefault(p => p.Name.Equals(fkeyName));
+                string typeName = fkeyProp != null && !fkeyProp.IsImmutable ? item.GetTypeName(getReturnType: true) : null;
+                if (typeName != null && !complexTypeNamesForEdit.Contains(typeName))
+                {
+                    complexTypeNamesForEdit.Add(typeName);
+                }
             }
+
+            return CodeEngine.EntitySettings.OfType<WpfMvvmEntitySetting>()
+                                            .Where(e => e.GenerateLookupService
+                                                     && complexTypeNamesForEdit.Contains(e.EntityDefinition.Name))
+                                            .OrderBy(e => e.Name)
+                                            .ToList();
         }
 
-
-        _foreignLookupEntities = CodeEngine.EntitySettings.OfType<WpfMvvmEntitySetting>()
-                                           .Where(e => e.GenerateLookupService
-                                                    && complexTypeNames.Contains(e.EntityDefinition.Name))
-                                           .OrderBy(e => e.Name)
-                                           .ToList();
-        _foreignLookupForEdit = CodeEngine.EntitySettings.OfType<WpfMvvmEntitySetting>()
-                                          .Where(e => e.GenerateLookupService
-                                                   && complexTypeNamesForEdit.Contains(e.EntityDefinition.Name))
-                                          .OrderBy(e => e.Name)
-                                          .ToList();
-
-        return _foreignLookupEntities;
+        return CodeEngine.EntitySettings.OfType<WpfMvvmEntitySetting>()
+                                        .Where(e => e.GenerateLookupService
+                                                 && complexTypeNames.Contains(e.EntityDefinition.Name))
+                                        .OrderBy(e => e.Name)
+                                        .ToList();
     }
-    private List<WpfMvvmEntitySetting> _foreignLookupEntities;
-    private List<WpfMvvmEntitySetting> _foreignLookupForEdit;
 }

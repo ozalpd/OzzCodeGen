@@ -10,7 +10,7 @@
 <#@ import namespace="OzzUtils" #>
 <# 
     var properties = GetIncludedProperties().ToList();
-    var foreignLookupEntities = EntitySetting.GetForeignLookupEntities(IsEdit);
+    var foreignLookupEntities = GetForeignLookupEntities(IsEdit);
     WriteUsingNamespaces(); #>
 //----------------------------------------------------------------------------------
 //
@@ -22,7 +22,7 @@
 
 namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
 {
-    public partial class <#= GetClassName() #> : <#= CodeEngine.AbstractCreateEditViewModelName #>
+    public partial class <#= GetClassName() #> : <#= CodeEngine.BaseCreateEditViewModelName #>
     {
 <#  foreach (var lookupEntity in foreignLookupEntities) { #>
         private readonly <#= lookupEntity.GetLookupName(LookupTemplate.Interface) #> _<#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #>;

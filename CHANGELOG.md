@@ -7,7 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 - Introduce `WpfDialogServcTemplate` for generating dialog service interfaces and implementations for entity create/edit dialogs.
+- Introduce `WpfCommandTemplate` for generating MVVM command classes (Create/Edit) in the WPF engine, including constructor wiring for view models, dialog services, and foreign lookups.
+- Added `MvvmTemplate` enum and entity setting helpers for template-specific naming.
 - Added properties `CommandVmTypeName` and `CommandVmNamespace` to `BaseMvvmEntitySetting<TPropertySetting>` for specifying ViewModel type name in generated command classes.
+- Centralized accessibility logic with `GetAccessibility()` and standardized `IsPublic` property. Updated `.csproj` and performed related cleanup.
 
 ### Changed
 - Update WpfMvvmCodeEngine to generate dialog service files in the Services folder, replacing old commands template generation.

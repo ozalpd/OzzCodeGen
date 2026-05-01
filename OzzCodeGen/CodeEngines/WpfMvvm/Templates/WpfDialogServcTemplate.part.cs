@@ -11,15 +11,10 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         private string _interfaceName => CodeEngine.DialogServiceContract;
         private string _className => CodeEngine.DialogServiceClassName;
 
-        public WpfDialogServcTemplate(WpfMvvmCodeEngine codeEngine, bool isInterface) : base(codeEngine, isInterface: isInterface) { }
+        public WpfDialogServcTemplate(WpfMvvmCodeEngine codeEngine, bool isInterface) : base(codeEngine, isInterface: isInterface)
+        {
 
-
-
-        /// <summary>
-        /// The generated class will be internal accessibility when IsPublic is false, and will have public accessibility when IsPublic is true.
-        /// Intended use for C# WPF application so it is set to false by default.
-        /// </summary>
-        public bool IsPublic { get; set; } = false;
+        }
 
         public override List<string> DefaultUsingNamespaceList()
         {
@@ -56,11 +51,6 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                 }
             }
             return namespaces.OrderBy(ns => ns).ToList();
-        }
-
-        public string GetAccessibility()
-        {
-            return IsPublic ? "public partial" : "internal partial";
         }
 
         public string GetDeclaration()

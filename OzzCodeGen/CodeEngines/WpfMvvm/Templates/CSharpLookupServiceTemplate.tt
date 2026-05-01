@@ -27,7 +27,7 @@ namespace <#= GetNamespace() #>
     /// <remarks>Implementations of this interface provide access to <#= EntitySetting.Name.ToCamelCase() #> data, typically for populating
     /// selection lists or validating <#= EntitySetting.Name.ToCamelCase() #> references in the application. Methods are asynchronous to support data
     /// sources that may require I/O operations, such as databases or remote services.</remarks>
-    public partial <#= GetDeclaration() #>
+    <#= GetAccessibility() #> <#= GetDeclaration() #>
     {
         Task<IReadOnlyList<<#= EntitySetting.Name #>>> Get<#= EntitySetting.Name.Pluralize() #>Async(<#= EntitySetting.HasIsActiveProperty() ? "bool isActive" : "" #>);
     }
@@ -38,7 +38,7 @@ namespace <#= GetNamespace() #>
     /// <remarks>This service is intended for retrieving <#= EntitySetting.Name.ToCamelCase() #> data, typically for populating UI selection
     /// lists or performing <#= EntitySetting.Name.ToCamelCase() #>-related lookups. It abstracts the data access layer, allowing consumers to retrieve
     /// <#= EntitySetting.Name.ToCamelCase() #> information without depending directly on repository implementations.</remarks>
-    public partial <#= GetDeclaration() #>
+    <#= GetAccessibility() #> <#= GetDeclaration() #>
     {
         private readonly <#= EntitySetting.RepositoryName #> _<#= EntitySetting.RepositoryInstanceName #>;
 
@@ -60,7 +60,7 @@ namespace <#= GetNamespace() #>
     /// </summary>
     /// <remarks>This implementation can be used in scenarios where <#= EntitySetting.Name.ToCamelCase() #> lookup functionality is optional or
     /// not required, such as in design time, in testing or when no <#= EntitySetting.RepositoryName #> are configured.</remarks>
-    public partial class <#= GetClassName(LookupTemplate.DesignTimeClass) #> : <#= GetClassName(LookupTemplate.Interface) #>
+    <#= GetAccessibility() #> class <#= GetClassName(LookupTemplate.DesignTimeClass) #> : <#= GetClassName(LookupTemplate.Interface) #>
     {
         public Task<IReadOnlyList<<#= EntitySetting.Name #>>> Get<#= EntitySetting.Name.Pluralize() #>Async(<#= EntitySetting.HasIsActiveProperty() ? "bool isActive" : "" #>)
         {

@@ -1,4 +1,5 @@
-﻿using OzzCodeGen.CodeEngines.Mvvm.Templates;
+﻿using OzzCodeGen.CodeEngines.Mvvm;
+using OzzCodeGen.CodeEngines.Mvvm.Templates;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,12 +7,13 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {
     public abstract class BaseCSharpWpfMvvmTemplate : BaseCSharpMvvmTemplate
     {
-        protected BaseCSharpWpfMvvmTemplate(WpfMvvmCodeEngine codeEngine, WpfMvvmEntitySetting entitySetting = null, bool isEdit = false, bool isInterface = false)
+        protected BaseCSharpWpfMvvmTemplate(WpfMvvmCodeEngine codeEngine, WpfMvvmEntitySetting entitySetting = null, MvvmTemplate templateType = MvvmTemplate.Create, bool isInterface = false)
         {
             CodeEngine = codeEngine;
             EntitySetting = entitySetting;
-            IsEdit = isEdit;
+            IsEdit = templateType == MvvmTemplate.Edit;
             IsInterface = isInterface;
+            TemplateType = templateType;
         }
 
         public WpfMvvmCodeEngine CodeEngine { get; }
@@ -22,6 +24,8 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         /// If true, it indicates the template is for edit view model, otherwise it's for create view model. This can be used to determine the class name and included properties.
         /// </summary>
         public bool IsEdit { get; }
+
+        public MvvmTemplate TemplateType { get; }
 
         /// <summary>
         /// If true, it indicates the template is for an interface, otherwise it's for a class.
@@ -47,6 +51,39 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
             return $"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.LookupFolder)}";
         }
+
+        public IEnumerable<WpfMvvmEntitySetting> GetForeignLookupEntities(bool isForEdit = false)
+        {
+            if (isForEdit)
+            {
+                if (_flookupEntitiesForEdit == null)
+                {
+                    _flookupEntitiesForEdit = EntitySetting.GetForeignLookupEntities(isForEdit);
+                }
+
+                return _flookupEntitiesForEdit;
+            }
+
+            if (_flookupEntities == null)
+            {
+                _flookupEntities = EntitySetting.GetForeignLookupEntities(isForEdit);
+            }
+
+            return _flookupEntities;
+        }
+        private IEnumerable<WpfMvvmEntitySetting> _flookupEntities;
+        private IEnumerable<WpfMvvmEntitySetting> _flookupEntitiesForEdit;
+
+        public List<WpfMvvmPropertySetting> GetPreselectProperties()
+        {
+            if(_preselectProperties == null)
+            {
+                _preselectProperties = EntitySetting.GetPreselectProperties();
+            }
+
+            return _preselectProperties;
+        }
+        private List<WpfMvvmPropertySetting> _preselectProperties;
 
 
         public override List<string> DefaultUsingNamespaceList()

@@ -86,7 +86,14 @@ namespace ");
             #line hidden
             this.Write(" references in the application. Methods are asynchronous to support data\r\n    ///" +
                     " sources that may require I/O operations, such as databases or remote services.<" +
-                    "/remarks>\r\n    public partial ");
+                    "/remarks>\r\n    ");
+            
+            #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetAccessibility()));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
             
             #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetDeclaration()));
@@ -159,7 +166,14 @@ namespace ");
             #line default
             #line hidden
             this.Write(" information without depending directly on repository implementations.</remarks>\r" +
-                    "\n    public partial ");
+                    "\n    ");
+            
+            #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetAccessibility()));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
             
             #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetDeclaration()));
@@ -301,7 +315,14 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write(" are configured.</remarks>\r\n    public partial class ");
+            this.Write(" are configured.</remarks>\r\n    ");
+            
+            #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetAccessibility()));
+            
+            #line default
+            #line hidden
+            this.Write(" class ");
             
             #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName(LookupTemplate.DesignTimeClass)));
