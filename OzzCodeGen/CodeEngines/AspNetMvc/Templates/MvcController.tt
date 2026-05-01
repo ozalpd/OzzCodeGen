@@ -21,7 +21,7 @@ var strongForeignEntity = Entity.StrongForeignEntity;
 var strongProperty = Entity.StrongForeignKeyProperty;
 var foreignDependentProperty = Entity.GetForeignDependentProperty(strongProperty);
 var strongForeignPKeyProperty = Entity.StrongForeignEntity==null ? null : Entity.StrongForeignEntity.GetPrimaryKey();
-string strongForeignPKey = strongForeignPKeyProperty==null ? "Id" : strongForeignPKeyProperty.Name;  
+string strongForeignPKey = strongForeignPKeyProperty==null ? "Id" : strongForeignPKeyProperty.Name;
 
 string [] fillSelectListsMethods = Entity.GetFillSelectListsMethods();
 string classType = Entity.SealedController ? "sealed partial" : "partial";
@@ -30,7 +30,7 @@ WriteUsingNamespaces(); #>
 
 namespace <#= NamespaceName #>
 {
-    public <#= classType #> class <#= Entity.ControllerName #>Controller<# if (!CustomFile){ #> : <#= Entity.BaseControllerName #><# } #> 
+    public <#= classType #> class <#= Entity.ControllerName #>Controller<# if (!CustomFile){ #> : <#= Entity.BaseControllerName #><# } #>
     {
 <#
 if (CustomFile)
@@ -40,8 +40,8 @@ if (CustomFile)
         partial void <#= AspNetMvcEngine.FillSelectListsMethodDefaultName #>(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>)
         {
 <#      foreach (var item in fkeyProperties)
-        { 
-             WriteViewBagSelectList(item); 
+        {
+             WriteViewBagSelectList(item);
         } #>
         }
 
@@ -50,14 +50,14 @@ if (CustomFile)
         //Purpose: To set default property values for newly created <#= Entity.Name #> entity
         //protected override async Task Set<#= Entity.Name #>Defaults(<#= Entity.Name #> <#= Entity.Name.ToCamelCase() #>) { }
 <# }
-else 
+else
 { #>
 <# if (Entity.GenerateGetQueryMethod){ #>
         private async Task<IQueryable<<#= Entity.Name #>>> Get<#= Entity.Name #>Query(QueryParameters qParams)
         {
             var query = Get<#= Entity.Name #>Query();
 <#  if(searchProperties.Where(p => p.IsString).Any())
-    { 
+    {
     int k = 0;#>
             if (!string.IsNullOrEmpty(qParams.SearchString))
             {
@@ -66,7 +66,7 @@ else
 <#        foreach (var item in searchProperties.Where(p => p.IsString))
           {
             k++;#>
-                            a.<#= item.Name #>.Contains(qParams.SearchString)<# if (k < searchProperties.Where(p => p.IsString).Count()){ #> |<# } #> 
+                            a.<#= item.Name #>.Contains(qParams.SearchString)<# if (k < searchProperties.Where(p => p.IsString).Count()){ #> |<# } #>
 <#        } #>
                         select a;
             }
@@ -131,7 +131,7 @@ else
             var items = await Get<#= Entity.Name #>DtoList(qParams);
             var result = new PagedList<<#= Entity.ModelForJson #>>(qParams, items);
             ViewBag.result = ConvertToJson(result);
-            
+
             return View();
 <#  } else { #>
             var query = await Get<#= Entity.Name #>Query(qParams);
@@ -162,7 +162,7 @@ else
         }
 
 <#  } #>
-<# if (Entity.GenerateActionForAutoComplete){ 
+<# if (Entity.GenerateActionForAutoComplete){
         if (DisplayProperty != null && DisplayProperty.IsString) {#>
         <#= CanViewAttrib #>
         public async Task<JsonResult> Get<#= Entity.Name.Pluralize() #>ForAutoComplete(QueryParameters qParam)
@@ -249,7 +249,7 @@ else
         {
             var <#= Entity.ModelForCreate.ToCamelCase() #> = new <#= Entity.ModelForCreate #>();
 <#  if (strongForeignEntity != null)
-    { 
+    {
         bool isString = strongProperty.IsString;#>
             if (<# if(isString) { #>!string.IsNullOrEmpty(<# } #><#= strongProperty.Name.ToCamelCase() #><# if(isString) { #>)<# } else { #> != null<# } #>)
             {
@@ -291,14 +291,14 @@ else
             if (ModelState.IsValid)
             {
                 OnCreateSaving(<#= Entity.ModelForCreate.ToCamelCase() #>);
-<#  if(Entity.ModelForCreate == Entity.Name) {#> 
+<#  if(Entity.ModelForCreate == Entity.Name) {#>
                 <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(<#= Entity.ModelForCreate.ToCamelCase() #>);
 <#  } else { #>
                 var entity = <#= Entity.ModelForCreate.ToCamelCase() #>.To<#= Entity.Name #>();
                 <#= dataContextIntance #>.<#= Entity.DataSetName #>.Add(entity);
 <#  } #>
                 await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
-<#  if(Entity.ModelForCreate == Entity.Name) {#> 
+<#  if(Entity.ModelForCreate == Entity.Name) {#>
                 OnCreateSaved(<#= Entity.ModelForCreate.ToCamelCase() #>);
 <#  } else { #>
                 OnCreateSaved(entity, <#= Entity.ModelForCreate.ToCamelCase() #>);
@@ -361,14 +361,14 @@ else
             {
                 OnEditSaving(<#= Entity.ModelForEdit.ToCamelCase() #>);
 <#  if(Entity.ModelForEdit == Entity.Name)
-    {#> 
+    {#>
                 <#= dataContextIntance #>.Entry(<#= Entity.Name.ToCamelCase() #>).State = EntityState.Modified;
 <#  } else { #>
                 var entity = <#= Entity.ModelForEdit.ToCamelCase() #>.To<#= Entity.Name #>();
                 <#= dataContextIntance #>.Entry(entity).State = EntityState.Modified;
 <#  } #>
                 await <#= dataContextIntance #>.SaveChangesAsync(<#= Entity.SaveParameter #>);
-<#  if(Entity.ModelForEdit == Entity.Name) {#> 
+<#  if(Entity.ModelForEdit == Entity.Name) {#>
                 OnEditSaved(<#= Entity.Name.ToCamelCase() #>);
 <#  } else { #>
                 OnEditSaved(entity, <#= Entity.ModelForEdit.ToCamelCase() #>);
@@ -410,9 +410,9 @@ else
             }
 
             OnDeleteChecking(<#= Entity.Name.ToCamelCase() #>);
-<#  if (collectionProperties.Any()) 
+<#  if (collectionProperties.Any())
     { #>
-<#      foreach (var property in collectionProperties) 
+<#      foreach (var property in collectionProperties)
         { #>
             int <#= property.Name.ToCamelCase() #>Count = <#= Entity.Name.ToCamelCase() #>.<#= property.Name #>.Count;
 <#      } #>
@@ -425,7 +425,7 @@ else
                 sb.Append(<#= Entity.Name.ToCamelCase() #>.<#= Entity.EntityDefinition.DisplayMember #>);
                 sb.Append("</b>.<br/>");
 
-<#      foreach (var property in collectionProperties) 
+<#      foreach (var property in collectionProperties)
         { #>
                 if (<#= property.Name.ToCamelCase() #>Count > 0)
                 {
@@ -492,7 +492,7 @@ else
         private bool? _canUserCreate;
 <#  } #>
 
-<# if(editRoles.Equals("true") || editRoles.Equals("false")) { #>        
+<# if(editRoles.Equals("true") || editRoles.Equals("false")) { #>
         <#= accessCanUserMethods #> override bool CanUserEdit() { return <#= editRoles #>; }
         <#= accessCanUserMethods #> override Task<bool> CanUserEditAsync() { return Task.FromResult(<#= editRoles #>); }
 <#  } else { #>
@@ -514,8 +514,8 @@ else
         }
         private bool? _canUserEdit;
 <#  } #>
-        
-<# if(deleteRoles.Equals("true") || deleteRoles.Equals("false")) { #>        
+
+<# if(deleteRoles.Equals("true") || deleteRoles.Equals("false")) { #>
         <#= accessCanUserMethods #> override bool CanUserDelete() { return <#= deleteRoles #>; }
         <#= accessCanUserMethods #> override Task<bool> CanUserDeleteAsync() { return Task.FromResult(<#= deleteRoles #>); }
 <#  } else { #>
@@ -538,7 +538,7 @@ else
         private bool? _canUserDelete;
 <#  } #>
 
-<# if(confidentRoles.Equals("true") || confidentRoles.Equals("false")) { #>        
+<# if(confidentRoles.Equals("true") || confidentRoles.Equals("false")) { #>
         <#= accessCanUserMethods #> override bool CanUserSeeRestricted() { return <#= confidentRoles #>; }
         <#= accessCanUserMethods #> override Task<bool> CanUserSeeRestrictedAsync() { return Task.FromResult(<#= confidentRoles #>); }
 <#  } else { #>
@@ -597,7 +597,7 @@ else
 <#      } #>
         }
 
-<#      var listName = Entity.Name.Pluralize().ToCamelCase(); #>        
+<#      var listName = Entity.Name.Pluralize().ToCamelCase(); #>
         public partial class <#= Entity.Name #>ListVM : List<<#= Entity.Name #>>
         {
             public <#= Entity.Name #>ListVM() { }
@@ -669,7 +669,7 @@ else
 } #>
     }
 }
-<#+ 
+<#+
 protected void WriteViewBagSelectList(AspNetMvcPropertySetting propertySetting)
 {
     var codeEngine = Entity.CodeEngine;

@@ -35,7 +35,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         {
             
             #line 11 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
- 
+
     var properties = GetIncludedProperties().ToList();
     var foreignLookupEntities = GetForeignLookupEntities(IsEdit);
     WriteUsingNamespaces(); 
@@ -272,7 +272,7 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("           \r\n        public ObservableCollection<");
+            this.Write("\r\n        public ObservableCollection<");
             
             #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.Name));

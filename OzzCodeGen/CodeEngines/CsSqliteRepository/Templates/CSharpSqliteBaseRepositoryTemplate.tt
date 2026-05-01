@@ -18,7 +18,7 @@ using System.ComponentModel.DataAnnotations;
 <#  var modelClassEngine = CodeEngine.ModelClassCodeEngine;
     if (modelClassEngine != null && modelClassEngine.GenerateValidator) { #>
 using <#= modelClassEngine.ValidatorNamespaceName #>;
-<#	} #>
+<#  } #>
 
 namespace <#= CodeEngine.NamespaceName #>
 {
@@ -159,7 +159,7 @@ namespace <#= CodeEngine.NamespaceName #>
 
             return dateTime;
         }
-<#	if (modelClassEngine != null && modelClassEngine.GenerateValidator) { #>
+<#  if (modelClassEngine != null && modelClassEngine.GenerateValidator) { #>
 
         protected static void ValidateOrThrow(object model)
         {
@@ -170,6 +170,6 @@ namespace <#= CodeEngine.NamespaceName #>
                 throw new ValidationException(message);
             }
         }
-<#	} #>
+<#  } #>
     }
 }

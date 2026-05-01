@@ -34,7 +34,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         {
             
             #line 10 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcDetailsView.tt"
- 
+
 var properties = Entity.DisplayColumns.Where(e => e.InDetailsView);
 WriteUsingNamespaces(); 
             

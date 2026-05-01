@@ -22,7 +22,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Enhances the ViewModel template to generate fields, collections, and async loading methods for foreign lookup entities.
 - Updates constructors to accept lookup services, adjusts using directives, and improves property generation for clarity and maintainability.
 - Refactors template logic for better modularity.
-- Dialog service template now dynamically generates parameters and XML docs for foreign lookup services and preselected properties.
 - Method signatures for Create/Edit dialogs include all required lookup and preselect parameters in both interface and implementation.
 - Added `GetPreselectProperties()` to `WpfMvvmEntitySetting` for ordered preselect property retrieval.
 - Foreign lookup entities are now ordered by name for consistent parameter order.

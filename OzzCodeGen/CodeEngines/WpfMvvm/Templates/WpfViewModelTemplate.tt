@@ -8,7 +8,7 @@
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzCodeGen.CodeEngines.Mvvm" #>
 <#@ import namespace="OzzUtils" #>
-<# 
+<#
     var properties = GetIncludedProperties().ToList();
     var foreignLookupEntities = GetForeignLookupEntities(IsEdit);
     WriteUsingNamespaces(); #>
@@ -47,7 +47,7 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
 <#  } #>
         }
 <#  foreach (var lookupEntity in foreignLookupEntities) { #>
-           
+
         public ObservableCollection<<#= lookupEntity.Name #>> <#= lookupEntity.Name.Pluralize() #> { get; }
 
         public async Task Load<#= lookupEntity.Name.Pluralize() #>Async()

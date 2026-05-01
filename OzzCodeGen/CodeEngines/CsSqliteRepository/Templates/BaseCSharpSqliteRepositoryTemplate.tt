@@ -9,7 +9,7 @@
 <#@ import namespace="OzzCodeGen.CodeEngines.CsDbRepository.Templates" #>
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzUtils" #>
-<#+ 
+<#+
 public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col, string value, bool isTimeStamp = false, string suffix = "")
 {
     string enumName = col.GetEnumTypeName();
@@ -40,7 +40,7 @@ public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col, s
     command.Parameters.AddWithValue("@<#= col.Name.ToCamelCase() #><#= suffix #>", <#= value #>);// Fallback for other types, relying on ADO.NET's type inference.
 <#+ }
 } #>
-<#+ 
+<#+
 public void WriteGetByResult(IEnumerable<BaseCsDbRepositoryPropertySetting> autoloadCols, IEnumerable<string> autoloadTypeNames){
     var pkey = GetPrimaryKey();
     var selfAutoloadCols = autoloadCols.Where(p => p.GetTypeName(getReturnType: true) == EntitySetting.Name);
@@ -52,7 +52,7 @@ public void WriteGetByResult(IEnumerable<BaseCsDbRepositoryPropertySetting> auto
 <#+     foreach (string name in autoloadTypeNames.Where(n => n != EntitySetting.Name && !n.StartsWith("ICollection<"))) {#>
             await Load<#= name #>Async(<#= EntitySetting.Name.ToCamelCase() #>);
 <#+ } #>
-            
+
             OnLoaded(<#= EntitySetting.Name.ToCamelCase() #>);
             return <#= EntitySetting.Name.ToCamelCase() #>;
 <#+ }#>

@@ -34,7 +34,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         {
             
             #line 10 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
- 
+
 bool searchable = Entity.DisplayColumns.Where(e => e.UseInSearch).Any();
 var properties = Entity.DisplayColumns.Where(e => e.InIndexView);
 var collectionProperties = Entity.GetInheritedCollectionProperties();
@@ -190,7 +190,7 @@ WriteUsingNamespaces();
             
             #line 78 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
 
-foreach (var property in properties) 
+foreach (var property in properties)
 {
 
             
@@ -286,7 +286,7 @@ foreach (var property in properties)
             
             #line 104 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
 
-if (collectionProperties.Any()) 
+if (collectionProperties.Any())
 { 
             
             #line default
@@ -345,7 +345,7 @@ if (collectionProperties.Any())
             #line hidden
             
             #line 125 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
-  if (entitiesThisForCreate.Any()) 
+  if (entitiesThisForCreate.Any())
     { 
             
             #line default
@@ -475,7 +475,7 @@ if (collectionProperties.Any())
             
             #line 141 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
 
-foreach (var property in properties) 
+foreach (var property in properties)
 {
     if(property.PropertyDefinition is CollectionProperty)
     {
@@ -547,8 +547,7 @@ foreach (var property in properties)
             
             #line default
             #line hidden
-            this.Write(@" 
-                           class=""text-decoration-none btn btn-sm btn-outline-dark"" title=""@ActionStrings.Details"">
+            this.Write(@"                           class=""text-decoration-none btn btn-sm btn-outline-dark"" title=""@ActionStrings.Details"">
                             <i class=""fa fa-external-link ms-1""></i>
                         </a>
                         @if (canUserEdit)
@@ -581,14 +580,13 @@ foreach (var property in properties)
             
             #line default
             #line hidden
-            this.Write(@" 
-                               class=""text-decoration-none btn btn-sm btn-outline-dark"" title=""@ActionStrings.Edit"">
+            this.Write(@"                               class=""text-decoration-none btn btn-sm btn-outline-dark"" title=""@ActionStrings.Edit"">
                                 <i class=""fa fa-pencil ms-1""></i>
                             </a>
                         }
                         @if (canUserDelete)
                         {
-                            <a href=""#deleteConfirm"" data-bs-toggle=""modal"" title=""@ActionStrings.Delete"" 
+                            <a href=""#deleteConfirm"" data-bs-toggle=""modal"" title=""@ActionStrings.Delete""
                                class=""text-decoration-none btn btn-sm btn-outline-dark""
                                onclick=""setDelete('<b>@Html.Encode(item.");
             
@@ -681,15 +679,15 @@ foreach (var property in properties)
                     "ext, textStatus, XMLHttpRequest) {\r\n                    hideBusy();\r\n           " +
                     "         if (textStatus == \'success\') {\r\n                        if (title != nu" +
                     "ll || title != \'\') {\r\n                            $(\'#dataInputTitle\').html(titl" +
-                    "e);\r\n                        }\r\n                        \r\n                      " +
-                    "  let inputForm = document.getElementById(\'dataInputForm\');\r\n                   " +
-                    "     if (inputForm != null) {\r\n                            $(\'#dataInputFooter\')" +
-                    ".show();\r\n                        }\r\n                        else {\r\n           " +
-                    "                 $(\'#dataInputFooter\').hide();\r\n                        }\r\n     " +
-                    "                   $(\'#dataInputModal\').modal(\'show\');\r\n                    }\r\n " +
-                    "                   else {\r\n                        showMessageBox(XMLHttpRequest" +
-                    ".statusText, XMLHttpRequest.responseText, false);\r\n                    }\r\n      " +
-                    "          });\r\n                return false;\r\n            });\r\n        }\r\n");
+                    "e);\r\n                        }\r\n\r\n                        let inputForm = docume" +
+                    "nt.getElementById(\'dataInputForm\');\r\n                        if (inputForm != nu" +
+                    "ll) {\r\n                            $(\'#dataInputFooter\').show();\r\n              " +
+                    "          }\r\n                        else {\r\n                            $(\'#dat" +
+                    "aInputFooter\').hide();\r\n                        }\r\n                        $(\'#d" +
+                    "ataInputModal\').modal(\'show\');\r\n                    }\r\n                    else " +
+                    "{\r\n                        showMessageBox(XMLHttpRequest.statusText, XMLHttpRequ" +
+                    "est.responseText, false);\r\n                    }\r\n                });\r\n         " +
+                    "       return false;\r\n            });\r\n        }\r\n");
             
             #line 239 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcIndexView.tt"
   } 

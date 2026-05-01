@@ -35,8 +35,8 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         {
             
             #line 11 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
- 
-var properties = CreateForm ? 
+
+var properties = CreateForm ?
         Entity.DisplayColumns.Where(e => e.InCreateView) :
         Entity.DisplayColumns.Where(e => e.InEditView);
 var decimalProperties = properties
@@ -133,13 +133,13 @@ WriteUsingNamespaces();
             #line default
             #line hidden
             this.Write("@using (Html.BeginForm(null, null, FormMethod.Post, new { id = \"dataInputForm\" })" +
-                    ")\r\n{\r\n    @Html.AntiForgeryToken()\r\n    \r\n    <div class=\"form\">\r\n        @Html." +
-                    "ValidationSummary(true)\r\n        @Html.HiddenFor(model => model.Id)\r\n        \r\n");
+                    ")\r\n{\r\n    @Html.AntiForgeryToken()\r\n\r\n    <div class=\"form\">\r\n        @Html.Vali" +
+                    "dationSummary(true)\r\n        @Html.HiddenFor(model => model.Id)\r\n\r\n");
             
             #line 45 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
 
 int visibleFields = 0; //visibleFields
-foreach (var property in properties) 
+foreach (var property in properties)
 {
     var useFor = CreateForm ? property.UseForCreate : property.UseForEdit;
     if (useFor == "HiddenInput")
@@ -158,7 +158,7 @@ foreach (var property in properties)
             
             #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcEditView.tt"
   }
-    else 
+    else
     {
         string editDivClass = useFor == "TextArea" ? "col-lg-7 col-md-8 col-sm-9" : "col-lg-5 col-md-6 col-sm-7";
         string autoFocus = visibleFields>0 ? string.Empty : ", @autofocus = \"autofocus\"";

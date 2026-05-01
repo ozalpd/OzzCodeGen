@@ -132,7 +132,7 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("        \r\n        public ");
+            this.Write("\r\n        public ");
             
             #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfCommandTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));

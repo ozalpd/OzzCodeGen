@@ -45,7 +45,7 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
             this.Write("]\"\r\n@echo .\r\n");
             
             #line 11 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
- 
+
 int i = 0;
 if(!string.IsNullOrEmpty(CodeEngine.BeforeScripts))
 {
@@ -61,7 +61,7 @@ if(!string.IsNullOrEmpty(CodeEngine.BeforeScripts))
 }
 var tables = CodeEngine.GetCreateTableList();
 foreach (var table in tables.Where(e => !e.Exclude))
-{ 
+{
     i++;
     WriteExecutingFile(table.Name + ".sql", i);
     if(table.StoredProcGeneration>StoredProcGeneration.NoStoredProcedure)
@@ -123,7 +123,7 @@ if(!string.IsNullOrEmpty(CodeEngine.AfterScripts))
         }
         
         #line 75 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\CreateMsSqlDb.tt"
- 
+
 void WriteExecutingFile(string fileName, int counter = 0)
 {
     if (counter>0)

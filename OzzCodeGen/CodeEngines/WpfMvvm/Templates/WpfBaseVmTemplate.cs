@@ -35,7 +35,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         {
             
             #line 11 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
- 
+
     var properties = GetIncludedProperties().ToList();
     WriteUsingNamespaces(); 
             
@@ -149,7 +149,7 @@ namespace ");
             base.RaisePropertyChanged(nameof(IsDirty));
         }
     }
-    
+
     public interface IIsDirty
     {
         bool IsDirty { get; }

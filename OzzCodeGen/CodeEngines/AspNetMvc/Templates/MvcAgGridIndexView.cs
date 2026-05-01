@@ -34,7 +34,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         {
             
             #line 10 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
- 
+
 bool searchable = Entity.DisplayColumns.Where(e => e.UseInSearch).Any();
 var properties = Entity.DisplayColumns.Where(e => e.InIndexView);
 var collectionProperties = Entity.GetInheritedCollectionProperties();
@@ -267,7 +267,7 @@ WriteUsingNamespaces();
             this.Write(", \' + params.value + \');\">@ActionStrings.Delete</a></li>\' +\r\n                }\r\n");
             
             #line 105 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcAgGridIndexView.tt"
-  if (entitiesThisForCreate.Any()) 
+  if (entitiesThisForCreate.Any())
     { 
             
             #line default

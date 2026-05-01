@@ -7,7 +7,7 @@
 /*
    Additional setup commands for database <#= CodeEngine.DatabaseName #>
 */
-<# 
+<#
 	int i = 0;
 	foreach (var command in CodeEngine.AdditionalCommands)
 	{

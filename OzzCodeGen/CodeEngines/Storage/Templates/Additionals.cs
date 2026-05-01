@@ -38,7 +38,7 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates
             this.Write("\r\n*/\r\n");
             
             #line 10 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\Additionals.tt"
- 
+
 	int i = 0;
 	foreach (var command in CodeEngine.AdditionalCommands)
 	{

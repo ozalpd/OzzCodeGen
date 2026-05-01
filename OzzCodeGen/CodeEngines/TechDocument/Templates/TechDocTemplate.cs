@@ -87,7 +87,7 @@ namespace OzzCodeGen.CodeEngines.TechDocument.Templates
             
             #line 22 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
 
-foreach (var property in properties) 
+foreach (var property in properties)
 {
 
             

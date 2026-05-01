@@ -8,7 +8,7 @@
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzCodeGen.CodeEngines.Mvvm" #>
 <#@ import namespace="OzzUtils" #>
-<# 
+<#
     var properties = GetIncludedProperties().ToList();
     WriteUsingNamespaces(); #>
 //----------------------------------------------------------------------------------
@@ -107,7 +107,7 @@ namespace <#= GetNamespace() #>
             base.RaisePropertyChanged(nameof(IsDirty));
         }
     }
-    
+
     public interface IIsDirty
     {
         bool IsDirty { get; }

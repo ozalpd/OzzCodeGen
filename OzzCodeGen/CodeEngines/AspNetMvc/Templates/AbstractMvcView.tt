@@ -7,7 +7,7 @@
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzCodeGen.Utilities" #>
-<#+ 
+<#+
 public void WriteUsingNamespaces()
 {
 	foreach(string namspc in UsingNamespaces)

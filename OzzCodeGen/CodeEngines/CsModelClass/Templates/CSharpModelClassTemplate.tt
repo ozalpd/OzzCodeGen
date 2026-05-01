@@ -55,7 +55,7 @@ namespace <#= NamespaceName #>
             OnInitilazed();
         }
 <#
-    foreach (var property in properties) 
+    foreach (var property in properties)
     {
         var comment = property.PropertyDefinition.Comment;
         if(codeEngine.GenerateXmlDoc && !string.IsNullOrWhiteSpace(comment)) {#>

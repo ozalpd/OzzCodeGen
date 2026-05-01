@@ -32,7 +32,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         {
             
             #line 8 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
- 
+
 var roles = CodeEngine.SecurityRoles.Where(r => !r.Equals(CodeEngine.AdminRole));
 string dataContextIntance = CodeEngine.DataContextInstance;
 string accessCanUserMethods = CodeEngine.AreCanUserMethodsPublic ? "public" : "protected";
@@ -82,39 +82,39 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write(" \r\n    {\r\n        public partial class QueryParameters\r\n        {\r\n            pu" +
-                    "blic QueryParameters() { Constructing(); }\r\n            protected virtual void C" +
-                    "onstructing()\r\n            {\r\n                Page = 1;\r\n                PageSiz" +
-                    "e = 20;\r\n            }\r\n\r\n            public QueryParameters(QueryParameters par" +
-                    "ameters)\r\n            {\r\n                Constructing(parameters);\r\n            " +
-                    "}\r\n            protected virtual void Constructing(QueryParameters parameters)\r\n" +
-                    "            {\r\n                Page = parameters.Page;\r\n                PageSize" +
-                    " = parameters.PageSize;\r\n                SearchString = parameters.SearchString;" +
-                    "\r\n                TotalCount = parameters.TotalCount;\r\n                PostBack " +
-                    "= parameters.PostBack;\r\n            }\r\n\r\n\r\n            public int Page { get; se" +
-                    "t; }\r\n            public int PageSize { get; set; }\r\n            public bool? Po" +
-                    "stBack { get; set; }\r\n            public string SearchString { get; set; }\r\n\r\n  " +
-                    "          public bool IsPostBack\r\n            {\r\n                get { return Po" +
-                    "stBack ?? false; }\r\n            }\r\n\r\n            public int PageCount\r\n         " +
-                    "   {\r\n                get\r\n                {\r\n                    return TotalCo" +
-                    "unt > 0 ? (int)Math.Ceiling(TotalCount / (double)PageSize) : 0;\r\n               " +
-                    " }\r\n            }\r\n\r\n            public int Skip\r\n            {\r\n               " +
-                    " get { return (Page - 1) * PageSize; }\r\n            }\r\n\r\n            public int " +
-                    "TotalCount\r\n            {\r\n                get { return _totalCount; }\r\n        " +
-                    "        set\r\n                {\r\n                    _totalCount = value;\r\n      " +
-                    "              if (Page < 1) Page = 1;\r\n                    if (Page > PageCount)" +
-                    " Page = PageCount;\r\n                    int skip = (Page - 1) * PageSize;\r\n     " +
-                    "           }\r\n            }\r\n            int _totalCount;\r\n        }\r\n\r\n        " +
-                    "protected virtual void PutPagerInViewBag(QueryParameters qParams)\r\n        {\r\n  " +
-                    "          ViewBag.page = qParams.Page;\r\n            ViewBag.totalCount = qParams" +
-                    ".TotalCount;\r\n            ViewBag.pageSize = qParams.PageSize;\r\n            View" +
-                    "Bag.pageCount = qParams.PageCount;\r\n        }\r\n\r\n        protected virtual async" +
-                    " Task PutCanUserInViewBag()\r\n        {\r\n            ViewBag.isUserAdmin = await " +
-                    "IsUserAdminAsync();\r\n            ViewBag.canUserEdit = await CanUserEditAsync();" +
-                    "\r\n            ViewBag.canUserCreate = await CanUserCreateAsync();\r\n            V" +
-                    "iewBag.canUserDelete = await CanUserDeleteAsync();\r\n            ViewBag.canSeeRe" +
-                    "stricted = await CanUserSeeRestrictedAsync();\r\n        }\r\n        //If we forget" +
-                    " to implement override methods, we will keep it secure.\r\n        ");
+            this.Write("    {\r\n        public partial class QueryParameters\r\n        {\r\n            publi" +
+                    "c QueryParameters() { Constructing(); }\r\n            protected virtual void Cons" +
+                    "tructing()\r\n            {\r\n                Page = 1;\r\n                PageSize =" +
+                    " 20;\r\n            }\r\n\r\n            public QueryParameters(QueryParameters parame" +
+                    "ters)\r\n            {\r\n                Constructing(parameters);\r\n            }\r\n" +
+                    "            protected virtual void Constructing(QueryParameters parameters)\r\n   " +
+                    "         {\r\n                Page = parameters.Page;\r\n                PageSize = " +
+                    "parameters.PageSize;\r\n                SearchString = parameters.SearchString;\r\n " +
+                    "               TotalCount = parameters.TotalCount;\r\n                PostBack = p" +
+                    "arameters.PostBack;\r\n            }\r\n\r\n\r\n            public int Page { get; set; " +
+                    "}\r\n            public int PageSize { get; set; }\r\n            public bool? PostB" +
+                    "ack { get; set; }\r\n            public string SearchString { get; set; }\r\n\r\n     " +
+                    "       public bool IsPostBack\r\n            {\r\n                get { return PostB" +
+                    "ack ?? false; }\r\n            }\r\n\r\n            public int PageCount\r\n            " +
+                    "{\r\n                get\r\n                {\r\n                    return TotalCount" +
+                    " > 0 ? (int)Math.Ceiling(TotalCount / (double)PageSize) : 0;\r\n                }\r" +
+                    "\n            }\r\n\r\n            public int Skip\r\n            {\r\n                ge" +
+                    "t { return (Page - 1) * PageSize; }\r\n            }\r\n\r\n            public int Tot" +
+                    "alCount\r\n            {\r\n                get { return _totalCount; }\r\n           " +
+                    "     set\r\n                {\r\n                    _totalCount = value;\r\n         " +
+                    "           if (Page < 1) Page = 1;\r\n                    if (Page > PageCount) Pa" +
+                    "ge = PageCount;\r\n                    int skip = (Page - 1) * PageSize;\r\n        " +
+                    "        }\r\n            }\r\n            int _totalCount;\r\n        }\r\n\r\n        pro" +
+                    "tected virtual void PutPagerInViewBag(QueryParameters qParams)\r\n        {\r\n     " +
+                    "       ViewBag.page = qParams.Page;\r\n            ViewBag.totalCount = qParams.To" +
+                    "talCount;\r\n            ViewBag.pageSize = qParams.PageSize;\r\n            ViewBag" +
+                    ".pageCount = qParams.PageCount;\r\n        }\r\n\r\n        protected virtual async Ta" +
+                    "sk PutCanUserInViewBag()\r\n        {\r\n            ViewBag.isUserAdmin = await IsU" +
+                    "serAdminAsync();\r\n            ViewBag.canUserEdit = await CanUserEditAsync();\r\n " +
+                    "           ViewBag.canUserCreate = await CanUserCreateAsync();\r\n            View" +
+                    "Bag.canUserDelete = await CanUserDeleteAsync();\r\n            ViewBag.canSeeRestr" +
+                    "icted = await CanUserSeeRestrictedAsync();\r\n        }\r\n        //If we forget to" +
+                    " implement override methods, we will keep it secure.\r\n        ");
             
             #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
@@ -201,7 +201,7 @@ namespace ");
         {
             if (!_isUserAdmin.HasValue)
             {
-                _isUserAdmin = Request.IsAuthenticated && 
+                _isUserAdmin = Request.IsAuthenticated &&
                                 await UserManager.IsInRoleAsync(UserID, SecurityRoles.Admin);
             }
             return _isUserAdmin.Value;
@@ -212,7 +212,7 @@ namespace ");
             
             #line 132 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
   foreach (var role in roles)
-    { 
+    {
         string varName = "_" + IsUserInRoleMethods[role.Trim()].ToCamelCase();
  
             
@@ -288,8 +288,8 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write(" = Request.IsAuthenticated && \r\n                                    await UserMan" +
-                    "ager.IsInRoleAsync(UserID, SecurityRoles.");
+            this.Write(" = Request.IsAuthenticated &&\r\n                                    await UserMana" +
+                    "ger.IsInRoleAsync(UserID, SecurityRoles.");
             
             #line 152 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(role.ToPascalCase()));
@@ -450,48 +450,48 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("        \r\n        protected void AppendExceptionMsg(Exception ex, StringBuilder s" +
-                    "b)\r\n        {\r\n            if (ex == null)\r\n                return;\r\n           " +
-                    " if (HttpContext.IsDebuggingEnabled)\r\n            {\r\n                sb.Append(e" +
-                    "x.Message);\r\n                sb.Append(\"<br/>\");\r\n                AppendExceptio" +
-                    "nMsg(ex.InnerException, sb);\r\n            }\r\n        }\r\n        \r\n        protec" +
-                    "ted virtual string ConvertToJson(object obj, bool includeNull = true, bool camel" +
-                    "Case = false)\r\n        {\r\n            var settings = new JsonSerializerSettings\r" +
-                    "\n            {\r\n                Converters = new JsonConverter[] { new Newtonsof" +
-                    "t.Json.Converters.StringEnumConverter() },\r\n                NullValueHandling = " +
-                    "includeNull ? NullValueHandling.Include : NullValueHandling.Ignore\r\n            " +
-                    "};\r\n            if (camelCase)\r\n                settings.ContractResolver = new " +
-                    "Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();\r\n\r\n     " +
-                    "       return JsonConvert.SerializeObject(obj, settings);\r\n        }\r\n\r\n        " +
-                    "protected virtual ActionResult BadRequestWithModelStateErrors()\r\n        {\r\n    " +
-                    "        var errorList = (from item in ModelState.Values\r\n                       " +
-                    "      from error in item.Errors\r\n                             select error.Error" +
-                    "Message).ToList();\r\n\r\n            var jsonErrors = JsonConvert.SerializeObject(\r" +
-                    "\n                          errorList,\r\n                          new JsonSeriali" +
-                    "zerSettings\r\n                          {\r\n                              NullValu" +
-                    "eHandling = NullValueHandling.Ignore,\r\n                              DefaultValu" +
-                    "eHandling = DefaultValueHandling.Ignore\r\n                          });\r\n\r\n      " +
-                    "      var result = StatusCodeTextResult(jsonErrors, HttpStatusCode.BadRequest);\r" +
-                    "\n\r\n            Response.AppendHeader(\"ModelStateErrors\", jsonErrors);\r\n\r\n       " +
-                    "     return result;\r\n        }\r\n\r\n        protected virtual ActionResult BadRequ" +
-                    "estTextResult()\r\n        {\r\n            return StatusCodeTextResult(\"HTTP Error " +
-                    "400.0 - Bad Request\", HttpStatusCode.BadRequest);\r\n        }\r\n\r\n        protecte" +
-                    "d virtual ActionResult NotFoundTextResult()\r\n        {\r\n            return Statu" +
-                    "sCodeTextResult(\"HTTP Error 404.0 - Not Found\", HttpStatusCode.NotFound);\r\n     " +
-                    "   }\r\n\r\n        protected virtual ActionResult StatusCodeTextResult(string conte" +
-                    "nt, HttpStatusCode statusCode)\r\n        {\r\n            Response.StatusCode = (in" +
-                    "t)statusCode;\r\n            Response.ContentType = \"text/plain\";\r\n            ret" +
-                    "urn new ContentResult\r\n            {\r\n                ContentType = \"text/plain\"" +
-                    ",\r\n                Content = content,\r\n                ContentEncoding = Encodin" +
-                    "g.UTF8\r\n            };\r\n        }\r\n\r\n        protected virtual ActionResult Stat" +
-                    "usCodeTextResult(StringBuilder sb, HttpStatusCode statusCode)\r\n        {\r\n      " +
-                    "      if (HttpContext.IsDebuggingEnabled)\r\n            {\r\n                sb.App" +
-                    "end(\"<br/><b>RouteData.Values</b><br/>\");\r\n                foreach (var item in " +
-                    "RouteData.Values)\r\n                {\r\n                    sb.Append(item.Key);\r\n" +
-                    "                    sb.Append(\" : \");\r\n                    sb.Append(item.Value)" +
-                    ";\r\n                    sb.Append(\"<br/>\");\r\n                }\r\n            }\r\n  " +
-                    "          return StatusCodeTextResult(sb.ToString(), statusCode);\r\n        }\r\n  " +
-                    "      \r\n        protected ");
+            this.Write("\r\n        protected void AppendExceptionMsg(Exception ex, StringBuilder sb)\r\n    " +
+                    "    {\r\n            if (ex == null)\r\n                return;\r\n            if (Htt" +
+                    "pContext.IsDebuggingEnabled)\r\n            {\r\n                sb.Append(ex.Messag" +
+                    "e);\r\n                sb.Append(\"<br/>\");\r\n                AppendExceptionMsg(ex." +
+                    "InnerException, sb);\r\n            }\r\n        }\r\n\r\n        protected virtual stri" +
+                    "ng ConvertToJson(object obj, bool includeNull = true, bool camelCase = false)\r\n " +
+                    "       {\r\n            var settings = new JsonSerializerSettings\r\n            {\r\n" +
+                    "                Converters = new JsonConverter[] { new Newtonsoft.Json.Converter" +
+                    "s.StringEnumConverter() },\r\n                NullValueHandling = includeNull ? Nu" +
+                    "llValueHandling.Include : NullValueHandling.Ignore\r\n            };\r\n            " +
+                    "if (camelCase)\r\n                settings.ContractResolver = new Newtonsoft.Json." +
+                    "Serialization.CamelCasePropertyNamesContractResolver();\r\n\r\n            return Js" +
+                    "onConvert.SerializeObject(obj, settings);\r\n        }\r\n\r\n        protected virtua" +
+                    "l ActionResult BadRequestWithModelStateErrors()\r\n        {\r\n            var erro" +
+                    "rList = (from item in ModelState.Values\r\n                             from error" +
+                    " in item.Errors\r\n                             select error.ErrorMessage).ToList(" +
+                    ");\r\n\r\n            var jsonErrors = JsonConvert.SerializeObject(\r\n               " +
+                    "           errorList,\r\n                          new JsonSerializerSettings\r\n   " +
+                    "                       {\r\n                              NullValueHandling = Null" +
+                    "ValueHandling.Ignore,\r\n                              DefaultValueHandling = Defa" +
+                    "ultValueHandling.Ignore\r\n                          });\r\n\r\n            var result" +
+                    " = StatusCodeTextResult(jsonErrors, HttpStatusCode.BadRequest);\r\n\r\n            R" +
+                    "esponse.AppendHeader(\"ModelStateErrors\", jsonErrors);\r\n\r\n            return resu" +
+                    "lt;\r\n        }\r\n\r\n        protected virtual ActionResult BadRequestTextResult()\r" +
+                    "\n        {\r\n            return StatusCodeTextResult(\"HTTP Error 400.0 - Bad Requ" +
+                    "est\", HttpStatusCode.BadRequest);\r\n        }\r\n\r\n        protected virtual Action" +
+                    "Result NotFoundTextResult()\r\n        {\r\n            return StatusCodeTextResult(" +
+                    "\"HTTP Error 404.0 - Not Found\", HttpStatusCode.NotFound);\r\n        }\r\n\r\n        " +
+                    "protected virtual ActionResult StatusCodeTextResult(string content, HttpStatusCo" +
+                    "de statusCode)\r\n        {\r\n            Response.StatusCode = (int)statusCode;\r\n " +
+                    "           Response.ContentType = \"text/plain\";\r\n            return new ContentR" +
+                    "esult\r\n            {\r\n                ContentType = \"text/plain\",\r\n             " +
+                    "   Content = content,\r\n                ContentEncoding = Encoding.UTF8\r\n        " +
+                    "    };\r\n        }\r\n\r\n        protected virtual ActionResult StatusCodeTextResult" +
+                    "(StringBuilder sb, HttpStatusCode statusCode)\r\n        {\r\n            if (HttpCo" +
+                    "ntext.IsDebuggingEnabled)\r\n            {\r\n                sb.Append(\"<br/><b>Rou" +
+                    "teData.Values</b><br/>\");\r\n                foreach (var item in RouteData.Values" +
+                    ")\r\n                {\r\n                    sb.Append(item.Key);\r\n                " +
+                    "    sb.Append(\" : \");\r\n                    sb.Append(item.Value);\r\n             " +
+                    "       sb.Append(\"<br/>\");\r\n                }\r\n            }\r\n            return" +
+                    " StatusCodeTextResult(sb.ToString(), statusCode);\r\n        }\r\n\r\n        protecte" +
+                    "d ");
             
             #line 276 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcBaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.DataContextClass));

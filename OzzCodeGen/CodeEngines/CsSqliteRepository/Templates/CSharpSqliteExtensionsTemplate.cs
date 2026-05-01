@@ -250,47 +250,47 @@ namespace ");
                     "parameter.</param>\r\n        public static void AddParameter(this SqliteCommand c" +
                     "ommand, string parameterName, string value)\r\n        {\r\n            var paramete" +
                     "r = command.GetParameter(parameterName, SqliteType.Text);\r\n            parameter" +
-                    ".Value = value;\r\n            command.Parameters.Add(parameter);\r\n        }\r\n    " +
-                    "    \r\n        /// <summary>\r\n        /// Converts a scaled integer value from th" +
-                    "e specified column in the data reader to a nullable decimal.\r\n        /// </summ" +
-                    "ary>\r\n        /// <remarks>Use this method to read decimal values that are store" +
-                    "d as scaled integers in the\r\n        /// database. The method divides the intege" +
-                    "r value by 10 raised to the specified scale to obtain the original\r\n        /// " +
-                    "decimal value.</remarks>\r\n        /// <param name=\"reader\">The SqliteDataReader " +
-                    "instance from which to retrieve the value.</param>\r\n        /// <param name=\"ord" +
-                    "inal\">The zero-based column ordinal of the value to convert.</param>\r\n        //" +
-                    "/ <param name=\"scale\">The number of decimal places by which the integer value is" +
-                    " scaled.</param>\r\n        /// <returns>A nullable decimal representing the unsca" +
-                    "led value from the specified column, or null if the column is\r\n        /// DBNul" +
-                    "l.</returns>\r\n        public static decimal? GetDecimalFromInteger(this SqliteDa" +
-                    "taReader reader, int ordinal, int scale)\r\n        {\r\n            if (reader.IsDB" +
-                    "Null(ordinal))\r\n            {\r\n                return null;\r\n            }\r\n    " +
-                    "        var value = reader.GetInt64(ordinal);\r\n            return value / (decim" +
-                    "al)Math.Pow(10, scale);\r\n        }\r\n\r\n        /// <summary>\r\n        /// Retriev" +
-                    "es a nullable decimal value from the specified <see cref=\"SqliteDataReader\"/> at" +
-                    " the given ordinal.\r\n        /// </summary>\r\n        /// <param name=\"reader\">Th" +
-                    "e <see cref=\"SqliteDataReader\"/> from which to retrieve the value.</param>\r\n    " +
-                    "    /// <param name=\"ordinal\">The zero-based column ordinal.</param>\r\n        //" +
-                    "/ <returns>The nullable decimal value, or null if the column is DBNull.</returns" +
-                    ">\r\n        public static decimal? GetDecimalFromText(this SqliteDataReader reade" +
-                    "r, int ordinal)\r\n        {\r\n            if (reader.IsDBNull(ordinal))\r\n         " +
-                    "   {\r\n                return null;\r\n            }\r\n            var value = reade" +
-                    "r.GetString(ordinal);\r\n            if (decimal.TryParse(value, NumberStyles.Any," +
-                    " CultureInfo.InvariantCulture, out decimal result))\r\n            {\r\n            " +
-                    "    return result;\r\n            }\r\n            throw new FormatException($\"The v" +
-                    "alue \'{value}\' at ordinal {ordinal} cannot be parsed as a decimal.\");\r\n        }" +
-                    "\r\n\r\n        /// <summary>\r\n        /// Creates a new <see cref=\"SqliteParameter\"" +
-                    "/> with the specified name and type for the given <see\r\n        /// cref=\"Sqlite" +
-                    "Command\"/>.\r\n        /// </summary>\r\n        /// <param name=\"command\">The <see " +
-                    "cref=\"SqliteCommand\"/> to which the parameter will be added.</param>\r\n        //" +
-                    "/ <param name=\"parameterName\">The name to assign to the parameter.</param>\r\n    " +
-                    "    /// <param name=\"paramType\">The SQLite data type to assign to the parameter." +
-                    "</param>\r\n        /// <returns>A new <see cref=\"SqliteParameter\"/> instance with" +
-                    " the specified name and type.</returns>\r\n        public static SqliteParameter G" +
-                    "etParameter(this SqliteCommand command, string parameterName, SqliteType paramTy" +
-                    "pe)\r\n        {\r\n            var parameter = command.CreateParameter();\r\n        " +
-                    "    parameter.ParameterName = parameterName;\r\n            parameter.SqliteType =" +
-                    " paramType;\r\n\r\n            return parameter;\r\n        }\r\n    }\r\n}\r\n");
+                    ".Value = value;\r\n            command.Parameters.Add(parameter);\r\n        }\r\n\r\n  " +
+                    "      /// <summary>\r\n        /// Converts a scaled integer value from the specif" +
+                    "ied column in the data reader to a nullable decimal.\r\n        /// </summary>\r\n  " +
+                    "      /// <remarks>Use this method to read decimal values that are stored as sca" +
+                    "led integers in the\r\n        /// database. The method divides the integer value " +
+                    "by 10 raised to the specified scale to obtain the original\r\n        /// decimal " +
+                    "value.</remarks>\r\n        /// <param name=\"reader\">The SqliteDataReader instance" +
+                    " from which to retrieve the value.</param>\r\n        /// <param name=\"ordinal\">Th" +
+                    "e zero-based column ordinal of the value to convert.</param>\r\n        /// <param" +
+                    " name=\"scale\">The number of decimal places by which the integer value is scaled." +
+                    "</param>\r\n        /// <returns>A nullable decimal representing the unscaled valu" +
+                    "e from the specified column, or null if the column is\r\n        /// DBNull.</retu" +
+                    "rns>\r\n        public static decimal? GetDecimalFromInteger(this SqliteDataReader" +
+                    " reader, int ordinal, int scale)\r\n        {\r\n            if (reader.IsDBNull(ord" +
+                    "inal))\r\n            {\r\n                return null;\r\n            }\r\n            " +
+                    "var value = reader.GetInt64(ordinal);\r\n            return value / (decimal)Math." +
+                    "Pow(10, scale);\r\n        }\r\n\r\n        /// <summary>\r\n        /// Retrieves a nul" +
+                    "lable decimal value from the specified <see cref=\"SqliteDataReader\"/> at the giv" +
+                    "en ordinal.\r\n        /// </summary>\r\n        /// <param name=\"reader\">The <see c" +
+                    "ref=\"SqliteDataReader\"/> from which to retrieve the value.</param>\r\n        /// " +
+                    "<param name=\"ordinal\">The zero-based column ordinal.</param>\r\n        /// <retur" +
+                    "ns>The nullable decimal value, or null if the column is DBNull.</returns>\r\n     " +
+                    "   public static decimal? GetDecimalFromText(this SqliteDataReader reader, int o" +
+                    "rdinal)\r\n        {\r\n            if (reader.IsDBNull(ordinal))\r\n            {\r\n  " +
+                    "              return null;\r\n            }\r\n            var value = reader.GetStr" +
+                    "ing(ordinal);\r\n            if (decimal.TryParse(value, NumberStyles.Any, Culture" +
+                    "Info.InvariantCulture, out decimal result))\r\n            {\r\n                retu" +
+                    "rn result;\r\n            }\r\n            throw new FormatException($\"The value \'{v" +
+                    "alue}\' at ordinal {ordinal} cannot be parsed as a decimal.\");\r\n        }\r\n\r\n    " +
+                    "    /// <summary>\r\n        /// Creates a new <see cref=\"SqliteParameter\"/> with " +
+                    "the specified name and type for the given <see\r\n        /// cref=\"SqliteCommand\"" +
+                    "/>.\r\n        /// </summary>\r\n        /// <param name=\"command\">The <see cref=\"Sq" +
+                    "liteCommand\"/> to which the parameter will be added.</param>\r\n        /// <param" +
+                    " name=\"parameterName\">The name to assign to the parameter.</param>\r\n        /// " +
+                    "<param name=\"paramType\">The SQLite data type to assign to the parameter.</param>" +
+                    "\r\n        /// <returns>A new <see cref=\"SqliteParameter\"/> instance with the spe" +
+                    "cified name and type.</returns>\r\n        public static SqliteParameter GetParame" +
+                    "ter(this SqliteCommand command, string parameterName, SqliteType paramType)\r\n   " +
+                    "     {\r\n            var parameter = command.CreateParameter();\r\n            para" +
+                    "meter.ParameterName = parameterName;\r\n            parameter.SqliteType = paramTy" +
+                    "pe;\r\n\r\n            return parameter;\r\n        }\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

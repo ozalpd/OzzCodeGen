@@ -36,7 +36,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         }
         
         #line 10 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\AbstractMvcView.tt"
- 
+
 public void WriteUsingNamespaces()
 {
 	foreach(string namspc in UsingNamespaces)

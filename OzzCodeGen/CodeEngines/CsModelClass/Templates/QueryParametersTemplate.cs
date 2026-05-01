@@ -84,32 +84,32 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
                     "e = queryParameters.Page;\r\n                PageSize = queryParameters.PageSize;\r" +
                     "\n                SearchString = queryParameters.SearchString;\r\n            }\r\n  " +
                     "      }\r\n\r\n        /// <summary>\r\n        /// Gets or sets the current page numb" +
-                    "er.\r\n        /// </summary>\r\n        public int Page { get; set; }\r\n        \r\n  " +
-                    "      /// <summary>\r\n        /// Gets or sets the number of items per page.\r\n   " +
-                    "     /// </summary>\r\n        public int PageSize { get; set; }\r\n        \r\n      " +
-                    "  /// <summary>\r\n        /// Gets or sets the general purpose search string.\r\n  " +
-                    "      /// </summary>\r\n        public string? SearchString { get; set; }\r\n\r\n     " +
-                    "   /// <summary>\r\n        /// Gets the total number of pages based on the total " +
-                    "count and page size.\r\n        /// </summary>\r\n        public int PageCount\r\n    " +
-                    "    {\r\n            get\r\n            {\r\n                return TotalCount > 0 ? (" +
-                    "int)Math.Ceiling(TotalCount / (double)PageSize) : 0;\r\n            }\r\n        }\r\n" +
-                    "\r\n        /// <summary>\r\n        /// Gets the number of items to skip based on t" +
-                    "he current page and page size.\r\n        /// </summary>\r\n        public int Skip\r" +
-                    "\n        {\r\n            get { return (Page - 1) * PageSize; }\r\n        }\r\n\r\n    " +
-                    "    /// <summary>\r\n        /// Gets or sets the total number of items.\r\n        " +
-                    "/// </summary>\r\n        public int TotalCount\r\n        {\r\n            get { retu" +
-                    "rn _totalCount; }\r\n            set\r\n            {\r\n                _totalCount =" +
-                    " value;\r\n                if (Page < 1) Page = 1;\r\n                if (Page > Pag" +
-                    "eCount) Page = PageCount;\r\n                int skip = (Page - 1) * PageSize;\r\n  " +
-                    "          }\r\n        }\r\n        int _totalCount;\r\n\r\n        public virtual bool " +
-                    "HasAnySearchCriteria()\r\n        {\r\n            _hasAnySearchCriteria = !string.I" +
-                    "sNullOrEmpty(SearchString);\r\n\r\n            OnHasAnySearchCriteria();\r\n          " +
-                    "  return _hasAnySearchCriteria;\r\n        }\r\n\r\n        /// <summary>\r\n        ///" +
-                    " Called when determining if there are any search criteria, can be used in a part" +
-                    "ial class to extend the logic.\r\n        /// Setting _hasAnySearchCriteria to tru" +
-                    "e in this method will indicate that there are search criteria.\r\n        /// </su" +
-                    "mmary>\r\n        partial void OnHasAnySearchCriteria();\r\n        bool _hasAnySear" +
-                    "chCriteria;\r\n    }\r\n}\r\n");
+                    "er.\r\n        /// </summary>\r\n        public int Page { get; set; }\r\n\r\n        //" +
+                    "/ <summary>\r\n        /// Gets or sets the number of items per page.\r\n        ///" +
+                    " </summary>\r\n        public int PageSize { get; set; }\r\n\r\n        /// <summary>\r" +
+                    "\n        /// Gets or sets the general purpose search string.\r\n        /// </summ" +
+                    "ary>\r\n        public string? SearchString { get; set; }\r\n\r\n        /// <summary>" +
+                    "\r\n        /// Gets the total number of pages based on the total count and page s" +
+                    "ize.\r\n        /// </summary>\r\n        public int PageCount\r\n        {\r\n         " +
+                    "   get\r\n            {\r\n                return TotalCount > 0 ? (int)Math.Ceiling" +
+                    "(TotalCount / (double)PageSize) : 0;\r\n            }\r\n        }\r\n\r\n        /// <s" +
+                    "ummary>\r\n        /// Gets the number of items to skip based on the current page " +
+                    "and page size.\r\n        /// </summary>\r\n        public int Skip\r\n        {\r\n    " +
+                    "        get { return (Page - 1) * PageSize; }\r\n        }\r\n\r\n        /// <summary" +
+                    ">\r\n        /// Gets or sets the total number of items.\r\n        /// </summary>\r\n" +
+                    "        public int TotalCount\r\n        {\r\n            get { return _totalCount; " +
+                    "}\r\n            set\r\n            {\r\n                _totalCount = value;\r\n       " +
+                    "         if (Page < 1) Page = 1;\r\n                if (Page > PageCount) Page = P" +
+                    "ageCount;\r\n                int skip = (Page - 1) * PageSize;\r\n            }\r\n   " +
+                    "     }\r\n        int _totalCount;\r\n\r\n        public virtual bool HasAnySearchCrit" +
+                    "eria()\r\n        {\r\n            _hasAnySearchCriteria = !string.IsNullOrEmpty(Sea" +
+                    "rchString);\r\n\r\n            OnHasAnySearchCriteria();\r\n            return _hasAny" +
+                    "SearchCriteria;\r\n        }\r\n\r\n        /// <summary>\r\n        /// Called when det" +
+                    "ermining if there are any search criteria, can be used in a partial class to ext" +
+                    "end the logic.\r\n        /// Setting _hasAnySearchCriteria to true in this method" +
+                    " will indicate that there are search criteria.\r\n        /// </summary>\r\n        " +
+                    "partial void OnHasAnySearchCriteria();\r\n        bool _hasAnySearchCriteria;\r\n   " +
+                    " }\r\n}\r\n");
             
             #line 112 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
   }
@@ -393,8 +393,8 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
             #line default
             #line hidden
             this.Write("\r\n        public override bool HasAnySearchCriteria()\r\n        {\r\n            _ha" +
-                    "sAnySearchCriteria = base.HasAnySearchCriteria();        \r\n            if (_hasA" +
-                    "nySearchCriteria) return true;\r\n\r\n");
+                    "sAnySearchCriteria = base.HasAnySearchCriteria();\r\n            if (_hasAnySearch" +
+                    "Criteria) return true;\r\n\r\n");
             
             #line 160 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
   foreach (var property in nonRangeProperties) { 

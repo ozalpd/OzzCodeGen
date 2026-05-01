@@ -28,7 +28,7 @@ namespace <#= EntitySetting.GetCommandsNamespaceName() #>
 <#      foreach (var lookupEntity in foreignLookupEntities) { #>
         private readonly <#= lookupEntity.GetLookupName(LookupTemplate.Interface) #> _<#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #>;
 <#      } #>
-        
+
         public <#= GetClassName() #>(<#= GetConstructorParameters() #>)
         {
             _viewModel = viewModel;

@@ -190,7 +190,7 @@ namespace ");
             
             #line 57 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\CSharpModelClassTemplate.tt"
 
-    foreach (var property in properties) 
+    foreach (var property in properties)
     {
         var comment = property.PropertyDefinition.Comment;
         if(codeEngine.GenerateXmlDoc && !string.IsNullOrWhiteSpace(comment)) {

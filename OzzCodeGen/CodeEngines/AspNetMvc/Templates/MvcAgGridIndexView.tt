@@ -7,7 +7,7 @@
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzUtils" #>
-<# 
+<#
 bool searchable = Entity.DisplayColumns.Where(e => e.UseInSearch).Any();
 var properties = Entity.DisplayColumns.Where(e => e.InIndexView);
 var collectionProperties = Entity.GetInheritedCollectionProperties();
@@ -102,7 +102,7 @@ WriteUsingNamespaces(); #>
                 {
                     @:'<li><a href="#deleteConfirm" data-bs-toggle="modal" onclick="setDelete(getObjectById(result.Items,' + params.value + ').<#= DisplayMember #>, ' + params.value + ');">@ActionStrings.Delete</a></li>' +
                 }
-<#  if (entitiesThisForCreate.Any()) 
+<#  if (entitiesThisForCreate.Any())
     { #>
                     '<li class="divider"></li>' +
 <#        foreach (var entity in entitiesThisForCreate)

@@ -4,7 +4,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="OzzUtils" #>
-<# 
+<#
 var fkeyProperties = Entity.GetInheritedIncludedProperties().Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey);
 var searchProperties = Entity.DisplayColumns.Where(e => e.UseInSearch);
 WriteUsingNamespaces(); #>
@@ -31,7 +31,7 @@ WriteUsingNamespaces(); #>
 
 <#  foreach (var item in searchProperties.Where(p => p.IsDateTime))
     { #>
-    
+
 @* <#= item.Name #> Filter Markup with Default Date is Today *@
 @{
     DateTime <#= item.Name.ToCamelCase() #>Min = ViewBag.<#= item.Name #>Min ?? DateTime.Now.Date;
@@ -46,7 +46,7 @@ WriteUsingNamespaces(); #>
 <#  } #>
 <#  foreach (var item in searchProperties.Where(p => p.IsDateTime))
     { #>
-    
+
 @* <#= item.Name #> Filter Markup passing value via ViewBag *@
 @{
     string <#= item.Name.ToCamelCase() #>Min = ViewBag.<#= item.Name #>Min == null ? string.Empty : ((DateTime)ViewBag.<#= item.Name #>Min).ToString("yyyy.MM.dd");
@@ -62,7 +62,7 @@ WriteUsingNamespaces(); #>
 
 <#  foreach (var item in searchProperties.Where(p => p.IsDateTime))
     { #>
-    
+
 @* <#= item.Name #> Filter Markup *@
 
         <div class="col-md-2 col-sm-3">

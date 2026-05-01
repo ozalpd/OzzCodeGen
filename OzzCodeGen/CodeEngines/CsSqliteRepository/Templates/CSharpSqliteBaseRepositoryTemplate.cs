@@ -58,7 +58,7 @@ using System.ComponentModel.DataAnnotations;
             this.Write(";\r\n");
             
             #line 21 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
-	} 
+  } 
             
             #line default
             #line hidden
@@ -150,7 +150,7 @@ using System.ComponentModel.DataAnnotations;
                     " parsedUtc.ToLocalTime().DateTime;\r\n\r\n            return dateTime;\r\n        }\r\n");
             
             #line 162 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
-	if (modelClassEngine != null && modelClassEngine.GenerateValidator) { 
+  if (modelClassEngine != null && modelClassEngine.GenerateValidator) { 
             
             #line default
             #line hidden
@@ -168,7 +168,7 @@ using System.ComponentModel.DataAnnotations;
                     "      }\r\n");
             
             #line 173 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
-	} 
+  } 
             
             #line default
             #line hidden

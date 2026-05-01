@@ -169,7 +169,6 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
             
             #line default
             #line hidden
-            this.Write(" \r\n");
             
             #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
         } 
@@ -309,7 +308,6 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
             
             #line default
             #line hidden
-            this.Write(" \r\n");
             
             #line 69 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       }
@@ -455,7 +453,6 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
             
             #line default
             #line hidden
-            this.Write(" \r\n");
             
             #line 101 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       }
@@ -476,7 +473,7 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
             
             #line default
             #line hidden
-            this.Write("        \r\n");
+            this.Write("\r\n");
             
             #line 107 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
     } 
@@ -509,7 +506,7 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
             
             #line default
             #line hidden
-            this.Write(");\r\n        \r\n");
+            this.Write(");\r\n\r\n");
             
             #line 112 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
     // GetPaged Method
@@ -944,7 +941,7 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
             
             #line default
             #line hidden
-            this.Write(");\r\n            SELECT last_insert_rowid();\";\r\n            \r\n");
+            this.Write(");\r\n            SELECT last_insert_rowid();\";\r\n\r\n");
             
             #line 222 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       WriteColumnsAndParameters(insertColumns, createdAtCol:createdAtCol, updatedAtCol:updatedAtCol); 
@@ -993,8 +990,8 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
             
             #line default
             #line hidden
-            this.Write("            \r\n            await _metadataRepository.SaveLastUpdateUtcAsync(connec" +
-                    "tion);\r\n            ClearRecordCountCache();\r\n            ");
+            this.Write("\r\n            await _metadataRepository.SaveLastUpdateUtcAsync(connection);\r\n    " +
+                    "        ClearRecordCountCache();\r\n            ");
             
             #line 232 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
@@ -1357,7 +1354,6 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
             
             #line default
             #line hidden
-            this.Write(" \r\n");
             
             #line 285 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   } 
@@ -1450,7 +1446,6 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
             
             #line default
             #line hidden
-            this.Write(" \r\n");
             
             #line 301 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   } 
@@ -1487,8 +1482,8 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
             
             #line default
             #line hidden
-            this.Write(");\r\n            }\r\n            \r\n            return affectedRows > 0;\r\n        }\r" +
-                    "\n        partial void OnUpdated(");
+            this.Write(");\r\n            }\r\n\r\n            return affectedRows > 0;\r\n        }\r\n        par" +
+                    "tial void OnUpdated(");
             
             #line 315 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
@@ -1590,7 +1585,6 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
             
             #line default
             #line hidden
-            this.Write(" \r\n");
             
             #line 333 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   } 
@@ -1611,7 +1605,7 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
             
             #line default
             #line hidden
-            this.Write("\";\r\n            \r\n");
+            this.Write("\";\r\n\r\n");
             
             #line 336 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
       WriteColumnsAndParameters(writeModel); 
@@ -1880,7 +1874,6 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
             
             #line default
             #line hidden
-            this.Write(" \r\n");
             
             #line 393 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
   } 

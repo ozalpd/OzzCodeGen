@@ -12,6 +12,16 @@ OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. 
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 
+## Latest Highlights (2.3.3)
+- Introduce `WpfDialogServcTemplate` for generating dialog service interfaces and implementations for entity create/edit dialogs.
+- Introduce `WpfCommandTemplate` for generating MVVM command classes (Create/Edit) in the WPF engine, including constructor wiring for view models, dialog services, and foreign lookups.
+- Added `MvvmTemplate` enum and entity setting helpers for template-specific naming.
+- Added properties `CommandVmTypeName` and `CommandVmNamespace` to `BaseMvvmEntitySetting<TPropertySetting>` for specifying ViewModel type name in generated command classes.
+- Centralized accessibility logic with `GetAccessibility()` and standardized `IsPublic` property. Updated `.csproj` and performed related cleanup.
+- Enhances the ViewModel template to generate fields, collections, and async loading methods for foreign lookup entities.
+- Added `GetPreselectProperties()` to `WpfMvvmEntitySetting` for ordered preselect property retrieval.
+- Renamed the WPF ViewModel template class and related files from `CSharpWpfViewModelTemplate` to `WpfViewModelTemplate`. Updated all references, constructors, and .csproj entries to use the new, shorter name.
+
 ## Latest Highlights (2.3.2)
 - Renamed `ServiceFolder`/`ServiceNamespaceName` to `LookupFolder`/`LookupNamespaceName` in `BaseMvvmCodeEngine` for clarity.
 - Added `PutLookupInInfra` property to control whether lookup services are placed in the infrastructure folder.

@@ -44,7 +44,7 @@ namespace <#= NamespaceName #>
     {
 <#	} #>
 <#
-    foreach (var property in properties) 
+    foreach (var property in properties)
     { #>
 <#    List<string> attributes  = GetPropertyAttributes(property);
     if(attributes.Any())
@@ -57,7 +57,7 @@ namespace <#= NamespaceName #>
         public <#= property.GetTypeName() #> <#= property.Name #> { get; set; }
 
 <#	}
-} 
+}
     if(codeEngine.SeperateMetaDataClass) {
     PopIndent();#>
         }

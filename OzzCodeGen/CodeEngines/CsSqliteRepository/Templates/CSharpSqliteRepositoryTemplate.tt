@@ -47,7 +47,7 @@ namespace <#= CodeEngine.NamespaceName #>
         public <#= EntitySetting.Name #>Repository(string databasePath
 <#      for (int i = 0; i < autoloadTypeNames.Count; i++) { #>
                                , I<#= GetRepositoryName(autoloadTypeNames[i]) #>? <#= GetRepositoryName(autoloadTypeNames[i]).ToCamelCase() #> = null<# if (autoloadTypeNames.Count == i+1) { #>
-) : base(databasePath, "<#= EntitySetting.TableName #>")<#    } #> 
+) : base(databasePath, "<#= EntitySetting.TableName #>")<#    } #>
 <#        } #>
 <#  } else { #>
         public <#= EntitySetting.Name #>Repository(string databasePath) : base(databasePath, "<#= EntitySetting.TableName #>")
@@ -65,7 +65,7 @@ namespace <#= CodeEngine.NamespaceName #>
 <#    } else { #>
             OnInitialized(<#= GetRepositoryName(autoloadTypeNames[0]).ToCamelCase() #> == null
 <#      for (int i = 1; i < autoloadTypeNames.Count; i++) { #>
-                        , <#= GetRepositoryName(autoloadTypeNames[i]).ToCamelCase() #> == null<# if (autoloadTypeNames.Count == i+1) { #>);<# } #> 
+                        , <#= GetRepositoryName(autoloadTypeNames[i]).ToCamelCase() #> == null<# if (autoloadTypeNames.Count == i+1) { #>);<# } #>
 <#      }
     } #>
         }
@@ -97,18 +97,18 @@ namespace <#= CodeEngine.NamespaceName #>
 <#  } else { #>
         partial void OnInitialized(bool is<#= GetRepositoryName(autoloadTypeNames[0]) #>Null
 <#      for (int i = 1; i < autoloadTypeNames.Count; i++) { #>
-                                 , bool is<#= GetRepositoryName(autoloadTypeNames[i]) #>Null<# if (autoloadTypeNames.Count == i+1) { #>);<# } #> 
+                                 , bool is<#= GetRepositoryName(autoloadTypeNames[i]) #>Null<# if (autoloadTypeNames.Count == i+1) { #>);<# } #>
 <#      }
     } #>
 <#  WriteGetMulipleRecordsMethod(); // GetAllAsync #>
 <#  foreach (var fkey in fkeyColumns) {
         WriteGetMulipleRecordsMethod(fkey as SqliteRepositoryPropertySetting);#>
-        
+
 <#    } #>
 <#  WriteGetSingleRecordMethod(pkey as SqliteRepositoryPropertySetting); // GetByPKeyAsync #>
 <#  WriteGetSingleRecordMethod(unique as SqliteRepositoryPropertySetting); // GetByUniqueAsync #>
         partial void OnLoaded(<#= EntitySetting.Name #> <#= EntitySetting.Name.ToCamelCase() #>);
-        
+
 <#    // GetPaged Method
     if (EntitySetting.GenerateGetPaged) {
         memberSignature = GetSignature(MethodType.GetPaged);
@@ -218,7 +218,7 @@ namespace <#= CodeEngine.NamespaceName #>
             command.CommandText = @$"INSERT INTO {_tableName} ({string.Join(", ", ColumnNames[1..])})
             VALUES (<#= GetParameterList(insertColumns) #>);
             SELECT last_insert_rowid();";
-            
+
 <#      WriteColumnsAndParameters(insertColumns, createdAtCol:createdAtCol, updatedAtCol:updatedAtCol); #>
 
 <#      if(pkey.IsIntegerNumeric) {#>
@@ -226,7 +226,7 @@ namespace <#= CodeEngine.NamespaceName #>
 <#      } else { #>
             var <#= pkey.Name.ToCamelCase() #> = await command.ExecuteScalarAsync();
 <#      } #>
-            
+
             await _metadataRepository.SaveLastUpdateUtcAsync(connection);
             ClearRecordCountCache();
             <#= EntitySetting.Name.ToCamelCase() #>.<#= pkey.Name #> = <#= pkey.Name.ToCamelCase() #>;
@@ -281,7 +281,7 @@ namespace <#= CodeEngine.NamespaceName #>
 <#  } #>
             bool noChanges = existing<#= EntitySetting.Name #> != null
 <#  for (int i = 0; i < updateColumns.Count; i++) {  #>
-                          && existing<#= EntitySetting.Name #>.<#= updateColumns[i].Name #> == <#= EntitySetting.Name.ToCamelCase() #>.<#= updateColumns[i].Name #><# if (i+1 == updateColumns.Count) { #>;<#    } #> 
+                          && existing<#= EntitySetting.Name #>.<#= updateColumns[i].Name #> == <#= EntitySetting.Name.ToCamelCase() #>.<#= updateColumns[i].Name #><# if (i+1 == updateColumns.Count) { #>;<#    } #>
 <#  } #>
 
             if (noChanges)
@@ -297,7 +297,7 @@ namespace <#= CodeEngine.NamespaceName #>
 <#  } #>
             command.CommandText = @$"UPDATE {_tableName} SET
 <#  for (int i = 0; i < updateColumns.Count; i++) {  #>
-                <#= updateColumns[i].Name #> = @<#= updateColumns[i].Name.ToCamelCase() #><# if (i+1 < updateColumns.Count) { #>,<#    } #> 
+                <#= updateColumns[i].Name #> = @<#= updateColumns[i].Name.ToCamelCase() #><# if (i+1 < updateColumns.Count) { #>,<#    } #>
 <#  } #>
             WHERE <#= pkey.Name #> = @<#= pkey.Name.ToCamelCase() #>";
 
@@ -309,7 +309,7 @@ namespace <#= CodeEngine.NamespaceName #>
                 await _metadataRepository.SaveLastUpdateUtcAsync(connection);
                 OnUpdated(<#= EntitySetting.Name.ToCamelCase() #>);
             }
-            
+
             return affectedRows > 0;
         }
         partial void OnUpdated(<#= EntitySetting.Name #> <#= EntitySetting.Name.ToCamelCase() #>);
@@ -329,10 +329,10 @@ namespace <#= CodeEngine.NamespaceName #>
             await using var command = connection.CreateCommand();
             command.CommandText = @$"UPDATE {_tableName} SET
 <#  for (int i = 0; i < writeModel.Columns.Count; i++) {  #>
-                <#= writeModel.Columns[i].Name #> = @<#= writeModel.Columns[i].Name.ToCamelCase() #><# if (i+1 < writeModel.Columns.Count) { #>,<#    } #> 
+                <#= writeModel.Columns[i].Name #> = @<#= writeModel.Columns[i].Name.ToCamelCase() #><# if (i+1 < writeModel.Columns.Count) { #>,<#    } #>
 <#  } #>
             WHERE <#= writeModel.PKey.Name #> = @<#= writeModel.PKeyValue #>";
-            
+
 <#      WriteColumnsAndParameters(writeModel); #>
 
             var affectedRows = await command.ExecuteNonQueryAsync();
@@ -389,7 +389,7 @@ namespace <#= CodeEngine.NamespaceName #>
         /// </summary>
         public readonly string[] ColumnNames = new[] {
 <#  for (int i = 0; i < repositoryColumns.Count; i++) {  #>
-            "<#= repositoryColumns[i].Name #>"<# if (i+1 < repositoryColumns.Count) { #>,<#    } #> 
+            "<#= repositoryColumns[i].Name #>"<# if (i+1 < repositoryColumns.Count) { #>,<#    } #>
 <#  } #>
         };
 <#  if (decimalColumns.Count > 0) { #>

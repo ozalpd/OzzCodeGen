@@ -35,7 +35,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         {
             
             #line 11 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
- 
+
     var entities = GetEntitySettings().ToList();
     WriteUsingNamespaces(); 
             

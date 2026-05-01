@@ -159,7 +159,7 @@ namespace ");
             
             #line 46 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
 
-    foreach (var property in properties) 
+    foreach (var property in properties)
     { 
             
             #line default
@@ -207,7 +207,7 @@ namespace ");
             
             #line 59 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Metadata\Templates\MetadataClassTemplate.tt"
 	}
-} 
+}
     if(codeEngine.SeperateMetaDataClass) {
     PopIndent();
             

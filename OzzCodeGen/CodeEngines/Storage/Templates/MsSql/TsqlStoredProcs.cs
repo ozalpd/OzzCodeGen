@@ -142,7 +142,7 @@ namespace OzzCodeGen.CodeEngines.Storage.Templates.MsSql
             
             #line default
             #line hidden
-            this.Write("            [LogStatus], \r\n            [LogStatusDescription])\r\n    Select  [");
+            this.Write("            [LogStatus],\r\n            [LogStatusDescription])\r\n    Select  [");
             
             #line 47 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.PrimaryKeyColumn.Name));
@@ -394,7 +394,7 @@ if(deleteMarkColumn != null)
             
             #line default
             #line hidden
-            this.Write("        \r\n    End\r\n    Else\r\n    Begin\r\n        Update [");
+            this.Write("\r\n    End\r\n    Else\r\n    Begin\r\n        Update [");
             
             #line 98 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TableDefinition.SchemaName));
@@ -511,7 +511,7 @@ if(deleteMarkColumn != null)
             this.Write("_Insert]\r\n");
             
             #line 116 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
-        
+
     var colDeclaresIns = TableDefinition.GetColumnList().Where(c => c.PrimaryKey == false && !c.DataType.StartsWith("as ", StringComparison.InvariantCultureIgnoreCase) && c.Exclude == false & string.IsNullOrEmpty(c.InsertDefault));
     string keyVal = insPKey ? keyVarName : "@newKey";
     if(insPKey){ 
@@ -537,7 +537,7 @@ if(deleteMarkColumn != null)
             #line 121 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     }
     foreach (var column in colDeclaresIns)
-    { 
+    {
             colNr++;
             
             #line default
@@ -569,7 +569,6 @@ if(deleteMarkColumn != null)
             
             #line default
             #line hidden
-            this.Write(" \r\n");
             
             #line 126 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     } 
@@ -773,13 +772,12 @@ if(deleteMarkColumn != null)
             
             #line default
             #line hidden
-            this.Write(" \r\n");
             
             #line 163 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
-        
+
     colNr = 0;
     foreach (var column in colDeclaresUpd)
-    { 
+    {
             colNr++;
             
             #line default
@@ -811,7 +809,6 @@ if(deleteMarkColumn != null)
             
             #line default
             #line hidden
-            this.Write(" \r\n");
             
             #line 169 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     } 
@@ -1031,7 +1028,6 @@ if(deleteMarkColumn != null)
             
             #line default
             #line hidden
-            this.Write(" \r\n");
             
             #line 211 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
  } 
@@ -1169,7 +1165,6 @@ if(deleteMarkColumn != null)
             
             #line default
             #line hidden
-            this.Write(" \r\n");
             
             #line 234 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     } 
@@ -1260,7 +1255,7 @@ if(deleteMarkColumn != null)
             #line hidden
             
             #line 253 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
-    } 
+    }
     if(TableDefinition.HasLogTable) {
         PushIndent("    ");
         WriteLine("");
@@ -1501,10 +1496,10 @@ if(deleteMarkColumn != null)
             this.Write(",\r\n");
             
             #line 322 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
-        
+
     colNr = 0;
     foreach (var column in colsInsOrUpd)
-    { 
+    {
             colNr++;
             
             #line default
@@ -1529,7 +1524,6 @@ if(deleteMarkColumn != null)
             
             #line default
             #line hidden
-            this.Write(" \r\n");
             
             #line 328 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     }
@@ -1563,7 +1557,7 @@ if(deleteMarkColumn != null)
         }
         
         #line 342 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
- 
+
 protected void WriteDeleteStatement(StorageEntitySetting table, StorageEntitySetting baseTable,string pkeyValue)
 { 
         
@@ -1766,14 +1760,14 @@ this.Write("\r\n");
         #line hidden
         
         #line 353 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
- 
+
 } 
         
         #line default
         #line hidden
         
         #line 355 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
- 
+
 protected void WriteUpdateStatement(StorageEntitySetting table, string pkeyValue, bool forInsOrUpdate = false, int maxLineLen = 48)
 {
     var columns = table.UseInheritance
@@ -1823,15 +1817,15 @@ this.Write("]\r\n       Set ");
         #line hidden
         
         #line 366 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
-    
+
     int colNr = 0, colLen, lineLen = 0;
     PushIndent("           ");
     foreach (var column in columns)
-    { 
+    {
         string colValue = string.IsNullOrEmpty(column.UpdateDefault) ? "@" + column.Name : column.UpdateDefault.Replace("{TableName}", table.TableName);
         colLen = colValue.Length + 3 + column.Name.Length;
         lineLen += colLen;
-        if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); } 
+        if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); }
         colNr++;
         
         
@@ -2000,13 +1994,6 @@ this.Write(")");
         #line default
         #line hidden
         
-        #line 388 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
-this.Write(" \r\n");
-
-        
-        #line default
-        #line hidden
-        
         #line 389 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     PushIndent("        ");
         } else {
@@ -2047,13 +2034,6 @@ this.Write(")");
         #line default
         #line hidden
         
-        #line 391 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
-this.Write(" \r\n");
-
-        
-        #line default
-        #line hidden
-        
         #line 392 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
          }
         }
@@ -2065,7 +2045,7 @@ this.Write(" \r\n");
         #line hidden
         
         #line 397 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
- 
+
 protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue, bool forInsOrUpdate = false, int maxLineLen = 48)
 {
     var columns = table.UseInheritance ?
@@ -2112,7 +2092,7 @@ this.Write("](\r\n");
         #line hidden
         
         #line 405 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
- 
+
     PushIndent("            ");
     if(!string.IsNullOrEmpty(pkeyValue)){ 
         
@@ -2147,7 +2127,7 @@ this.Write("], ");
         #line hidden
         
         #line 408 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
-    
+
     int colNr = 0, colLen, lineLen = 0;
     string colValue;
     foreach (var column in columns)
@@ -2155,7 +2135,7 @@ this.Write("], ");
         colValue = column.GetInsertValue(forInsOrUpdate);
         colLen = colValue.Length > column.Name.Length ? colValue.Length : column.Name.Length;
         lineLen += colLen;
-        if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); lineLen = colValue.Length; } 
+        if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); lineLen = colValue.Length; }
         colNr++;
         
         
@@ -2266,7 +2246,7 @@ this.Write(", ");
         colValue = column.GetInsertValue(forInsOrUpdate);
         colLen = colValue.Length > column.Name.Length ? colValue.Length : column.Name.Length;
         lineLen += colLen;
-        if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); lineLen = colValue.Length;} 
+        if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); lineLen = colValue.Length;}
         colNr++; 
         
         #line default
@@ -2321,14 +2301,14 @@ this.Write(")");
         #line hidden
         
         #line 440 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
- 
+
 } 
         
         #line default
         #line hidden
         
         #line 442 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
- 
+
 protected void WriteSelectStatement(string keyValue)
 {
     var firstBase = TableDefinition.GetFirstBase();
@@ -2598,7 +2578,7 @@ this.Write("\r\n");
         #line hidden
         
         #line 462 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
- 
+
 } 
         
         #line default
@@ -2607,7 +2587,7 @@ this.Write("\r\n");
         #line 464 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
 
 protected void WriteSelectColumns(StorageEntitySetting table, bool hasMore = false)
-{    
+{
     var columns = table.UseInheritance ?
             table.Properties.Where(c => c.PrimaryKey == false & c.Exclude == false) :
             table.GetColumnList().Where(c => c.PrimaryKey == false & c.Exclude == false);
@@ -2673,13 +2653,6 @@ this.Write(",");
         #line default
         #line hidden
         
-        #line 474 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
-this.Write(" \r\n");
-
-        
-        #line default
-        #line hidden
-        
         #line 475 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
     }
 
@@ -2688,7 +2661,7 @@ this.Write(" \r\n");
         #line hidden
         
         #line 477 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\Storage\Templates\MsSql\TsqlStoredProcs.tt"
- 
+
 } 
         
         #line default

@@ -8,8 +8,8 @@
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzCodeGen.Utilities" #>
 <#@ import namespace="OzzUtils" #>
-<# 
-var properties = CreateForm ? 
+<#
+var properties = CreateForm ?
         Entity.DisplayColumns.Where(e => e.InCreateView) :
         Entity.DisplayColumns.Where(e => e.InEditView);
 var decimalProperties = properties
@@ -37,21 +37,21 @@ WriteUsingNamespaces(); #>
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "dataInputForm" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form">
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.Id)
-        
+
 <#
 int visibleFields = 0; //visibleFields
-foreach (var property in properties) 
+foreach (var property in properties)
 {
     var useFor = CreateForm ? property.UseForCreate : property.UseForEdit;
     if (useFor == "HiddenInput")
     { #>
         @Html.HiddenFor(m => m.<#= property.Name #>)
 <#  }
-    else 
+    else
     {
         string editDivClass = useFor == "TextArea" ? "col-lg-7 col-md-8 col-sm-9" : "col-lg-5 col-md-6 col-sm-7";
         string autoFocus = visibleFields>0 ? string.Empty : ", @autofocus = \"autofocus\"";

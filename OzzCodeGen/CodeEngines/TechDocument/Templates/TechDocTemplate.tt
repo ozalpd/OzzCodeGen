@@ -20,7 +20,7 @@ Bu entity <#= EntitySetting.StorageEntity.SchemaName #>.<#= EntitySetting.Storag
 <#= EntitySetting.GetLocalizedName("tr") #> kayıtlarına ait veri sahalarından oluşur, içerdiği sahalar aşağıda listelenmiştir.
 
 <#
-foreach (var property in properties) 
+foreach (var property in properties)
 {
 #>
 <#= property.Name #> <#= property.GetTypeDescription() #> <#= property.AddtDescription #>

@@ -48,7 +48,7 @@ var strongForeignEntity = Entity.StrongForeignEntity;
 var strongProperty = Entity.StrongForeignKeyProperty;
 var foreignDependentProperty = Entity.GetForeignDependentProperty(strongProperty);
 var strongForeignPKeyProperty = Entity.StrongForeignEntity==null ? null : Entity.StrongForeignEntity.GetPrimaryKey();
-string strongForeignPKey = strongForeignPKeyProperty==null ? "Id" : strongForeignPKeyProperty.Name;  
+string strongForeignPKey = strongForeignPKeyProperty==null ? "Id" : strongForeignPKeyProperty.Name;
 
 string [] fillSelectListsMethods = Entity.GetFillSelectListsMethods();
 string classType = Entity.SealedController ? "sealed partial" : "partial";
@@ -98,7 +98,7 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write(" \r\n    {\r\n");
+            this.Write("    {\r\n");
             
             #line 35 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
 
@@ -134,8 +134,8 @@ if (CustomFile)
             
             #line 42 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
       foreach (var item in fkeyProperties)
-        { 
-             WriteViewBagSelectList(item); 
+        {
+             WriteViewBagSelectList(item);
         } 
             
             #line default
@@ -179,7 +179,7 @@ if (CustomFile)
             
             #line 52 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
  }
-else 
+else
 { 
             
             #line default
@@ -215,7 +215,7 @@ else
             
             #line 59 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   if(searchProperties.Where(p => p.IsString).Any())
-    { 
+    {
     int k = 0;
             
             #line default
@@ -251,7 +251,6 @@ else
             
             #line default
             #line hidden
-            this.Write(" \r\n");
             
             #line 70 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
         } 
@@ -519,8 +518,8 @@ else
             
             #line default
             #line hidden
-            this.Write(">(qParams, items);\r\n            ViewBag.result = ConvertToJson(result);\r\n        " +
-                    "    \r\n            return View();\r\n");
+            this.Write(">(qParams, items);\r\n            ViewBag.result = ConvertToJson(result);\r\n\r\n      " +
+                    "      return View();\r\n");
             
             #line 136 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   } else { 
@@ -631,7 +630,7 @@ else
             #line hidden
             
             #line 165 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
- if (Entity.GenerateActionForAutoComplete){ 
+ if (Entity.GenerateActionForAutoComplete){
         if (DisplayProperty != null && DisplayProperty.IsString) {
             
             #line default
@@ -986,7 +985,7 @@ else
             
             #line 251 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
   if (strongForeignEntity != null)
-    { 
+    {
         bool isString = strongProperty.IsString;
             
             #line default
@@ -1303,7 +1302,7 @@ else
             
             #line default
             #line hidden
-            this.Write(" \r\n                ");
+            this.Write("                ");
             
             #line 295 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance));
@@ -1387,7 +1386,7 @@ else
             
             #line default
             #line hidden
-            this.Write(" \r\n                OnCreateSaved(");
+            this.Write("                OnCreateSaved(");
             
             #line 302 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.ModelForCreate.ToCamelCase()));
@@ -1624,7 +1623,7 @@ else
             
             #line default
             #line hidden
-            this.Write(" \r\n                ");
+            this.Write("                ");
             
             #line 365 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(dataContextIntance));
@@ -1694,7 +1693,7 @@ else
             
             #line default
             #line hidden
-            this.Write(" \r\n                OnEditSaved(");
+            this.Write("                OnEditSaved(");
             
             #line 372 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name.ToCamelCase()));
@@ -1835,14 +1834,14 @@ else
             this.Write(");\r\n");
             
             #line 413 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-  if (collectionProperties.Any()) 
+  if (collectionProperties.Any())
     { 
             
             #line default
             #line hidden
             
             #line 415 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-      foreach (var property in collectionProperties) 
+      foreach (var property in collectionProperties)
         { 
             
             #line default
@@ -1927,7 +1926,7 @@ else
             this.Write(");\r\n                sb.Append(\"</b>.<br/>\");\r\n\r\n");
             
             #line 428 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
-      foreach (var property in collectionProperties) 
+      foreach (var property in collectionProperties)
         { 
             
             #line default
@@ -2146,7 +2145,7 @@ else
             
             #line default
             #line hidden
-            this.Write("        \r\n        ");
+            this.Write("        ");
             
             #line 496 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
@@ -2219,14 +2218,14 @@ else
             
             #line default
             #line hidden
-            this.Write("        \r\n");
+            this.Write("\r\n");
             
             #line 518 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
  if(deleteRoles.Equals("true") || deleteRoles.Equals("false")) { 
             
             #line default
             #line hidden
-            this.Write("        \r\n        ");
+            this.Write("        ");
             
             #line 519 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
@@ -2306,7 +2305,7 @@ else
             
             #line default
             #line hidden
-            this.Write("        \r\n        ");
+            this.Write("        ");
             
             #line 542 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(accessCanUserMethods));
@@ -2595,7 +2594,7 @@ else
             
             #line default
             #line hidden
-            this.Write("        \r\n        public partial class ");
+            this.Write("        public partial class ");
             
             #line 601 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Entity.Name));
@@ -2973,7 +2972,7 @@ else
         }
         
         #line 672 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcController.tt"
- 
+
 protected void WriteViewBagSelectList(AspNetMvcPropertySetting propertySetting)
 {
     var codeEngine = Entity.CodeEngine;

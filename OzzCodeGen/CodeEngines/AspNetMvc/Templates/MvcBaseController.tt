@@ -5,7 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzUtils" #>
-<# 
+<#
 var roles = CodeEngine.SecurityRoles.Where(r => !r.Equals(CodeEngine.AdminRole));
 string dataContextIntance = CodeEngine.DataContextInstance;
 string accessCanUserMethods = CodeEngine.AreCanUserMethodsPublic ? "public" : "protected";
@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 
 namespace <#= CodeEngine.ControllersNamespace #>
 {
-    public abstract partial class <#= CodeEngine.BaseControllerName #><# if (!CustomFile){ #> : <#= CodeEngine.BaseOfBaseController #><# } #> 
+    public abstract partial class <#= CodeEngine.BaseControllerName #><# if (!CustomFile){ #> : <#= CodeEngine.BaseOfBaseController #><# } #>
     {
         public partial class QueryParameters
         {
@@ -122,7 +122,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
         {
             if (!_isUserAdmin.HasValue)
             {
-                _isUserAdmin = Request.IsAuthenticated && 
+                _isUserAdmin = Request.IsAuthenticated &&
                                 await UserManager.IsInRoleAsync(UserID, SecurityRoles.Admin);
             }
             return _isUserAdmin.Value;
@@ -130,7 +130,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
         bool? _isUserAdmin;
 
 <#  foreach (var role in roles)
-    { 
+    {
         string varName = "_" + IsUserInRoleMethods[role.Trim()].ToCamelCase();
  #>
 
@@ -148,7 +148,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
         {
             if (!<#= varName #>.HasValue)
             {
-                <#= varName #> = Request.IsAuthenticated && 
+                <#= varName #> = Request.IsAuthenticated &&
                                     await UserManager.IsInRoleAsync(UserID, SecurityRoles.<#= role.ToPascalCase() #>);
             }
             return <#= varName #>.Value;
@@ -188,7 +188,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
         #endregion
 <#  if (CodeEngine.GenerateDataContext)
     { #>
-        
+
         protected void AppendExceptionMsg(Exception ex, StringBuilder sb)
         {
             if (ex == null)
@@ -200,7 +200,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
                 AppendExceptionMsg(ex.InnerException, sb);
             }
         }
-        
+
         protected virtual string ConvertToJson(object obj, bool includeNull = true, bool camelCase = false)
         {
             var settings = new JsonSerializerSettings
@@ -272,7 +272,7 @@ namespace <#= CodeEngine.ControllersNamespace #>
             }
             return StatusCodeTextResult(sb.ToString(), statusCode);
         }
-        
+
         protected <#= CodeEngine.DataContextClass #> <#= dataContextIntance #>
         {
             get

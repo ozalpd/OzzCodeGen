@@ -38,7 +38,7 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
         }
         
         #line 12 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
- 
+
 public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col, string value, bool isTimeStamp = false, string suffix = "")
 {
     string enumName = col.GetEnumTypeName();
@@ -539,7 +539,7 @@ this.Write(");// Fallback for other types, relying on ADO.NET\'s type inference.
         #line hidden
         
         #line 43 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
- 
+
 public void WriteGetByResult(IEnumerable<BaseCsDbRepositoryPropertySetting> autoloadCols, IEnumerable<string> autoloadTypeNames){
     var pkey = GetPrimaryKey();
     var selfAutoloadCols = autoloadCols.Where(p => p.GetTypeName(getReturnType: true) == EntitySetting.Name);
@@ -720,7 +720,7 @@ this.Write(");\r\n");
         #line hidden
         
         #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\BaseCSharpSqliteRepositoryTemplate.tt"
-this.Write("            \r\n            OnLoaded(");
+this.Write("\r\n            OnLoaded(");
 
         
         #line default

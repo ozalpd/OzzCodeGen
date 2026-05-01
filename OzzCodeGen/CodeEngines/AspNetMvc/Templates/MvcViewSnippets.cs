@@ -31,7 +31,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc.Templates
         {
             
             #line 7 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
- 
+
 var fkeyProperties = Entity.GetInheritedIncludedProperties().Where(e => (e.InCreateView | e.InEditView) & e.IsForeignKey);
 var searchProperties = Entity.DisplayColumns.Where(e => e.UseInSearch);
 WriteUsingNamespaces(); 
@@ -172,7 +172,7 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write("    \r\n@* ");
+            this.Write("\r\n@* ");
             
             #line 35 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
@@ -265,7 +265,7 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write("    \r\n@* ");
+            this.Write("\r\n@* ");
             
             #line 50 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
@@ -373,7 +373,7 @@ WriteUsingNamespaces();
             
             #line default
             #line hidden
-            this.Write("    \r\n@* ");
+            this.Write("\r\n@* ");
             
             #line 66 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\AspNetMvc\Templates\MvcViewSnippets.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
