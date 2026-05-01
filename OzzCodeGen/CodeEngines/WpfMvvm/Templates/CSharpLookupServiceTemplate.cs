@@ -117,7 +117,7 @@ namespace ");
             this.Write(");\r\n    }\r\n");
             
             #line 34 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
-  } else if (TemplateType==LookupServiceTemplateType.RunTimeClass) { // RunTime Implementation ↓ 
+  } else if (TemplateType==LookupTemplate.RunTimeClass) { // RunTime Implementation ↓ 
             
             #line default
             #line hidden
@@ -267,14 +267,14 @@ namespace ");
             this.Write(".ToList();\r\n        }\r\n    }\r\n");
             
             #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
-  } else if (TemplateType==LookupServiceTemplateType.DesignTimeClass) { // DesignTime Implementation ↓ 
+  } else if (TemplateType==LookupTemplate.DesignTimeClass) { // DesignTime Implementation ↓ 
             
             #line default
             #line hidden
             this.Write("    /// <summary>\r\n    /// Provides a no-op implementation of the ");
             
             #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName(LookupServiceTemplateType.Interface)));
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName(LookupTemplate.Interface)));
             
             #line default
             #line hidden
@@ -304,14 +304,14 @@ namespace ");
             this.Write(" are configured.</remarks>\r\n    public partial class ");
             
             #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName(LookupServiceTemplateType.DesignTimeClass)));
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName(LookupTemplate.DesignTimeClass)));
             
             #line default
             #line hidden
             this.Write(" : ");
             
             #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName(LookupServiceTemplateType.Interface)));
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName(LookupTemplate.Interface)));
             
             #line default
             #line hidden

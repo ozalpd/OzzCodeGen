@@ -7,7 +7,6 @@
 <#@ import namespace="OzzCodeGen.CodeEngines" #>
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzCodeGen.CodeEngines.Mvvm" #>
-<#@ import namespace="OzzCodeGen.CodeEngines.Mvvm.Templates" #>
 <#@ import namespace="OzzUtils" #>
 <# 
     var properties = GetIncludedProperties().ToList();
@@ -26,7 +25,7 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
     public partial class <#= GetClassName() #> : <#= CodeEngine.AbstractCreateEditViewModelName #>
     {
 <#  foreach (var lookupEntity in foreignLookupEntities) { #>
-        private readonly <#= lookupEntity.GetLookupName(LookupServiceTemplateType.Interface) #> _<#= lookupEntity.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase() #>;
+        private readonly <#= lookupEntity.GetLookupName(LookupTemplate.Interface) #> _<#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #>;
 <#  } #>
         private <#= EntitySetting.Name #> _<#= EntitySetting.Name.ToCamelCase() #>;
         public <#= EntitySetting.Name #> <#= EntitySetting.Name #> => _<#= EntitySetting.Name.ToCamelCase() #>;
@@ -34,7 +33,7 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
         public <#= GetClassName() #>(<#= GetParamsDeclaration() #>)
         {
 <#  foreach (var lookupEntity in foreignLookupEntities) { #>
-            _<#= lookupEntity.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase() #> = <#= lookupEntity.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase() #>;
+            _<#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #> = <#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #>;
             <#= lookupEntity.Name.Pluralize() #> = new ObservableCollection<<#= lookupEntity.Name #>>();
 
 <#  } #>
@@ -53,7 +52,7 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
 
         public async Task Load<#= lookupEntity.Name.Pluralize() #>Async()
         {
-            var items = await _<#= lookupEntity.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase() #>.Get<#= lookupEntity.Name.Pluralize() #>Async(<#= lookupEntity.HasIsActiveProperty() ? "isActive: true" : "" #>);
+            var items = await _<#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #>.Get<#= lookupEntity.Name.Pluralize() #>Async(<#= lookupEntity.HasIsActiveProperty() ? "isActive: true" : "" #>);
             <#= lookupEntity.Name.Pluralize() #>.Clear();
             foreach (var item in items)
             {

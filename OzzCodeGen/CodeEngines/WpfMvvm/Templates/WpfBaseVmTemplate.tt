@@ -6,7 +6,7 @@
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzCodeGen.CodeEngines" #>
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
-<#@ import namespace="OzzCodeGen.CodeEngines.Mvvm.Templates" #>
+<#@ import namespace="OzzCodeGen.CodeEngines.Mvvm" #>
 <#@ import namespace="OzzUtils" #>
 <# 
     var properties = GetIncludedProperties().ToList();
@@ -21,7 +21,7 @@
 namespace <#= GetNamespace() #>
 {
     <#= GetClassDeclaration() #>
-<#  if (BaseType == BaseViewModelTypes.BaseViewModel) // AbstractViewModel ↓
+<#  if (BaseType == BaseVM.BaseViewModel) // AbstractViewModel ↓
     { #>
     {
         protected virtual void RaisePropertyChanged(string propertyName)
@@ -34,7 +34,7 @@ namespace <#= GetNamespace() #>
         public event PropertyChangedEventHandler? PropertyChanged;
     }
 <#  }                               // AbstractCollectionVM ↓
-    else if (BaseType == BaseViewModelTypes.CollectionVM)
+    else if (BaseType == BaseVM.CollectionVM)
     { #>
     {
         protected <#= GetClassName() #>()
@@ -88,7 +88,7 @@ namespace <#= GetNamespace() #>
         private string? _searchString;
     }
 <#  }                               // AbstractCreateEditVM ↓
-    else if (BaseType == BaseViewModelTypes.CreateEditVM)
+    else if (BaseType == BaseVM.CreateEditVM)
     { #>
     {
         public <#= GetClassName() #>()
@@ -113,7 +113,7 @@ namespace <#= GetNamespace() #>
         bool IsDirty { get; }
     }
 <#  }                               // AbstractDataErrorInfoVM ↓
-    else if (BaseType == BaseViewModelTypes.DataErrorInfoVM)
+    else if (BaseType == BaseVM.DataErrorInfoVM)
     { #>
     {
         protected readonly Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>(StringComparer.Ordinal);

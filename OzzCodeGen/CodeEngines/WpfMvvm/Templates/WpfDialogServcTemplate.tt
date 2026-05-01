@@ -7,7 +7,6 @@
 <#@ import namespace="OzzCodeGen.CodeEngines" #>
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzCodeGen.CodeEngines.Mvvm" #>
-<#@ import namespace="OzzCodeGen.CodeEngines.Mvvm.Templates" #>
 <#@ import namespace="OzzUtils" #>
 <# 
     var entities = GetEntitySettings().ToList();
@@ -35,7 +34,7 @@ namespace <#= CodeEngine.ServicesNamespaceName #>
         /// </summary>
         /// <param name="owner">The window that will own the dialog. This determines the dialog's parent window for modality and positioning.</param>
 <#  foreach (var lookupEntity in foreignLookupEntities) { #>
-        /// <param name="<#= lookupEntity.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase() #>">The <#= lookupEntity.Name.ToCamelCase() #> lookup service used to provide <#= lookupEntity.Name.ToCamelCase() #> selection options within the dialog.</param>
+        /// <param name="<#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #>">The <#= lookupEntity.Name.ToCamelCase() #> lookup service used to provide <#= lookupEntity.Name.ToCamelCase() #> selection options within the dialog.</param>
 <#  } #>
 <#  foreach (var property in preselectProperties) { #>
         /// <param name="preselected<#= property.Name #>">An optional preselected <#= property.Name.ToCamelCase() #> to initialize the dialog with.</param>
@@ -55,7 +54,7 @@ namespace <#= CodeEngine.ServicesNamespaceName #>
         /// positioning.</param>
         /// <param name="<#= entity.Name.ToCamelCase() #>">The <#= entity.Name.PascalCaseToTitleCase() #> entity to edit. The dialog will display and allow editing of this <#= entity.Name.ToCamelCase() #>'s properties.</param>
 <#  foreach (var lookupEntity in foreignLookupEntities) { #>
-        /// <param name="<#= lookupEntity.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase() #>">The <#= lookupEntity.Name.ToCamelCase() #> lookup service used to provide <#= lookupEntity.Name.ToCamelCase() #> selection options within the dialog.</param>
+        /// <param name="<#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #>">The <#= lookupEntity.Name.ToCamelCase() #> lookup service used to provide <#= lookupEntity.Name.ToCamelCase() #> selection options within the dialog.</param>
 <#  } #>
         /// <returns>A tuple containing two values: IsConfirmed is <see langword="true"/> if the user confirmed the dialog;
         /// otherwise, <see langword="false"/>. IsDirty is <see langword="true"/> if any changes were made to the <#= entity.Name.ToCamelCase() #>
@@ -67,7 +66,7 @@ namespace <#= CodeEngine.ServicesNamespaceName #>
 <#  } else { #>
 <#      foreach (var entity in entities) {#>
 <#          if (entity.IsInCreateDialogService) {
-                var foreignLookupEntities = entity.GetForeignLookupEntities().Select(e => e.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase());
+                var foreignLookupEntities = entity.GetForeignLookupEntities().Select(e => e.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase());
                 var preselectProperties = entity.GetPreselectProperties().Select(e => e.Name);
                 var allParams = foreignLookupEntities.Concat(preselectProperties.Select(p => $"preselected{p}")).ToList();
                 #>
@@ -86,7 +85,7 @@ namespace <#= CodeEngine.ServicesNamespaceName #>
 <#          }
             if (entity.IsInEditDialogService) {
                 var allParams = new List<string>(){ entity.Name.ToCamelCase() };
-                allParams.AddRange(entity.GetForeignLookupEntities(isForEdit: true).Select(e => e.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase()));
+                allParams.AddRange(entity.GetForeignLookupEntities(isForEdit: true).Select(e => e.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase()));
                 #>
         /// <inheritdoc />
         public (bool IsConfirmed, bool IsDirty) Show<#= entity.Name #>EditDialog(<#= GetParamsDeclaration(entity, isEdit: true) #>)

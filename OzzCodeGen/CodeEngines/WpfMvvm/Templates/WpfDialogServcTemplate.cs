@@ -16,7 +16,6 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
     using OzzCodeGen.CodeEngines;
     using OzzCodeGen.Templates.Cs;
     using OzzCodeGen.CodeEngines.Mvvm;
-    using OzzCodeGen.CodeEngines.Mvvm.Templates;
     using OzzUtils;
     using System;
     
@@ -35,7 +34,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         public override string TransformText()
         {
             
-            #line 12 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 11 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
  
     var entities = GetEntitySettings().ToList();
     WriteUsingNamespaces(); 
@@ -51,33 +50,33 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 //----------------------------------------------------------------------------------
 namespace ");
             
-            #line 22 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 21 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.ServicesNamespaceName));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    ");
             
-            #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 23 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetDeclaration()));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n");
             
-            #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 25 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
   if (IsInterface) { 
             
             #line default
             #line hidden
             
-            #line 27 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
       foreach (var entity in entities) {
             
             #line default
             #line hidden
             
-            #line 28 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 27 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
           if (entity.IsInCreateDialogService) {
                 var foreignLookupEntities = entity.GetForeignLookupEntities();
                 var preselectProperties = entity.GetPreselectProperties();
@@ -87,7 +86,7 @@ namespace ");
             #line hidden
             this.Write("        /// <summary>\r\n        /// Displays the ");
             
-            #line 33 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name.PascalCaseToTitleCase()));
             
             #line default
@@ -95,7 +94,7 @@ namespace ");
             this.Write(" creation dialog and returns the result indicating whether the user confirmed the" +
                     " dialog\r\n        /// and the created ");
             
-            #line 34 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 33 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name.PascalCaseToTitleCase()));
             
             #line default
@@ -104,62 +103,62 @@ namespace ");
                     "t will own the dialog. This determines the dialog\'s parent window for modality a" +
                     "nd positioning.</param>\r\n");
             
-            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
   foreach (var lookupEntity in foreignLookupEntities) { 
             
             #line default
             #line hidden
             this.Write("        /// <param name=\"");
             
-            #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase()));
+            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("\">The ");
             
-            #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" lookup service used to provide ");
             
-            #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" selection options within the dialog.</param>\r\n");
             
-            #line 39 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 40 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 39 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
   foreach (var property in preselectProperties) { 
             
             #line default
             #line hidden
             this.Write("        /// <param name=\"preselected");
             
-            #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 40 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write("\">An optional preselected ");
             
-            #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 40 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" to initialize the dialog with.</param>\r\n");
             
-            #line 42 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
   } 
             
             #line default
@@ -168,7 +167,7 @@ namespace ");
                     "ue\"/> if the user confirmed the dialog; otherwise, <see\r\n        /// langword=\"f" +
                     "alse\"/>. The second item is the created ");
             
-            #line 44 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 43 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name.PascalCaseToTitleCase()));
             
             #line default
@@ -176,35 +175,35 @@ namespace ");
             this.Write(" if confirmed; otherwise, <see langword=\"null\"/>.</returns>\r\n        (bool IsConf" +
                     "irmed, ");
             
-            #line 45 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 44 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("? ");
             
-            #line 45 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 44 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write(") Show");
             
-            #line 45 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 44 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("CreateDialog(");
             
-            #line 45 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 44 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetParamsDeclaration(entity)));
             
             #line default
             #line hidden
             this.Write(");\r\n\r\n");
             
-            #line 47 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 46 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
           }
             if (entity.IsInEditDialogService) {
                 var foreignLookupEntities = entity.GetForeignLookupEntities(isForEdit: true); 
@@ -214,7 +213,7 @@ namespace ");
             this.Write("        /// <summary>\r\n        /// Displays a modal dialog for editing the specif" +
                     "ied ");
             
-            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 50 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name.PascalCaseToTitleCase()));
             
             #line default
@@ -226,56 +225,56 @@ namespace ");
         /// positioning.</param>
         /// <param name=""");
             
-            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 55 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("\">The ");
             
-            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 55 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name.PascalCaseToTitleCase()));
             
             #line default
             #line hidden
             this.Write(" entity to edit. The dialog will display and allow editing of this ");
             
-            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 55 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("\'s properties.</param>\r\n");
             
-            #line 57 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
   foreach (var lookupEntity in foreignLookupEntities) { 
             
             #line default
             #line hidden
             this.Write("        /// <param name=\"");
             
-            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase()));
+            #line 57 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("\">The ");
             
-            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 57 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" lookup service used to provide ");
             
-            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 57 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" selection options within the dialog.</param>\r\n");
             
-            #line 59 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
   } 
             
             #line default
@@ -284,7 +283,7 @@ namespace ");
                     "\"true\"/> if the user confirmed the dialog;\r\n        /// otherwise, <see langword" +
                     "=\"false\"/>. IsDirty is <see langword=\"true\"/> if any changes were made to the ");
             
-            #line 61 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 60 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name.ToCamelCase()));
             
             #line default
@@ -292,47 +291,47 @@ namespace ");
             this.Write("\r\n        /// during editing; otherwise, <see langword=\"false\"/>.</returns>\r\n    " +
                     "    (bool IsConfirmed, bool IsDirty) Show");
             
-            #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 62 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("EditDialog(");
             
-            #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 62 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetParamsDeclaration(entity, isEdit: true)));
             
             #line default
             #line hidden
             this.Write(");\r\n\r\n");
             
-            #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 64 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
           } 
             
             #line default
             #line hidden
             
-            #line 66 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
     } 
             
             #line default
             #line hidden
             
-            #line 67 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 66 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
   } else { 
             
             #line default
             #line hidden
             
-            #line 68 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 67 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
       foreach (var entity in entities) {
             
             #line default
             #line hidden
             
-            #line 69 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 68 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
           if (entity.IsInCreateDialogService) {
-                var foreignLookupEntities = entity.GetForeignLookupEntities().Select(e => e.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase());
+                var foreignLookupEntities = entity.GetForeignLookupEntities().Select(e => e.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase());
                 var preselectProperties = entity.GetPreselectProperties().Select(e => e.Name);
                 var allParams = foreignLookupEntities.Concat(preselectProperties.Select(p => $"preselected{p}")).ToList();
                 
@@ -341,42 +340,42 @@ namespace ");
             #line hidden
             this.Write("        /// <inheritdoc />\r\n        public (bool IsConfirmed, ");
             
-            #line 75 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 74 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("? ");
             
-            #line 75 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 74 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write(") Show");
             
-            #line 75 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 74 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("CreateDialog(");
             
-            #line 75 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 74 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetParamsDeclaration(entity)));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n            var dialog = new ");
             
-            #line 77 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 76 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("Create(");
             
-            #line 77 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 76 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", allParams)));
             
             #line default
@@ -385,46 +384,46 @@ namespace ");
                     "r result = dialog.ShowDialog() == true;\r\n            return (result, result ? di" +
                     "alog.");
             
-            #line 83 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 82 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write(" : null);\r\n        }\r\n\r\n");
             
-            #line 86 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 85 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
           }
             if (entity.IsInEditDialogService) {
                 var allParams = new List<string>(){ entity.Name.ToCamelCase() };
-                allParams.AddRange(entity.GetForeignLookupEntities(isForEdit: true).Select(e => e.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase()));
+                allParams.AddRange(entity.GetForeignLookupEntities(isForEdit: true).Select(e => e.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase()));
                 
             
             #line default
             #line hidden
             this.Write("        /// <inheritdoc />\r\n        public (bool IsConfirmed, bool IsDirty) Show");
             
-            #line 92 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 91 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("EditDialog(");
             
-            #line 92 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 91 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetParamsDeclaration(entity, isEdit: true)));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n            var dialog = new ");
             
-            #line 94 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 93 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("Edit(");
             
-            #line 94 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 93 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", allParams)));
             
             #line default
@@ -433,19 +432,19 @@ namespace ");
                     "r result = dialog.ShowDialog() == true;\r\n            return (result, dialog.IsDi" +
                     "rty);\r\n        }\r\n\r\n");
             
-            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 102 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
           } 
             
             #line default
             #line hidden
             
-            #line 104 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
     } 
             
             #line default
             #line hidden
             
-            #line 105 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 104 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
   } 
             
             #line default

@@ -1,7 +1,6 @@
 ﻿using OzzCodeGen.CodeEngines.Mvvm.Templates;
 using System.Collections.Generic;
 using System.Linq;
-using static OzzCodeGen.CodeEngines.WpfMvvm.Templates.CSharpLookupServiceTemplate;
 
 namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {

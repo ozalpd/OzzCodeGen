@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Added `GetPreselectProperties()` to `WpfMvvmEntitySetting` for ordered preselect property retrieval.
 - Foreign lookup entities are now ordered by name for consistent parameter order.
 - Renamed CSharpWpfBaseVmTemplate to WpfBaseVmTemplate, updating all class, file, and T4 references.
+- Update WPF MVVM engine UI to support new properties and improve layout
 
 ## [2.3.2] - 2026-04-27
 

@@ -15,7 +15,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
     using OzzCodeGen.Definitions;
     using OzzCodeGen.CodeEngines;
     using OzzCodeGen.Templates.Cs;
-    using OzzCodeGen.CodeEngines.Mvvm.Templates;
+    using OzzCodeGen.CodeEngines.Mvvm;
     using OzzUtils;
     using System;
     
@@ -65,7 +65,7 @@ namespace ");
             this.Write("\r\n");
             
             #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
-  if (BaseType == BaseViewModelTypes.BaseViewModel) // AbstractViewModel ↓
+  if (BaseType == BaseVM.BaseViewModel) // AbstractViewModel ↓
     { 
             
             #line default
@@ -84,7 +84,7 @@ namespace ");
             
             #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
   }                               // AbstractCollectionVM ↓
-    else if (BaseType == BaseViewModelTypes.CollectionVM)
+    else if (BaseType == BaseVM.CollectionVM)
     { 
             
             #line default
@@ -121,7 +121,7 @@ namespace ");
             
             #line 90 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
   }                               // AbstractCreateEditVM ↓
-    else if (BaseType == BaseViewModelTypes.CreateEditVM)
+    else if (BaseType == BaseVM.CreateEditVM)
     { 
             
             #line default
@@ -158,7 +158,7 @@ namespace ");
             
             #line 115 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
   }                               // AbstractDataErrorInfoVM ↓
-    else if (BaseType == BaseViewModelTypes.DataErrorInfoVM)
+    else if (BaseType == BaseVM.DataErrorInfoVM)
     { 
             
             #line default

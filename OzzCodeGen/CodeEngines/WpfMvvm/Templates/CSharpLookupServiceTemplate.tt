@@ -31,7 +31,7 @@ namespace <#= GetNamespace() #>
     {
         Task<IReadOnlyList<<#= EntitySetting.Name #>>> Get<#= EntitySetting.Name.Pluralize() #>Async(<#= EntitySetting.HasIsActiveProperty() ? "bool isActive" : "" #>);
     }
-<#  } else if (TemplateType==LookupServiceTemplateType.RunTimeClass) { // RunTime Implementation ↓ #>
+<#  } else if (TemplateType==LookupTemplate.RunTimeClass) { // RunTime Implementation ↓ #>
     /// <summary>
     /// Provides <#= EntitySetting.Name.ToCamelCase() #> lookup functionality using an underlying <#= EntitySetting.Name.ToCamelCase() #> repository.
     /// </summary>
@@ -53,14 +53,14 @@ namespace <#= GetNamespace() #>
             return <#= EntitySetting.Name.Pluralize().ToCamelCase() #>.ToList();
         }
     }
-<#  } else if (TemplateType==LookupServiceTemplateType.DesignTimeClass) { // DesignTime Implementation ↓ #>
+<#  } else if (TemplateType==LookupTemplate.DesignTimeClass) { // DesignTime Implementation ↓ #>
     /// <summary>
-    /// Provides a no-op implementation of the <#= GetClassName(LookupServiceTemplateType.Interface) #> interface that returns an empty or
+    /// Provides a no-op implementation of the <#= GetClassName(LookupTemplate.Interface) #> interface that returns an empty or
     /// mock list of <#= EntitySetting.Name.Pluralize().ToCamelCase() #>.
     /// </summary>
     /// <remarks>This implementation can be used in scenarios where <#= EntitySetting.Name.ToCamelCase() #> lookup functionality is optional or
     /// not required, such as in design time, in testing or when no <#= EntitySetting.RepositoryName #> are configured.</remarks>
-    public partial class <#= GetClassName(LookupServiceTemplateType.DesignTimeClass) #> : <#= GetClassName(LookupServiceTemplateType.Interface) #>
+    public partial class <#= GetClassName(LookupTemplate.DesignTimeClass) #> : <#= GetClassName(LookupTemplate.Interface) #>
     {
         public Task<IReadOnlyList<<#= EntitySetting.Name #>>> Get<#= EntitySetting.Name.Pluralize() #>Async(<#= EntitySetting.HasIsActiveProperty() ? "bool isActive" : "" #>)
         {

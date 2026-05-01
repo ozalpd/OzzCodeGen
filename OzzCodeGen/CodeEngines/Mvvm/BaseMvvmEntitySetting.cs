@@ -24,12 +24,37 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     public IEnumerable<BaseMvvmPropertySetting> MvvmProperties => Properties.Cast<BaseMvvmPropertySetting>();
 
     /// <summary>
+    /// Gets or sets the namespace of the command ViewModel associated with this entity.
+    /// </summary>
+    public string CommandVmNamespace
+    {
+        get { return _commandVmNamespace ?? string.Empty; }
+        set
+        {
+            if (_commandVmNamespace == value) return;
+            _commandVmNamespace = value;
+            RaisePropertyChanged(nameof(CommandVmNamespace));
+        }
+    }
+    private string _commandVmNamespace;
+
+    /// <summary>
     /// ViewModel type name to be used in generated command classes for this entity. Which ViewModel type must have
     /// selected item property for the entity and save, load, and delete methods for the command classes to call.
     /// </summary>
+    /// <remarks>If the entity is abstract, this property returns an empty string. Otherwise, it returns a
+    /// namespace in the format "I{Name}VM" by default, where {Name} is the entity's name.</remarks>
     public string CommandVmTypeName
     {
-        get { return _commandVmTypeName ?? $"I{Name}VM"; }
+        get
+        {
+            if (_commandVmTypeName == null)
+                _commandVmTypeName = EntityDefinition.Abstract
+                                   ? string.Empty
+                                   : $"I{Name.Pluralize()}VM";
+
+            return _commandVmTypeName;
+        }
         set
         {
             if (_commandVmTypeName == value) return;
@@ -41,7 +66,7 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
 
     public bool GenerateCreateCommand
     {
-        get { return _generateCreateCommand ?? true; }
+        get { return _generateCreateCommand ?? !EntityDefinition.Abstract; }
         set
         {
             if (_generateCreateCommand == value) return;
@@ -51,57 +76,9 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     }
     private bool? _generateCreateCommand;
 
-    public bool GenerateCreateView
-    {
-        get { return _generateCreateView ?? true; }
-        set
-        {
-            if (_generateCreateView == value) return;
-            _generateCreateView = value;
-            RaisePropertyChanged(nameof(GenerateCreateView));
-        }
-    }
-    private bool? _generateCreateView;
-
-    public bool GenerateEditView
-    {
-        get { return _generateEditView ?? true; }
-        set
-        {
-            if (_generateEditView == value) return;
-            _generateEditView = value;
-            RaisePropertyChanged(nameof(GenerateEditView));
-        }
-    }
-    private bool? _generateEditView;
-
-    public bool GenerateCreateViewModel
-    {
-        get { return _generateCreateViewModel ?? true; }
-        set
-        {
-            if (_generateCreateViewModel == value) return;
-            _generateCreateViewModel = value;
-            RaisePropertyChanged(nameof(GenerateCreateViewModel));
-        }
-    }
-    private bool? _generateCreateViewModel;
-
-    public bool GenerateDeleteCommand
-    {
-        get { return _generateDeleteCommand ?? true; }
-        set
-        {
-            if (_generateDeleteCommand == value) return;
-            _generateDeleteCommand = value;
-            RaisePropertyChanged(nameof(GenerateDeleteCommand));
-        }
-    }
-    private bool? _generateDeleteCommand;
-
     public bool GenerateEditCommand
     {
-        get { return _generateEditCommand ?? true; }
+        get { return _generateEditCommand ?? !EntityDefinition.Abstract; }
         set
         {
             if (_generateEditCommand == value) return;
@@ -111,17 +88,53 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     }
     private bool? _generateEditCommand;
 
-    public bool GenerateEditViewModel
+    public bool GenerateDeleteCommand
     {
-        get { return _generateEditViewModel ?? true; }
+        get { return _generateDeleteCommand ?? !EntityDefinition.Abstract; }
         set
         {
-            if (_generateEditViewModel == value) return;
-            _generateEditViewModel = value;
-            RaisePropertyChanged(nameof(GenerateEditViewModel));
+            if (_generateDeleteCommand == value) return;
+            _generateDeleteCommand = value;
+            RaisePropertyChanged(nameof(GenerateDeleteCommand));
         }
     }
-    private bool? _generateEditViewModel;
+    private bool? _generateDeleteCommand;
+
+    public bool GenerateCreateVM
+    {
+        get { return _generateCreateVM ?? !EntityDefinition.Abstract; }
+        set
+        {
+            if (_generateCreateVM == value) return;
+            _generateCreateVM = value;
+            RaisePropertyChanged(nameof(GenerateCreateVM));
+        }
+    }
+    private bool? _generateCreateVM;
+
+    public bool GenerateEditVM
+    {
+        get { return _generateEditVM ?? !EntityDefinition.Abstract; }
+        set
+        {
+            if (_generateEditVM == value) return;
+            _generateEditVM = value;
+            RaisePropertyChanged(nameof(GenerateEditVM));
+        }
+    }
+    private bool? _generateEditVM;
+
+    public bool GenerateCollectionVM
+    {
+        get { return _generateCollectionVM ?? !EntityDefinition.Abstract; }
+        set
+        {
+            if (_generateCollectionVM == value) return;
+            _generateCollectionVM = value;
+            RaisePropertyChanged(nameof(GenerateCollectionVM));
+        }
+    }
+    private bool? _generateCollectionVM;
 
     public bool GenerateLookupService
     {
@@ -134,6 +147,30 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
         }
     }
     private bool? _generateLookupService;
+
+    public bool GenerateCreateView
+    {
+        get { return _generateCreateView ?? !EntityDefinition.Abstract; }
+        set
+        {
+            if (_generateCreateView == value) return;
+            _generateCreateView = value;
+            RaisePropertyChanged(nameof(GenerateCreateView));
+        }
+    }
+    private bool? _generateCreateView;
+
+    public bool GenerateEditView
+    {
+        get { return _generateEditView ?? !EntityDefinition.Abstract; }
+        set
+        {
+            if (_generateEditView == value) return;
+            _generateEditView = value;
+            RaisePropertyChanged(nameof(GenerateEditView));
+        }
+    }
+    private bool? _generateEditView;
 
 
     [XmlIgnore]
@@ -187,7 +224,15 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     /// </summary>
     public string RepositoryName
     {
-        get { return _repositoryName ?? $"I{Name}Repository"; }
+        get
+        {
+            if (_repositoryName == null)
+                _repositoryName = EntityDefinition.Abstract
+                                ? string.Empty
+                                : $"I{Name}Repository";
+
+            return _repositoryName;
+        }
         set
         {
             if (_repositoryName == value) return;
@@ -206,7 +251,9 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
         get
         {
             if (_subFolder == null)
-                _subFolder = Name.Pluralize();
+                _subFolder = EntityDefinition.Abstract
+                           ? string.Empty
+                           : Name.Pluralize();
 
             return _subFolder;
         }
@@ -235,17 +282,17 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
         return GetInheritedIncludedProperties().Where(p => !string.IsNullOrEmpty(p.DefaultValue));
     }
 
-    public string GetLookupName(LookupServiceTemplateType templateType)
+    public string GetLookupName(LookupTemplate templateType)
     {
         switch (templateType)
         {
-            case LookupServiceTemplateType.Interface:
+            case LookupTemplate.Interface:
                 return $"I{Name}LookupService";
 
-            case LookupServiceTemplateType.DesignTimeClass:
+            case LookupTemplate.DesignTimeClass:
                 return $"{Name}MockLookupService";
 
-            case LookupServiceTemplateType.RunTimeClass:
+            case LookupTemplate.RunTimeClass:
                 return $"{Name}LookupService";
 
             default:

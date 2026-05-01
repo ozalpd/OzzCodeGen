@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using OzzCodeGen.CodeEngines.Mvvm;
+using System.Collections.Generic;
 
 namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {
@@ -10,12 +11,12 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
     /// </summary>
     public partial class WpfBaseVmTemplate
     {
-        public WpfBaseVmTemplate(WpfMvvmCodeEngine codeEngine, BaseViewModelTypes baseType) : base(codeEngine)
+        public WpfBaseVmTemplate(WpfMvvmCodeEngine codeEngine, BaseVM baseType) : base(codeEngine)
         {
             BaseType = baseType;
         }
 
-        public BaseViewModelTypes BaseType { get; }
+        public BaseVM BaseType { get; }
 
         public bool GenerateValidator => CodeEngine.ModelClassCodeEngine != null
                                       && CodeEngine.ModelClassCodeEngine.GenerateValidator;
@@ -24,16 +25,16 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         {
             switch (BaseType)
             {
-                case BaseViewModelTypes.BaseViewModel:
+                case BaseVM.BaseViewModel:
                     return "public abstract class AbstractViewModel : INotifyPropertyChanged";
 
-                case BaseViewModelTypes.DataErrorInfoVM:
+                case BaseVM.DataErrorInfoVM:
                     return "public abstract class AbstractDataErrorInfoVM : AbstractViewModel, INotifyDataErrorInfo";
 
-                case BaseViewModelTypes.CollectionVM:
+                case BaseVM.CollectionVM:
                     return "public abstract class AbstractCollectionVM<T> : AbstractViewModel where T : class";
 
-                case BaseViewModelTypes.CreateEditVM:
+                case BaseVM.CreateEditVM:
                     return "public abstract class AbstractCreateEditVM : AbstractDataErrorInfoVM, IIsDirty";
 
                 default:
@@ -45,16 +46,16 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         {
             switch (BaseType)
             {
-                case BaseViewModelTypes.BaseViewModel:
+                case BaseVM.BaseViewModel:
                     return "AbstractViewModel";
 
-                case BaseViewModelTypes.DataErrorInfoVM:
+                case BaseVM.DataErrorInfoVM:
                     return "AbstractDataErrorInfoVM";
 
-                case BaseViewModelTypes.CollectionVM:
+                case BaseVM.CollectionVM:
                     return "AbstractCollectionVM";
 
-                case BaseViewModelTypes.CreateEditVM:
+                case BaseVM.CreateEditVM:
                     return "AbstractCreateEditVM";
 
                 default:
@@ -79,10 +80,10 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
             switch (BaseType)
             {
-                case BaseViewModelTypes.BaseViewModel:
+                case BaseVM.BaseViewModel:
                     namespaces.Add("System.ComponentModel");
                     break;
-                case BaseViewModelTypes.DataErrorInfoVM:
+                case BaseVM.DataErrorInfoVM:
                     if (GenerateValidator)
                     {
                         namespaces.Add(CodeEngine.ModelClassCodeEngine.ValidatorNamespaceName);
@@ -90,24 +91,16 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                     namespaces.Add("System.ComponentModel");
                     namespaces.Add("System.Collections");
                     break;
-                case BaseViewModelTypes.CollectionVM:
+                case BaseVM.CollectionVM:
                     namespaces.Add("System.Collections.ObjectModel");
                     break;
-                case BaseViewModelTypes.CreateEditVM:
+                case BaseVM.CreateEditVM:
                     break;
                 default:
                     break;
             }
 
             return namespaces;
-        }
-
-        public enum BaseViewModelTypes
-        {
-            BaseViewModel,
-            DataErrorInfoVM,
-            CollectionVM,
-            CreateEditVM
         }
     }
 }

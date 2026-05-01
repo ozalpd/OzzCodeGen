@@ -126,10 +126,10 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
     private bool RenderBaseViewModels()
     {
         bool allWritten = true;
-        allWritten &= RenderBaseVM(new WpfBaseVmTemplate(this, WpfBaseVmTemplate.BaseViewModelTypes.BaseViewModel));
-        allWritten &= RenderBaseVM(new WpfBaseVmTemplate(this, WpfBaseVmTemplate.BaseViewModelTypes.DataErrorInfoVM));
-        allWritten &= RenderBaseVM(new WpfBaseVmTemplate(this, WpfBaseVmTemplate.BaseViewModelTypes.CreateEditVM));
-        allWritten &= RenderBaseVM(new WpfBaseVmTemplate(this, WpfBaseVmTemplate.BaseViewModelTypes.CollectionVM));
+        allWritten &= RenderBaseVM(new WpfBaseVmTemplate(this, BaseVM.BaseViewModel));
+        allWritten &= RenderBaseVM(new WpfBaseVmTemplate(this, BaseVM.DataErrorInfoVM));
+        allWritten &= RenderBaseVM(new WpfBaseVmTemplate(this, BaseVM.CreateEditVM));
+        allWritten &= RenderBaseVM(new WpfBaseVmTemplate(this, BaseVM.CollectionVM));
 
         return allWritten;
     }
@@ -169,13 +169,13 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
     {
         bool allWritten = true;
 
-        if (entitySetting.GenerateCreateViewModel)
+        if (entitySetting.GenerateCreateVM)
         {
             var template = new CSharpWpfViewModelTemplate(entitySetting, isEdit: false);
             allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
         }
 
-        if (entitySetting.GenerateEditViewModel)
+        if (entitySetting.GenerateEditVM)
         {
             var template = new CSharpWpfViewModelTemplate(entitySetting, isEdit: true);
             allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
@@ -183,13 +183,13 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
         if (entitySetting.GenerateLookupService)
         {
-            var template = new CSharpLookupServiceTemplate(entitySetting, LookupServiceTemplateType.Interface);
+            var template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.Interface);
             allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, LookupFolder);
-            template = new CSharpLookupServiceTemplate(entitySetting, LookupServiceTemplateType.DesignTimeClass);
+            template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.DesignTimeClass);
             allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, LookupFolder);
 
             string targetDir = PutLookupInInfra ? TargetInfrastructureDirectory : TargetDirectory;
-            template = new CSharpLookupServiceTemplate(entitySetting, LookupServiceTemplateType.RunTimeClass);
+            template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.RunTimeClass);
             allWritten &= RenderTemplate(template, targetDir, LookupFolder);
         }
 

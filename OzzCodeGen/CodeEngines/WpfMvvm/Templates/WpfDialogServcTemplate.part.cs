@@ -105,9 +105,9 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             foreach (var lookupEntity in foreignLookupEntities)
             {
                 sb.Append(", ");
-                sb.Append(lookupEntity.GetLookupName(LookupServiceTemplateType.Interface));
+                sb.Append(lookupEntity.GetLookupName(LookupTemplate.Interface));
                 sb.Append(' ');
-                sb.Append(lookupEntity.GetLookupName(LookupServiceTemplateType.RunTimeClass).ToCamelCase());
+                sb.Append(lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase());
             }
 
             if (isEdit)

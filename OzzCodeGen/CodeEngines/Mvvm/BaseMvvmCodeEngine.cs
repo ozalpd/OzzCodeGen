@@ -9,13 +9,6 @@ using System.Xml.Serialization;
 
 namespace OzzCodeGen.CodeEngines.Mvvm;
 
-public enum LookupServiceTemplateType
-{
-    Interface,
-    DesignTimeClass,
-    RunTimeClass
-}
-
 public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
 {
     protected abstract BaseMvvmPropertySetting CreatePropertySetting();
