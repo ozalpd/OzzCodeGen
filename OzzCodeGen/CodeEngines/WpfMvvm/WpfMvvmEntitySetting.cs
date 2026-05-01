@@ -17,6 +17,13 @@ public class WpfMvvmEntitySetting : BaseMvvmEntitySetting<WpfMvvmPropertySetting
             .FirstOrDefault(e => e.EntityDefinition.Name.Equals(EntityDefinition.BaseTypeName));
     }
 
+    public List<WpfMvvmPropertySetting> GetPreselectProperties()
+    {
+        return GetInheritedIncludedProperties().Where(p => p.IsPreselectedInCreate)
+                                               .OrderBy(e => e.Name)
+                                               .ToList();
+    }
+
     public IEnumerable<WpfMvvmEntitySetting> GetForeignLookupEntities(bool isForEdit = false)
     {
         if (isForEdit && _foreignLookupForEdit != null)
@@ -45,10 +52,12 @@ public class WpfMvvmEntitySetting : BaseMvvmEntitySetting<WpfMvvmPropertySetting
         _foreignLookupEntities = CodeEngine.EntitySettings.OfType<WpfMvvmEntitySetting>()
                                            .Where(e => e.GenerateLookupService
                                                     && complexTypeNames.Contains(e.EntityDefinition.Name))
+                                           .OrderBy(e => e.Name)
                                            .ToList();
         _foreignLookupForEdit = CodeEngine.EntitySettings.OfType<WpfMvvmEntitySetting>()
                                           .Where(e => e.GenerateLookupService
                                                    && complexTypeNamesForEdit.Contains(e.EntityDefinition.Name))
+                                          .OrderBy(e => e.Name)
                                           .ToList();
 
         return _foreignLookupEntities;

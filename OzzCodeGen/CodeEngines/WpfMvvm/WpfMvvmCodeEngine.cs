@@ -123,16 +123,6 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         return allWritten;
     }
 
-    private bool RenderCommands(WpfMvvmEntitySetting entitySetting)
-    {
-        if (!entitySetting.GenerateEditCommand)
-            return true;
-        //var template = new WpfDialogServcTemplate(entitySetting);
-        var template = new WpfDialogServcTemplate(this, isInterface: true);
-        var fileName = Path.Combine(TargetDirectory, ServicesFolder, template.GetDefaultFileName());
-        return template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
-    }
-
     private bool RenderBaseViewModels()
     {
         bool allWritten = true;
@@ -148,6 +138,24 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
     {
         var baseVmFileName = Path.Combine(TargetInfrastructureDirectory, ViewModelFolder, baseVmTemplate.GetDefaultFileName());
         return baseVmTemplate.WriteToFile(baseVmFileName, OverwriteExisting);
+    }
+
+    private bool RenderCommands(WpfMvvmEntitySetting entitySetting)
+    {
+        if (!entitySetting.GenerateEditCommand)
+            return true;
+        bool allWritten = true;
+
+        var template = new WpfDialogServcTemplate(this, isInterface: true);
+        allWritten &= RenderTemplate(template, TargetDirectory, ServicesFolder);
+        template = new WpfDialogServcTemplate(this, isInterface: false);
+        allWritten &= RenderTemplate(template, TargetDirectory, ServicesFolder);
+
+        //TODO: Add command templates here
+        //CreateEditCommandTemplate, DeleteCommandTemplate, etc.
+
+
+        return allWritten;
     }
 
     private bool RenderTemplate(BaseCSharpWpfMvvmTemplate template, string targetDir, string subFolder)

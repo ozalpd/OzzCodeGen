@@ -113,10 +113,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             if (isEdit)
                 return sb.ToString();
 
-
-            var preselectProperties = entitySetting.Properties
-                                                   .Where(p => p.IsPreselectedInCreate)
-                                                   .ToList();
+            var preselectProperties = entitySetting.GetPreselectProperties();
             foreach (var property in preselectProperties)
             {
                 sb.Append(", ");
