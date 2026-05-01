@@ -171,13 +171,13 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
         if (entitySetting.GenerateCreateVM)
         {
-            var template = new CSharpWpfViewModelTemplate(entitySetting, isEdit: false);
+            var template = new WpfViewModelTemplate(entitySetting, isEdit: false);
             allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
         }
 
         if (entitySetting.GenerateEditVM)
         {
-            var template = new CSharpWpfViewModelTemplate(entitySetting, isEdit: true);
+            var template = new WpfViewModelTemplate(entitySetting, isEdit: true);
             allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
         }
 

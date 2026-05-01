@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {
-    public partial class CSharpWpfViewModelTemplate
+    public partial class WpfViewModelTemplate
     {
-        public CSharpWpfViewModelTemplate(WpfMvvmEntitySetting entitySetting, bool isEdit)
+        public WpfViewModelTemplate(WpfMvvmEntitySetting entitySetting, bool isEdit)
             : base(entitySetting.CodeEngine as WpfMvvmCodeEngine, entitySetting, isEdit: isEdit)
         {
 

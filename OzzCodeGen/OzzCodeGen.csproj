@@ -240,10 +240,10 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>WpfBaseVmTemplate.tt</DependentUpon>
 		</Compile>
-		<Compile Update="CodeEngines\WpfMvvm\Templates\CSharpWpfViewModelTemplate.cs">
+		<Compile Update="CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.cs">
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
-		  <DependentUpon>CSharpWpfViewModelTemplate.tt</DependentUpon>
+		  <DependentUpon>WpfViewModelTemplate.tt</DependentUpon>
 		</Compile>
 		<Compile Update="CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.cs">
 		  <DesignTime>True</DesignTime>
@@ -379,8 +379,8 @@
 		<None Update="CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt">
 		  <LastGenOutput>WpfBaseVmTemplate.cs</LastGenOutput>
 		</None>
-		<None Update="CodeEngines\WpfMvvm\Templates\CSharpWpfViewModelTemplate.tt">
-		  <LastGenOutput>CSharpWpfViewModelTemplate.cs</LastGenOutput>
+		<None Update="CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt">
+		  <LastGenOutput>WpfViewModelTemplate.cs</LastGenOutput>
 		</None>
 		<None Update="CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt">
 		  <LastGenOutput>WpfDialogServcTemplate.cs</LastGenOutput>
