@@ -6,11 +6,11 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
     /// Template for generating base ViewModel classes in a WPF MVVM application. This template can generate different types of base ViewModel classes based on the specified BaseViewModelTypes enum value.
     /// The generated classes include AbstractViewModel, AbstractDataErrorInfoVM, AbstractCollectionVM, and AbstractCreateEditVM, each with its own set of implemented interfaces and functionality.
     /// The template also determines the necessary using namespaces based on the type of base ViewModel being generated and whether a validator is needed.
-    /// Partial class of CSharpWpfBaseVmTemplate.tt's code-behind file.
+    /// Partial class of WpfBaseVmTemplate.tt's code-behind file.
     /// </summary>
-    public partial class CSharpWpfBaseVmTemplate
+    public partial class WpfBaseVmTemplate
     {
-        public CSharpWpfBaseVmTemplate(WpfMvvmCodeEngine codeEngine, BaseViewModelTypes baseType) : base(codeEngine)
+        public WpfBaseVmTemplate(WpfMvvmCodeEngine codeEngine, BaseViewModelTypes baseType) : base(codeEngine)
         {
             BaseType = baseType;
         }

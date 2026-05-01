@@ -126,15 +126,15 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
     private bool RenderBaseViewModels()
     {
         bool allWritten = true;
-        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, CSharpWpfBaseVmTemplate.BaseViewModelTypes.BaseViewModel));
-        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, CSharpWpfBaseVmTemplate.BaseViewModelTypes.DataErrorInfoVM));
-        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, CSharpWpfBaseVmTemplate.BaseViewModelTypes.CreateEditVM));
-        allWritten &= RenderBaseVM(new CSharpWpfBaseVmTemplate(this, CSharpWpfBaseVmTemplate.BaseViewModelTypes.CollectionVM));
+        allWritten &= RenderBaseVM(new WpfBaseVmTemplate(this, WpfBaseVmTemplate.BaseViewModelTypes.BaseViewModel));
+        allWritten &= RenderBaseVM(new WpfBaseVmTemplate(this, WpfBaseVmTemplate.BaseViewModelTypes.DataErrorInfoVM));
+        allWritten &= RenderBaseVM(new WpfBaseVmTemplate(this, WpfBaseVmTemplate.BaseViewModelTypes.CreateEditVM));
+        allWritten &= RenderBaseVM(new WpfBaseVmTemplate(this, WpfBaseVmTemplate.BaseViewModelTypes.CollectionVM));
 
         return allWritten;
     }
 
-    private bool RenderBaseVM(CSharpWpfBaseVmTemplate baseVmTemplate)
+    private bool RenderBaseVM(WpfBaseVmTemplate baseVmTemplate)
     {
         var baseVmFileName = Path.Combine(TargetInfrastructureDirectory, ViewModelFolder, baseVmTemplate.GetDefaultFileName());
         return baseVmTemplate.WriteToFile(baseVmFileName, OverwriteExisting);

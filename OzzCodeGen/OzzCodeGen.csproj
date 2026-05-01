@@ -235,10 +235,10 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>CSharpLookupServiceTemplate.tt</DependentUpon>
 		</Compile>
-		<Compile Update="CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.cs">
+		<Compile Update="CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.cs">
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
-		  <DependentUpon>CSharpWpfBaseVmTemplate.tt</DependentUpon>
+		  <DependentUpon>WpfBaseVmTemplate.tt</DependentUpon>
 		</Compile>
 		<Compile Update="CodeEngines\WpfMvvm\Templates\CSharpWpfViewModelTemplate.cs">
 		  <DesignTime>True</DesignTime>
@@ -376,8 +376,8 @@
 		<None Update="CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt">
 		  <LastGenOutput>CSharpLookupServiceTemplate.cs</LastGenOutput>
 		</None>
-		<None Update="CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.tt">
-		  <LastGenOutput>CSharpWpfBaseVmTemplate.cs</LastGenOutput>
+		<None Update="CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt">
+		  <LastGenOutput>WpfBaseVmTemplate.cs</LastGenOutput>
 		</None>
 		<None Update="CodeEngines\WpfMvvm\Templates\CSharpWpfViewModelTemplate.tt">
 		  <LastGenOutput>CSharpWpfViewModelTemplate.cs</LastGenOutput>

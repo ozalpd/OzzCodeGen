@@ -23,6 +23,21 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     [JsonIgnore]
     public IEnumerable<BaseMvvmPropertySetting> MvvmProperties => Properties.Cast<BaseMvvmPropertySetting>();
 
+    /// <summary>
+    /// ViewModel type name to be used in generated command classes for this entity. Which ViewModel type must have
+    /// selected item property for the entity and save, load, and delete methods for the command classes to call.
+    /// </summary>
+    public string CommandVmTypeName
+    {
+        get { return _commandVmTypeName ?? $"I{Name}VM"; }
+        set
+        {
+            if (_commandVmTypeName == value) return;
+            _commandVmTypeName = value;
+            RaisePropertyChanged(nameof(CommandVmTypeName));
+        }
+    }
+    private string _commandVmTypeName;
 
     public bool GenerateCreateCommand
     {

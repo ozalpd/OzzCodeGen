@@ -23,9 +23,9 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.tt"
+    #line 1 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "18.0.0.0")]
-    public partial class CSharpWpfBaseVmTemplate : BaseCSharpWpfMvvmTemplate
+    public partial class WpfBaseVmTemplate : BaseCSharpWpfMvvmTemplate
     {
 #line hidden
         /// <summary>
@@ -34,7 +34,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         public override string TransformText()
         {
             
-            #line 11 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.tt"
+            #line 11 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
  
     var properties = GetIncludedProperties().ToList();
     WriteUsingNamespaces(); 
@@ -50,21 +50,21 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 //----------------------------------------------------------------------------------
 namespace ");
             
-            #line 21 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.tt"
+            #line 21 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetNamespace()));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    ");
             
-            #line 23 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.tt"
+            #line 23 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassDeclaration()));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.tt"
+            #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
   if (BaseType == BaseViewModelTypes.BaseViewModel) // AbstractViewModel ↓
     { 
             
@@ -82,7 +82,7 @@ namespace ");
     }
 ");
             
-            #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.tt"
+            #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
   }                               // AbstractCollectionVM ↓
     else if (BaseType == BaseViewModelTypes.CollectionVM)
     { 
@@ -91,7 +91,7 @@ namespace ");
             #line hidden
             this.Write("    {\r\n        protected ");
             
-            #line 40 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.tt"
+            #line 40 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
             
             #line default
@@ -119,7 +119,7 @@ namespace ");
                     "f(CollectionFiltered));\r\n            }\r\n        }\r\n        private string? _sear" +
                     "chString;\r\n    }\r\n");
             
-            #line 90 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.tt"
+            #line 90 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
   }                               // AbstractCreateEditVM ↓
     else if (BaseType == BaseViewModelTypes.CreateEditVM)
     { 
@@ -128,7 +128,7 @@ namespace ");
             #line hidden
             this.Write("    {\r\n        public ");
             
-            #line 94 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.tt"
+            #line 94 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
             
             #line default
@@ -156,7 +156,7 @@ namespace ");
     }
 ");
             
-            #line 115 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.tt"
+            #line 115 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
   }                               // AbstractDataErrorInfoVM ↓
     else if (BaseType == BaseViewModelTypes.DataErrorInfoVM)
     { 
@@ -205,7 +205,7 @@ namespace ");
                     "ual(newErrors))\r\n                return;\r\n\r\n            _errors[propertyName] = " +
                     "newErrors;\r\n            OnErrorsChanged(propertyName);\r\n        }\r\n    }\r\n");
             
-            #line 216 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpWpfBaseVmTemplate.tt"
+            #line 216 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
     } 
             
             #line default
