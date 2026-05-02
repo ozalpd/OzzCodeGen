@@ -263,7 +263,6 @@
                                 <DataGridCheckBoxColumn Binding="{Binding Abstract}" Header="Abstract" Width="40"/>
                                 <DataGridTextColumn Binding="{Binding DisplayName}" Header="Display Name" Width="160"/>
                                 <DataGridTextColumn Binding="{Binding DisplayMember}" Header="Display Member" Width="160"/>
-                                <DataGridCheckBoxColumn Binding="{Binding LetDownloadAll}" Header="Let Download All" Width="40"/>
                             </DataGrid.Columns>
                             <DataGrid.ContextMenu>
                                 <ContextMenu>
