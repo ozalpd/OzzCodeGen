@@ -237,8 +237,8 @@ namespace OzzCodeGen.CodeEngines.Storage
 
         [XmlIgnore]
         [JsonIgnore]
-        public List<StorageEntitySetting> ForeignTables
-        {
+        public List<StorageEntitySetting> ForeignTables//TODO:Replace with a method that returns the list instead of a property with backing field, to avoid issues with serialization and changes in the base table or columns
+        {//GetForeignEntities()...
             get
             {
                 if (_foreignTables == null)

@@ -14,6 +14,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Update T4 templates and .part.cs files to use new helpers.
 - Minor formatting and code cleanup.
 - Update `WpfMvvm` templates for consistent ordering.
+- Improve formatting and line break handling in T4 stored procedure templates and generated code; use WriteLine for parameter/column lists and insert explicit line breaks.
+- Update insert, update, and select statement generation for better comma and line break management.
+- Refactor `WriteSelectColumns`, `WriteInsertStatement`, and `WriteUpdateStatement` to always end lists with a line break and handle hasMore flag more cleanly.
 
 ## [2.3.3] - 2026-04-30
 

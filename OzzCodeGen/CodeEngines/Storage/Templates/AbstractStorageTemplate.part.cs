@@ -25,7 +25,7 @@
         {
             if (TableDefinition == null)
             {
-                return $"CodeEngine.DatabaseName.sql";
+                return $"{CodeEngine.DatabaseName}.sql";
             }
             else
             {

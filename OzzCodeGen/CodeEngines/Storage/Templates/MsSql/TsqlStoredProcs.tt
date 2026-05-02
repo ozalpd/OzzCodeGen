@@ -122,8 +122,9 @@ CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableN
     foreach (var column in colDeclaresIns)
     {
             colNr++;#>
-    @<#= column.Name #> <#= GetColumnType(column) #><# if(colNr < colDeclaresIns.Count()) {#>,<#  } #>
-<#    } #>
+    @<#= column.Name #> <#= GetColumnType(column) #><# if(colNr < colDeclaresIns.Count()) this.WriteLine(","); #>
+<#  }
+this.Write("\r\n"); #>
 As
 Begin
 <#  if(!insPKey) { #>
@@ -159,14 +160,15 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[<#= TableDe
 DROP PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Update]
 Go
 CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableName #>_Update]
-    <#= keyVarName #> <#= GetColumnType(pKey) #><# if(colDeclaresUpd.Any()){ #>,<# } #>
+    <#= keyVarName #> <#= GetColumnType(pKey) #><# if(colDeclaresUpd.Any()) this.WriteLine(","); #>
 <#
     colNr = 0;
     foreach (var column in colDeclaresUpd)
     {
             colNr++;#>
-    @<#= column.Name #> <#= GetColumnType(column) #><# if(colNr < colDeclaresUpd.Count()) {#>,<#  } #>
-<#    } #>
+    @<#= column.Name #> <#= GetColumnType(column) #><# if(colNr < colDeclaresUpd.Count()) this.WriteLine(","); #>
+<#  }
+this.Write("\r\n"); #>
 As
 Begin
 <# WriteUpdateStatement(TableDefinition, keyVarName); #>
@@ -207,8 +209,9 @@ CREATE PROCEDURE [<#= TableDefinition.SchemaName #>].[<#= TableDefinition.TableN
     foreach (var column in colsInsOrUpd)
     {
             colNr++;#>
-    @<#= column.Name #> <#= GetColumnType(column) #><# if(colNr < colsInsOrUpd.Count()) {#>,<#  } #>
-<# } #>
+    @<#= column.Name #> <#= GetColumnType(column) #><# if(colNr < colsInsOrUpd.Count()) this.WriteLine(","); #>
+<# }
+this.Write("\r\n"); #>
 As
 Begin
 <#  if(insPKey==false) {
@@ -231,7 +234,8 @@ Begin
         } else { #>
     Where [<#= pKey.Name #>] = <#= keyVarName #>
 <#      } #>
-<#    } #>
+<#    }
+this.Write("\r\n"); #>
     Set @Result = 0;
 
 <#  if(insPKey) { #>
@@ -307,7 +311,7 @@ Begin
 <#  if(sprocGeneration==StoredProcGeneration.InsertOrUpdateOnly || sprocGeneration==StoredProcGeneration.InsertOrUpdateWithComplexResult) {
             resulType = TableDefinition.TableName + "_InsertOrUpdate" + "_Result"; #>
     Select  [<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>],
-<#          WriteSelectColumns(firstBase, true); #>
+<#      WriteSelectColumns(firstBase, hasMore: true); #>
             @Result As Result
     From  <#= TableDefinition.ConcatTableNameAndSchema() #>
     Where [<#= firstBase.SchemaName #>].[<#= firstBase.TableName #>].[<#= firstBase.PrimaryKeyColumn.Name #>] = <#= keyVarName  #>
@@ -323,9 +327,10 @@ Go
     colNr = 0;
     foreach (var column in colsInsOrUpd)
     {
-            colNr++;#>
-                entity.<#= column.Name #><# if(colNr < colsInsOrUpd.Count() || sprocGeneration==StoredProcGeneration.InsertOrUpdateAndCUD) {#>,<#  } #>
-<#    }
+        colNr++;#>
+                entity.<#= column.Name #><# if(colNr < colsInsOrUpd.Count() || sprocGeneration==StoredProcGeneration.InsertOrUpdateAndCUD) this.WriteLine(","); #>
+<#  }
+    Write("\r\n");
     if(sprocGeneration==StoredProcGeneration.InsertOrUpdateAndCUD){#>
                 new ObjectParameter("Result", typeof(int)));
 
@@ -371,7 +376,7 @@ protected void WriteUpdateStatement(StorageEntitySetting table, string pkeyValue
         string colValue = string.IsNullOrEmpty(column.UpdateDefault) ? "@" + column.Name : column.UpdateDefault.Replace("{TableName}", table.TableName);
         colLen = colValue.Length + 3 + column.Name.Length;
         lineLen += colLen;
-        if(lineLen > maxLineLen && colNr > 0) { WriteLine(""); }
+        if(lineLen > maxLineLen && colNr > 0) Write("\r\n");
         colNr++;
         #>
 [<#= column.Name #>] = <#= colValue #><#+ if(colNr < columns.Count()) {#>, <#+ } #>
@@ -386,13 +391,14 @@ protected void WriteUpdateStatement(StorageEntitySetting table, string pkeyValue
         colNr++;
         if(colNr==1){ #>
       And (<#= column.GetAlterCheckLine() #><#+ if(colNr == colsToCheck.Count()) {#>)<#+ } #>
-<#+    PushIndent("        ");
+<#+     Write("\r\n");PushIndent("        ");
         } else {#>
 Or <#= column.GetAlterCheckLine() #><#+ if(colNr == colsToCheck.Count()) {#>)<#+ } #>
 <#+         }
         }
-    }
     PopIndent();
+    this.Write("\r\n");
+    }
 } #>
 <#+
 protected void WriteInsertStatement(StorageEntitySetting table, string pkeyValue, bool forInsOrUpdate = false, int maxLineLen = 48)
@@ -471,8 +477,8 @@ protected void WriteSelectColumns(StorageEntitySetting table, bool hasMore = fal
     foreach (var column in columns)
     {
         colNr++; #>
-            [<#= table.TableName #>].[<#= column.Name #>]<#+ if(colNr < columns.Count() || hasMore) {#>,<#+ } #>
-<#+    }
-#>
+            [<#= table.TableName #>].[<#= column.Name #>]<#+ if(colNr < columns.Count()) WriteLine(","); else if (hasMore) Write(","); #>
+<#+ }
+this.Write("\r\n");#>
 <#+
 } #>

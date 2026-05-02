@@ -1,7 +1,5 @@
-﻿using OzzCodeGen.Providers;
-using OzzUtils;
+﻿using OzzUtils;
 using OzzUtils.Savables;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -54,23 +52,6 @@ namespace OzzCodeGen.Definitions
             }
         }
         DataModel dataModel;
-
-        public List<EntitySource> EntitySource
-        {
-            get
-            {
-                if (_entitySource == null)
-                    _entitySource = new List<EntitySource>();
-                return _entitySource;
-            }
-            set
-            {
-                if (_entitySource == value) return;
-                _entitySource = value;
-                RaisePropertyChanged("EntitySource");
-            }
-        }
-        List<EntitySource> _entitySource;
 
         public string Comment
         {
@@ -125,20 +106,7 @@ namespace OzzCodeGen.Definitions
                 RaisePropertyChanged("Abstract");
             }
         }
-        bool _abstract;
-
-        public bool LetDownloadAll
-        {
-            get { return _letDownloadAll; }
-            set
-            {
-                if (_letDownloadAll == value) return;
-                _letDownloadAll = value;
-                RaisePropertyChanged("LetDownloadAll");
-            }
-        }
-        private bool _letDownloadAll;
-        
+        bool _abstract;        
 
         /// <summary>
         /// Display text for UI
@@ -282,8 +250,7 @@ namespace OzzCodeGen.Definitions
                 BaseTypeName = this.BaseTypeName,
                 Comment = this.Comment,
                 Abstract = this.Abstract,
-                DisplayMember = this.DisplayMember,
-                LetDownloadAll = this.LetDownloadAll
+                DisplayMember = this.DisplayMember
             };
 
             foreach (var p in Properties)
