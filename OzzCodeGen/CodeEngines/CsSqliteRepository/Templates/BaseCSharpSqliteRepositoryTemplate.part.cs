@@ -60,7 +60,7 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate
     {
         return EntitySetting.ModelClassEntitySetting;
     }
-    
+
     protected override BaseCsDbRepositoryPropertySetting GetPrimaryKey()
     {
         return GetRepositoryProperties().FirstOrDefault(p => p.IsKey);
@@ -80,8 +80,12 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate
 
     protected override IEnumerable<BaseCsDbRepositoryPropertySetting> GetAutoLoadProperties()
     {
-        return EntitySetting.GetAutoLoadProperties();
+        if (_autoLoads == null)
+            _autoLoads = EntitySetting.GetAutoLoadProperties().OrderBy(p => p.Name);
+
+        return _autoLoads;
     }
+    private IEnumerable<BaseCsDbRepositoryPropertySetting> _autoLoads;
 
     protected override string GetEntityTypeName(bool isNullable)
     {
@@ -90,7 +94,7 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate
 
     protected override IEnumerable<BaseCsDbRepositoryPropertySetting> GetForeignKeyProperties()
     {
-        return GetRepositoryProperties().Where(p => p.IsForeignKey);
+        return GetRepositoryProperties().Where(p => p.IsForeignKey).OrderBy(p => p.Name);
     }
 
     protected IEnumerable<SqliteRepositoryPropertySetting> GetInsertProperties()
@@ -110,7 +114,7 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate
 
     protected IEnumerable<SqliteRepositoryPropertySetting> GetSingleUpdateProperties()
     {
-        return GetRepositoryProperties().Where(p => p.SingleColumnUpdate);
+        return GetRepositoryProperties().Where(p => p.SingleColumnUpdate).OrderBy(p => p.Name);
     }
 
     protected IEnumerable<SqliteRepositoryPropertySetting> GetUpdateProperties()

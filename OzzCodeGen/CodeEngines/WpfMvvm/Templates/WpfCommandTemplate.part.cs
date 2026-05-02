@@ -55,7 +55,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                 {
                     if (i > 0 && i % 2 == 0)
                     {
-                        sb.Append(",\n");
+                        sb.Append(",\r\n");
                         sb.Append(' ', GetClassName().Length + 16);
                     }
                     else if (i > 0)

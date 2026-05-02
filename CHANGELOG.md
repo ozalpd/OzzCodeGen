@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+## [2.3.4] - 2026-05-02
+
+### Added
+- Add async `AnyByForeignKey` methods for each foreign key in `CSharpSqliteRepositoryTemplate`.
+
+### Changed
+- Generate repository constructors and OnInitialized signatures using new helpers for better formatting and maintainability.
+- Moved `MethodType` enum to `enums.cs` under the `OzzCodeGen.CodeEngines.CsDbRepository` namespace and extended the enum with `AnyByForeignKey`.
+- Consistently order autoload, foreign key, and update properties by name.
+- Update T4 templates and .part.cs files to use new helpers.
+- Minor formatting and code cleanup.
+- Update `WpfMvvm` templates for consistent ordering.
 
 ## [2.3.3] - 2026-04-30
 

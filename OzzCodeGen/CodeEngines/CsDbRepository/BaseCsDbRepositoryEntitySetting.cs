@@ -37,14 +37,11 @@ namespace OzzCodeGen.CodeEngines.CsDbRepository
 
         public IEnumerable<T> GetAutoLoadProperties()
         {
-            if (_autoLoadProperties == null)
-                _autoLoadProperties = GetInheritedIncludedProperties()
+            return GetInheritedIncludedProperties()
                                             .Where(p => p.AutoLoad)
                                             .OrderBy(p => p.PropertyDefinition.DisplayOrder)
                                             .ToList();
-            return _autoLoadProperties;
         }
-        IEnumerable<T> _autoLoadProperties;
 
         public string GetRepositoryName()
         {

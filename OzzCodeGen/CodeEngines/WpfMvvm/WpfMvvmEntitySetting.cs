@@ -20,7 +20,7 @@ public class WpfMvvmEntitySetting : BaseMvvmEntitySetting<WpfMvvmPropertySetting
     public List<WpfMvvmPropertySetting> GetPreselectProperties()
     {
         return GetInheritedIncludedProperties().Where(p => p.IsPreselectedInCreate)
-                                               .OrderBy(e => e.Name)
+                                               .OrderBy(p => p.Name)
                                                .ToList();
     }
 

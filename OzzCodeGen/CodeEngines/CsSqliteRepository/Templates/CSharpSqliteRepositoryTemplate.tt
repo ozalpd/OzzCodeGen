@@ -44,11 +44,8 @@ namespace <#= CodeEngine.NamespaceName #>
     public partial class <#= EntitySetting.Name #>Repository : <#= CodeEngine.BaseRepositoryClassName #><<#= EntitySetting.Name #>>, I<#= EntitySetting.Name #>Repository
     {
 <#  if (autoloadCols.Count > 0) { #>
-        public <#= EntitySetting.Name #>Repository(string databasePath
-<#      for (int i = 0; i < autoloadTypeNames.Count; i++) { #>
-                               , I<#= GetRepositoryName(autoloadTypeNames[i]) #>? <#= GetRepositoryName(autoloadTypeNames[i]).ToCamelCase() #> = null<# if (autoloadTypeNames.Count == i+1) { #>
-) : base(databasePath, "<#= EntitySetting.TableName #>")<#    } #>
-<#        } #>
+        public <#= EntitySetting.Name #>Repository(<#= GetConstructorParameters() #>) : base(databasePath, "<#= EntitySetting.TableName #>")
+
 <#  } else { #>
         public <#= EntitySetting.Name #>Repository(string databasePath) : base(databasePath, "<#= EntitySetting.TableName #>")
 <#  } #>
@@ -58,16 +55,7 @@ namespace <#= CodeEngine.NamespaceName #>
             _<#= GetRepositoryName(name).ToCamelCase() #> = <#= GetRepositoryName(name).ToCamelCase() #> ?? new <#= GetRepositoryName(name) #>(<#= GetRepositoryInitialization(name) #>);
 <#    } #>
             InitializeDatabase();
-<#  if (autoloadTypeNames.Count == 0) { #>
-            OnInitialized();
-<#    } else if (autoloadTypeNames.Count == 1) { #>
-            OnInitialized(<#= GetRepositoryName(autoloadTypeNames[0]).ToCamelCase() #> == null);
-<#    } else { #>
-            OnInitialized(<#= GetRepositoryName(autoloadTypeNames[0]).ToCamelCase() #> == null
-<#      for (int i = 1; i < autoloadTypeNames.Count; i++) { #>
-                        , <#= GetRepositoryName(autoloadTypeNames[i]).ToCamelCase() #> == null<# if (autoloadTypeNames.Count == i+1) { #>);<# } #>
-<#      }
-    } #>
+            OnInitialized(<#= GetOnInitializedParameters(forMethodCall:true) #>);
         }
         private readonly string _selectStatement;
 <#  foreach (string name in autoloadTypeNames) {#>
@@ -90,19 +78,28 @@ namespace <#= CodeEngine.NamespaceName #>
         /// which can be useful to determine if any additional initialization or event wiring is needed.
         /// </summary>
 <#  } #>
-<#  if (autoloadTypeNames.Count == 0) { #>
-        partial void OnInitialized();
-<#  } else if (autoloadTypeNames.Count == 1) { #>
-        partial void OnInitialized(bool is<#= GetRepositoryName(autoloadTypeNames[0]) #>Null);
-<#  } else { #>
-        partial void OnInitialized(bool is<#= GetRepositoryName(autoloadTypeNames[0]) #>Null
-<#      for (int i = 1; i < autoloadTypeNames.Count; i++) { #>
-                                 , bool is<#= GetRepositoryName(autoloadTypeNames[i]) #>Null<# if (autoloadTypeNames.Count == i+1) { #>);<# } #>
-<#      }
-    } #>
+        partial void OnInitialized(<#= GetOnInitializedParameters() #>);
 <#  WriteGetMulipleRecordsMethod(); // GetAllAsync #>
-<#  foreach (var fkey in fkeyColumns) {
-        WriteGetMulipleRecordsMethod(fkey as SqliteRepositoryPropertySetting);#>
+<#  foreach (SqliteRepositoryPropertySetting fkey in fkeyColumns) {
+        memberSignature = GetSignature(MethodType.AnyByForeignKey, fkey);
+        AddSignature(memberSignature); #>
+
+        public async <#= memberSignature #>
+        {
+<#      if (fkey.PropertyDefinition.IsTypeNumeric()) {#>
+            if (<#= fkey.Name.ToCamelCase() #> < 1)
+                throw new ArgumentOutOfRangeException(nameof(<#= fkey.Name.ToCamelCase() #>), <#= fkey.Name.ToCamelCase() #>, "Must be a valid positive id.");
+
+<#      } #>
+            await using var connection = await GetOpenConnectionAsync();
+            await using var command = connection.CreateCommand();
+            command.CommandText = $"SELECT COUNT(1) FROM {_tableName} WHERE <#= fkey.Name #> = @<#= fkey.Name.ToCamelCase() #>";
+            command.Parameters.AddWithValue("@<#= fkey.Name.ToCamelCase() #>", <#= fkey.Name.ToCamelCase() #>);
+            var result = await command.ExecuteScalarAsync();
+            return Convert.ToInt64(result) > 0;
+        }
+
+<#      WriteGetMulipleRecordsMethod(fkey);#>
 
 <#    } #>
 <#  WriteGetSingleRecordMethod(pkey as SqliteRepositoryPropertySetting); // GetByPKeyAsync #>

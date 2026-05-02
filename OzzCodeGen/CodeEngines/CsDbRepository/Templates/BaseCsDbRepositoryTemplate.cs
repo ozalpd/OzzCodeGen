@@ -5,7 +5,6 @@ using OzzUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace OzzCodeGen.CodeEngines.CsDbRepository.Templates
 {
@@ -63,6 +62,9 @@ namespace OzzCodeGen.CodeEngines.CsDbRepository.Templates
                                              .Any(p => p.Name.Equals("IsActive", StringComparison.InvariantCultureIgnoreCase));
             switch (methodType)
             {
+                case MethodType.AnyByForeignKey:
+                    return $"Task<bool> AnyBy{column.Name}Async({column.GetTypeName()} {column.Name.ToCamelCase()})";
+
                 case MethodType.Create:
                     return $"Task<{pkey.GetTypeName()}> CreateAsync({EntitySetting.Name} {EntitySetting.Name.ToCamelCase()})";
 
@@ -110,19 +112,5 @@ namespace OzzCodeGen.CodeEngines.CsDbRepository.Templates
 
             return string.Empty;
         }
-    }
-
-    public enum MethodType
-    {
-        Create,
-        DeleteByPKey,
-        DeleteByUniqueIndex,
-        GetAll,
-        GetPaged,
-        GetByPKey,
-        GetByUnique,
-        GetByForeignKey,
-        UpdateEntity,
-        UpdateSingleColumnById,
     }
 }
