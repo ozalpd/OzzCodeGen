@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Add async `AnyByForeignKey` methods for each foreign key in `CSharpSqliteRepositoryTemplate`.
 
 ### Changed
+- Replaced `StorageEntitySetting.ForeignTables` property with a `GetForeignTables()` method to fix an issue of template `CreateMsSqlDb` and to ensure up-to-date foreign key resolution. Added XML docs to `GetForeignTables()` method for clarity.
 - Generate repository constructors and OnInitialized signatures using new helpers for better formatting and maintainability.
 - Moved `MethodType` enum to `enums.cs` under the `OzzCodeGen.CodeEngines.CsDbRepository` namespace and extended the enum with `AnyByForeignKey`.
 - Consistently order autoload, foreign key, and update properties by name.
@@ -17,6 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Improve formatting and line break handling in T4 stored procedure templates and generated code; use WriteLine for parameter/column lists and insert explicit line breaks.
 - Update insert, update, and select statement generation for better comma and line break management.
 - Refactor `WriteSelectColumns`, `WriteInsertStatement`, and `WriteUpdateStatement` to always end lists with a line break and handle hasMore flag more cleanly.
+- Refactored all RaisePropertyChanged calls to use nameof() for safer refactoring.
+- Updated all usages and table creation logic to use the new method.
 
 ## [2.3.3] - 2026-04-30
 

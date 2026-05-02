@@ -32,7 +32,7 @@ namespace OzzCodeGen.Definitions
                 {
                     DisplayName = name.PascalCaseToTitleCase();
                 }
-                RaisePropertyChanged("Name");
+                RaisePropertyChanged(nameof(Name));
             }
         }
         private string name;
@@ -44,7 +44,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (_comment == value) return;
                 _comment = value;
-                RaisePropertyChanged("Comment");
+                RaisePropertyChanged(nameof(Comment));
             }
         }
         string _comment;
@@ -60,7 +60,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (displayOrder == value) return;
                 displayOrder = value;
-                RaisePropertyChanged("DisplayOrder");
+                RaisePropertyChanged(nameof(DisplayOrder));
             }
         }
         private int displayOrder;
@@ -83,7 +83,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (displayName == value) return;
                 displayName = value;
-                RaisePropertyChanged("DisplayName");
+                RaisePropertyChanged(nameof(DisplayName));
             }
         }
         string displayName;
@@ -98,7 +98,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (typeName == value) return;
                 typeName = value;
-                RaisePropertyChanged("TypeName");
+                RaisePropertyChanged(nameof(TypeName));
             }
         }
         private string typeName;
@@ -113,7 +113,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (_isClientComputed == value) return;
                 _isClientComputed = value;
-                RaisePropertyChanged("IsClientComputed");
+                RaisePropertyChanged(nameof(IsClientComputed));
             }
         }
         bool _isClientComputed;
@@ -128,7 +128,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (_isServerComputed == value) return;
                 _isServerComputed = value;
-                RaisePropertyChanged("IsServerComputed");
+                RaisePropertyChanged(nameof(IsServerComputed));
             }
         }
         bool _isServerComputed;
@@ -146,13 +146,16 @@ namespace OzzCodeGen.Definitions
                 if (_restrictedData == value)
                     return;
                 _restrictedData = value;
-                RaisePropertyChanged("RestrictedData");
+                RaisePropertyChanged(nameof(RestrictedData));
             }
         }
         private bool? _restrictedData;
 
         private bool GetIsRestricted()
         {
+            if (string.IsNullOrEmpty(Name))
+                return false;
+
             string lowerName = Name.ToLowerInvariant();
             return lowerName.Contains("user") ||
                 lowerName.Contains("create") ||

@@ -184,7 +184,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             var foreignTable = GetForeignTable(column);
             if (foreignTable != null)
             {
-                if (foreignTable.ForeignTables.Contains(table))
+                if (foreignTable.GetForeignTables().Contains(table))
                 {
                     string fKeyRef = string.Format("Alter Table [{0}].[{1}] Add {2}",
                                         table.SchemaName,

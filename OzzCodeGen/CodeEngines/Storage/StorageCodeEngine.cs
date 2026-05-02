@@ -22,7 +22,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             set
             {
                 _pluralize = value;
-                RaisePropertyChanged("PluralizeTableNames");
+                RaisePropertyChanged(nameof(PluralizeTableNames));
             }
         }
         private bool _pluralize = true;
@@ -39,7 +39,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             set
             {
                 _databaseName = value;
-                RaisePropertyChanged("DatabaseName");
+                RaisePropertyChanged(nameof(DatabaseName));
             }
         }
         private string _databaseName;
@@ -56,7 +56,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             {
                 if (_databaseServer == value)
                     return;
-                RaisePropertyChanged("DatabaseServer");
+                RaisePropertyChanged(nameof(DatabaseServer));
                 _databaseServer = value;
             }
         }
@@ -71,7 +71,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             set
             {
                 _beforeScripts = value;
-                RaisePropertyChanged("BeforeScripts");
+                RaisePropertyChanged(nameof(BeforeScripts));
             }
             get { return _beforeScripts; }
         }
@@ -86,7 +86,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             set
             {
                 _lastScripts = value;
-                RaisePropertyChanged("AfterScripts");
+                RaisePropertyChanged(nameof(AfterScripts));
             }
             get { return _lastScripts; }
         }
@@ -126,7 +126,7 @@ namespace OzzCodeGen.CodeEngines.Storage
         }
         public virtual void onSchemaNameChanged(string oldValue)
         {
-            RaisePropertyChanged("SchemaName");
+            RaisePropertyChanged(nameof(SchemaName));
             foreach (var item in Entities)
             {
                 if (item.SchemaName.Equals(oldValue))
@@ -142,14 +142,14 @@ namespace OzzCodeGen.CodeEngines.Storage
             set
             {
                 _putCommentsIntoScripts = value;
-                RaisePropertyChanged("PutCommentsIntoScripts");
+                RaisePropertyChanged(nameof(PutCommentsIntoScripts));
             }
         }
         private bool _putCommentsIntoScripts;
 
         protected override void OnSearchStringChanged()
         {
-            RaisePropertyChanged("Entities");
+            RaisePropertyChanged(nameof(Entities));
         }
 
         [XmlIgnore]
@@ -176,7 +176,7 @@ namespace OzzCodeGen.CodeEngines.Storage
             {
                 if (_entities == value) return;
                 _entities = value;
-                RaisePropertyChanged("Entities");
+                RaisePropertyChanged(nameof(Entities));
             }
         }
         private ObservableCollection<StorageEntitySetting> _entities;
@@ -432,35 +432,34 @@ namespace OzzCodeGen.CodeEngines.Storage
             return Entities.FirstOrDefault(e => e.TableName.Equals(column.ForeignKeyTable));
         }
 
+        /// <summary>
+        /// Returns a list of storage entity settings representing the tables to be created, excluding entities marked
+        /// for exclusion.
+        /// </summary>
+        /// <returns>A list of <see cref="StorageEntitySetting"/> objects for all entities that are not excluded from table
+        /// creation.</returns>
         public List<StorageEntitySetting> GetCreateTableList()
         {
-            if (_createTableList != null)
-                return _createTableList;
-
-            _createTableList = new List<StorageEntitySetting>();
+            var createTableList = new List<StorageEntitySetting>();
             foreach (var item in Entities.Where(e => !e.Exclude))
             {
-                var tables = item.ForeignTables;
+                AddToCreateTableList(item, createTableList);
             }
-            foreach (var item in Entities.Where(e => !e.Exclude))
-            {
-                AddToCreateTableList(item);
-            }
-            return _createTableList;
+            return createTableList;
         }
-        List<StorageEntitySetting> _createTableList;
 
-        private void AddToCreateTableList(StorageEntitySetting table)
+        private void AddToCreateTableList(StorageEntitySetting table, List<StorageEntitySetting> createTableList)
         {
-            if (_createTableList.Contains(table))
+            if (createTableList.Contains(table))
                 return;
 
-            foreach (var item in table.ForeignTables)
+            var fTables = table.GetForeignTables();
+            foreach (var item in fTables)
             {
-                if (!item.ForeignTables.Contains(table))
-                    AddToCreateTableList(item);
+                if (!item.GetForeignTables().Contains(table))
+                    AddToCreateTableList(item, createTableList);
             }
-            _createTableList.Add(table);
+            createTableList.Add(table);
         }
 
         public void RenderCreateDbTemplate()

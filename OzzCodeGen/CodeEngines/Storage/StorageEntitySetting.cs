@@ -235,39 +235,40 @@ namespace OzzCodeGen.CodeEngines.Storage
         [JsonIgnore]
         public StorageCodeEngine CodeEngine { get; set; }
 
-        [XmlIgnore]
-        [JsonIgnore]
-        public List<StorageEntitySetting> ForeignTables//TODO:Replace with a method that returns the list instead of a property with backing field, to avoid issues with serialization and changes in the base table or columns
-        {//GetForeignEntities()...
-            get
+
+        /// <summary>
+        /// Gets a list of foreign table settings referenced by this entity, including the base table and all unique
+        /// foreign key tables.
+        /// </summary>
+        /// <remarks>The returned list includes the base table, if present, and all referenced foreign
+        /// tables that are not excluded and are unique. The current entity is not included in the result.</remarks>
+        /// <returns>A list of <see cref="StorageEntitySetting"/> objects representing the foreign tables associated with this
+        /// entity. The list is empty if there are no foreign tables.</returns>
+        public List<StorageEntitySetting> GetForeignTables()
+        {
+            var fTables = new List<StorageEntitySetting>();
+
+            var baseTable = GetBaseTable();
+            if (baseTable != null && !fTables.Contains(baseTable))
             {
-                if (_foreignTables == null)
-                {
-                    _foreignTables = new List<StorageEntitySetting>();
-
-                    var baseTable = GetBaseTable();
-                    if (baseTable != null && !_foreignTables.Contains(baseTable))
-                    {
-                        _foreignTables.Add(baseTable);
-                    }
-
-                    foreach (var item in GetColumnList()
-                                        .Where(c => c.Exclude == false & !string.IsNullOrEmpty(c.ForeignKeyTable)))
-                    {
-                        var foreignTable = CodeEngine
-                                            .Entities
-                                            .FirstOrDefault(e => e.TableName.Equals(item.ForeignKeyTable));
-                        if (foreignTable != null && !_foreignTables.Contains(foreignTable) && foreignTable != this)
-                        {
-                            _foreignTables.Add(foreignTable);
-                        }
-                    }
-                }
-                return _foreignTables;
+                fTables.Add(baseTable);
             }
+
+            foreach (var item in GetColumnList()
+                                .Where(c => c.Exclude == false & !string.IsNullOrEmpty(c.ForeignKeyTable)))
+            {
+                var foreignTable = CodeEngine
+                                    .Entities
+                                    .FirstOrDefault(e => e.TableName.Equals(item.ForeignKeyTable));
+                if (foreignTable != null && !fTables.Contains(foreignTable) && foreignTable != this)
+                {
+                    fTables.Add(foreignTable);
+                }
+            }
+
+            return fTables;
         }
 
-        private List<StorageEntitySetting> _foreignTables;
 
         public StorageEntitySetting GetFirstBase()
         {

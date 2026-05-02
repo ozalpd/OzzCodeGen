@@ -18,7 +18,7 @@ namespace OzzCodeGen.CodeEngines
             {
                 if (_properties == value) return;
                 _properties = value;
-                RaisePropertyChanged("Properties");
+                RaisePropertyChanged(nameof(Properties));
             }
         }
         protected List<T> _properties;
@@ -93,7 +93,7 @@ namespace OzzCodeGen.CodeEngines
         {
             if (property == null || !property.IsForeignKey)
                 return null;
-            
+
             return GetInheritedComplexProperties()
                                 .FirstOrDefault(p => ((ComplexProperty)p.PropertyDefinition).DependentPropertyName == property.Name);
         }

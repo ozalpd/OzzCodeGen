@@ -32,7 +32,7 @@ namespace OzzCodeGen.Definitions
                 if (isDefaultDisplayName)
                     DisplayName = name.PascalCaseToTitleCase();
 
-                RaisePropertyChanged("Name");
+                RaisePropertyChanged(nameof(Name));
             }
             get { return name; }
         }
@@ -60,7 +60,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (_comment == value) return;
                 _comment = value;
-                RaisePropertyChanged("Comment");
+                RaisePropertyChanged(nameof(Comment));
             }
         }
         string _comment;
@@ -76,7 +76,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (namespaceName == value) return;
                 namespaceName = value;
-                RaisePropertyChanged("NamespaceName");
+                RaisePropertyChanged(nameof(NamespaceName));
             }
         }
         private string namespaceName;
@@ -91,7 +91,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (_displayOrder == value) return;
                 _displayOrder = value;
-                RaisePropertyChanged("DisplayOrder");
+                RaisePropertyChanged(nameof(DisplayOrder));
             }
         }
         int _displayOrder;
@@ -103,7 +103,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (_abstract == value) return;
                 _abstract = value;
-                RaisePropertyChanged("Abstract");
+                RaisePropertyChanged(nameof(Abstract));
             }
         }
         bool _abstract;        
@@ -125,7 +125,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (displayName == value) return;
                 displayName = value;
-                RaisePropertyChanged("DisplayName");
+                RaisePropertyChanged(nameof(DisplayName));
             }
         }
         string displayName;
@@ -147,7 +147,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (displayMember == value) return;
                 displayMember = value;
-                RaisePropertyChanged("DisplayMember");
+                RaisePropertyChanged(nameof(DisplayMember));
             }
         }
         string displayMember;
@@ -162,7 +162,7 @@ namespace OzzCodeGen.Definitions
             {
                 if (_baseTypeName == value) return;
                 _baseTypeName = value;
-                RaisePropertyChanged("BaseTypeName");
+                RaisePropertyChanged(nameof(BaseTypeName));
             }
         }
         private string _baseTypeName;

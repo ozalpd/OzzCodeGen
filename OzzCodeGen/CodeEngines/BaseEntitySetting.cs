@@ -20,7 +20,7 @@ namespace OzzCodeGen.CodeEngines
             {
                 if (_name == value) return;
                 _name = value != null ? value.Replace(" ", "") : string.Empty;
-                RaisePropertyChanged("Name");
+                RaisePropertyChanged(nameof(Name));
             }
         }
         private string _name;
@@ -39,7 +39,7 @@ namespace OzzCodeGen.CodeEngines
             {
                 if (_exclude == value) return;
                 _exclude = value;
-                RaisePropertyChanged("Exclude");
+                RaisePropertyChanged(nameof(Exclude));
             }
         }
         private bool? _exclude;
@@ -51,7 +51,7 @@ namespace OzzCodeGen.CodeEngines
             {
                 if (_overwriteExisting == value) return;
                 _overwriteExisting = value;
-                RaisePropertyChanged("OverwriteExisting");
+                RaisePropertyChanged(nameof(OverwriteExisting));
             }
         }
         private bool _overwriteExisting;
@@ -65,7 +65,7 @@ namespace OzzCodeGen.CodeEngines
             {
                 if (_dataModel == value) return;
                 _dataModel = value;
-                RaisePropertyChanged("DataModel");
+                RaisePropertyChanged(nameof(DataModel));
             }
         }
         DataModel _dataModel;
