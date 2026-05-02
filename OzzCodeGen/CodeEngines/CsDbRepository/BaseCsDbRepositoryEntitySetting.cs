@@ -38,9 +38,22 @@ namespace OzzCodeGen.CodeEngines.CsDbRepository
         public IEnumerable<T> GetAutoLoadProperties()
         {
             return GetInheritedIncludedProperties()
-                                            .Where(p => p.AutoLoad)
-                                            .OrderBy(p => p.PropertyDefinition.DisplayOrder)
-                                            .ToList();
+                            .Where(p => p.AutoLoad)
+                            .OrderBy(p => p.PropertyDefinition.DisplayOrder)
+                            .ToList();
+        }
+
+        /// <summary>
+        /// Returns a collection of properties that reference the current entity within the model.
+        /// </summary>
+        /// <returns>An enumerable collection of <see cref="ModelPropertySetting"/> objects that reference this entity. If there
+        /// are no referencing properties, returns an empty collection.</returns>
+        public IEnumerable<ModelPropertySetting> GetReferencingProperties()
+        {
+            if (ModelClassEntitySetting != null)
+                return ModelClassEntitySetting.GetReferencingProperties();
+
+            return Enumerable.Empty<ModelPropertySetting>();
         }
 
         public string GetRepositoryName()
@@ -175,6 +188,5 @@ namespace OzzCodeGen.CodeEngines.CsDbRepository
             }
         }
         private StorageEntitySetting _storageEntitySetting;
-
     }
 }

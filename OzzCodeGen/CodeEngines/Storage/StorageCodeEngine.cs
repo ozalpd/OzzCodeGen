@@ -331,9 +331,9 @@ namespace OzzCodeGen.CodeEngines.Storage
 
         protected string GetTableName(string typeName)
         {
-            StorageEntitySetting table = Entities == null ? null :
-                Entities.Where(e => typeName.Equals(e.Name)).FirstOrDefault();
-
+            StorageEntitySetting table = Entities == null
+                                       ? null
+                                       : Entities.FirstOrDefault(e => typeName.Equals(e.Name));
             if (table != null)
             {
                 return table.TableName;

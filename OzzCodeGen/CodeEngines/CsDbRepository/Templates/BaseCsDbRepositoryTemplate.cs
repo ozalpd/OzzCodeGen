@@ -63,33 +63,33 @@ namespace OzzCodeGen.CodeEngines.CsDbRepository.Templates
             switch (methodType)
             {
                 case MethodType.AnyByForeignKey:
-                    return $"Task<bool> AnyBy{column.Name}Async({column.GetTypeName()} {column.Name.ToCamelCase()})";
+                    return $"Task<bool> AnyBy{column.Name}Async({column.GetTypeName(getReturnType: true)} {column.Name.ToCamelCase()})";
 
                 case MethodType.Create:
-                    return $"Task<{pkey.GetTypeName()}> CreateAsync({EntitySetting.Name} {EntitySetting.Name.ToCamelCase()})";
+                    return $"Task<{pkey.GetTypeName(getReturnType: true)}> CreateAsync({EntitySetting.Name} {EntitySetting.Name.ToCamelCase()})";
 
                 case MethodType.DeleteByPKey:
-                    return $"Task<bool> DeleteAsync({pkey.GetTypeName()} {pkey.Name.ToCamelCase()})";
+                    return $"Task<bool> DeleteAsync({pkey.GetTypeName(getReturnType: true)} {pkey.Name.ToCamelCase()})";
 
                 case MethodType.DeleteByUniqueIndex:
                     if (unique != null)
-                        return $"Task<bool> DeleteAsync({unique.GetTypeName()} {unique.Name.ToCamelCase()})";
+                        return $"Task<bool> DeleteAsync({unique.GetTypeName(getReturnType: true)} {unique.Name.ToCamelCase()})";
                     break;
 
                 case MethodType.GetAll:
                     return $"Task<IReadOnlyList<{EntitySetting.Name}>> GetAllAsync({(HasIsActiveProperty() ? "bool? isActive = null" : "")})";
 
                 case MethodType.GetByPKey:
-                    return $"Task<{GetEntityTypeName(isNullable: true)}> GetBy{pkey.Name}Async({pkey.GetTypeName()}? {pkey.Name.ToCamelCase()})";
+                    return $"Task<{GetEntityTypeName(isNullable: true)}> GetBy{pkey.Name}Async({pkey.GetTypeName(getReturnType: true)}? {pkey.Name.ToCamelCase()})";
 
                 case MethodType.GetByUnique:
                     if (unique != null)
-                        return $"Task<{GetEntityTypeName(isNullable: true)}> GetBy{unique.Name}Async({unique.GetTypeName()}? {unique.Name.ToCamelCase()})";
+                        return $"Task<{GetEntityTypeName(isNullable: true)}> GetBy{unique.Name}Async({unique.GetTypeName(getReturnType: true)}? {unique.Name.ToCamelCase()})";
                     break;
 
                 case MethodType.GetByForeignKey:
                     if (column != null)
-                        return $"Task<IReadOnlyList<{EntitySetting.Name}>> GetBy{column.Name}Async({column.GetTypeName()} {column.Name.ToCamelCase()}{(hasIsActive ? ", bool? isActive = null" : "")})";
+                        return $"Task<IReadOnlyList<{EntitySetting.Name}>> GetBy{column.Name}Async({column.GetTypeName(getReturnType: true)} {column.Name.ToCamelCase()}{(hasIsActive ? ", bool? isActive = null" : "")})";
                     break;
 
                 case MethodType.GetPaged:
@@ -103,7 +103,7 @@ namespace OzzCodeGen.CodeEngines.CsDbRepository.Templates
 
                 case MethodType.UpdateSingleColumnById:
                     if (column != null)
-                        return $"Task<bool> Update{column.Name}Async({pkey.GetTypeName()} {pkey.Name.ToCamelCase()}, {column.GetTypeName()} {column.Name.ToCamelCase()})";
+                        return $"Task<bool> Update{column.Name}Async({pkey.GetTypeName(getReturnType: true)} {pkey.Name.ToCamelCase()}, {column.GetTypeName(getReturnType: true)} {column.Name.ToCamelCase()})";
                     break;
 
                 default:

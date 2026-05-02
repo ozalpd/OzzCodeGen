@@ -33,6 +33,10 @@
     bool hasSelfAutoload = autoloadCols.Any(p => p.GetTypeName(getReturnType: true) == EntitySetting.Name);
     var fkeyColumns = GetForeignKeyProperties().ToList();
     var singleUpdCols = GetSingleUpdateProperties().ToList();
+    var autoloadRepoNames = autoloadTypeNames.Select(n => GetRepositoryName(n)).ToList();
+    var outerReferences = EntitySetting.GetReferencingProperties().ToList();
+    var outerRepoNames = outerReferences.Select(r => GetRepositoryName(r.EntitySetting.Name)).Distinct().Except(autoloadRepoNames).ToList();
+    var allRepoNames = autoloadRepoNames.Union(outerRepoNames).ToList();
     string memberSignature = string.Empty; #>
 <#  WriteUsingNamespaces(); #>
 
@@ -51,16 +55,33 @@ namespace <#= CodeEngine.NamespaceName #>
 <#  } #>
         {
             _selectStatement = $"SELECT {string.Join(", ", ColumnNames)} FROM {_tableName}";
-<#  foreach (string name in autoloadTypeNames) {#>
-            _<#= GetRepositoryName(name).ToCamelCase() #> = <#= GetRepositoryName(name).ToCamelCase() #> ?? new <#= GetRepositoryName(name) #>(<#= GetRepositoryInitialization(name) #>);
+            _databasePath = databasePath;
+<#  foreach (string name in autoloadRepoNames) { #>
+            if (<#= name.ToCamelCase() #> != null)
+                _<#= name.ToCamelCase() #> = <#= name.ToCamelCase() #>;
 <#    } #>
+
             InitializeDatabase();
             OnInitialized(<#= GetOnInitializedParameters(forMethodCall:true) #>);
         }
+        private readonly string _databasePath;
         private readonly string _selectStatement;
-<#  foreach (string name in autoloadTypeNames) {#>
-        private readonly I<#= GetRepositoryName(name) #> _<#= GetRepositoryName(name).ToCamelCase() #>;
+<#  foreach (string name in allRepoNames) {#>
+
+        protected I<#= name #> <#= name #>
+        {
+            get
+            {
+                if (_<#= name.ToCamelCase() #> == null)
+                {
+                    _<#= name.ToCamelCase() #> = new <#= name #>(<#= GetRepositoryInit(name) #>);
+                }
+                return _<#= name.ToCamelCase() #>;
+            }
+        }
+        private I<#= name #> _<#= name.ToCamelCase() #>;
 <#  } #>
+
 
         private void InitializeDatabase()
         {
@@ -86,9 +107,9 @@ namespace <#= CodeEngine.NamespaceName #>
 
         public async <#= memberSignature #>
         {
-<#      if (fkey.PropertyDefinition.IsTypeNumeric()) {#>
+<#      if (fkey.IsIntegerNumeric) {#>
             if (<#= fkey.Name.ToCamelCase() #> < 1)
-                throw new ArgumentOutOfRangeException(nameof(<#= fkey.Name.ToCamelCase() #>), <#= fkey.Name.ToCamelCase() #>, "Must be a valid positive id.");
+                return false;
 
 <#      } #>
             await using var connection = await GetOpenConnectionAsync();
@@ -232,6 +253,48 @@ namespace <#= CodeEngine.NamespaceName #>
             return <#= pkey.Name.ToCamelCase() #>;
         }
         partial void OnCreated(<#= EntitySetting.Name #> <#= EntitySetting.Name.ToCamelCase() #>);
+<#  // CanDelete Method
+    memberSignature = $"Task<bool> CanDeleteAsync({pkey.GetTypeName()} {pkey.Name.ToCamelCase()})";
+    AddSignature(memberSignature);
+#>
+
+        /// <summary>
+        /// Determines whether a <#= EntitySetting.Name.ToCamelCase() #> can be safely deleted based on the absence of related records.
+        /// </summary>
+        /// <remarks>A <#= EntitySetting.Name.ToCamelCase() #> can be deleted only if there are no associated records. Use this method
+        /// before attempting to delete a <#= EntitySetting.Name.ToCamelCase() #> to avoid violating referential integrity.</remarks>
+        /// <param name="id">The identifier of the <#= EntitySetting.Name.ToCamelCase() #> record to check for deletability.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result is <see langword="true"/> if the <#= EntitySetting.Name.ToCamelCase() #>
+        /// can be deleted; otherwise, <see langword="false"/>.</returns>
+<#  if(outerReferences.Any()) {#>
+        public async <#= memberSignature #>
+        {
+<#      if(pkey.IsIntegerNumeric) {#>
+            if (<#= pkey.Name.ToCamelCase() #> < 1)
+                return false;
+
+<#      } #>
+            bool result = true;
+<#      foreach (var other in outerReferences) {
+            var othComplex = (ComplexProperty)other.PropertyDefinition;#>
+
+            // Checking any <#= other.EntitySetting.Name.ToCamelCase() #> record exists through <#= other.EntitySetting.Name #>.<#= othComplex.DependentPropertyName #> reference
+            result = result && !(await <#= GetRepositoryName(other.EntitySetting.Name) #>.AnyBy<#= othComplex.DependentPropertyName #>Async(<#= pkey.Name.ToCamelCase() #>));
+<#      } #>
+
+            return result;
+        }
+<#  } else { #>
+        public <#= memberSignature #>
+        {
+<#       if(pkey.IsIntegerNumeric) {#>
+            if (<#= pkey.Name.ToCamelCase() #> < 1)
+                return Task.FromResult(false);
+
+<#       } #>
+            return Task.FromResult(true);
+        }
+<#  } #>
 <#  // Delete Method
     memberSignature = GetSignature(MethodType.DeleteByPKey);
     AddSignature(memberSignature);
@@ -278,7 +341,7 @@ namespace <#= CodeEngine.NamespaceName #>
 <#  } #>
             bool noChanges = existing<#= EntitySetting.Name #> != null
 <#  for (int i = 0; i < updateColumns.Count; i++) {  #>
-                          && existing<#= EntitySetting.Name #>.<#= updateColumns[i].Name #> == <#= EntitySetting.Name.ToCamelCase() #>.<#= updateColumns[i].Name #><# if (i+1 == updateColumns.Count) { #>;<#    } #>
+                          && existing<#= EntitySetting.Name #>.<#= updateColumns[i].Name #> == <#= EntitySetting.Name.ToCamelCase() #>.<#= updateColumns[i].Name #><# if (i+1 == updateColumns.Count) WriteLine(";"); else WriteLine(""); #>
 <#  } #>
 
             if (noChanges)
@@ -294,8 +357,9 @@ namespace <#= CodeEngine.NamespaceName #>
 <#  } #>
             command.CommandText = @$"UPDATE {_tableName} SET
 <#  for (int i = 0; i < updateColumns.Count; i++) {  #>
-                <#= updateColumns[i].Name #> = @<#= updateColumns[i].Name.ToCamelCase() #><# if (i+1 < updateColumns.Count) { #>,<#    } #>
-<#  } #>
+                <#= updateColumns[i].Name #> = @<#= updateColumns[i].Name.ToCamelCase() #><# if (i+1 < updateColumns.Count) WriteLine(","); #>
+<#  }
+WriteLine(""); #>
             WHERE <#= pkey.Name #> = @<#= pkey.Name.ToCamelCase() #>";
 
 <#      WriteColumnsAndParameters(updateColumns, pkey, updatedAtCol:updatedAtCol); #>
@@ -386,8 +450,9 @@ namespace <#= CodeEngine.NamespaceName #>
         /// </summary>
         public readonly string[] ColumnNames = new[] {
 <#  for (int i = 0; i < repositoryColumns.Count; i++) {  #>
-            "<#= repositoryColumns[i].Name #>"<# if (i+1 < repositoryColumns.Count) { #>,<#    } #>
-<#  } #>
+            "<#= repositoryColumns[i].Name #>"<# if (i+1 < repositoryColumns.Count) WriteLine(","); #>
+<#  }
+WriteLine("");#>
         };
 <#  if (decimalColumns.Count > 0) { #>
 
@@ -421,7 +486,7 @@ public void WriteToDictionaryLines(){
 <#+ foreach (string name in autoloadTypeNames.Where(n => n != EntitySetting.Name && !n.StartsWith("ICollection<"))) {
         string autoPKeyName = GetEntityPKeyName(name);
 #>
-            var <#= name.Pluralize().ToCamelCase() #>By<#= autoPKeyName #> = (await _<#= GetRepositoryName(name).ToCamelCase() #>.GetAllAsync()).ToDictionary(item => item.<#= autoPKeyName #>);
+            var <#= name.Pluralize().ToCamelCase() #>By<#= autoPKeyName #> = (await <#= GetRepositoryName(name) #>.GetAllAsync()).ToDictionary(item => item.<#= autoPKeyName #>);
 <#+    }
     if (hasSelfAutoload) { #>
             var <#= EntitySetting.Name.Pluralize().ToCamelCase() #>By<#= pkey.Name #> = (await GetAllAsync()).ToDictionary(item => item.<#= pkey.Name #>);

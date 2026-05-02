@@ -12,6 +12,12 @@ OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. 
 
 See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 
+## Latest Highlights (2.3.4)
+- Added `CanDeleteAsync` to generated SQLite repositories for referential integrity checks before deletion.
+- Add async `AnyByForeignKey` methods for each foreign key in `CSharpSqliteRepositoryTemplate`.
+- Replaced `StorageEntitySetting.ForeignTables` property with a `GetForeignTables()` method to fix an issue of template `CreateMsSqlDb` and to ensure up-to-date foreign key resolution. Added XML docs to `GetForeignTables()` method for clarity.
+- Refactored repository initialization to support both autoloaded and externally referenced repositories. Improved code generation for parameter lists, update statements, and column arrays.
+
 ## Latest Highlights (2.3.3)
 - Introduce `WpfDialogServcTemplate` for generating dialog service interfaces and implementations for entity create/edit dialogs.
 - Introduce `WpfCommandTemplate` for generating MVVM command classes (Create/Edit) in the WPF engine, including constructor wiring for view models, dialog services, and foreign lookups.

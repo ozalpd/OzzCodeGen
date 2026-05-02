@@ -254,8 +254,8 @@ namespace OzzCodeGen.CodeEngines.Storage
                 fTables.Add(baseTable);
             }
 
-            foreach (var item in GetColumnList()
-                                .Where(c => c.Exclude == false & !string.IsNullOrEmpty(c.ForeignKeyTable)))
+            var columns = GetInheritedIncludedProperties().Where(c => !string.IsNullOrEmpty(c.ForeignKeyTable));
+            foreach (var item in columns)
             {
                 var foreignTable = CodeEngine
                                     .Entities

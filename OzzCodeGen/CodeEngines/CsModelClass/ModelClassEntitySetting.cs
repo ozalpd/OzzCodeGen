@@ -33,6 +33,27 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
         }
         private bool _generateQueryParam;
 
+        /// <summary>
+        /// Returns a collection of properties from other entities that reference this entity as a complex type.
+        /// </summary>
+        /// <remarks>This method identifies all properties in the model that are complex types and whose
+        /// type name matches the current entity's name. Use this to discover navigation or foreign key relationships
+        /// pointing to this entity.</remarks>
+        /// <returns>An enumerable collection of <see cref="ModelPropertySetting"/> objects representing properties in other
+        /// entities that reference this entity. The collection is ordered by property name.</returns>
+        public IEnumerable<ModelPropertySetting> GetReferencingProperties()
+        {
+            var foreignProperties = CodeEngine.EntitySettings
+                                              .OfType<ModelClassEntitySetting>()
+                                              .SelectMany(e => e.Properties.OfType<ModelPropertySetting>())
+                                              .Where(p => p.IsComplex
+                                                       && p.PropertyDefinition.TypeName == EntityDefinition.Name)
+                                              .OrderBy(p => p.Name)
+                                              .ToList();
+
+            return foreignProperties;
+        }
+
         public IEnumerable<ModelPropertySetting> SearchableProperties
         {
             get

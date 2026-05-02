@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [2.3.4] - 2026-05-02
 
 ### Added
+- Added `CanDeleteAsync` to generated SQLite repositories for referential integrity checks before deletion.
 - Add async `AnyByForeignKey` methods for each foreign key in `CSharpSqliteRepositoryTemplate`.
 
 ### Changed
@@ -20,6 +21,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Refactor `WriteSelectColumns`, `WriteInsertStatement`, and `WriteUpdateStatement` to always end lists with a line break and handle hasMore flag more cleanly.
 - Refactored all RaisePropertyChanged calls to use nameof() for safer refactoring.
 - Updated all usages and table creation logic to use the new method.
+- Refactored repository initialization to support both autoloaded and externally referenced repositories. Improved code generation for parameter lists, update statements, and column arrays.
+- Centralized referencing property discovery and clarified navigation handling.
+- Updated numeric checks, added null/empty guards, enhanced XML docs, and performed minor cleanup in storage engine and entity settings.
+
 
 ## [2.3.3] - 2026-04-30
 

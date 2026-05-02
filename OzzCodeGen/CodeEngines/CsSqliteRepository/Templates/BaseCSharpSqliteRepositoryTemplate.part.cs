@@ -126,22 +126,43 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate
                              && !p.ColumnName.Equals(createdAtColName, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    protected string GetRepositoryInitialization(string entityName)
+    protected string GetNameFromRepository(string repoName)
     {
-        if (!EntitySetting.HasThisKindOfRepository(entityName))
-            return "databasePath";
-
-        return $"databasePath, {GetRepositoryName(EntitySetting.Name).ToCamelCase()}: this";
+        return repoName.Replace("Repository", string.Empty);
     }
 
-    protected string GetRepositoryName(string entityName)
+    protected string GetRepositoryInit(string repoName)
     {
+        if (HasThisRepositoryProperty(repoName))
+        {
+            string thisRepo = GetRepositoryName();
+            return $"_databasePath, {thisRepo.ToCamelCase()}: this";
+        }
+        return "_databasePath";
+    }
+
+    protected string GetRepositoryName(string entityName = "")
+    {
+        if (string.IsNullOrEmpty(entityName))
+            entityName = EntitySetting.Name;
+
         return EntitySetting.GetRepositoryName(entityName);
     }
 
     protected override bool HasIsActiveProperty()
     {
         return EntitySetting.HasIsActiveProperty();
+    }
+
+    protected bool HasThisRepositoryProperty(string repoName)
+    {
+        var entityName = GetNameFromRepository(repoName);
+        var entity = GetEntityByName(entityName);
+        var autoloads = entity.Properties
+                              .OfType<SqliteRepositoryPropertySetting>()
+                              .Where(p => p.AutoLoad).ToList();
+
+        return autoloads.Any(p => p.GetTypeName(getReturnType: true) == EntitySetting.Name);
     }
 
     protected virtual bool ShouldSkipInsert(SqliteRepositoryPropertySetting property)
@@ -182,7 +203,25 @@ public abstract partial class BaseCSharpSqliteRepositoryTemplate
 
     protected string GetParameterList(IEnumerable<SqliteRepositoryPropertySetting> properties)
     {
-        return string.Join(", ", properties.Select(p => $"@{p.ColumnName.ToCamelCase()}"));
+        var sb = new StringBuilder();
+        int i = 0;
+        foreach (var property in properties)
+        {
+            if (i % 6 == 0 && i > 0)
+            {
+                sb.Append(",\r\n");
+                sb.Append(' ', 20);
+            }
+            else if (i > 0)
+            {
+                sb.Append(", ");
+            }
+            i++;
+            sb.Append('@');
+            sb.Append(property.ColumnName.ToCamelCase());
+        }
+
+        return sb.ToString();
     }
 
     protected string GetMappingExpression(SqliteRepositoryPropertySetting property, string ordinalNr, bool needsComma, string readerName = "reader")
