@@ -24,14 +24,12 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="160" />
                 <ColumnDefinition Width="240"/>
-                <ColumnDefinition Width="120" />
-                <ColumnDefinition Width="240"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="26"/>
-                <RowDefinition Height="26"/>
-                <RowDefinition Height="26"/>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="24"/>
                 <RowDefinition Height="6"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -65,56 +63,56 @@
             <TextBox Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="0"
                      Text="{Binding TargetFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetDirectory}"
-                     Style="{StaticResource textBoxStyle}" Margin="4,0"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
                      Background="#FFFFFAED"/>
-            
+
             <TextBlock Grid.Column="2" Grid.Row="1" Margin="4,2,0,0"
                        Text="Target Contracts Folder:"
                        VerticalAlignment="Center"/>
             <TextBox Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="1"
                      Text="{Binding InfrastructureFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetInfrastructureDirectory}"
-                     Style="{StaticResource textBoxStyle}" Margin="4,0"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
                      Background="#FFFFFAED"/>
-            
+
             <TextBlock Grid.Column="2" Grid.Row="2" Margin="4,2,0,0"
                        Text="Base Class Name:"
                        VerticalAlignment="Center"/>
             <TextBox Grid.Column="3" Grid.Row="2"
                      Text="{Binding BaseRepositoryClassName, Mode=TwoWay}"
-                     Style="{StaticResource textBoxStyle}" Margin="4,0"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
                      Background="#FFFFFAED"/>
-            
-            
-            <TextBlock Grid.Column="5" Grid.Row="0" Margin="4,2,0,0"
+
+
+            <TextBlock Grid.Column="5" Grid.Row="0" Margin="8,2,0,0"
                        Text="Namespace Name:"
                        VerticalAlignment="Center"/>
             <TextBox Grid.Column="6" Grid.Row="0"
                      Text="{Binding NamespaceName, Mode=TwoWay}"
-                     Style="{StaticResource textBoxStyle}" Margin="4,0"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
                      Background="#FFFFFAED"/>
 
-            <TextBlock Grid.Column="5" Grid.Row="1" Margin="4,2,0,0"
+            <TextBlock Grid.Column="5" Grid.Row="1" Margin="8,2,0,0"
                        Text="Infrastructure Namespace:"
                        ToolTip="Namespace for generated infrastructure contracts."
                        VerticalAlignment="Center"/>
             <TextBox Grid.Column="6" Grid.Row="1"
                      Text="{Binding InfrastructureNamespaceName, Mode=TwoWay}"
                      ToolTip="Namespace for generated infrastructure contracts or base classes."
-                     Style="{StaticResource textBoxStyle}" Margin="4,0"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
                      Background="#FFFFFAED"/>
 
-            <TextBlock Grid.Column="5" Grid.Row="2" Margin="4,2,0,0"
+            <TextBlock Grid.Column="5" Grid.Row="2" Margin="8,2,0,0"
                        Text="Metadata Repository Name:"
                        VerticalAlignment="Center"/>
             <TextBox Grid.Column="6" Grid.Row="2"
                      Text="{Binding MetadataRepositoryName, Mode=TwoWay}"
-                     Style="{StaticResource textBoxStyle}" Margin="4,0"
+                     Style="{StaticResource textBoxStyle}" Margin="0"
                      Background="#FFFFFAED"/>
 
-            
-            
-            <Grid Grid.Row="4" Grid.ColumnSpan="10" Margin="4">
+
+
+            <Grid Grid.Row="4" Grid.ColumnSpan="8" Margin="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" MaxWidth="860"/>
                     <ColumnDefinition Width="6"/>
@@ -146,21 +144,21 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="26"/>
-                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="24"/>
                         <RowDefinition Height="32"/>
-                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="24"/>
                         <RowDefinition Height="8"/>
-                        <RowDefinition Height="26"/>
-                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
                         <RowDefinition Height="8"/>
                         <RowDefinition Height="32"/>
-                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="24"/>
                         <RowDefinition Height="32"/>
-                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="24"/>
                         <RowDefinition Height="32"/>
-                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="24"/>
                         <RowDefinition Height="32"/>
-                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="24"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
@@ -171,7 +169,8 @@
                     <TextBox Grid.Column="0" Grid.Row="1" Margin="4,0,4,0"
                              Text="{Binding FileNameDDL, Mode=TwoWay}"
                              ToolTip="Table definition file for initializing the table for entity"
-                             Style="{StaticResource textBoxStyle}" VerticalAlignment="Top"/>
+                             Style="{StaticResource textBoxStyle}"
+                             Background="#FFFFFAED" VerticalAlignment="Top"/>
 
                     <TextBlock Grid.Column="0" Grid.Row="2" Margin="4,8,0,0"
                                Text="Seed File Name:"
@@ -180,7 +179,8 @@
                     <TextBox Grid.Column="0" Grid.Row="3" Margin="4,0,4,0"
                              Text="{Binding FileNameSeed, Mode=TwoWay}"
                              ToolTip="File name for data seed after initializing the table"
-                             Style="{StaticResource textBoxStyle}" VerticalAlignment="Top"/>
+                             Style="{StaticResource textBoxStyle}"
+                             Background="#FFFFFAED"  VerticalAlignment="Top"/>
 
 
 
@@ -197,9 +197,10 @@
                     <TextBlock Grid.Column="0" Grid.Row="8" Margin="4,0,0,0"
                                Text="Order By Clause:"
                                VerticalAlignment="Center"/>
-                    <TextBox Grid.Column="0" Grid.Row="9" Margin="4,0,4,0"
+                    <TextBox Grid.Column="0" Grid.Row="9" Margin="4,0"
                              Text="{Binding OrderByClause, Mode=TwoWay}"
-                             Style="{StaticResource textBoxStyle}" VerticalAlignment="Top"/>
+                             Style="{StaticResource textBoxStyle}"
+                             Background="#FFFFFAED"  VerticalAlignment="Top"/>
 
                     <TextBlock Grid.Column="0" Grid.Row="10" Margin="4,0,0,0"
                                Text="Created at Property Name:"
@@ -208,7 +209,8 @@
                     <TextBox Grid.Column="0" Grid.Row="11" Margin="4,0,4,0"
                              Text="{Binding CreatedAtName, Mode=TwoWay}"
                              ToolTip="Property name for creation time of the entity"
-                             Style="{StaticResource textBoxStyle}" VerticalAlignment="Top"/>
+                             Style="{StaticResource textBoxStyle}"
+                             Background="#FFFFFAED"  VerticalAlignment="Top"/>
 
                     <TextBlock Grid.Column="0" Grid.Row="12" Margin="4,0,0,0"
                                Text="Updated at Property Name:"
@@ -217,7 +219,8 @@
                     <TextBox Grid.Column="0" Grid.Row="13" Margin="4,0,4,0"
                              Text="{Binding UpdatedAtName, Mode=TwoWay}"
                              ToolTip="Property name for update time of the entity"
-                             Style="{StaticResource textBoxStyle}" VerticalAlignment="Top"/>
+                             Style="{StaticResource textBoxStyle}"
+                             Background="#FFFFFAED"  VerticalAlignment="Top"/>
 
                     <GridSplitter Grid.Column="1" Grid.RowSpan="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="6" ResizeDirection="Columns" />
                     <Grid Grid.Column="2" Grid.RowSpan="20">
@@ -239,60 +242,59 @@
                                 <DataGridTextColumn Header="CLR Type" Width="110" Binding="{Binding ClrTypeName}" IsReadOnly="True" />
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Border Grid.Column="2" BorderBrush="#FF041C24" Padding="2" BorderThickness="1,1,1,1">
-                            <Grid Background="#FFE6F4FF"
-                                  DataContext="{Binding SelectedItem, ElementName=grdPropertySettings}">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="28"/>
-                                    <RowDefinition Height="28"/>
-                                    <RowDefinition Height="28"/>
-                                    <RowDefinition Height="8"/>
-                                    <RowDefinition Height="24"/>
-                                    <RowDefinition Height="28"/>
-                                    <RowDefinition Height="28"/>
-                                    <RowDefinition Height="28"/>
-                                    <RowDefinition Height="28"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
+                        <Grid Grid.Column="2" Background="#FFE6F4FF"
+                                DataContext="{Binding SelectedItem, ElementName=grdPropertySettings}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="8"/>
+                                <RowDefinition Height="24"/>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-                                <CheckBox Grid.Row="0" Margin="4,0,0,0" VerticalAlignment="Center"
-                                          ToolTip="Automatically load this property when its parent entity is loaded"
-                                          Content="Auto Load"
-                                          IsChecked="{Binding AutoLoad}"/>
+                            <CheckBox Grid.Row="0" Margin="4,0,0,0" VerticalAlignment="Center"
+                                        ToolTip="Automatically load this property when its parent entity is loaded"
+                                        Content="Auto Load"
+                                        IsChecked="{Binding AutoLoad}"/>
 
-                                <CheckBox Grid.Row="1" Margin="4,0,0,0" VerticalAlignment="Center"
-                                          ToolTip="In update method, check if the value has been altered"
-                                          Content="Check If Altered"
-                                          IsChecked="{Binding CheckIfAltered}"/>
+                            <CheckBox Grid.Row="1" Margin="4,0,0,0" VerticalAlignment="Center"
+                                        ToolTip="In update method, check if the value has been altered"
+                                        Content="Check If Altered"
+                                        IsChecked="{Binding CheckIfAltered}"/>
 
-                                <CheckBox Grid.Row="2" Margin="4,0,0,0" VerticalAlignment="Center"
-                                          ToolTip="Generate a dedicated update method for this column"
-                                          Content="Single Column Update"
-                                          IsChecked="{Binding SingleColumnUpdate}"/>
+                            <CheckBox Grid.Row="2" Margin="4,0,0,0" VerticalAlignment="Center"
+                                        ToolTip="Generate a dedicated update method for this column"
+                                        Content="Single Column Update"
+                                        IsChecked="{Binding SingleColumnUpdate}"/>
 
-                                <TextBlock Grid.Row="4" Margin="4,0,0,0"
-                                           Text="Decimal to Integer Scale:"
-                                           ToolTip="Base-10 scale used when converting decimal values to SQLite integer storage"
-                                           VerticalAlignment="Center"/>
-                                <TextBox Grid.Row="5" Margin="4,0,4,0" VerticalAlignment="Top"
-                                         Text="{Binding DecimalToIntegerScale, Mode=TwoWay}"
-                                         ToolTip="Base-10 scale used when converting decimal values to SQLite integer storage"
-                                         Style="{StaticResource textBoxStyle}"/>
+                            <TextBlock Grid.Row="4" Margin="4,0,0,0"
+                                        Text="Decimal to Integer Scale:"
+                                        ToolTip="Base-10 scale used when converting decimal values to SQLite integer storage"
+                                        VerticalAlignment="Center"/>
+                            <TextBox Grid.Row="5" Margin="4,0" VerticalAlignment="Top"
+                                        Text="{Binding DecimalToIntegerScale, Mode=TwoWay}"
+                                        ToolTip="Base-10 scale used when converting decimal values to SQLite integer storage"
+                                        Style="{StaticResource textBoxStyle}"
+                                        Background="#FFFFFAED" />
 
-                                <CheckBox Grid.Row="7" Margin="4,0,0,0" VerticalAlignment="Center"
-                                          ToolTip="Indicates if this property is a repository column"
-                                          Content="Repository Column"
-                                          IsEnabled="False"
-                                          IsChecked="{Binding IsRepositoryColumn, Mode=OneWay}"/>
+                            <CheckBox Grid.Row="7" Margin="4,0,0,0" VerticalAlignment="Center"
+                                        ToolTip="Indicates if this property is a repository column"
+                                        Content="Repository Column"
+                                        IsEnabled="False"
+                                        IsChecked="{Binding IsRepositoryColumn, Mode=OneWay}"/>
 
-                                <CheckBox Grid.Row="8" Margin="4,0,0,0" VerticalAlignment="Center"
-                                          ToolTip="Indicates if this property is uniquely indexed"
-                                          Content="Unique Indexed"
-                                          IsEnabled="False"
-                                          IsChecked="{Binding IsUniqueIndexed, Mode=OneWay}"/>
+                            <CheckBox Grid.Row="8" Margin="4,0,0,0" VerticalAlignment="Center"
+                                        ToolTip="Indicates if this property is uniquely indexed"
+                                        Content="Unique Indexed"
+                                        IsEnabled="False"
+                                        IsChecked="{Binding IsUniqueIndexed, Mode=OneWay}"/>
 
-                            </Grid>
-                        </Border>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
