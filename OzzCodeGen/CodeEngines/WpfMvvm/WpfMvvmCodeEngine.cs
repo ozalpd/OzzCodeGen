@@ -155,14 +155,27 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
         //TODO: Add base command templates here
         //
+        WpfCommandTemplate template = null;
+        if (entitySetting.GenerateCreateCommand)
+        {
+            template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Create);
+            template.IsPublic = false;
+            allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
+        }
 
-        var template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Create);
-        template.IsPublic = false;
-        allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
+        if (entitySetting.GenerateEditCommand)
+        {
+            template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Edit);
+            template.IsPublic = false;
+            allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
+        }
 
-        template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Edit);
-        template.IsPublic = false;
-        allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
+        if (entitySetting.GenerateDeleteCommand)
+        {
+            template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Delete);
+            template.IsPublic = false;
+            allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
+        }
 
         return allWritten;
     }

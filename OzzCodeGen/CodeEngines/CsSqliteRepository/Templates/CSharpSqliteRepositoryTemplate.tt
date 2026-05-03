@@ -79,7 +79,7 @@ namespace <#= CodeEngine.NamespaceName #>
                 return _<#= name.ToCamelCase() #>;
             }
         }
-        private I<#= name #> _<#= name.ToCamelCase() #>;
+        private I<#= name #>? _<#= name.ToCamelCase() #>;
 <#  } #>
 
 

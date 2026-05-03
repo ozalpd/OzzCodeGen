@@ -10,7 +10,7 @@
 <#@ import namespace="OzzUtils" #>
 <#
     var properties = GetIncludedProperties().ToList();
-    var foreignLookupEntities = GetForeignLookupEntities(IsEdit);
+    var foreignLookupEntities = GetForeignLookupEntities();
     WriteUsingNamespaces(); #>
 //----------------------------------------------------------------------------------
 //

@@ -280,7 +280,7 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
             
             #line default
             #line hidden
-            this.Write(" _");
+            this.Write("? _");
             
             #line 82 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name.ToCamelCase()));

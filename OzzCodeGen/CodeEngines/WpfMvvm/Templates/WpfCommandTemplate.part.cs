@@ -1,6 +1,5 @@
 ﻿using OzzCodeGen.CodeEngines.Mvvm;
 using OzzUtils;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +16,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
 
 
-        public string BaseCommandName => IsCreateOrEdit ? CodeEngine.BaseCommandName : CodeEngine.BaseAsyncCommandName;
+        public string BaseCommandName => CodeEngine.BaseCommandName;
 
         public string GetClassName() => EntitySetting.GetCommandName(TemplateType);
 
@@ -33,19 +32,24 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public bool IsCreateOrEdit => TemplateType == MvvmTemplate.Create || TemplateType == MvvmTemplate.Edit;
 
+        public bool HasDlgService => IsCreateOrEdit; // || TemplateType == MvvmTemplate.Collection;
+
         public string GetConstructorParameters()
         {
             var sb = new StringBuilder();
             sb.Append(EntitySetting.CommandVmTypeName);
             sb.Append(" viewModel");
-            sb.Append(", ");
-            sb.Append(CodeEngine.DialogServiceContract);
-            sb.Append(' ');
-            sb.Append(CodeEngine.DialogServiceClassName.ToCamelCase());
+            if (HasDlgService)
+            {
+                sb.Append(", ");
+                sb.Append(CodeEngine.DialogServiceContract);
+                sb.Append(' ');
+                sb.Append(CodeEngine.DialogServiceClassName.ToCamelCase());
+            }
             if (!IsCreateOrEdit)
                 return sb.ToString();
 
-            var foreignLookupEntities = GetForeignLookupEntities(isForEdit: IsEdit);
+            var foreignLookupEntities = GetForeignLookupEntities();
             int i = 0;
             if (foreignLookupEntities != null && foreignLookupEntities.Any())
             {
@@ -83,7 +87,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             if (!IsCreateOrEdit)
                 return sb.ToString();
 
-            var foreignLookupEntities = GetForeignLookupEntities(isForEdit: IsEdit);
+            var foreignLookupEntities = GetForeignLookupEntities();
             foreach (var lookupEntity in foreignLookupEntities)
             {
                 sb.Append(", _");

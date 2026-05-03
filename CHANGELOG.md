@@ -2,11 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
-## [2.3.4] - 2026-05-02
+## [2.3.4] - 2026-05-03
 
 ### Added
 - Added `CanDeleteAsync` to generated SQLite repositories for referential integrity checks before deletion.
 - Add async `AnyByForeignKey` methods for each foreign key in `CSharpSqliteRepositoryTemplate`.
+- Add full `Delete` command template logic for `WPF MVVM` entities, including `CanExecute/Execute` methods with PK validation and confirmation dialog.
 
 ### Changed
 - Replaced `StorageEntitySetting.ForeignTables` property with a `GetForeignTables()` method to fix an issue of template `CreateMsSqlDb` and to ensure up-to-date foreign key resolution. Added XML docs to `GetForeignTables()` method for clarity.

@@ -1,4 +1,5 @@
-﻿using OzzCodeGen.CodeEngines.Mvvm;
+﻿using OzzCodeGen.CodeEngines.CsDbRepository;
+using OzzCodeGen.CodeEngines.Mvvm;
 using OzzCodeGen.CodeEngines.Mvvm.Templates;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,31 +53,45 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             return $"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.LookupFolder)}";
         }
 
-        public IEnumerable<WpfMvvmEntitySetting> GetForeignLookupEntities(bool isForEdit = false)
+        public IEnumerable<WpfMvvmEntitySetting> GetForeignLookupEntities(MvvmTemplate? templateType = null)
         {
-            if (isForEdit)
-            {
-                if (_flookupEntitiesForEdit == null)
-                {
-                    _flookupEntitiesForEdit = EntitySetting.GetForeignLookupEntities(isForEdit);
-                }
+            if (templateType == null)
+                templateType = TemplateType;
 
+            if ((templateType != MvvmTemplate.Create && templateType != MvvmTemplate.Edit)
+                || EntitySetting == null)
+                return Enumerable.Empty<WpfMvvmEntitySetting>();
+
+
+            if (templateType == MvvmTemplate.Create && _flookupEntities == null)
+            {
+                _flookupEntities = EntitySetting.GetForeignLookupEntities(isForEdit: false);
+                return _flookupEntities;
+            }
+
+            if (templateType == MvvmTemplate.Edit && _flookupEntitiesForEdit == null)
+            {
+                _flookupEntitiesForEdit = EntitySetting.GetForeignLookupEntities(isForEdit: true);
                 return _flookupEntitiesForEdit;
             }
 
-            if (_flookupEntities == null)
-            {
-                _flookupEntities = EntitySetting.GetForeignLookupEntities(isForEdit);
-            }
-
-            return _flookupEntities;
+            return templateType == MvvmTemplate.Edit ? _flookupEntitiesForEdit : _flookupEntities;
         }
         private IEnumerable<WpfMvvmEntitySetting> _flookupEntities;
         private IEnumerable<WpfMvvmEntitySetting> _flookupEntitiesForEdit;
 
+        protected virtual WpfMvvmPropertySetting GetPrimaryKey()
+        {
+            if (EntitySetting == null)
+                return null;
+
+            return EntitySetting.GetInheritedSimpleProperties()
+                                .FirstOrDefault(p => p.IsKey);
+        }
+
         public List<WpfMvvmPropertySetting> GetPreselectProperties()
         {
-            if(_preselectProperties == null)
+            if (_preselectProperties == null)
             {
                 _preselectProperties = EntitySetting.GetPreselectProperties();
             }

@@ -295,12 +295,10 @@
                               ToolTip="Generate an Edit Command for the entity."
                               IsChecked="{Binding GenerateEditCommand}"/>
 
-                    <!-- Template of DeleteCommand is not ready yet, so hiding the option for now.
                     <CheckBox Grid.Row="11" VerticalAlignment="Center" Margin="4,0,0,0"
                               Content="Generate Delete Command"
                               ToolTip="Generate a Delete Command for the entity."
                               IsChecked="{Binding GenerateDeleteCommand}"/>
-                    -->
 
                     <CheckBox Grid.Row="13" VerticalAlignment="Center" Margin="4,0,0,0"
                               Content="Generate Create VM"
