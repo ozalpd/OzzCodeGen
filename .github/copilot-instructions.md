@@ -102,6 +102,9 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - **XAML resource naming:** Use generic XAML resource-related names instead of localization/.resx resources; prefer shorter names for clarity.
 - **Path and Directory usage:** Use 'Directory' mostly for full target directory paths and 'Path' for full file paths; keep property name as `XamlResourcesFolder`.
 
+## File Generation Mode
+- Use the enum name `FileGenerationMode` for generate/overwrite behavior. This enum should be reusable across code engines to maintain consistency in file handling.
+
 ## Extending This Repo
 - **Add a model provider:** Implement `IModelProvider`, wire UI selection, and set `CodeGenProject.ModelProvider`. Provide `SelectSource()` for source picking and `RefreshDataModel()` for schema sync.
 - **Add a code engine:** Create a `BaseCodeEngine` subclass with `EngineId`, `ProjectTypeName`, `CreateEntitySetting()`, `DefaultFileName`, `OpenFile()`, `RefreshFromProject()`, `GetTemplateList()`, and a `UiControl` user control under `CodeEngines/<Engine>/UI`. Register in [EngineTypes.cs](OzzCodeGen/CodeEngines/EngineTypes.cs). If the engine needs shared app-layer infrastructure output behavior, derive from `BaseAppInfraCodeEngine` instead of directly from `BaseCodeEngine`.

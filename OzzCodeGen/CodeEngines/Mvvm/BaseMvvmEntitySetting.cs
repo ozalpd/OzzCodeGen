@@ -64,122 +64,187 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     }
     private string _commandVmTypeName;
 
-    public bool GenerateCreateCommand
+    public bool GenerateAnyCommand => GenModeCreateCommand > FileGenerationMode.DoNotGenerate
+                                   || GenModeEditCommand > FileGenerationMode.DoNotGenerate
+                                   || GenModeDeleteCommand > FileGenerationMode.DoNotGenerate;
+    public FileGenerationMode GenModeCreateCommand
     {
-        get { return _generateCreateCommand ?? !EntityDefinition.Abstract; }
-        set
+        get
         {
-            if (_generateCreateCommand == value) return;
-            _generateCreateCommand = value;
-            RaisePropertyChanged(nameof(GenerateCreateCommand));
-        }
-    }
-    private bool? _generateCreateCommand;
+            if (_genModeCreateCommand == null)
+                _genModeCreateCommand = EntityDefinition.Abstract
+                                       ? FileGenerationMode.DoNotGenerate
+                                       : FileGenerationMode.GenerateIfNotExists;
 
-    public bool GenerateEditCommand
-    {
-        get { return _generateEditCommand ?? !EntityDefinition.Abstract; }
+            return _genModeCreateCommand.Value;
+        }
         set
         {
-            if (_generateEditCommand == value) return;
-            _generateEditCommand = value;
-            RaisePropertyChanged(nameof(GenerateEditCommand));
+            if (_genModeCreateCommand == value) return;
+            _genModeCreateCommand = value;
+            RaisePropertyChanged(nameof(GenModeCreateCommand));
         }
     }
-    private bool? _generateEditCommand;
+    private FileGenerationMode? _genModeCreateCommand;
 
-    public bool GenerateDeleteCommand
+    public FileGenerationMode GenModeEditCommand
     {
-        get { return _generateDeleteCommand ?? !EntityDefinition.Abstract; }
-        set
+        get
         {
-            if (_generateDeleteCommand == value) return;
-            _generateDeleteCommand = value;
-            RaisePropertyChanged(nameof(GenerateDeleteCommand));
-        }
-    }
-    private bool? _generateDeleteCommand;
+            if (_genModeEditCommand == null)
+                _genModeEditCommand = EntityDefinition.Abstract
+                                     ? FileGenerationMode.DoNotGenerate
+                                     : FileGenerationMode.GenerateIfNotExists;
 
-    public bool GenerateCreateVM
-    {
-        get { return _generateCreateVM ?? !EntityDefinition.Abstract; }
+            return _genModeEditCommand.Value;
+        }
         set
         {
-            if (_generateCreateVM == value) return;
-            _generateCreateVM = value;
-            RaisePropertyChanged(nameof(GenerateCreateVM));
+            if (_genModeEditCommand == value) return;
+            _genModeEditCommand = value;
+            RaisePropertyChanged(nameof(GenModeEditCommand));
         }
     }
-    private bool? _generateCreateVM;
+    private FileGenerationMode? _genModeEditCommand;
 
-    public bool GenerateEditVM
+    public FileGenerationMode GenModeDeleteCommand
     {
-        get { return _generateEditVM ?? !EntityDefinition.Abstract; }
+        get
+        {
+            if (_genModeDeleteCommand == null)
+                _genModeDeleteCommand = EntityDefinition.Abstract
+                                       ? FileGenerationMode.DoNotGenerate
+                                       : FileGenerationMode.GenerateIfNotExists;
+            return _genModeDeleteCommand.Value;
+        }
         set
         {
-            if (_generateEditVM == value) return;
-            _generateEditVM = value;
-            RaisePropertyChanged(nameof(GenerateEditVM));
+            if (_genModeDeleteCommand == value) return;
+            _genModeDeleteCommand = value;
+            RaisePropertyChanged(nameof(GenModeDeleteCommand));
         }
     }
-    private bool? _generateEditVM;
+    private FileGenerationMode? _genModeDeleteCommand;
 
-    public bool GenerateCollectionVM
+    public FileGenerationMode GenModeCreateVM
     {
-        get { return _generateCollectionVM ?? !EntityDefinition.Abstract; }
+        get
+        {
+            if (_genModeCreateVM == null)
+                _genModeCreateVM = EntityDefinition.Abstract
+                                 ? FileGenerationMode.DoNotGenerate
+                                 : FileGenerationMode.GenerateIfNotExists;
+            return _genModeCreateVM.Value;
+        }
         set
         {
-            if (_generateCollectionVM == value) return;
-            _generateCollectionVM = value;
-            RaisePropertyChanged(nameof(GenerateCollectionVM));
+            if (_genModeCreateVM == value) return;
+            _genModeCreateVM = value;
+            RaisePropertyChanged(nameof(GenModeCreateVM));
         }
     }
-    private bool? _generateCollectionVM;
+    private FileGenerationMode? _genModeCreateVM;
 
-    public bool GenerateLookupService
+    public FileGenerationMode GenModeEditVM
     {
-        get { return _generateLookupService ?? false; }
+        get
+        {
+            if (_genModeEditVM == null)
+                _genModeEditVM = EntityDefinition.Abstract
+                               ? FileGenerationMode.DoNotGenerate
+                               : FileGenerationMode.GenerateIfNotExists;
+            return _genModeEditVM.Value;
+        }
         set
         {
-            if (_generateLookupService == value) return;
-            _generateLookupService = value;
-            RaisePropertyChanged(nameof(GenerateLookupService));
+            if (_genModeEditVM == value) return;
+            _genModeEditVM = value;
+            RaisePropertyChanged(nameof(GenModeEditVM));
         }
     }
-    private bool? _generateLookupService;
+    private FileGenerationMode? _genModeEditVM;
 
-    public bool GenerateCreateView
+    public FileGenerationMode GenModeCollectionVM
     {
-        get { return _generateCreateView ?? !EntityDefinition.Abstract; }
-        set
+        get
         {
-            if (_generateCreateView == value) return;
-            _generateCreateView = value;
-            RaisePropertyChanged(nameof(GenerateCreateView));
-        }
-    }
-    private bool? _generateCreateView;
+            if (_genModeCollectionVM == null)
+                _genModeCollectionVM = EntityDefinition.Abstract
+                                     ? FileGenerationMode.DoNotGenerate
+                                     : FileGenerationMode.GenerateIfNotExists;
 
-    public bool GenerateEditView
-    {
-        get { return _generateEditView ?? !EntityDefinition.Abstract; }
+            return _genModeCollectionVM.Value;
+        }
         set
         {
-            if (_generateEditView == value) return;
-            _generateEditView = value;
-            RaisePropertyChanged(nameof(GenerateEditView));
+            if (_genModeCollectionVM == value) return;
+            _genModeCollectionVM = value;
+            RaisePropertyChanged(nameof(GenModeCollectionVM));
         }
     }
-    private bool? _generateEditView;
+    private FileGenerationMode? _genModeCollectionVM;
+
+
+    public FileGenerationMode GenModeLookupService
+    {
+        get { return _genModeLookupService ?? FileGenerationMode.DoNotGenerate; }
+        set
+        {
+            if (_genModeLookupService == value) return;
+            _genModeLookupService = value;
+            RaisePropertyChanged(nameof(GenModeLookupService));
+        }
+    }
+    private FileGenerationMode? _genModeLookupService;
+
+    public FileGenerationMode GenModeCreateView
+    {
+        get
+        {
+            if (_genModeCreateView == null)
+                _genModeCreateView = EntityDefinition.Abstract
+                                   ? FileGenerationMode.DoNotGenerate
+                                   : FileGenerationMode.GenerateIfNotExists;
+
+            return _genModeCreateView.Value;
+        }
+        set
+        {
+            if (_genModeCreateView == value) return;
+            _genModeCreateView = value;
+            RaisePropertyChanged(nameof(GenModeCreateView));
+        }
+    }
+    private FileGenerationMode? _genModeCreateView;
+
+    public FileGenerationMode GenModeEditView
+    {
+        get
+        {
+            if (_genModeEditView == null)
+                _genModeEditView = EntityDefinition.Abstract
+                                 ? FileGenerationMode.DoNotGenerate
+                                 : FileGenerationMode.GenerateIfNotExists;
+
+            return _genModeEditView.Value;
+        }
+        set
+        {
+            if (_genModeEditView == value) return;
+            _genModeEditView = value;
+            RaisePropertyChanged(nameof(GenModeEditView));
+        }
+    }
+    private FileGenerationMode? _genModeEditView;
 
 
     [XmlIgnore]
     [JsonIgnore]
-    public bool IsInCreateDialogService => GenerateCreateView && GenerateCreateCommand;
+    public bool IsInCreateDialogService => GenModeCreateView > FileGenerationMode.DoNotGenerate && GenModeCreateCommand > FileGenerationMode.DoNotGenerate;
 
     [XmlIgnore]
     [JsonIgnore]
-    public bool IsInEditDialogService => GenerateEditView && GenerateEditCommand;
+    public bool IsInEditDialogService => GenModeEditView > FileGenerationMode.DoNotGenerate && GenModeEditCommand > FileGenerationMode.DoNotGenerate;
 
 
     public string GetCommandsNamespaceName()

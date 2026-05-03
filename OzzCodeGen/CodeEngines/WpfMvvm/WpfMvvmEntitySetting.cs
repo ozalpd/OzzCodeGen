@@ -45,14 +45,14 @@ public class WpfMvvmEntitySetting : BaseMvvmEntitySetting<WpfMvvmPropertySetting
             }
 
             return CodeEngine.EntitySettings.OfType<WpfMvvmEntitySetting>()
-                                            .Where(e => e.GenerateLookupService
+                                            .Where(e => e.GenModeLookupService > FileGenerationMode.DoNotGenerate 
                                                      && complexTypeNamesForEdit.Contains(e.EntityDefinition.Name))
                                             .OrderBy(e => e.Name)
                                             .ToList();
         }
 
         return CodeEngine.EntitySettings.OfType<WpfMvvmEntitySetting>()
-                                        .Where(e => e.GenerateLookupService
+                                        .Where(e => e.GenModeLookupService > FileGenerationMode.DoNotGenerate
                                                  && complexTypeNames.Contains(e.EntityDefinition.Name))
                                         .OrderBy(e => e.Name)
                                         .ToList();

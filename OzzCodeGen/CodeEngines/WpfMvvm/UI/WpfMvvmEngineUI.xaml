@@ -3,12 +3,14 @@
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                     xmlns:ui="clr-namespace:OzzCodeGen.UI"
+                     xmlns:System="clr-namespace:System;assembly=mscorlib"
 					 xmlns:Converters="clr-namespace:OzzUtils.Wpf.Converters;assembly=OzzUtils"
+                     xmlns:ui="clr-namespace:OzzCodeGen.UI" xmlns:CodeGen="clr-namespace:OzzCodeGen"
                      mc:Ignorable="d"
-                     d:DesignHeight="680" d:DesignWidth="1800">
+                     d:DesignHeight="720" d:DesignWidth="1800">
     <UserControl.Resources>
         <ResourceDictionary>
+            <Converters:EnumDescriptionConverter x:Key="enumConverter" />
             <Style x:Key="wpfMvvmTextBoxStyle" TargetType="TextBox"
                    BasedOn="{StaticResource textBoxStyle}">
                 <Setter Property="Background" Value="#FFFFFAE0" />
@@ -27,6 +29,11 @@
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="Background" Value="#FFFFFAA8" />
             </Style>
+            <ObjectDataProvider x:Key="generateMode" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="CodeGen:FileGenerationMode" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/OzzCodeGen;component/Resources/BootstrapIcons.xaml" />
                 <ResourceDictionary Source="/OzzCodeGen;component/Resources/Styles.xaml" />
@@ -53,17 +60,17 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="28"/>
-                <RowDefinition Height="28"/>
-                <RowDefinition Height="28"/>
-                <RowDefinition Height="28"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.RowSpan="4">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="42"/>
                     <RowDefinition Height="36"/>
-                    <RowDefinition Height="26"/>
+                    <RowDefinition Height="42"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Button x:Name="btnRenderTemplate"
                         Content="Render Template"
@@ -87,7 +94,7 @@
 
             <TextBlock Grid.Column="1" Text="Template:" VerticalAlignment="Center" Margin="8,0,0,0"/>
             <ComboBox Grid.Column="2" Grid.ColumnSpan="2"
-                      Margin="4,0,4,0"
+                      Style="{StaticResource comboBoxStyle}"
                       ItemsSource="{Binding Templates}"
                       SelectedItem="{Binding SelectedTemplate, Mode=TwoWay}"/>
 
@@ -230,112 +237,186 @@
                 <Grid Grid.Column="1" Margin="8,0,0,0" Background="#FFFDEBC4"
                       DataContext="{Binding SelectedItem, ElementName=grdEntitySettings}">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" MaxWidth="320"/>
-                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*" MinWidth="140" MaxWidth="200"/>
+                        <ColumnDefinition Width="6*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="26"/>
-                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="26"/>
                         <RowDefinition Height="32"/>
-                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="26"/>
                         <RowDefinition Height="32"/>
-                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="26"/>
                         <RowDefinition Height="32"/>
-                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="26"/>
                         <RowDefinition Height="12"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
-                        <RowDefinition Height="12"/>
+                        <RowDefinition Height="8"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="8"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="8"/>
                         <RowDefinition Height="24"/>
-                        <RowDefinition Height="12"/>
                         <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="12"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="12"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="SubFolder:"
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="SubFolder:"
                                ToolTip="SubFolder for the entity, if this is empty or whitespace, generated files will be placed in the related folders."
                                Style="{StaticResource entGridTextBlockStyle}"/>
-                    <TextBox Grid.Row="1" Text="{Binding SubFolder, Mode=TwoWay}"
+                    <TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding SubFolder, Mode=TwoWay}"
                              ToolTip="SubFolder for the entity, if this is empty or whitespace, generated files will be placed in the related folders."
                              Style="{StaticResource entGridTextBoxStyle}"/>
 
-                    <TextBlock Grid.Row="2" Text="Repository Name:"
+                    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="Repository Name:"
                                ToolTip="Name of the repository for the entity"
                                Style="{StaticResource entGridTextBlockStyle}"/>
-                    <TextBox Grid.Row="3" Text="{Binding RepositoryName, Mode=TwoWay}"
+                    <TextBox Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding RepositoryName, Mode=TwoWay}"
                              ToolTip="Name of the repository for the entity"
                              Style="{StaticResource entGridTextBoxStyle}"/>
 
-                    <TextBlock Grid.Row="4" Text="Command ViewModel Type Name:"
+                    <TextBlock Grid.Row="4" Grid.ColumnSpan="2" Text="Command ViewModel Type Name:"
                                ToolTip="Name of the command ViewModel for the entity"
                                Style="{StaticResource entGridTextBlockStyle}"/>
-                    <TextBox Grid.Row="5" Text="{Binding CommandVmTypeName, Mode=TwoWay}"
+                    <TextBox Grid.Row="5" Grid.ColumnSpan="2" Text="{Binding CommandVmTypeName, Mode=TwoWay}"
                              ToolTip="Name of the command ViewModel for the entity"
                              Style="{StaticResource entGridTextBoxStyle}"/>
-                    <TextBlock Grid.Row="6" Text="Command ViewModel Namespace:"
+                    <TextBlock Grid.Row="6" Grid.ColumnSpan="2" Text="Command ViewModel Namespace:"
                                ToolTip="Namespace of the command ViewModel for the entity"
                                Style="{StaticResource entGridTextBlockStyle}"/>
-                    <TextBox Grid.Row="7" Text="{Binding CommandVmNamespace, Mode=TwoWay}"
-                             ToolTip="Name of the command ViewModel for the entity"
+                    <TextBox Grid.Row="7" Grid.ColumnSpan="2" Text="{Binding CommandVmNamespace, Mode=TwoWay}"
+                             ToolTip="Namespace of the command ViewModel for the entity"
                              Style="{StaticResource entGridTextBoxStyle}"/>
 
 
-                    <CheckBox Grid.Row="9" Style="{StaticResource entGridCheckBoxStyle}"
-                              Content="Generate Create Command"
-                              ToolTip="Generate a Create Command for the entity."
-                              IsChecked="{Binding GenerateCreateCommand}"/>
+                    <TextBlock Grid.Row="9" Text="Create Command"
+                               ToolTip="Generate Mode for Create Command for the entity."
+                               Style="{StaticResource rightAlignedTextBlockStyle}"/>
+                    <ComboBox Grid.Column="1" Grid.Row="9" Style="{StaticResource comboBoxStyle}"
+                              ItemsSource="{Binding Source={StaticResource generateMode}}"
+                              SelectedItem="{Binding GenModeCreateCommand}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-                    <CheckBox Grid.Row="10" Style="{StaticResource entGridCheckBoxStyle}"
-                              Content="Generate Edit Command"
-                              ToolTip="Generate an Edit Command for the entity."
-                              IsChecked="{Binding GenerateEditCommand}"/>
+                    <TextBlock Grid.Row="10" Text="Edit Command"
+                               ToolTip="Generate Mode forn Edit Command for the entity."
+                               Style="{StaticResource rightAlignedTextBlockStyle}"/>
+                    <ComboBox Grid.Column="1" Grid.Row="10" Style="{StaticResource comboBoxStyle}"
+                              ItemsSource="{Binding Source={StaticResource generateMode}}"
+                              SelectedItem="{Binding GenModeEditCommand}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-                    <CheckBox Grid.Row="11" Style="{StaticResource entGridCheckBoxStyle}"
-                              Content="Generate Delete Command"
-                              ToolTip="Generate a Delete Command for the entity."
-                              IsChecked="{Binding GenerateDeleteCommand}"/>
+                    <TextBlock Grid.Row="11" Text="Delete Command"
+                               ToolTip="Generate Mode for Delete Command for the entity."
+                               Style="{StaticResource rightAlignedTextBlockStyle}"/>
+                    <ComboBox Grid.Column="1" Grid.Row="11" Style="{StaticResource comboBoxStyle}"
+                              ItemsSource="{Binding Source={StaticResource generateMode}}"
+                              SelectedItem="{Binding GenModeDeleteCommand}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-                    <CheckBox Grid.Row="13" Style="{StaticResource entGridCheckBoxStyle}"
-                              Content="Generate Create VM"
-                              ToolTip="Generate a Create ViewModel for the entity."
-                              IsChecked="{Binding GenerateCreateVM}"/>
+                    <TextBlock Grid.Row="13" Text="Create VM"
+                               ToolTip="Generate Mode for Create ViewModel for the entity."
+                               Style="{StaticResource rightAlignedTextBlockStyle}"/>
+                    <ComboBox Grid.Column="1" Grid.Row="13" Style="{StaticResource comboBoxStyle}"
+                              ItemsSource="{Binding Source={StaticResource generateMode}}"
+                              SelectedItem="{Binding GenModeCreateVM}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-                    <CheckBox Grid.Row="14" Style="{StaticResource entGridCheckBoxStyle}"
-                              Content="Generate Edit VM"
-                              ToolTip="Generate an Edit ViewModel for the entity."
-                              IsChecked="{Binding GenerateEditVM}"/>
+                    <TextBlock Grid.Row="14" Text="Edit VM"
+                               ToolTip="Generate Mode for Edit ViewModel for the entity."
+                               Style="{StaticResource rightAlignedTextBlockStyle}"/>
+                    <ComboBox Grid.Column="1" Grid.Row="14" Style="{StaticResource comboBoxStyle}"
+                              ItemsSource="{Binding Source={StaticResource generateMode}}"
+                              SelectedItem="{Binding GenModeEditVM}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-                    <CheckBox Grid.Row="15" Style="{StaticResource entGridCheckBoxStyle}"
-                              Content="Generate Collection VM"
-                              ToolTip="Generate a Collection ViewModel for the entity."
-                              IsChecked="{Binding GenerateCollectionVM}"/>
+                    <TextBlock Grid.Row="15" Text="Collection VM:"
+                               ToolTip="Generate Mode for Collection ViewModel for the entity."
+                               Style="{StaticResource rightAlignedTextBlockStyle}"/>
+                    <ComboBox Grid.Column="1" Grid.Row="15" Style="{StaticResource comboBoxStyle}"
+                              ItemsSource="{Binding Source={StaticResource generateMode}}"
+                              SelectedItem="{Binding GenModeCollectionVM}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-                    <CheckBox Grid.Row="17" Style="{StaticResource entGridCheckBoxStyle}"
-                              Content="Generate Create View"
-                              ToolTip="Generate a Create View for the entity."
-                              IsChecked="{Binding GenerateCreateView}"/>
+                    <TextBlock Grid.Row="17" Text="Create View"
+                               ToolTip="Generate Mode for Create View for the entity."
+                               Style="{StaticResource rightAlignedTextBlockStyle}"/>
+                    <ComboBox Grid.Column="1" Grid.Row="17" Style="{StaticResource comboBoxStyle}"
+                              ItemsSource="{Binding Source={StaticResource generateMode}}"
+                              SelectedItem="{Binding GenModeCreateView}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-                    <CheckBox Grid.Row="18" Style="{StaticResource entGridCheckBoxStyle}"
-                              Content="Generate Edit View"
-                              ToolTip="Generate an Edit View for the entity."
-                              IsChecked="{Binding GenerateEditView}"/>
+                    <TextBlock Grid.Row="18" Text="Edit View"
+                               ToolTip="Generate Mode for Edit View for the entity."
+                               Style="{StaticResource rightAlignedTextBlockStyle}"/>
+                    <ComboBox Grid.Column="1" Grid.Row="18" Style="{StaticResource comboBoxStyle}"
+                              ItemsSource="{Binding Source={StaticResource generateMode}}"
+                              SelectedItem="{Binding GenModeEditView}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-                    <CheckBox Grid.Row="20" Style="{StaticResource entGridCheckBoxStyle}"
-                              Content="Generate Lookup Service"
-                              IsChecked="{Binding GenerateLookupService}"/>
+                    <TextBlock Grid.Row="20" Text="Lookup Service"
+                               ToolTip="Generate Mode for Lookup Service for the entity."
+                               Style="{StaticResource rightAlignedTextBlockStyle}"/>
+                    <ComboBox Grid.Column="1" Grid.Row="20" Margin="4,0"
+                              ItemsSource="{Binding Source={StaticResource generateMode}}"
+                              SelectedItem="{Binding GenModeLookupService}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
 
-                    <GridSplitter Grid.Column="1" Grid.RowSpan="26" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" ResizeDirection="Columns"/>
-                    <DataGrid x:Name="grdPropertySettings" Grid.Column="1" Grid.RowSpan="26" Margin="8,0,0,0" Background="#FFFDEBC4"
+                    <GridSplitter Grid.Column="2" Grid.RowSpan="26" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" ResizeDirection="Columns"/>
+                    <DataGrid x:Name="grdPropertySettings" Grid.Column="2" Grid.RowSpan="26" Margin="8,0,0,0" Background="#FFFDEBC4"
                               ItemsSource="{Binding Properties, Mode=TwoWay}"
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"

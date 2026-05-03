@@ -141,8 +141,9 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
     private bool RenderCommands(WpfMvvmEntitySetting entitySetting)
     {
-        if (!entitySetting.GenerateEditCommand)
+        if (entitySetting == null || entitySetting.GenerateAnyCommand == false)
             return true;
+
         bool allWritten = true;
 
         var svcTmplate = new WpfDialogServcTemplate(this, isInterface: true);
@@ -157,21 +158,21 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         allWritten &= RenderTemplate(baseCmdTemplate, TargetInfrastructureDirectory, CommandFolder);
 
         WpfCommandTemplate template = null;
-        if (entitySetting.GenerateCreateCommand)
+        if (entitySetting.GenModeCreateCommand > FileGenerationMode.DoNotGenerate)
         {
             template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Create);
             template.IsPublic = false;
             allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
         }
 
-        if (entitySetting.GenerateEditCommand)
+        if (entitySetting.GenModeEditCommand > FileGenerationMode.DoNotGenerate)
         {
             template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Edit);
             template.IsPublic = false;
             allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
         }
 
-        if (entitySetting.GenerateDeleteCommand)
+        if (entitySetting.GenModeDeleteCommand > FileGenerationMode.DoNotGenerate)
         {
             template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Delete);
             template.IsPublic = false;
@@ -192,19 +193,19 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
     {
         bool allWritten = true;
 
-        if (entitySetting.GenerateCreateVM)
+        if (entitySetting.GenModeCreateVM > FileGenerationMode.DoNotGenerate)
         {
             var template = new WpfViewModelTemplate(entitySetting, MvvmTemplate.Create);
             allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
         }
 
-        if (entitySetting.GenerateEditVM)
+        if (entitySetting.GenModeEditVM > FileGenerationMode.DoNotGenerate)
         {
             var template = new WpfViewModelTemplate(entitySetting, MvvmTemplate.Edit);
             allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
         }
 
-        if (entitySetting.GenerateLookupService)
+        if (entitySetting.GenModeLookupService > FileGenerationMode.DoNotGenerate)
         {
             bool targetInfra = !string.IsNullOrEmpty(InfrastructureFolder);
             var template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.Interface);
@@ -227,13 +228,14 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
     {
         bool allWritten = true;
 
-        if (entitySetting.GenerateCreateView)
+        if (entitySetting.GenModeCreateView > FileGenerationMode.DoNotGenerate)
         {
             //var template = new WpfMvvmViewXamlTemplate(entitySetting, isEdit: false);
             //var fileName = Path.Combine(TargetDirectory, ViewFolder, template.GetDefaultFileName());
             //allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
         }
-        if (entitySetting.GenerateEditView)
+
+        if (entitySetting.GenModeEditView > FileGenerationMode.DoNotGenerate)
         {
             //var template = new WpfMvvmViewXamlTemplate(entitySetting, isEdit: true);
             //var fileName = Path.Combine(TargetDirectory, ViewFolder, template.GetDefaultFileName());
