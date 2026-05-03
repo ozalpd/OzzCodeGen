@@ -3,8 +3,8 @@
 OzzCodeGen is a pluggable code generator library with a WPF UI, OzzCodeGen.Wpf. OzzLocalization is a companion library (with its own UI OzzLocalization.Wpf) used to create and manage translated strings that OzzCodeGen can consume during code generation.
 
 ## Current Versions
-- `OzzCodeGen`: `2.3.2`
-- `OzzCodeGen.Wpf`: `2.3.2`
+- `OzzCodeGen`: `2.3.4`
+- `OzzCodeGen.Wpf`: `2.3.4`
 - `OzzLocalization`: `2.1.6`
 - `OzzLocalization.Wpf`: `2.1.6`
 
@@ -14,8 +14,9 @@ See [`CHANGELOG.md`](CHANGELOG.md) for release history.
 
 ## Latest Highlights (2.3.4)
 - Added `CanDeleteAsync` to generated SQLite repositories for referential integrity checks before deletion.
-- Add async `AnyByForeignKey` methods for each foreign key in `CSharpSqliteRepositoryTemplate`.
-- Add full `Delete` command template logic for `WPF MVVM` entities, including `CanExecute/Execute` methods with PK validation and confirmation dialog.
+- Added async `AnyByForeignKey` methods for each foreign key in `CSharpSqliteRepositoryTemplate`.
+- Added full `Delete` command template logic for `WPF MVVM` entities, including `CanExecute/Execute` methods with PK validation and confirmation dialog.
+- Introduced `WpfBaseCommandTemplate` (T4, .part.cs, .cs) to generate an abstract base command class implementing `ICommand` for `WPF MVVM`.
 - Replaced `StorageEntitySetting.ForeignTables` property with a `GetForeignTables()` method to fix an issue of template `CreateMsSqlDb` and to ensure up-to-date foreign key resolution. Added XML docs to `GetForeignTables()` method for clarity.
 - Refactored repository initialization to support both autoloaded and externally referenced repositories. Improved code generation for parameter lists, update statements, and column arrays.
 

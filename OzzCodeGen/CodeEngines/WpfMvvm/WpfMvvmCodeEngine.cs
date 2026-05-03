@@ -153,8 +153,9 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         svcTmplate.IsPublic = false;
         allWritten &= RenderTemplate(svcTmplate, TargetDirectory, ServicesFolder);
 
-        //TODO: Add base command templates here
-        //
+        var baseCmdTemplate = new WpfBaseCommandTemplate(this);
+        allWritten &= RenderTemplate(baseCmdTemplate, TargetInfrastructureDirectory, CommandFolder);
+
         WpfCommandTemplate template = null;
         if (entitySetting.GenerateCreateCommand)
         {

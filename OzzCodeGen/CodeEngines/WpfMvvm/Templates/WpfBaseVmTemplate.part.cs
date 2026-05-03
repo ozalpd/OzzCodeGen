@@ -1,5 +1,6 @@
 ﻿using OzzCodeGen.CodeEngines.Mvvm;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {
@@ -83,6 +84,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                 case BaseVM.BaseViewModel:
                     namespaces.Add("System.ComponentModel");
                     break;
+
                 case BaseVM.DataErrorInfoVM:
                     if (GenerateValidator)
                     {
@@ -91,16 +93,19 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                     namespaces.Add("System.ComponentModel");
                     namespaces.Add("System.Collections");
                     break;
+
                 case BaseVM.CollectionVM:
                     namespaces.Add("System.Collections.ObjectModel");
                     break;
+
                 case BaseVM.CreateEditVM:
                     break;
+
                 default:
                     break;
             }
 
-            return namespaces;
+            return namespaces.OrderBy(ns => ns).ToList();
         }
     }
 }
