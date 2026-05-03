@@ -369,11 +369,11 @@ namespace ");
             this.Write(")\r\n        {\r\n            var dialog = new ");
             
             #line 76 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(entity.GetViewName(MvvmTemplate.Create)));
             
             #line default
             #line hidden
-            this.Write("Create(");
+            this.Write("(");
             
             #line 76 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", allParams)));
@@ -417,11 +417,11 @@ namespace ");
             this.Write(")\r\n        {\r\n            var dialog = new ");
             
             #line 93 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(entity.GetViewName(MvvmTemplate.Edit)));
             
             #line default
             #line hidden
-            this.Write("Edit(");
+            this.Write("(");
             
             #line 93 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", allParams)));

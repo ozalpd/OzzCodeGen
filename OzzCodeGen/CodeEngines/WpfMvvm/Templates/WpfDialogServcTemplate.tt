@@ -73,7 +73,7 @@ namespace <#= CodeEngine.ServicesNamespaceName #>
         /// <inheritdoc />
         public (bool IsConfirmed, <#= entity.Name #>? <#= entity.Name #>) Show<#= entity.Name #>CreateDialog(<#= GetParamsDeclaration(entity) #>)
         {
-            var dialog = new <#= entity.Name #>Create(<#= string.Join(", ", allParams) #>)
+            var dialog = new <#= entity.GetViewName(MvvmTemplate.Create) #>(<#= string.Join(", ", allParams) #>)
             {
                 Owner = owner
             };
@@ -90,7 +90,7 @@ namespace <#= CodeEngine.ServicesNamespaceName #>
         /// <inheritdoc />
         public (bool IsConfirmed, bool IsDirty) Show<#= entity.Name #>EditDialog(<#= GetParamsDeclaration(entity, isEdit: true) #>)
         {
-            var dialog = new <#= entity.Name #>Edit(<#= string.Join(", ", allParams) #>)
+            var dialog = new <#= entity.GetViewName(MvvmTemplate.Edit) #>(<#= string.Join(", ", allParams) #>)
             {
                 Owner = owner
             };

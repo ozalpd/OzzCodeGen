@@ -20,7 +20,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             {
                 return CodeEngine.CommandNamespaceName;
             }
-            return $"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.BaseCommandNamespaceName)}";
+            return GetFolderToNamespace(CodeEngine.BaseCommandNamespaceName);
         }
 
         public override List<string> DefaultUsingNamespaceList()
