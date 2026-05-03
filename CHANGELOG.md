@@ -26,6 +26,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Refactored repository initialization to support both autoloaded and externally referenced repositories. Improved code generation for parameter lists, update statements, and column arrays.
 - Centralized referencing property discovery and clarified navigation handling.
 - Updated numeric checks, added null/empty guards, enhanced XML docs, and performed minor cleanup in storage engine and entity settings.
+- Add and apply new TextBox/CheckBox styles for clarity in Storage and WpfMvvm engine UIs
+- Reorganize WpfMvvm UI layout; add XAML Resources Folder field and update namespace/folder settings
+- Rename `UseResourceFiles` to `UseLocalizedResx` and update bindings
+- Add `XamlResourcesFolder` property and computed directory to WpfMvvm engine
+- Adjust base TextBox style margins for consistency
 
 ## [2.3.3] - 2026-04-30
 

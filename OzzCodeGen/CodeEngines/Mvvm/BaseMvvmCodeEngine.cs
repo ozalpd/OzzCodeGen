@@ -173,17 +173,21 @@ for Commands: {TargetCommandDirectory}";
     [JsonIgnore]
     public string TargetViewModelDirectory => Path.GetFullPath(Path.Combine(TargetDirectory, ViewModelFolder));
 
-    public bool UseResourceFiles
+    [XmlIgnore]
+    [JsonIgnore]
+    public string TargetXamlResourcesDirectory => Path.GetFullPath(Path.Combine(TargetDirectory, XamlResourcesFolder));
+
+    public bool UseLocalizedResx
     {
-        get { return _useResourceFiles ?? false; }
+        get { return _useLocalizedResx ?? false; }
         set
         {
-            if (_useResourceFiles == value) return;
-            _useResourceFiles = value;
-            RaisePropertyChanged(nameof(UseResourceFiles));
+            if (_useLocalizedResx == value) return;
+            _useLocalizedResx = value;
+            RaisePropertyChanged(nameof(UseLocalizedResx));
         }
     }
-    private bool? _useResourceFiles;
+    private bool? _useLocalizedResx;
 
     public string ViewFolder
     {
@@ -218,6 +222,19 @@ for Commands: {TargetCommandDirectory}";
     [XmlIgnore]
     [JsonIgnore]
     public string ViewNamespaceName => $"{NamespaceName}.Views";
+
+    public string XamlResourcesFolder
+    {
+        get { return _resourcesFolder ?? "Resources"; }
+        set
+        {
+            if (_resourcesFolder == value) return;
+            _resourcesFolder = value;
+            RaisePropertyChanged(nameof(XamlResourcesFolder));
+            RaisePropertyChanged(nameof(TargetXamlResourcesDirectory));
+        }
+    }
+    private string _resourcesFolder;
 
 
 

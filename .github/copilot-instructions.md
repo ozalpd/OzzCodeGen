@@ -99,6 +99,8 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - **Property names:** Use clear category-style names for helper flags and generated-setting properties, such as `IsSearchParameter`, `IsFractionalNumeric`, and `IsIntegerNumeric`, instead of ambiguous names like `IsDecimalNumeric`.
 - **Naming conventions for numeric type helper properties:** Use `IsDecimal` for the C# `decimal` type specifically, `IsFractionalNumeric` for `float`/`double`/`decimal`, `IsIntegerNumeric` for integer types, `IsDouble` for `double`, and `IsFloat` for `float`.
 - **Base engine naming:** Use short base engine names for infrastructure-related generation that can apply to C#/TypeScript style languages but should not imply SQL engine applicability. Prefer `BaseAppInfraCodeEngine` for this role.
+- **XAML resource naming:** Use generic XAML resource-related names instead of localization/.resx resources; prefer shorter names for clarity.
+- **Path and Directory usage:** Use 'Directory' mostly for full target directory paths and 'Path' for full file paths; keep property name as `XamlResourcesFolder`.
 
 ## Extending This Repo
 - **Add a model provider:** Implement `IModelProvider`, wire UI selection, and set `CodeGenProject.ModelProvider`. Provide `SelectSource()` for source picking and `RefreshDataModel()` for schema sync.
@@ -115,7 +117,7 @@ Use this guide to be productive quickly in this repo. Focus on the concrete patt
 - For app-language engines that generate shared base/contracts infrastructure, prefer `BaseAppInfraCodeEngine` so `InfrastructureFolder`/`TargetInfrastructureDirectory` behavior stays centralized and consistent.
 - For repository engines, build on `CsDbRepository` base classes and keep contract (interface) generation configurable with separate folder/namespace settings.
 - If the engine uses T4 templates, include the `.tt` and generated companions in `OzzCodeGen.csproj` with the same `DependentUpon` pattern used by existing engines. Scaffolded `.tt` files are acceptable while generation behavior is still being completed.
-- For SQLite repository generation
+- For SQLite repository generation.
 - For storage DDL generation, keep index generation helpers centralized and ensure both MSSQL and SQLite templates support composite-index fields consistently.
 
 ## Testing Strategy

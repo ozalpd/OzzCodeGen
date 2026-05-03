@@ -40,7 +40,57 @@ namespace <#= EntitySetting.GetCommandsNamespaceName() #>
             _<#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #> = <#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #>;
 <#  } #>
         }
-<#  if (TemplateType == MvvmTemplate.Delete) {
+<#  // Create Command Begins Here
+    if (TemplateType == MvvmTemplate.Create) {
+        var preselectProperties = GetPreselectProperties();
+#>
+
+        public override async void Execute(object? parameter)
+        {
+            if (parameter is not Window owner)
+                return;
+
+            try
+            {
+                var dialogResult = _windowDialogService.Show<#= EntitySetting.Name #>CreateDialog(<#= GetSvcShowParameters() #>);
+
+                if (dialogResult.IsConfirmed && dialogResult.<#= EntitySetting.Name #> is not null)
+                {
+                    var <#= EntitySetting.Name.ToCamelCase() #> = dialogResult.<#= EntitySetting.Name #>;
+                    await _viewModel.Save<#= EntitySetting.Name #>Async(<#= EntitySetting.Name.ToCamelCase() #>);
+                    await _viewModel.Load<#= EntitySetting.Name.Pluralize() #>Async();
+
+                    _viewModel.Selected<#= EntitySetting.Name #> = _viewModel.<#= EntitySetting.Name.Pluralize() #>.FirstOrDefault(x => x.Id == <#= EntitySetting.Name.ToCamelCase() #>.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                string innerExceptionMsg = ex.InnerException != null ? $"\n{ex.InnerException.Message}" : "";
+                MessageBox.Show($"{MessageStrings.SaveOperationFailed}\n{ex.Message}{innerExceptionMsg}",
+                    CommonStrings.AppTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+<#      if (preselectProperties.Any()) { #>
+            finally
+            {
+<#          foreach (var property in preselectProperties) { #>
+                Preselected<#= property.Name #> = null;
+<#          } #>
+            }
+<#      } #>
+        }
+<#      foreach (var property in preselectProperties) { #>
+
+        /// <summary>
+        /// Before executing the command, we can set this property to have the <#= property.Name.ToCamelCase() #> preselected in the <#= EntitySetting.Name #> creation dialog.
+        /// This is useful when you want to create a <#= EntitySetting.Name #> for a specific <#= property.Name.ToCamelCase() #> and want to save the user from having to select it manually.
+        /// </summary>
+        public <#= property.GetTypeName() #>? Preselected<#= property.Name #> { get; set; } = null;
+<#      } #>
+<#  } #>
+<#  // Delete Command Begins Here
+    if (TemplateType == MvvmTemplate.Delete) {
         var pkey = GetPrimaryKey();
 #>
 
@@ -92,7 +142,8 @@ namespace <#= EntitySetting.GetCommandsNamespaceName() #>
             await _viewModel.Load<#= EntitySetting.Name.Pluralize() #>Async();
         }
 <#  } #>
-<#  if (IsEdit) { #>
+<#  // Edit Command Begins Here
+    if (IsEdit) { #>
 
         public override bool CanExecute(object? parameter)
         {
@@ -133,53 +184,6 @@ namespace <#= EntitySetting.GetCommandsNamespaceName() #>
                     MessageBoxImage.Error);
             }
         }
-<#  } else if (IsCreateOrEdit) {
-        var preselectProperties = GetPreselectProperties();
-    #>
-
-        public override async void Execute(object? parameter)
-        {
-            if (parameter is not Window owner)
-                return;
-
-            try
-            {
-                var dialogResult = _windowDialogService.Show<#= EntitySetting.Name #>CreateDialog(<#= GetSvcShowParameters() #>);
-
-                if (dialogResult.IsConfirmed && dialogResult.<#= EntitySetting.Name #> is not null)
-                {
-                    var <#= EntitySetting.Name.ToCamelCase() #> = dialogResult.<#= EntitySetting.Name #>;
-                    await _viewModel.Save<#= EntitySetting.Name #>Async(<#= EntitySetting.Name.ToCamelCase() #>);
-                    await _viewModel.Load<#= EntitySetting.Name.Pluralize() #>Async();
-
-                    _viewModel.Selected<#= EntitySetting.Name #> = _viewModel.<#= EntitySetting.Name.Pluralize() #>.FirstOrDefault(x => x.Id == <#= EntitySetting.Name.ToCamelCase() #>.Id);
-                }
-            }
-            catch (Exception ex)
-            {
-                string innerExceptionMsg = ex.InnerException != null ? $"\n{ex.InnerException.Message}" : "";
-                MessageBox.Show($"{MessageStrings.SaveOperationFailed}\n{ex.Message}{innerExceptionMsg}",
-                    CommonStrings.AppTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
-            }
-<#      if (preselectProperties.Any()) { #>
-            finally
-            {
-<#          foreach (var property in preselectProperties) { #>
-                Preselected<#= property.Name #> = null;
-<#          } #>
-            }
-<#      } #>
-        }
-<#      foreach (var property in preselectProperties) { #>
-
-        /// <summary>
-        /// Before executing the command, we can set this property to have the <#= property.Name.ToCamelCase() #> preselected in the <#= EntitySetting.Name #> creation dialog.
-        /// This is useful when you want to create a <#= EntitySetting.Name #> for a specific <#= property.Name.ToCamelCase() #> and want to save the user from having to select it manually.
-        /// </summary>
-        public <#= property.GetTypeName() #>? Preselected<#= property.Name #> { get; set; } = null;
-<#      } #>
 <#  } #>
     }
 }
