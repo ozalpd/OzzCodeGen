@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {
@@ -20,9 +18,9 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         {
             if (string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
             {
-                return CodeEngine.ViewModelNamespaceName;
+                return CodeEngine.CommandNamespaceName;
             }
-            return $"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.ViewModelFolder)}";
+            return $"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.BaseCommandNamespaceName)}";
         }
 
         public override List<string> DefaultUsingNamespaceList()
