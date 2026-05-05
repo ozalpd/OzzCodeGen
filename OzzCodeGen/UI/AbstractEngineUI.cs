@@ -25,6 +25,11 @@ namespace OzzCodeGen.UI
             HiddenColumns.Add("EntityDefinition");
             HiddenColumns.Add("EntitySetting");
             HiddenColumns.Add("PropertyDefinition");
+
+            HeaderPrefixesToTrim.Add("Generate");
+            HeaderPrefixesToTrim.Add("GenMode");
+
+            HeaderSuffixesToReplace.Add("ViewModel", "VM");
         }
 
         protected virtual void RaisePropertyChanged(string propertyName)
@@ -65,16 +70,28 @@ namespace OzzCodeGen.UI
         private Dictionary<string, short> _columnWidths;
 
 
-        public List<string> ReadOnlyColumns
+        public List<string> HeaderPrefixesToTrim
         {
             get
             {
-                if (_readOnlyColumns == null)
-                    _readOnlyColumns = new List<string>();
-                return _readOnlyColumns;
+                if (_prefixesToTrim == null)
+                    _prefixesToTrim = new List<string>();
+                return _prefixesToTrim;
             }
         }
-        private List<string> _readOnlyColumns;
+        private List<string> _prefixesToTrim;
+
+
+        public Dictionary<string, string> HeaderSuffixesToReplace
+        {
+            get
+            {
+                if (_suffixesToTrim == null)
+                    _suffixesToTrim = new Dictionary<string, string>();
+                return _suffixesToTrim;
+            }
+        }
+        private Dictionary<string, string> _suffixesToTrim;
 
 
         public List<string> HiddenColumns
@@ -86,6 +103,18 @@ namespace OzzCodeGen.UI
                 return _hiddenColumns;
             }
         }
+
+
+        public List<string> ReadOnlyColumns
+        {
+            get
+            {
+                if (_readOnlyColumns == null)
+                    _readOnlyColumns = new List<string>();
+                return _readOnlyColumns;
+            }
+        }
+        private List<string> _readOnlyColumns;
         private List<string> _hiddenColumns;
 
 
@@ -102,14 +131,23 @@ namespace OzzCodeGen.UI
                 string header = c.Header.ToString();
                 if (header != null)
                 {
-                    if (header.Length > "Generate".Length + 1 && header.StartsWith("Generate"))
+                    foreach (string s in HeaderPrefixesToTrim)
                     {
-                        header = header.Substring("Generate".Length);
+                        if (header.Length > s.Length + 1 && header.StartsWith(s))
+                        {
+                            header = header.Substring(s.Length);
+                        }
                     }
-                    if (header.Length > "ViewModel".Length + 1 && header.EndsWith("ViewModel"))
+                    foreach (var kvp in HeaderSuffixesToReplace)
                     {
-                        header = header.Substring(0, header.Length - "ViewModel".Length) + "VM";
+                        string suffix = kvp.Key;
+                        string replacement = kvp.Value;
+                        if (header.Length > suffix.Length + 1 && header.EndsWith(suffix))
+                        {
+                            header = header.Substring(0, header.Length - suffix.Length) + replacement;
+                        }
                     }
+
                     c.Header = header.PascalCaseToTitleCase();
                 }
             }
