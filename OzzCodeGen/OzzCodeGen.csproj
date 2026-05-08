@@ -260,6 +260,11 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>WpfDialogServcTemplate.tt</DependentUpon>
 		</Compile>
+		<Compile Update="CodeEngines\WpfMvvm\Templates\XamlStylesTemplate.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>XamlStylesTemplate.tt</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -400,6 +405,9 @@
 		</None>
 		<None Update="CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt">
 		  <LastGenOutput>WpfDialogServcTemplate.cs</LastGenOutput>
+		</None>
+		<None Update="CodeEngines\WpfMvvm\Templates\XamlStylesTemplate.tt">
+		  <LastGenOutput>XamlStylesTemplate.cs</LastGenOutput>
 		</None>
 	</ItemGroup>
 

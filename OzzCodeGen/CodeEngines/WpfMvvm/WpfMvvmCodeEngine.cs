@@ -144,15 +144,7 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         if (entitySetting == null || entitySetting.GenerateAnyCommand == false)
             return true;
 
-        bool allWritten = true;
-
-        var svcTmplate = new WpfDialogServcTemplate(this, isInterface: true);
-        svcTmplate.IsPublic = false;
-        allWritten &= RenderTemplate(svcTmplate, TargetDirectory, ServicesFolder);
-
-        svcTmplate = new WpfDialogServcTemplate(this, isInterface: false);
-        svcTmplate.IsPublic = false;
-        allWritten &= RenderTemplate(svcTmplate, TargetDirectory, ServicesFolder);
+        bool allWritten = RenderDialogSvcTemplate();
 
         var baseCmdTemplate = new WpfBaseCommandTemplate(this);
         allWritten &= RenderTemplate(baseCmdTemplate, TargetInfrastructureDirectory, CommandFolder);
@@ -179,6 +171,19 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
             allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
         }
 
+        return allWritten;
+    }
+
+    private bool RenderDialogSvcTemplate()
+    {
+        bool allWritten = true;
+        var svcTmplate = new WpfDialogServcTemplate(this, isInterface: true);
+        svcTmplate.IsPublic = false;
+        allWritten &= RenderTemplate(svcTmplate, TargetDirectory, ServicesFolder);
+
+        svcTmplate = new WpfDialogServcTemplate(this, isInterface: false);
+        svcTmplate.IsPublic = false;
+        allWritten &= RenderTemplate(svcTmplate, TargetDirectory, ServicesFolder);
         return allWritten;
     }
 
@@ -226,7 +231,14 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
     private bool RenderViews(WpfMvvmEntitySetting entitySetting)
     {
-        bool allWritten = true;
+        if (entitySetting.GenerateAnyView == false)
+            return true;
+
+        bool allWritten = RenderDialogSvcTemplate();
+
+        var stylesTmplate = new XamlStylesTemplate();
+        var fileName = Path.Combine(TargetDirectory, XamlResourcesFolder, stylesTmplate.GetDefaultFileName());
+        allWritten &= stylesTmplate.WriteToFile(fileName, OverwriteExisting);
 
         if (entitySetting.GenModeCreateView > FileGenerationMode.DoNotGenerate)
         {

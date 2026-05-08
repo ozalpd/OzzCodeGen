@@ -67,6 +67,13 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     public bool GenerateAnyCommand => GenModeCreateCommand > FileGenerationMode.DoNotGenerate
                                    || GenModeEditCommand > FileGenerationMode.DoNotGenerate
                                    || GenModeDeleteCommand > FileGenerationMode.DoNotGenerate;
+
+    public bool GenerateAnyView => GenModeCreateView > FileGenerationMode.DoNotGenerate
+                                   || GenModeEditView > FileGenerationMode.DoNotGenerate;
+
+    public bool GenerateAnyViewModel => GenModeCreateVM > FileGenerationMode.DoNotGenerate
+                                   || GenModeEditVM > FileGenerationMode.DoNotGenerate
+                                   || GenModeCollectionVM > FileGenerationMode.DoNotGenerate;
     public FileGenerationMode GenModeCreateCommand
     {
         get
