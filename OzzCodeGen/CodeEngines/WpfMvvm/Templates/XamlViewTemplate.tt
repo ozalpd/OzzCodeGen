@@ -1,0 +1,33 @@
+﻿<#@ template language="C#" inherits="AbstractTemplate" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OzzCodeGen.Templates" #>
+<#@ import namespace="OzzCodeGen.Templates.Cs" #>
+<#@ import namespace="OzzCodeGen.Definitions" #>
+<#@ import namespace="OzzCodeGen.Utilities" #>
+<Window x:Class="<#= GetFullClassName() #>"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:<#= GetNamespace() #>"
+        xmlns:i18n="clr-namespace:TD.i18n;assembly=<#= CodeEngine.LocalizationAssemblyName #>"
+<#  if (!string.IsNullOrEmpty(GetBaseClassNamespaceDeclaration())) { #>
+        xmlns:base="<#= GetBaseClassNamespaceDeclaration() #>"
+<#  } #>
+        Title="{x:Static i18n:LocalizedStrings.CreateCurrency}"
+        Height="320" Width="420" MinHeight="320" MinWidth="420"
+        WindowStartupLocation="CenterOwner"
+        FocusManager.FocusedElement="{Binding ElementName=CurrencyTickerTextBox}"
+        mc:Ignorable="d">
+    <Grid Margin="12">
+
+
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button Content="{x:Static i18n:ActionStrings.OK}" Width="90" Margin="0,0,8,0" IsDefault="True" IsEnabled="{Binding IsValid}" Click="OkButton_Click" />
+            <Button Content="{x:Static i18n:ActionStrings.Cancel}" Width="90" IsCancel="True" />
+        </StackPanel>
+    </Grid>
+</Window>

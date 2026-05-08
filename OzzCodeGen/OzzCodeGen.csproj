@@ -235,6 +235,11 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>CSharpLookupServiceTemplate.tt</DependentUpon>
 		</Compile>
+		<Compile Update="CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>CSharpViewTemplate.tt</DependentUpon>
+		</Compile>
 		<Compile Update="CodeEngines\WpfMvvm\Templates\WpfBaseCommandTemplate.cs">
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
@@ -264,6 +269,11 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>XamlStylesTemplate.tt</DependentUpon>
+		</Compile>
+		<Compile Update="CodeEngines\WpfMvvm\Templates\XamlViewTemplate.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>XamlViewTemplate.tt</DependentUpon>
 		</Compile>
 	</ItemGroup>
 
@@ -391,6 +401,9 @@
 		<None Update="CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt">
 		  <LastGenOutput>CSharpLookupServiceTemplate.cs</LastGenOutput>
 		</None>
+		<None Update="CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt">
+		  <LastGenOutput>CSharpViewTemplate.cs</LastGenOutput>
+		</None>
 		<None Update="CodeEngines\WpfMvvm\Templates\WpfBaseCommandTemplate.tt">
 		  <LastGenOutput>WpfBaseCommandTemplate.cs</LastGenOutput>
 		</None>
@@ -408,6 +421,9 @@
 		</None>
 		<None Update="CodeEngines\WpfMvvm\Templates\XamlStylesTemplate.tt">
 		  <LastGenOutput>XamlStylesTemplate.cs</LastGenOutput>
+		</None>
+		<None Update="CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt">
+		  <LastGenOutput>XamlViewTemplate.cs</LastGenOutput>
 		</None>
 	</ItemGroup>
 

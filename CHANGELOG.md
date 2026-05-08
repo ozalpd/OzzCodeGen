@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - Added new enum type `FileGenerationMode` with values `DoNotGenerate`, `GenerateIfNotExists`, and `GenerateAndOverwrite` to control file overwrite behavior in code generation.
 - Added `XamlStylesTemplate.tt` and generated files for reusable WPF styles
+- Introduced `CSharpViewTemplate` and `XamlViewTemplate` for generating WPF MVVM entity views (code-behind and XAML).
 
 ### Changed
 - Replaced boolean generation flags with `FileGenerationMode` enum in MVVM entity settings and engine logic for consistent file generation/overwrite control.
@@ -15,6 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Generate styles XAML in `WpfMvvmCodeEngine` during view output
 - Refactor command/view rendering with `RenderDialogSvcTemplate` helper
 - Added `GenerateAnyView`/`GenerateAnyViewModel` to `BaseMvvmEntitySetting`
+- Added `LocalizationAssemblyName` property to `BaseMvvmCodeEngine` for specifying the localization resource assembly.
+- Updated view generation logic to use the new templates and localization assembly setting.
 
 ## [2.3.4] - 2026-05-03
 

@@ -242,9 +242,8 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
         if (entitySetting.GenModeCreateView > FileGenerationMode.DoNotGenerate)
         {
-            //var template = new WpfMvvmViewXamlTemplate(entitySetting, isEdit: false);
-            //var fileName = Path.Combine(TargetDirectory, ViewFolder, template.GetDefaultFileName());
-            //allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
+            var template = new CSharpViewTemplate(entitySetting, MvvmTemplate.Create);
+            allWritten &= RenderTemplate(template, TargetDirectory, ViewFolder);
         }
 
         if (entitySetting.GenModeEditView > FileGenerationMode.DoNotGenerate)

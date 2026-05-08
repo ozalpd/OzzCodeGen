@@ -17,6 +17,7 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
     public readonly string BaseAsyncCommandName = "AbstractAsyncCommand";
     public readonly string BaseCommandName = "AbstractCommand";
     public readonly string BaseCreateEditViewModelName = "AbstractCreateEditVM";
+    public readonly string BaseEditViewName = "AbstractEditView";
 
     public readonly string DialogServiceContract = "IWindowDialogService";
     public readonly string DialogServiceClassName = "WindowDialogService";
@@ -255,6 +256,23 @@ for Commands: {TargetCommandDirectory}";
         }
     }
     private CSharpModelClassCodeEngine _modelClassEngine;
+
+    public string LocalizationAssemblyName
+    {
+        get
+        {
+            return _localizationAssembly
+                 ?? ResxEngine?.NamespaceName
+                 ?? $"{Project.NamespaceName}.i18n";
+        }
+        set
+        {
+            if (_localizationAssembly == value) return;
+            _localizationAssembly = value;
+            RaisePropertyChanged(nameof(LocalizationAssemblyName));
+        }
+    }
+    private string _localizationAssembly;
 
     [XmlIgnore]
     [JsonIgnore]
