@@ -274,6 +274,23 @@ for Commands: {TargetCommandDirectory}";
     }
     private string _localizationAssembly;
 
+    public string LocalizationNamespaceName
+    {
+        get
+        {
+            return _localizationNamespace
+                 ?? ResxEngine?.NamespaceName
+                 ?? $"{Project.NamespaceName}.i18n";
+        }
+        set
+        {
+            if (_localizationNamespace == value) return;
+            _localizationNamespace = value;
+            RaisePropertyChanged(nameof(LocalizationNamespaceName));
+        }
+    }
+    private string _localizationNamespace;
+
     [XmlIgnore]
     [JsonIgnore]
     public ResxEngine ResxEngine

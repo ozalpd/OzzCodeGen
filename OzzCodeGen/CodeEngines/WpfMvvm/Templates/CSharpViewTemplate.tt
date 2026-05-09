@@ -22,13 +22,36 @@ namespace <#= GetNamespace() #>
 
         public <#= EntitySetting.Name #> <#= EntitySetting.Name #> => _viewModel.<#= EntitySetting.Name #>;
 
+<#  if (IsEdit) { #>
+        /// <summary>
+        /// This constructor should not be called, but we need it for the designer to work.
+        /// </summary>
+        /// <remarks>This constructor creates a dummy <#= EntitySetting.Name #> for the designer.</remarks>
+<#  } #>
         public <#= GetClassName() #>()
         {
             InitializeComponent();
 
+<#  if (IsEdit) { #>
+            _viewModel = new <#= GetViewModelClassName() #>(new <#= EntitySetting.Name #>());
+            _isDirty = _viewModel;
+<#  } else { #>
             _viewModel = new <#= GetViewModelClassName() #>();
+<#  } #>
             DataContext = _viewModel;
         }
+<#  if (IsEdit) { #>
+
+        /// <summary>
+        /// This constructor should be used at runtime to create the view with a real <#= EntitySetting.Name #>.
+        /// </summary>
+        /// <param name="<#= EntitySetting.Name.ToCamelCase() #>">The real <#= EntitySetting.Name #> to be used by the view.</param>
+        public <#= GetClassName() #>(<#= EntitySetting.Name #> <#= EntitySetting.Name.ToCamelCase() #>) : base(new <#= GetViewModelClassName() #>(<#= EntitySetting.Name.ToCamelCase() #>))
+        {
+            InitializeComponent();
+            _viewModel = (<#= GetViewModelClassName() #>)DataContext;
+        }
+<#  } #>
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {

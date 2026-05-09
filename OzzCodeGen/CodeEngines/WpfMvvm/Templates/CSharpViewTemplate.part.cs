@@ -43,7 +43,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public override string GetDefaultFileName() => $"{XamlViewTemplate.GetDefaultFileName()}.cs";
 
-        public string GetNamespace() => EntitySetting.GetViewsNamespaceName();
+        public string GetNamespace() => XamlViewTemplate.GetNamespace();
 
         public string GetViewModelClassName() => EntitySetting.GetViewModelName(TemplateType);
 

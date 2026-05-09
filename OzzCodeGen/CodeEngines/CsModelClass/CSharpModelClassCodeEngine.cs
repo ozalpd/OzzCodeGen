@@ -427,4 +427,8 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
         return (ModelClassEntitySetting)_engineUI.grdEntitySettings.SelectedItem;
     }
 
+    public ModelClassEntitySetting GetEntitySettingByName(string name)
+    {
+        return Entities.FirstOrDefault(e => e.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+    }
 }

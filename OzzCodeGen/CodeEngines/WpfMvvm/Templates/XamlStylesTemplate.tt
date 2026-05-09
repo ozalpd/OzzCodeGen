@@ -93,18 +93,25 @@
         </Style.Triggers>
     </Style>
 
+    <!-- TextBox Style: multi-line validation error display only -->
+    <Style x:Key="ValidationMutliLineTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource ValidationTextBoxStyle}">
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+    </Style>
+
     <!-- TextBox Style: read-only display only -->
     <Style x:Key="ReadOnlyTextBoxStyle" TargetType="TextBox">
-        <Setter Property="Margin" Value="0,0,0,8" />
+        <Setter Property="Margin" Value="0,0,0,20" />
         <Setter Property="IsReadOnly" Value="True" />
         <Setter Property="Background" Value="#EDEDED" />
     </Style>
 
     <!-- TextBlock Style: right-aligned display only -->
     <Style x:Key="RightAlignedTextBlockStyle" TargetType="TextBlock">
-        <Setter Property="Margin" Value="0,0,4,0" />
+        <Setter Property="Margin" Value="0,0,8,0" />
         <Setter Property="HorizontalAlignment" Value="Right" />
-        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Top" />
     </Style>
 
     <!-- Button Style: toolbar icon button 22x18 -->

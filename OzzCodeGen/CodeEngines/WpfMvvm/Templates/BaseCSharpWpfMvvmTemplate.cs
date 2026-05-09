@@ -22,7 +22,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         public WpfMvvmEntitySetting EntitySetting { get; }
 
         /// <summary>
-        /// If true, it indicates the template is for edit view model, otherwise it's for create view model. This can be used to determine the class name and included properties.
+        /// If true, it indicates the template is for edit view or view model, otherwise it's for create view or view model. This can be used to determine the class name and included properties.
         /// </summary>
         public bool IsEdit { get; }
 

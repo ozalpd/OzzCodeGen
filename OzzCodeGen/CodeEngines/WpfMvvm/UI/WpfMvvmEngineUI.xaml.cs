@@ -11,9 +11,13 @@ public partial class WpfMvvmEngineUI : AbstractEngineUI
         HiddenColumns.Add("CodeEngine");
         HiddenColumns.Add("Properties");
         HiddenColumns.Add("MvvmProperties");
-        HiddenColumns.Add("IncludedProperties");
-        HiddenColumns.Add("GetBaseEntitySetting");
         HiddenColumns.Add("BaseEntitySetting");
+        HiddenColumns.Add("IncludedProperties");
+        HiddenColumns.Add("ModelPropertySetting");
+        HiddenColumns.Add("GetBaseEntitySetting");
+        HiddenColumns.Add("IsInEditDialogService");
+        HiddenColumns.Add("RepositoryInstanceName");
+        HiddenColumns.Add("IsInCreateDialogService");
 
         HiddenColumns.Add("ClrTypeName");
         HiddenColumns.Add("IsFloat");

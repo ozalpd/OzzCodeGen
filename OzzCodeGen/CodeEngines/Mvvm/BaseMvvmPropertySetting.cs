@@ -1,5 +1,8 @@
 using OzzCodeGen.CodeEngines.CSharp;
+using OzzCodeGen.CodeEngines.CsModelClass;
+using OzzCodeGen.Definitions;
 using System;
+using System.Linq;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
@@ -143,6 +146,55 @@ public abstract class BaseMvvmPropertySetting : BaseCSharpPropertySetting
         }
     }
     private bool? _isReadOnlyInEdit;
+
+    public bool IsMultiLine
+    {
+        get
+        {
+            if (_isMultiLine == null && PropertyDefinition is StringProperty)
+            {
+                var sProperty = (StringProperty)PropertyDefinition;
+                if (ModelPropertySetting != null)
+                {
+                    _isMultiLine = DataTypes.MultilineText.Equals(ModelPropertySetting.DataType);
+                }
+                else
+                {
+                    _isMultiLine = sProperty.MaxLength > 100;
+                }
+            }
+            else if (_isMultiLine == null)
+            {
+                _isMultiLine = false;
+            }
+            return _isMultiLine ?? false;
+        }
+        set
+        {
+            if (_isMultiLine == value) return;
+            _isMultiLine = value;
+            RaisePropertyChanged(nameof(IsMultiLine));
+        }
+    }
+    bool? _isMultiLine;
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public ModelPropertySetting ModelPropertySetting
+    {
+        get
+        {
+            if (_modelPropertySetting == null)
+            {
+                var modelEntity = CodeEngine.ModelClassCodeEngine
+                                            .GetEntitySettingByName(EntitySetting.Name);
+                _modelPropertySetting = modelEntity.Properties
+                                                   .FirstOrDefault(p => p.Name == Name);
+            }
+            return _modelPropertySetting;
+        }
+    }
+    private ModelPropertySetting _modelPropertySetting;
 
     /// <summary>
     /// Gets or sets the constraint applied to the property's value like .ToUpperInvariant() or < 0 ? 0 : value.

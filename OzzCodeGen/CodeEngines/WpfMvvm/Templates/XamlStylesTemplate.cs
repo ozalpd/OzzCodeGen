@@ -91,23 +91,28 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                     "operty=\"BorderThickness\" Value=\"2\" />\r\n                <Setter Property=\"ToolTip" +
                     "\" Value=\"{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)" +
                     "[0].ErrorContent}\" />\r\n            </Trigger>\r\n        </Style.Triggers>\r\n    </" +
-                    "Style>\r\n\r\n    <!-- TextBox Style: read-only display only -->\r\n    <Style x:Key=\"" +
-                    "ReadOnlyTextBoxStyle\" TargetType=\"TextBox\">\r\n        <Setter Property=\"Margin\" V" +
-                    "alue=\"0,0,0,8\" />\r\n        <Setter Property=\"IsReadOnly\" Value=\"True\" />\r\n      " +
-                    "  <Setter Property=\"Background\" Value=\"#EDEDED\" />\r\n    </Style>\r\n\r\n    <!-- Tex" +
-                    "tBlock Style: right-aligned display only -->\r\n    <Style x:Key=\"RightAlignedText" +
-                    "BlockStyle\" TargetType=\"TextBlock\">\r\n        <Setter Property=\"Margin\" Value=\"0," +
-                    "0,4,0\" />\r\n        <Setter Property=\"HorizontalAlignment\" Value=\"Right\" />\r\n    " +
-                    "    <Setter Property=\"VerticalAlignment\" Value=\"Center\" />\r\n    </Style>\r\n\r\n    " +
-                    "<!-- Button Style: toolbar icon button 22x18 -->\r\n    <Style x:Key=\"IconButtonSt" +
-                    "yle-22x18\" TargetType=\"Button\">\r\n        <Setter Property=\"Margin\" Value=\"0,4,0," +
-                    "0\" />\r\n        <Setter Property=\"VerticalAlignment\" Value=\"Top\" />\r\n        <Set" +
-                    "ter Property=\"Height\" Value=\"18\" />\r\n        <Setter Property=\"Width\" Value=\"22\"" +
-                    " />\r\n    </Style>\r\n\r\n    <!-- Button Style: toolbar icon button 28x24 -->\r\n    <" +
-                    "Style x:Key=\"IconButtonStyle-28x24\" TargetType=\"Button\">\r\n        <Setter Proper" +
-                    "ty=\"Margin\" Value=\"0,1,4,1\" />\r\n        <Setter Property=\"VerticalAlignment\" Val" +
-                    "ue=\"Top\" />\r\n        <Setter Property=\"Height\" Value=\"24\" />\r\n        <Setter Pr" +
-                    "operty=\"Width\" Value=\"28\" />\r\n    </Style>\r\n\r\n</ResourceDictionary>");
+                    "Style>\r\n\r\n    <!-- TextBox Style: multi-line validation error display only -->\r\n" +
+                    "    <Style x:Key=\"ValidationMutliLineTextBoxStyle\" TargetType=\"TextBox\" BasedOn=" +
+                    "\"{StaticResource ValidationTextBoxStyle}\">\r\n        <Setter Property=\"AcceptsRet" +
+                    "urn\" Value=\"True\" />\r\n        <Setter Property=\"TextWrapping\" Value=\"Wrap\" />\r\n " +
+                    "       <Setter Property=\"VerticalScrollBarVisibility\" Value=\"Auto\" />\r\n    </Sty" +
+                    "le>\r\n\r\n    <!-- TextBox Style: read-only display only -->\r\n    <Style x:Key=\"Rea" +
+                    "dOnlyTextBoxStyle\" TargetType=\"TextBox\">\r\n        <Setter Property=\"Margin\" Valu" +
+                    "e=\"0,0,0,20\" />\r\n        <Setter Property=\"IsReadOnly\" Value=\"True\" />\r\n        " +
+                    "<Setter Property=\"Background\" Value=\"#EDEDED\" />\r\n    </Style>\r\n\r\n    <!-- TextB" +
+                    "lock Style: right-aligned display only -->\r\n    <Style x:Key=\"RightAlignedTextBl" +
+                    "ockStyle\" TargetType=\"TextBlock\">\r\n        <Setter Property=\"Margin\" Value=\"0,0," +
+                    "8,0\" />\r\n        <Setter Property=\"HorizontalAlignment\" Value=\"Right\" />\r\n      " +
+                    "  <Setter Property=\"VerticalAlignment\" Value=\"Top\" />\r\n    </Style>\r\n\r\n    <!-- " +
+                    "Button Style: toolbar icon button 22x18 -->\r\n    <Style x:Key=\"IconButtonStyle-2" +
+                    "2x18\" TargetType=\"Button\">\r\n        <Setter Property=\"Margin\" Value=\"0,4,0,0\" />" +
+                    "\r\n        <Setter Property=\"VerticalAlignment\" Value=\"Top\" />\r\n        <Setter P" +
+                    "roperty=\"Height\" Value=\"18\" />\r\n        <Setter Property=\"Width\" Value=\"22\" />\r\n" +
+                    "    </Style>\r\n\r\n    <!-- Button Style: toolbar icon button 28x24 -->\r\n    <Style" +
+                    " x:Key=\"IconButtonStyle-28x24\" TargetType=\"Button\">\r\n        <Setter Property=\"M" +
+                    "argin\" Value=\"0,1,4,1\" />\r\n        <Setter Property=\"VerticalAlignment\" Value=\"T" +
+                    "op\" />\r\n        <Setter Property=\"Height\" Value=\"24\" />\r\n        <Setter Propert" +
+                    "y=\"Width\" Value=\"28\" />\r\n    </Style>\r\n\r\n</ResourceDictionary>");
             return this.GenerationEnvironment.ToString();
         }
     }

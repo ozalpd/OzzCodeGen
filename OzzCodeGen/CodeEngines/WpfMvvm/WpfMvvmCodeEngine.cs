@@ -243,15 +243,26 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         if (entitySetting.GenModeCreateView > FileGenerationMode.DoNotGenerate)
         {
             var template = new CSharpViewTemplate(entitySetting, MvvmTemplate.Create);
-            allWritten &= RenderTemplate(template, TargetDirectory, ViewFolder);
+            allWritten &= RenderViewTemplate(template);
         }
 
         if (entitySetting.GenModeEditView > FileGenerationMode.DoNotGenerate)
         {
-            //var template = new WpfMvvmViewXamlTemplate(entitySetting, isEdit: true);
-            //var fileName = Path.Combine(TargetDirectory, ViewFolder, template.GetDefaultFileName());
-            //allWritten &= template.WriteToFile(fileName, OverwriteExisting || entitySetting.OverwriteExisting);
+            var template = new CSharpViewTemplate(entitySetting, MvvmTemplate.Edit);
+            allWritten &= RenderViewTemplate(template);
         }
+
+        return allWritten;
+    }
+
+    public bool RenderViewTemplate(CSharpViewTemplate template)
+    {
+        bool allWritten = true;
+        allWritten &= RenderTemplate(template, TargetDirectory, ViewFolder);
+        var xamlTemplate = template.XamlViewTemplate; //new XamlViewTemplate(entitySetting, MvvmTemplate.Create);
+        string fileName = Path.Combine(TargetDirectory, ViewFolder, xamlTemplate.GetDefaultFileName());
+        allWritten &= xamlTemplate.WriteToFile(fileName, OverwriteExisting);
+
         return allWritten;
     }
 
