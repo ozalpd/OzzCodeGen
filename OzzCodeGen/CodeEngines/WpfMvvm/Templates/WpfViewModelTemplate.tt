@@ -30,7 +30,7 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
         private <#= EntitySetting.Name #> _<#= EntitySetting.Name.ToCamelCase() #>;
         public <#= EntitySetting.Name #> <#= EntitySetting.Name #> => _<#= EntitySetting.Name.ToCamelCase() #>;
 
-        public <#= GetClassName() #>(<#= GetParamsDeclaration() #>)
+        public <#= GetClassName() #>(<#= GetVmConstructorParams(isDeclaration: true) #>)
         {
 <#  foreach (var lookupEntity in foreignLookupEntities) { #>
             _<#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #> = <#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #>;

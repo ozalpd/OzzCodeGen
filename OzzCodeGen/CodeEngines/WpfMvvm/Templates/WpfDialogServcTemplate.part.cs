@@ -78,43 +78,6 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             return IsInterface ? $"{_interfaceName}.cs" : $"{_className}.cs";
         }
 
-        public string GetParamsDeclaration(WpfMvvmEntitySetting entitySetting, bool isEdit = false)
-        {
-            var sb = new StringBuilder();
-            sb.Append("Window owner");
-            if (isEdit)
-            {
-                sb.Append(", ");
-                sb.Append(entitySetting.Name);
-                sb.Append(' ');
-                sb.Append(entitySetting.Name.ToCamelCase());
-            }
-
-            var foreignLookupEntities = entitySetting.GetForeignLookupEntities(isForEdit: isEdit);
-
-            foreach (var lookupEntity in foreignLookupEntities)
-            {
-                sb.Append(", ");
-                sb.Append(lookupEntity.GetLookupName(LookupTemplate.Interface));
-                sb.Append(' ');
-                sb.Append(lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase());
-            }
-
-            if (isEdit)
-                return sb.ToString();
-
-            var preselectProperties = entitySetting.GetPreselectProperties();
-            foreach (var property in preselectProperties)
-            {
-                sb.Append(", ");
-                sb.Append(property.GetTypeName(getReturnType: true));
-                sb.Append("? preselected");
-                sb.Append(property.Name);
-            }
-
-            return sb.ToString();
-        }
-
         public IEnumerable<WpfMvvmEntitySetting> GetEntitySettings()
         {
             if (_entitySettings == null)

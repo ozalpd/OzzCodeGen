@@ -41,7 +41,7 @@ namespace <#= CodeEngine.ServicesNamespaceName #>
 <#  } #>
         /// <returns>A tuple containing a Boolean value that is <see langword="true"/> if the user confirmed the dialog; otherwise, <see
         /// langword="false"/>. The second item is the created <#= entity.Name.PascalCaseToTitleCase() #> if confirmed; otherwise, <see langword="null"/>.</returns>
-        (bool IsConfirmed, <#= entity.Name #>? <#= entity.Name #>) Show<#= entity.Name #>CreateDialog(<#= GetParamsDeclaration(entity) #>);
+        (bool IsConfirmed, <#= entity.Name #>? <#= entity.Name #>) Show<#= entity.Name #>CreateDialog(<#= GetShowViewParams(entity, isDeclaration:true, isDlgSvc:true) #>);
 
 <#          }
             if (entity.IsInEditDialogService) {
@@ -59,21 +59,17 @@ namespace <#= CodeEngine.ServicesNamespaceName #>
         /// <returns>A tuple containing two values: IsConfirmed is <see langword="true"/> if the user confirmed the dialog;
         /// otherwise, <see langword="false"/>. IsDirty is <see langword="true"/> if any changes were made to the <#= entity.Name.ToCamelCase() #>
         /// during editing; otherwise, <see langword="false"/>.</returns>
-        (bool IsConfirmed, bool IsDirty) Show<#= entity.Name #>EditDialog(<#= GetParamsDeclaration(entity, isEdit: true) #>);
+        (bool IsConfirmed, bool IsDirty) Show<#= entity.Name #>EditDialog(<#= GetShowViewParams(entity, isDeclaration:true, isEdit:true, isDlgSvc: true) #>);
 
 <#          } #>
 <#    } #>
 <#  } else { #>
 <#      foreach (var entity in entities) {#>
-<#          if (entity.IsInCreateDialogService) {
-                var foreignLookupEntities = entity.GetForeignLookupEntities().Select(e => e.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase());
-                var preselectProperties = entity.GetPreselectProperties().Select(e => e.Name);
-                var allParams = foreignLookupEntities.Concat(preselectProperties.Select(p => $"preselected{p}")).ToList();
-                #>
+<#          if (entity.IsInCreateDialogService) { #>
         /// <inheritdoc />
-        public (bool IsConfirmed, <#= entity.Name #>? <#= entity.Name #>) Show<#= entity.Name #>CreateDialog(<#= GetParamsDeclaration(entity) #>)
+        public (bool IsConfirmed, <#= entity.Name #>? <#= entity.Name #>) Show<#= entity.Name #>CreateDialog(<#= GetShowViewParams(entity, isDeclaration:true, isDlgSvc:true) #>)
         {
-            var dialog = new <#= entity.GetViewName(MvvmTemplate.Create) #>(<#= string.Join(", ", allParams) #>)
+            var dialog = new <#= entity.GetViewName(MvvmTemplate.Create) #>(<#= GetShowViewParams(entity) #>)
             {
                 Owner = owner
             };
@@ -83,14 +79,11 @@ namespace <#= CodeEngine.ServicesNamespaceName #>
         }
 
 <#          }
-            if (entity.IsInEditDialogService) {
-                var allParams = new List<string>(){ entity.Name.ToCamelCase() };
-                allParams.AddRange(entity.GetForeignLookupEntities(isForEdit: true).Select(e => e.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase()));
-                #>
+            if (entity.IsInEditDialogService) { #>
         /// <inheritdoc />
-        public (bool IsConfirmed, bool IsDirty) Show<#= entity.Name #>EditDialog(<#= GetParamsDeclaration(entity, isEdit: true) #>)
+        public (bool IsConfirmed, bool IsDirty) Show<#= entity.Name #>EditDialog(<#= GetShowViewParams(entity, isDeclaration:true, isEdit:true, isDlgSvc:true) #>)
         {
-            var dialog = new <#= entity.GetViewName(MvvmTemplate.Edit) #>(<#= string.Join(", ", allParams) #>)
+            var dialog = new <#= entity.GetViewName(MvvmTemplate.Edit) #>(<#= GetShowViewParams(entity, isEdit:true) #>)
             {
                 Owner = owner
             };

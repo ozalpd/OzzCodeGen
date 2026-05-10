@@ -144,7 +144,7 @@ namespace ");
             this.Write("(");
             
             #line 33 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetParamsDeclaration()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetVmConstructorParams(isDeclaration: true)));
             
             #line default
             #line hidden

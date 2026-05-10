@@ -15,7 +15,7 @@ public enum BaseVM
 }
 
 /// <summary>
-/// Specifies the types of lookup service templates that can be generated.  
+/// Specifies the types of lookup service templates that can be generated.
 /// </summary>
 /// <remarks>This enumeration is used to distinguish between interface, design-time, and run-time implementations
 /// of lookup services in code generation scenarios. The values correspond to different template outputs for lookup
