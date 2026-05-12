@@ -69,6 +69,16 @@ namespace OzzCodeGen.CodeEngines
                                         .FirstOrDefault(e => e.Name == Name);
         }
 
+        public string GetEnumTypeName()
+        {
+            if (PropertyDefinition is SimpleProperty simpleProperty)
+            {
+                return simpleProperty.EnumTypeName;
+            }
+
+            return string.Empty;
+        }
+
         public string GetForeignKeyName()
         {
             if (PropertyDefinition is ComplexProperty)
@@ -159,7 +169,7 @@ namespace OzzCodeGen.CodeEngines
         [XmlIgnore]
         [JsonIgnore]
         public bool IsNullable => PropertyDefinition != null
-                               && PropertyDefinition  is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsNullable;
+                               && PropertyDefinition is SimpleProperty && ((SimpleProperty)PropertyDefinition).IsNullable;
 
         /// <summary>
         /// Gets a value indicating whether the property definition represents a simple or string property.

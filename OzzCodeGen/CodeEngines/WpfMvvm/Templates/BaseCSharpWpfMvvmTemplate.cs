@@ -62,6 +62,17 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             return $"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.LookupFolder)}";
         }
 
+        public IEnumerable<string> GetEnumTypeNames()
+        {
+            if (_enumTypeNames == null)
+            {
+                _enumTypeNames = EntitySetting.GetEnumTypeNames().ToList();
+            }
+
+            return _enumTypeNames;
+        }
+        private IEnumerable<string> _enumTypeNames;
+
         public IEnumerable<WpfMvvmEntitySetting> GetForeignLookupEntities(MvvmTemplate? templateType = null)
         {
             if (templateType == null)

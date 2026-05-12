@@ -11,6 +11,7 @@
 <#
     var properties = GetIncludedProperties().ToList();
     var foreignLookupEntities = GetForeignLookupEntities();
+    var enumTypeNames = GetEnumTypeNames().ToList();
     WriteUsingNamespaces(); #>
 //----------------------------------------------------------------------------------
 //
@@ -37,6 +38,11 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
             <#= lookupEntity.Name.Pluralize() #> = new ObservableCollection<<#= lookupEntity.Name #>>();
 
 <#  } #>
+<#  foreach (var enumTypeName in enumTypeNames) { #>
+            <#= enumTypeName #>Values = EnumExtension.GetValues<<#= enumTypeName #>>()
+                                        .Select(x => new EnumValueItem<<#= enumTypeName #>> { Value = x, DisplayValue = x.GetDisplayValue() })
+                                        .ToList();
+<#  } #>
 <#  if (IsEdit) { #>
             _<#= EntitySetting.Name.ToCamelCase() #> = <#= EntitySetting.Name.ToCamelCase() #>;
 <#  } else { #>
@@ -60,14 +66,20 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
             }
         }
 <#  } #>
+<#  foreach (var enumTypeName in enumTypeNames) { #>
 
+        /// <summary>
+        /// Gets the collection of available <#= enumTypeName #> enum members for selection or display.
+        /// </summary>
+        public IEnumerable<EnumValueItem<<#= enumTypeName #>>> <#= enumTypeName #>Values { get; }
+<#  } #>
 <#  foreach (var prop in properties.Where(p => !p.IsKey))
     {
         bool isReadOnly = IsEdit ? prop.IsReadOnlyInEdit : prop.IsReadOnlyInCreate;
 #>
 
 <#      if (isReadOnly) { #>
-            public <#= prop.GetTypeName() #> <#= prop.Name #> => _<#= EntitySetting.Name.ToCamelCase() #>.<#= prop.Name #>;
+        public <#= prop.GetTypeName() #> <#= prop.Name #> => _<#= EntitySetting.Name.ToCamelCase() #>.<#= prop.Name #>;
 <#      } else { #>
         public <#= prop.GetTypeName() #> <#= prop.Name #>
         {

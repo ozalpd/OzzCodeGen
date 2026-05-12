@@ -1,6 +1,5 @@
 using OzzCodeGen.CodeEngines.CsModelClass.Templates;
 using OzzCodeGen.CodeEngines.CsModelClass.UI;
-using OzzCodeGen.CodeEngines.CsSqliteRepository;
 using OzzCodeGen.Utilities;
 using System;
 using System.Collections.Generic;
@@ -23,6 +22,13 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
     public static string DefaultFileName { get { return "CsModelClassCodeEngine.settings"; } }
 
     public override string ProjectTypeName { get { return "C# Model Class Generator"; } }
+
+    public readonly string EnumExtensionName = "EnumExtension";
+
+    public readonly string ExtensionsFolderName = "Extensions";
+
+    public string ExtensionsNamespaceName => $"{Project.NamespaceName}.Extensions";
+    
 
     public override string GetDefaultFileName()
     {

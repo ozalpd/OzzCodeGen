@@ -1,5 +1,4 @@
 ﻿using OzzCodeGen.CodeEngines.Mvvm;
-using OzzUtils;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,6 +37,10 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             if (modelClassEngine != null)
             {
                 namespaces.Add(modelClassEngine.NamespaceName);
+                if (GetEnumTypeNames().Any())
+                {
+                    namespaces.Add(modelClassEngine.ExtensionsNamespaceName);
+                }
             }
             if (!string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
             {

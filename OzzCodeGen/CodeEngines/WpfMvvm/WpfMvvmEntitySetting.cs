@@ -24,6 +24,15 @@ public class WpfMvvmEntitySetting : BaseMvvmEntitySetting<WpfMvvmPropertySetting
                                                .ToList();
     }
 
+    public IEnumerable<string> GetEnumTypeNames()
+    {
+        var properties = GetInheritedIncludedProperties();
+        return properties.Where(p => !string.IsNullOrEmpty(p.GetEnumTypeName()))
+                         .Select(p => p.GetEnumTypeName())
+                         .Distinct()
+                         .ToList();
+    }
+
     public IEnumerable<WpfMvvmEntitySetting> GetForeignLookupEntities(bool isForEdit = false)
     {
         var complexproperties = Properties.Where(p => p.PropertyDefinition is ComplexProperty);
@@ -45,7 +54,7 @@ public class WpfMvvmEntitySetting : BaseMvvmEntitySetting<WpfMvvmPropertySetting
             }
 
             return CodeEngine.EntitySettings.OfType<WpfMvvmEntitySetting>()
-                                            .Where(e => e.GenModeLookupService > FileGenerationMode.DoNotGenerate 
+                                            .Where(e => e.GenModeLookupService > FileGenerationMode.DoNotGenerate
                                                      && complexTypeNamesForEdit.Contains(e.EntityDefinition.Name))
                                             .OrderBy(e => e.Name)
                                             .ToList();
