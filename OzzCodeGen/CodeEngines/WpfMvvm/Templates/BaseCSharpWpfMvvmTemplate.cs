@@ -117,11 +117,38 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                                 .FirstOrDefault(p => p.IsKey);
         }
 
+        /// <summary>
+        /// Generates a parameter string for displaying a view, based on the specified options.
+        /// </summary>
+        /// <param name="isDeclaration">Indicates whether the generated parameters are for a declaration context. The default is <see
+        /// langword="false"/>.</param>
+        /// <param name="isDlgSvc">Indicates whether the parameters are for a dialog service context. The default is <see langword="false"/>.</param>
+        /// <param name="isDesignTime">Indicates whether the parameters are for design-time usage. The default is <see langword="false"/>.</param>
+        /// <returns>A string containing the parameters to use when displaying the view, formatted according to the specified
+        /// options.</returns>
         public string GetShowViewParams(bool isDeclaration = false, bool isDlgSvc = false, bool isDesignTime = false)
         {
             return GetShowViewParams(EntitySetting, isDeclaration, isEdit: IsEdit, isDlgSvc: isDlgSvc, isDesignTime: isDesignTime);
         }
 
+        /// <summary>
+        /// Builds a parameter list string for a generated ShowView method or view constructor, based on the specified entity
+        /// settings and context flags.
+        /// </summary>
+        /// <remarks>The generated parameter list adapts to the context provided by the flags. For
+        /// example, when isDeclaration is true, type names are included; when isDesignTime is true, design-time class
+        /// instances or null values are used instead of declarations. This method is typically used in code generation
+        /// scenarios for WPF MVVM views.</remarks>
+        /// <param name="entitySetting">The entity setting that defines the context and available properties for the view parameters.</param>
+        /// <param name="isDeclaration">true to generate parameter declarations (with types); false to generate parameter usage (names only).</param>
+        /// <param name="isEdit">true to include parameters relevant for edit views; otherwise, only parameters for non-edit views are
+        /// included.</param>
+        /// <param name="isDlgSvc">true to include dialog service parameters such as the window owner; otherwise, dialog service parameters are
+        /// omitted.</param>
+        /// <param name="isDesignTime">true to generate parameters suitable for design-time scenarios (e.g., for view designers); otherwise,
+        /// generates parameters for runtime usage.</param>
+        /// <returns>A comma-separated string representing the parameter list for the ShowView method or constructor, formatted
+        /// according to the specified flags and entity settings.</returns>
         public string GetShowViewParams(WpfMvvmEntitySetting entitySetting, bool isDeclaration = false, bool isEdit = false, bool isDlgSvc = false, bool isDesignTime = false)
         {
             var sb = new StringBuilder();

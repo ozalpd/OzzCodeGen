@@ -25,10 +25,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             {
                 namespaces.Add(modelClassEngine.NamespaceName);
             }
-            //if (!string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
-            //{
-            //    namespaces.Add($"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.ViewModelFolder)}");
-            //}
+
             if (EntitySetting.GetForeignLookupEntities(IsEdit).Any())
             {
                 namespaces.Add(GetLookupContractNamespace());

@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Added `GenerateAnyView`/`GenerateAnyViewModel` to `BaseMvvmEntitySetting`
 - Added `LocalizationAssemblyName` property to `BaseMvvmCodeEngine` for specifying the localization resource assembly.
 - Updated view generation logic to use the new templates and localization assembly setting.
+- Adds `GetDependent()` and `GetLookupEntity()` to `BaseMvvmPropertySetting`.
 
 ## [2.3.4] - 2026-05-03
 

@@ -7,6 +7,7 @@
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzCodeGen.Utilities" #>
+<#@ import namespace="OzzUtils" #>
 <#  var properties = GetProperties().ToList();
     var focusProperty = GetFocusProperty(); #>
 <<#= BaseClassDeclaration #> x:Class="<#= GetFullClassName() #>"
@@ -44,10 +45,13 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <#  int i = 0;
-    foreach (var prop in properties.Where(p => !p.IsKey)) { #>
+    foreach (var prop in properties.Where(p => !p.IsKey)) {
+        var lookupEntity = prop.GetLookupEntity();
+        var dependent = prop.GetDependent();
+        string bindingName = prop.IsForeignKey && dependent != null ? dependent.Name : prop.Name; #>
         
         <TextBlock Grid.Row="<#= i #>" Grid.Column="0" Style="{StaticResource RightAlignedTextBlockStyle}"
-                   Text="{x:Static i18n:LocalizedStrings.<#= prop.Name #>}" />
+                   Text="{x:Static i18n:LocalizedStrings.<#= bindingName #>}" />
 <#      bool isReadOnly = IsEdit ? prop.IsReadOnlyInEdit : prop.IsReadOnlyInCreate;
         if (prop.IsMultiLine && !isReadOnly) {
 #>
@@ -56,14 +60,15 @@
                  Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
 <#  } else if (prop.IsBoolean) { #>
         <CheckBox Grid.Row="<#= i #>" Grid.Column="1" Margin="0,0,0,8" IsChecked="{Binding <#= prop.Name #>}" />
-<#  } else if (isReadOnly) { #>
-        <TextBox Grid.Row="<#= i #>" Grid.Column="1" Style="{StaticResource ReadOnlyTextBoxStyle}" Text="{Binding <#= prop.Name #>, Mode=OneWay}" />
-<#  } else if (prop.IsForeignKey) { #>
+<#  } else if (isReadOnly) {
+        bindingName = prop.IsForeignKey && lookupEntity != null ? $"{dependent.Name}.{lookupEntity.EntityDefinition.DisplayMember}" : prop.Name; #>
+        <TextBox Grid.Row="<#= i #>" Grid.Column="1" Style="{StaticResource ReadOnlyTextBoxStyle}" Text="{Binding <#= bindingName #>, Mode=OneWay}" />
+<#  } else if (prop.IsForeignKey && lookupEntity != null) { #>
         <ComboBox <#= GetElementName(prop, true) #>Grid.Row="<#= i #>" Grid.Column="1"
                   Style="{StaticResource ValidationComboBoxStyle}"
-                  ItemsSource="{Binding Lookup}"
-                  DisplayMemberPath="Lookup.DisplayName"
-                  SelectedValuePath="Lookup.pkey"
+                  ItemsSource="{Binding <#= lookupEntity.Name.Pluralize() #>}"
+                  DisplayMemberPath="<#= lookupEntity.EntityDefinition.DisplayMember #>"
+                  SelectedValuePath="<#= lookupEntity.GetPrimaryKey().Name #>"
                   SelectedValue="{Binding <#= prop.Name #>, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
 <#  } else if (prop.IsSimpleOrString) { #>
         <TextBox <#= GetElementName(prop, true) #>Grid.Row="<#= i #>" Grid.Column="1"
@@ -73,7 +78,7 @@
         i++;
     } #>
 
-        <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+        <StackPanel Grid.Row="<#= i #>" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
             <Button Content="<#= GetActionString("OK") #>" Width="90" Margin="0,0,8,0" IsDefault="True" IsEnabled="{Binding IsValid}" Click="OkButton_Click" />
             <Button Content="<#= GetActionString("Cancel") #>" Width="90" IsCancel="True" />
         </StackPanel>

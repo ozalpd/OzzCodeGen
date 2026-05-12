@@ -211,6 +211,26 @@ public abstract class BaseMvvmPropertySetting : BaseCSharpPropertySetting
     }
     private string _valueSuffix;
 
+    /// <summary>
+    /// Gets the dependent property setting associated with this property, if one exists.
+    /// </summary>
+    /// <remarks>A dependent property is determined based on the underlying property definition. This method
+    /// searches for a matching property by name within the entity's MVVM property collection.</remarks>
+    /// <returns>A <see cref="BaseMvvmPropertySetting"/> representing the dependent property, or <see langword="null"/> if no
+    /// dependent property is found.</returns>
+    public BaseMvvmPropertySetting GetDependent()
+    {
+        if (PropertyDefinition is SimpleProperty simpleProperty && IsForeignKey)
+        {
+            var dependentProperty = simpleProperty.GetDependent();
+            if (dependentProperty != null)
+            {
+                return MvvmEntitySetting.MvvmProperties
+                                        .FirstOrDefault(p => dependentProperty.Name.Equals(p.Name));
+            }
+        }
+        return null;
+    }
 
     protected override BaseCodeEngine GetCodeEngine()
     {

@@ -53,7 +53,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             int i = 0;
             if (foreignLookupEntities != null && foreignLookupEntities.Any())
             {
-                sb.Append(",\n");
+                sb.Append(",\r\n");
                 sb.Append(' ', GetClassName().Length + 16);
                 foreach (var lookupEntity in foreignLookupEntities)
                 {
