@@ -7,6 +7,7 @@ public interface IMvvmEntitySetting
     string Name { get; }
     BaseMvvmCodeEngine CodeEngine { get; set; }
     IEnumerable<BaseMvvmPropertySetting> MvvmProperties { get; }
+    IEnumerable<BaseMvvmPropertySetting> PropertiesInCreateEditOrder { get; }
     BaseMvvmPropertySetting FindProperty(string propertyName);
     void AddProperty(BaseMvvmPropertySetting propertySetting);
     bool RemoveProperty(BaseMvvmPropertySetting propertySetting);

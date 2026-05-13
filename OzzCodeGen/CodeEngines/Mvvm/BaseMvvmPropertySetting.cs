@@ -19,6 +19,23 @@ public abstract class BaseMvvmPropertySetting : BaseCSharpPropertySetting
     public BaseMvvmCodeEngine CodeEngine => MvvmEntitySetting.CodeEngine;
 
 
+
+    /// <summary>
+    /// Gets or sets the display order of the property in the create or edit view.
+    /// </summary>
+    public int CreateEditOrder
+    {
+        get { return _createEditOrder ?? PropertyDefinition.DisplayOrder; }
+        set
+        {
+            if (_createEditOrder == value) return;
+            _createEditOrder = value;
+            RaisePropertyChanged(nameof(CreateEditOrder));
+            RaisePropertyChanged(nameof(MvvmEntitySetting.PropertiesInCreateEditOrder));
+        }
+    }
+    private int? _createEditOrder;
+
     public string DefaultValue
     {
         get
@@ -44,6 +61,7 @@ public abstract class BaseMvvmPropertySetting : BaseCSharpPropertySetting
         }
     }
     private string _defaultValue;
+
 
     public string FormatDefaultValue()
     {

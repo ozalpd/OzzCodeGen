@@ -68,11 +68,10 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public IEnumerable<WpfMvvmPropertySetting> GetProperties()
         {
-            return EntitySetting.GetInheritedIncludedProperties()
+            return EntitySetting.PropertiesInCreateEditOrder
                                 .OfType<WpfMvvmPropertySetting>()
                                 .Where(p => p.IncludeInView
-                                         && p.IsSimpleOrString
-                                         && p.IsKey == false)
+                                         && p.IsSimpleOrString)
                                 .ToList();
         }
 

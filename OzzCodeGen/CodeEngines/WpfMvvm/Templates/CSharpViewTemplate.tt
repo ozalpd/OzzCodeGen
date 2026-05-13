@@ -53,6 +53,41 @@ namespace <#= GetNamespace() #>
 <#      } #>
             SourceInitialized += <#= GetClassName() #>_SourceInitialized;
         }
+<#  } else if (IsCreate) {  #>
+        public <#= GetClassName() #>()
+        {
+            InitializeComponent();
+
+            _viewModel = new <#= GetViewModelClassName() #>();
+            DataContext = _viewModel;
+            SourceInitialized += <#= GetClassName() #>_SourceInitialized;
+        }
+<#  } #>
+<#  if (IsEdit) { #>
+        /// <summary>
+        /// This constructor should not be called, but we need it for the designer to work.
+        /// </summary>
+        /// <remarks>This constructor creates a dummy <#= EntitySetting.Name #> for the designer.</remarks>
+        public <#= GetClassName() #>()
+        {
+            InitializeComponent();
+
+            _viewModel = new <#= GetViewModelClassName() #>(new <#= EntitySetting.Name #>());
+            _isDirty = _viewModel;
+            DataContext = _viewModel;
+            SourceInitialized += <#= GetClassName() #>_SourceInitialized;
+        }
+
+        /// <summary>
+        /// This constructor should be used at runtime to create the view with a real <#= EntitySetting.Name #>.
+        /// </summary>
+        /// <param name="<#= EntitySetting.Name.ToCamelCase() #>">The real <#= EntitySetting.Name #> to be used by the view.</param>
+        public <#= GetClassName() #>(<#= GetShowViewParams(isDeclaration:true) #>) : base(new <#= GetViewModelClassName() #>(<#= EntitySetting.Name.ToCamelCase() #>))
+        {
+            InitializeComponent();
+            _viewModel = (<#= GetViewModelClassName() #>)DataContext;
+        }
+<#  } #>
 
         private async void <#= GetClassName() #>_SourceInitialized(object? sender, EventArgs e)
         {
@@ -72,40 +107,9 @@ namespace <#= GetNamespace() #>
                 _viewModel.<#= property.Name #>Id = _preselected<#= property.Name #>.Id;
             }
 <#      } #>
+            OnSourceInitialized();
         }
-<#  } else if (IsCreate) {  #>
-        public <#= GetClassName() #>()
-        {
-            InitializeComponent();
-
-            _viewModel = new <#= GetViewModelClassName() #>();
-            DataContext = _viewModel;
-        }
-<#  } #>
-<#  if (IsEdit) { #>
-        /// <summary>
-        /// This constructor should not be called, but we need it for the designer to work.
-        /// </summary>
-        /// <remarks>This constructor creates a dummy <#= EntitySetting.Name #> for the designer.</remarks>
-        public <#= GetClassName() #>()
-        {
-            InitializeComponent();
-
-            _viewModel = new <#= GetViewModelClassName() #>(new <#= EntitySetting.Name #>());
-            _isDirty = _viewModel;
-            DataContext = _viewModel;
-        }
-
-        /// <summary>
-        /// This constructor should be used at runtime to create the view with a real <#= EntitySetting.Name #>.
-        /// </summary>
-        /// <param name="<#= EntitySetting.Name.ToCamelCase() #>">The real <#= EntitySetting.Name #> to be used by the view.</param>
-        public <#= GetClassName() #>(<#= GetShowViewParams(isDeclaration:true) #>) : base(new <#= GetViewModelClassName() #>(<#= EntitySetting.Name.ToCamelCase() #>))
-        {
-            InitializeComponent();
-            _viewModel = (<#= GetViewModelClassName() #>)DataContext;
-        }
-<#  } #>
+        partial void OnSourceInitialized();
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {

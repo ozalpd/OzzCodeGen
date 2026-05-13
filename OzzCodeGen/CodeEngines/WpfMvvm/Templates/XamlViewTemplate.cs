@@ -176,8 +176,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             
             #line default
             #line hidden
-            this.Write("            <RowDefinition Height=\"Auto\" />\r\n        </Grid.RowDefinitions>\r\n    " +
-                    "    ");
+            this.Write("            <RowDefinition Height=\"Auto\" />\r\n        </Grid.RowDefinitions>\r\n");
             
             #line 48 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
   int i = 0;

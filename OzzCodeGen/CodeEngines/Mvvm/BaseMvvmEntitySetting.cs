@@ -23,6 +23,10 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     [JsonIgnore]
     public IEnumerable<BaseMvvmPropertySetting> MvvmProperties => Properties.Cast<BaseMvvmPropertySetting>();
 
+    [XmlIgnore]
+    [JsonIgnore]
+    public IEnumerable<BaseMvvmPropertySetting> PropertiesInCreateEditOrder => GetInheritedIncludedProperties().OrderBy(p => p.CreateEditOrder);
+
     /// <summary>
     /// Gets or sets the namespace of the command ViewModel associated with this entity.
     /// </summary>
@@ -336,6 +340,9 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
             RaisePropertyChanged(nameof(SubFolder));
         }
     }
+
+    IEnumerable<BaseMvvmPropertySetting> IMvvmEntitySetting.MvvmProperties => MvvmProperties;
+
     private string _subFolder;
 
 

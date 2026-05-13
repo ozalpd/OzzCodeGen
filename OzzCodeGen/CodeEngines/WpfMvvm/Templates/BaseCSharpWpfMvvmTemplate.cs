@@ -100,11 +100,18 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         private IEnumerable<WpfMvvmEntitySetting> _flookupEntities;
         private IEnumerable<WpfMvvmEntitySetting> _flookupEntitiesForEdit;
 
-        public List<WpfMvvmPropertySetting> GetPreselectProperties()
+        public List<WpfMvvmPropertySetting> GetPreselectProperties(MvvmTemplate? templateType = null)
         {
-            if (_preselectProperties == null)
+            if (templateType == null)
+                templateType = TemplateType;
+
+            if (_preselectProperties == null && EntitySetting != null && templateType == MvvmTemplate.Create)
             {
                 _preselectProperties = EntitySetting.GetPreselectProperties();
+            }
+            else if(_preselectProperties == null)
+            {
+                _preselectProperties = new List<WpfMvvmPropertySetting>();
             }
 
             return _preselectProperties;
