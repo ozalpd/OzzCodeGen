@@ -9,7 +9,8 @@
 <#@ import namespace="OzzCodeGen.Utilities" #>
 <#@ import namespace="OzzUtils" #>
 <#  var properties = GetProperties().ToList();
-    var focusProperty = GetFocusProperty(); #>
+    var focusProperty = GetFocusProperty();
+    var enumTypeNames = EntitySetting.GetEnumTypeNames().ToList(); #>
 <<#= BaseClassDeclaration #> x:Class="<#= GetFullClassName() #>"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -48,32 +49,37 @@
     foreach (var prop in properties.Where(p => !p.IsKey)) {
         var lookupEntity = prop.GetLookupEntity();
         var dependent = prop.GetDependent();
+        string enumName = prop.GetEnumTypeName();
+        bool isEnum = !string.IsNullOrEmpty(enumName);
         string bindingName = prop.IsForeignKey && dependent != null ? dependent.Name : prop.Name; #>
         
         <TextBlock Grid.Row="<#= i #>" Grid.Column="0" Style="{StaticResource RightAlignedTextBlockStyle}"
-                   Text="{x:Static i18n:LocalizedStrings.<#= bindingName #>}" />
+                   Text="{x:Static i18n:LocalizedStrings.<#= bindingName #>}"/>
 <#      bool isReadOnly = IsEdit ? prop.IsReadOnlyInEdit : prop.IsReadOnlyInCreate;
         if (prop.IsMultiLine && !isReadOnly) {
 #>
         <TextBox <#= GetElementName(prop, true) #>Grid.Row="<#= i #>" Grid.Column="1"
                  Style="{StaticResource ValidationMutliLineTextBoxStyle}"
-                 Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                 Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 <#  } else if (prop.IsBoolean) { #>
         <CheckBox Grid.Row="<#= i #>" Grid.Column="1" Margin="0,0,0,8" IsChecked="{Binding <#= prop.Name #>}" />
 <#  } else if (isReadOnly) {
         bindingName = prop.IsForeignKey && lookupEntity != null ? $"{dependent.Name}.{lookupEntity.EntityDefinition.DisplayMember}" : prop.Name; #>
-        <TextBox Grid.Row="<#= i #>" Grid.Column="1" Style="{StaticResource ReadOnlyTextBoxStyle}" Text="{Binding <#= bindingName #>, Mode=OneWay}" />
-<#  } else if (prop.IsForeignKey && lookupEntity != null) { #>
+        <TextBox Grid.Row="<#= i #>" Grid.Column="1" Style="{StaticResource ReadOnlyTextBoxStyle}" Text="{Binding <#= bindingName #>, Mode=OneWay}"/>
+<#  } else if (isEnum || (prop.IsForeignKey && lookupEntity != null)) {
+        string itemsSource = isEnum ? $"{enumName}Values" : lookupEntity.Name.Pluralize();
+        string memberPath = isEnum ? "DisplayValue" : lookupEntity.EntityDefinition.DisplayMember;
+        string valuePath = isEnum ? "Value" : lookupEntity.GetPrimaryKey().Name; #>
         <ComboBox <#= GetElementName(prop, true) #>Grid.Row="<#= i #>" Grid.Column="1"
                   Style="{StaticResource ValidationComboBoxStyle}"
-                  ItemsSource="{Binding <#= lookupEntity.Name.Pluralize() #>}"
-                  DisplayMemberPath="<#= lookupEntity.EntityDefinition.DisplayMember #>"
-                  SelectedValuePath="<#= lookupEntity.GetPrimaryKey().Name #>"
-                  SelectedValue="{Binding <#= prop.Name #>, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                  ItemsSource="{Binding <#= itemsSource #>}"
+                  DisplayMemberPath="<#= memberPath #>"
+                  SelectedValuePath="<#= valuePath #>"
+                  SelectedValue="{Binding <#= prop.Name #>, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 <#  } else if (prop.IsSimpleOrString) { #>
         <TextBox <#= GetElementName(prop, true) #>Grid.Row="<#= i #>" Grid.Column="1"
                  Style="{StaticResource ValidationTextBoxStyle}"
-                 Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                 Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 <#      }
         i++;
     } #>

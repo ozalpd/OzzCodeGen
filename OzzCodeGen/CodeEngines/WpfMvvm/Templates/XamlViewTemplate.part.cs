@@ -95,15 +95,13 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public string GetElementName(WpfMvvmPropertySetting propertySetting, bool includeNameTag = false)
         {
-            var focusProperty = GetFocusProperty();
-            if (focusProperty == null || propertySetting.Name != focusProperty.Name)
-                return string.Empty;
-
+            string enumName = propertySetting.GetEnumTypeName();
+            var lookupEntity = propertySetting.GetLookupEntity();
             var sb = new StringBuilder();
             if (includeNameTag)
                 sb.Append("x:Name=\"");
 
-            sb.Append(focusProperty.Name);
+            sb.Append(propertySetting.Name);
             if (propertySetting.IsBoolean)
             {
                 sb.Append("CheckBox");
@@ -112,9 +110,17 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             {
                 sb.Append("DatePicker");
             }
+            else if (!string.IsNullOrEmpty(enumName) || lookupEntity != null)
+            {
+                sb.Append("ComboBox");
+            }
             else if (propertySetting.IsSimpleOrString)
             {
                 sb.Append("TextBox");
+            }
+            else
+            {
+                sb.Append("Control");
             }
 
             if (includeNameTag)

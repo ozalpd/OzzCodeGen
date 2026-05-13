@@ -36,20 +36,21 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             
             #line 11 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
   var properties = GetProperties().ToList();
-    var focusProperty = GetFocusProperty(); 
+    var focusProperty = GetFocusProperty();
+    var enumTypeNames = EntitySetting.GetEnumTypeNames().ToList(); 
             
             #line default
             #line hidden
             this.Write("<");
             
-            #line 13 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 14 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseClassDeclaration));
             
             #line default
             #line hidden
             this.Write(" x:Class=\"");
             
-            #line 13 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 14 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetFullClassName()));
             
             #line default
@@ -61,90 +62,90 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         xmlns:mc=""http://schemas.openxmlformats.org/markup-compatibility/2006""
         xmlns:local=""clr-namespace:");
             
-            #line 18 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 19 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetNamespace()));
             
             #line default
             #line hidden
             this.Write("\"\r\n");
             
-            #line 19 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 20 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
   if (!string.IsNullOrEmpty(LocalizationNamespaceDeclaration)) { 
             
             #line default
             #line hidden
             this.Write("        xmlns:i18n=\"");
             
-            #line 20 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 21 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(LocalizationNamespaceDeclaration));
             
             #line default
             #line hidden
             this.Write("\"\r\n");
             
-            #line 21 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 22 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 22 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 23 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
   if (!string.IsNullOrEmpty(BaseClassNamespaceDeclaration)) { 
             
             #line default
             #line hidden
             this.Write("        xmlns:base=\"");
             
-            #line 23 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseClassNamespaceDeclaration));
             
             #line default
             #line hidden
             this.Write("\"\r\n");
             
-            #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 25 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
   } 
             
             #line default
             #line hidden
             this.Write("        Title=\"");
             
-            #line 25 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetTitle()));
             
             #line default
             #line hidden
             this.Write("\"\r\n        Height=\"");
             
-            #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 27 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetMinHeight()));
             
             #line default
             #line hidden
             this.Write("\" Width=\"420\" MinHeight=\"");
             
-            #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 27 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetMinHeight()));
             
             #line default
             #line hidden
             this.Write("\" MinWidth=\"420\"\r\n        WindowStartupLocation=\"CenterOwner\"\r\n");
             
-            #line 28 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 29 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
   if (focusProperty != null) { 
             
             #line default
             #line hidden
             this.Write("        FocusManager.FocusedElement=\"{Binding ElementName=");
             
-            #line 29 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetElementName(focusProperty)));
             
             #line default
             #line hidden
             this.Write("}\"\r\n");
             
-            #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 31 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
   } 
             
             #line default
@@ -154,7 +155,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                     "Width=\"*\" />\r\n        </Grid.ColumnDefinitions>\r\n        <Grid.RowDefinitions>\r\n" +
                     "");
             
-            #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 39 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
   foreach (var prop in properties.Where(p => !p.IsKey)) {
         if (prop.IsMultiLine) { 
             
@@ -162,14 +163,14 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             #line hidden
             this.Write("            <RowDefinition Height=\"*\" />\r\n");
             
-            #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 42 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
   } else { 
             
             #line default
             #line hidden
             this.Write("            <RowDefinition Height=\"Auto\" />\r\n");
             
-            #line 43 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 44 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
       }
     } 
             
@@ -178,18 +179,20 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             this.Write("            <RowDefinition Height=\"Auto\" />\r\n        </Grid.RowDefinitions>\r\n    " +
                     "    ");
             
-            #line 47 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 48 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
   int i = 0;
     foreach (var prop in properties.Where(p => !p.IsKey)) {
         var lookupEntity = prop.GetLookupEntity();
         var dependent = prop.GetDependent();
+        string enumName = prop.GetEnumTypeName();
+        bool isEnum = !string.IsNullOrEmpty(enumName);
         string bindingName = prop.IsForeignKey && dependent != null ? dependent.Name : prop.Name; 
             
             #line default
             #line hidden
             this.Write("        \r\n        <TextBlock Grid.Row=\"");
             
-            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
@@ -197,14 +200,14 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             this.Write("\" Grid.Column=\"0\" Style=\"{StaticResource RightAlignedTextBlockStyle}\"\r\n          " +
                     "         Text=\"{x:Static i18n:LocalizedStrings.");
             
-            #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 57 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(bindingName));
             
             #line default
             #line hidden
-            this.Write("}\" />\r\n");
+            this.Write("}\"/>\r\n");
             
-            #line 55 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
       bool isReadOnly = IsEdit ? prop.IsReadOnlyInEdit : prop.IsReadOnlyInCreate;
         if (prop.IsMultiLine && !isReadOnly) {
 
@@ -213,14 +216,14 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             #line hidden
             this.Write("        <TextBox ");
             
-            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 61 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetElementName(prop, true)));
             
             #line default
             #line hidden
             this.Write("Grid.Row=\"");
             
-            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 61 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
@@ -228,35 +231,35 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             this.Write("\" Grid.Column=\"1\"\r\n                 Style=\"{StaticResource ValidationMutliLineTex" +
                     "tBoxStyle}\"\r\n                 Text=\"{Binding ");
             
-            #line 60 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
-            this.Write(", UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}\" />\r\n");
+            this.Write(", UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}\"/>\r\n");
             
-            #line 61 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 64 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
   } else if (prop.IsBoolean) { 
             
             #line default
             #line hidden
             this.Write("        <CheckBox Grid.Row=\"");
             
-            #line 62 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write("\" Grid.Column=\"1\" Margin=\"0,0,0,8\" IsChecked=\"{Binding ");
             
-            #line 62 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write("}\" />\r\n");
             
-            #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 66 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
   } else if (isReadOnly) {
         bindingName = prop.IsForeignKey && lookupEntity != null ? $"{dependent.Name}.{lookupEntity.EntityDefinition.DisplayMember}" : prop.Name; 
             
@@ -264,35 +267,38 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             #line hidden
             this.Write("        <TextBox Grid.Row=\"");
             
-            #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 68 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write("\" Grid.Column=\"1\" Style=\"{StaticResource ReadOnlyTextBoxStyle}\" Text=\"{Binding ");
             
-            #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 68 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(bindingName));
             
             #line default
             #line hidden
-            this.Write(", Mode=OneWay}\" />\r\n");
+            this.Write(", Mode=OneWay}\"/>\r\n");
             
-            #line 66 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
-  } else if (prop.IsForeignKey && lookupEntity != null) { 
+            #line 69 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+  } else if (isEnum || (prop.IsForeignKey && lookupEntity != null)) {
+        string itemsSource = isEnum ? $"{enumName}Values" : lookupEntity.Name.Pluralize();
+        string memberPath = isEnum ? "DisplayValue" : lookupEntity.EntityDefinition.DisplayMember;
+        string valuePath = isEnum ? "Value" : lookupEntity.GetPrimaryKey().Name; 
             
             #line default
             #line hidden
             this.Write("        <ComboBox ");
             
-            #line 67 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 73 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetElementName(prop, true)));
             
             #line default
             #line hidden
             this.Write("Grid.Row=\"");
             
-            #line 67 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 73 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
@@ -300,50 +306,50 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             this.Write("\" Grid.Column=\"1\"\r\n                  Style=\"{StaticResource ValidationComboBoxSty" +
                     "le}\"\r\n                  ItemsSource=\"{Binding ");
             
-            #line 69 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.Name.Pluralize()));
+            #line 75 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(itemsSource));
             
             #line default
             #line hidden
             this.Write("}\"\r\n                  DisplayMemberPath=\"");
             
-            #line 70 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.EntityDefinition.DisplayMember));
+            #line 76 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(memberPath));
             
             #line default
             #line hidden
             this.Write("\"\r\n                  SelectedValuePath=\"");
             
-            #line 71 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.GetPrimaryKey().Name));
+            #line 77 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(valuePath));
             
             #line default
             #line hidden
             this.Write("\"\r\n                  SelectedValue=\"{Binding ");
             
-            #line 72 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 78 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write(", Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=T" +
-                    "rue}\" />\r\n");
+                    "rue}\"/>\r\n");
             
-            #line 73 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 79 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
   } else if (prop.IsSimpleOrString) { 
             
             #line default
             #line hidden
             this.Write("        <TextBox ");
             
-            #line 74 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 80 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetElementName(prop, true)));
             
             #line default
             #line hidden
             this.Write("Grid.Row=\"");
             
-            #line 74 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 80 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
@@ -351,14 +357,14 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             this.Write("\" Grid.Column=\"1\"\r\n                 Style=\"{StaticResource ValidationTextBoxStyle" +
                     "}\"\r\n                 Text=\"{Binding ");
             
-            #line 76 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 82 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
-            this.Write(", UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}\" />\r\n");
+            this.Write(", UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}\"/>\r\n");
             
-            #line 77 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 83 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
       }
         i++;
     } 
@@ -367,7 +373,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             #line hidden
             this.Write("\r\n        <StackPanel Grid.Row=\"");
             
-            #line 81 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 87 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
@@ -375,7 +381,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             this.Write("\" Grid.ColumnSpan=\"2\" Orientation=\"Horizontal\" HorizontalAlignment=\"Right\" Margin" +
                     "=\"0,12,0,0\">\r\n            <Button Content=\"");
             
-            #line 82 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 88 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetActionString("OK")));
             
             #line default
@@ -383,14 +389,14 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             this.Write("\" Width=\"90\" Margin=\"0,0,8,0\" IsDefault=\"True\" IsEnabled=\"{Binding IsValid}\" Clic" +
                     "k=\"OkButton_Click\" />\r\n            <Button Content=\"");
             
-            #line 83 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 89 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetActionString("Cancel")));
             
             #line default
             #line hidden
             this.Write("\" Width=\"90\" IsCancel=\"True\" />\r\n        </StackPanel>\r\n    </Grid>\r\n</");
             
-            #line 86 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
+            #line 92 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseClassDeclaration));
             
             #line default
