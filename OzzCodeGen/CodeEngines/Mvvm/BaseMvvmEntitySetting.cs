@@ -25,7 +25,23 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
 
     [XmlIgnore]
     [JsonIgnore]
-    public IEnumerable<BaseMvvmPropertySetting> PropertiesInCreateEditOrder => GetInheritedIncludedProperties().OrderBy(p => p.CreateEditOrder);
+    public IEnumerable<BaseMvvmPropertySetting> PropertiesInCreateEditOrder
+    {
+        get
+        {
+            if (_propertiesInCreateEditOrder == null)
+                RefreshPropertiesInCreateEditOrder();
+
+            return _propertiesInCreateEditOrder;
+        }
+    }
+    private IEnumerable<BaseMvvmPropertySetting> _propertiesInCreateEditOrder;
+
+    public void RefreshPropertiesInCreateEditOrder()
+    {
+        _propertiesInCreateEditOrder = GetInheritedIncludedProperties().OrderBy(p => p.CreateEditOrder).ToList();
+        RaisePropertyChanged(nameof(PropertiesInCreateEditOrder));
+    }
 
     /// <summary>
     /// Gets or sets the namespace of the command ViewModel associated with this entity.
