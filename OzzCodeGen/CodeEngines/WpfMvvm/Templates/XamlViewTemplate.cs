@@ -189,7 +189,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             
             #line default
             #line hidden
-            this.Write("        \r\n        <TextBlock Grid.Row=\"");
+            this.Write("\r\n        <TextBlock Grid.Row=\"");
             
             #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));

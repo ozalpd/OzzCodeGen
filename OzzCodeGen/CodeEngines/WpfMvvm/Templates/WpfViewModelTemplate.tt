@@ -51,7 +51,9 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
             <#= prop.Name #> = <#= prop.FormatDefaultValue() #>;
 <#    } #>
 <#  } #>
+            OnInitialized();
         }
+        partial void OnInitialized();
 <#  foreach (var lookupEntity in foreignLookupEntities) { #>
 
         public ObservableCollection<<#= lookupEntity.Name #>> <#= lookupEntity.Name.Pluralize() #> { get; }

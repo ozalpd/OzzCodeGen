@@ -52,7 +52,7 @@
         string enumName = prop.GetEnumTypeName();
         bool isEnum = !string.IsNullOrEmpty(enumName);
         string bindingName = prop.IsForeignKey && dependent != null ? dependent.Name : prop.Name; #>
-        
+
         <TextBlock Grid.Row="<#= i #>" Grid.Column="0" Style="{StaticResource RightAlignedTextBlockStyle}"
                    Text="{x:Static i18n:LocalizedStrings.<#= bindingName #>}"/>
 <#      bool isReadOnly = IsEdit ? prop.IsReadOnlyInEdit : prop.IsReadOnlyInCreate;
