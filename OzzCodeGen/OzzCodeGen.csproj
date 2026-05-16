@@ -11,10 +11,10 @@
 		<RootNamespace>OzzCodeGen</RootNamespace>
 		<AssemblyName>OzzCodeGen</AssemblyName>
 
-		<Version>2.3.5</Version>
-		<AssemblyVersion>2.3.5.0</AssemblyVersion>
-		<FileVersion>2.3.5.0</FileVersion>
-		<InformationalVersion>2.3.5</InformationalVersion>
+		<Version>2.3.6</Version>
+		<AssemblyVersion>2.3.6.0</AssemblyVersion>
+		<FileVersion>2.3.6.0</FileVersion>
+		<InformationalVersion>2.3.6</InformationalVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -139,6 +139,11 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>CSharpValidatorTemplate.tt</DependentUpon>
+		</Compile>
+		<Compile Update="CodeEngines\CsModelClass\Templates\EnumExtensionTemplate.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>EnumExtensionTemplate.tt</DependentUpon>
 		</Compile>
 		<Compile Update="CodeEngines\CsModelClass\Templates\QueryParametersTemplate.cs">
 		  <DesignTime>True</DesignTime>
@@ -343,6 +348,9 @@
 		</None>
 		<None Update="CodeEngines\CsModelClass\Templates\CSharpValidatorTemplate.tt">
 		  <LastGenOutput>CSharpValidatorTemplate.cs</LastGenOutput>
+		</None>
+		<None Update="CodeEngines\CsModelClass\Templates\EnumExtensionTemplate.tt">
+		  <LastGenOutput>EnumExtensionTemplate.cs</LastGenOutput>
 		</None>
 		<None Update="CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt">
 		  <LastGenOutput>QueryParametersTemplate.cs</LastGenOutput>

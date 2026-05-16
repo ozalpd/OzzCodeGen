@@ -6,7 +6,7 @@
                      xmlns:ui="clr-namespace:OzzCodeGen.UI"
                      xmlns:local="clr-namespace:OzzCodeGen.CodeEngines.CsModelClass.UI"
                      mc:Ignorable="d" 
-                     d:DesignHeight="460" d:DesignWidth="1400">
+                     d:DesignHeight="540" d:DesignWidth="1536">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -19,14 +19,17 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="172"/>
                 <ColumnDefinition Width="160"/>
                 <ColumnDefinition Width="172"/>
-                <ColumnDefinition Width="172" />
                 <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="176"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="172"/>
+                <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="26"/>
                 <RowDefinition Height="26"/>
                 <RowDefinition Height="26"/>
                 <RowDefinition Height="26"/>
@@ -38,13 +41,13 @@
             <Button x:Name="btnRenderTemplate"
                     Content="Render Template"
                     Background="#FFE6F4FF"
-                    Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="4"
+                    Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Margin="4"
                     Click="btnRenderTemplate_Click"/>
 
             <Button x:Name="btnRefresh"
                     Content="Refresh"
                     Background="#FFE6F4FF"
-                    Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Margin="4"
+                    Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" Margin="4"
                     Click="btnRefresh_Click"/>
 
             <CheckBox Content="All Entities"
@@ -61,23 +64,18 @@
                       ToolTip="Generate metadata classes for DataTranferObjects"
                       IsChecked="{Binding GenerateForDTO}"/>
 
-            
+
             <CheckBox Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Margin="0"
                       Content="Generate Annotations"
                       ToolTip="Generate annotations for the metadata classes"
                       IsChecked="{Binding GenAnnotations}"/>
 
             <CheckBox Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Margin="0"
-                      Content="Generate Validator"
-                      ToolTip="Generate a validator class for all the entities"
-                      IsChecked="{Binding GenerateValidator}"/>
-
-            <CheckBox Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" Margin="0"
                       Content="Use Resx Resource"
                       ToolTip="Use resx resource files for error messages and display names instead of hard coded strings"
                       IsChecked="{Binding UseResourceFiles}"/>
 
-            <CheckBox Grid.Column="2" Grid.Row="3" VerticalAlignment="Center" Margin="0"
+            <CheckBox Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" Margin="0"
                       Content="Generate XML Doc"
                       ToolTip="Generate XML documentation for the metadata classes"
                       IsChecked="{Binding GenerateXmlDoc}"/>
@@ -92,72 +90,102 @@
                      Style="{StaticResource textBoxStyle}"/>
 
             <TextBlock Grid.Column="3" Grid.Row="1" Margin="4,0,0,0"
-                       Text="Validator Namespace:"
-                       ToolTip="Namespace of Generated Validator Class"
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="4" Grid.Row="1"
-                     Text="{Binding ValidatorNamespaceName, Mode=TwoWay}"
-                     ToolTip="Namespace of Generated Validator Class"
-                     Style="{StaticResource textBoxStyle}"/>
-
-            <TextBlock Grid.Column="3" Grid.Row="2" Margin="4,0,0,0"
-                       Text="QueryParameters Namespace:"
-                       ToolTip="Namespace of Generated QueryParameters Class"
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="4" Grid.Row="2"
-                     Text="{Binding QueryParamNamespaceName, Mode=TwoWay}"
-                     ToolTip="Namespace of Generated QueryParameters Class"
-                     Style="{StaticResource textBoxStyle}"/>
-
-            <TextBlock Grid.Column="3" Grid.Row="3" Margin="4,0,0,0"
-                       Text="Custom Attrib. Namespace:"
-                       ToolTip="Namespace of Custom Attributes"
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="4" Grid.Row="3"
-                     Text="{Binding CustomAttribNamespace, Mode=TwoWay}"
-                     ToolTip="Namespace of Custom Attributes"
-                     Style="{StaticResource textBoxStyle}"/>
-
-
-            <TextBlock Grid.Column="5" Grid.Row="0" Margin="4,0,0,0"
                        Text="Target Model Folder:"
                        ToolTip="Target folder for generated model class files"
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="6" Grid.Row="0"
+            <TextBox Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="1"
                      Text="{Binding TargetFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetDirectory}"
                      Style="{StaticResource textBoxStyle}"/>
 
-            <TextBlock Text="Target Validator Folder:"
-                   ToolTip="Target folder for generated validator class file"
-                   Grid.Column="5" Grid.Row="1" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Grid.Column="6" Grid.Row="1"
-                     Text="{Binding ValidatorFolder, Mode=TwoWay}"
-                     ToolTip="{Binding TargetValidatorDirectory}"
+            <TextBlock Grid.Column="3" Grid.Row="2" Margin="4,0,0,0"
+                       Text="QueryParameters Namespace:"
+                       ToolTip="Namespace of generated QueryParameters class"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="4" Grid.Row="2"
+                     Text="{Binding QueryParamNamespaceName, Mode=TwoWay}"
+                     ToolTip="Namespace of generated QueryParameters class"
                      Style="{StaticResource textBoxStyle}"/>
 
-            <TextBlock Text="Target QueryParameters Folder:"
-                   ToolTip="Target folder for generated QueryParameters class file"
-                   Grid.Column="5" Grid.Row="2" Margin="4,0,0,0" VerticalAlignment="Center"/>
-            <TextBox Grid.Column="6" Grid.Row="2"
+            <TextBlock Grid.Column="3" Grid.Row="3" Margin="4,0,0,0"
+                       Text="Target QueryParameters Folder:"
+                       ToolTip="Target folder for generated QueryParameters class file"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2"
                      Text="{Binding QueryParamFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetQueryParamDirectory}"
                      Style="{StaticResource textBoxStyle}"/>
 
+            <TextBlock Grid.Column="3" Grid.Row="4" Margin="4,0,0,0"
+                       Text="Custom Attrib. Namespace:"
+                       ToolTip="Namespace of custom attributes"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="4" Grid.Row="4"
+                     Text="{Binding CustomAttribNamespace, Mode=TwoWay}"
+                     ToolTip="Namespace of custom attributes"
+                     Style="{StaticResource textBoxStyle}"/>
 
 
-            <Grid Grid.Row="4" Grid.ColumnSpan="7" Margin="4,4,4,0">
+
+
+            <TextBlock Grid.Column="6" Grid.Row="0" Margin="4,0,0,0"
+                       Text="Validator Namespace:"
+                       ToolTip="Namespace of generated validator class"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="7" Grid.Row="0"
+                     Text="{Binding ValidatorNamespaceName, Mode=TwoWay}"
+                     ToolTip="Namespace of generated validator class"
+                     Style="{StaticResource textBoxStyle}"/>
+            <CheckBox Grid.Column="8" Grid.Row="0" VerticalAlignment="Center" Margin="8,0"
+                      Content="Generate Validator"
+                      ToolTip="Generate a validator class for all the entities"
+                      IsChecked="{Binding GenerateValidator}"/>
+
+
+            <TextBlock Grid.Column="6" Grid.Row="1" Margin="4,0,0,0"
+                       Text="Target Validator Folder:"
+                       ToolTip="Target folder for generated validator class file"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="7" Grid.Row="1" Grid.ColumnSpan="2"
+                     Text="{Binding ValidatorFolder, Mode=TwoWay}"
+                     ToolTip="{Binding TargetValidatorDirectory}"
+                     Style="{StaticResource textBoxStyle}"/>
+
+            <TextBlock Grid.Column="6" Grid.Row="2" Margin="4,0,0,0"
+                       Text="Extensions Namespace:"
+                       ToolTip="Namespace of generated extension classes"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="7" Grid.Row="2"
+                     Text="{Binding ExtensionsNamespaceName, Mode=TwoWay}"
+                     ToolTip="Namespace of generated extension classes"
+                     Style="{StaticResource textBoxStyle}"/>
+            <CheckBox Grid.Column="8" Grid.Row="2" VerticalAlignment="Center" Margin="8,0"
+                      Content="Generate Enum Extension"
+                      ToolTip="Generate EnumExtension class for displaying enum values"
+                      IsChecked="{Binding GenerateEnumExtension}"/>
+
+            <TextBlock Grid.Column="6" Grid.Row="3" Margin="4,0,0,0"
+                       Text="Target Extensions Folder:"
+                       ToolTip="Target folder for generated extension classes file"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="7" Grid.Row="3" Grid.ColumnSpan="2"
+                     Text="{Binding ExtensionsFolder, Mode=TwoWay}"
+                     ToolTip="{Binding TargetExtensionsDirectory}"
+                     Style="{StaticResource textBoxStyle}"/>
+
+
+
+            <Grid Grid.Row="5" Grid.ColumnSpan="10" Margin="4,4,4,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" MaxWidth="480"/>
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
 
-                <DataGrid x:Name="grdEntitySettings" ItemsSource="{Binding Entities, Mode=TwoWay}" 
-                SelectedItem="{Binding CurrentEntitySetting, Mode=TwoWay}"
-                AutoGeneratedColumns="grdEntitySettings_AutoGeneratedColumns"
-                CanUserDeleteRows="False" 
-                CanUserAddRows="False"  
-                AutoGeneratingColumn="grdEntitySettings_AutoGeneratingColumn">
+                <DataGrid x:Name="grdEntitySettings" ItemsSource="{Binding Entities, Mode=TwoWay}"
+                          SelectedItem="{Binding CurrentEntitySetting, Mode=TwoWay}"
+                          CanUserDeleteRows="False" CanUserAddRows="False"
+                          AutoGeneratedColumns="grdEntitySettings_AutoGeneratedColumns"
+                          AutoGeneratingColumn="grdEntitySettings_AutoGeneratingColumn">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem x:Name="mnuEntityOptions"  Header="Options" IsEnabled="False" />

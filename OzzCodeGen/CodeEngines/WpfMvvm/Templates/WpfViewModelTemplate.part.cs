@@ -50,7 +50,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                 {
                     namespaces.Add(modelClassEngine.ExtensionsNamespaceName);
                     namespaces = namespaces.OrderBy(ns => ns).ToList();
-                    namespaces.Add($"static {modelClassEngine.ExtensionsNamespaceName}.{modelClassEngine.EnumExtensionName}");
+                    namespaces.Add($"static {modelClassEngine.ExtensionsNamespaceName}.{modelClassEngine.EnumExtensionClassName}");
                 }
                 else
                 {

@@ -23,11 +23,44 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
 
     public override string ProjectTypeName { get { return "C# Model Class Generator"; } }
 
-    public readonly string EnumExtensionName = "EnumExtension";
+    public readonly string EnumExtensionClassName = "EnumExtension";
 
-    public readonly string ExtensionsFolderName = "Extensions";
 
-    public string ExtensionsNamespaceName => $"{Project.NamespaceName}.Extensions";
+    /// <summary>
+    /// Target folder for extension classes which is relative to the solution directory.
+    /// </summary>
+    public string ExtensionsFolder
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_ExtensionsFolder))
+                _ExtensionsFolder = "Extensions";
+            return _ExtensionsFolder;
+        }
+        set
+        {
+            _ExtensionsFolder = value;
+            RaisePropertyChanged(nameof(ExtensionsFolder));
+            RaisePropertyChanged(nameof(TargetExtensionsDirectory));
+        }
+    }
+    private string _ExtensionsFolder;
+
+    public string ExtensionsNamespaceName
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_ExtensionsNamespaceName))
+                _ExtensionsNamespaceName = $"{Project.NamespaceName}.Extensions";
+            return _ExtensionsNamespaceName;
+        }
+        set
+        {
+            _ExtensionsNamespaceName = value;
+            RaisePropertyChanged(nameof(ExtensionsNamespaceName));
+        }
+    }
+    private string _ExtensionsNamespaceName;
 
 
     public override string GetDefaultFileName()
@@ -95,6 +128,20 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
     private bool _genAnnotations;
 
     /// <summary>
+    /// Generates EnumExtension class for to use displaying enum values.
+    /// </summary>
+    public bool GenerateEnumExtension
+    {
+        get { return _generateEnumExtension ?? true; }
+        set
+        {
+            _generateEnumExtension = value;
+            RaisePropertyChanged(nameof(GenerateEnumExtension));
+        }
+    }
+    private bool? _generateEnumExtension;
+
+    /// <summary>
     /// Generates a validator class for all the entities when enabled.
     /// </summary>
     public bool GenerateValidator
@@ -122,6 +169,24 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
         }
     }
     private bool _generateXmlDoc;
+
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public string TargetExtensionsDirectory
+    {
+        get
+        {
+            if (Project != null && !string.IsNullOrEmpty(Project.TargetSolutionDir))
+            {
+                return Path.GetFullPath(Path.Combine(Project.TargetSolutionDir, ExtensionsFolder));
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+    }
 
     [XmlIgnore]
     [JsonIgnore]
@@ -317,6 +382,13 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
         else
         {
             allWritten = RenderTemplate(entity);
+        }
+
+        if (GenerateEnumExtension)
+        {
+            var enumExtensionTemplate = new EnumExtensionTemplate(this);
+            var fileName = Path.Combine(TargetExtensionsDirectory, enumExtensionTemplate.GetDefaultFileName());
+            allWritten = enumExtensionTemplate.WriteToFile(fileName, OverwriteExisting) & allWritten;
         }
 
         if (GenerateValidator)

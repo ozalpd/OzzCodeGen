@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
 {
@@ -16,6 +17,20 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
         public override string GetDefaultFileName()
         {
             return $"{CodeEngine.ValidatorClassName}.cs";
+        }
+
+
+        public override List<string> DefaultUsingNamespaceList()
+        {
+            var namespaces = new List<string>()
+            {
+                "System.ComponentModel.DataAnnotations"
+            };
+
+            if (HasCustomAttributes())
+                namespaces.Add(CodeEngine.CustomAttribNamespace);
+
+            return namespaces.OrderBy(ns => ns).ToList();
         }
 
         public bool HasCustomAttributes()

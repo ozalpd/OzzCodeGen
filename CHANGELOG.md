@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+## [2.3.6] - 2026-05-16
+
+### Added
+- Added `EnumExtensionTemplate` T4 and code generation for enum extension methods and `EnumValueItem<T>` class.
+
+### Changed
+- Introduced settings for extensions folder/namespace and enum extension generation in `CSharpModelClassCodeEngine`.
+- Updated WPF UI to configure and enable enum extension generation.
+- Updated MVVM engine template to use new `EnumExtensionClassName`.
+- Improved UI for folder/namespace settings.
+
 ## [2.3.5] - 2026-05-08
 
 ### Added

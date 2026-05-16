@@ -167,6 +167,15 @@ public partial class WpfMvvmEngineUI : AbstractEngineUI
 
     private void grdEntitySettings_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        if (grdEntitySettings.SelectedItem == null || !(grdEntitySettings.SelectedItem is WpfMvvmEntitySetting))
+        {
+            btnMovePropertyTop.IsEnabled = false;
+            btnMovePropertyUp.IsEnabled = false;
+            btnMovePropertyDown.IsEnabled = false;
+            btnMovePropertyBottom.IsEnabled = false;
+            return;
+        }
+
         var entitySetting = (WpfMvvmEntitySetting)grdEntitySettings.SelectedItem;
         if (entitySetting != null)
             entitySetting.RefreshPropertiesInCreateEditOrder();
