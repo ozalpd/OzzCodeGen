@@ -39,9 +39,8 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
 
 <#  } #>
 <#  foreach (var enumTypeName in enumTypeNames) { #>
-            <#= enumTypeName #>Values = EnumExtension.GetValues<<#= enumTypeName #>>()
-                                        .Select(x => new EnumValueItem<<#= enumTypeName #>> { Value = x, DisplayValue = x.GetDisplayValue() })
-                                        .ToList();
+            <#= enumTypeName #>Values = GetValues<<#= enumTypeName #>>();
+
 <#  } #>
 <#  if (IsEdit) { #>
             _<#= EntitySetting.Name.ToCamelCase() #> = <#= EntitySetting.Name.ToCamelCase() #>;

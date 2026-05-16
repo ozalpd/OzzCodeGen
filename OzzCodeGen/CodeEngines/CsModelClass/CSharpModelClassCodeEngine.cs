@@ -28,7 +28,7 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
     public readonly string ExtensionsFolderName = "Extensions";
 
     public string ExtensionsNamespaceName => $"{Project.NamespaceName}.Extensions";
-    
+
 
     public override string GetDefaultFileName()
     {

@@ -33,15 +33,6 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         public override List<string> DefaultUsingNamespaceList()
         {
             var namespaces = new List<string>();
-            var modelClassEngine = CodeEngine.ModelClassCodeEngine;
-            if (modelClassEngine != null)
-            {
-                namespaces.Add(modelClassEngine.NamespaceName);
-                if (GetEnumTypeNames().Any())
-                {
-                    namespaces.Add(modelClassEngine.ExtensionsNamespaceName);
-                }
-            }
             if (!string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
             {
                 namespaces.Add($"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.ViewModelFolder)}");
@@ -51,7 +42,26 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                 namespaces.Add(GetLookupContractNamespace());
                 namespaces.Add("System.Collections.ObjectModel");
             }
-            return namespaces.OrderBy(ns => ns).ToList();
+            var modelClassEngine = CodeEngine.ModelClassCodeEngine;
+            if (modelClassEngine != null)
+            {
+                namespaces.Add(modelClassEngine.NamespaceName);
+                if (GetEnumTypeNames().Any())
+                {
+                    namespaces.Add(modelClassEngine.ExtensionsNamespaceName);
+                    namespaces = namespaces.OrderBy(ns => ns).ToList();
+                    namespaces.Add($"static {modelClassEngine.ExtensionsNamespaceName}.{modelClassEngine.EnumExtensionName}");
+                }
+                else
+                {
+                    namespaces = namespaces.OrderBy(ns => ns).ToList();
+                }
+            }
+            else
+            {
+                namespaces = namespaces.OrderBy(ns => ns).ToList();
+            }
+            return namespaces;
         }
     }
 }
