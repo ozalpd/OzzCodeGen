@@ -23,8 +23,79 @@
 
 namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
 {
-    public partial class <#= GetClassName() #> : <#= CodeEngine.BaseCreateEditViewModelName #>
+    public partial class <#= GetClassName() #> : <#= GetBaseClassName() #>
     {
+<#  if (TemplateType == MvvmTemplate.Collection) {
+        string queryParamsName = EntitySetting.GenerateGetPaged ? "queryParams" : string.Empty;
+        var pkey = GetPrimaryKey();  #>
+        public <#= GetClassName() #>(<#= GetVmConstructorParams(isDeclaration: true) #>)
+        {
+            <#= EntitySetting.RepositoryInstanceName #> = <#= EntitySetting.RepositoryInstanceName.ToCamelCase() #>;
+            <#= EntitySetting.Name.Pluralize() #> = new ObservableCollection<<#= EntitySetting.Name #>>();
+
+            <#= EntitySetting.Name #>CreateCommand = new <#= EntitySetting.Name #>CreateCommand (<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Create, hasDlgService:true) #>);
+            <#= EntitySetting.Name #>DeleteCommand = new <#= EntitySetting.Name #>DeleteCommand (<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Delete) #>);
+            <#= EntitySetting.Name #>EditCommand = new <#= EntitySetting.Name #>EditCommand (<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Edit, hasDlgService:true) #>);
+        }
+
+        public <#= EntitySetting.RepositoryName #> <#= EntitySetting.RepositoryInstanceName #> { get; }
+        public ObservableCollection<<#= EntitySetting.Name #>> <#= EntitySetting.Name.Pluralize() #> { get; }
+
+        public <#= EntitySetting.Name #>CreateCommand <#= EntitySetting.Name #>CreateCommand { get; }
+        public <#= EntitySetting.Name #>DeleteCommand <#= EntitySetting.Name #>DeleteCommand { get; }
+        public <#= EntitySetting.Name #>EditCommand <#= EntitySetting.Name #>EditCommand { get; }
+
+<#      if (EntitySetting.GenerateGetPaged) { #>
+        public <#= EntitySetting.GetQueryParamClassName() #>? LastQueryParams { get; private set; }
+
+        public async Task Load<#= EntitySetting.Name.Pluralize() #>Async()
+        {
+            await Load<#= EntitySetting.Name.Pluralize() #>Async(LastQueryParams ?? new <#= EntitySetting.GetQueryParamClassName() #>());
+        }
+
+        public async Task Load<#= EntitySetting.Name.Pluralize() #>Async(<#= EntitySetting.GetQueryParamClassName() #> <#= queryParamsName#>)
+<#      } else { #>
+        public async Task Load<#= EntitySetting.Name.Pluralize() #>Async()
+<#      } #>
+        {
+            if (Load<#= EntitySetting.Name.Pluralize() #>InProgress)
+                return;
+            Load<#= EntitySetting.Name.Pluralize() #>InProgress = true;
+<#      if (EntitySetting.GenerateGetPaged) { #>
+            var items = await <#= EntitySetting.RepositoryInstanceName #>.GetPagedAsync(<#= queryParamsName #>);
+            LastQueryParams = <#= queryParamsName #>;
+<#      } else { #>
+            var items = await <#= EntitySetting.RepositoryInstanceName #>.GetAllAsync();
+<#      } #>
+            ReplaceCollection(<#= EntitySetting.Name.Pluralize() #>, items);
+            Load<#= EntitySetting.Name.Pluralize() #>InProgress = false;
+            On<#= EntitySetting.Name.Pluralize() #>Loaded();
+        }
+        public bool Load<#= EntitySetting.Name.Pluralize() #>InProgress { get; private set; } = false;
+        protected virtual void On<#= EntitySetting.Name.Pluralize() #>Loaded() { /* For override in derived classes */ }
+        
+
+        public async Task Save<#= EntitySetting.Name #>Async(<#= EntitySetting.Name #> <#= EntitySetting.Name.ToCamelCase() #>)
+        {
+            if (<#= EntitySetting.Name.ToCamelCase() #>.<#= pkey.Name #> <= 0)
+                <#= EntitySetting.Name.ToCamelCase() #>.<#= pkey.Name #> = await <#= EntitySetting.RepositoryInstanceName #>.CreateAsync(<#= EntitySetting.Name.ToCamelCase() #>);
+            else
+                await <#= EntitySetting.RepositoryInstanceName #>.UpdateAsync(<#= EntitySetting.Name.ToCamelCase() #>);
+        }
+
+        public <#= EntitySetting.Name #>? Selected<#= EntitySetting.Name #>
+        {
+            get { return SelectedItem; }
+            set
+            {
+                SelectedItem = value;
+                RaisePropertyChanged(nameof(Selected<#= EntitySetting.Name #>));
+            }
+        }
+<#      WriteLine("    }");
+        WriteLine("}");
+        return this.GenerationEnvironment.ToString();
+    } #>
 <#  foreach (var lookupEntity in foreignLookupEntities) { #>
         private readonly <#= lookupEntity.GetLookupName(LookupTemplate.Interface) #> _<#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #>;
 <#  } #>

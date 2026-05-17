@@ -190,7 +190,7 @@ namespace ");
             this.Write(" _");
             
             #line 43 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName.ToCamelCase()));
             
             #line default
             #line hidden
@@ -211,21 +211,21 @@ namespace ");
             this.Write(" ");
             
             #line 45 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n            _");
             
             #line 47 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" = ");
             
             #line 47 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName.ToCamelCase()));
             
             #line default
             #line hidden
@@ -260,7 +260,7 @@ namespace ");
             this.Write(" = await _");
             
             #line 52 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName.ToCamelCase()));
             
             #line default
             #line hidden

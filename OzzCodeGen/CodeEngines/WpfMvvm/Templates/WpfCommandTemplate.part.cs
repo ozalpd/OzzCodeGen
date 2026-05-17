@@ -30,49 +30,12 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public string GetNamespace() => EntitySetting.GetCommandsNamespaceName();
 
-        public bool IsCreateOrEdit => TemplateType == MvvmTemplate.Create || TemplateType == MvvmTemplate.Edit;
 
         public bool HasDlgService => IsCreateOrEdit; // || TemplateType == MvvmTemplate.Collection;
 
         public string GetConstructorParameters()
         {
-            var sb = new StringBuilder();
-            sb.Append(EntitySetting.CommandVmTypeName);
-            sb.Append(" viewModel");
-            if (HasDlgService)
-            {
-                sb.Append(", ");
-                sb.Append(CodeEngine.DialogServiceContract);
-                sb.Append(' ');
-                sb.Append(CodeEngine.DialogServiceClassName.ToCamelCase());
-            }
-            if (!IsCreateOrEdit)
-                return sb.ToString();
-
-            var foreignLookupEntities = GetForeignLookupEntities();
-            int i = 0;
-            if (foreignLookupEntities != null && foreignLookupEntities.Any())
-            {
-                sb.Append(",\r\n");
-                sb.Append(' ', GetClassName().Length + 16);
-                foreach (var lookupEntity in foreignLookupEntities)
-                {
-                    if (i > 0 && i % 2 == 0)
-                    {
-                        sb.Append(",\r\n");
-                        sb.Append(' ', GetClassName().Length + 16);
-                    }
-                    else if (i > 0)
-                    {
-                        sb.Append(", ");
-                    }
-                    sb.Append(lookupEntity.GetLookupName(LookupTemplate.Interface));
-                    sb.Append(' ');
-                    sb.Append(lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase());
-                    i++;
-                }
-            }
-            return sb.ToString();
+            return GetCommandConstructorParams("viewModel", isDeclaration: true, hasDlgService: HasDlgService);
         }
 
         public string GetSvcShowParameters()

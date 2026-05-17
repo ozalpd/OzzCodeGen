@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [2.3.7] - 2026-05-17
+
+### Added
+- Added support for generating collection view models (ListVM) with `GenerateGetPaged` option that generates paged query methods in the WPF MVVM engine.
+
+### Changed
+- Bump version to 2.3.7 in OzzCodeGen and OzzCodeGen.Wpf
+- Added AppSettingsFolder property and UI binding
+- Refactor query param class name logic (`GetQueryParamClassName`)
+- Centralize constructor parameter generation for commands/VMs
+- Update naming: CollectionVM → ListVM, improve repo instance naming
+- Update T4 templates for new features and consistency
+- Make base VM abstract methods virtual with empty bodies
+- Add ReplaceCollection helper to generated VMs
+- Improve foreign lookup entity detection logic
+- Remove unnecessary IsPublic assignments in templates
+- Tweak MVVM engine UI layout for new fields and clarity
+
 ### Fixed
 - In `CSharpSqliteRepositoryTemplate` removed underscore/camelCase repository references in autoloaded navigation property assignments. Instead uses lazy loading property names which property names are exactly same as repository class names.
 

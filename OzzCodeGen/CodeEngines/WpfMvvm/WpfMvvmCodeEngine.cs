@@ -153,21 +153,18 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         if (entitySetting.GenModeCreateCommand > FileGenerationMode.DoNotGenerate)
         {
             template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Create);
-            template.IsPublic = false;
             allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
         }
 
         if (entitySetting.GenModeEditCommand > FileGenerationMode.DoNotGenerate)
         {
             template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Edit);
-            template.IsPublic = false;
             allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
         }
 
         if (entitySetting.GenModeDeleteCommand > FileGenerationMode.DoNotGenerate)
         {
             template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Delete);
-            template.IsPublic = false;
             allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
         }
 
@@ -178,11 +175,9 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
     {
         bool allWritten = true;
         var svcTmplate = new WpfDialogServcTemplate(this, isInterface: true);
-        svcTmplate.IsPublic = false;
         allWritten &= RenderTemplate(svcTmplate, TargetDirectory, ServicesFolder);
 
         svcTmplate = new WpfDialogServcTemplate(this, isInterface: false);
-        svcTmplate.IsPublic = false;
         allWritten &= RenderTemplate(svcTmplate, TargetDirectory, ServicesFolder);
         return allWritten;
     }
@@ -210,19 +205,22 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
             allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
         }
 
+        if (entitySetting.GenModeCollectionVM > FileGenerationMode.DoNotGenerate)
+        {
+            var template = new WpfViewModelTemplate(entitySetting, MvvmTemplate.Collection);
+            allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
+        }
+
         if (entitySetting.GenModeLookupService > FileGenerationMode.DoNotGenerate)
         {
             bool targetInfra = !string.IsNullOrEmpty(InfrastructureFolder);
             var template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.Interface);
-            template.IsPublic = targetInfra;
             allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, LookupFolder);
             template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.DesignTimeClass);
-            template.IsPublic = targetInfra;
             allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, LookupFolder);
 
             string targetDir = PutLookupInInfra ? TargetInfrastructureDirectory : TargetDirectory;
             template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.RunTimeClass);
-            template.IsPublic = PutLookupInInfra;
             allWritten &= RenderTemplate(template, targetDir, LookupFolder);
         }
 

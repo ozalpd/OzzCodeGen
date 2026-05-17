@@ -1,4 +1,5 @@
 using OzzCodeGen.CodeEngines.CSharp;
+using OzzCodeGen.CodeEngines.CsModelClass;
 using OzzUtils;
 using System.Collections.Generic;
 using System.Linq;
@@ -215,6 +216,37 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     }
     private FileGenerationMode? _genModeEditVM;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether paged query methods should be generated in the collection view model.
+    /// </summary>
+    /// <remarks>When enabled, the code generator will include methods that support retrieving data in pages,
+    /// which is useful for large datasets or implementing pagination in user interfaces.</remarks>
+    public bool GenerateGetPaged
+    {
+        get
+        {
+            if (_generateGetPaged == null && ModelClassEntitySetting != null)
+                _generateGetPaged = ModelClassEntitySetting.GenerateQueryParam;
+
+            return _generateGetPaged ?? false;
+        }
+        set
+        {
+            _generateGetPaged = value;
+            RaisePropertyChanged(nameof(GenerateGetPaged));
+        }
+    }
+    private bool? _generateGetPaged;
+
+    public string GetQueryParamClassName()
+    {
+        if (ModelClassEntitySetting == null)
+            return "QueryParameters";
+
+        return ModelClassEntitySetting.GetQueryParamClassName();
+    }
+
+
     public FileGenerationMode GenModeCollectionVM
     {
         get
@@ -329,9 +361,9 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
         get
         {
             if (RepositoryName.StartsWith("I"))
-                return RepositoryName.Substring(1).ToCamelCase();
+                return RepositoryName.Substring(1);
 
-            return RepositoryName.ToCamelCase();
+            return RepositoryName;
         }
     }
 
@@ -426,7 +458,8 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
                 return $"{Name}EditVM";
 
             case MvvmTemplate.Collection:
-                return $"{Name}CollectionVM";
+                return $"{Name}ListVM";
+
             default:
                 return $"{Name}ViewModel";
         }
@@ -455,6 +488,16 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
 
             default:
                 return $"{Name}Window";
+        }
+    }
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public ModelClassEntitySetting ModelClassEntitySetting
+    {
+        get
+        {
+            return CodeEngine?.ModelClassCodeEngine.GetEntitySettingByName(Name);
         }
     }
 

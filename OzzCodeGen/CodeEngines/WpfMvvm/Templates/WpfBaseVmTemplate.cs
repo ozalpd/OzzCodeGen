@@ -99,27 +99,30 @@ namespace ");
             this.Write("()\r\n        {\r\n            Collection = new ObservableCollection<T>();\r\n         " +
                     "   CollectionFiltered = Collection;\r\n        }\r\n\r\n        public ObservableColle" +
                     "ction<T> Collection { get; }\r\n        public ObservableCollection<T> CollectionF" +
-                    "iltered { get; protected set; }\r\n\r\n        protected abstract void OnSearchStrin" +
-                    "gChanged();\r\n        protected abstract void OnSelectedItemChanging(T? newSelect" +
-                    "edItem);\r\n        protected abstract void OnSelectedItemChanged(T? oldSelectedIt" +
-                    "em);\r\n\r\n        public T? SelectedItem\r\n        {\r\n            get => _selectedI" +
-                    "tem;\r\n            set\r\n            {\r\n                if (_selectedItem is IEqua" +
-                    "table<T>)\r\n                {\r\n                    if (Equals(_selectedItem, valu" +
-                    "e))\r\n                        return;\r\n                }\r\n                OnSelec" +
-                    "tedItemChanging(value);\r\n                var oldItem = _selectedItem;\r\n         " +
-                    "       _selectedItem = value;\r\n                RaisePropertyChanged(nameof(Selec" +
-                    "tedItem));\r\n                OnSelectedItemChanged(oldItem);\r\n            }\r\n    " +
-                    "    }\r\n        protected T? _selectedItem;\r\n\r\n        public string SearchString" +
-                    "\r\n        {\r\n            get => _searchString ?? string.Empty;\r\n            set\r" +
-                    "\n            {\r\n                _searchString = value;\r\n                RaisePro" +
-                    "pertyChanged(nameof(SearchString));\r\n                OnSearchStringChanged();\r\n " +
-                    "               if (SelectedItem == null)\r\n                {\r\n                   " +
-                    " if (CollectionFiltered.Count > 0)\r\n                        SelectedItem = Colle" +
-                    "ctionFiltered[0];\r\n                }\r\n                RaisePropertyChanged(nameo" +
-                    "f(CollectionFiltered));\r\n            }\r\n        }\r\n        private string? _sear" +
-                    "chString;\r\n    }\r\n");
+                    "iltered { get; protected set; }\r\n\r\n        protected virtual void OnSearchString" +
+                    "Changed() { }\r\n        protected virtual void OnSelectedItemChanging(T? newSelec" +
+                    "tedItem) { }\r\n        protected virtual void OnSelectedItemChanged(T? oldSelecte" +
+                    "dItem) { }\r\n\r\n        public T? SelectedItem\r\n        {\r\n            get => _sel" +
+                    "ectedItem;\r\n            set\r\n            {\r\n                if (_selectedItem is" +
+                    " IEquatable<T>)\r\n                {\r\n                    if (Equals(_selectedItem" +
+                    ", value))\r\n                        return;\r\n                }\r\n                O" +
+                    "nSelectedItemChanging(value);\r\n                var oldItem = _selectedItem;\r\n   " +
+                    "             _selectedItem = value;\r\n                RaisePropertyChanged(nameof" +
+                    "(SelectedItem));\r\n                OnSelectedItemChanged(oldItem);\r\n            }" +
+                    "\r\n        }\r\n        protected T? _selectedItem;\r\n\r\n        public string Search" +
+                    "String\r\n        {\r\n            get => _searchString ?? string.Empty;\r\n          " +
+                    "  set\r\n            {\r\n                _searchString = value;\r\n                Ra" +
+                    "isePropertyChanged(nameof(SearchString));\r\n                OnSearchStringChanged" +
+                    "();\r\n                if (SelectedItem == null)\r\n                {\r\n             " +
+                    "       if (CollectionFiltered.Count > 0)\r\n                        SelectedItem =" +
+                    " CollectionFiltered[0];\r\n                }\r\n                RaisePropertyChanged" +
+                    "(nameof(CollectionFiltered));\r\n            }\r\n        }\r\n        private string?" +
+                    " _searchString;\r\n        \r\n        protected void ReplaceCollection<T>(Observabl" +
+                    "eCollection<T> target, IEnumerable<T> source)\r\n        {\r\n            target.Cle" +
+                    "ar();\r\n            foreach (var item in source)\r\n            {\r\n                " +
+                    "target.Add(item);\r\n            }\r\n        }\r\n    }\r\n");
             
-            #line 90 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
+            #line 99 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
   }                               // AbstractCreateEditVM ↓
     else if (BaseType == BaseVM.CreateEditVM)
     { 
@@ -128,7 +131,7 @@ namespace ");
             #line hidden
             this.Write("    {\r\n        public ");
             
-            #line 94 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
+            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
             
             #line default
@@ -156,7 +159,7 @@ namespace ");
     }
 ");
             
-            #line 115 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
+            #line 124 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
   }                               // AbstractDataErrorInfoVM ↓
     else if (BaseType == BaseVM.DataErrorInfoVM)
     { 
@@ -205,7 +208,7 @@ namespace ");
                     "ual(newErrors))\r\n                return;\r\n\r\n            _errors[propertyName] = " +
                     "newErrors;\r\n            OnErrorsChanged(propertyName);\r\n        }\r\n    }\r\n");
             
-            #line 216 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
+            #line 225 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
     } 
             
             #line default

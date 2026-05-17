@@ -21,6 +21,8 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public WpfMvvmEntitySetting EntitySetting { get; }
 
+        public bool IsCreateOrEdit => TemplateType == MvvmTemplate.Create || TemplateType == MvvmTemplate.Edit;
+
         /// <summary>
         /// Gets a value indicating whether the current template represents a create operation. This can be used to determine the class name and included properties.
         /// </summary>
@@ -109,7 +111,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             {
                 _preselectProperties = EntitySetting.GetPreselectProperties();
             }
-            else if(_preselectProperties == null)
+            else if (_preselectProperties == null)
             {
                 _preselectProperties = new List<WpfMvvmPropertySetting>();
             }
@@ -133,6 +135,42 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
             return EntitySetting.GetInheritedSimpleProperties()
                                 .FirstOrDefault(p => p.IsKey);
+        }
+
+        public string GetCommandConstructorParams(string vmName, bool isDeclaration = false, MvvmTemplate? templateType = null, bool hasDlgService = false)
+        {
+            if (templateType == null)
+                templateType = TemplateType;
+
+            string cmdClassName = EntitySetting.GetCommandName(templateType.Value);
+            int indent = cmdClassName.Length + 16;
+            int lineBrkInterval = isDeclaration ? 2 : 4;
+
+            var sb = new StringBuilder();
+            if (isDeclaration)
+            {
+                sb.Append(EntitySetting.CommandVmTypeName);
+                sb.Append(' ');
+            }
+            sb.Append(vmName);
+            int idx = 1;
+
+            if (hasDlgService)
+            {
+                sb.Append(", ");
+                if (isDeclaration)
+                {
+                    sb.Append(CodeEngine.DialogServiceContract);
+                    sb.Append(' ');
+                }
+                sb.Append(CodeEngine.DialogServiceClassName.ToCamelCase());
+                idx++;
+            }
+            if (templateType == MvvmTemplate.Delete)
+                return sb.ToString();
+
+            idx = AppendLookupEntities(EntitySetting, sb, idx, lineBrkInterval, indent, isDeclaration, templateType == MvvmTemplate.Edit);
+            return sb.ToString();
         }
 
         /// <summary>
@@ -196,29 +234,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                 idx++;
             }
 
-            var foreignLookupEntities = entitySetting.GetForeignLookupEntities(isForEdit: isEdit);
-            foreach (var lookupEntity in foreignLookupEntities)
-            {
-                AddCommaOrSpace(sb, idx, lineBrkInterval, indent);
-                idx++;
-
-                if (isDesignTime)
-                {
-                    sb.Append("new "); // instantiate the design time class for the view designer
-                    sb.Append(lookupEntity.GetLookupName(LookupTemplate.DesignTimeClass));
-                    sb.Append("()");
-                    continue; // For design time there must be no declaration
-                }
-
-
-                if (isDeclaration)
-                {
-                    sb.Append(lookupEntity.GetLookupName(LookupTemplate.Interface));
-                    sb.Append(' ');
-                }
-
-                sb.Append(lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase());
-            }
+            idx = AppendLookupEntities(entitySetting, sb, idx, lineBrkInterval, indent, isDeclaration, isEdit, isDesignTime);
 
             if (isEdit)
                 return sb.ToString();
@@ -246,10 +262,47 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             return sb.ToString();
         }
 
-        public string GetVmConstructorParams(bool isDeclaration = false)
+        private static int AppendLookupEntities(WpfMvvmEntitySetting entitySetting, StringBuilder sb, int idx, int lineBrkInterval, int indent, bool isDeclaration, bool isEdit, bool isDesignTime = false)
         {
+            var foreignLookupEntities = entitySetting.GetForeignLookupEntities(isForEdit: isEdit);
+            foreach (var lookupEntity in foreignLookupEntities)
+            {
+                AddCommaOrSpace(sb, idx, lineBrkInterval, indent);
+                idx++;
+
+                if (isDesignTime)
+                {
+                    sb.Append("new "); // instantiate the design time class for the view designer
+                    sb.Append(lookupEntity.GetLookupName(LookupTemplate.DesignTimeClass));
+                    sb.Append("()");
+                    continue; // For design time there must be no declaration
+                }
+
+
+                if (isDeclaration)
+                {
+                    sb.Append(lookupEntity.GetLookupName(LookupTemplate.Interface));
+                    sb.Append(' ');
+                }
+
+                sb.Append(lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase());
+            }
+
+            return idx;
+        }
+
+        public string GetVmConstructorParams(bool isDeclaration = false, MvvmTemplate? templateType = null)
+        {
+            if (templateType == null)
+                templateType = TemplateType;
+
+            string cmdClassName = EntitySetting.GetViewModelName(templateType.Value);
+            int idx = 0;
+            int indent = cmdClassName.Length + 16;
+            int lineBrkInterval = isDeclaration ? 2 : 4;
+
             var sb = new System.Text.StringBuilder();
-            if (IsEdit)
+            if (templateType == MvvmTemplate.Edit)
             {
                 if (isDeclaration)
                 {
@@ -257,21 +310,29 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                     sb.Append(' ');
                 }
                 sb.Append(EntitySetting.Name.ToCamelCase());
+                idx++;
             }
-
-            var foreignLookupEntities = EntitySetting.GetForeignLookupEntities(IsEdit);
-            foreach (var lookupEntity in foreignLookupEntities)
+            else if (templateType == MvvmTemplate.Collection)
             {
-                if (sb.Length > 0)
-                    sb.Append(", ");
+                if (isDeclaration)
+                {
+                    sb.Append(EntitySetting.RepositoryName);
+                    sb.Append(' ');
+                }
+                sb.Append(EntitySetting.RepositoryInstanceName.ToCamelCase());
+                idx++;
+                sb.Append(", ");
 
                 if (isDeclaration)
                 {
-                    sb.Append(lookupEntity.GetLookupName(LookupTemplate.Interface));
+                    sb.Append(CodeEngine.DialogServiceContract);
                     sb.Append(' ');
                 }
-                sb.Append(lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase());
+                sb.Append(CodeEngine.DialogServiceClassName.ToCamelCase());
+                idx++;
             }
+
+            idx = AppendLookupEntities(EntitySetting, sb, idx, lineBrkInterval, indent, isDeclaration, templateType == MvvmTemplate.Edit);
 
             return sb.ToString();
         }

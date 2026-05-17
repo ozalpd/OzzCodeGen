@@ -40,16 +40,16 @@ namespace <#= GetNamespace() #>
     /// <#= EntitySetting.Name.ToCamelCase() #> information without depending directly on repository implementations.</remarks>
     <#= GetAccessibility() #> <#= GetDeclaration() #>
     {
-        private readonly <#= EntitySetting.RepositoryName #> _<#= EntitySetting.RepositoryInstanceName #>;
+        private readonly <#= EntitySetting.RepositoryName #> _<#= EntitySetting.RepositoryInstanceName.ToCamelCase() #>;
 
-        public <#= GetClassName() #>(<#= EntitySetting.RepositoryName #> <#= EntitySetting.RepositoryInstanceName #>)
+        public <#= GetClassName() #>(<#= EntitySetting.RepositoryName #> <#= EntitySetting.RepositoryInstanceName.ToCamelCase() #>)
         {
-            _<#= EntitySetting.RepositoryInstanceName #> = <#= EntitySetting.RepositoryInstanceName #>;
+            _<#= EntitySetting.RepositoryInstanceName.ToCamelCase() #> = <#= EntitySetting.RepositoryInstanceName.ToCamelCase() #>;
         }
 
         public async Task<IReadOnlyList<<#= EntitySetting.Name #>>> Get<#= EntitySetting.Name.Pluralize() #>Async(<#= EntitySetting.HasIsActiveProperty() ? "bool isActive" : "" #>)
         {
-            var <#= EntitySetting.Name.Pluralize().ToCamelCase() #> = await _<#= EntitySetting.RepositoryInstanceName #>.GetAllAsync(<#= EntitySetting.HasIsActiveProperty() ? "isActive" : "" #>);
+            var <#= EntitySetting.Name.Pluralize().ToCamelCase() #> = await _<#= EntitySetting.RepositoryInstanceName.ToCamelCase() #>.GetAllAsync(<#= EntitySetting.HasIsActiveProperty() ? "isActive" : "" #>);
             return <#= EntitySetting.Name.Pluralize().ToCamelCase() #>.ToList();
         }
     }

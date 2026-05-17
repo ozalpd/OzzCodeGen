@@ -33,6 +33,12 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
         }
         private bool _generateQueryParam;
 
+        public string GetQueryParamClassName()
+        {
+            string queryParamClassName = ((CSharpModelClassCodeEngine)CodeEngine).QueryParamClassName;
+            return GenerateQueryParam ? $"{EntityDefinition.Name}{queryParamClassName}" : queryParamClassName;
+        }
+
         /// <summary>
         /// Returns a collection of properties from other entities that reference this entity as a complex type.
         /// </summary>

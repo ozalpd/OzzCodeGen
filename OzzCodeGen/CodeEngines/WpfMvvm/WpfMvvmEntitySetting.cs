@@ -36,9 +36,6 @@ public class WpfMvvmEntitySetting : BaseMvvmEntitySetting<WpfMvvmPropertySetting
     public IEnumerable<WpfMvvmEntitySetting> GetForeignLookupEntities(bool isForEdit = false)
     {
         var complexproperties = Properties.Where(p => p.PropertyDefinition is ComplexProperty);
-        var complexTypeNames = complexproperties.Select(p => p.GetTypeName(getReturnType: true))
-                                                .Distinct()
-                                                .ToList();
         if (isForEdit)
         {
             var complexTypeNamesForEdit = new List<string>();
@@ -60,6 +57,9 @@ public class WpfMvvmEntitySetting : BaseMvvmEntitySetting<WpfMvvmPropertySetting
                                             .ToList();
         }
 
+        var complexTypeNames = complexproperties.Select(p => p.GetTypeName(getReturnType: true))
+                                                .Distinct()
+                                                .ToList();
         return CodeEngine.EntitySettings.OfType<WpfMvvmEntitySetting>()
                                         .Where(e => e.GenModeLookupService > FileGenerationMode.DoNotGenerate
                                                  && complexTypeNames.Contains(e.EntityDefinition.Name))

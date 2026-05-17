@@ -53,9 +53,8 @@ namespace OzzCodeGen.CodeEngines.CsDbRepository.Templates
             CSharpModelClassCodeEngine modelClassEngine = modelEntity?.CodeEngine as CSharpModelClassCodeEngine;
             string queryParamClassName = string.Empty;
             if (modelEntity != null && modelClassEngine != null)
-                queryParamClassName = modelEntity.GenerateQueryParam
-                                    ? $"{EntitySetting.Name}{modelClassEngine.QueryParamClassName}"
-                                    : modelClassEngine.QueryParamClassName;
+                queryParamClassName = modelEntity.GetQueryParamClassName();
+
             bool hasIsActive = HasIsActiveProperty();
             bool needIsActive = hasIsActive
                              && !GetSearchableNonRangeProperties()

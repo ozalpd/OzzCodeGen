@@ -68,283 +68,752 @@ namespace ");
             this.Write(" : ");
             
             #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.BaseCreateEditViewModelName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetBaseClassName()));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n");
             
             #line 28 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
-  foreach (var lookupEntity in foreignLookupEntities) { 
+  if (TemplateType == MvvmTemplate.Collection) {
+        string queryParamsName = EntitySetting.GenerateGetPaged ? "queryParams" : string.Empty;
+        var pkey = GetPrimaryKey();  
             
             #line default
             #line hidden
-            this.Write("        private readonly ");
-            
-            #line 29 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.GetLookupName(LookupTemplate.Interface)));
-            
-            #line default
-            #line hidden
-            this.Write(" _");
-            
-            #line 29 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase()));
-            
-            #line default
-            #line hidden
-            this.Write(";\r\n");
-            
-            #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
-  } 
-            
-            #line default
-            #line hidden
-            this.Write("        private ");
+            this.Write("        public ");
             
             #line 31 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
-            
-            #line default
-            #line hidden
-            this.Write(" _");
-            
-            #line 31 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
-            
-            #line default
-            #line hidden
-            this.Write(";\r\n        public ");
-            
-            #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
-            
-            #line default
-            #line hidden
-            this.Write(" => _");
-            
-            #line 32 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
-            
-            #line default
-            #line hidden
-            this.Write(";\r\n\r\n        public ");
-            
-            #line 34 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
             
             #line default
             #line hidden
             this.Write("(");
             
+            #line 31 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetVmConstructorParams(isDeclaration: true)));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n        {\r\n            ");
+            
+            #line 33 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName));
+            
+            #line default
+            #line hidden
+            this.Write(" = ");
+            
+            #line 33 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n            ");
+            
             #line 34 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize()));
+            
+            #line default
+            #line hidden
+            this.Write(" = new ObservableCollection<");
+            
+            #line 34 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write(">();\r\n\r\n            ");
+            
+            #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("CreateCommand = new ");
+            
+            #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("CreateCommand (");
+            
+            #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetCommandConstructorParams("this", templateType: MvvmTemplate.Create, hasDlgService:true)));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n            ");
+            
+            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("DeleteCommand = new ");
+            
+            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("DeleteCommand (");
+            
+            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetCommandConstructorParams("this", templateType: MvvmTemplate.Delete)));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n            ");
+            
+            #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("EditCommand = new ");
+            
+            #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("EditCommand (");
+            
+            #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetCommandConstructorParams("this", templateType: MvvmTemplate.Edit, hasDlgService:true)));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n        }\r\n\r\n        public ");
+            
+            #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryName));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName));
+            
+            #line default
+            #line hidden
+            this.Write(" { get; }\r\n        public ObservableCollection<");
+            
+            #line 42 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("> ");
+            
+            #line 42 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize()));
+            
+            #line default
+            #line hidden
+            this.Write(" { get; }\r\n\r\n        public ");
+            
+            #line 44 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("CreateCommand ");
+            
+            #line 44 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("CreateCommand { get; }\r\n        public ");
+            
+            #line 45 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("DeleteCommand ");
+            
+            #line 45 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("DeleteCommand { get; }\r\n        public ");
+            
+            #line 46 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("EditCommand ");
+            
+            #line 46 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("EditCommand { get; }\r\n\r\n");
+            
+            #line 48 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+      if (EntitySetting.GenerateGetPaged) { 
+            
+            #line default
+            #line hidden
+            this.Write("        public ");
+            
+            #line 49 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.GetQueryParamClassName()));
+            
+            #line default
+            #line hidden
+            this.Write("? LastQueryParams { get; private set; }\r\n\r\n        public async Task Load");
+            
+            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize()));
+            
+            #line default
+            #line hidden
+            this.Write("Async()\r\n        {\r\n            await Load");
+            
+            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize()));
+            
+            #line default
+            #line hidden
+            this.Write("Async(LastQueryParams ?? new ");
+            
+            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.GetQueryParamClassName()));
+            
+            #line default
+            #line hidden
+            this.Write("());\r\n        }\r\n\r\n        public async Task Load");
+            
+            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize()));
+            
+            #line default
+            #line hidden
+            this.Write("Async(");
+            
+            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.GetQueryParamClassName()));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(queryParamsName));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n");
+            
+            #line 57 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+      } else { 
+            
+            #line default
+            #line hidden
+            this.Write("        public async Task Load");
+            
+            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize()));
+            
+            #line default
+            #line hidden
+            this.Write("Async()\r\n");
+            
+            #line 59 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+      } 
+            
+            #line default
+            #line hidden
+            this.Write("        {\r\n            if (Load");
+            
+            #line 61 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize()));
+            
+            #line default
+            #line hidden
+            this.Write("InProgress)\r\n                return;\r\n            Load");
+            
+            #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize()));
+            
+            #line default
+            #line hidden
+            this.Write("InProgress = true;\r\n");
+            
+            #line 64 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+      if (EntitySetting.GenerateGetPaged) { 
+            
+            #line default
+            #line hidden
+            this.Write("            var items = await ");
+            
+            #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName));
+            
+            #line default
+            #line hidden
+            this.Write(".GetPagedAsync(");
+            
+            #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(queryParamsName));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n            LastQueryParams = ");
+            
+            #line 66 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(queryParamsName));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n");
+            
+            #line 67 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+      } else { 
+            
+            #line default
+            #line hidden
+            this.Write("            var items = await ");
+            
+            #line 68 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName));
+            
+            #line default
+            #line hidden
+            this.Write(".GetAllAsync();\r\n");
+            
+            #line 69 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+      } 
+            
+            #line default
+            #line hidden
+            this.Write("            ReplaceCollection(");
+            
+            #line 70 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize()));
+            
+            #line default
+            #line hidden
+            this.Write(", items);\r\n            Load");
+            
+            #line 71 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize()));
+            
+            #line default
+            #line hidden
+            this.Write("InProgress = false;\r\n            On");
+            
+            #line 72 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize()));
+            
+            #line default
+            #line hidden
+            this.Write("Loaded();\r\n        }\r\n        public bool Load");
+            
+            #line 74 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize()));
+            
+            #line default
+            #line hidden
+            this.Write("InProgress { get; private set; } = false;\r\n        protected virtual void On");
+            
+            #line 75 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.Pluralize()));
+            
+            #line default
+            #line hidden
+            this.Write("Loaded() { /* For override in derived classes */ }\r\n        \r\n\r\n        public as" +
+                    "ync Task Save");
+            
+            #line 78 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("Async(");
+            
+            #line 78 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 78 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n        {\r\n            if (");
+            
+            #line 80 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(".");
+            
+            #line 80 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" <= 0)\r\n                ");
+            
+            #line 81 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(".");
+            
+            #line 81 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(pkey.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" = await ");
+            
+            #line 81 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName));
+            
+            #line default
+            #line hidden
+            this.Write(".CreateAsync(");
+            
+            #line 81 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n            else\r\n                await ");
+            
+            #line 83 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.RepositoryInstanceName));
+            
+            #line default
+            #line hidden
+            this.Write(".UpdateAsync(");
+            
+            #line 83 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n        }\r\n\r\n        public ");
+            
+            #line 86 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("? Selected");
+            
+            #line 86 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        {\r\n            get { return SelectedItem; }\r\n            set\r\n         " +
+                    "   {\r\n                SelectedItem = value;\r\n                RaisePropertyChange" +
+                    "d(nameof(Selected");
+            
+            #line 92 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write("));\r\n            }\r\n        }\r\n");
+            
+            #line 95 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+      WriteLine("    }");
+        WriteLine("}");
+        return this.GenerationEnvironment.ToString();
+    } 
+            
+            #line default
+            #line hidden
+            
+            #line 99 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+  foreach (var lookupEntity in foreignLookupEntities) { 
+            
+            #line default
+            #line hidden
+            this.Write("        private readonly ");
+            
+            #line 100 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.GetLookupName(LookupTemplate.Interface)));
+            
+            #line default
+            #line hidden
+            this.Write(" _");
+            
+            #line 100 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n");
+            
+            #line 101 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+  } 
+            
+            #line default
+            #line hidden
+            this.Write("        private ");
+            
+            #line 102 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" _");
+            
+            #line 102 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n        public ");
+            
+            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" => _");
+            
+            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n\r\n        public ");
+            
+            #line 105 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
+            
+            #line default
+            #line hidden
+            this.Write("(");
+            
+            #line 105 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetVmConstructorParams(isDeclaration: true)));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n");
             
-            #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 107 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
   foreach (var lookupEntity in foreignLookupEntities) { 
             
             #line default
             #line hidden
             this.Write("            _");
             
-            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 108 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 108 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(";\r\n            ");
             
-            #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 109 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.Name.Pluralize()));
             
             #line default
             #line hidden
             this.Write(" = new ObservableCollection<");
             
-            #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 109 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.Name));
             
             #line default
             #line hidden
             this.Write(">();\r\n\r\n");
             
-            #line 40 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 111 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 112 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
   foreach (var enumTypeName in enumTypeNames) { 
             
             #line default
             #line hidden
             this.Write("            ");
             
-            #line 42 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 113 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enumTypeName));
             
             #line default
             #line hidden
             this.Write("Values = GetValues<");
             
-            #line 42 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 113 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enumTypeName));
             
             #line default
             #line hidden
             this.Write(">();\r\n\r\n");
             
-            #line 44 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 115 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 45 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 116 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
   if (IsEdit) { 
             
             #line default
             #line hidden
             this.Write("            _");
             
-            #line 46 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 117 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 46 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 117 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 47 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 118 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
   } else { 
             
             #line default
             #line hidden
             this.Write("            _");
             
-            #line 48 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 119 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(" = new ");
             
-            #line 48 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 119 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write("();\r\n");
             
-            #line 49 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 120 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
       foreach (var prop in EntitySetting.GetDefaultValuedProperties()) {
             
             #line default
             #line hidden
             this.Write("            ");
             
-            #line 50 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 121 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 50 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 121 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.FormatDefaultValue()));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 122 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
     } 
             
             #line default
             #line hidden
             
-            #line 52 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 123 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
   } 
             
             #line default
             #line hidden
             this.Write("            OnInitialized();\r\n        }\r\n        partial void OnInitialized();\r\n");
             
-            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 127 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
   foreach (var lookupEntity in foreignLookupEntities) { 
             
             #line default
             #line hidden
             this.Write("\r\n        public ObservableCollection<");
             
-            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 129 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.Name));
             
             #line default
             #line hidden
             this.Write("> ");
             
-            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 129 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.Name.Pluralize()));
             
             #line default
             #line hidden
             this.Write(" { get; }\r\n\r\n        public async Task Load");
             
-            #line 60 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 131 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.Name.Pluralize()));
             
             #line default
             #line hidden
             this.Write("Async()\r\n        {\r\n            var items = await _");
             
-            #line 62 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 133 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".Get");
             
-            #line 62 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 133 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.Name.Pluralize()));
             
             #line default
             #line hidden
             this.Write("Async(");
             
-            #line 62 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 133 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.HasIsActiveProperty() ? "isActive: true" : ""));
             
             #line default
             #line hidden
             this.Write(");\r\n            ");
             
-            #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 134 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.Name.Pluralize()));
             
             #line default
@@ -352,27 +821,27 @@ namespace ");
             this.Write(".Clear();\r\n            foreach (var item in items)\r\n            {\r\n              " +
                     "  ");
             
-            #line 66 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 137 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.Name.Pluralize()));
             
             #line default
             #line hidden
             this.Write(".Add(item);\r\n            }\r\n        }\r\n");
             
-            #line 69 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 140 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 70 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 141 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
   foreach (var enumTypeName in enumTypeNames) { 
             
             #line default
             #line hidden
             this.Write("\r\n        /// <summary>\r\n        /// Gets the collection of available ");
             
-            #line 73 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 144 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enumTypeName));
             
             #line default
@@ -380,27 +849,27 @@ namespace ");
             this.Write(" enum members for selection or display.\r\n        /// </summary>\r\n        public I" +
                     "Enumerable<EnumValueItem<");
             
-            #line 75 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 146 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enumTypeName));
             
             #line default
             #line hidden
             this.Write(">> ");
             
-            #line 75 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 146 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enumTypeName));
             
             #line default
             #line hidden
             this.Write("Values { get; }\r\n");
             
-            #line 76 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 147 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 77 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 148 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
   foreach (var prop in properties.Where(p => !p.IsKey))
     {
         bool isReadOnly = IsEdit ? prop.IsReadOnlyInEdit : prop.IsReadOnlyInCreate;
@@ -410,168 +879,168 @@ namespace ");
             #line hidden
             this.Write("\r\n");
             
-            #line 82 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 153 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
       if (isReadOnly) { 
             
             #line default
             #line hidden
             this.Write("        public ");
             
-            #line 83 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 154 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.GetTypeName()));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 83 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 154 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write(" => _");
             
-            #line 83 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 154 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 83 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 154 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 84 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 155 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
       } else { 
             
             #line default
             #line hidden
             this.Write("        public ");
             
-            #line 85 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 156 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.GetTypeName()));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 85 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 156 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write("\r\n        {\r\n            get { return _");
             
-            #line 87 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 158 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 87 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 158 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write("; }\r\n            set\r\n            {\r\n");
             
-            #line 90 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 161 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
           if (prop.IsNullableString) { 
             
             #line default
             #line hidden
             this.Write("                if (!string.IsNullOrWhiteSpace(value) && _");
             
-            #line 91 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 162 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 91 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 162 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write(" != value)\r\n");
             
-            #line 92 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 163 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
           } else { 
             
             #line default
             #line hidden
             this.Write("                if (_");
             
-            #line 93 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 164 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 93 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 164 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write(" != value)\r\n");
             
-            #line 94 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 165 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
           } 
             
             #line default
             #line hidden
             this.Write("                {\r\n                    _");
             
-            #line 96 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 167 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 96 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 167 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write(" = value");
             
-            #line 96 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 167 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.ValueConstraint));
             
             #line default
             #line hidden
             this.Write(";\r\n                    RaisePropertyChanged(nameof(");
             
-            #line 97 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 168 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write("));\r\n                    ValidateProperty(_");
             
-            #line 98 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 169 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(", nameof(");
             
-            #line 98 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 169 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write("));\r\n                }\r\n");
             
-            #line 100 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 171 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
           if (prop.IsNullableString) { 
             
             #line default
@@ -579,55 +1048,55 @@ namespace ");
             this.Write("                else if (string.IsNullOrWhiteSpace(value))\r\n                {\r\n  " +
                     "                  _");
             
-            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 174 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 174 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write(" = null;\r\n                    RaisePropertyChanged(nameof(");
             
-            #line 104 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 175 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write("));\r\n                    ValidateProperty(_");
             
-            #line 105 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 176 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(", nameof(");
             
-            #line 105 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 176 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
             
             #line default
             #line hidden
             this.Write("));\r\n                }\r\n");
             
-            #line 107 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 178 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
           } 
             
             #line default
             #line hidden
             this.Write("            }\r\n        }\r\n");
             
-            #line 110 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 181 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
       } 
             
             #line default
             #line hidden
             
-            #line 111 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 182 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
   } 
             
             #line default
@@ -635,7 +1104,7 @@ namespace ");
             this.Write("\r\n        public bool ValidateModel()\r\n        {\r\n            return ValidateMode" +
                     "l(_");
             
-            #line 115 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
+            #line 186 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfViewModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default

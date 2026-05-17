@@ -36,6 +36,24 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
     }
     private string _commandFolder;
 
+
+    public string AppSettingsFolder
+    {
+        get { return _appSettingsFolder ?? "Models"; }
+        set
+        {
+            if (_appSettingsFolder == value) return;
+            _appSettingsFolder = value;
+            RaisePropertyChanged(nameof(AppSettingsFolder));
+        }
+    }
+    private string _appSettingsFolder;
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public string AppSettingsNamespaceName => $"{NamespaceName}.{AppSettingsFolder}";
+
+
     [XmlIgnore]
     [JsonIgnore]
     public string BaseCommandNamespaceName => string.IsNullOrWhiteSpace(InfrastructureFolder)
