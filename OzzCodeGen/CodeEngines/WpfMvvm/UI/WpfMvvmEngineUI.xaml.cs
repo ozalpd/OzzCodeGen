@@ -21,6 +21,7 @@ public partial class WpfMvvmEngineUI : AbstractEngineUI
         HiddenColumns.Add("IsInEditDialogService");
         HiddenColumns.Add("RepositoryInstanceName");
         HiddenColumns.Add("IsInCreateDialogService");
+        HiddenColumns.Add("PropertiesInCreateEditOrder");
 
         HiddenColumns.Add("ClrTypeName");
         HiddenColumns.Add("IsFloat");
