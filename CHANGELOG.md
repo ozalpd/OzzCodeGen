@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+## [2.3.7] - 2026-05-17
+### Fixed
+- In `CSharpSqliteRepositoryTemplate` removed underscore/camelCase repository references in autoloaded navigation property assignments. Instead uses lazy loading property names which property names are exactly same as repository class names.
+
 ## [2.3.6] - 2026-05-16
 
 ### Added

@@ -1808,10 +1808,10 @@ WriteLine("");
             
             #line default
             #line hidden
-            this.Write(" = await _");
+            this.Write(" = await ");
             
             #line 419 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetRepositoryName(name).ToCamelCase()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetRepositoryName(name)));
             
             #line default
             #line hidden

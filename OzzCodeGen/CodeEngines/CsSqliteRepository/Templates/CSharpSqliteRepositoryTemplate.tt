@@ -416,7 +416,7 @@ WriteLine(""); #>
         private async Task Load<#= name #>Async(<#= EntitySetting.Name #> <#= EntitySetting.Name.ToCamelCase() #>)
         {
 <#      foreach (var col in autoloadCols.Where(p => p.GetTypeName(getReturnType: true) == autoEntity.Name)) { #>
-            <#= EntitySetting.Name.ToCamelCase() #>.<#= col.Name #> = await _<#= GetRepositoryName(name).ToCamelCase() #>.GetBy<#= autoPKeyName #>Async(<#= EntitySetting.Name.ToCamelCase() #>.<#= col.GetForeignKeyName() #>)
+            <#= EntitySetting.Name.ToCamelCase() #>.<#= col.Name #> = await <#= GetRepositoryName(name) #>.GetBy<#= autoPKeyName #>Async(<#= EntitySetting.Name.ToCamelCase() #>.<#= col.GetForeignKeyName() #>)
                             ?? new <#= name #> { <#= autoPKeyName #> = <#= EntitySetting.Name.ToCamelCase() #>.<#= col.GetForeignKeyName() #> };
 <#        } #>
         }
