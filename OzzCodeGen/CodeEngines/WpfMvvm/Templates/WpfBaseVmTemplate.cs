@@ -117,10 +117,10 @@ namespace ");
                     "       if (CollectionFiltered.Count > 0)\r\n                        SelectedItem =" +
                     " CollectionFiltered[0];\r\n                }\r\n                RaisePropertyChanged" +
                     "(nameof(CollectionFiltered));\r\n            }\r\n        }\r\n        private string?" +
-                    " _searchString;\r\n        \r\n        protected void ReplaceCollection<T>(Observabl" +
-                    "eCollection<T> target, IEnumerable<T> source)\r\n        {\r\n            target.Cle" +
-                    "ar();\r\n            foreach (var item in source)\r\n            {\r\n                " +
-                    "target.Add(item);\r\n            }\r\n        }\r\n    }\r\n");
+                    " _searchString;\r\n\r\n        protected void ReplaceCollection<T>(ObservableCollect" +
+                    "ion<T> target, IEnumerable<T> source)\r\n        {\r\n            target.Clear();\r\n " +
+                    "           foreach (var item in source)\r\n            {\r\n                target.A" +
+                    "dd(item);\r\n            }\r\n        }\r\n    }\r\n");
             
             #line 99 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
   }                               // AbstractCreateEditVM ↓

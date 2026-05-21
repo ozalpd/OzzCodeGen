@@ -36,6 +36,9 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
             <#= EntitySetting.Name #>CreateCommand = new <#= EntitySetting.Name #>CreateCommand (<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Create, hasDlgService:true) #>);
             <#= EntitySetting.Name #>DeleteCommand = new <#= EntitySetting.Name #>DeleteCommand (<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Delete) #>);
             <#= EntitySetting.Name #>EditCommand = new <#= EntitySetting.Name #>EditCommand (<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Edit, hasDlgService:true) #>);
+<#      if (EntitySetting.GenerateGetPaged) { #>
+            QueryParams = new <#= EntitySetting.GetQueryParamClassName() #>();
+<#      } #>
         }
 
         public <#= EntitySetting.RepositoryName #> <#= EntitySetting.RepositoryInstanceName #> { get; }
@@ -46,14 +49,14 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
         public <#= EntitySetting.Name #>EditCommand <#= EntitySetting.Name #>EditCommand { get; }
 
 <#      if (EntitySetting.GenerateGetPaged) { #>
-        public <#= EntitySetting.GetQueryParamClassName() #>? LastQueryParams { get; private set; }
+        protected <#= EntitySetting.GetQueryParamClassName() #> QueryParams { get; private set; }
 
         public async Task Load<#= EntitySetting.Name.Pluralize() #>Async()
         {
-            await Load<#= EntitySetting.Name.Pluralize() #>Async(LastQueryParams ?? new <#= EntitySetting.GetQueryParamClassName() #>());
+            await Load<#= EntitySetting.Name.Pluralize() #>Async(QueryParams);
         }
 
-        public async Task Load<#= EntitySetting.Name.Pluralize() #>Async(<#= EntitySetting.GetQueryParamClassName() #> <#= queryParamsName#>)
+        protected async Task Load<#= EntitySetting.Name.Pluralize() #>Async(<#= EntitySetting.GetQueryParamClassName() #> <#= queryParamsName#>)
 <#      } else { #>
         public async Task Load<#= EntitySetting.Name.Pluralize() #>Async()
 <#      } #>
@@ -63,7 +66,8 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
             Load<#= EntitySetting.Name.Pluralize() #>InProgress = true;
 <#      if (EntitySetting.GenerateGetPaged) { #>
             var items = await <#= EntitySetting.RepositoryInstanceName #>.GetPagedAsync(<#= queryParamsName #>);
-            LastQueryParams = <#= queryParamsName #>;
+            QueryParams = <#= queryParamsName #>;
+            RaisePropertyChanged(nameof(QueryParams));
 <#      } else { #>
             var items = await <#= EntitySetting.RepositoryInstanceName #>.GetAllAsync();
 <#      } #>
@@ -73,7 +77,6 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
         }
         public bool Load<#= EntitySetting.Name.Pluralize() #>InProgress { get; private set; } = false;
         protected virtual void On<#= EntitySetting.Name.Pluralize() #>Loaded() { /* For override in derived classes */ }
-        
 
         public async Task Save<#= EntitySetting.Name #>Async(<#= EntitySetting.Name #> <#= EntitySetting.Name.ToCamelCase() #>)
         {
