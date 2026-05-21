@@ -30,11 +30,10 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public string GetNamespace()
         {
-            if (TemplateType == LookupTemplate.RunTimeClass || string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
-            {
-                return CodeEngine.LookupNamespaceName;
-            }
-            return $"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.LookupFolder)}";
+            if (TemplateType == LookupTemplate.DesignTimeClass)
+                return CodeEngine.DesignTimeNamespaceName;
+
+            return CodeEngine.LookupNamespaceName;
         }
 
 
@@ -46,6 +45,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             {
                 namespaces.Add(modelClassEngine.NamespaceName);
             }
+
             if (TemplateType == LookupTemplate.RunTimeClass)
             {
                 namespaces.Add(CodeEngine.RepoContractNamespaceName);
@@ -54,6 +54,11 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                 if (!string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder) && !CodeEngine.PutLookupInInfra)
                     namespaces.Add($"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.LookupFolder)}");
             }
+            else if (TemplateType == LookupTemplate.DesignTimeClass)
+            {
+                namespaces.Add(CodeEngine.LookupNamespaceName);
+            }
+
             return namespaces.OrderBy(ns => ns).ToList();
         }
 

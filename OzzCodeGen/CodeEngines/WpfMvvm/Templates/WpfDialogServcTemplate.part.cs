@@ -36,7 +36,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             var entitySettings = GetEntitySettings();
             if (entitySettings.Any(e => e.GetForeignLookupEntities().Any()))
             {
-                namespaces.Add(GetLookupContractNamespace());
+                namespaces.Add(CodeEngine.LookupNamespaceName);
             }
 
             if (!IsInterface)

@@ -56,14 +56,6 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         }
         private IEnumerable<WpfMvvmPropertySetting> _includedProperties;
 
-        public string GetLookupContractNamespace()
-        {
-            if (string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
-                return CodeEngine.LookupNamespaceName;
-
-            return $"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.LookupFolder)}";
-        }
-
         public IEnumerable<string> GetEnumTypeNames()
         {
             if (_enumTypeNames == null)

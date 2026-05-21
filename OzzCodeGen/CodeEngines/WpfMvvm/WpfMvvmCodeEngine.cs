@@ -214,12 +214,15 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         if (entitySetting.GenModeLookupService > FileGenerationMode.DoNotGenerate)
         {
             bool targetInfra = !string.IsNullOrEmpty(InfrastructureFolder);
+            string targetDir = targetInfra & PutLookupInInfra
+                             ? TargetInfrastructureDirectory
+                             : TargetDirectory;
             var template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.Interface);
-            allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, LookupFolder);
-            template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.DesignTimeClass);
-            allWritten &= RenderTemplate(template, TargetInfrastructureDirectory, LookupFolder);
+            allWritten &= RenderTemplate(template, targetDir, LookupFolder);
 
-            string targetDir = PutLookupInInfra ? TargetInfrastructureDirectory : TargetDirectory;
+            template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.DesignTimeClass);
+            allWritten &= RenderTemplate(template, targetDir, DesignTimeFolder);
+
             template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.RunTimeClass);
             allWritten &= RenderTemplate(template, targetDir, LookupFolder);
         }

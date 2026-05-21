@@ -28,7 +28,8 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
             if (EntitySetting.GetForeignLookupEntities(IsEdit).Any())
             {
-                namespaces.Add(GetLookupContractNamespace());
+                namespaces.Add(CodeEngine.LookupNamespaceName);
+                namespaces.Add(CodeEngine.DesignTimeNamespaceName);
                 namespaces.Add("System.Collections.ObjectModel");
             }
             return namespaces.OrderBy(ns => ns).ToList();

@@ -7,7 +7,7 @@
 					 xmlns:Converters="clr-namespace:OzzUtils.Wpf.Converters;assembly=OzzUtils"
                      xmlns:ui="clr-namespace:OzzCodeGen.UI" xmlns:CodeGen="clr-namespace:OzzCodeGen"
                      mc:Ignorable="d"
-                     d:DesignHeight="720" d:DesignWidth="1780">
+                     d:DesignHeight="720" d:DesignWidth="1680">
     <UserControl.Resources>
         <ResourceDictionary>
             <Converters:EnumDescriptionConverter x:Key="enumConverter" />
@@ -44,51 +44,65 @@
     <Border BorderBrush="#FF9090AF" Background="#FFFFE19F" Padding="2" Margin="2">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="144" />
+                <ColumnDefinition Width="132" />
                 <ColumnDefinition Width="64" />
                 <ColumnDefinition Width="96" />
-                <ColumnDefinition Width="96" />
                 <ColumnDefinition Width="160" />
-                <ColumnDefinition Width="180" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="180" />
-                <ColumnDefinition Width="180" />
-                <ColumnDefinition Width="172" />
-                <ColumnDefinition Width="180" />
+                <ColumnDefinition Width="*" MinWidth="80" />
+                <ColumnDefinition Width="48" />
+                <ColumnDefinition Width="114" />
+                <ColumnDefinition Width="*" MinWidth="160" />
+                <ColumnDefinition Width="24" />
                 <ColumnDefinition Width="140" />
-                <ColumnDefinition Width="180" />
+                <ColumnDefinition Width="*" MinWidth="160" />
+                <ColumnDefinition Width="140" />
+                <ColumnDefinition Width="*" MinWidth="160" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="26"/>
                 <RowDefinition Height="26"/>
-                <RowDefinition Height="26"/>
+                <RowDefinition Height="32"/>
                 <RowDefinition Height="26"/>
                 <RowDefinition Height="26"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.RowSpan="5">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="48"/>
-                    <RowDefinition Height="48"/>
+                    <RowDefinition Height="36"/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Button x:Name="btnRenderTemplate"
                         Content="Render Template"
-                        Grid.Column="0" Grid.Row="0" Margin="4,0,0,4"
+                        Grid.Column="0" Grid.Row="0" Margin="4,0,0,0"
                         IsEnabled="{Binding CanRender}"
                         Click="btnRenderTemplate_Click"
                         Background="#FFFDEBC4"/>
 
+                <CheckBox Grid.Column="4" Grid.Row="1"
+                          VerticalAlignment="Center" Margin="4,0,0,2"
+                      Content="Overwrite Existing"
+                      ToolTip="Overwrite existing files if they already exist."
+                      IsChecked="{Binding OverwriteExisting}"/>
+
+                <CheckBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2"
+                          VerticalAlignment="Center" Margin="4,0,0,2"
+                          Content="Render All Entities"
+                          ToolTip="Render for every entity in the model."
+                          IsChecked="{Binding RenderAllEntities}"/>
+
                 <Button x:Name="btnRenderAllTemplates"
                         Content="Render All Templates"
-                        Grid.Column="0" Grid.Row="1" Margin="4,0,0,4"
+                        Grid.Column="0" Grid.Row="3" Margin="4,0,0,4"
                         Click="btnRenderAllTemplates_Click"
                         Background="#FFFDEBC4"/>
 
                 <Button x:Name="btnRefresh"
                         Content="Refresh"
-                        Grid.Column="0" Grid.Row="2"  Margin="4,0,0,0"
+                        Grid.Column="0" Grid.Row="4"  Margin="4,0,0,0"
                         Click="btnRefresh_Click"
                         Background="#FFFDEBC4"/>
             </Grid>
@@ -99,146 +113,159 @@
                       ItemsSource="{Binding Templates}"
                       SelectedItem="{Binding SelectedTemplate, Mode=TwoWay}"/>
 
-            <CheckBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Center" Margin="8,4,0,0"
-                      Content="All Entities"
-                      ToolTip="Render for every entity in the model."
-                      IsChecked="{Binding RenderAllEntities}"/>
-
-            <CheckBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Center" Margin="8,0,0,0"
-                      Content="Overwrite Existing Files"
-                      IsChecked="{Binding OverwriteExisting}"/>
-
-            <CheckBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" VerticalAlignment="Center" Margin="8,4,0,0"
-                      Content="Use Localized Resx"
-                      IsChecked="{Binding UseLocalizedResx}"/>
 
 
-            <TextBlock Grid.Column="4" Grid.Row="0" Margin="4,2,0,0"
+            <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Margin="8,0,0,2"
+                       Text="Namespace Name:"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="3" Grid.Row="1"
+                     Text="{Binding NamespaceName, Mode=TwoWay}"
+                     Style="{StaticResource wpfMvvmTextBoxStyle}"/>
+
+            <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Margin="8,0,0,2"
+                       Text="Infrastructure Namespace:"
+                       ToolTip="Namespace for generated infrastructure contracts."
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="3" Grid.Row="2"
+                     Text="{Binding InfrastructureNamespaceName, Mode=TwoWay}"
+                     ToolTip="Namespace for generated infrastructure contracts or base classes."
+                     Style="{StaticResource wpfMvvmTextBoxStyle}"
+                     Margin="0,0,4,6"/>
+
+            <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Margin="8,0,0,2"
                        Text="Target Folder:"
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="0"
+            <TextBox Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="3"
                      Text="{Binding TargetFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetDirectory}"
                      Style="{StaticResource wpfMvvmTextBoxStyle}"/>
 
-
-            <TextBlock Grid.Column="4" Grid.Row="1" Margin="4,2,0,0"
-                       Text="Namespace Name:"
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="5" Grid.Row="1"
-                     Text="{Binding NamespaceName, Mode=TwoWay}"
-                     Style="{StaticResource wpfMvvmTextBoxStyle}"/>
-
-
-            <TextBlock Grid.Column="4" Grid.Row="2" Margin="4,2,0,0"
+            <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Margin="8,0,0,2"
                        Text="Target Infrastructure Folder:"
+                       ToolTip="Folder for generated infrastructure contracts or base classes."
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="2"
+            <TextBox Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="4"
                      Text="{Binding InfrastructureFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetInfrastructureDirectory}"
                      Style="{StaticResource wpfMvvmTextBoxStyle}"/>
-            <TextBlock Grid.Column="4" Grid.Row="3" Margin="4,2,0,0"
-                       Text="Infrastructure Namespace:"
-                       ToolTip="Namespace for generated infrastructure contracts."
+
+
+            <TextBlock Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="0" Margin="4,0,0,2"
+                       Text="Repository Class Namespace:"
+                       ToolTip="Namespace for repository implementations."
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="5" Grid.Row="3"
-                     Text="{Binding InfrastructureNamespaceName, Mode=TwoWay}"
-                     ToolTip="Namespace for generated infrastructure contracts or base classes."
+            <TextBox Grid.Column="7" Grid.Row="0"
+                     Text="{Binding RepositoryNamespaceName, Mode=TwoWay}"
+                     ToolTip="Namespace for repository implementations."
                      Style="{StaticResource wpfMvvmTextBoxStyle}"/>
 
-            <TextBlock Grid.Column="7" Grid.Row="4" Margin="4,2,0,0"
-                       Text="AppSettings Folder/Namespace:"
-                       ToolTip="Folder for application settings."
+            <TextBlock Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="1" Margin="4,0,0,2"
+                       Text="Repo. Contract Namespace:"
+                       ToolTip="Namespace for repository contracts."
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="8" Grid.Row="4"
-                     Text="{Binding AppSettingsFolder, Mode=TwoWay}"
-                     ToolTip="Folder for application settings."
+            <TextBox Grid.Column="7" Grid.Row="1"
+                     Text="{Binding RepoContractNamespaceName, Mode=TwoWay}"
+                     ToolTip="Namespace for repository contracts."
                      Style="{StaticResource wpfMvvmTextBoxStyle}"/>
 
 
-            <TextBlock Grid.Column="7" Grid.Row="0" Margin="4,2,0,0"
-                       Text="Commands Folder/Namespace:"
+            <TextBlock Grid.Column="6" Grid.Row="2" Margin="4,6,0,0"
+                       Text="Commands Folder:"
+                       ToolTip="Folder and Namespace for command"
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="8" Grid.Row="0"
+            <TextBox Grid.Column="7" Grid.Row="2"
                      Text="{Binding CommandFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetCommandDirectory}"
-                     Style="{StaticResource wpfMvvmTextBoxStyle}"/>
-            <TextBlock Grid.Column="7" Grid.Row="1" Margin="4,2,0,0"
-                       Text="ViewModel Folder/Namespace:"
+                     Style="{StaticResource wpfMvvmTextBoxStyle}"
+                     Margin="0,6,4,0"/>
+
+            <TextBlock Grid.Column="6" Grid.Row="3" Margin="4,0,0,2"
+                       Text="ViewModel Folder:"
+                       ToolTip="Folder and Namespace for view models."
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="8" Grid.Row="1"
+            <TextBox Grid.Column="7" Grid.Row="3"
                      Text="{Binding ViewModelFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetViewModelDirectory}"
                      Style="{StaticResource wpfMvvmTextBoxStyle}"/>
 
-            <TextBlock Grid.Column="7" Grid.Row="2" Margin="4,2,0,0"
-                       Text="View Folder/Namespace:"
+            <TextBlock Grid.Column="6" Grid.Row="4" Margin="4,0,0,2"
+                       Text="View Folder:"
+                       ToolTip="Folder and Namespace for views."
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="8" Grid.Row="2"
+            <TextBox Grid.Column="7" Grid.Row="4"
                      Text="{Binding ViewFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetViewDirectory}"
                      Style="{StaticResource wpfMvvmTextBoxStyle}"/>
 
-            <TextBlock Grid.Column="7" Grid.Row="3" Margin="4,2,0,0"
-                       Text="XAML Resources Folder:"
+            <TextBlock Grid.Column="9" Grid.Row="0" Margin="4,0,0,2"
+                       Text="DesignTime Folder:"
+                       ToolTip="Folder and Namespace for design time components."
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="10" Grid.Row="0"
+                     Text="{Binding DesignTimeFolder, Mode=TwoWay}"
+                     ToolTip="{Binding TargetDesignTimeDirectory}"
+                     Style="{StaticResource wpfMvvmTextBoxStyle}"/>
+
+            <TextBlock Grid.Column="9" Grid.Row="1" Margin="4,0,0,2"
+                       Text="Lookup Service Folder:"
+                       ToolTip="Folder and Namespace for lookup services."
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="10" Grid.Row="1"
+                     Text="{Binding LookupFolder, Mode=TwoWay}"
+                     ToolTip="{Binding TargetLookupDirectory}"
+                     Style="{StaticResource wpfMvvmTextBoxStyle}"/>
+
+            <CheckBox Grid.Column="9" Grid.ColumnSpan="2" Grid.Row="2"
+                      VerticalAlignment="Center" Margin="4,0,0,6"
+                      ToolTip="Include lookup and design time components in the infrastructure layer."
+                      Content="Put Lookup and Mock Components in Infrastructure"
+                      IsChecked="{Binding PutLookupInInfra}"/>
+
+
+            <TextBlock Grid.Column="9" Grid.Row="3" Margin="4,0,0,2"
+                       Text="AppSettings Folder:"
+                       ToolTip="Folder and Namespace for application settings."
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="10" Grid.Row="3"
+                     Text="{Binding AppSettingsFolder, Mode=TwoWay}"
+                     ToolTip="{Binding TargetAppSettingsDirectory}"
+                     Style="{StaticResource wpfMvvmTextBoxStyle}"/>
+
+            <TextBlock Grid.Column="9" Grid.Row="4" Margin="4,0,0,2"
+                       Text="Resources Folder:"
                        ToolTip="Folder for XAML resources."
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="8" Grid.Row="3"
+            <TextBox Grid.Column="10" Grid.Row="4"
                      Text="{Binding XamlResourcesFolder, Mode=TwoWay}"
                      ToolTip="{Binding TargetXamlResourcesDirectory}"
                      Style="{StaticResource wpfMvvmTextBoxStyle}"/>
 
 
 
-            <TextBlock Grid.Column="9" Grid.Row="0" Margin="4,2,0,0"
-                       Text="Repository Class Namespace:"
-                       ToolTip="Namespace for repository implementations."
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="10" Grid.Row="0"
-                     Text="{Binding RepositoryNamespaceName, Mode=TwoWay}"
-                     ToolTip="Namespace for repository implementations."
-                     Style="{StaticResource wpfMvvmTextBoxStyle}"/>
 
-            <TextBlock Grid.Column="9" Grid.Row="1" Margin="4,2,0,0"
-                       Text="Repost. Contract Namespace:"
-                       ToolTip="Namespace for repository contracts."
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="10" Grid.Row="1"
-                     Text="{Binding RepoContractNamespaceName, Mode=TwoWay}"
-                     ToolTip="Namespace for repository contracts."
-                     Style="{StaticResource wpfMvvmTextBoxStyle}"/>
 
-            <TextBlock Grid.Column="9" Grid.Row="2" Margin="4,2,0,0"
+            <TextBlock Grid.Column="11" Grid.Row="0" Margin="4,0,0,2"
                        Text="Localization Assembly:"
                        ToolTip="Name of the assembly containing localization resources."
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="10" Grid.Row="2"
+            <TextBox Grid.Column="12" Grid.Row="0"
                      Text="{Binding LocalizationAssemblyName, Mode=TwoWay}"
                      ToolTip="Name of the assembly containing localization resources."
                      Style="{StaticResource wpfMvvmTextBoxStyle}"/>
 
-            <TextBlock Grid.Column="9" Grid.Row="3" Margin="4,2,0,0"
+            <TextBlock Grid.Column="11" Grid.Row="1" Margin="4,0,0,2"
                        Text="Localization Namespace:"
                        ToolTip="Namespace for localization resources."
                        VerticalAlignment="Center"/>
-            <TextBox Grid.Column="10" Grid.Row="3"
+            <TextBox Grid.Column="12" Grid.Row="1"
                      Text="{Binding LocalizationNamespaceName, Mode=TwoWay}"
                      ToolTip="Namespace for localization resources."
                      Style="{StaticResource wpfMvvmTextBoxStyle}"/>
 
-
-            <TextBlock Grid.Column="11" Grid.Row="0" Margin="4,2,0,0"
-                       Text="Lookup Service Folder:"
-                       VerticalAlignment="Center"/>
-            <TextBox Grid.Column="12" Grid.Row="0"
-                     Text="{Binding LookupFolder, Mode=TwoWay}"
-                     ToolTip="{Binding TargetLookupDirectory}"
-                     Style="{StaticResource wpfMvvmTextBoxStyle}"/>
-
-            <CheckBox Grid.Column="11" Grid.ColumnSpan="2" Grid.Row="1"
-                      VerticalAlignment="Center" Margin="4,2,0,0"
-                      Content="Put Lookup in Infrastructure"
-                      IsChecked="{Binding PutLookupInInfra}"/>
+            <CheckBox Grid.Column="11" Grid.ColumnSpan="2" Grid.Row="2"
+                      VerticalAlignment="Center" Margin="4,0,0,6"
+                      Content="Use Localized Resx"
+                      IsChecked="{Binding UseLocalizedResx}"/>
 
 
             <Grid Grid.Row="5" Grid.ColumnSpan="14" Margin="4">
@@ -336,7 +363,7 @@
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
                     <CheckBox Grid.Row="10" Grid.Column="1" Margin="4,0,0,0" VerticalAlignment="Center"
                               IsChecked="{Binding GenerateGetPaged}"/>
-                    
+
                     <TextBlock Grid.Row="12" Text="Create Command:"
                                ToolTip="Generate Mode for Create Command for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
@@ -485,25 +512,25 @@
                                     </Grid>
                                 </Viewbox>
                             </Button>
-                            <Button x:Name="btnMovePropertyUp" 
-                                    ToolTip="Move Property Up" 
+                            <Button x:Name="btnMovePropertyUp"
+                                    ToolTip="Move Property Up"
                                     Style="{StaticResource sidebarButtons}"
                                     Click="MoveProperty_Click">
                                 <Viewbox Width="18" Height="18">
                                     <Path Fill="#004487" Data="{StaticResource arrow-up}" Margin="0,0,4,0"/>
                                 </Viewbox>
                             </Button>
-                            <Button x:Name="btnMovePropertyDown" 
-                                    ToolTip="Move Property Down" 
-                                    Style="{StaticResource sidebarButtons}" 
+                            <Button x:Name="btnMovePropertyDown"
+                                    ToolTip="Move Property Down"
+                                    Style="{StaticResource sidebarButtons}"
                                     Click="MoveProperty_Click">
                                 <Viewbox Width="18" Height="18">
                                     <Path Fill="#004487" Data="{StaticResource arrow-down}" Margin="0,0,4,0"/>
                                 </Viewbox>
                             </Button>
-                            <Button x:Name="btnMovePropertyBottom" 
-                                    ToolTip="Move Property Bottom" 
-                                    Style="{StaticResource sidebarButtons}" 
+                            <Button x:Name="btnMovePropertyBottom"
+                                    ToolTip="Move Property Bottom"
+                                    Style="{StaticResource sidebarButtons}"
                                     Click="MoveProperty_Click">
                                 <Viewbox Width="18" Height="18">
                                     <Grid>

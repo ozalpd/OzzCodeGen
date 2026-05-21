@@ -62,7 +62,7 @@
                  Style="{StaticResource ValidationMutliLineTextBoxStyle}"
                  Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 <#  } else if (prop.IsBoolean) { #>
-        <CheckBox Grid.Row="<#= i #>" Grid.Column="1" Margin="0,0,0,8" IsChecked="{Binding <#= prop.Name #>}" />
+        <CheckBox Grid.Row="<#= i #>" Grid.Column="1" Margin="0,0,0,18" IsChecked="{Binding <#= prop.Name #>}" />
 <#  } else if (isReadOnly) {
         bindingName = prop.IsForeignKey && lookupEntity != null ? $"{dependent.Name}.{lookupEntity.EntityDefinition.DisplayMember}" : prop.Name; #>
         <TextBox Grid.Row="<#= i #>" Grid.Column="1" Style="{StaticResource ReadOnlyTextBoxStyle}" Text="{Binding <#= bindingName #>, Mode=OneWay}"/>

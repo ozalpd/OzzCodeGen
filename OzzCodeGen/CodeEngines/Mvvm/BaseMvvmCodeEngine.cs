@@ -23,20 +23,6 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
     public readonly string DialogServiceClassName = "WindowDialogService";
 
 
-    public string CommandFolder
-    {
-        get { return _commandFolder ?? "Commands"; }
-        set
-        {
-            if (_commandFolder == value) return;
-            _commandFolder = value;
-            RaisePropertyChanged(nameof(CommandFolder));
-            RaisePropertyChanged(nameof(TargetCommandDirectory));
-        }
-    }
-    private string _commandFolder;
-
-
     public string AppSettingsFolder
     {
         get { return _appSettingsFolder ?? "Models"; }
@@ -60,9 +46,48 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
                                            ? $"{NamespaceName}.{CommandFolder}"
                                            : $"{InfrastructureNamespaceName}.{CommandFolder}";
 
+    public string CommandFolder
+    {
+        get { return _commandFolder ?? "Commands"; }
+        set
+        {
+            if (_commandFolder == value) return;
+            _commandFolder = value;
+            RaisePropertyChanged(nameof(CommandFolder));
+            RaisePropertyChanged(nameof(TargetCommandDirectory));
+        }
+    }
+    private string _commandFolder;
+
     [XmlIgnore]
     [JsonIgnore]
     public string CommandNamespaceName => $"{NamespaceName}.{CommandFolder}";
+
+    public string DesignTimeFolder
+    {
+        get { return _designTimeFolder ?? "DesignTime"; }
+        set
+        {
+            if (_designTimeFolder == value) return;
+            _designTimeFolder = value;
+            RaisePropertyChanged(nameof(DesignTimeFolder));
+            RaisePropertyChanged(nameof(TargetDesignTimeDirectory));
+        }
+    }
+    private string _designTimeFolder;
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public string DesignTimeNamespaceName
+    {
+        get
+        {
+            if (PutLookupInInfra)
+                return $"{InfrastructureNamespaceName}.{DesignTimeFolder}";
+
+            return $"{NamespaceName}.{DesignTimeFolder}";
+        }
+    }
 
     /// <summary>
     /// Repository contract namespace name.
@@ -116,9 +141,9 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
         get
         {
             if (PutLookupInInfra)
-                return $"{InfrastructureNamespaceName}.{LookupFolder}";
+                return $"{InfrastructureNamespaceName}.{GetFolderToNamespace(LookupFolder)}";
 
-            return $"{NamespaceName}.{LookupFolder}";
+            return $"{NamespaceName}.{GetFolderToNamespace(LookupFolder)}";
         }
     }
 
@@ -153,7 +178,17 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
 
     [XmlIgnore]
     [JsonIgnore]
+    public string TargetAppSettingsDirectory => Path.GetFullPath(Path.Combine(TargetDirectory, AppSettingsFolder));
+
+    [XmlIgnore]
+    [JsonIgnore]
     public string TargetCommandDirectory => Path.GetFullPath(Path.Combine(TargetDirectory, CommandFolder));
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public string TargetDesignTimeDirectory => PutLookupInInfra
+                                         ? Path.GetFullPath(Path.Combine(TargetInfrastructureDirectory, DesignTimeFolder))
+                                         : Path.GetFullPath(Path.Combine(TargetDirectory, DesignTimeFolder));
 
 
     [XmlIgnore]

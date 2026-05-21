@@ -2,14 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
-## [2.3.7] - 2026-05-17
+## [2.3.7] - 2026-05-21
 
 ### Added
 - Added support for generating collection view models (ListVM) with `GenerateGetPaged` option that generates paged query methods in the WPF MVVM engine.
 
 ### Changed
 - Bump version to 2.3.7 in OzzCodeGen and OzzCodeGen.Wpf
-- Added AppSettingsFolder property and UI binding
+- Added `AppSettingsFolder` and `TargetAppSettingsDirectory` properties and their UI bindings
 - Refactor query param class name logic (`GetQueryParamClassName`)
 - Centralize constructor parameter generation for commands/VMs
 - Update naming: CollectionVM → ListVM, improve repo instance naming
@@ -18,7 +18,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Add ReplaceCollection helper to generated VMs
 - Improve foreign lookup entity detection logic
 - Remove unnecessary IsPublic assignments in templates
-- Tweak MVVM engine UI layout for new fields and clarity
+- Introduced `DesignTimeFolder` and related namespace/directory properties in `BaseMvvmCodeEngine`
+- Tweak MVVM engine UI layout for new fields like `DesignTimeFolder`, clarify tooltips, and improve clarity
+- Added `GetFolderToNamespace` helper for consistent namespace generation from folder paths
+- Refactor `LookupNamespaceName` and related logic to use new helper
+- Update code generation and templates to use new namespace/directory properties
 
 ### Fixed
 - In `CSharpSqliteRepositoryTemplate` removed underscore/camelCase repository references in autoloaded navigation property assignments. Instead uses lazy loading property names which property names are exactly same as repository class names.

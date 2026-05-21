@@ -249,7 +249,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             
             #line default
             #line hidden
-            this.Write("\" Grid.Column=\"1\" Margin=\"0,0,0,8\" IsChecked=\"{Binding ");
+            this.Write("\" Grid.Column=\"1\" Margin=\"0,0,0,18\" IsChecked=\"{Binding ");
             
             #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));

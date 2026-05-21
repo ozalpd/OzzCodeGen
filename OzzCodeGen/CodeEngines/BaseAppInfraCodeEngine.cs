@@ -70,6 +70,13 @@ namespace OzzCodeGen.CodeEngines
         }
         private string _infrastructureFolder;
 
+        protected string GetFolderToNamespace(string folder)
+        {
+            if (string.IsNullOrWhiteSpace(folder))
+                return string.Empty;
+            return folder.Replace("/", ".").Replace("\\", ".");
+        }
+
         [XmlIgnore]
         [JsonIgnore]
         public virtual string TargetInfrastructureDirectory
