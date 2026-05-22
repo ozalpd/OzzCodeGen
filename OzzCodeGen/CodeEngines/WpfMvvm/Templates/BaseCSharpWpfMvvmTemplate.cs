@@ -1,4 +1,5 @@
-﻿using OzzCodeGen.CodeEngines.Mvvm;
+﻿using OzzCodeGen.CodeEngines.CsModelClass;
+using OzzCodeGen.CodeEngines.Mvvm;
 using OzzCodeGen.CodeEngines.Mvvm.Templates;
 using OzzUtils;
 using System.Collections.Generic;
@@ -93,6 +94,18 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         }
         private IEnumerable<WpfMvvmEntitySetting> _flookupEntities;
         private IEnumerable<WpfMvvmEntitySetting> _flookupEntitiesForEdit;
+
+
+        protected IEnumerable<ModelPropertySetting> GetSearchableNonRangeProperties()
+        {
+            return EntitySetting.SearchableNonRangeProperties;
+        }
+
+        protected IEnumerable<ModelPropertySetting> GetSearchableRangeProperties()
+        {
+            return EntitySetting.SearchableRangeProperties;
+        }
+
 
         public List<WpfMvvmPropertySetting> GetPreselectProperties(MvvmTemplate? templateType = null)
         {

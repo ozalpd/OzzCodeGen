@@ -4,12 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [2.3.8] - 2026-05-22
 
+### Added
+- Added `CSharpQueryParamsVmTemplate` for generating strongly-typed query parameter ViewModels.
+
 ### Changed
-- Bump version to 2.3.8 in OzzCodeGen and OzzCodeGen.Wpf
+- Refactored code engines to centralize access to model class and storage engines in base classes.
 - Change `QueryParameters.TotalCount` to long for large result support.
+- Unified query parameter and searchable property logic in `BaseCSharpEntitySetting` and, removing duplication.
 - Refactor SQLite repo template: extract WHERE clause logic to `AppendWhere` method, used for both SELECT and COUNT queries.
 - Separate `IsActive` handling from general search logic.
+- Improved namespace and path handling for generated files.
 - Update repository method generation for improved parameter and SQL handling.
+- Bump version to 2.3.8 in OzzCodeGen and OzzCodeGen.Wpf
 
 ## [2.3.7] - 2026-05-21
 

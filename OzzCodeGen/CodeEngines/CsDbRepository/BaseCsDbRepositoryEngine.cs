@@ -1,6 +1,4 @@
-﻿using OzzCodeGen.CodeEngines.CsModelClass;
-using OzzCodeGen.CodeEngines.Storage;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -73,51 +71,5 @@ namespace OzzCodeGen.CodeEngines.CsDbRepository
             }
         }
         private List<BaseCsDbRepositoryEntitySetting<T>> _entities;
-
-
-        /// <summary>
-        /// Model class code engine is used to get information about the model classes, such as validator class, which can be used in the repository templates.
-        /// </summary>
-        [XmlIgnore]
-        [JsonIgnore]
-        public CSharpModelClassCodeEngine ModelClassCodeEngine
-        {
-            get
-            {
-                if (_modelClassEngine == null && Project != null)
-                {
-                    _modelClassEngine = Project.GetCodeEngine(EngineTypes.CsModelClassCodeEngineId) as CSharpModelClassCodeEngine;
-                }
-                return _modelClassEngine;
-            }
-        }
-        private CSharpModelClassCodeEngine _modelClassEngine;
-
-        [XmlIgnore]
-        [JsonIgnore]
-        public string QueryParamNamespaceName
-        {
-            get { return ModelClassCodeEngine?.QueryParamNamespaceName ?? string.Empty; }
-        }
-
-
-        /// <summary>
-        /// Storage code engine is used to get information about the storage, such as table and column names, which can be used in the repository templates.
-        /// It is not serialized because it is retrieved from the project when needed.
-        /// </summary>
-        [XmlIgnore]
-        [JsonIgnore]
-        public StorageCodeEngine StorageCodeEngine
-        {
-            get
-            {
-                if (_storageCodeEngine == null && Project != null)
-                {
-                    _storageCodeEngine = Project.GetCodeEngine(EngineTypes.SqliteScriptsId) as SqliteScriptsEngine;
-                }
-                return _storageCodeEngine;
-            }
-        }
-        private StorageCodeEngine _storageCodeEngine;
     }
 }

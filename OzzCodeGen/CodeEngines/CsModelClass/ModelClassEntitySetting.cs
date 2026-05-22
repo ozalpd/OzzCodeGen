@@ -19,7 +19,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
         /// <summary>
         /// Generates a QueryParameters helper class for this entity when enabled.
         /// </summary>
-        public bool GenerateQueryParam
+        public new bool GenerateQueryParam
         {
             set
             {
@@ -60,7 +60,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             return foreignProperties;
         }
 
-        public IEnumerable<ModelPropertySetting> SearchableProperties
+        public new IEnumerable<ModelPropertySetting> SearchableProperties
         {
             get
             {
@@ -72,33 +72,5 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
             }
         }
         IEnumerable<ModelPropertySetting> _searchableProperties;
-
-        IEnumerable<ModelPropertySetting> SearchableComplexProperties
-        {
-            get
-            {
-                return SearchableProperties.Where(p => p.IsComplex)
-                                           .OrderBy(p => p.PropertyDefinition.DisplayOrder);
-            }
-        }
-
-        public IEnumerable<ModelPropertySetting> SearchableNonRangeProperties
-        {
-            get { return SearchableSimpleProperties.Where(p => !p.IsDateTime && !p.IsFractionalNumeric); }
-        }
-
-        public IEnumerable<ModelPropertySetting> SearchableRangeProperties
-        {
-            get { return SearchableSimpleProperties.Where(p => p.IsDateTime || p.IsFractionalNumeric); }
-        }
-
-        public IEnumerable<ModelPropertySetting> SearchableSimpleProperties
-        {
-            get
-            {
-                return SearchableProperties.Where(p => p.IsSimpleOrString)
-                                           .OrderBy(p => p.PropertyDefinition.DisplayOrder);
-            }
-        }
     }
 }

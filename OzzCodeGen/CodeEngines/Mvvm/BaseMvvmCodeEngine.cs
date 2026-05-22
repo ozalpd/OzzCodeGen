@@ -1,4 +1,3 @@
-using OzzCodeGen.CodeEngines.CsModelClass;
 using OzzCodeGen.CodeEngines.Localization;
 using OzzCodeGen.Definitions;
 using System;
@@ -16,6 +15,7 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
 
     public readonly string BaseAsyncCommandName = "AbstractAsyncCommand";
     public readonly string BaseCommandName = "AbstractCommand";
+    public readonly string BaseViewModelName = "AbstractViewModel";
     public readonly string BaseCreateEditViewModelName = "AbstractCreateEditVM";
     public readonly string BaseEditViewName = "AbstractEditView";
 
@@ -290,25 +290,6 @@ for Commands: {TargetCommandDirectory}";
     }
     private string _resourcesFolder;
 
-
-
-    /// <summary>
-    /// Model class code engine is used to get information about the model classes, such as validator class, which can be used in the repository templates.
-    /// </summary>
-    [XmlIgnore]
-    [JsonIgnore]
-    public CSharpModelClassCodeEngine ModelClassCodeEngine
-    {
-        get
-        {
-            if (_modelClassEngine == null && Project != null)
-            {
-                _modelClassEngine = Project.GetCodeEngine(EngineTypes.CsModelClassCodeEngineId) as CSharpModelClassCodeEngine;
-            }
-            return _modelClassEngine;
-        }
-    }
-    private CSharpModelClassCodeEngine _modelClassEngine;
 
     public string LocalizationAssemblyName
     {

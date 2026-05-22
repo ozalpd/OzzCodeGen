@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using OzzCodeGen.CodeEngines.Storage;
+using OzzCodeGen.Definitions;
+using OzzUtils.Savables;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Windows.Controls;
 using System.Xml.Serialization;
-using OzzCodeGen.Definitions;
-using OzzUtils.Savables;
 
 namespace OzzCodeGen.CodeEngines
 {
@@ -45,6 +46,47 @@ namespace OzzCodeGen.CodeEngines
             }
         }
         CodeGenProject _project;
+
+
+        /// <summary>
+        /// Sqlite storage code engine is used to get information about the storage, such as table and column names, which can be used in the repository templates.
+        /// It is not serialized because it is retrieved from the project when needed.
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        public SqliteScriptsEngine SqliteStorageCodeEngine
+        {
+            get
+            {
+                if (_sqliteCodeEngine == null && Project != null)
+                {
+                    _sqliteCodeEngine = Project.GetCodeEngine(EngineTypes.SqliteScriptsId) as SqliteScriptsEngine;
+                }
+                return _sqliteCodeEngine;
+            }
+        }
+        private SqliteScriptsEngine _sqliteCodeEngine;
+
+
+        /// <summary>
+        /// T-SQL storage code engine is used to get information about the storage, such as table and column names, which can be used in the repository templates.
+        /// It is not serialized because it is retrieved from the project when needed.
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        public TSqlScriptsEngine TSqlStorageCodeEngine
+        {
+            get
+            {
+                if (_storageCodeEngine == null && Project != null)
+                {
+                    _storageCodeEngine = Project.GetCodeEngine(EngineTypes.TSqlScriptsId) as TSqlScriptsEngine;
+                }
+                return _storageCodeEngine;
+            }
+        }
+        private TSqlScriptsEngine _storageCodeEngine;
+
 
         protected virtual void Project_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

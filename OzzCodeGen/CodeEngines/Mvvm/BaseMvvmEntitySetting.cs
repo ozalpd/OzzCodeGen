@@ -225,10 +225,10 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     {
         get
         {
-            if (_generateGetPaged == null && ModelClassEntitySetting != null)
-                _generateGetPaged = ModelClassEntitySetting.GenerateQueryParam;
+            if (_generateGetPaged == null)
+                _generateGetPaged = GenerateQueryParam;
 
-            return _generateGetPaged ?? false;
+            return _generateGetPaged.Value;
         }
         set
         {
@@ -241,7 +241,7 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     public string GetQueryParamClassName()
     {
         if (ModelClassEntitySetting == null)
-            return "QueryParameters";
+            return CSharpModelClassCodeEngine.QueryParamClassName;
 
         return ModelClassEntitySetting.GetQueryParamClassName();
     }
@@ -488,16 +488,6 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
 
             default:
                 return $"{Name}Window";
-        }
-    }
-
-    [XmlIgnore]
-    [JsonIgnore]
-    public ModelClassEntitySetting ModelClassEntitySetting
-    {
-        get
-        {
-            return CodeEngine?.ModelClassCodeEngine.GetEntitySettingByName(Name);
         }
     }
 

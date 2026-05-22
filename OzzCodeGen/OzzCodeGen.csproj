@@ -240,6 +240,11 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>CSharpLookupServiceTemplate.tt</DependentUpon>
 		</Compile>
+		<Compile Update="CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>CSharpQueryParamsVmTemplate.tt</DependentUpon>
+		</Compile>
 		<Compile Update="CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.cs">
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
@@ -408,6 +413,9 @@
 		</None>
 		<None Update="CodeEngines\WpfMvvm\Templates\CSharpLookupServiceTemplate.tt">
 		  <LastGenOutput>CSharpLookupServiceTemplate.cs</LastGenOutput>
+		</None>
+		<None Update="CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.tt">
+		  <LastGenOutput>CSharpQueryParamsVmTemplate.cs</LastGenOutput>
 		</None>
 		<None Update="CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt">
 		  <LastGenOutput>CSharpViewTemplate.cs</LastGenOutput>

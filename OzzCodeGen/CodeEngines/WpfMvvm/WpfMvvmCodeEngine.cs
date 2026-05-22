@@ -105,8 +105,8 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
         if (renderAll || SelectedTemplate == wpfViewModelsTemplate || SelectedTemplate == wpfViewAndVmTemplates)
         {
-            allWritten &= RenderViewModels(entitySetting);
             allWritten &= RenderBaseViewModels();
+            allWritten &= RenderViewModels(entitySetting);
         }
 
         if (renderAll || SelectedTemplate == wpfViewsTemplate || SelectedTemplate == wpfViewAndVmTemplates)
@@ -135,7 +135,11 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
     private bool RenderBaseVM(WpfBaseVmTemplate baseVmTemplate)
     {
-        var baseVmFileName = Path.Combine(TargetInfrastructureDirectory, ViewModelFolder, baseVmTemplate.GetDefaultFileName());
+        bool hasInfra = !string.IsNullOrEmpty(InfrastructureFolder);
+        string targetInfraDir = hasInfra
+                              ? TargetInfrastructureDirectory
+                              : TargetDirectory;
+        var baseVmFileName = Path.Combine(targetInfraDir, ViewModelFolder, baseVmTemplate.GetDefaultFileName());
         return baseVmTemplate.WriteToFile(baseVmFileName, OverwriteExisting);
     }
 
@@ -146,8 +150,12 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
         bool allWritten = RenderDialogSvcTemplate();
 
+        bool hasInfra = !string.IsNullOrEmpty(InfrastructureFolder);
+        string targetInfraDir = hasInfra
+                              ? TargetInfrastructureDirectory
+                              : TargetDirectory;
         var baseCmdTemplate = new WpfBaseCommandTemplate(this);
-        allWritten &= RenderTemplate(baseCmdTemplate, TargetInfrastructureDirectory, CommandFolder);
+        allWritten &= RenderTemplate(baseCmdTemplate, targetInfraDir, CommandFolder);
 
         WpfCommandTemplate template = null;
         if (entitySetting.GenModeCreateCommand > FileGenerationMode.DoNotGenerate)
@@ -209,22 +217,42 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         {
             var template = new WpfViewModelTemplate(entitySetting, MvvmTemplate.Collection);
             allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
+
+            if (entitySetting.GenerateGetPaged)
+            {
+                CSharpQueryParamsVmTemplate qparamTemplate = null;
+                bool hasInfra = !string.IsNullOrEmpty(InfrastructureFolder);
+                string targetInfraDir = hasInfra
+                                      ? TargetInfrastructureDirectory
+                                      : TargetDirectory;
+
+                if (entitySetting.GenerateQueryParam)
+                {
+                    qparamTemplate = new CSharpQueryParamsVmTemplate(this, entitySetting);
+                    allWritten &= RenderTemplate(qparamTemplate, targetInfraDir, ViewModelFolder);
+                }
+
+                // For GetPaged or the base query param class of the entitySetting's query param class.
+                // We need the file even if GenerateQueryParam is false, as it can be used as a base class for the entity's query param class
+                qparamTemplate = new CSharpQueryParamsVmTemplate(this);
+                allWritten &= RenderTemplate(qparamTemplate, targetInfraDir, ViewModelFolder);
+            }
         }
 
         if (entitySetting.GenModeLookupService > FileGenerationMode.DoNotGenerate)
         {
-            bool targetInfra = !string.IsNullOrEmpty(InfrastructureFolder);
-            string targetDir = targetInfra & PutLookupInInfra
-                             ? TargetInfrastructureDirectory
-                             : TargetDirectory;
+            bool hasInfra = !string.IsNullOrEmpty(InfrastructureFolder);
+            string targetInfraDir = hasInfra & PutLookupInInfra
+                                  ? TargetInfrastructureDirectory
+                                  : TargetDirectory;
             var template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.Interface);
-            allWritten &= RenderTemplate(template, targetDir, LookupFolder);
+            allWritten &= RenderTemplate(template, targetInfraDir, LookupFolder);
 
             template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.DesignTimeClass);
-            allWritten &= RenderTemplate(template, targetDir, DesignTimeFolder);
+            allWritten &= RenderTemplate(template, targetInfraDir, DesignTimeFolder);
 
             template = new CSharpLookupServiceTemplate(entitySetting, LookupTemplate.RunTimeClass);
-            allWritten &= RenderTemplate(template, targetDir, LookupFolder);
+            allWritten &= RenderTemplate(template, targetInfraDir, LookupFolder);
         }
 
         return allWritten;

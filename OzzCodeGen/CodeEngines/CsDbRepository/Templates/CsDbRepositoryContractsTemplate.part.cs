@@ -7,7 +7,6 @@ namespace OzzCodeGen.CodeEngines.CsDbRepository.Templates
 {
     public partial class CsDbRepositoryContractsTemplate : BaseCsDbRepositoryTemplate
     {
-
         public CsDbRepositoryContractsTemplate(BaseAppInfraCodeEngine codeEngine, BaseEntitySetting entitySetting, List<string> signatureList) : base(codeEngine, entitySetting)
         {
             _signatureList = signatureList;
@@ -77,7 +76,10 @@ namespace OzzCodeGen.CodeEngines.CsDbRepository.Templates
 
         protected override IEnumerable<ModelPropertySetting> GetSearchableNonRangeProperties()
         {
-            throw new NotImplementedException();
+            if (EntitySetting is BaseCsDbRepositoryEntitySetting<BaseCsDbRepositoryPropertySetting> repositoryEntitySetting)
+                return repositoryEntitySetting.SearchableNonRangeProperties;
+
+            return Enumerable.Empty<ModelPropertySetting>();
         }
 
         protected override BaseCsDbRepositoryPropertySetting GetUniqueIndexed()

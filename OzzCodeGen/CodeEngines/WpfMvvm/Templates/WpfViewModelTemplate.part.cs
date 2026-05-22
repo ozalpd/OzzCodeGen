@@ -23,7 +23,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                     return CodeEngine.BaseCreateEditViewModelName;
 
                 case MvvmTemplate.Delete:
-                    return "AbstractViewModel";
+                    return CodeEngine.BaseViewModelName;
 
                 case MvvmTemplate.Collection:
                     return $"AbstractCollectionVM<{EntitySetting.Name}>";

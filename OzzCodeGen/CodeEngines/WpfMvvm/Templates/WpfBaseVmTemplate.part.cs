@@ -27,7 +27,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             switch (BaseType)
             {
                 case BaseVM.BaseViewModel:
-                    return "public abstract class AbstractViewModel : INotifyPropertyChanged";
+                    return $"public abstract class {CodeEngine.BaseViewModelName} : INotifyPropertyChanged";
 
                 case BaseVM.DataErrorInfoVM:
                     return "public abstract class AbstractDataErrorInfoVM : AbstractViewModel, INotifyDataErrorInfo";
@@ -36,7 +36,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                     return "public abstract class AbstractCollectionVM<T> : AbstractViewModel where T : class";
 
                 case BaseVM.CreateEditVM:
-                    return "public abstract class AbstractCreateEditVM : AbstractDataErrorInfoVM, IIsDirty";
+                    return $"public abstract class {CodeEngine.BaseCreateEditViewModelName} : AbstractDataErrorInfoVM, IIsDirty";
 
                 default:
                     return string.Empty;
@@ -48,7 +48,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             switch (BaseType)
             {
                 case BaseVM.BaseViewModel:
-                    return "AbstractViewModel";
+                    return CodeEngine.BaseViewModelName;
 
                 case BaseVM.DataErrorInfoVM:
                     return "AbstractDataErrorInfoVM";
@@ -57,7 +57,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                     return "AbstractCollectionVM";
 
                 case BaseVM.CreateEditVM:
-                    return "AbstractCreateEditVM";
+                    return CodeEngine.BaseCreateEditViewModelName;
 
                 default:
                     return string.Empty;
