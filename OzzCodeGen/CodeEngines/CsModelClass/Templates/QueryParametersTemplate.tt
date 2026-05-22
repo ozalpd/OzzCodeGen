@@ -21,19 +21,19 @@ namespace <#= NamespaceName #>
     /// <summary>
     /// Represents the query parameters for pagination and searching.
     /// </summary>
-    public partial class <#= CodeEngine.QueryParamClassName #>
+    public partial class <#= CSharpModelClassCodeEngine.QueryParamClassName #>
     {
-        public <#= CodeEngine.QueryParamClassName #>()
+        public <#= CSharpModelClassCodeEngine.QueryParamClassName #>()
         {
             Page = 1;
             PageSize = 20;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="<#= CodeEngine.QueryParamClassName #>"/> class based on the specified query parameters.
+        /// Initializes a new instance of the <see cref="<#= CSharpModelClassCodeEngine.QueryParamClassName #>"/> class based on the specified query parameters.
         /// </summary>
         /// <param name="queryParameters">The query parameters to copy values from.</param>
-        public QueryParameters(QueryParameters queryParameters)
+        public <#= CSharpModelClassCodeEngine.QueryParamClassName #>(<#= CSharpModelClassCodeEngine.QueryParamClassName #> queryParameters)
         {
             if (queryParameters != null)
             {
@@ -78,9 +78,9 @@ namespace <#= NamespaceName #>
         }
 
         /// <summary>
-        /// Gets or sets the total number of items.
+        /// Gets or sets the total number of records that match the query criteria.
         /// </summary>
-        public int TotalCount
+        public long TotalCount
         {
             get { return _totalCount; }
             set
@@ -88,10 +88,10 @@ namespace <#= NamespaceName #>
                 _totalCount = value;
                 if (Page < 1) Page = 1;
                 if (Page > PageCount) Page = PageCount;
-                int skip = (Page - 1) * PageSize;
+                long skip = (Page - 1) * PageSize;
             }
         }
-        int _totalCount;
+        long _totalCount;
 
         public virtual bool HasAnySearchCriteria()
         {
@@ -122,17 +122,17 @@ namespace <#= NamespaceName #>
     /// <summary>
     /// Represents the query parameters for the <#= EntitySetting.Name #> entity.
     /// </summary>
-    public partial class <#= EntitySetting.Name #><#= CodeEngine.QueryParamClassName #> : <#= CodeEngine.QueryParamClassName #>
+    public partial class <#= EntitySetting.Name #><#= CSharpModelClassCodeEngine.QueryParamClassName #> : <#= CSharpModelClassCodeEngine.QueryParamClassName #>
     {
-        public <#= EntitySetting.Name #><#= CodeEngine.QueryParamClassName #>() { }
+        public <#= EntitySetting.Name #><#= CSharpModelClassCodeEngine.QueryParamClassName #>() { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="<#= EntitySetting.Name #><#= CodeEngine.QueryParamClassName #>"/> class based on the specified query parameters.
+        /// Initializes a new instance of the <see cref="<#= EntitySetting.Name #><#= CSharpModelClassCodeEngine.QueryParamClassName #>"/> class based on the specified query parameters.
         /// </summary>
         /// <param name="queryParameters">The query parameters to copy values from.</param>
-        public <#= EntitySetting.Name #><#= CodeEngine.QueryParamClassName #>(<#= EntitySetting.Name #><#= CodeEngine.QueryParamClassName #> queryParameters) : base(queryParameters)
+        public <#= EntitySetting.Name #><#= CSharpModelClassCodeEngine.QueryParamClassName #>(<#= EntitySetting.Name #><#= CSharpModelClassCodeEngine.QueryParamClassName #> queryParameters) : base(queryParameters)
         {
-            if (queryParameters != null && queryParameters is <#= EntitySetting.Name #><#= CodeEngine.QueryParamClassName #> <#= EntitySetting.Name.ToCamelCase() #>QueryParams)
+            if (queryParameters != null && queryParameters is <#= EntitySetting.Name #><#= CSharpModelClassCodeEngine.QueryParamClassName #> <#= EntitySetting.Name.ToCamelCase() #>QueryParams)
             {
 <#  foreach (var property in nonRangeProperties) { #>
                 <#= property.Name #> = <#= EntitySetting.Name.ToCamelCase() #>QueryParams.<#= property.Name #>;

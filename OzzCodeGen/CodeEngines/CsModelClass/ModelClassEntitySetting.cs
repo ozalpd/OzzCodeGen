@@ -35,7 +35,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass
 
         public string GetQueryParamClassName()
         {
-            string queryParamClassName = ((CSharpModelClassCodeEngine)CodeEngine).QueryParamClassName;
+            string queryParamClassName = CSharpModelClassCodeEngine.QueryParamClassName;
             return GenerateQueryParam ? $"{EntityDefinition.Name}{queryParamClassName}" : queryParamClassName;
         }
 

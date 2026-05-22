@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+## [2.3.8] - 2026-05-22
+
+### Changed
+- Bump version to 2.3.8 in OzzCodeGen and OzzCodeGen.Wpf
+- Change `QueryParameters.TotalCount` to long for large result support.
+- Refactor SQLite repo template: extract WHERE clause logic to `AppendWhere` method, used for both SELECT and COUNT queries.
+- Separate `IsActive` handling from general search logic.
+- Update repository method generation for improved parameter and SQL handling.
+
 ## [2.3.7] - 2026-05-21
 
 ### Added

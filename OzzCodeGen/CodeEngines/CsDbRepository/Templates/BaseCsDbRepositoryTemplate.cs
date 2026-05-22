@@ -38,6 +38,15 @@ namespace OzzCodeGen.CodeEngines.CsDbRepository.Templates
 
         protected abstract BaseCsDbRepositoryPropertySetting GetPrimaryKey();
 
+        public string GetQueryParamClassName()
+        {
+            ModelClassEntitySetting modelEntity = GetModelClassEntitySetting();
+            if (modelEntity != null)
+                return modelEntity.GetQueryParamClassName();
+
+            return CSharpModelClassCodeEngine.QueryParamClassName;
+        }
+
         protected abstract IEnumerable<ModelPropertySetting> GetSearchableNonRangeProperties();
 
         protected abstract BaseCsDbRepositoryPropertySetting GetUniqueIndexed();
@@ -51,9 +60,7 @@ namespace OzzCodeGen.CodeEngines.CsDbRepository.Templates
             var unique = GetUniqueIndexed();
             ModelClassEntitySetting modelEntity = GetModelClassEntitySetting();
             CSharpModelClassCodeEngine modelClassEngine = modelEntity?.CodeEngine as CSharpModelClassCodeEngine;
-            string queryParamClassName = string.Empty;
-            if (modelEntity != null && modelClassEngine != null)
-                queryParamClassName = modelEntity.GetQueryParamClassName();
+            string queryParamClassName = GetQueryParamClassName();
 
             bool hasIsActive = HasIsActiveProperty();
             bool needIsActive = hasIsActive

@@ -16,7 +16,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
 
         public override string GetDefaultFileName()
         {
-            return $"{CodeEngine.ValidatorClassName}.cs";
+            return $"{CSharpModelClassCodeEngine.ValidatorClassName}.cs";
         }
 
 

@@ -58,14 +58,14 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
                     "d searching.\r\n    /// </summary>\r\n    public partial class ");
             
             #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(CSharpModelClassCodeEngine.QueryParamClassName));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n        public ");
             
             #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(CSharpModelClassCodeEngine.QueryParamClassName));
             
             #line default
             #line hidden
@@ -73,43 +73,56 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
                     "      /// <summary>\r\n        /// Initializes a new instance of the <see cref=\"");
             
             #line 33 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(CSharpModelClassCodeEngine.QueryParamClassName));
             
             #line default
             #line hidden
             this.Write("\"/> class based on the specified query parameters.\r\n        /// </summary>\r\n     " +
                     "   /// <param name=\"queryParameters\">The query parameters to copy values from.</" +
-                    "param>\r\n        public QueryParameters(QueryParameters queryParameters)\r\n       " +
-                    " {\r\n            if (queryParameters != null)\r\n            {\r\n                Pag" +
-                    "e = queryParameters.Page;\r\n                PageSize = queryParameters.PageSize;\r" +
-                    "\n                SearchString = queryParameters.SearchString;\r\n            }\r\n  " +
-                    "      }\r\n\r\n        /// <summary>\r\n        /// Gets or sets the current page numb" +
-                    "er.\r\n        /// </summary>\r\n        public int Page { get; set; }\r\n\r\n        //" +
-                    "/ <summary>\r\n        /// Gets or sets the number of items per page.\r\n        ///" +
-                    " </summary>\r\n        public int PageSize { get; set; }\r\n\r\n        /// <summary>\r" +
-                    "\n        /// Gets or sets the general purpose search string.\r\n        /// </summ" +
-                    "ary>\r\n        public string? SearchString { get; set; }\r\n\r\n        /// <summary>" +
-                    "\r\n        /// Gets the total number of pages based on the total count and page s" +
-                    "ize.\r\n        /// </summary>\r\n        public int PageCount\r\n        {\r\n         " +
-                    "   get\r\n            {\r\n                return TotalCount > 0 ? (int)Math.Ceiling" +
-                    "(TotalCount / (double)PageSize) : 0;\r\n            }\r\n        }\r\n\r\n        /// <s" +
-                    "ummary>\r\n        /// Gets the number of items to skip based on the current page " +
-                    "and page size.\r\n        /// </summary>\r\n        public int Skip\r\n        {\r\n    " +
-                    "        get { return (Page - 1) * PageSize; }\r\n        }\r\n\r\n        /// <summary" +
-                    ">\r\n        /// Gets or sets the total number of items.\r\n        /// </summary>\r\n" +
-                    "        public int TotalCount\r\n        {\r\n            get { return _totalCount; " +
-                    "}\r\n            set\r\n            {\r\n                _totalCount = value;\r\n       " +
-                    "         if (Page < 1) Page = 1;\r\n                if (Page > PageCount) Page = P" +
-                    "ageCount;\r\n                int skip = (Page - 1) * PageSize;\r\n            }\r\n   " +
-                    "     }\r\n        int _totalCount;\r\n\r\n        public virtual bool HasAnySearchCrit" +
-                    "eria()\r\n        {\r\n            _hasAnySearchCriteria = !string.IsNullOrEmpty(Sea" +
-                    "rchString);\r\n\r\n            OnHasAnySearchCriteria();\r\n            return _hasAny" +
-                    "SearchCriteria;\r\n        }\r\n\r\n        /// <summary>\r\n        /// Called when det" +
-                    "ermining if there are any search criteria, can be used in a partial class to ext" +
-                    "end the logic.\r\n        /// Setting _hasAnySearchCriteria to true in this method" +
-                    " will indicate that there are search criteria.\r\n        /// </summary>\r\n        " +
-                    "partial void OnHasAnySearchCriteria();\r\n        bool _hasAnySearchCriteria;\r\n   " +
-                    " }\r\n}\r\n");
+                    "param>\r\n        public ");
+            
+            #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CSharpModelClassCodeEngine.QueryParamClassName));
+            
+            #line default
+            #line hidden
+            this.Write("(");
+            
+            #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CSharpModelClassCodeEngine.QueryParamClassName));
+            
+            #line default
+            #line hidden
+            this.Write(" queryParameters)\r\n        {\r\n            if (queryParameters != null)\r\n         " +
+                    "   {\r\n                Page = queryParameters.Page;\r\n                PageSize = q" +
+                    "ueryParameters.PageSize;\r\n                SearchString = queryParameters.SearchS" +
+                    "tring;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// Gets or s" +
+                    "ets the current page number.\r\n        /// </summary>\r\n        public int Page { " +
+                    "get; set; }\r\n\r\n        /// <summary>\r\n        /// Gets or sets the number of ite" +
+                    "ms per page.\r\n        /// </summary>\r\n        public int PageSize { get; set; }\r" +
+                    "\n\r\n        /// <summary>\r\n        /// Gets or sets the general purpose search st" +
+                    "ring.\r\n        /// </summary>\r\n        public string? SearchString { get; set; }" +
+                    "\r\n\r\n        /// <summary>\r\n        /// Gets the total number of pages based on t" +
+                    "he total count and page size.\r\n        /// </summary>\r\n        public int PageCo" +
+                    "unt\r\n        {\r\n            get\r\n            {\r\n                return TotalCoun" +
+                    "t > 0 ? (int)Math.Ceiling(TotalCount / (double)PageSize) : 0;\r\n            }\r\n  " +
+                    "      }\r\n\r\n        /// <summary>\r\n        /// Gets the number of items to skip b" +
+                    "ased on the current page and page size.\r\n        /// </summary>\r\n        public " +
+                    "int Skip\r\n        {\r\n            get { return (Page - 1) * PageSize; }\r\n        " +
+                    "}\r\n\r\n        /// <summary>\r\n        /// Gets or sets the total number of records" +
+                    " that match the query criteria.\r\n        /// </summary>\r\n        public long Tot" +
+                    "alCount\r\n        {\r\n            get { return _totalCount; }\r\n            set\r\n  " +
+                    "          {\r\n                _totalCount = value;\r\n                if (Page < 1)" +
+                    " Page = 1;\r\n                if (Page > PageCount) Page = PageCount;\r\n           " +
+                    "     long skip = (Page - 1) * PageSize;\r\n            }\r\n        }\r\n        long " +
+                    "_totalCount;\r\n\r\n        public virtual bool HasAnySearchCriteria()\r\n        {\r\n " +
+                    "           _hasAnySearchCriteria = !string.IsNullOrEmpty(SearchString);\r\n\r\n     " +
+                    "       OnHasAnySearchCriteria();\r\n            return _hasAnySearchCriteria;\r\n   " +
+                    "     }\r\n\r\n        /// <summary>\r\n        /// Called when determining if there ar" +
+                    "e any search criteria, can be used in a partial class to extend the logic.\r\n    " +
+                    "    /// Setting _hasAnySearchCriteria to true in this method will indicate that " +
+                    "there are search criteria.\r\n        /// </summary>\r\n        partial void OnHasAn" +
+                    "ySearchCriteria();\r\n        bool _hasAnySearchCriteria;\r\n    }\r\n}\r\n");
             
             #line 112 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
   }
@@ -151,14 +164,14 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
             #line hidden
             
             #line 125 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(CSharpModelClassCodeEngine.QueryParamClassName));
             
             #line default
             #line hidden
             this.Write(" : ");
             
             #line 125 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(CSharpModelClassCodeEngine.QueryParamClassName));
             
             #line default
             #line hidden
@@ -171,7 +184,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
             #line hidden
             
             #line 127 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(CSharpModelClassCodeEngine.QueryParamClassName));
             
             #line default
             #line hidden
@@ -185,7 +198,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
             #line hidden
             
             #line 130 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(CSharpModelClassCodeEngine.QueryParamClassName));
             
             #line default
             #line hidden
@@ -200,7 +213,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
             #line hidden
             
             #line 133 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(CSharpModelClassCodeEngine.QueryParamClassName));
             
             #line default
             #line hidden
@@ -213,7 +226,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
             #line hidden
             
             #line 133 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(CSharpModelClassCodeEngine.QueryParamClassName));
             
             #line default
             #line hidden
@@ -227,7 +240,7 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.Templates
             #line hidden
             
             #line 135 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\QueryParametersTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.QueryParamClassName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(CSharpModelClassCodeEngine.QueryParamClassName));
             
             #line default
             #line hidden

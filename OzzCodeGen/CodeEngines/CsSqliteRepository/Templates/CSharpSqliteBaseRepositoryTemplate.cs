@@ -15,6 +15,7 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
     using OzzCodeGen.Definitions;
     using OzzCodeGen.CodeEngines;
     using OzzCodeGen.Templates.Cs;
+    using OzzCodeGen.CodeEngines.CsModelClass;
     using System;
     
     /// <summary>
@@ -42,7 +43,7 @@ using Microsoft.Data.Sqlite;
 using System.ComponentModel.DataAnnotations;
 ");
             
-            #line 18 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
+            #line 19 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
   var modelClassEngine = CodeEngine.ModelClassCodeEngine;
     if (modelClassEngine != null && modelClassEngine.GenerateValidator) { 
             
@@ -50,21 +51,21 @@ using System.ComponentModel.DataAnnotations;
             #line hidden
             this.Write("using ");
             
-            #line 20 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
+            #line 21 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(modelClassEngine.ValidatorNamespaceName));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 21 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
+            #line 22 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
   } 
             
             #line default
             #line hidden
             this.Write("\r\nnamespace ");
             
-            #line 23 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
+            #line 24 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.NamespaceName));
             
             #line default
@@ -82,14 +83,14 @@ using System.ComponentModel.DataAnnotations;
     /// <typeparam name=""T"">The entity type that the repository manages. Must be a reference type.</typeparam>
     public abstract partial class ");
             
-            #line 34 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
+            #line 35 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.BaseRepositoryClassName));
             
             #line default
             #line hidden
             this.Write("<T> where T : class\r\n    {\r\n        protected ");
             
-            #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
+            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.BaseRepositoryClassName));
             
             #line default
@@ -149,7 +150,7 @@ using System.ComponentModel.DataAnnotations;
                     "ateTimeOffset.TryParse(utcValue, out var parsedUtc))\r\n                dateTime =" +
                     " parsedUtc.ToLocalTime().DateTime;\r\n\r\n            return dateTime;\r\n        }\r\n");
             
-            #line 162 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
+            #line 163 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
   if (modelClassEngine != null && modelClassEngine.GenerateValidator) { 
             
             #line default
@@ -157,8 +158,8 @@ using System.ComponentModel.DataAnnotations;
             this.Write("\r\n        protected static void ValidateOrThrow(object model)\r\n        {\r\n       " +
                     "     var errors = ");
             
-            #line 166 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(modelClassEngine.ValidatorClassName));
+            #line 167 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(CSharpModelClassCodeEngine.ValidatorClassName));
             
             #line default
             #line hidden
@@ -167,7 +168,7 @@ using System.ComponentModel.DataAnnotations;
                     "e));\r\n                throw new ValidationException(message);\r\n            }\r\n  " +
                     "      }\r\n");
             
-            #line 173 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
+            #line 174 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteBaseRepositoryTemplate.tt"
   } 
             
             #line default

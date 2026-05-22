@@ -25,6 +25,8 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
 
     public readonly string EnumExtensionClassName = "EnumExtension";
 
+    public static string QueryParamClassName = "QueryParameters";
+    public static string ValidatorClassName = "ModelValidator";
 
     /// <summary>
     /// Target folder for extension classes which is relative to the solution directory.
@@ -279,8 +281,6 @@ public class CSharpModelClassCodeEngine : BaseModelClassCodeEngine
     }
     private string _validatorFolder;
 
-    public readonly string QueryParamClassName = "QueryParameters";
-    public readonly string ValidatorClassName = "ModelValidator";
 
     public string ValidatorNamespaceName
     {

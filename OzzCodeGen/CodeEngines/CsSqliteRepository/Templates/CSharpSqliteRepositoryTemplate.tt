@@ -144,10 +144,50 @@ namespace <#= CodeEngine.NamespaceName #>
             await using var connection = await GetOpenConnectionAsync();
             await using var command = connection.CreateCommand();
             command.CommandText = _selectStatement;
+<#    if (EntitySetting.HasSearchableProperties) {#>
+            AppendWhere(queryParameters, command);
+<#    } else if (needIsActive) {#>
+            if (isActive.HasValue)
+            {
+                command.CommandText += " WHERE IsActive = @isActive";
+                command.Parameters.AddWithValue("@isActive", isActive.Value);
+            }
+<#    } #>
 
-<#      if (needIsActive || EntitySetting.HasSearchableProperties) {#>
+            command.CommandText += " <#= EntitySetting.OrderByClause #>";
+            command.CommandText += " LIMIT @pageSize OFFSET @skip";
+            command.Parameters.AddWithValue("@pageSize", queryParameters.PageSize);
+            command.Parameters.AddWithValue("@skip", queryParameters.Skip);
+
+            await using var reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                var <#= EntitySetting.Name.ToCamelCase() #> = Map<#= EntitySetting.Name #>(reader);
+<#  WriteFromDictionaryLines(); #>
+                result.Add(<#= EntitySetting.Name.ToCamelCase() #>);
+            }
+            
+            await using var countCommand = connection.CreateCommand();
+            countCommand.CommandText = $"SELECT COUNT(1) FROM {_tableName}";
+<#    if (EntitySetting.HasSearchableProperties) {#>
+            AppendWhere(queryParameters, countCommand);
+<#    } else if (needIsActive) {#>
+            if (isActive.HasValue)
+            {
+                countCommand.CommandText += " WHERE IsActive = @isActive";
+                countCommand.Parameters.AddWithValue("@isActive", isActive.Value);
+            }
+<#    } #>
+            queryParameters.TotalCount = Convert.ToInt64(await countCommand.ExecuteScalarAsync());
+
+            return result;
+        }
+
+<#      if (EntitySetting.HasSearchableProperties) {#>
+        private static void AppendWhere(<#= GetQueryParamClassName() #> queryParameters, SqliteCommand command)
+        {
             var whereClauses = new List<string>();
-<#        } #>
+
 <#      if (needIsActive) {#>
             if (isActive.HasValue)
             {
@@ -183,29 +223,15 @@ namespace <#= CodeEngine.NamespaceName #>
 <#          }
       } #>
 
-<#    if (needIsActive || EntitySetting.HasSearchableProperties) {#>
             if (whereClauses.Count > 0)
             {
                 var whereClause = string.Join(" AND ", whereClauses);
-                command.CommandText = _selectStatement + " WHERE " + whereClause;
+                command.CommandText += " WHERE ";
+                command.CommandText += whereClause;
             }
-<#    } #>
-
-            command.CommandText += " ORDER BY Id LIMIT @pageSize OFFSET @skip";
-            command.Parameters.AddWithValue("@pageSize", queryParameters.PageSize);
-            command.Parameters.AddWithValue("@skip", queryParameters.Skip);
-
-            await using var reader = await command.ExecuteReaderAsync();
-            while (await reader.ReadAsync())
-            {
-                var <#= EntitySetting.Name.ToCamelCase() #> = Map<#= EntitySetting.Name #>(reader);
-<#  WriteFromDictionaryLines(); #>
-                result.Add(<#= EntitySetting.Name.ToCamelCase() #>);
-            }
-
-            return result;
         }
 
+<#        } #>
 <#  }  #>
 <#  // Create Method
     // If unique indexed property exists, CreateAsync will return existing record's PK value.

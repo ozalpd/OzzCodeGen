@@ -20,7 +20,7 @@ using <#= CodeEngine.CustomAttribNamespace #>;
 //----------------------------------------------------------------------------------
 namespace <#= NamespaceName #>
 {
-    public static partial class <#= CodeEngine.ValidatorClassName #>
+    public static partial class <#= CSharpModelClassCodeEngine.ValidatorClassName #>
     {
         public static IReadOnlyDictionary<string, IReadOnlyList<string>> Validate(object model)
         {

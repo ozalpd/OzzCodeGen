@@ -70,7 +70,7 @@ namespace ");
             this.Write("\r\n{\r\n    public static partial class ");
             
             #line 23 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsModelClass\Templates\CSharpValidatorTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(CodeEngine.ValidatorClassName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(CSharpModelClassCodeEngine.ValidatorClassName));
             
             #line default
             #line hidden
