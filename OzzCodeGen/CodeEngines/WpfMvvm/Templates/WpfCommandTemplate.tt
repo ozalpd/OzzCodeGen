@@ -40,7 +40,8 @@ namespace <#= EntitySetting.GetCommandsNamespaceName() #>
             _<#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #> = <#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #>;
 <#  } #>
         }
-<#  // Create Command Begins Here
+<#
+    // Create Command Begins Here
     if (TemplateType == MvvmTemplate.Create) {
         var preselectProperties = GetPreselectProperties();
 #>
@@ -89,7 +90,52 @@ namespace <#= EntitySetting.GetCommandsNamespaceName() #>
         public <#= property.GetTypeName() #>? Preselected<#= property.Name #> { get; set; } = null;
 <#      } #>
 <#  } #>
-<#  // Delete Command Begins Here
+<#
+    // Edit Command Begins Here
+    if (TemplateType == MvvmTemplate.Edit) { #>
+
+        public override bool CanExecute(object? parameter)
+        {
+            return _viewModel.Selected<#= EntitySetting.Name #> is not null;
+        }
+
+        public override async void Execute(object? parameter)
+        {
+            if (_viewModel.Selected<#= EntitySetting.Name #> is null)
+                return;
+
+            if (parameter is not Window owner)
+                return;
+
+            var <#= EntitySetting.Name.ToCamelCase() #> = _viewModel.Selected<#= EntitySetting.Name #>;
+
+            try
+            {
+                var dialogResult = _windowDialogService.Show<#= EntitySetting.Name #>EditDialog(<#= GetSvcShowParameters() #>);
+                if (dialogResult.IsConfirmed && dialogResult.IsDirty)
+                {
+                    await _viewModel.Save<#= EntitySetting.Name #>Async(<#= EntitySetting.Name.ToCamelCase() #>);
+                    await _viewModel.Load<#= EntitySetting.Name.Pluralize() #>Async();
+                }
+                else if (dialogResult.IsDirty)
+                {
+                    await _viewModel.Load<#= EntitySetting.Name.Pluralize() #>Async();
+                }
+
+                _viewModel.Selected<#= EntitySetting.Name #> = _viewModel.<#= EntitySetting.Name.Pluralize() #>.FirstOrDefault(x => x.Id == <#= EntitySetting.Name.ToCamelCase() #>.Id);
+            }
+            catch (Exception ex)
+            {
+                string innerExceptionMsg = ex.InnerException != null ? $"\n{ex.InnerException.Message}" : "";
+                MessageBox.Show($"{MessageStrings.SaveOperationFailed}\n{ex.Message}{innerExceptionMsg}",
+                    CommonStrings.AppTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+<#  } #>
+<#
+    // Delete Command Begins Here
     if (TemplateType == MvvmTemplate.Delete) {
         var pkey = GetPrimaryKey();
 #>
@@ -140,49 +186,6 @@ namespace <#= EntitySetting.GetCommandsNamespaceName() #>
             _viewModel.Selected<#= EntitySetting.Name #> = null;
             _viewModel.<#= EntitySetting.Name.Pluralize() #>.Remove(<#= EntitySetting.Name.ToCamelCase() #>);
             await _viewModel.Load<#= EntitySetting.Name.Pluralize() #>Async();
-        }
-<#  } #>
-<#  // Edit Command Begins Here
-    if (IsEdit) { #>
-
-        public override bool CanExecute(object? parameter)
-        {
-            return _viewModel.Selected<#= EntitySetting.Name #> is not null;
-        }
-
-        public override async void Execute(object? parameter)
-        {
-            if (_viewModel.Selected<#= EntitySetting.Name #> is null)
-                return;
-
-            if (parameter is not Window owner)
-                return;
-
-            var <#= EntitySetting.Name.ToCamelCase() #> = _viewModel.Selected<#= EntitySetting.Name #>;
-
-            try
-            {
-                var dialogResult = _windowDialogService.Show<#= EntitySetting.Name #>EditDialog(<#= GetSvcShowParameters() #>);
-                if (dialogResult.IsConfirmed && dialogResult.IsDirty)
-                {
-                    await _viewModel.Save<#= EntitySetting.Name #>Async(<#= EntitySetting.Name.ToCamelCase() #>);
-                    await _viewModel.Load<#= EntitySetting.Name.Pluralize() #>Async();
-                }
-                else if (dialogResult.IsDirty)
-                {
-                    await _viewModel.Load<#= EntitySetting.Name.Pluralize() #>Async();
-                }
-
-                _viewModel.Selected<#= EntitySetting.Name #> = _viewModel.<#= EntitySetting.Name.Pluralize() #>.FirstOrDefault(x => x.Id == <#= EntitySetting.Name.ToCamelCase() #>.Id);
-            }
-            catch (Exception ex)
-            {
-                string innerExceptionMsg = ex.InnerException != null ? $"\n{ex.InnerException.Message}" : "";
-                MessageBox.Show($"{MessageStrings.SaveOperationFailed}\n{ex.Message}{innerExceptionMsg}",
-                    CommonStrings.AppTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
-            }
         }
 <#  } #>
     }

@@ -91,8 +91,24 @@ namespace <#= GetNamespace() #>
 
         public <#= queryParamClassName #> <#= queryParamClassName #> { get; }
         
+        /// <summary>
+        /// Gets a value indicating whether there is a next page available.
+        /// </summary>
+        public bool HasNextPage => QueryParameters.HasNextPage;
+
+        /// <summary>
+        /// Gets a value indicating whether there is a previous page available.
+        /// </summary>
+        public bool HasPrevPage => QueryParameters.HasPrevPage;
+        
+        /// <summary>
+        /// Gets the total number of pages based on the total count and page size.
+        /// </summary>
         public int PageCount => <#= queryParamClassName #>.PageCount;
         
+        /// <summary>
+        /// Gets or sets the current page number.
+        /// </summary>
         public int Page
         {
             get => <#= queryParamClassName #>.Page;
@@ -103,6 +119,9 @@ namespace <#= GetNamespace() #>
             }
         }
         
+        /// <summary>
+        /// Gets or sets the number of items per page.
+        /// </summary>
         public int PageSize
         {
             get => <#= queryParamClassName #>.PageSize;
@@ -123,15 +142,10 @@ namespace <#= GetNamespace() #>
             }
         }
         
-        public long TotalCount
-        {
-            get => <#= queryParamClassName #>.TotalCount;
-            set
-            {
-                <#= queryParamClassName #>.TotalCount = value;
-                RaisePropertyChanged(nameof(TotalCount));
-            }
-        }
+        /// <summary>
+        /// Gets the total number of records that match the query criteria.
+        /// </summary>
+        public long TotalCount => <#= queryParamClassName #>.TotalCount;
 <#  } #>
     }
 }
