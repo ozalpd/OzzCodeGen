@@ -178,6 +178,21 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     }
     private FileGenerationMode? _genModeDeleteCommand;
 
+    public FileGenerationMode GenModeLoadCommand
+    {
+        get
+        {
+            return _genModeLoadCommand ?? FileGenerationMode.DoNotGenerate;
+        }
+        set
+        {
+            if (_genModeLoadCommand == value) return;
+            _genModeLoadCommand = value;
+            RaisePropertyChanged(nameof(GenModeLoadCommand));
+        }
+    }
+    private FileGenerationMode? _genModeLoadCommand;
+
     public FileGenerationMode GenModeCreateVM
     {
         get
@@ -420,7 +435,7 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
         return GetInheritedIncludedProperties().Where(p => !string.IsNullOrEmpty(p.DefaultValue));
     }
 
-    public string GetCommandName(MvvmTemplate templateType)
+    public string GetCommandName(MvvmTemplate templateType, PageCommand pageCommand = PageCommand.LoadCommand)
     {
         switch (templateType)
         {
@@ -434,7 +449,26 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
                 return $"{Name}DeleteCommand";
 
             case MvvmTemplate.Collection:
-                return $"{Name.Pluralize()}ManageCommand";
+                return GetPageCommandName(pageCommand);
+
+            default:
+                return $"{Name}Command";
+        }
+
+    }
+
+    public string GetPageCommandName(PageCommand pageCommand)
+    {
+        switch (pageCommand)
+        {
+            case PageCommand.LoadCommand:
+                return $"{Name.Pluralize()}LoadCommand";
+
+            case PageCommand.PrevPageCommand:
+                return $"{Name.Pluralize()}PrevPageCommand";
+
+            case PageCommand.NextPageCommand:
+                return $"{Name.Pluralize()}NextPageCommand";
 
             default:
                 return $"{Name}Command";

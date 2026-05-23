@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 - Added `CSharpQueryParamsVmTemplate` for generating strongly-typed query parameter ViewModels.
+- Introduced `GenModeLoadCommand` and `PageCommand` enum, updated UI for per-entity configuration, and extended templates and code generation logic to support paging commands with correct inheritance and parameter handling.
 
 ### Changed
 - Refactored code engines to centralize access to model class and storage engines in base classes.
@@ -15,6 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Separate `IsActive` handling from general search logic.
 - Improved namespace and path handling for generated files.
 - Update repository method generation for improved parameter and SQL handling.
+
+- Added support for generating Load, NextPage, and PrevPage commands for entity collections in the WPF MVVM engine.
 - Bump version to 2.3.8 in OzzCodeGen and OzzCodeGen.Wpf
 
 ## [2.3.7] - 2026-05-21

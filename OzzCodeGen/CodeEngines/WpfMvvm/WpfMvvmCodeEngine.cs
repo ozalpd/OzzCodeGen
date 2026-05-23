@@ -176,6 +176,20 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
             allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
         }
 
+        if (entitySetting.GenModeLoadCommand > FileGenerationMode.DoNotGenerate)
+        {
+            template = new WpfCommandTemplate(entitySetting, PageCommand.LoadCommand);
+            allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
+
+            if (entitySetting.GenerateGetPaged)
+            {
+                template = new WpfCommandTemplate(entitySetting, PageCommand.PrevPageCommand);
+                allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
+                template = new WpfCommandTemplate(entitySetting, PageCommand.NextPageCommand);
+                allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
+            }
+        }
+
         return allWritten;
     }
 

@@ -313,6 +313,7 @@
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
                         <RowDefinition Height="8"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
@@ -403,10 +404,24 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <TextBlock Grid.Row="16" Text="Create VM:"
+                    <TextBlock Grid.Row="15" Text="Load Command:"
+                               ToolTip="Generate Mode for Load Command for the entity."
+                               Style="{StaticResource rightAlignedTextBlockStyle}"/>
+                    <ComboBox Grid.Column="1" Grid.Row="15" Style="{StaticResource comboBoxStyle}"
+                              ItemsSource="{Binding Source={StaticResource generateMode}}"
+                              SelectedItem="{Binding GenModeLoadCommand}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    
+
+                    <TextBlock Grid.Row="17" Text="Create VM:"
                                ToolTip="Generate Mode for Create ViewModel for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="16" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="17" Style="{StaticResource comboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeCreateVM}">
                         <ComboBox.ItemTemplate>
@@ -416,10 +431,10 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <TextBlock Grid.Row="17" Text="Edit VM:"
+                    <TextBlock Grid.Row="18" Text="Edit VM:"
                                ToolTip="Generate Mode for Edit ViewModel for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="17" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="18" Style="{StaticResource comboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeEditVM}">
                         <ComboBox.ItemTemplate>
@@ -429,10 +444,10 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <TextBlock Grid.Row="18" Text="Collection VM:"
+                    <TextBlock Grid.Row="19" Text="Collection VM:"
                                ToolTip="Generate Mode for Collection ViewModel for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="18" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="19" Style="{StaticResource comboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeCollectionVM}">
                         <ComboBox.ItemTemplate>
@@ -441,11 +456,12 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
+                    
 
-                    <TextBlock Grid.Row="20" Text="Create View:"
+                    <TextBlock Grid.Row="21" Text="Create View:"
                                ToolTip="Generate Mode for Create View for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="20" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="21" Style="{StaticResource comboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeCreateView}">
                         <ComboBox.ItemTemplate>
@@ -455,10 +471,10 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <TextBlock Grid.Row="21" Text="Edit View:"
+                    <TextBlock Grid.Row="22" Text="Edit View:"
                                ToolTip="Generate Mode for Edit View for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="21" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="22" Style="{StaticResource comboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeEditView}">
                         <ComboBox.ItemTemplate>
@@ -468,10 +484,10 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <TextBlock Grid.Row="23" Text="Lookup Service:"
+                    <TextBlock Grid.Row="24" Text="Lookup Service:"
                                ToolTip="Generate Mode for Lookup Service for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="23" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="24" Style="{StaticResource comboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeLookupService}">
                         <ComboBox.ItemTemplate>

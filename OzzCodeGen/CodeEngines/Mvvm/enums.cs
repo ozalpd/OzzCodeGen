@@ -38,3 +38,10 @@ public enum MvvmTemplate
     Delete,
     Collection
 }
+
+public enum PageCommand
+{
+    LoadCommand,
+    PrevPageCommand,
+    NextPageCommand
+}

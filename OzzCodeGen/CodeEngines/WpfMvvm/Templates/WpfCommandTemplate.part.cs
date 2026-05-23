@@ -8,17 +8,50 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {
     public partial class WpfCommandTemplate
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WpfCommandTemplate"/> class for collection-based command generation.
+        /// </summary>
+        /// <param name="entitySetting">The WPF MVVM entity setting.</param>
+        /// <param name="pageCommand">The page command type.</param>
+        public WpfCommandTemplate(WpfMvvmEntitySetting entitySetting, PageCommand pageCommand) : this(entitySetting, MvvmTemplate.Collection)
+        {
+            PageCommand = pageCommand;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WpfCommandTemplate"/> class for generating WPF command
+        /// implementations.
+        /// </summary>
+        /// <param name="entitySetting">The entity setting containing the model and generation configuration.</param>
+        /// <param name="templateType">The MVVM template type to generate.</param>
         public WpfCommandTemplate(WpfMvvmEntitySetting entitySetting, MvvmTemplate templateType)
             : base(entitySetting.CodeEngine as WpfMvvmCodeEngine, entitySetting, templateType: templateType)
         {
-
+            PageCommand = PageCommand.LoadCommand;
         }
 
+        /// <summary>
+        /// Determines load command type if TemplateType is Collection, in other template types it has no effect.
+        /// </summary>
+        public PageCommand PageCommand { get; }
 
 
-        public string BaseCommandName => CodeEngine.BaseCommandName;
+        public string BaseCommandName => GetBaseCommandName();
 
-        public string GetClassName() => EntitySetting.GetCommandName(TemplateType);
+        private string GetBaseCommandName()
+        {
+            // All commands inherit from the same base command
+            // except NextPageCommand and PrevPageCommand.
+            if (PageCommand == PageCommand.LoadCommand)
+                return CodeEngine.BaseCommandName;
+
+            PassViewModelToBase = true;
+            return EntitySetting.GetPageCommandName(PageCommand.LoadCommand);
+        }
+
+        public bool PassViewModelToBase { get; private set; }
+
+        public string GetClassName() => EntitySetting.GetCommandName(TemplateType, PageCommand);
 
         public override string GetDefaultFileName()
         {
@@ -30,12 +63,13 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public string GetNamespace() => EntitySetting.GetCommandsNamespaceName();
 
-
         public bool HasDlgService => IsCreateOrEdit; // || TemplateType == MvvmTemplate.Collection;
+
+        public bool IsLoadCommand => TemplateType == MvvmTemplate.Collection;
 
         public string GetConstructorParameters()
         {
-            return GetCommandConstructorParams("viewModel", isDeclaration: true, hasDlgService: HasDlgService);
+            return GetCommandConstructorParams("viewModel", isDeclaration: true, hasDlgService: HasDlgService, isLoadCommand: IsLoadCommand);
         }
 
         public string GetSvcShowParameters()
@@ -70,17 +104,20 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             return sb.ToString();
         }
 
+
         public override List<string> DefaultUsingNamespaceList()
         {
-            var namespaces = new List<string>
-            {
-                "System.Windows",
-                CodeEngine.ServicesNamespaceName
-            };
+            var namespaces = new List<string>();
 
-            var resxEngine = CodeEngine.ResxEngine;
-            if (resxEngine != null)
-                namespaces.Add(resxEngine.NamespaceName);
+            if (!IsLoadCommand)
+            {
+                var resxEngine = CodeEngine.ResxEngine;
+                if (resxEngine != null)
+                    namespaces.Add(resxEngine.NamespaceName);
+
+                namespaces.Add(CodeEngine.ServicesNamespaceName);
+                namespaces.Add("System.Windows");
+            }
 
             if (!string.IsNullOrEmpty(EntitySetting.CommandVmNamespace))
                 namespaces.Add(EntitySetting.CommandVmNamespace);

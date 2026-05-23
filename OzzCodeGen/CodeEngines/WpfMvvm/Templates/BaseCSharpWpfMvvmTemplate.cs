@@ -142,7 +142,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                                 .FirstOrDefault(p => p.IsKey);
         }
 
-        public string GetCommandConstructorParams(string vmName, bool isDeclaration = false, MvvmTemplate? templateType = null, bool hasDlgService = false)
+        public string GetCommandConstructorParams(string vmName, bool isDeclaration = false, MvvmTemplate? templateType = null, bool hasDlgService = false, bool isLoadCommand = false)
         {
             if (templateType == null)
                 templateType = TemplateType;
@@ -171,7 +171,8 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                 sb.Append(CodeEngine.DialogServiceClassName.ToCamelCase());
                 idx++;
             }
-            if (templateType == MvvmTemplate.Delete)
+
+            if (templateType == MvvmTemplate.Delete || isLoadCommand)
                 return sb.ToString();
 
             idx = AppendLookupEntities(EntitySetting, sb, idx, lineBrkInterval, indent, isDeclaration, templateType == MvvmTemplate.Edit);

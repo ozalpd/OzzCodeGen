@@ -22,24 +22,30 @@ namespace <#= EntitySetting.GetCommandsNamespaceName() #>
 {
     <#= GetAccessibility() #> class <#= GetClassName() #> : <#= BaseCommandName #>
     {
-        private readonly <#= EntitySetting.CommandVmTypeName #> _viewModel;
+<#  if (!PassViewModelToBase) { #>
+        protected readonly <#= EntitySetting.CommandVmTypeName #> _viewModel;
+<#  } #>
 <#  if (HasDlgService) { #>
         private readonly <#= CodeEngine.DialogServiceContract #> _<#= CodeEngine.DialogServiceClassName.ToCamelCase() #>;
 <#  } #>
 <#  foreach (var lookupEntity in foreignLookupEntities) { #>
         private readonly <#= lookupEntity.GetLookupName(LookupTemplate.Interface) #> _<#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #>;
 <#  } #>
-
+<#  if (PassViewModelToBase) { #>
+        public <#= GetClassName() #>(<#= GetConstructorParameters() #>) : base(viewModel) { }
+<#      } else { #>
+        
         public <#= GetClassName() #>(<#= GetConstructorParameters() #>)
         {
             _viewModel = viewModel;
-<#  if (HasDlgService) { #>
+<#      if (HasDlgService) { #>
             _<#= CodeEngine.DialogServiceClassName.ToCamelCase() #> = <#= CodeEngine.DialogServiceClassName.ToCamelCase() #>;
-<#  } #>
-<#  foreach (var lookupEntity in foreignLookupEntities) { #>
+<#      } #>
+<#      foreach (var lookupEntity in foreignLookupEntities) { #>
             _<#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #> = <#= lookupEntity.GetLookupName(LookupTemplate.RunTimeClass).ToCamelCase() #>;
-<#  } #>
+<#      } #>
         }
+<#  } #>
 <#
     // Create Command Begins Here
     if (TemplateType == MvvmTemplate.Create) {
@@ -186,6 +192,37 @@ namespace <#= EntitySetting.GetCommandsNamespaceName() #>
             _viewModel.Selected<#= EntitySetting.Name #> = null;
             _viewModel.<#= EntitySetting.Name.Pluralize() #>.Remove(<#= EntitySetting.Name.ToCamelCase() #>);
             await _viewModel.Load<#= EntitySetting.Name.Pluralize() #>Async();
+        }
+<#  } #>
+<#
+    // Load Commands Begins Here
+    if (TemplateType == MvvmTemplate.Collection) { #>
+
+        public override bool CanExecute(object? parameter)
+        {
+<#  if (PageCommand == PageCommand.LoadCommand) { #>
+            return !_viewModel.Load<#= EntitySetting.Name.Pluralize() #>InProgress;
+<#  } else if (PageCommand == PageCommand.NextPageCommand) { #>
+            return base.CanExecute(parameter) && _viewModel.QueryVM.HasNextPage;
+<#  } else if (PageCommand == PageCommand.PrevPageCommand) { #>
+            return base.CanExecute(parameter) && _viewModel.QueryVM.HasPrevPage;
+<#  } #>
+        }
+
+        public override async void Execute(object? parameter)
+        {
+            if (!CanExecute(parameter))
+                return;
+
+<#  if (PageCommand == PageCommand.LoadCommand) { #>
+            _viewModel.QueryVM.Page = 1;
+<#  } else if (PageCommand == PageCommand.NextPageCommand) { #>
+            _viewModel.QueryVM.Page++;
+<#  } else if (PageCommand == PageCommand.PrevPageCommand) { #>
+            _viewModel.QueryVM.Page--;
+<#  } #>
+            await _viewModel.Load<#= EntitySetting.Name.Pluralize() #>Async();
+            RaiseCanExecuteChanged();
         }
 <#  } #>
     }
