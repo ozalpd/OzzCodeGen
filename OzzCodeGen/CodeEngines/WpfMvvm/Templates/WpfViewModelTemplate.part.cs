@@ -83,7 +83,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             if (TemplateType == MvvmTemplate.Collection)
             {
                 namespaces.Add(CodeEngine.RepoContractNamespaceName);
-                namespaces.Add(CodeEngine.RepositoryNamespaceName);
+                //namespaces.Add(CodeEngine.RepositoryNamespaceName);
                 namespaces.Add(CodeEngine.ServicesNamespaceName);
                 namespaces.Add(EntitySetting.GetCommandsNamespaceName());
                 if (EntitySetting.GenerateGetPaged && EntitySetting.GenerateQueryParam

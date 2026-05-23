@@ -35,24 +35,34 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
         {
             <#= EntitySetting.RepositoryInstanceName #> = <#= EntitySetting.RepositoryInstanceName.ToCamelCase() #>;
             <#= EntitySetting.Name.Pluralize() #> = new ObservableCollection<<#= EntitySetting.Name #>>();
-
-            <#= EntitySetting.Name #>CreateCommand = new <#= EntitySetting.Name #>CreateCommand (<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Create, hasDlgService:true) #>);
-            <#= EntitySetting.Name #>DeleteCommand = new <#= EntitySetting.Name #>DeleteCommand (<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Delete) #>);
-            <#= EntitySetting.Name #>EditCommand = new <#= EntitySetting.Name #>EditCommand (<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Edit, hasDlgService:true) #>);
 <#      if (EntitySetting.GenerateGetPaged) { #>
             QueryVM = new <#= queryParamClassName #>VM();
+<#      } #>
+
+<#  WriteEnumValueInit(enumTypeNames); #>
+            <#= EntitySetting.Name #>CreateCommand = new <#= EntitySetting.Name #>CreateCommand(<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Create, hasDlgService:true) #>);
+            <#= EntitySetting.Name #>DeleteCommand = new <#= EntitySetting.Name #>DeleteCommand(<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Delete) #>);
+            <#= EntitySetting.Name #>EditCommand = new <#= EntitySetting.Name #>EditCommand(<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Edit, hasDlgService:true) #>);
+            <#= EntitySetting.GetPageCommandName(PageCommand.LoadCommand) #> = new <#= EntitySetting.GetPageCommandName(PageCommand.LoadCommand) #>(<#= GetCommandConstructorParams("this", isLoadCommand: true) #>);
+<#      if (EntitySetting.GenerateGetPaged) { #>
+            <#= EntitySetting.GetPageCommandName(PageCommand.NextPageCommand) #> = new <#= EntitySetting.GetPageCommandName(PageCommand.NextPageCommand) #>(<#= GetCommandConstructorParams("this", isLoadCommand: true) #>);
+            <#= EntitySetting.GetPageCommandName(PageCommand.PrevPageCommand) #> = new <#= EntitySetting.GetPageCommandName(PageCommand.PrevPageCommand) #>(<#= GetCommandConstructorParams("this", isLoadCommand: true) #>);
 <#      } #>
         }
 
         public <#= EntitySetting.RepositoryName #> <#= EntitySetting.RepositoryInstanceName #> { get; }
         public ObservableCollection<<#= EntitySetting.Name #>> <#= EntitySetting.Name.Pluralize() #> { get; }
+<#  WriteEnumValues(enumTypeNames); #>
 
         public <#= EntitySetting.Name #>CreateCommand <#= EntitySetting.Name #>CreateCommand { get; }
         public <#= EntitySetting.Name #>DeleteCommand <#= EntitySetting.Name #>DeleteCommand { get; }
         public <#= EntitySetting.Name #>EditCommand <#= EntitySetting.Name #>EditCommand { get; }
-
+        public <#= EntitySetting.GetPageCommandName(PageCommand.LoadCommand) #> <#= EntitySetting.GetPageCommandName(PageCommand.LoadCommand) #> { get; }
 <#      if (EntitySetting.GenerateGetPaged) { #>
-        public <#= queryParamClassName #>VM QueryVM { get; private set; }
+        public <#= EntitySetting.GetPageCommandName(PageCommand.NextPageCommand) #> <#= EntitySetting.GetPageCommandName(PageCommand.NextPageCommand) #> { get; }
+        public <#= EntitySetting.GetPageCommandName(PageCommand.PrevPageCommand) #> <#= EntitySetting.GetPageCommandName(PageCommand.PrevPageCommand) #> { get; }
+
+        public <#= queryParamClassName #>VM QueryVM { get; }
 
         public async Task Load<#= EntitySetting.Name.Pluralize() #>Async()
         {
@@ -66,15 +76,27 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
         {
             if (Load<#= EntitySetting.Name.Pluralize() #>InProgress)
                 return;
+
             Load<#= EntitySetting.Name.Pluralize() #>InProgress = true;
+            <#= EntitySetting.GetPageCommandName(PageCommand.LoadCommand) #>.RaiseCanExecuteChanged();
 <#      if (EntitySetting.GenerateGetPaged) { #>
+            <#= EntitySetting.GetPageCommandName(PageCommand.PrevPageCommand) #>.RaiseCanExecuteChanged();
+            <#= EntitySetting.GetPageCommandName(PageCommand.NextPageCommand) #>.RaiseCanExecuteChanged();
+
             var items = await <#= EntitySetting.RepositoryInstanceName #>.GetPagedAsync(queryVM.<#= queryParamPropertyName #>);
             RaisePropertyChanged(nameof(QueryVM));
 <#      } else { #>
+
             var items = await <#= EntitySetting.RepositoryInstanceName #>.GetAllAsync();
 <#      } #>
             ReplaceCollection(<#= EntitySetting.Name.Pluralize() #>, items);
+
             Load<#= EntitySetting.Name.Pluralize() #>InProgress = false;
+            <#= EntitySetting.GetPageCommandName(PageCommand.LoadCommand) #>.RaiseCanExecuteChanged();
+<#      if (EntitySetting.GenerateGetPaged) { #>
+            <#= EntitySetting.GetPageCommandName(PageCommand.PrevPageCommand) #>.RaiseCanExecuteChanged();
+            <#= EntitySetting.GetPageCommandName(PageCommand.NextPageCommand) #>.RaiseCanExecuteChanged();
+<#      } #>
             On<#= EntitySetting.Name.Pluralize() #>Loaded();
         }
         public bool Load<#= EntitySetting.Name.Pluralize() #>InProgress { get; private set; } = false;
@@ -114,10 +136,6 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
             <#= lookupEntity.Name.Pluralize() #> = new ObservableCollection<<#= lookupEntity.Name #>>();
 
 <#  } #>
-<#  foreach (var enumTypeName in enumTypeNames) { #>
-            <#= enumTypeName #>Values = GetValues<<#= enumTypeName #>>();
-
-<#  } #>
 <#  if (IsEdit) { #>
             _<#= EntitySetting.Name.ToCamelCase() #> = <#= EntitySetting.Name.ToCamelCase() #>;
 <#  } else { #>
@@ -126,6 +144,7 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
             <#= prop.Name #> = <#= prop.FormatDefaultValue() #>;
 <#    } #>
 <#  } #>
+<#  WriteEnumValueInit(enumTypeNames); #>
             OnInitialized();
         }
         partial void OnInitialized();
@@ -143,13 +162,7 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
             }
         }
 <#  } #>
-<#  foreach (var enumTypeName in enumTypeNames) { #>
-
-        /// <summary>
-        /// Gets the collection of available <#= enumTypeName #> enum members for selection or display.
-        /// </summary>
-        public IEnumerable<EnumValueItem<<#= enumTypeName #>>> <#= enumTypeName #>Values { get; }
-<#  } #>
+<#  WriteEnumValues(enumTypeNames); #>
 <#  foreach (var prop in properties.Where(p => !p.IsKey))
     {
         bool isReadOnly = IsEdit ? prop.IsReadOnlyInEdit : prop.IsReadOnlyInCreate;
@@ -192,3 +205,23 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
         }
     }
 }
+<#+
+private void WriteEnumValues(IEnumerable<string> enumTypeNames)
+{
+    foreach (var enumTypeName in enumTypeNames)
+    { #>
+
+        /// <summary>
+        /// Gets the collection of available <#= enumTypeName #> enum members for selection or display.
+        /// </summary>
+        public IEnumerable<EnumValueItem<<#= enumTypeName #>>> <#= enumTypeName #>Values { get; }
+<#+ }
+}
+private void WriteEnumValueInit(IEnumerable<string> enumTypeNames)
+{
+    foreach (var enumTypeName in enumTypeNames)
+    { #>
+            <#= enumTypeName #>Values = GetValues<<#= enumTypeName #>>();
+<#+ }
+}
+#>
