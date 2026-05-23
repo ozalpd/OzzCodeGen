@@ -1,4 +1,5 @@
 ﻿using OzzCodeGen.CodeEngines.Mvvm;
+using OzzUtils;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -52,7 +53,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
                 // If infrastructure folder is specified, then we need to add the service namespace for the interface reference
                 if (!string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder) && !CodeEngine.PutLookupInInfra)
-                    namespaces.Add($"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.LookupFolder)}");
+                    namespaces.Add($"{CodeEngine.InfrastructureNamespaceName}.{CodeEngine.LookupFolder.FolderPathToNamespace()}");
             }
             else if (TemplateType == LookupTemplate.DesignTimeClass)
             {

@@ -1,4 +1,5 @@
 ﻿using OzzCodeGen.CodeEngines.Mvvm;
+using OzzUtils;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -56,21 +57,13 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             var namespaces = new List<string>();
             if (!string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
             {
-                namespaces.Add($"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.ViewModelFolder)}");
+                namespaces.Add($"{CodeEngine.InfrastructureNamespaceName}.{CodeEngine.ViewModelFolder.FolderPathToNamespace()}");
             }
 
             if (EntitySetting.GetForeignLookupEntities(IsEdit).Any())
             {
                 namespaces.Add(CodeEngine.LookupNamespaceName);
                 namespaces.Add("System.Collections.ObjectModel");
-            }
-
-            if (TemplateType == MvvmTemplate.Collection)
-            {
-                namespaces.Add(CodeEngine.RepoContractNamespaceName);
-                namespaces.Add(CodeEngine.RepositoryNamespaceName);
-                namespaces.Add(CodeEngine.ServicesNamespaceName);
-                namespaces.Add(EntitySetting.GetCommandsNamespaceName());
             }
 
             var modelClassEngine = CodeEngine.ModelClassCodeEngine;
@@ -84,17 +77,28 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                 {
                     namespaces.Add(modelClassEngine.ExtensionsNamespaceName);
                     namespaces = namespaces.OrderBy(ns => ns).ToList();
-                    namespaces.Add($"static {modelClassEngine.ExtensionsNamespaceName}.{modelClassEngine.EnumExtensionClassName}");
-                }
-                else
-                {
-                    namespaces = namespaces.OrderBy(ns => ns).ToList();
                 }
             }
-            else
+
+            if (TemplateType == MvvmTemplate.Collection)
             {
-                namespaces = namespaces.OrderBy(ns => ns).ToList();
+                namespaces.Add(CodeEngine.RepoContractNamespaceName);
+                namespaces.Add(CodeEngine.RepositoryNamespaceName);
+                namespaces.Add(CodeEngine.ServicesNamespaceName);
+                namespaces.Add(EntitySetting.GetCommandsNamespaceName());
+                if (EntitySetting.GenerateGetPaged && EntitySetting.GenerateQueryParam
+                    && !namespaces.Contains(EntitySetting.GetQueryParamNamespace()))
+                {
+                    namespaces.Add(EntitySetting.GetQueryParamNamespace());
+                }
             }
+
+            namespaces = namespaces.OrderBy(ns => ns).ToList();
+            if (modelClassEngine != null && GetEnumTypeNames().Any())
+            {
+                namespaces.Add($"static {modelClassEngine.ExtensionsNamespaceName}.{modelClassEngine.EnumExtensionClassName}");
+            }
+
             return namespaces;
         }
     }

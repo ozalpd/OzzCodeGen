@@ -1,4 +1,5 @@
 ﻿using OzzCodeGen.CodeEngines.CsModelClass;
+using OzzUtils;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -55,10 +56,10 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         {
             string baseNamespace = string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder)
                                  ? CodeEngine.ViewModelNamespaceName
-                                 : $"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.ViewModelFolder)}";
+                                 : $"{CodeEngine.InfrastructureNamespaceName}.{CodeEngine.ViewModelFolder.FolderPathToNamespace()}";
             if (!string.IsNullOrWhiteSpace(SubFolder))
             {
-                return $"{baseNamespace}.{GetFolderToNamespace(SubFolder)}";
+                return $"{baseNamespace}.{SubFolder.FolderPathToNamespace()}";
             }
 
             return baseNamespace;

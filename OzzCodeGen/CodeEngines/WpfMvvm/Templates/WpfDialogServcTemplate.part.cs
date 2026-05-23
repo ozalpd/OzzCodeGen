@@ -1,5 +1,4 @@
-﻿using OzzCodeGen.CodeEngines.Mvvm;
-using OzzUtils;
+﻿using OzzUtils;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +29,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             }
             if (!string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
             {
-                namespaces.Add($"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.ViewModelFolder)}");
+                namespaces.Add($"{CodeEngine.InfrastructureNamespaceName}.{CodeEngine.ViewModelFolder.FolderPathToNamespace()}");
             }
 
             var entitySettings = GetEntitySettings();

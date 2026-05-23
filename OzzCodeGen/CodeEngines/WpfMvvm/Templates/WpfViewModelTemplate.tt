@@ -5,6 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzCodeGen.CodeEngines" #>
+<#@ import namespace="OzzCodeGen.CodeEngines.CsModelClass" #>
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
 <#@ import namespace="OzzCodeGen.CodeEngines.Mvvm" #>
 <#@ import namespace="OzzUtils" #>
@@ -26,8 +27,10 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
     public partial class <#= GetClassName() #> : <#= GetBaseClassName() #>
     {
 <#  if (TemplateType == MvvmTemplate.Collection) {
-        string queryParamsName = EntitySetting.GenerateGetPaged ? "queryParams" : string.Empty;
-        var pkey = GetPrimaryKey();  #>
+        var pkey = GetPrimaryKey();
+        string queryParamClassName = EntitySetting.GetQueryParamClassName();
+        string queryParamPropertyName = EntitySetting.GenerateQueryParam ? "Parameters" : CSharpModelClassCodeEngine.QueryParamClassName;
+        #>
         public <#= GetClassName() #>(<#= GetVmConstructorParams(isDeclaration: true) #>)
         {
             <#= EntitySetting.RepositoryInstanceName #> = <#= EntitySetting.RepositoryInstanceName.ToCamelCase() #>;
@@ -37,7 +40,7 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
             <#= EntitySetting.Name #>DeleteCommand = new <#= EntitySetting.Name #>DeleteCommand (<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Delete) #>);
             <#= EntitySetting.Name #>EditCommand = new <#= EntitySetting.Name #>EditCommand (<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Edit, hasDlgService:true) #>);
 <#      if (EntitySetting.GenerateGetPaged) { #>
-            QueryParams = new <#= EntitySetting.GetQueryParamClassName() #>();
+            QueryVM = new <#= queryParamClassName #>VM();
 <#      } #>
         }
 
@@ -49,14 +52,14 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
         public <#= EntitySetting.Name #>EditCommand <#= EntitySetting.Name #>EditCommand { get; }
 
 <#      if (EntitySetting.GenerateGetPaged) { #>
-        protected <#= EntitySetting.GetQueryParamClassName() #> QueryParams { get; private set; }
+        public <#= queryParamClassName #>VM QueryVM { get; private set; }
 
         public async Task Load<#= EntitySetting.Name.Pluralize() #>Async()
         {
-            await Load<#= EntitySetting.Name.Pluralize() #>Async(QueryParams);
+            await Load<#= EntitySetting.Name.Pluralize() #>Async(QueryVM);
         }
 
-        protected async Task Load<#= EntitySetting.Name.Pluralize() #>Async(<#= EntitySetting.GetQueryParamClassName() #> <#= queryParamsName#>)
+        protected async Task Load<#= EntitySetting.Name.Pluralize() #>Async(<#= queryParamClassName #>VM queryVM)
 <#      } else { #>
         public async Task Load<#= EntitySetting.Name.Pluralize() #>Async()
 <#      } #>
@@ -65,9 +68,8 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
                 return;
             Load<#= EntitySetting.Name.Pluralize() #>InProgress = true;
 <#      if (EntitySetting.GenerateGetPaged) { #>
-            var items = await <#= EntitySetting.RepositoryInstanceName #>.GetPagedAsync(<#= queryParamsName #>);
-            QueryParams = <#= queryParamsName #>;
-            RaisePropertyChanged(nameof(QueryParams));
+            var items = await <#= EntitySetting.RepositoryInstanceName #>.GetPagedAsync(queryVM.<#= queryParamPropertyName #>);
+            RaisePropertyChanged(nameof(QueryVM));
 <#      } else { #>
             var items = await <#= EntitySetting.RepositoryInstanceName #>.GetAllAsync();
 <#      } #>

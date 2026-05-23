@@ -1,5 +1,6 @@
 using OzzCodeGen.CodeEngines.Localization;
 using OzzCodeGen.Definitions;
+using OzzUtils;
 using System;
 using System.IO;
 using System.Linq;
@@ -141,9 +142,9 @@ public abstract class BaseMvvmCodeEngine : BaseAppInfraCodeEngine
         get
         {
             if (PutLookupInInfra)
-                return $"{InfrastructureNamespaceName}.{GetFolderToNamespace(LookupFolder)}";
+                return $"{InfrastructureNamespaceName}.{LookupFolder.FolderPathToNamespace()}";
 
-            return $"{NamespaceName}.{GetFolderToNamespace(LookupFolder)}";
+            return $"{NamespaceName}.{LookupFolder.FolderPathToNamespace()}";
         }
     }
 

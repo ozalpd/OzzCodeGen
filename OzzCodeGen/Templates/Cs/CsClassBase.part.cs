@@ -30,14 +30,6 @@ namespace OzzCodeGen.Templates.Cs
             return IsPublic ? "public partial" : "internal partial";
         }
 
-
-        protected string GetFolderToNamespace(string folder)
-        {
-            if (string.IsNullOrWhiteSpace(folder))
-                return string.Empty;
-            return folder.Replace("/", ".").Replace("\\", ".");
-        }
-
         /// <summary>
         /// The generated class or interface will have public accessibility when IsPublic is true
         /// and will have internal accessibility when IsPublic is false.

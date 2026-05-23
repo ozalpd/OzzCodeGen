@@ -246,6 +246,18 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
         return ModelClassEntitySetting.GetQueryParamClassName();
     }
 
+    public string GetQueryParamNamespace()
+    {
+        string baseNamespace = string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder)
+                                 ? CodeEngine.ViewModelNamespaceName
+                                 : $"{CodeEngine.InfrastructureNamespaceName}.{CodeEngine.ViewModelFolder.FolderPathToNamespace()}";
+        if (!string.IsNullOrWhiteSpace(SubFolder))
+        {
+            return $"{baseNamespace}.{SubFolder.FolderPathToNamespace()}";
+        }
+
+        return baseNamespace;
+    }
 
     public FileGenerationMode GenModeCollectionVM
     {

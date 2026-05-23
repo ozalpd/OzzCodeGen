@@ -1,4 +1,5 @@
 ﻿using OzzCodeGen.CodeEngines.Mvvm;
+using OzzUtils;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -72,7 +73,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             {
                 return CodeEngine.ViewModelNamespaceName;
             }
-            return $"{CodeEngine.InfrastructureNamespaceName}.{GetFolderToNamespace(CodeEngine.ViewModelFolder)}";
+            return $"{CodeEngine.InfrastructureNamespaceName}.{CodeEngine.ViewModelFolder.FolderPathToNamespace()}";
         }
 
         public override List<string> DefaultUsingNamespaceList()

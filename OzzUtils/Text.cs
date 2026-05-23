@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,23 +14,6 @@ namespace OzzUtils
             return Regex.IsMatch(s, @"^\d+$");
         }
 
-        public static string ToTitleCase(this string s)
-        {
-            if (string.IsNullOrEmpty(s)) return string.Empty;
-
-            var textInfo = Thread.CurrentThread.CurrentCulture.TextInfo;
-            return  textInfo.ToTitleCase(s);
-        }
-
-        public static string ToSentenceCase(this string s)
-        {
-            if (string.IsNullOrEmpty(s)) return string.Empty;
-
-            var lowerCase = s.ToLower();
-            var r = new Regex(@"(^[a-z])|\.\s+(.)", RegexOptions.ExplicitCapture);
-            return r.Replace(lowerCase, l => l.Value.ToUpper());
-        }
-
         public static string PascalCaseToTitleCase(this string s)
         {
             if (string.IsNullOrEmpty(s)) return string.Empty;
@@ -44,57 +26,32 @@ namespace OzzUtils
             return Regex.Replace(s, "[a-z][A-Z]", m => m.Value[0] + " " + char.ToLowerInvariant(m.Value[1]));
         }
 
-        /// <summary>
-        /// Returns new string which spaces are removed and each word begins with a capital letter
-        /// </summary>
-        /// <param name="s"></param>
-        /// <returns></returns>
-        public static string ToPascalCase(this string s)
+        public static string FolderPathToNamespace(this string s)
         {
-
-            if (string.IsNullOrEmpty(s))
+            if (string.IsNullOrWhiteSpace(s))
                 return string.Empty;
-            
-            if (s.Length == 1)
-                return s[0].ToString().ToUpperInvariant();
-            
-            string[] words = s.Split(' ');
-            if (words.Length == 1)
-                return s.ToTitleCase()[0].ToString().ToUpperInvariant() + s.Substring(1);
-            
+
+            string[] parts = s.Split(new[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
             StringBuilder sb = new StringBuilder();
-            foreach (var word in words)
+            for (int i = 0; i < parts.Length; i++)
             {
-                if (!string.IsNullOrEmpty(word))
+                if (sb.Length > 0)
                 {
-                    sb.Append(word[0].ToString().ToUpperInvariant());
-                    sb.Append(word.Substring(1).ToLowerInvariant());
+                    sb.Append('.');
                 }
+                sb.Append(parts[i]);
             }
+
             return sb.ToString();
         }
 
-        /// <summary>
-        /// Returns new string with the first letter changed to lowercase
-        /// </summary>
-        public static string ToCamelCase(this string s)
-        {
-            if (String.IsNullOrEmpty(s))
-                return s;
-
-            if (s.Length == 1)
-                return s[0].ToString().ToLowerInvariant();
-
-            return s[0].ToString().ToLowerInvariant() + s.ToPascalCase().Substring(1);
-        }
-
-        public static string StripNamespace(this string s)
+        public static string GetRootNamespace(this string s)
         {
             string[] parts = s.Split('.');
             return parts.LastOrDefault();
         }
 
-        public static string GetNamespace(this string s)
+        public static string GetUpperNamespace(this string s)
         {
             string[] parts = s.Split('.');
             StringBuilder sb = new StringBuilder();
@@ -109,7 +66,6 @@ namespace OzzUtils
 
             return sb.ToString();
         }
-
 
         public static string Pluralize(this string s)
         {
@@ -172,7 +128,7 @@ namespace OzzUtils
         }
 
 
-        private static List<char[]>  ReplaceTrEnList
+        private static List<char[]> ReplaceTrEnList
         {
             set { List<char[]> replaceList = value; }
             get
@@ -210,6 +166,67 @@ namespace OzzUtils
             }
 
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Returns new string with the first letter changed to lowercase
+        /// </summary>
+        public static string ToCamelCase(this string s)
+        {
+            if (String.IsNullOrEmpty(s))
+                return s;
+
+            if (s.Length == 1)
+                return s[0].ToString().ToLowerInvariant();
+
+            return s[0].ToString().ToLowerInvariant() + s.ToPascalCase().Substring(1);
+        }
+
+        /// <summary>
+        /// Returns new string which spaces are removed and each word begins with a capital letter
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string ToPascalCase(this string s)
+        {
+
+            if (string.IsNullOrEmpty(s))
+                return string.Empty;
+
+            if (s.Length == 1)
+                return s[0].ToString().ToUpperInvariant();
+
+            string[] words = s.Split(' ');
+            if (words.Length == 1)
+                return s.ToTitleCase()[0].ToString().ToUpperInvariant() + s.Substring(1);
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var word in words)
+            {
+                if (!string.IsNullOrEmpty(word))
+                {
+                    sb.Append(word[0].ToString().ToUpperInvariant());
+                    sb.Append(word.Substring(1).ToLowerInvariant());
+                }
+            }
+            return sb.ToString();
+        }
+
+        public static string ToSentenceCase(this string s)
+        {
+            if (string.IsNullOrEmpty(s)) return string.Empty;
+
+            var lowerCase = s.ToLower();
+            var r = new Regex(@"(^[a-z])|\.\s+(.)", RegexOptions.ExplicitCapture);
+            return r.Replace(lowerCase, l => l.Value.ToUpper());
+        }
+
+        public static string ToTitleCase(this string s)
+        {
+            if (string.IsNullOrEmpty(s)) return string.Empty;
+
+            var textInfo = Thread.CurrentThread.CurrentCulture.TextInfo;
+            return textInfo.ToTitleCase(s);
         }
 
 
@@ -305,9 +322,9 @@ namespace OzzUtils
             char[] array = new char[source.Length];
             int arrayIndex = 0;
             char[] removeArray = { '\'', '\"', '[', ']', '{', '}', '(', ')', '"',
-                                     '%', '$','.',',','!','@','#','$','%','^','&', 
-                                     '*', '”', '“', '‘', '’', ';', ':', '\\', 
-                                     '\r', '\n', '>', '<', '…', 
+                                     '%', '$','.',',','!','@','#','$','%','^','&',
+                                     '*', '”', '“', '‘', '’', ';', ':', '\\',
+                                     '\r', '\n', '>', '<', '…',
                                      '`','~','/','?','+','=','€' };
 
             for (int i = 0; i < source.Length; i++)

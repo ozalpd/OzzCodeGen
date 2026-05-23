@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using OzzUtils;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
@@ -20,7 +21,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             {
                 return CodeEngine.CommandNamespaceName;
             }
-            return GetFolderToNamespace(CodeEngine.BaseCommandNamespaceName);
+            return CodeEngine.BaseCommandNamespaceName.FolderPathToNamespace();
         }
 
         public override List<string> DefaultUsingNamespaceList()
