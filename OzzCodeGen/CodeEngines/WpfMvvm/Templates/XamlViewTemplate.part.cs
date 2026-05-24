@@ -144,7 +144,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         public int GetMinHeight()
         {
             int baseHeight = 100;
-            int rowHeight = 36;
+            int rowHeight = 40;
             int multilineRowHeight = 64;
 
             //We're simulating layout
