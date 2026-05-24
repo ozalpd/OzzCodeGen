@@ -109,6 +109,21 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     }
     private string _commandVmTypeName;
 
+    /// <summary>
+    /// The column layout configuration for input forms.
+    /// </summary>
+    public FormColumnLayout InputColumnLayout
+    {
+        get { return _inputFormColumnLayout ?? FormColumnLayout.OneColumn; }
+        set
+        {
+            if (_inputFormColumnLayout == value) return;
+            _inputFormColumnLayout = value;
+            RaisePropertyChanged(nameof(FormColumnLayout));
+        }
+    }
+    private FormColumnLayout? _inputFormColumnLayout;
+
     public bool GenerateAnyCommand => GenModeCreateCommand > FileGenerationMode.DoNotGenerate
                                    || GenModeEditCommand > FileGenerationMode.DoNotGenerate
                                    || GenModeDeleteCommand > FileGenerationMode.DoNotGenerate;

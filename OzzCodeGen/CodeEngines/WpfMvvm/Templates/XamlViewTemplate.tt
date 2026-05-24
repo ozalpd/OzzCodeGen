@@ -10,7 +10,14 @@
 <#@ import namespace="OzzUtils" #>
 <#  var properties = GetProperties().ToList();
     var focusProperty = GetFocusProperty();
-    var enumTypeNames = EntitySetting.GetEnumTypeNames().ToList(); #>
+    var enumTypeNames = EntitySetting.GetEnumTypeNames().ToList();
+    int minHeight = GetMinHeight();
+    int minWidth = GetMinWidth();
+    bool anyMultiLine = properties.Any(p => p.IsMultiLine);
+    int colSpan = ColumnLayout * 2 - 1;
+    int rowIdx = 0;
+    int rowNr = 0;
+    int colNr = 0; #>
 <<#= BaseClassDeclaration #> x:Class="<#= GetFullClassName() #>"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -24,68 +31,101 @@
         xmlns:base="<#= BaseClassNamespaceDeclaration #>"
 <#  } #>
         Title="<#= GetTitle() #>"
-        Height="<#= GetMinHeight() #>" Width="420" MinHeight="<#= GetMinHeight() #>" MinWidth="420"
+        Height="<#= minHeight #>" Width="<#= minWidth #>" MinHeight="<#= minHeight #>" MinWidth="<#= minWidth #>"
         WindowStartupLocation="CenterOwner"
 <#  if (focusProperty != null) { #>
         FocusManager.FocusedElement="{Binding ElementName=<#= GetElementName(focusProperty) #>}"
 <#  } #>
         mc:Ignorable="d">
-    <Grid Margin="12">
+    <Grid Margin="8,12">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120" />
+<#  for (int i = 0; i < ColumnLayout; i++) { #>
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
+<#  } #>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
 <#  foreach (var prop in properties.Where(p => !p.IsKey)) {
-        if (prop.IsMultiLine) { #>
+        if (prop.IsMultiLine) {
+            rowIdx = 0; #>
             <RowDefinition Height="*" />
-<#  } else { #>
+<#  } else if (rowIdx % ColumnLayout == 0) { #>
             <RowDefinition Height="Auto" />
 <#      }
+        rowIdx++;
     } #>
+<#  if (anyMultiLine) { #>
             <RowDefinition Height="Auto" />
+<#  } else { #>
+            <RowDefinition Height="*" />
+<#  } #>
         </Grid.RowDefinitions>
-<#  int i = 0;
+<#  rowIdx = 0;
+    rowNr = 0;
+    colNr = 0;
     foreach (var prop in properties.Where(p => !p.IsKey)) {
         var lookupEntity = prop.GetLookupEntity();
         var dependent = prop.GetDependent();
         string enumName = prop.GetEnumTypeName();
         bool isEnum = !string.IsNullOrEmpty(enumName);
-        string bindingName = prop.IsForeignKey && dependent != null ? dependent.Name : prop.Name; #>
+        string bindingName = prop.IsForeignKey && dependent != null ? dependent.Name : prop.Name;
+        bool isReadOnly = IsEdit ? prop.IsReadOnlyInEdit : prop.IsReadOnlyInCreate;
+        if (prop.IsMultiLine) {
+            if(colNr > 0) rowNr++;
+            colNr = 0;
+        }#>
 
-        <TextBlock Grid.Row="<#= i #>" Grid.Column="0" Style="{StaticResource RightAlignedTextBlockStyle}"
+        <TextBlock Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr #>" Style="{StaticResource RightAlignedTextBlockStyle}"
                    Text="{x:Static i18n:LocalizedStrings.<#= bindingName #>}"/>
-<#      bool isReadOnly = IsEdit ? prop.IsReadOnlyInEdit : prop.IsReadOnlyInCreate;
-        if (prop.IsMultiLine && !isReadOnly) {
-#>
-        <TextBox <#= GetElementName(prop, true) #>Grid.Row="<#= i #>" Grid.Column="1"
+<#      if (prop.IsMultiLine && !isReadOnly) {
+            rowIdx = -1;
+            #>
+        <TextBox <#= GetElementName(prop, true) #>Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>"
                  Style="{StaticResource ValidationMutliLineTextBoxStyle}"
+<#      if(colSpan > 1) { #>
+                 Grid.ColumnSpan="<#= colSpan #>"
+<#      } #>
                  Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 <#  } else if (prop.IsBoolean) { #>
-        <CheckBox Grid.Row="<#= i #>" Grid.Column="1" Margin="0,0,0,18" IsChecked="{Binding <#= prop.Name #>}" />
+        <CheckBox Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>" Margin="0,0,0,20" IsChecked="{Binding <#= prop.Name #>}" />
 <#  } else if (isReadOnly) {
         bindingName = prop.IsForeignKey && lookupEntity != null ? $"{dependent.Name}.{lookupEntity.EntityDefinition.DisplayMember}" : prop.Name; #>
-        <TextBox Grid.Row="<#= i #>" Grid.Column="1" Style="{StaticResource ReadOnlyTextBoxStyle}" Text="{Binding <#= bindingName #>, Mode=OneWay}"/>
+        <TextBox Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>"
+<#      if(prop.IsMultiLine && colSpan > 1) { #>
+                 Grid.ColumnSpan="<#= colSpan #>" Margin="0,0,0,8" TextWrapping="Wrap"
+<#      } else if (prop.IsMultiLine) { #>
+                 TextWrapping="Wrap"
+<#      } #>
+                 Style="{StaticResource ReadOnlyTextBoxStyle}"
+                 Text="{Binding <#= bindingName #>, Mode=OneWay}"/>
 <#  } else if (isEnum || (prop.IsForeignKey && lookupEntity != null)) {
         string itemsSource = isEnum ? $"{enumName}Values" : lookupEntity.Name.Pluralize();
         string memberPath = isEnum ? "DisplayValue" : lookupEntity.EntityDefinition.DisplayMember;
         string valuePath = isEnum ? "Value" : lookupEntity.GetPrimaryKey().Name; #>
-        <ComboBox <#= GetElementName(prop, true) #>Grid.Row="<#= i #>" Grid.Column="1"
+        <ComboBox <#= GetElementName(prop, true) #>Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>"
                   Style="{StaticResource ValidationComboBoxStyle}"
                   ItemsSource="{Binding <#= itemsSource #>}"
                   DisplayMemberPath="<#= memberPath #>"
                   SelectedValuePath="<#= valuePath #>"
                   SelectedValue="{Binding <#= prop.Name #>, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 <#  } else if (prop.IsSimpleOrString) { #>
-        <TextBox <#= GetElementName(prop, true) #>Grid.Row="<#= i #>" Grid.Column="1"
+        <TextBox <#= GetElementName(prop, true) #>Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>"
                  Style="{StaticResource ValidationTextBoxStyle}"
                  Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 <#      }
-        i++;
-    } #>
+        rowIdx++;
+        if (rowIdx % ColumnLayout == 0) {
+            rowNr++;
+            colNr = 0;
+        }
+        else {
+            colNr += 2;
+        }
+    }
+    rowNr++; #>
 
-        <StackPanel Grid.Row="<#= i #>" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
-            <Button Content="<#= GetActionString("OK") #>" Width="90" Margin="0,0,8,0" IsDefault="True" IsEnabled="{Binding IsValid}" Click="OkButton_Click" />
+        <StackPanel Grid.Row="<#= rowNr #>" Grid.ColumnSpan="<#= colSpan + 1 #>" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,6" VerticalAlignment="Bottom">
+            <Button Content="<#= GetActionString("OK") #>" Width="90" Margin="0,0,18,0" IsDefault="True" IsEnabled="{Binding IsValid}" Click="OkButton_Click" />
             <Button Content="<#= GetActionString("Cancel") #>" Width="90" IsCancel="True" />
         </StackPanel>
     </Grid>

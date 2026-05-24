@@ -109,7 +109,7 @@
 
     <!-- TextBlock Style: right-aligned display only -->
     <Style x:Key="RightAlignedTextBlockStyle" TargetType="TextBlock">
-        <Setter Property="Margin" Value="0,0,8,0" />
+        <Setter Property="Margin" Value="4,0,8,0" />
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="VerticalAlignment" Value="Top" />
     </Style>

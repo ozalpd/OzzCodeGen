@@ -7,12 +7,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 - Added new ViewFieldMode enum properties `CreateViewMode` and `EditViewMode` and replaced IncludeInView/IncludeInViewModel with to WPF MVVM property settings for controlling inclusion and editability control in MVVM view and view model generation.
+- Added `FormColumnLayout` enum and `InputColumnLayout` property to enable 1-4 column input forms.
 
 ### Changed
 - Updated XAML view template and view model templates, and WPF UI to use CreateViewMode/EditViewMode.
 - Marked IsReadOnlyInCreate/Edit as computed and non-serialized.
 - Incremented project version to 2.3.9.
 - Also changed AspNetMvcPropertySetting.IsNullable to a method.
+- Updated XAML view template to generate grid columns/rows dynamically and calculate min width/height.
+- Improved field layout logic, adjusted TextBlock style margins, and added a "Reset Order" button in the MVVM engine UI.
+- Refactored property order logic and made minor UI tweaks.
 
 ## [2.3.8] - 2026-05-24
 

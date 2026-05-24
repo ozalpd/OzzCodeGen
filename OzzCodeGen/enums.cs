@@ -27,11 +27,20 @@ public enum DefinitionType
     String
 }
 
+public enum FormColumnLayout
+{
+    OneColumn = 1,
+    TwoColumns = 2,
+    ThreeColumns = 3,
+    FourColumns = 4
+}
+
 public enum TargetDotNetPlatform
 {
     DotNetFramework,
     ModernDotNet
 }
+
 public enum ViewFieldMode
 {
     [Description("Exclude")]

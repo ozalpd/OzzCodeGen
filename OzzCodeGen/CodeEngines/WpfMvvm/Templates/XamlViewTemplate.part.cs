@@ -27,6 +27,8 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public string GetFullClassName() => $"{GetNamespace()}.{GetClassName()}";
 
+        public int ColumnLayout => (int)EntitySetting.InputColumnLayout;
+
         public override string GetDefaultFileName()
         {
             if (string.IsNullOrWhiteSpace(EntitySetting.SubFolder))
@@ -141,12 +143,38 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public int GetMinHeight()
         {
-            int baseHeight = 160;
-            int propertyHeight = 32;
-            int propertiesCount = GetProperties().Count();
-            int multilinePropertiesCount = GetProperties().Count(p => p.IsMultiLine);
-            int minHeight = baseHeight + propertyHeight * propertiesCount + multilinePropertiesCount * 48;
+            int baseHeight = 100;
+            int rowHeight = 36;
+            int multilineRowHeight = 64;
+
+            //We're simulating layout
+            var properties = GetProperties().Where(p => !p.IsKey)
+                                            .ToList();
+            int rowNr = 0;
+            int minHeight = baseHeight;
+            foreach (var prop in properties)
+            {
+                if (prop.IsMultiLine)
+                {
+                    rowNr = 0;
+                    minHeight += multilineRowHeight;
+                }
+                else if (rowNr % ColumnLayout == 0)
+                {
+                    minHeight += rowHeight;
+                }
+                rowNr++;
+            }
+
             return (int)(Math.Ceiling(minHeight * 0.10m) * 10); // round up to the nearest 10
+        }
+
+        public int GetMinWidth()
+        {
+            int baseWidth = 124; //100 + 2 x Grid Margin
+            int columnWidth = 296;  // 470 - 124, where 470 is the width of a single column layout
+            int minWidth = baseWidth + ColumnLayout * columnWidth;
+            return (int)(Math.Ceiling(minWidth * 0.10m) * 10); // round up to the nearest 10
         }
 
         public string GetTitle()

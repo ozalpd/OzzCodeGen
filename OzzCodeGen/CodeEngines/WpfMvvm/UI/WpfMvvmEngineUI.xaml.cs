@@ -147,10 +147,10 @@ public partial class WpfMvvmEngineUI : AbstractEngineUI
                 nextOne.CreateEditOrder -= 100;
             }
         }
-        int i = grdEntitySettings.SelectedIndex;
+        int idx = grdEntitySettings.SelectedIndex;
         grdEntitySettings.SelectedIndex = -1;
         entitySetting.RefreshPropertiesInCreateEditOrder();
-        grdEntitySettings.SelectedIndex = i;
+        grdEntitySettings.SelectedIndex = idx;
         grdPropertiesInCreateEdit.SelectedItem = propertySetting;
         _isMovingProperty = false;
     }
@@ -182,5 +182,30 @@ public partial class WpfMvvmEngineUI : AbstractEngineUI
         var entitySetting = (WpfMvvmEntitySetting)grdEntitySettings.SelectedItem;
         if (entitySetting != null)
             entitySetting.RefreshPropertiesInCreateEditOrder();
+    }
+
+    private void btnResetOrder_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        var entitySetting = (WpfMvvmEntitySetting)grdEntitySettings.SelectedItem;
+        var propertySetting = GetSelectedCreateEditPropertySetting();
+        int orderStep = 100;
+        int order = 0;
+        foreach (var prop in entitySetting.MvvmProperties.OrderBy(p => p.PropertyDefinition.DisplayOrder))
+        {
+            if (order < orderStep)
+            {
+                order = prop.PropertyDefinition.DisplayOrder;
+            }
+            else
+            {
+                order += orderStep;
+            }
+            prop.CreateEditOrder = order;
+        }
+        int idx = grdEntitySettings.SelectedIndex;
+        grdEntitySettings.SelectedIndex = -1;
+        entitySetting.RefreshPropertiesInCreateEditOrder();
+        grdEntitySettings.SelectedIndex = idx;
+        grdPropertiesInCreateEdit.SelectedItem = propertySetting;
     }
 }

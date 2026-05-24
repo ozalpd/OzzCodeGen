@@ -101,7 +101,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                     "e=\"0,0,0,20\" />\r\n        <Setter Property=\"IsReadOnly\" Value=\"True\" />\r\n        " +
                     "<Setter Property=\"Background\" Value=\"#EDEDED\" />\r\n    </Style>\r\n\r\n    <!-- TextB" +
                     "lock Style: right-aligned display only -->\r\n    <Style x:Key=\"RightAlignedTextBl" +
-                    "ockStyle\" TargetType=\"TextBlock\">\r\n        <Setter Property=\"Margin\" Value=\"0,0," +
+                    "ockStyle\" TargetType=\"TextBlock\">\r\n        <Setter Property=\"Margin\" Value=\"4,0," +
                     "8,0\" />\r\n        <Setter Property=\"HorizontalAlignment\" Value=\"Right\" />\r\n      " +
                     "  <Setter Property=\"VerticalAlignment\" Value=\"Top\" />\r\n    </Style>\r\n\r\n    <!-- " +
                     "Button Style: toolbar icon button 22x18 -->\r\n    <Style x:Key=\"IconButtonStyle-2" +
