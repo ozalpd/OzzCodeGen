@@ -381,18 +381,44 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write(".PageSize = value;\r\n                RaisePropertyChanged(nameof(PageSize));\r\n    " +
-                    "        }\r\n        }\r\n        \r\n        public string? SearchString\r\n        {\r\n" +
-                    "            get => ");
+            this.Write(@".PageSize = value;
+                RaisePropertyChanged(nameof(PageSize));
+                RaisePropertyChanged(nameof(PageInfo));
+                RaisePropertyChanged(nameof(PageCount));
+                RaisePropertyChanged(nameof(RecordsInfo));
+            }
+        }
+        
+        /// <summary>
+        /// Gets a localized string displaying pagination information including current page, total pages.
+        /// </summary>
+        public string PageInfo => ");
             
-            #line 137 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.tt"
+            #line 141 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(queryParamClassName));
+            
+            #line default
+            #line hidden
+            this.Write(".PageInfo;\r\n\r\n        /// <summary>       \r\n        /// Gets a localized string d" +
+                    "isplaying the total number of records.\r\n        /// </summary>\r\n        public s" +
+                    "tring RecordsInfo => ");
+            
+            #line 146 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(queryParamClassName));
+            
+            #line default
+            #line hidden
+            this.Write(".RecordsInfo;\r\n\r\n        public string? SearchString\r\n        {\r\n            get " +
+                    "=> ");
+            
+            #line 150 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(queryParamClassName));
             
             #line default
             #line hidden
             this.Write(".SearchString;\r\n            set\r\n            {\r\n                ");
             
-            #line 140 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.tt"
+            #line 153 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(queryParamClassName));
             
             #line default
@@ -407,14 +433,14 @@ namespace ");
         /// </summary>
         public long TotalCount => ");
             
-            #line 148 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.tt"
+            #line 161 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(queryParamClassName));
             
             #line default
             #line hidden
             this.Write(".TotalCount;\r\n");
             
-            #line 149 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.tt"
+            #line 162 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.tt"
   } 
             
             #line default

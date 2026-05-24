@@ -37,7 +37,9 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
             <#= EntitySetting.Name.Pluralize() #> = new ObservableCollection<<#= EntitySetting.Name #>>();
 <#      if (EntitySetting.GenerateGetPaged) { #>
             QueryVM = new <#= queryParamClassName #>VM();
+            QueryVM.PropertyChanged += OnPropertyChanged;
 <#      } #>
+            PropertyChanged += OnPropertyChanged;
 
 <#  WriteEnumValueInit(enumTypeNames); #>
             <#= EntitySetting.Name #>CreateCommand = new <#= EntitySetting.Name #>CreateCommand(<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Create, hasDlgService:true) #>);
@@ -116,7 +118,19 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
             set
             {
                 SelectedItem = value;
+                TradeEditCommand.RaiseCanExecuteChanged();
+                TradeDeleteCommand.RaiseCanExecuteChanged();
                 RaisePropertyChanged(nameof(Selected<#= EntitySetting.Name #>));
+            }
+        }
+
+        protected virtual void OnPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(QueryVM.PageSize))
+            {
+                TradesLoadCommand.RaiseCanExecuteChanged();
+                TradesPrevPageCommand.RaiseCanExecuteChanged();
+                TradesNextPageCommand.RaiseCanExecuteChanged();
             }
         }
 <#      WriteLine("    }");
