@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+
+## [2.3.9] - 2026-05-24
+
+### Added
+- Added new ViewFieldMode enum properties `CreateViewMode` and `EditViewMode` and replaced IncludeInView/IncludeInViewModel with to WPF MVVM property settings for controlling inclusion and editability control in MVVM view and view model generation.
+
+### Changed
+- Updated XAML view template and view model templates, and WPF UI to use CreateViewMode/EditViewMode.
+- Marked IsReadOnlyInCreate/Edit as computed and non-serialized.
+- Incremented project version to 2.3.9.
+- Also changed AspNetMvcPropertySetting.IsNullable to a method.
+
 ## [2.3.8] - 2026-05-24
 
 ### Added

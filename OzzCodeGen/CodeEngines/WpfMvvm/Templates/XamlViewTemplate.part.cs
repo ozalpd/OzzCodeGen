@@ -68,11 +68,22 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public IEnumerable<WpfMvvmPropertySetting> GetProperties()
         {
-            return EntitySetting.PropertiesInCreateEditOrder
-                                .OfType<WpfMvvmPropertySetting>()
-                                .Where(p => p.IncludeInView
-                                         && p.IsSimpleOrString)
-                                .ToList();
+            var simples = EntitySetting.PropertiesInCreateEditOrder
+                                       .OfType<WpfMvvmPropertySetting>()
+                                       .Where(p => p.IsSimpleOrString);
+            if (TemplateType == MvvmTemplate.Edit)
+            {
+                simples = simples.Where(p => p.EditViewMode != ViewFieldMode.Exclude);
+            }
+            else if (TemplateType == MvvmTemplate.Create)
+            {
+                simples = simples.Where(p => p.CreateViewMode != ViewFieldMode.Exclude);
+            }
+            //TODO: consider collection properties for collection template
+            //else if (TemplateType == MvvmTemplate.Collection) { }
+
+            var result = simples.ToList();
+            return result;
         }
 
         public WpfMvvmPropertySetting GetFocusProperty()

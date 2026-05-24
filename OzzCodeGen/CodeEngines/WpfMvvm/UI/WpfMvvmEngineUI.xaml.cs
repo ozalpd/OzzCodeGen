@@ -37,10 +37,12 @@ public partial class WpfMvvmEngineUI : AbstractEngineUI
         HiddenColumns.Add("RepositoryName");
         HiddenColumns.Add("IsIntegerNumeric");
         HiddenColumns.Add("IsNullableString");
+        HiddenColumns.Add("IsReadOnlyInEdit");
         HiddenColumns.Add("CommandVmTypeName");
         HiddenColumns.Add("MvvmEntitySetting");
         HiddenColumns.Add("IsLoadingFromFile");
         HiddenColumns.Add("CommandVmNamespace");
+        HiddenColumns.Add("IsReadOnlyInCreate");
         HiddenColumns.Add("IsFractionalNumeric");
         HiddenColumns.Add("RepositoryInstanceName");
 

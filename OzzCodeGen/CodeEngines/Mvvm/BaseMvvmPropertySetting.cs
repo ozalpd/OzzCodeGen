@@ -87,30 +87,6 @@ public abstract class BaseMvvmPropertySetting : BaseCSharpPropertySetting
         return _defaultValue;
     }
 
-    public bool IncludeInView
-    {
-        get { return _includeInView ?? true; }
-        set
-        {
-            if (_includeInView == value) return;
-            _includeInView = value;
-            RaisePropertyChanged(nameof(IncludeInView));
-        }
-    }
-    private bool? _includeInView;
-
-    public bool IncludeInViewModel
-    {
-        get { return _includeInViewModel ?? true; }
-        set
-        {
-            if (_includeInViewModel == value) return;
-            _includeInViewModel = value;
-            RaisePropertyChanged(nameof(IncludeInViewModel));
-        }
-    }
-    private bool? _includeInViewModel;
-
     public bool IsPreselectedInCreate
     {
         get { return _isPreselectInCreate; }
@@ -125,45 +101,13 @@ public abstract class BaseMvvmPropertySetting : BaseCSharpPropertySetting
     }
     private bool _isPreselectInCreate;
 
-    public bool IsReadOnlyInCreate
-    {
-        get
-        {
-            if (_isReadOnlyInCreate == null)
-            {
-                _isReadOnlyInCreate = IsKey;
-            }
-            return _isReadOnlyInCreate.Value;
-        }
-        set
-        {
-            if (_isReadOnlyInCreate == value) return;
-            _isReadOnlyInCreate = value;
-            RaisePropertyChanged(nameof(IsReadOnlyInCreate));
-        }
-    }
-    private bool? _isReadOnlyInCreate;
+    [XmlIgnore]
+    [JsonIgnore]
+    public bool IsReadOnlyInCreate => CreateViewMode == ViewFieldMode.ReadOnly;
 
-    public bool IsReadOnlyInEdit
-    {
-        get
-        {
-            if (_isReadOnlyInEdit == null)
-            {
-                _isReadOnlyInEdit = IsKey || IsImmutable
-                                 || PropertyDefinition.IsServerComputed
-                                 || PropertyDefinition.IsClientComputed;
-            }
-            return _isReadOnlyInEdit.Value;
-        }
-        set
-        {
-            if (_isReadOnlyInEdit == value) return;
-            _isReadOnlyInEdit = value;
-            RaisePropertyChanged(nameof(IsReadOnlyInEdit));
-        }
-    }
-    private bool? _isReadOnlyInEdit;
+    [XmlIgnore]
+    [JsonIgnore]
+    public bool IsReadOnlyInEdit => EditViewMode == ViewFieldMode.ReadOnly;
 
     public bool IsMultiLine
     {
@@ -195,6 +139,43 @@ public abstract class BaseMvvmPropertySetting : BaseCSharpPropertySetting
         }
     }
     bool? _isMultiLine;
+
+    public ViewFieldMode CreateViewMode
+    {
+        get { return _createViewMode ?? ViewFieldMode.Editable; }
+        set
+        {
+            if (_createViewMode == value) return;
+            _createViewMode = value;
+            RaisePropertyChanged(nameof(CreateViewMode));
+        }
+    }
+    private ViewFieldMode? _createViewMode;
+
+    public ViewFieldMode EditViewMode
+    {
+        get
+        {
+            if (_editViewMode == null)
+            {
+                _editViewMode = IsKey || IsImmutable
+                                 || PropertyDefinition.IsServerComputed
+                                 || PropertyDefinition.IsClientComputed
+                              ? ViewFieldMode.ReadOnly
+                              : ViewFieldMode.Editable;
+            }
+
+            return _editViewMode ?? ViewFieldMode.Editable;
+        }
+        set
+        {
+            if (_editViewMode == value) return;
+            _editViewMode = value;
+            RaisePropertyChanged(nameof(EditViewMode));
+        }
+    }
+    private ViewFieldMode? _editViewMode;
+
 
     [XmlIgnore]
     [JsonIgnore]

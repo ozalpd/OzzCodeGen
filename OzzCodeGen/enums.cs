@@ -32,4 +32,12 @@ public enum TargetDotNetPlatform
     DotNetFramework,
     ModernDotNet
 }
-
+public enum ViewFieldMode
+{
+    [Description("Exclude")]
+    Exclude = 0,           // replaces: Include = false (i.e., not in view)
+    [Description("Editable")]
+    Editable = 1,          // replaces: Include = true, IsReadOnly = false
+    [Description("Read Only")]
+    ReadOnly = 2           // replaces: Include = true, IsReadOnly = true
+}

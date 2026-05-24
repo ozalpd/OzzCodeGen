@@ -236,7 +236,7 @@ namespace OzzCodeGen.CodeEngines.AspNetMvc
                     "HiddenInput"
                 };
 
-        public bool IsNullable()
+        public new bool IsNullable()
         {
             if (PropertyDefinition is SimpleProperty)
             {
