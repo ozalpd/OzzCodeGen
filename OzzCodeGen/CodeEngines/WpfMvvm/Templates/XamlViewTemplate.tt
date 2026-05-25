@@ -86,6 +86,9 @@
                  Grid.ColumnSpan="<#= colSpan #>"
 <#      } #>
                  Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+<#  } else if (prop.IsDateTime) { #>
+        <DatePicker <#= GetElementName(prop, true) #>Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>" Margin="0,-2,0,16"
+                    SelectedDate="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 <#  } else if (prop.IsBoolean) { #>
         <CheckBox Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>" Margin="0,0,0,20" IsChecked="{Binding <#= prop.Name #>}" />
 <#  } else if (isReadOnly) {
@@ -108,6 +111,15 @@
                   DisplayMemberPath="<#= memberPath #>"
                   SelectedValuePath="<#= valuePath #>"
                   SelectedValue="{Binding <#= prop.Name #>, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+<#  } else if (prop.IsDecimalNumeric || prop.IsIntegerNumeric) { #>
+        <TextBox <#= GetElementName(prop, true) #>Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>"
+                 Style="{StaticResource ValidationTextBoxStyle}"
+<#      if (prop.IsDecimalNumeric) { #>
+                 PreviewTextInput="DecimalTextBox_PreviewTextInput"
+<#      } else if (prop.IsIntegerNumeric) { #>
+                 PreviewTextInput="IntegerTextBox_PreviewTextInput"
+<#      } #>
+                 Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True}"/>
 <#  } else if (prop.IsSimpleOrString) { #>
         <TextBox <#= GetElementName(prop, true) #>Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>"
                  Style="{StaticResource ValidationTextBoxStyle}"

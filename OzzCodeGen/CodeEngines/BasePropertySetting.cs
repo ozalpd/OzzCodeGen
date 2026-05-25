@@ -113,6 +113,12 @@ namespace OzzCodeGen.CodeEngines
         public bool IsComplex => PropertyDefinition != null
                               && PropertyDefinition is ComplexProperty;
 
+        /// <summary>
+        /// Indicates whether the type is decimal, double, or float.
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        public bool IsDecimalNumeric => IsDecimal || IsDouble || IsFloat;
 
         /// <summary>
         /// Gets a value indicating whether the property is the C# <see langword="decimal"/> type.

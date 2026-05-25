@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [2.3.9] - 2026-05-24
+## [2.3.9] - 2026-05-25
 
 ### Added
 - Added new ViewFieldMode enum properties `CreateViewMode` and `EditViewMode` and replaced IncludeInView/IncludeInViewModel with to WPF MVVM property settings for controlling inclusion and editability control in MVVM view and view model generation.
@@ -16,7 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Also changed AspNetMvcPropertySetting.IsNullable to a method.
 - Updated XAML view template to generate grid columns/rows dynamically and calculate min width/height.
 - Improved field layout logic, adjusted TextBlock style margins, and added a "Reset Order" button in the MVVM engine UI.
-- Refactored property order logic and made minor UI tweaks.
+- Generates DatePicker for DateTime, TextBox with input validation for numeric types
+- Added event handlers for decimal/integer input (regex, culture-aware)
 
 ## [2.3.8] - 2026-05-24
 

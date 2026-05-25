@@ -464,19 +464,65 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             
             #line default
             #line hidden
-            this.Write(@"            OnSourceInitialized();
-        }
-        partial void OnSourceInitialized();
-
-        private void OkButton_Click(object sender, RoutedEventArgs e)
+            this.Write("            OnSourceInitialized();\r\n        }\r\n        partial void OnSourceIniti" +
+                    "alized();\r\n");
+            
+            #line 113 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+      if (HasAnyDecimalNumeric) { 
+            
+            #line default
+            #line hidden
+            this.Write(@"
+        private void DecimalTextBox_Pasting(object sender, DataObjectPastingEventArgs e)
         {
-            if (!_viewModel.ValidateModel())
+            if (sender is not TextBox tb)
+                return;
+            if (e.DataObject.GetDataPresent(typeof(string)))
+            {
+                var pasteText = (string)e.DataObject.GetData(typeof(string));
+                var proposed = tb.Text.Remove(tb.SelectionStart, tb.SelectionLength).Insert(tb.SelectionStart, pasteText);
+                var decimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+                if (!Regex.IsMatch(proposed, @""^-?\d*("" + Regex.Escape(decimalSeparator) + @""\d*)?$""))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
+            }
+        }
+
+        private void DecimalTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (sender is not TextBox tb)
                 return;
 
-            DialogResult = true;
+            var decimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            var proposed = tb.Text.Remove(tb.SelectionStart, tb.SelectionLength).Insert(tb.SelectionStart, e.Text);
+            e.Handled = !Regex.IsMatch(proposed, @""^-?\d*("" + Regex.Escape(decimalSeparator) + @""\d*)?$"");
         }
-    }
-}");
+");
+            
+            #line 144 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+      }
+        if (HasAnyIntegerNumeric) { 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        private void IntegerTextBox_PreviewTextInput(object sender, TextComposi" +
+                    "tionEventArgs e)\r\n        {\r\n            if (sender is not TextBox tb)\r\n        " +
+                    "        return;\r\n\r\n            e.Handled = !char.IsDigit(e.Text, 0);\r\n        }\r" +
+                    "\n");
+            
+            #line 154 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+      } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        private void OkButton_Click(object sender, RoutedEventArgs e)\r\n        " +
+                    "{\r\n            if (!_viewModel.ValidateModel())\r\n                return;\r\n\r\n    " +
+                    "        DialogResult = true;\r\n        }\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

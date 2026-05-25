@@ -133,14 +133,12 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                 || (preselectProperties != null && preselectProperties.Count > 0);
         }
 
-        protected virtual WpfMvvmPropertySetting GetPrimaryKey()
-        {
-            if (EntitySetting == null)
-                return null;
+        public bool HasAnyDecimalNumeric => GetIncludedProperties().Any(p => p.IsDecimalNumeric);
 
-            return EntitySetting.GetInheritedSimpleProperties()
-                                .FirstOrDefault(p => p.IsKey);
-        }
+        public bool HasAnyIntegerNumeric => GetIncludedProperties().Any(p => p.IsIntegerNumeric);
+
+        protected virtual WpfMvvmPropertySetting GetPrimaryKey() => GetIncludedProperties().FirstOrDefault(p => p.IsKey);
+
 
         public string GetCommandConstructorParams(string vmName, bool isDeclaration = false, MvvmTemplate? templateType = null, bool hasDlgService = false, bool isLoadCommand = false)
         {

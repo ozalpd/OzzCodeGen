@@ -32,6 +32,19 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                 namespaces.Add(CodeEngine.DesignTimeNamespaceName);
                 namespaces.Add("System.Collections.ObjectModel");
             }
+
+            if (HasAnyDecimalNumeric)
+            {
+                namespaces.Add("System.Globalization");
+                namespaces.Add("System.Text.RegularExpressions");
+            }
+            
+            if (HasAnyDecimalNumeric || HasAnyIntegerNumeric)
+            {
+                namespaces.Add("System.Windows.Controls");
+                namespaces.Add("System.Windows.Input");
+            }
+
             return namespaces.OrderBy(ns => ns).ToList();
         }
 
