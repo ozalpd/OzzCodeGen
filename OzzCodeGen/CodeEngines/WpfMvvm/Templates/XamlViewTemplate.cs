@@ -600,7 +600,7 @@ this.Write(this.ToStringHelper.ToStringWithCulture(GetBindingName(prop)));
         #line hidden
         
         #line 142 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\XamlViewTemplate.tt"
-this.Write(", StringFormat=\\{0:N4\\}, Mode=OneWay}\"\r\n");
+this.Write(", StringFormat=\\{0:N2\\}, Mode=OneWay}\"\r\n");
 
         
         #line default

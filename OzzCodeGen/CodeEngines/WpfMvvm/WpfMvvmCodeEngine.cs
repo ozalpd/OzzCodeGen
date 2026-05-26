@@ -160,38 +160,38 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
         WpfCommandTemplate template = null;
         if (entitySetting.GenModeCreateCommand > FileGenerationMode.SkipManuallyEdited)
         {
-            template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Create);
+            template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Create, entitySetting.GenModeCreateCommand);
             allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
         }
 
         if (entitySetting.GenModeEditCommand > FileGenerationMode.SkipManuallyEdited)
         {
-            template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Edit);
+            template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Edit, entitySetting.GenModeEditCommand);
             allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
         }
 
         if (entitySetting.GenModeDeleteCommand > FileGenerationMode.SkipManuallyEdited)
         {
-            template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Delete);
+            template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Delete, entitySetting.GenModeDeleteCommand);
             allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
         }
 
         if (entitySetting.GenModeDetailCommand > FileGenerationMode.SkipManuallyEdited)
         {
-            template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Detail);
+            template = new WpfCommandTemplate(entitySetting, MvvmTemplate.Detail, entitySetting.GenModeDetailCommand);
             allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
         }
 
         if (entitySetting.GenModeLoadCommand > FileGenerationMode.SkipManuallyEdited)
         {
-            template = new WpfCommandTemplate(entitySetting, PageCommand.LoadCommand);
+            template = new WpfCommandTemplate(entitySetting, PageCommand.LoadCommand, entitySetting.GenModeLoadCommand);
             allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
 
             if (entitySetting.GenerateGetPaged)
             {
-                template = new WpfCommandTemplate(entitySetting, PageCommand.PrevPageCommand);
+                template = new WpfCommandTemplate(entitySetting, PageCommand.PrevPageCommand, entitySetting.GenModeLoadCommand);
                 allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
-                template = new WpfCommandTemplate(entitySetting, PageCommand.NextPageCommand);
+                template = new WpfCommandTemplate(entitySetting, PageCommand.NextPageCommand, entitySetting.GenModeLoadCommand);
                 allWritten &= RenderTemplate(template, TargetDirectory, CommandFolder);
             }
         }
@@ -212,7 +212,10 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
     private bool RenderTemplate(BaseCSharpWpfMvvmTemplate template, string targetDir, string subFolder)
     {
-        bool overwrite = OverwriteExisting || (template.EntitySetting != null && template.EntitySetting.OverwriteExisting);
+        if (template.FileGenerationMode <= FileGenerationMode.SkipManuallyEdited)
+            return true;
+
+        bool overwrite = OverwriteExisting || template.FileGenerationMode > FileGenerationMode.GenerateIfNotExists;
         var fileName = Path.Combine(targetDir, subFolder, template.GetDefaultFileName());
         return template.WriteToFile(fileName, overwrite);
     }
@@ -226,19 +229,19 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
         if (entitySetting.GenModeCreateVM > FileGenerationMode.SkipManuallyEdited)
         {
-            var template = new WpfViewModelTemplate(entitySetting, MvvmTemplate.Create);
+            var template = new WpfViewModelTemplate(entitySetting, MvvmTemplate.Create, entitySetting.GenModeCreateVM);
             allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
         }
 
         if (entitySetting.GenModeEditVM > FileGenerationMode.SkipManuallyEdited)
         {
-            var template = new WpfViewModelTemplate(entitySetting, MvvmTemplate.Edit);
+            var template = new WpfViewModelTemplate(entitySetting, MvvmTemplate.Edit, entitySetting.GenModeEditVM);
             allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
         }
 
         if (entitySetting.GenModeCollectionVM > FileGenerationMode.SkipManuallyEdited)
         {
-            var template = new WpfViewModelTemplate(entitySetting, MvvmTemplate.Collection);
+            var template = new WpfViewModelTemplate(entitySetting, MvvmTemplate.Collection, entitySetting.GenModeCollectionVM);
             allWritten &= RenderTemplate(template, TargetDirectory, ViewModelFolder);
 
             if (entitySetting.GenerateGetPaged)
@@ -294,19 +297,19 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
         if (entitySetting.GenModeCreateView > FileGenerationMode.SkipManuallyEdited)
         {
-            var template = new CSharpViewTemplate(entitySetting, MvvmTemplate.Create);
+            var template = new CSharpViewTemplate(entitySetting, MvvmTemplate.Create, entitySetting.GenModeCreateView);
             allWritten &= RenderViewTemplate(template);
         }
 
         if (entitySetting.GenModeEditView > FileGenerationMode.SkipManuallyEdited)
         {
-            var template = new CSharpViewTemplate(entitySetting, MvvmTemplate.Edit);
+            var template = new CSharpViewTemplate(entitySetting, MvvmTemplate.Edit, entitySetting.GenModeEditView);
             allWritten &= RenderViewTemplate(template);
         }
 
         if (entitySetting.GenModeDetailView > FileGenerationMode.SkipManuallyEdited)
         {
-            var template = new CSharpViewTemplate(entitySetting, MvvmTemplate.Detail);
+            var template = new CSharpViewTemplate(entitySetting, MvvmTemplate.Detail, entitySetting.GenModeDetailView);
             allWritten &= RenderViewTemplate(template);
         }
 
@@ -315,11 +318,15 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
     public bool RenderViewTemplate(CSharpViewTemplate template)
     {
+        if (template.FileGenerationMode <= FileGenerationMode.SkipManuallyEdited)
+            return true;
+
         bool allWritten = true;
         allWritten &= RenderTemplate(template, TargetDirectory, ViewFolder);
         var xamlTemplate = template.XamlViewTemplate; //new XamlViewTemplate(entitySetting, MvvmTemplate.Create);
         string fileName = Path.Combine(TargetDirectory, ViewFolder, xamlTemplate.GetDefaultFileName());
-        allWritten &= xamlTemplate.WriteToFile(fileName, OverwriteExisting);
+        bool overwrite = OverwriteExisting || template.FileGenerationMode > FileGenerationMode.GenerateIfNotExists;
+        allWritten &= xamlTemplate.WriteToFile(fileName, overwrite);
 
         return allWritten;
     }

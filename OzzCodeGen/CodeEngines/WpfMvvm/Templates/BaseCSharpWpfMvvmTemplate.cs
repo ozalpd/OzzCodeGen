@@ -10,12 +10,14 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {
     public abstract class BaseCSharpWpfMvvmTemplate : BaseCSharpMvvmTemplate
     {
-        protected BaseCSharpWpfMvvmTemplate(WpfMvvmCodeEngine codeEngine, WpfMvvmEntitySetting entitySetting = null, MvvmTemplate templateType = MvvmTemplate.Create, bool isInterface = false)
+        protected BaseCSharpWpfMvvmTemplate(WpfMvvmCodeEngine codeEngine, WpfMvvmEntitySetting entitySetting = null, MvvmTemplate templateType = MvvmTemplate.Create,
+                                            bool isInterface = false, FileGenerationMode fileGenerationMode = FileGenerationMode.GenerateIfNotExists)
         {
             CodeEngine = codeEngine;
             EntitySetting = entitySetting;
             IsInterface = isInterface;
             TemplateType = templateType;
+            FileGenerationMode = fileGenerationMode;
         }
 
         public WpfMvvmCodeEngine CodeEngine { get; }
@@ -37,6 +39,8 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         public bool IsDetail => TemplateType == MvvmTemplate.Detail;
 
         public MvvmTemplate TemplateType { get; }
+
+        public FileGenerationMode FileGenerationMode { get; }
 
         /// <summary>
         /// If true, it indicates the template is for an interface, otherwise it's for a class.

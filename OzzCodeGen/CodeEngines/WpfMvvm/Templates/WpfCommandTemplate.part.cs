@@ -13,7 +13,8 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         /// </summary>
         /// <param name="entitySetting">The WPF MVVM entity setting.</param>
         /// <param name="pageCommand">The page command type.</param>
-        public WpfCommandTemplate(WpfMvvmEntitySetting entitySetting, PageCommand pageCommand) : this(entitySetting, MvvmTemplate.Collection)
+        /// <param name="fileGenerationMode">The file generation mode.</param>
+        public WpfCommandTemplate(WpfMvvmEntitySetting entitySetting, PageCommand pageCommand, FileGenerationMode fileGenerationMode) : this(entitySetting, MvvmTemplate.Collection, fileGenerationMode)
         {
             PageCommand = pageCommand;
         }
@@ -24,8 +25,8 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         /// </summary>
         /// <param name="entitySetting">The entity setting containing the model and generation configuration.</param>
         /// <param name="templateType">The MVVM template type to generate.</param>
-        public WpfCommandTemplate(WpfMvvmEntitySetting entitySetting, MvvmTemplate templateType)
-            : base(entitySetting.CodeEngine as WpfMvvmCodeEngine, entitySetting, templateType: templateType)
+        public WpfCommandTemplate(WpfMvvmEntitySetting entitySetting, MvvmTemplate templateType, FileGenerationMode fileGenerationMode)
+            : base(entitySetting.CodeEngine as WpfMvvmCodeEngine, entitySetting, templateType: templateType, fileGenerationMode: fileGenerationMode)
         {
             PageCommand = PageCommand.LoadCommand;
         }

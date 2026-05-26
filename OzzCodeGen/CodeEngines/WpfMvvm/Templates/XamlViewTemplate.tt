@@ -139,7 +139,7 @@ void WritePropInTextBlock(WpfMvvmPropertySetting prop, int colNr, int rowNr) {
 <#+  if (prop.IsDateTime) { //ReadOnly DateTime #>
                    Text="{Binding <#= GetBindingName(prop) #>, StringFormat=\{0:yyyy-MM-dd HH:mm\}, Mode=OneWay}"
 <#+  } else if (prop.IsDecimalNumeric) { #>
-                   Text="{Binding <#= GetBindingName(prop) #>, StringFormat=\{0:N4\}, Mode=OneWay}"
+                   Text="{Binding <#= GetBindingName(prop) #>, StringFormat=\{0:N2\}, Mode=OneWay}"
 <#+  } else if (!prop.IsForeignKey && !isEnum && (prop.IsIntegerNumeric)) { #>
                    Text="{Binding <#= GetBindingName(prop) #>, StringFormat=\{0:D\}, Mode=OneWay}"
 <#+  } else { #>

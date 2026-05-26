@@ -6,8 +6,8 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {
     public partial class CSharpViewTemplate
     {
-        public CSharpViewTemplate(WpfMvvmEntitySetting entitySetting, MvvmTemplate templateType)
-            : base(entitySetting.CodeEngine as WpfMvvmCodeEngine, entitySetting, templateType: templateType)
+        public CSharpViewTemplate(WpfMvvmEntitySetting entitySetting, MvvmTemplate templateType, FileGenerationMode fileGenerationMode)
+            : base(entitySetting.CodeEngine as WpfMvvmCodeEngine, entitySetting, templateType: templateType, fileGenerationMode: fileGenerationMode)
         {
             XamlViewTemplate = new XamlViewTemplate(entitySetting, templateType);
         }

@@ -7,8 +7,8 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 {
     public partial class WpfViewModelTemplate
     {
-        public WpfViewModelTemplate(WpfMvvmEntitySetting entitySetting, MvvmTemplate templateType)
-            : base(entitySetting.CodeEngine as WpfMvvmCodeEngine, entitySetting, templateType: templateType)
+        public WpfViewModelTemplate(WpfMvvmEntitySetting entitySetting, MvvmTemplate templateType, FileGenerationMode fileGenerationMode)
+            : base(entitySetting.CodeEngine as WpfMvvmCodeEngine, entitySetting, templateType: templateType, fileGenerationMode: fileGenerationMode)
         {
 
         }
