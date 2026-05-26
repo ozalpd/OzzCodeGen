@@ -176,6 +176,30 @@ public abstract class BaseMvvmPropertySetting : BaseCSharpPropertySetting
     }
     private ViewFieldMode? _editViewMode;
 
+    public bool ShowInCollection
+    {
+        get { return _showInCollection ?? true; }
+        set
+        {
+            if (_showInCollection == value) return;
+            _showInCollection = value;
+            RaisePropertyChanged(nameof(ShowInCollection));
+        }
+    }
+    private bool? _showInCollection;
+
+    public bool ShowInDetail
+    {
+        get { return _showInDetail ?? true; }
+        set
+        {
+            if (_showInDetail == value) return;
+            _showInDetail = value;
+            RaisePropertyChanged(nameof(ShowInDetail));
+        }
+    }
+    private bool? _showInDetail;
+
 
     [XmlIgnore]
     [JsonIgnore]

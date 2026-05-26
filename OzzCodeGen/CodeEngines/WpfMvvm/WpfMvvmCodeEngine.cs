@@ -34,7 +34,7 @@ public class WpfMvvmCodeEngine : BaseMvvmCodeEngine
 
     public override List<string> GetTemplateList()
     {
-        SelectedTemplate = wpfViewModelsTemplate;
+        SelectedTemplate = wpfAllTemplates;
         return new List<string>
         {
             wpfCommandsTemplate,

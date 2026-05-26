@@ -69,7 +69,7 @@
         string enumName = prop.GetEnumTypeName();
         bool isEnum = !string.IsNullOrEmpty(enumName);
         string bindingName = prop.IsForeignKey && dependent != null ? dependent.Name : prop.Name;
-        bool isReadOnly = IsEdit ? prop.IsReadOnlyInEdit : prop.IsReadOnlyInCreate;
+        bool isReadOnly = IsReadOnly(prop);
         if (prop.IsMultiLine) {
             if(colNr > 0) rowNr++;
             colNr = 0;
@@ -86,11 +86,13 @@
                  Grid.ColumnSpan="<#= colSpan #>"
 <#      } #>
                  Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
-<#  } else if (prop.IsDateTime) { #>
-        <DatePicker <#= GetElementName(prop, true) #>Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>" Margin="0,-2,0,16"
-                    SelectedDate="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 <#  } else if (prop.IsBoolean) { #>
-        <CheckBox Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>" Margin="0,0,0,20" IsChecked="{Binding <#= prop.Name #>}" />
+        <CheckBox Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>" Margin="0,0,0,22"
+<#      if (isReadOnly) { #>
+                  IsEnabled="False" IsChecked="{Binding <#= prop.Name #>, Mode=OneWay}" />
+<#      } else { #>
+                  IsChecked="{Binding <#= prop.Name #>}" />
+<#      } #>
 <#  } else if (isReadOnly) {
         bindingName = prop.IsForeignKey && lookupEntity != null ? $"{dependent.Name}.{lookupEntity.EntityDefinition.DisplayMember}" : prop.Name; #>
         <TextBox Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>"
@@ -101,6 +103,9 @@
 <#      } #>
                  Style="{StaticResource ReadOnlyTextBoxStyle}"
                  Text="{Binding <#= bindingName #>, Mode=OneWay}"/>
+<#  } else if (prop.IsDateTime) { #>
+        <DatePicker <#= GetElementName(prop, true) #>Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>" Margin="0,-2,0,16"
+                    SelectedDate="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 <#  } else if (isEnum || (prop.IsForeignKey && lookupEntity != null)) {
         string itemsSource = isEnum ? $"{enumName}Values" : lookupEntity.Name.Pluralize();
         string memberPath = isEnum ? "DisplayValue" : lookupEntity.EntityDefinition.DisplayMember;

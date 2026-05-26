@@ -3,10 +3,23 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.3.10] - 2026-05-26
+
+### Added
+- Introduce Detail View generation mode and column layout options
+- Added `ShowInCollection`/`ShowInDetail` property flags for view filtering
+
+### Changed
+- Update property filtering and XAML templates for new view types
+- Enhance WPF engine UI with Detail View and layout controls
+- Refactor Boolean/DateTime rendering and improve styles
+- Bump version to 2.3.10
+
+
 ## [2.3.9] - 2026-05-25
 
 ### Added
-- Added new ViewFieldMode enum properties `CreateViewMode` and `EditViewMode` and replaced IncludeInView/IncludeInViewModel with to WPF MVVM property settings for controlling inclusion and editability control in MVVM view and view model generation.
+- Added new `ViewFieldMode` enum properties `CreateViewMode` and `EditViewMode` and replaced IncludeInView/IncludeInViewModel with to WPF MVVM property settings for controlling inclusion and editability control in MVVM view and view model generation.
 - Added `FormColumnLayout` enum and `InputColumnLayout` property to enable 1-4 column input forms.
 
 ### Changed

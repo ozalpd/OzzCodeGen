@@ -36,6 +36,7 @@ public enum MvvmTemplate
     Create,
     Edit,
     Delete,
+    Detail,
     Collection
 }
 

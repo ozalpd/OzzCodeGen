@@ -35,7 +35,7 @@ public partial class WpfMvvmEngineUI : AbstractEngineUI
         HiddenColumns.Add("IsNullable");
         HiddenColumns.Add("IsCollection");
         HiddenColumns.Add("RepositoryName");
-        HiddenColumns.Add("IsIntegerNumeric");
+        //HiddenColumns.Add("IsIntegerNumeric");
         HiddenColumns.Add("IsNullableString");
         HiddenColumns.Add("IsReadOnlyInEdit");
         HiddenColumns.Add("CommandVmTypeName");
@@ -44,17 +44,28 @@ public partial class WpfMvvmEngineUI : AbstractEngineUI
         HiddenColumns.Add("CommandVmNamespace");
         HiddenColumns.Add("IsReadOnlyInCreate");
         HiddenColumns.Add("IsFractionalNumeric");
+        HiddenColumns.Add("SearchableProperties");
         HiddenColumns.Add("RepositoryInstanceName");
+        HiddenColumns.Add("ModelClassEntitySetting");
+        HiddenColumns.Add("SearchableRangeProperties");
+        HiddenColumns.Add("SearchableSimpleProperties");
+        HiddenColumns.Add("SearchableNonRangeProperties");
 
-        ColumnWidths["GenerateCreateView"] = 80;
-        ColumnWidths["GenerateEditView"] = 72;
-        ColumnWidths["GenerateCreateViewModel"] = 72;
-        ColumnWidths["GenerateEditViewModel"] = 64;
-        ColumnWidths["GenerateLookupService"] = 80;
-        ColumnWidths["GenerateCommands"] = 80;
-        ColumnWidths["IncludeInView"] = 80;
-        ColumnWidths["IncludeInViewModel"] = 64;
-        ColumnWidths["IsReadOnly"] = 80;
+        //ColumnWidths["GenModeDeleteCommand"] = 80;
+        //ColumnWidths["GenModeEditCommand"] = 72;
+        //ColumnWidths["GenModeCreateView"] = 80;
+        //ColumnWidths["GenModeEditView"] = 72;
+        //ColumnWidths["GenModeCreateViewModel"] = 72;
+        //ColumnWidths["GenModeEditViewModel"] = 64;
+        //ColumnWidths["GenModeLookupService"] = 80;
+        //ColumnWidths["GenModeCommands"] = 80;
+        ColumnWidths["IsPreselectedInCreate"] = 100;
+        ColumnWidths["CreateViewMode"] = 80;
+        ColumnWidths["EditViewMode"] = 64;
+
+        HeaderPrefixesToTrim.Add("Is");
+        HeaderPrefixesToTrim.Add("Show");
+
 
         EntitiesDataGrid = grdEntitySettings;
         PropertiesDataGrid = grdPropertySettings;

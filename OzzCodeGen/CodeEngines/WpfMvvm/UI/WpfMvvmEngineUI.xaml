@@ -7,7 +7,7 @@
 					 xmlns:Converters="clr-namespace:OzzUtils.Wpf.Converters;assembly=OzzUtils"
                      xmlns:ui="clr-namespace:OzzCodeGen.UI" xmlns:CodeGen="clr-namespace:OzzCodeGen"
                      mc:Ignorable="d"
-                     d:DesignHeight="720" d:DesignWidth="1680">
+                     d:DesignHeight="800" d:DesignWidth="1600">
     <UserControl.Resources>
         <ResourceDictionary>
             <Converters:EnumDescriptionConverter x:Key="enumConverter" />
@@ -16,12 +16,16 @@
                 <Setter Property="Background" Value="#FFFFFAE0" />
                 <Setter Property="Margin" Value="0,1,4,1" />
             </Style>
+            <Style x:Key="wpfMvvmComboBoxStyle" TargetType="{x:Type ComboBox}">
+                <Setter Property="Margin" Value="4,1"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
             <Style x:Key="entGridTextBoxStyle" TargetType="TextBox"
                    BasedOn="{StaticResource wpfMvvmTextBoxStyle}">
-                <Setter Property="Margin" Value="4,0" />
+                <Setter Property="Margin" Value="0,0,4,0" />
             </Style>
             <Style x:Key="entGridTextBlockStyle" TargetType="TextBlock">
-                <Setter Property="Margin" Value="4,4,0,0" />
+                <Setter Property="Margin" Value="0,4,0,0" />
                 <Setter Property="VerticalAlignment" Value="Center" />
             </Style>
             <Style x:Key="entGridCheckBoxStyle" TargetType="CheckBox">
@@ -34,6 +38,11 @@
                     <x:Type TypeName="CodeGen:FileGenerationMode" />
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
+            <ObjectDataProvider x:Key="formColumnLayout" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="CodeGen:FormColumnLayout" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/OzzCodeGen;component/Resources/BootstrapIcons.xaml" />
                 <ResourceDictionary Source="/OzzCodeGen;component/Resources/Styles.xaml" />
@@ -41,7 +50,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border BorderBrush="#FF9090AF" Background="#FFFFE19F" Padding="2" Margin="2">
+    <Border BorderBrush="#FF9090AF" Background="#FFFFE19F" Padding="2,6,2,0" Margin="0">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="132" />
@@ -109,7 +118,7 @@
 
             <TextBlock Grid.Column="1" Text="Template:" VerticalAlignment="Center" Margin="8,0,0,0"/>
             <ComboBox Grid.Column="2" Grid.ColumnSpan="2"
-                      Style="{StaticResource comboBoxStyle}"
+                      Style="{StaticResource wpfMvvmComboBoxStyle}"
                       ItemsSource="{Binding Templates}"
                       SelectedItem="{Binding SelectedTemplate, Mode=TwoWay}"/>
 
@@ -290,10 +299,10 @@
 
                 <GridSplitter Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" ResizeDirection="Columns"/>
 
-                <Grid Grid.Column="1" Margin="8,0,0,0" Background="#FFFDEBC4"
+                <Grid Grid.Column="1" Margin="12,0,0,0" Background="#FFFDEBC4"
                       DataContext="{Binding SelectedItem, ElementName=grdEntitySettings}">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*" MinWidth="80" MaxWidth="200"/>
                         <ColumnDefinition Width="6*"/>
                     </Grid.ColumnDefinitions>
@@ -307,21 +316,25 @@
                         <RowDefinition Height="32"/>
                         <RowDefinition Height="26"/>
                         <RowDefinition Height="8"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="8"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/><!--Overwrite Existing-->
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="8"/>
+                        <RowDefinition Height="24"/><!--Create Command-->
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="8"/>
+                        <RowDefinition Height="24"/><!--Create VM-->
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="8"/>
+                        <RowDefinition Height="24"/><!--Create View-->
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="8"/>
+                        <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
@@ -368,7 +381,7 @@
                     <TextBlock Grid.Row="12" Text="Create Command:"
                                ToolTip="Generate Mode for Create Command for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="12" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="12" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeCreateCommand}">
                         <ComboBox.ItemTemplate>
@@ -381,7 +394,7 @@
                     <TextBlock Grid.Row="13" Text="Edit Command:"
                                ToolTip="Generate Mode for Edit Command for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="13" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="13" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeEditCommand}">
                         <ComboBox.ItemTemplate>
@@ -394,7 +407,7 @@
                     <TextBlock Grid.Row="14" Text="Delete Command:"
                                ToolTip="Generate Mode for Delete Command for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="14" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="14" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeDeleteCommand}">
                         <ComboBox.ItemTemplate>
@@ -407,7 +420,7 @@
                     <TextBlock Grid.Row="15" Text="Load Command:"
                                ToolTip="Generate Mode for Load Command for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="15" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="15" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeLoadCommand}">
                         <ComboBox.ItemTemplate>
@@ -416,12 +429,12 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    
+
 
                     <TextBlock Grid.Row="17" Text="Create VM:"
                                ToolTip="Generate Mode for Create ViewModel for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="17" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="17" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeCreateVM}">
                         <ComboBox.ItemTemplate>
@@ -434,7 +447,7 @@
                     <TextBlock Grid.Row="18" Text="Edit VM:"
                                ToolTip="Generate Mode for Edit ViewModel for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="18" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="18" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeEditVM}">
                         <ComboBox.ItemTemplate>
@@ -447,7 +460,7 @@
                     <TextBlock Grid.Row="19" Text="Collection VM:"
                                ToolTip="Generate Mode for Collection ViewModel for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="19" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="19" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeCollectionVM}">
                         <ComboBox.ItemTemplate>
@@ -456,12 +469,12 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    
+
 
                     <TextBlock Grid.Row="21" Text="Create View:"
                                ToolTip="Generate Mode for Create View for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="21" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="21" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeCreateView}">
                         <ComboBox.ItemTemplate>
@@ -474,7 +487,7 @@
                     <TextBlock Grid.Row="22" Text="Edit View:"
                                ToolTip="Generate Mode for Edit View for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="22" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="22" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeEditView}">
                         <ComboBox.ItemTemplate>
@@ -484,10 +497,51 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <TextBlock Grid.Row="24" Text="Lookup Service:"
+                    <TextBlock Grid.Row="23" Text="Form Column Layout:"
+                               ToolTip="Column layout configuration for create view and edit view for the entity."
+                               Style="{StaticResource rightAlignedTextBlockStyle}"/>
+                    <ComboBox Grid.Column="1" Grid.Row="23" Style="{StaticResource wpfMvvmComboBoxStyle}"
+                              ItemsSource="{Binding Source={StaticResource formColumnLayout}}"
+                              SelectedItem="{Binding InputColumnLayout}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <TextBlock Grid.Row="24" Text="Detail View:"
+                               ToolTip="Generate Mode for Detail View for the entity."
+                               Style="{StaticResource rightAlignedTextBlockStyle}"/>
+                    <ComboBox Grid.Column="1" Grid.Row="24" Style="{StaticResource wpfMvvmComboBoxStyle}"
+                              ItemsSource="{Binding Source={StaticResource generateMode}}"
+                              SelectedItem="{Binding GenModeDetailView}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <TextBlock Grid.Row="25" Text="Detail Column Layout:"
+                               ToolTip="Column layout configuration for detail view for the entity."
+                               Style="{StaticResource rightAlignedTextBlockStyle}"/>
+                    <ComboBox Grid.Column="1" Grid.Row="25" Style="{StaticResource wpfMvvmComboBoxStyle}"
+                              ItemsSource="{Binding Source={StaticResource formColumnLayout}}"
+                              SelectedItem="{Binding DetailColumnLayout}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+
+
+                    <TextBlock Grid.Row="27" Text="Lookup Service:"
                                ToolTip="Generate Mode for Lookup Service for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="24" Style="{StaticResource comboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="27" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeLookupService}">
                         <ComboBox.ItemTemplate>
@@ -498,8 +552,8 @@
                     </ComboBox>
 
 
-                    <GridSplitter Grid.Column="2" Grid.RowSpan="26" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" ResizeDirection="Columns"/>
-                    <Grid Grid.Column="2" Grid.RowSpan="26" Margin="8,0,0,0">
+                    <GridSplitter Grid.Column="2" Grid.RowSpan="30" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" ResizeDirection="Columns"/>
+                    <Grid Grid.Column="2" Grid.RowSpan="30" Margin="8,0,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />

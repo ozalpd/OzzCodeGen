@@ -70,22 +70,29 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public IEnumerable<WpfMvvmPropertySetting> GetProperties()
         {
-            var simples = EntitySetting.PropertiesInCreateEditOrder
-                                       .OfType<WpfMvvmPropertySetting>()
-                                       .Where(p => p.IsSimpleOrString);
+            var result = EntitySetting.PropertiesInCreateEditOrder
+                                       .OfType<WpfMvvmPropertySetting>();
+
             if (TemplateType == MvvmTemplate.Edit)
             {
-                simples = simples.Where(p => p.EditViewMode != ViewFieldMode.Exclude);
+                result = result.Where(p => p.IsSimpleOrString
+                                        && p.EditViewMode != ViewFieldMode.Exclude);
             }
             else if (TemplateType == MvvmTemplate.Create)
             {
-                simples = simples.Where(p => p.CreateViewMode != ViewFieldMode.Exclude);
+                result = result.Where(p => p.IsSimpleOrString
+                                        && p.CreateViewMode != ViewFieldMode.Exclude);
             }
-            //TODO: consider collection properties for collection template
-            //else if (TemplateType == MvvmTemplate.Collection) { }
+            else if (TemplateType == MvvmTemplate.Collection)
+            {
+                result = result.Where(p => p.ShowInCollection);
+            }
+            else if (TemplateType == MvvmTemplate.Detail)
+            {
+                result = result.Where(p => p.ShowInDetail);
+            }
 
-            var result = simples.ToList();
-            return result;
+            return result.ToList();
         }
 
         public WpfMvvmPropertySetting GetFocusProperty()
@@ -191,6 +198,9 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                 case MvvmTemplate.Delete:
                     return hasLocalization ? GetLocalizedString($"Delete{EntitySetting.Name}") : $"Delete {EntitySetting.Name}";
 
+                case MvvmTemplate.Detail:
+                    return hasLocalization ? GetLocalizedString(EntitySetting.Name) : $"{EntitySetting.Name} Detail";
+
                 case MvvmTemplate.Collection:
                     return hasLocalization ? GetLocalizedString($"{EntitySetting.Name}List") : $"{EntitySetting.Name} Collection";
 
@@ -213,6 +223,15 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         /// If true, it indicates the template is for edit view, otherwise it's for create view. This can be used to determine the class name and included properties.
         /// </summary>
         public bool IsCreateOrEdit => TemplateType == MvvmTemplate.Create || TemplateType == MvvmTemplate.Edit;
+
+        public bool IsReadOnly(WpfMvvmPropertySetting prop)
+        {
+            if (!IsCreateOrEdit)
+                return true;
+
+            return IsEdit ? prop.IsReadOnlyInEdit
+                          : prop.IsReadOnlyInCreate;
+        }
 
         public MvvmTemplate TemplateType { get; }
 

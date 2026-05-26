@@ -110,6 +110,21 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     private string _commandVmTypeName;
 
     /// <summary>
+    /// The column layout configuration for detail views.
+    /// </summary>
+    public FormColumnLayout DetailColumnLayout
+    {
+        get { return _detailFormColumnLayout ?? FormColumnLayout.OneColumn; }
+        set
+        {
+            if (_detailFormColumnLayout == value) return;
+            _detailFormColumnLayout = value;
+            RaisePropertyChanged(nameof(DetailColumnLayout));
+        }
+    }
+    private FormColumnLayout? _detailFormColumnLayout;
+
+    /// <summary>
     /// The column layout configuration for input forms.
     /// </summary>
     public FormColumnLayout InputColumnLayout
@@ -119,10 +134,11 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
         {
             if (_inputFormColumnLayout == value) return;
             _inputFormColumnLayout = value;
-            RaisePropertyChanged(nameof(FormColumnLayout));
+            RaisePropertyChanged(nameof(InputColumnLayout));
         }
     }
     private FormColumnLayout? _inputFormColumnLayout;
+
 
     public bool GenerateAnyCommand => GenModeCreateCommand > FileGenerationMode.DoNotGenerate
                                    || GenModeEditCommand > FileGenerationMode.DoNotGenerate
@@ -361,6 +377,18 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
         }
     }
     private FileGenerationMode? _genModeEditView;
+
+    public FileGenerationMode GenModeDetailView
+    {
+        get { return _genModeDetailView ?? FileGenerationMode.DoNotGenerate; }
+        set
+        {
+            if (_genModeDetailView == value) return;
+            _genModeDetailView = value;
+            RaisePropertyChanged(nameof(GenModeDetailView));
+        }
+    }
+    private FileGenerationMode? _genModeDetailView;
 
 
     [XmlIgnore]

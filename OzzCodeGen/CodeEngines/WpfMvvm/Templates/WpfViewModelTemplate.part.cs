@@ -49,21 +49,27 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public override IEnumerable<WpfMvvmPropertySetting> GetIncludedProperties()
         {
-            var simples = base.GetIncludedProperties().OfType<WpfMvvmPropertySetting>();
+            var result = base.GetIncludedProperties().OfType<WpfMvvmPropertySetting>();
 
             if (TemplateType == MvvmTemplate.Edit)
             {
-                simples = simples.Where(p => p.EditViewMode != ViewFieldMode.Exclude);
+                result = result.Where(p => p.EditViewMode != ViewFieldMode.Exclude);
             }
             else if (TemplateType == MvvmTemplate.Create)
             {
-                simples = simples.Where(p => p.CreateViewMode != ViewFieldMode.Exclude);
+                result = result.Where(p => p.CreateViewMode != ViewFieldMode.Exclude);
             }
-            //TODO: consider collection properties for collection template
-            //else if (TemplateType == MvvmTemplate.Collection) { }
+            else if (TemplateType == MvvmTemplate.Collection)
+            {
+                result = result.Where(p => p.ShowInCollection);
+            }
+            else if (TemplateType == MvvmTemplate.Detail)
+            {
+                result = result.Where(p => p.ShowInDetail);
+            }
 
-            var result = simples.ToList();
-            return result;
+
+            return result.ToList();
         }
 
         public override List<string> DefaultUsingNamespaceList()
