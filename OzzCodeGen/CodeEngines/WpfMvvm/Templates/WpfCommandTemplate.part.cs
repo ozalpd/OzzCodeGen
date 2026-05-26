@@ -63,13 +63,13 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public string GetNamespace() => EntitySetting.GetCommandsNamespaceName();
 
-        public bool HasDlgService => IsCreateOrEdit; // || TemplateType == MvvmTemplate.Collection;
+        public bool HasDlgService => IsCreateOrEdit || IsDetail;
 
-        public bool IsLoadCommand => TemplateType == MvvmTemplate.Collection;
+        public bool IsDisplayOnly => TemplateType == MvvmTemplate.Collection || TemplateType == MvvmTemplate.Detail;
 
         public string GetConstructorParameters()
         {
-            return GetCommandConstructorParams("viewModel", isDeclaration: true, hasDlgService: HasDlgService, isLoadCommand: IsLoadCommand);
+            return GetCommandConstructorParams("viewModel", isDeclaration: true, hasDlgService: HasDlgService, isDisplayOnly: IsDisplayOnly);
         }
 
         public string GetSvcShowParameters()
@@ -109,18 +109,23 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         {
             var namespaces = new List<string>();
 
-            if (!IsLoadCommand)
+            if (!IsDisplayOnly || HasDlgService)
             {
                 var resxEngine = CodeEngine.ResxEngine;
                 if (resxEngine != null)
                     namespaces.Add(resxEngine.NamespaceName);
-
-                namespaces.Add(CodeEngine.ServicesNamespaceName);
                 namespaces.Add("System.Windows");
             }
 
+            if (HasDlgService)
+            {
+                namespaces.Add(CodeEngine.ServicesNamespaceName);
+            }
+
             if (!string.IsNullOrEmpty(EntitySetting.CommandVmNamespace))
+            {
                 namespaces.Add(EntitySetting.CommandVmNamespace);
+            }
 
             if (!string.IsNullOrWhiteSpace(CodeEngine.InfrastructureFolder))
                 namespaces.Add(CodeEngine.BaseCommandNamespaceName);

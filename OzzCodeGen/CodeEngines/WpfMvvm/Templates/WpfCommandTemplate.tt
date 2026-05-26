@@ -97,13 +97,34 @@ namespace <#= EntitySetting.GetCommandsNamespaceName() #>
 <#      } #>
 <#  } #>
 <#
-    // Edit Command Begins Here
-    if (TemplateType == MvvmTemplate.Edit) { #>
+    // for Edit + Detail Command
+    if (TemplateType == MvvmTemplate.Edit || TemplateType == MvvmTemplate.Detail) { #>
 
         public override bool CanExecute(object? parameter)
         {
             return _viewModel.Selected<#= EntitySetting.Name #> is not null;
         }
+<#  } #>
+<#
+    // for Detail Command
+    if (TemplateType == MvvmTemplate.Detail) { #>
+
+        public override async void Execute(object? parameter)
+        {
+            if (_viewModel.Selected<#= EntitySetting.Name #> is null)
+                return;
+
+            if (parameter is not Window owner)
+                return;
+
+            var <#= EntitySetting.Name.ToCamelCase() #> = _viewModel.Selected<#= EntitySetting.Name #>;
+            _windowDialogService.Show<#= EntitySetting.Name #>DetailDialog(owner, <#= EntitySetting.Name.ToCamelCase() #>);
+        }
+
+<#  } #>
+<#
+    // Edit Command Begins Here
+    if (TemplateType == MvvmTemplate.Edit) { #>
 
         public override async void Execute(object? parameter)
         {

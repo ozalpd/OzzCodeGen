@@ -34,6 +34,8 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         /// </summary>
         public bool IsEdit => TemplateType == MvvmTemplate.Edit;
 
+        public bool IsDetail => TemplateType == MvvmTemplate.Detail;
+
         public MvvmTemplate TemplateType { get; }
 
         /// <summary>
@@ -140,7 +142,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         protected virtual WpfMvvmPropertySetting GetPrimaryKey() => GetIncludedProperties().FirstOrDefault(p => p.IsKey);
 
 
-        public string GetCommandConstructorParams(string vmName, bool isDeclaration = false, MvvmTemplate? templateType = null, bool hasDlgService = false, bool isLoadCommand = false)
+        public string GetCommandConstructorParams(string vmName, bool isDeclaration = false, MvvmTemplate? templateType = null, bool hasDlgService = false, bool isDisplayOnly = false)
         {
             if (templateType == null)
                 templateType = TemplateType;
@@ -170,7 +172,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                 idx++;
             }
 
-            if (templateType == MvvmTemplate.Delete || isLoadCommand)
+            if (templateType == MvvmTemplate.Delete || isDisplayOnly)
                 return sb.ToString();
 
             idx = AppendLookupEntities(EntitySetting, sb, idx, lineBrkInterval, indent, isDeclaration, templateType == MvvmTemplate.Edit);

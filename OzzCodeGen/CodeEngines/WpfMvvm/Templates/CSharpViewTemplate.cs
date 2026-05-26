@@ -118,30 +118,44 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             
             #line default
             #line hidden
-            this.Write("\r\n        public ");
+            this.Write("\r\n");
             
             #line 29 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+  if (IsCreateOrEdit) { 
+            
+            #line default
+            #line hidden
+            this.Write("        public ");
+            
+            #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 29 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" => _viewModel.");
             
-            #line 29 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 30 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
-            this.Write(";\r\n\r\n");
+            this.Write(";\r\n");
             
             #line 31 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+  } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 33 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
   if (IsCreate && HasLookupOrPreselectProperties()) { 
             
             #line default
@@ -150,21 +164,21 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                     "need it for the designer to work.\r\n        /// </summary>\r\n        /// <remarks>" +
                     "This constructor creates a dummy ");
             
-            #line 35 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 37 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" for the designer.</remarks>\r\n        public ");
             
-            #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
             
             #line default
             #line hidden
             this.Write("() : this(");
             
-            #line 36 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 38 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetShowViewParams(isDesignTime:true)));
             
             #line default
@@ -172,35 +186,35 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             this.Write(")\r\n        {\r\n\r\n        }\r\n\r\n        /// <summary>\r\n        /// This constructor " +
                     "should be used at runtime to create the view with a real ");
             
-            #line 42 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 44 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(".\r\n        /// </summary>\r\n        /// <param name=\"");
             
-            #line 44 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 46 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("\">The real ");
             
-            #line 44 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 46 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" to be used by the view.</param>\r\n        public ");
             
-            #line 45 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 47 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 45 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 47 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetShowViewParams(isDeclaration:true)));
             
             #line default
@@ -208,63 +222,63 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             this.Write(")\r\n        {\r\n            InitializeComponent();\r\n\r\n            _viewModel = new " +
                     "");
             
-            #line 49 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetViewModelClassName()));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 49 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetVmConstructorParams()));
             
             #line default
             #line hidden
             this.Write(");\r\n            DataContext = _viewModel;\r\n");
             
-            #line 51 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
       foreach (var property in preselectProperties) { 
             
             #line default
             #line hidden
             this.Write("            _preselected");
             
-            #line 52 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(" = preselected");
             
-            #line 52 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 53 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 55 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
       } 
             
             #line default
             #line hidden
             this.Write("            SourceInitialized += ");
             
-            #line 54 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
             
             #line default
             #line hidden
             this.Write("_SourceInitialized;\r\n        }\r\n");
             
-            #line 56 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 58 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
   } else if (IsCreate) {  
             
             #line default
             #line hidden
             this.Write("        public ");
             
-            #line 57 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 59 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
             
             #line default
@@ -272,27 +286,27 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             this.Write("()\r\n        {\r\n            InitializeComponent();\r\n\r\n            _viewModel = new" +
                     " ");
             
-            #line 61 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetViewModelClassName()));
             
             #line default
             #line hidden
             this.Write("();\r\n            DataContext = _viewModel;\r\n            SourceInitialized += ");
             
-            #line 63 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
             
             #line default
             #line hidden
             this.Write("_SourceInitialized;\r\n        }\r\n");
             
-            #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 67 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
   } 
             
             #line default
             #line hidden
             
-            #line 66 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 68 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
   if (IsEdit) { 
             
             #line default
@@ -301,14 +315,14 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                     "need it for the designer to work.\r\n        /// </summary>\r\n        /// <remarks>" +
                     "This constructor creates a dummy ");
             
-            #line 70 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 72 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" for the designer.</remarks>\r\n        public ");
             
-            #line 71 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 73 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
             
             #line default
@@ -316,14 +330,14 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             this.Write("()\r\n        {\r\n            InitializeComponent();\r\n\r\n            _viewModel = new" +
                     " ");
             
-            #line 75 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 77 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetViewModelClassName()));
             
             #line default
             #line hidden
             this.Write("(new ");
             
-            #line 75 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 77 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
@@ -331,7 +345,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             this.Write("());\r\n            _isDirty = _viewModel;\r\n            DataContext = _viewModel;\r\n" +
                     "            SourceInitialized += ");
             
-            #line 78 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 80 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
             
             #line default
@@ -339,84 +353,185 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
             this.Write("_SourceInitialized;\r\n        }\r\n\r\n        /// <summary>\r\n        /// This constru" +
                     "ctor should be used at runtime to create the view with a real ");
             
-            #line 82 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 84 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(".\r\n        /// </summary>\r\n        /// <param name=\"");
             
-            #line 84 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 86 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("\">The real ");
             
-            #line 84 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 86 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
             
             #line default
             #line hidden
             this.Write(" to be used by the view.</param>\r\n        public ");
             
-            #line 85 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 87 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 85 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 87 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetShowViewParams(isDeclaration:true)));
             
             #line default
             #line hidden
             this.Write(") : base(new ");
             
-            #line 85 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 87 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetViewModelClassName()));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 85 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 87 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("))\r\n        {\r\n            InitializeComponent();\r\n            _viewModel = (");
             
-            #line 88 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 90 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetViewModelClassName()));
             
             #line default
             #line hidden
             this.Write(")DataContext;\r\n        }\r\n");
             
-            #line 90 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 92 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+  } 
+            
+            #line default
+            #line hidden
+            
+            #line 93 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+  if (IsDetail) { 
+            
+            #line default
+            #line hidden
+            this.Write("        /// <summary>\r\n        /// This constructor should not be called, but we " +
+                    "need it for the designer to work.\r\n        /// </summary>\r\n        /// <remarks>" +
+                    "This constructor creates a dummy ");
+            
+            #line 97 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" for the designer.</remarks>\r\n        public ");
+            
+            #line 98 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
+            
+            #line default
+            #line hidden
+            this.Write("()\r\n        {\r\n            InitializeComponent();\r\n\r\n            _viewModel = new" +
+                    " ");
+            
+            #line 102 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetViewModelClassName()));
+            
+            #line default
+            #line hidden
+            this.Write("();\r\n            DataContext = _viewModel;\r\n            SourceInitialized += ");
+            
+            #line 104 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
+            
+            #line default
+            #line hidden
+            this.Write("_SourceInitialized;\r\n        }\r\n\r\n        /// <summary>\r\n        /// This constru" +
+                    "ctor should be used at runtime to create the view with a real ");
+            
+            #line 108 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write(".\r\n        /// </summary>\r\n        /// <param name=\"");
+            
+            #line 110 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write("\">The real ");
+            
+            #line 110 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EntitySetting.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" to be used by the view.</param>\r\n        public ");
+            
+            #line 111 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
+            
+            #line default
+            #line hidden
+            this.Write("(");
+            
+            #line 111 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetViewModelClassName()));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 111 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetViewModelClassName().ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n        {\r\n            InitializeComponent();\r\n\r\n            _viewModel = ");
+            
+            #line 115 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetViewModelClassName().ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n            DataContext = _viewModel;\r\n            SourceInitialized += ");
+            
+            #line 117 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
+            
+            #line default
+            #line hidden
+            this.Write("_SourceInitialized;\r\n        }\r\n");
+            
+            #line 119 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
   } 
             
             #line default
             #line hidden
             this.Write("\r\n        private async void ");
             
-            #line 92 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 121 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetClassName()));
             
             #line default
             #line hidden
             this.Write("_SourceInitialized(object? sender, EventArgs e)\r\n        {\r\n");
             
-            #line 94 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
-      foreach (var lookupEntity in foreignLookupEntities) { 
+            #line 123 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+  foreach (var lookupEntity in foreignLookupEntities) { 
             
             #line default
             #line hidden
             this.Write("            try\r\n            {\r\n                await _viewModel.Load");
             
-            #line 97 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 126 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(lookupEntity.Name.Pluralize()));
             
             #line default
@@ -425,49 +540,55 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                     "         MessageBox.Show($\"Load exchanges failed.\\n{ex.Message}\", \"Ozz Trade Dia" +
                     "ry\", MessageBoxButton.OK, MessageBoxImage.Error);\r\n            }\r\n");
             
-            #line 103 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
-      } 
+            #line 132 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+  } 
             
             #line default
             #line hidden
             
-            #line 104 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
-      foreach (var property in preselectProperties) { 
+            #line 133 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+  foreach (var property in preselectProperties) { 
             
             #line default
             #line hidden
             this.Write("            if (_preselected");
             
-            #line 105 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 134 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(" != null)\r\n            {\r\n                _viewModel.");
             
-            #line 107 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 136 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write("Id = _preselected");
             
-            #line 107 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 136 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write(".Id;\r\n            }\r\n");
             
-            #line 109 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
-      } 
+            #line 138 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+  } 
             
             #line default
             #line hidden
             this.Write("            OnSourceInitialized();\r\n        }\r\n        partial void OnSourceIniti" +
                     "alized();\r\n");
             
-            #line 113 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 142 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+  if (IsCreateOrEdit) { 
+            
+            #line default
+            #line hidden
+            
+            #line 143 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
       if (HasAnyDecimalNumeric) { 
             
             #line default
@@ -504,7 +625,7 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         }
 ");
             
-            #line 144 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 174 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
       }
         if (HasAnyIntegerNumeric) { 
             
@@ -515,14 +636,21 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                     "        return;\r\n\r\n            e.Handled = !char.IsDigit(e.Text, 0);\r\n        }\r" +
                     "\n");
             
-            #line 154 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+            #line 184 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
       } 
             
             #line default
             #line hidden
             this.Write("\r\n        private void OkButton_Click(object sender, RoutedEventArgs e)\r\n        " +
                     "{\r\n            if (!_viewModel.ValidateModel())\r\n                return;\r\n\r\n    " +
-                    "        DialogResult = true;\r\n        }\r\n    }\r\n}");
+                    "        DialogResult = true;\r\n        }\r\n");
+            
+            #line 193 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpViewTemplate.tt"
+  } 
+            
+            #line default
+            #line hidden
+            this.Write("    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

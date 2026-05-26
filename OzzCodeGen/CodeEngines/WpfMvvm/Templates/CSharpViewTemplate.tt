@@ -26,7 +26,9 @@ namespace <#= GetNamespace() #>
 <#      } #>
 <#  } #>
 
+<#  if (IsCreateOrEdit) { #>
         public <#= EntitySetting.Name #> <#= EntitySetting.Name #> => _viewModel.<#= EntitySetting.Name #>;
+<#  } #>
 
 <#  if (IsCreate && HasLookupOrPreselectProperties()) { #>
         /// <summary>
@@ -88,10 +90,37 @@ namespace <#= GetNamespace() #>
             _viewModel = (<#= GetViewModelClassName() #>)DataContext;
         }
 <#  } #>
+<#  if (IsDetail) { #>
+        /// <summary>
+        /// This constructor should not be called, but we need it for the designer to work.
+        /// </summary>
+        /// <remarks>This constructor creates a dummy <#= EntitySetting.Name #> for the designer.</remarks>
+        public <#= GetClassName() #>()
+        {
+            InitializeComponent();
+
+            _viewModel = new <#= GetViewModelClassName() #>();
+            DataContext = _viewModel;
+            SourceInitialized += <#= GetClassName() #>_SourceInitialized;
+        }
+
+        /// <summary>
+        /// This constructor should be used at runtime to create the view with a real <#= EntitySetting.Name #>.
+        /// </summary>
+        /// <param name="<#= EntitySetting.Name.ToCamelCase() #>">The real <#= EntitySetting.Name #> to be used by the view.</param>
+        public <#= GetClassName() #>(<#= GetViewModelClassName() #> <#= GetViewModelClassName().ToCamelCase() #>)
+        {
+            InitializeComponent();
+
+            _viewModel = <#= GetViewModelClassName().ToCamelCase() #>;
+            DataContext = _viewModel;
+            SourceInitialized += <#= GetClassName() #>_SourceInitialized;
+        }
+<#  } #>
 
         private async void <#= GetClassName() #>_SourceInitialized(object? sender, EventArgs e)
         {
-<#      foreach (var lookupEntity in foreignLookupEntities) { #>
+<#  foreach (var lookupEntity in foreignLookupEntities) { #>
             try
             {
                 await _viewModel.Load<#= lookupEntity.Name.Pluralize() #>Async();
@@ -100,16 +129,17 @@ namespace <#= GetNamespace() #>
             {
                 MessageBox.Show($"Load exchanges failed.\n{ex.Message}", "Ozz Trade Diary", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-<#      } #>
-<#      foreach (var property in preselectProperties) { #>
+<#  } #>
+<#  foreach (var property in preselectProperties) { #>
             if (_preselected<#= property.Name #> != null)
             {
                 _viewModel.<#= property.Name #>Id = _preselected<#= property.Name #>.Id;
             }
-<#      } #>
+<#  } #>
             OnSourceInitialized();
         }
         partial void OnSourceInitialized();
+<#  if (IsCreateOrEdit) { #>
 <#      if (HasAnyDecimalNumeric) { #>
 
         private void DecimalTextBox_Pasting(object sender, DataObjectPastingEventArgs e)
@@ -160,5 +190,6 @@ namespace <#= GetNamespace() #>
 
             DialogResult = true;
         }
+<#  } #>
     }
 }

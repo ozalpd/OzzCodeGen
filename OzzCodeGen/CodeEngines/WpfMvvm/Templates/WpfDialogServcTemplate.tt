@@ -61,6 +61,16 @@ namespace <#= CodeEngine.ServicesNamespaceName #>
         /// during editing; otherwise, <see langword="false"/>.</returns>
         (bool IsConfirmed, bool IsDirty) Show<#= entity.Name #>EditDialog(<#= GetShowViewParams(entity, isDeclaration:true, isEdit:true, isDlgSvc: true) #>);
 
+<#          }
+            if (entity.IsInDetailDialogService) { #>
+        /// <summary>
+        /// Displays a dialog showing detailed information for the specified <#= entity.Name.ToCamelCase() #>.
+        /// </summary>
+        /// <param name="owner">The window that will own the dialog. This parameter determines the parent window for modal behavior and dialog
+        /// positioning.</param>
+        /// <param name="<#= entity.Name.ToCamelCase() #>">The <#= entity.Name.ToCamelCase() #> entity to display in the detail dialog.</param>
+        void Show<#= entity.Name #>DetailDialog(<#= GetShowViewParams(entity, isDeclaration:true, isEdit:true, isDlgSvc: true) #>);
+
 <#          } #>
 <#    } #>
 <#  } else { #>
@@ -92,7 +102,20 @@ namespace <#= CodeEngine.ServicesNamespaceName #>
             return (result, dialog.IsDirty);
         }
 
-<#          } #>
+<#          }
+            if (entity.IsInDetailDialogService) { #>
+        /// <inheritdoc />
+        public void Show<#= entity.Name #>DetailDialog(<#= GetShowViewParams(entity, isDeclaration:true, isEdit:true, isDlgSvc: true) #>)
+        {
+            var dialog = new <#= entity.GetViewName(MvvmTemplate.Detail) #>(<#= GetShowViewParams(entity, isEdit:true) #>)
+            {
+                Owner = owner
+            };
+
+            dialog.ShowDialog();
+        }
+
+<#          }  #>
 <#    } #>
 <#  } #>
     }

@@ -7,7 +7,7 @@
 					 xmlns:Converters="clr-namespace:OzzUtils.Wpf.Converters;assembly=OzzUtils"
                      xmlns:ui="clr-namespace:OzzCodeGen.UI" xmlns:CodeGen="clr-namespace:OzzCodeGen"
                      mc:Ignorable="d"
-                     d:DesignHeight="800" d:DesignWidth="1600">
+                     d:DesignHeight="832" d:DesignWidth="1600">
     <UserControl.Resources>
         <ResourceDictionary>
             <Converters:EnumDescriptionConverter x:Key="enumConverter" />
@@ -323,6 +323,7 @@
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
                         <RowDefinition Height="8"/>
                         <RowDefinition Height="24"/><!--Create VM-->
                         <RowDefinition Height="24"/>
@@ -417,10 +418,23 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <TextBlock Grid.Row="15" Text="Load Command:"
-                               ToolTip="Generate Mode for Load Command for the entity."
+                    <TextBlock Grid.Row="15" Text="Detail Command:"
+                               ToolTip="Generate Mode for Detail Command for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
                     <ComboBox Grid.Column="1" Grid.Row="15" Style="{StaticResource wpfMvvmComboBoxStyle}"
+                              ItemsSource="{Binding Source={StaticResource generateMode}}"
+                              SelectedItem="{Binding GenModeDetailCommand}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <TextBlock Grid.Row="16" Text="Load Command:"
+                               ToolTip="Generate Mode for Load Command for the entity."
+                               Style="{StaticResource rightAlignedTextBlockStyle}"/>
+                    <ComboBox Grid.Column="1" Grid.Row="16" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeLoadCommand}">
                         <ComboBox.ItemTemplate>
@@ -431,10 +445,10 @@
                     </ComboBox>
 
 
-                    <TextBlock Grid.Row="17" Text="Create VM:"
+                    <TextBlock Grid.Row="18" Text="Create VM:"
                                ToolTip="Generate Mode for Create ViewModel for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="17" Style="{StaticResource wpfMvvmComboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="18" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeCreateVM}">
                         <ComboBox.ItemTemplate>
@@ -444,10 +458,10 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <TextBlock Grid.Row="18" Text="Edit VM:"
+                    <TextBlock Grid.Row="19" Text="Edit VM:"
                                ToolTip="Generate Mode for Edit ViewModel for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="18" Style="{StaticResource wpfMvvmComboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="19" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeEditVM}">
                         <ComboBox.ItemTemplate>
@@ -457,10 +471,10 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <TextBlock Grid.Row="19" Text="Collection VM:"
+                    <TextBlock Grid.Row="20" Text="Collection VM:"
                                ToolTip="Generate Mode for Collection ViewModel for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="19" Style="{StaticResource wpfMvvmComboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="20" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeCollectionVM}">
                         <ComboBox.ItemTemplate>
@@ -471,10 +485,10 @@
                     </ComboBox>
 
 
-                    <TextBlock Grid.Row="21" Text="Create View:"
+                    <TextBlock Grid.Row="22" Text="Create View:"
                                ToolTip="Generate Mode for Create View for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="21" Style="{StaticResource wpfMvvmComboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="22" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeCreateView}">
                         <ComboBox.ItemTemplate>
@@ -484,10 +498,10 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <TextBlock Grid.Row="22" Text="Edit View:"
+                    <TextBlock Grid.Row="23" Text="Edit View:"
                                ToolTip="Generate Mode for Edit View for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="22" Style="{StaticResource wpfMvvmComboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="23" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeEditView}">
                         <ComboBox.ItemTemplate>
@@ -497,10 +511,10 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <TextBlock Grid.Row="23" Text="Form Column Layout:"
+                    <TextBlock Grid.Row="24" Text="Form Column Layout:"
                                ToolTip="Column layout configuration for create view and edit view for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="23" Style="{StaticResource wpfMvvmComboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="24" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource formColumnLayout}}"
                               SelectedItem="{Binding InputColumnLayout}">
                         <ComboBox.ItemTemplate>
@@ -510,10 +524,10 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <TextBlock Grid.Row="24" Text="Detail View:"
+                    <TextBlock Grid.Row="25" Text="Detail View:"
                                ToolTip="Generate Mode for Detail View for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="24" Style="{StaticResource wpfMvvmComboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="25" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeDetailView}">
                         <ComboBox.ItemTemplate>
@@ -523,10 +537,10 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <TextBlock Grid.Row="25" Text="Detail Column Layout:"
+                    <TextBlock Grid.Row="26" Text="Detail Column Layout:"
                                ToolTip="Column layout configuration for detail view for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="25" Style="{StaticResource wpfMvvmComboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="26" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource formColumnLayout}}"
                               SelectedItem="{Binding DetailColumnLayout}">
                         <ComboBox.ItemTemplate>
@@ -538,10 +552,10 @@
 
 
 
-                    <TextBlock Grid.Row="27" Text="Lookup Service:"
+                    <TextBlock Grid.Row="28" Text="Lookup Service:"
                                ToolTip="Generate Mode for Lookup Service for the entity."
                                Style="{StaticResource rightAlignedTextBlockStyle}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="27" Style="{StaticResource wpfMvvmComboBoxStyle}"
+                    <ComboBox Grid.Column="1" Grid.Row="28" Style="{StaticResource wpfMvvmComboBoxStyle}"
                               ItemsSource="{Binding Source={StaticResource generateMode}}"
                               SelectedItem="{Binding GenModeLookupService}">
                         <ComboBox.ItemTemplate>
@@ -552,8 +566,8 @@
                     </ComboBox>
 
 
-                    <GridSplitter Grid.Column="2" Grid.RowSpan="30" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" ResizeDirection="Columns"/>
-                    <Grid Grid.Column="2" Grid.RowSpan="30" Margin="8,0,0,0">
+                    <GridSplitter Grid.Column="2" Grid.RowSpan="32" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="8" ResizeDirection="Columns"/>
+                    <Grid Grid.Column="2" Grid.RowSpan="32" Margin="8,0,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -571,6 +585,14 @@
                         </DataGrid>
                         <GridSplitter Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="8" ResizeDirection="Rows"/>
                         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Margin="0,8,0,0">
+                            <Button x:Name="btnResetOrder"
+                                    ToolTip="Resets display orders of non inherited properties"
+                                    Style="{StaticResource sidebarButtons}" Margin="0,0,0,8"
+                                    Click="btnResetOrder_Click">
+                                <Viewbox Width="18" Height="18">
+                                    <Path Fill="#004487" Data="{StaticResource sort-down-alt}" Margin="0,0,4,0"/>
+                                </Viewbox>
+                            </Button>
                             <Button x:Name="btnMovePropertyTop"
                                     ToolTip="Move Property Top"
                                     Style="{StaticResource sidebarButtons}"
@@ -607,13 +629,6 @@
                                         <Path Fill="#004487" Data="{StaticResource arrow-down}" Margin="0,0,4,5"/>
                                         <Path Fill="#004487" Data="{StaticResource arrow-down}" Margin="0,5,4,0"/>
                                     </Grid>
-                                </Viewbox>
-                            </Button>
-                            <Button x:Name="btnResetOrder"
-                                    ToolTip="Resets display orders of all properties"
-                                    Style="{StaticResource sidebarButtons}" Click="btnResetOrder_Click">
-                                <Viewbox Width="18" Height="18">
-                                    <Path Fill="#004487" Data="{StaticResource sort-down-alt}" Margin="0,0,4,0"/>
                                 </Viewbox>
                             </Button>
                         </StackPanel>

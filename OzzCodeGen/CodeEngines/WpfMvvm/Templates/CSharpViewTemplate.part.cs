@@ -26,20 +26,20 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                 namespaces.Add(modelClassEngine.NamespaceName);
             }
 
-            if (EntitySetting.GetForeignLookupEntities(IsEdit).Any())
+            if (IsCreateOrEdit && (EntitySetting.GetForeignLookupEntities(IsEdit).Any()))
             {
                 namespaces.Add(CodeEngine.LookupNamespaceName);
                 namespaces.Add(CodeEngine.DesignTimeNamespaceName);
                 namespaces.Add("System.Collections.ObjectModel");
             }
 
-            if (HasAnyDecimalNumeric)
+            if (IsCreateOrEdit && (HasAnyDecimalNumeric))
             {
                 namespaces.Add("System.Globalization");
                 namespaces.Add("System.Text.RegularExpressions");
             }
-            
-            if (HasAnyDecimalNumeric || HasAnyIntegerNumeric)
+
+            if (IsCreateOrEdit && (HasAnyDecimalNumeric || HasAnyIntegerNumeric))
             {
                 namespaces.Add("System.Windows.Controls");
                 namespaces.Add("System.Windows.Input");

@@ -5,6 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="OzzCodeGen.Templates" #>
 <#@ import namespace="OzzCodeGen.Templates.Cs" #>
+<#@ import namespace="OzzCodeGen.CodeEngines.Mvvm" #>
 <#@ import namespace="OzzCodeGen.Definitions" #>
 <#@ import namespace="OzzCodeGen.Utilities" #>
 <#@ import namespace="OzzUtils" #>
@@ -41,17 +42,20 @@
         <Grid.ColumnDefinitions>
 <#  for (int i = 0; i < ColumnLayout; i++) { #>
             <ColumnDefinition Width="Auto" />
+<#      if (TemplateType == MvvmTemplate.Detail) { #>
+            <ColumnDefinition Width="Auto" MinWidth="96" />
+<#      } #>
             <ColumnDefinition Width="*" />
 <#  } #>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
 <#  foreach (var prop in properties.Where(p => !p.IsKey)) {
         if (prop.IsMultiLine) {
-            rowIdx = 0; #>
+            rowIdx = -1; #>
             <RowDefinition Height="*" />
-<#  } else if (rowIdx % ColumnLayout == 0) { #>
+<#      } else if (rowIdx % ColumnLayout == 0) { #>
             <RowDefinition Height="Auto" />
-<#      }
+<#     }
         rowIdx++;
     } #>
 <#  if (anyMultiLine) { #>
@@ -64,46 +68,29 @@
     rowNr = 0;
     colNr = 0;
     foreach (var prop in properties.Where(p => !p.IsKey)) {
+        bool isReadOnly = TemplateType == MvvmTemplate.Detail || IsReadOnly(prop);
         var lookupEntity = prop.GetLookupEntity();
         var dependent = prop.GetDependent();
         string enumName = prop.GetEnumTypeName();
         bool isEnum = !string.IsNullOrEmpty(enumName);
-        string bindingName = prop.IsForeignKey && dependent != null ? dependent.Name : prop.Name;
-        bool isReadOnly = IsReadOnly(prop);
+        string labelBinding = prop.IsForeignKey && dependent != null ? dependent.Name : prop.Name;
         if (prop.IsMultiLine) {
             if(colNr > 0) rowNr++;
             colNr = 0;
+            rowIdx = -1;
         }#>
 
-        <TextBlock Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr #>" Style="{StaticResource RightAlignedTextBlockStyle}"
-                   Text="{x:Static i18n:LocalizedStrings.<#= bindingName #>}"/>
-<#      if (prop.IsMultiLine && !isReadOnly) {
-            rowIdx = -1;
-            #>
-        <TextBox <#= GetElementName(prop, true) #>Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>"
-                 Style="{StaticResource ValidationMutliLineTextBoxStyle}"
-<#      if(colSpan > 1) { #>
-                 Grid.ColumnSpan="<#= colSpan #>"
-<#      } #>
-                 Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
-<#  } else if (prop.IsBoolean) { #>
-        <CheckBox Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>" Margin="0,0,0,22"
-<#      if (isReadOnly) { #>
-                  IsEnabled="False" IsChecked="{Binding <#= prop.Name #>, Mode=OneWay}" />
-<#      } else { #>
-                  IsChecked="{Binding <#= prop.Name #>}" />
-<#      } #>
-<#  } else if (isReadOnly) {
-        bindingName = prop.IsForeignKey && lookupEntity != null ? $"{dependent.Name}.{lookupEntity.EntityDefinition.DisplayMember}" : prop.Name; #>
-        <TextBox Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>"
-<#      if(prop.IsMultiLine && colSpan > 1) { #>
-                 Grid.ColumnSpan="<#= colSpan #>" Margin="0,0,0,8" TextWrapping="Wrap"
-<#      } else if (prop.IsMultiLine) { #>
-                 TextWrapping="Wrap"
-<#      } #>
-                 Style="{StaticResource ReadOnlyTextBoxStyle}"
-                 Text="{Binding <#= bindingName #>, Mode=OneWay}"/>
-<#  } else if (prop.IsDateTime) { #>
+        <TextBlock Grid.Column="<#= colNr #>" Grid.Row="<#= rowNr #>" FontWeight="Bold"
+                   Style="{StaticResource RightAlignedTextBlockStyle}" Text="{x:Static i18n:LocalizedStrings.<#= labelBinding #>}"/>
+<#      if (prop.IsBoolean) {
+            WriteCheckBox(prop, colNr, rowNr, isReadOnly);
+        } else if (TemplateType == MvvmTemplate.Detail) {
+            WritePropInTextBlock(prop, colNr, rowNr);
+        } else if (prop.IsMultiLine && !isReadOnly) {
+            WriteMultiLineEditableTextBox(prop, colNr, rowNr);
+        } else if (isReadOnly) {
+            WriteReadOnlyTextBox(prop, colNr, rowNr);
+        } else if (prop.IsDateTime) { #>
         <DatePicker <#= GetElementName(prop, true) #>Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>" Margin="0,-2,0,16"
                     SelectedDate="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 <#  } else if (isEnum || (prop.IsForeignKey && lookupEntity != null)) {
@@ -116,34 +103,108 @@
                   DisplayMemberPath="<#= memberPath #>"
                   SelectedValuePath="<#= valuePath #>"
                   SelectedValue="{Binding <#= prop.Name #>, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
-<#  } else if (prop.IsDecimalNumeric || prop.IsIntegerNumeric) { #>
-        <TextBox <#= GetElementName(prop, true) #>Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>"
-                 Style="{StaticResource ValidationTextBoxStyle}"
-<#      if (prop.IsDecimalNumeric) { #>
-                 PreviewTextInput="DecimalTextBox_PreviewTextInput"
-<#      } else if (prop.IsIntegerNumeric) { #>
-                 PreviewTextInput="IntegerTextBox_PreviewTextInput"
-<#      } #>
-                 Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True}"/>
-<#  } else if (prop.IsSimpleOrString) { #>
-        <TextBox <#= GetElementName(prop, true) #>Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>"
-                 Style="{StaticResource ValidationTextBoxStyle}"
-                 Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
-<#      }
+<#  } else if (prop.IsSimpleOrString) {
+        WriteEditableTextBox(prop, colNr, rowNr);
+    }
         rowIdx++;
         if (rowIdx % ColumnLayout == 0) {
             rowNr++;
             colNr = 0;
         }
         else {
-            colNr += 2;
+            colNr = TemplateType == MvvmTemplate.Detail ? colNr + 3 : colNr + 2;
         }
     }
-    rowNr++; #>
+    rowNr++;
+    if (TemplateType != MvvmTemplate.Detail) {#>
 
         <StackPanel Grid.Row="<#= rowNr #>" Grid.ColumnSpan="<#= colSpan + 1 #>" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,6" VerticalAlignment="Bottom">
             <Button Content="<#= GetActionString("OK") #>" Width="90" Margin="0,0,18,0" IsDefault="True" IsEnabled="{Binding IsValid}" Click="OkButton_Click" />
             <Button Content="<#= GetActionString("Cancel") #>" Width="90" IsCancel="True" />
         </StackPanel>
+<#   } #>
     </Grid>
 </<#= BaseClassDeclaration #>>
+<#+
+void WritePropInTextBlock(WpfMvvmPropertySetting prop, int colNr, int rowNr) {
+    int colSpan = ColumnLayout * 2 - 1;
+    colSpan = TemplateType == MvvmTemplate.Detail ? colSpan + ColumnLayout : colSpan;
+    bool isEnum = !string.IsNullOrEmpty(prop.GetEnumTypeName()); #>
+        <TextBlock Grid.Column="<#= colNr + 1#>" Grid.Row="<#= rowNr #>"
+<#+  if(prop.IsMultiLine && colSpan > 1) { //ReadOnly MultiLine #>
+                   Grid.ColumnSpan="<#= colSpan #>" TextWrapping="Wrap"
+<#+  } else if (prop.IsMultiLine) { //ReadOnly MultiLine No ColumnSpan #>
+                   TextWrapping="Wrap"
+<#+  } #>
+<#+  if (prop.IsDateTime) { //ReadOnly DateTime #>
+                   Text="{Binding <#= GetBindingName(prop) #>, StringFormat=\{0:yyyy-MM-dd HH:mm\}, Mode=OneWay}"
+<#+  } else if (prop.IsDecimalNumeric) { #>
+                   Text="{Binding <#= GetBindingName(prop) #>, StringFormat=\{0:N4\}, Mode=OneWay}"
+<#+  } else if (!prop.IsForeignKey && !isEnum && (prop.IsIntegerNumeric)) { #>
+                   Text="{Binding <#= GetBindingName(prop) #>, StringFormat=\{0:D\}, Mode=OneWay}"
+<#+  } else { #>
+                   Text="{Binding <#= GetBindingName(prop) #>, Mode=OneWay}"
+<#+  }
+     if (!prop.IsForeignKey && !isEnum && (prop.IsDecimalNumeric || prop.IsIntegerNumeric)) { #>
+                   Style="{StaticResource RightAlignedTextBlockStyle}"
+<#+  } #>
+                   Margin="0,0,0,8"/>
+<#+
+} #>
+<#+
+void WriteEditableTextBox(WpfMvvmPropertySetting prop, int colNr, int rowNr) {#>
+        <TextBox <#= GetElementName(prop, true) #>Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>"
+<#+  if (prop.IsDecimalNumeric) { #>
+                 PreviewTextInput="DecimalTextBox_PreviewTextInput"
+<#+  } else if (prop.IsIntegerNumeric) { #>
+                 PreviewTextInput="IntegerTextBox_PreviewTextInput"
+<#+  }
+     if (prop.IsDecimalNumeric || prop.IsIntegerNumeric) {#>
+                 Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True}"
+<#+  } else { #>
+                 Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+<#+  } #>
+                 Style="{StaticResource ValidationTextBoxStyle}"/>
+<#+
+} #>
+<#+
+void WriteReadOnlyTextBox(WpfMvvmPropertySetting prop, int colNr, int rowNr) {
+    int colSpan = ColumnLayout * 2 - 1;
+ #>
+        <TextBox Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>"
+<#+  if(prop.IsMultiLine && colSpan > 1) { //ReadOnly MultiLine #>
+                 Grid.ColumnSpan="<#= colSpan #>" TextWrapping="Wrap"
+<#+  } else if (prop.IsMultiLine) { //ReadOnly MultiLine No ColumnSpan #>
+                 TextWrapping="Wrap"
+<#+  } #>
+<#+  if (prop.IsDateTime) { //ReadOnly DateTime #>
+                 Text="{Binding <#= GetBindingName(prop) #>, StringFormat=\{0:yyyy-MM-dd HH:mm\}, Mode=OneWay}"
+<#+  } else { #>
+                 Text="{Binding <#= GetBindingName(prop) #>, Mode=OneWay}"
+<#+  } #>
+                 Style="{StaticResource ReadOnlyTextBoxStyle}"/>
+<#+
+} #>
+<#+
+void WriteMultiLineEditableTextBox(WpfMvvmPropertySetting prop, int colNr, int rowNr) {
+    int colSpan = ColumnLayout * 2 - 1; #>
+        <TextBox <#= GetElementName(prop, true) #>Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>"
+                 Style="{StaticResource ValidationMutliLineTextBoxStyle}"
+<#+  if(colSpan > 1) { #>
+                 Grid.ColumnSpan="<#= colSpan #>"
+<#+  } #>
+                 Text="{Binding <#= prop.Name #>, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+<#+
+} #>
+<#+
+void WriteCheckBox(WpfMvvmPropertySetting prop, int colNr, int rowNr, bool isReadOnly) {
+    string margin = TemplateType == MvvmTemplate.Detail ? "0,0,0,8" : "0,0,0,22";
+    #>
+        <CheckBox Grid.Row="<#= rowNr #>" Grid.Column="<#= colNr + 1#>" Margin="<#= margin #>"
+<#+  if (isReadOnly) { #>
+                  IsEnabled="False" IsChecked="{Binding <#= prop.Name #>, Mode=OneWay}" />
+<#+  } else { #>
+                  IsChecked="{Binding <#= prop.Name #>}" />
+<#+  } #>
+<#+
+} #>

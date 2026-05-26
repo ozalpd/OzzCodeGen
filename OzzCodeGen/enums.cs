@@ -12,10 +12,12 @@ public enum FileGenerationMode
 {
     [Description("Do Not Generate")]
     DoNotGenerate = 0,
-    [Description("Generate and Overwrite")]
-    GenerateAndOverwrite = 1,
+    [Description("Skip Manually Edited Files")]
+    SkipManuallyEdited = 1,
     [Description("Generate if Not Exists")]
-    GenerateIfNotExists = 2
+    GenerateIfNotExists = 2,
+    [Description("Generate and Overwrite")]
+    GenerateAndOverwrite = 3
 }
 
 public enum DefinitionType

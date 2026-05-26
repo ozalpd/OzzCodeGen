@@ -27,7 +27,9 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
 
         public string GetFullClassName() => $"{GetNamespace()}.{GetClassName()}";
 
-        public int ColumnLayout => (int)EntitySetting.InputColumnLayout;
+        public int ColumnLayout => IsCreateOrEdit
+                                ? (int)EntitySetting.InputColumnLayout
+                                : (int)EntitySetting.DetailColumnLayout;
 
         public override string GetDefaultFileName()
         {
@@ -51,6 +53,19 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
         {
             bool hasLocalization = CodeEngine.ResxEngine != null;
             return hasLocalization ? GetLocalizedString(key, "ActionStrings") : key;
+        }
+
+        public string GetBindingName(WpfMvvmPropertySetting propertySetting)
+        {
+            if (!propertySetting.IsForeignKey)
+                return propertySetting.Name;
+
+            var lookupEntity = propertySetting.GetLookupEntity();
+            if (lookupEntity == null)
+                return propertySetting.Name;
+
+            var dependent = propertySetting.GetDependent();
+            return $"{dependent.Name}.{lookupEntity.EntityDefinition.DisplayMember}";
         }
 
         public string GetLocalizedString(string key, string resxName = "LocalizedStrings")

@@ -140,16 +140,19 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     private FormColumnLayout? _inputFormColumnLayout;
 
 
-    public bool GenerateAnyCommand => GenModeCreateCommand > FileGenerationMode.DoNotGenerate
-                                   || GenModeEditCommand > FileGenerationMode.DoNotGenerate
-                                   || GenModeDeleteCommand > FileGenerationMode.DoNotGenerate;
+    public bool GenerateAnyCommand => GenModeCreateCommand > FileGenerationMode.SkipManuallyEdited
+                                   || GenModeEditCommand > FileGenerationMode.SkipManuallyEdited
+                                   || GenModeDeleteCommand > FileGenerationMode.SkipManuallyEdited
+                                   || GenModeDetailCommand > FileGenerationMode.SkipManuallyEdited
+                                   || GenModeLoadCommand > FileGenerationMode.SkipManuallyEdited;
 
-    public bool GenerateAnyView => GenModeCreateView > FileGenerationMode.DoNotGenerate
-                                   || GenModeEditView > FileGenerationMode.DoNotGenerate;
+    public bool GenerateAnyView => GenModeCreateView > FileGenerationMode.SkipManuallyEdited
+                                   || GenModeEditView > FileGenerationMode.SkipManuallyEdited
+                                   || GenModeDetailView > FileGenerationMode.SkipManuallyEdited;
 
-    public bool GenerateAnyViewModel => GenModeCreateVM > FileGenerationMode.DoNotGenerate
-                                   || GenModeEditVM > FileGenerationMode.DoNotGenerate
-                                   || GenModeCollectionVM > FileGenerationMode.DoNotGenerate;
+    public bool GenerateAnyViewModel => GenModeCreateVM > FileGenerationMode.SkipManuallyEdited
+                                   || GenModeEditVM > FileGenerationMode.SkipManuallyEdited
+                                   || GenModeCollectionVM > FileGenerationMode.SkipManuallyEdited;
     public FileGenerationMode GenModeCreateCommand
     {
         get
@@ -209,12 +212,21 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     }
     private FileGenerationMode? _genModeDeleteCommand;
 
+    public FileGenerationMode GenModeDetailCommand
+    {
+        get { return _genModeDetailCommand ?? FileGenerationMode.DoNotGenerate; }
+        set
+        {
+            if (_genModeDetailCommand == value) return;
+            _genModeDetailCommand = value;
+            RaisePropertyChanged(nameof(GenModeDetailCommand));
+        }
+    }
+    private FileGenerationMode? _genModeDetailCommand;
+
     public FileGenerationMode GenModeLoadCommand
     {
-        get
-        {
-            return _genModeLoadCommand ?? FileGenerationMode.DoNotGenerate;
-        }
+        get { return _genModeLoadCommand ?? FileGenerationMode.DoNotGenerate; }
         set
         {
             if (_genModeLoadCommand == value) return;
@@ -399,6 +411,10 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
     [JsonIgnore]
     public bool IsInEditDialogService => GenModeEditView > FileGenerationMode.DoNotGenerate && GenModeEditCommand > FileGenerationMode.DoNotGenerate;
 
+    [XmlIgnore]
+    [JsonIgnore]
+    public bool IsInDetailDialogService => GenModeDetailView > FileGenerationMode.DoNotGenerate && GenModeDetailCommand > FileGenerationMode.DoNotGenerate;
+
 
     public string GetCommandsNamespaceName()
     {
@@ -491,6 +507,9 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
             case MvvmTemplate.Delete:
                 return $"{Name}DeleteCommand";
 
+            case MvvmTemplate.Detail:
+                return $"{Name}DetailCommand";
+
             case MvvmTemplate.Collection:
                 return GetPageCommandName(pageCommand);
 
@@ -546,6 +565,9 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
             case MvvmTemplate.Edit:
                 return $"{Name}EditVM";
 
+            case MvvmTemplate.Detail:
+                return Name;
+
             case MvvmTemplate.Collection:
                 return $"{Name}ListVM";
 
@@ -559,20 +581,18 @@ public abstract class BaseMvvmEntitySetting<TPropertySetting> : BaseCSharpEntity
         switch (templateType)
         {
             case MvvmTemplate.Create:
-                // This will propbably be a dialog view, so we use the entity name followed by 'CreateView' to indicate that it's a view for creating an instance of the entity.
                 return $"{Name}CreateView";
 
             case MvvmTemplate.Edit:
-                // This will propbably be a dialog view, so we use the entity name followed by 'EditView' to indicate that it's a view for editing an instance of the entity.
                 return $"{Name}EditView";
 
             case MvvmTemplate.Delete:
-                // If we use a view for delete operations, we should mostly use a dialog view, so the entity name followed by 'DeleteView' indicates that it's a view for confirming the deletion of an instance of the entity.
                 return $"{Name}DeleteView";
 
+            case MvvmTemplate.Detail:
+                return $"{Name}DetailView";
+
             case MvvmTemplate.Collection:
-                // For collection views, we typically use the pluralized form of the entity name to indicate that the view is for managing multiple instances of the entity.
-                // Name ends with 'Window' to indicate that it's a window view, which is common for collection views in MVVM applications.
                 return $"{Name.Pluralize()}Window";
 
             default:

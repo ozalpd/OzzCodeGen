@@ -44,11 +44,12 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
 <#  WriteEnumValueInit(enumTypeNames); #>
             <#= EntitySetting.Name #>CreateCommand = new <#= EntitySetting.Name #>CreateCommand(<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Create, hasDlgService:true) #>);
             <#= EntitySetting.Name #>DeleteCommand = new <#= EntitySetting.Name #>DeleteCommand(<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Delete) #>);
+            <#= EntitySetting.Name #>DetailCommand = new <#= EntitySetting.Name #>DetailCommand(<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Detail, hasDlgService:true, isDisplayOnly: true) #>);
             <#= EntitySetting.Name #>EditCommand = new <#= EntitySetting.Name #>EditCommand(<#= GetCommandConstructorParams("this", templateType: MvvmTemplate.Edit, hasDlgService:true) #>);
-            <#= EntitySetting.GetPageCommandName(PageCommand.LoadCommand) #> = new <#= EntitySetting.GetPageCommandName(PageCommand.LoadCommand) #>(<#= GetCommandConstructorParams("this", isLoadCommand: true) #>);
+            <#= EntitySetting.GetPageCommandName(PageCommand.LoadCommand) #> = new <#= EntitySetting.GetPageCommandName(PageCommand.LoadCommand) #>(<#= GetCommandConstructorParams("this", isDisplayOnly: true) #>);
 <#      if (EntitySetting.GenerateGetPaged) { #>
-            <#= EntitySetting.GetPageCommandName(PageCommand.NextPageCommand) #> = new <#= EntitySetting.GetPageCommandName(PageCommand.NextPageCommand) #>(<#= GetCommandConstructorParams("this", isLoadCommand: true) #>);
-            <#= EntitySetting.GetPageCommandName(PageCommand.PrevPageCommand) #> = new <#= EntitySetting.GetPageCommandName(PageCommand.PrevPageCommand) #>(<#= GetCommandConstructorParams("this", isLoadCommand: true) #>);
+            <#= EntitySetting.GetPageCommandName(PageCommand.NextPageCommand) #> = new <#= EntitySetting.GetPageCommandName(PageCommand.NextPageCommand) #>(<#= GetCommandConstructorParams("this", isDisplayOnly: true) #>);
+            <#= EntitySetting.GetPageCommandName(PageCommand.PrevPageCommand) #> = new <#= EntitySetting.GetPageCommandName(PageCommand.PrevPageCommand) #>(<#= GetCommandConstructorParams("this", isDisplayOnly: true) #>);
 <#      } #>
         }
 
@@ -58,6 +59,7 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
 
         public <#= EntitySetting.Name #>CreateCommand <#= EntitySetting.Name #>CreateCommand { get; }
         public <#= EntitySetting.Name #>DeleteCommand <#= EntitySetting.Name #>DeleteCommand { get; }
+        public <#= EntitySetting.Name #>DetailCommand <#= EntitySetting.Name #>DetailCommand { get; }
         public <#= EntitySetting.Name #>EditCommand <#= EntitySetting.Name #>EditCommand { get; }
         public <#= EntitySetting.GetPageCommandName(PageCommand.LoadCommand) #> <#= EntitySetting.GetPageCommandName(PageCommand.LoadCommand) #> { get; }
 <#      if (EntitySetting.GenerateGetPaged) { #>
@@ -118,8 +120,9 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
             set
             {
                 SelectedItem = value;
-                TradeEditCommand.RaiseCanExecuteChanged();
-                TradeDeleteCommand.RaiseCanExecuteChanged();
+                <#= EntitySetting.Name #>EditCommand.RaiseCanExecuteChanged();
+                <#= EntitySetting.Name #>DeleteCommand.RaiseCanExecuteChanged();
+                <#= EntitySetting.Name #>DetailCommand.RaiseCanExecuteChanged();
                 RaisePropertyChanged(nameof(Selected<#= EntitySetting.Name #>));
             }
         }
@@ -128,9 +131,9 @@ namespace <#= EntitySetting.GetViewModelsNamespaceName() #>
         {
             if (e.PropertyName == nameof(QueryVM.PageSize))
             {
-                TradesLoadCommand.RaiseCanExecuteChanged();
-                TradesPrevPageCommand.RaiseCanExecuteChanged();
-                TradesNextPageCommand.RaiseCanExecuteChanged();
+                <#= EntitySetting.Name.Pluralize() #>LoadCommand.RaiseCanExecuteChanged();
+                <#= EntitySetting.Name.Pluralize() #>PrevPageCommand.RaiseCanExecuteChanged();
+                <#= EntitySetting.Name.Pluralize() #>NextPageCommand.RaiseCanExecuteChanged();
             }
         }
 <#      WriteLine("    }");

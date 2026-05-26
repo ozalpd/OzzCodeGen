@@ -306,72 +306,118 @@ namespace ");
             this.Write(");\r\n\r\n");
             
             #line 64 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+          }
+            if (entity.IsInDetailDialogService) { 
+            
+            #line default
+            #line hidden
+            this.Write("        /// <summary>\r\n        /// Displays a dialog showing detailed information" +
+                    " for the specified ");
+            
+            #line 67 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(".\r\n        /// </summary>\r\n        /// <param name=\"owner\">The window that will o" +
+                    "wn the dialog. This parameter determines the parent window for modal behavior an" +
+                    "d dialog\r\n        /// positioning.</param>\r\n        /// <param name=\"");
+            
+            #line 71 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write("\">The ");
+            
+            #line 71 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name.ToCamelCase()));
+            
+            #line default
+            #line hidden
+            this.Write(" entity to display in the detail dialog.</param>\r\n        void Show");
+            
+            #line 72 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
+            
+            #line default
+            #line hidden
+            this.Write("DetailDialog(");
+            
+            #line 72 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetShowViewParams(entity, isDeclaration:true, isEdit:true, isDlgSvc: true)));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n\r\n");
+            
+            #line 74 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
           } 
             
             #line default
             #line hidden
             
-            #line 65 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 75 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
     } 
             
             #line default
             #line hidden
             
-            #line 66 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 76 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
   } else { 
             
             #line default
             #line hidden
             
-            #line 67 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 77 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
       foreach (var entity in entities) {
             
             #line default
             #line hidden
             
-            #line 68 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 78 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
           if (entity.IsInCreateDialogService) { 
             
             #line default
             #line hidden
             this.Write("        /// <inheritdoc />\r\n        public (bool IsConfirmed, ");
             
-            #line 70 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 80 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("? ");
             
-            #line 70 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 80 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write(") Show");
             
-            #line 70 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 80 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("CreateDialog(");
             
-            #line 70 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 80 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetShowViewParams(entity, isDeclaration:true, isDlgSvc:true)));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n            var dialog = new ");
             
-            #line 72 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 82 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.GetViewName(MvvmTemplate.Create)));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 72 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 82 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetShowViewParams(entity)));
             
             #line default
@@ -380,14 +426,14 @@ namespace ");
                     "r result = dialog.ShowDialog() == true;\r\n            return (result, result ? di" +
                     "alog.");
             
-            #line 78 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 88 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write(" : null);\r\n        }\r\n\r\n");
             
-            #line 81 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 91 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
           }
             if (entity.IsInEditDialogService) { 
             
@@ -395,28 +441,28 @@ namespace ");
             #line hidden
             this.Write("        /// <inheritdoc />\r\n        public (bool IsConfirmed, bool IsDirty) Show");
             
-            #line 84 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 94 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
             
             #line default
             #line hidden
             this.Write("EditDialog(");
             
-            #line 84 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 94 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetShowViewParams(entity, isDeclaration:true, isEdit:true, isDlgSvc:true)));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n            var dialog = new ");
             
-            #line 86 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 96 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(entity.GetViewName(MvvmTemplate.Edit)));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 86 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 96 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetShowViewParams(entity, isEdit:true)));
             
             #line default
@@ -425,19 +471,56 @@ namespace ");
                     "r result = dialog.ShowDialog() == true;\r\n            return (result, dialog.IsDi" +
                     "rty);\r\n        }\r\n\r\n");
             
-            #line 95 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
-          } 
+            #line 105 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+          }
+            if (entity.IsInDetailDialogService) { 
+            
+            #line default
+            #line hidden
+            this.Write("        /// <inheritdoc />\r\n        public void Show");
+            
+            #line 108 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(entity.Name));
+            
+            #line default
+            #line hidden
+            this.Write("DetailDialog(");
+            
+            #line 108 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetShowViewParams(entity, isDeclaration:true, isEdit:true, isDlgSvc: true)));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n        {\r\n            var dialog = new ");
+            
+            #line 110 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(entity.GetViewName(MvvmTemplate.Detail)));
+            
+            #line default
+            #line hidden
+            this.Write("(");
+            
+            #line 110 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetShowViewParams(entity, isEdit:true)));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n            {\r\n                Owner = owner\r\n            };\r\n\r\n            di" +
+                    "alog.ShowDialog();\r\n        }\r\n\r\n");
+            
+            #line 118 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+          }  
             
             #line default
             #line hidden
             
-            #line 96 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 119 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
     } 
             
             #line default
             #line hidden
             
-            #line 97 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
+            #line 120 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfDialogServcTemplate.tt"
   } 
             
             #line default

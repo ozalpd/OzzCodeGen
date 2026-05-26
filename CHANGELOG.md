@@ -8,13 +8,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - Introduce Detail View generation mode and column layout options
 - Added `ShowInCollection`/`ShowInDetail` property flags for view filtering
+- Added "Detail" view and command generation to the WPF MVVM code engine, including UI options, templates, and dialog service integration.
+- Introduces `SkipManuallyEdited` to `FileGenerationMode` and updates generation logic accordingly.
+- Enhances XAML/C# templates for read-only detail views and updates property/viewmodel handling for the new mode. Includes minor UI and code cleanups.
 
 ### Changed
 - Update property filtering and XAML templates for new view types
 - Enhance WPF engine UI with Detail View and layout controls
 - Refactor Boolean/DateTime rendering and improve styles
 - Bump version to 2.3.10
-
 
 ## [2.3.9] - 2026-05-25
 
