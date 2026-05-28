@@ -48,6 +48,136 @@ namespace OzzCodeGen.CodeEngines.TechDocument
             if (PropertyDefinition is CollectionProperty)
             {
                 var collProp = (CollectionProperty)PropertyDefinition;
+                return $"Collection of {collProp.GetObjectTypeName()}.";
+            }
+            var sb = new StringBuilder();
+            if (PropertyDefinition is ComplexProperty)
+            {
+                var complex = (ComplexProperty)PropertyDefinition;
+                var dependentProp = complex.Dependency;
+                sb.Append(" is a type of ");
+                sb.Append(complex.TypeName);
+                sb.Append(" property.");
+
+                if (dependentProp != null)
+                {
+                    sb.Append(" Its foreign key is ");
+                    sb.Append(dependentProp.Name);
+                }
+
+                sb.Append(".");
+
+                return sb.ToString();
+            }
+
+            ComplexProperty dependedComplex = null;
+            if (PropertyDefinition is StringProperty)
+            {
+                var strProperty = (StringProperty)PropertyDefinition;
+                sb.Append("string type, ");
+                if (strProperty.MaxLength > 0)
+                {
+                    sb.Append(strProperty.MaxLength);
+                }
+                else
+                {
+                    sb.Append("maximum");
+                }
+                sb.Append(" characters length ");
+            }
+
+            if (PropertyDefinition is SimpleProperty)
+            {
+                var simple = (SimpleProperty)PropertyDefinition;
+                bool isNull = simple.IsNullable;
+
+                switch (PropertyDefinition.TypeName.ToLowerInvariant())
+                {
+                    case "bool":
+                        return isNull ? "Nullable<bool> type."
+                                      : "bool type.";
+
+                    case "datetime":
+                        return isNull ? "Nullable<DateTime> type."
+                                      : "DateTime type.";
+
+                    case "int":
+                        if (!string.IsNullOrWhiteSpace(simple.EnumTypeName))
+                        {
+                            sb.Append("enum ");
+                            sb.Append(simple.EnumTypeName);
+                            sb.Append(", in the database table ");
+                        }
+                        if (simple.IsNullable)
+                        {
+                            sb.Append("Nullable<int> type");
+                        }
+                        else
+                        {
+                            sb.Append("int type");
+                        }
+
+                        dependedComplex = GetDependedComplex(simple.Name);
+                        if (dependedComplex != null)
+                        {
+                            sb.Append(" depended ");
+                            string dependTranslation = CodeEngine.GetTranslation(dependedComplex.Name, langCode);
+                            sb.Append(dependTranslation);
+
+                            if (dependedComplex.Name.Equals(dependTranslation, StringComparison.InvariantCultureIgnoreCase) == false)
+                            {
+                                sb.Append(" (");
+                                sb.Append(dependedComplex.Name);
+                                sb.Append(")");
+                            }
+                            sb.Append(" keeps primary key value ");
+                        }
+                        break;
+
+                    case "byte":
+                        if (isNull)
+                        {
+                            sb.Append("Nullable<byte> type");
+                        }
+                        else
+                        {
+                            sb.Append("byte type");
+                        }
+                        break;
+
+                    case "decimal":
+                        return isNull ? "Nullable<decimal> type."
+                                      : "decimal type.";
+
+                    //case "system.guid":
+                    //    column.DataType = "UniqueIdentifier";
+                    //    break;
+
+                    case "guid":
+                        return isNull ? "Nullable<Guid> type."
+                                      : "Guid type.";
+
+
+                    default:
+                        break;
+                }
+            }
+
+            if (sb.Length > 0)
+            {
+                sb.Append(" property.");
+                return sb.ToString();
+            }
+
+            return PropertyDefinition.TypeName;
+
+        }
+
+        public string GetTypeDescriptionTR()
+        {
+            if (PropertyDefinition is CollectionProperty)
+            {
+                var collProp = (CollectionProperty)PropertyDefinition;
                 return $"{collProp.GetObjectTypeName()} tipinde koleksiyondur.";
             }
 

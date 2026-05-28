@@ -23,5 +23,5 @@ Bu entity <#= EntitySetting.StorageEntity.SchemaName #>.<#= EntitySetting.Storag
 foreach (var property in properties)
 {
 #>
-<#= property.Name #> <#= property.GetTypeDescription() #> <#= property.AddtDescription #>
+- <#= property.Name #> <#= property.GetTypeDescription() #> <#= property.AddtDescription #>
 <#	} #>

@@ -93,6 +93,7 @@ foreach (var property in properties)
             
             #line default
             #line hidden
+            this.Write("- ");
             
             #line 26 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\TechDocument\Templates\TechDocTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
