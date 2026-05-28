@@ -35,6 +35,8 @@ namespace OzzCodeGen.CodeEngines.CsModelClass.UI
             HiddenColumns.Add("SearchableNonRangeProperties");
             HiddenColumns.Add("SearchableSimpleProperties");
             HiddenColumns.Add("SearchableRangeProperties");
+            HiddenColumns.Add("HasSearchableProperties");
+            HiddenColumns.Add("ModelClassEntitySetting");
             HiddenColumns.Add("MetadataEntitySetting");
             HiddenColumns.Add("SearchableProperties");
             HiddenColumns.Add("IsLoadingFromFile");

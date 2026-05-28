@@ -45,7 +45,8 @@ public partial class WpfMvvmEngineUI : AbstractEngineUI
         HiddenColumns.Add("IsReadOnlyInCreate");
         HiddenColumns.Add("IsFractionalNumeric");
         HiddenColumns.Add("SearchableProperties");
-        HiddenColumns.Add("RepositoryInstanceName");
+        HiddenColumns.Add("HasSearchableProperties");
+        HiddenColumns.Add("IsInDetailDialogService");
         HiddenColumns.Add("ModelClassEntitySetting");
         HiddenColumns.Add("SearchableRangeProperties");
         HiddenColumns.Add("SearchableSimpleProperties");

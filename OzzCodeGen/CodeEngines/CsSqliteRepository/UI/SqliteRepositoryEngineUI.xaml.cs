@@ -43,9 +43,13 @@ public partial class SqliteRepositoryEngineUI : AbstractEngineUI
         HiddenColumns.Add("IsLoadingFromFile");
         //HiddenColumns.Add("IsRepositoryColumn");
         HiddenColumns.Add("IsFractionalNumeric");
+        HiddenColumns.Add("SearchableProperties");
         HiddenColumns.Add("IsRepositoryTextColumn");
+        HiddenColumns.Add("ModelClassEntitySetting");
+        HiddenColumns.Add("HasSearchableProperties");
         HiddenColumns.Add("SearchableRangeProperties");
         HiddenColumns.Add("IsRepositoryIntegerColumn");
+        HiddenColumns.Add("SearchableSimpleProperties");
         HiddenColumns.Add("SearchableNonRangeProperties");
 
         EntitiesDataGrid = grdEntitySettings;
