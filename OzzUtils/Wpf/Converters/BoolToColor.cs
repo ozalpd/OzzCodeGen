@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -19,13 +16,13 @@ namespace OzzUtils.Wpf.Converters
         }
 
         /// <summary>
-        /// 
+        /// Converts a boolean value to a SolidColorBrush based on the ColorForTrueValue and ColorForFalseValue properties.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="targetType"></param>
-        /// <param name="parameter"></param>
-        /// <param name="culture"></param>
-        /// <returns></returns>
+        /// <param name="value">The boolean value to convert.</param>
+        /// <param name="targetType">The target type of the conversion.</param>
+        /// <param name="parameter">An optional parameter for the conversion.</param>
+        /// <param name="culture">The culture information for the conversion.</param>
+        /// <returns>A SolidColorBrush representing the boolean value.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if ((value is bool && (bool)value) || (value is bool? && (((bool?)value) ?? false)))

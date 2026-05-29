@@ -128,39 +128,27 @@ namespace OzzUtils
         }
 
 
-        private static List<char[]> ReplaceTrEnList
-        {
-            set { List<char[]> replaceList = value; }
-            get
+        private static List<char[]> _replaceTrEnList = new List<char[]>()
             {
-                if (_replaceTrEnList == null)
-                    SetReplaceList();
-                return _replaceTrEnList;
-            }
-        }
-        private static void SetReplaceList()
-        {
-            _replaceTrEnList = new List<char[]>();
-            _replaceTrEnList.Add(new char[] { 'ş', 's' });
-            _replaceTrEnList.Add(new char[] { 'ğ', 'g' });
-            _replaceTrEnList.Add(new char[] { 'ü', 'u' });
-            _replaceTrEnList.Add(new char[] { 'ö', 'o' });
-            _replaceTrEnList.Add(new char[] { 'ç', 'c' });
-            _replaceTrEnList.Add(new char[] { 'ı', 'i' });
-            _replaceTrEnList.Add(new char[] { 'İ', 'I' });
-            _replaceTrEnList.Add(new char[] { 'Ş', 'S' });
-            _replaceTrEnList.Add(new char[] { 'Ç', 'C' });
-            _replaceTrEnList.Add(new char[] { 'Ö', 'O' });
-            _replaceTrEnList.Add(new char[] { 'Ğ', 'G' });
-            _replaceTrEnList.Add(new char[] { 'Ü', 'U' });
-        }
-        private static List<char[]> _replaceTrEnList;
+                new char[] { 'ş', 's' },
+                new char[] { 'ğ', 'g' },
+                new char[] { 'ü', 'u' },
+                new char[] { 'ö', 'o' },
+                new char[] { 'ç', 'c' },
+                new char[] { 'ı', 'i' },
+                new char[] { 'İ', 'I' },
+                new char[] { 'Ş', 'S' },
+                new char[] { 'Ç', 'C' },
+                new char[] { 'Ö', 'O' },
+                new char[] { 'Ğ', 'G' },
+                new char[] { 'Ü', 'U' }
+            };
 
         public static string RemoveTurkishChars(this string source)
         {
             StringBuilder sb = new StringBuilder(source);
 
-            foreach (char[] c in ReplaceTrEnList)
+            foreach (char[] c in _replaceTrEnList)
             {
                 sb.Replace(c[0], c[1]);
             }

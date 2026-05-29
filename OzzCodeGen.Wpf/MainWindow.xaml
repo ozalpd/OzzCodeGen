@@ -131,8 +131,8 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Recent Files:" VerticalAlignment="Center" Width="72" Margin="4,0,0,0"/>
-                    <ComboBox x:Name="cboRecentProjects" Width="150" Margin="0,4" HorizontalAlignment="Left" 
-                        SelectedItem="{Binding SelectedProjectFile}" 
+                    <ComboBox x:Name="cboRecentProjects" Width="150" Margin="0,4" HorizontalAlignment="Left"
+                        SelectedItem="{Binding SelectedProjectFile}"
                         ItemsSource="{Binding Settings.RecentProjectFiles}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
@@ -184,14 +184,14 @@
                         <ColumnDefinition Width="3*" />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Vertical" Margin="0,24,4,0">
-                            <Button x:Name="btnAddEntity" 
-                                ToolTip="Add Entity" 
-                                Style="{StaticResource sidebarButtons}" 
+                            <Button x:Name="btnAddEntity"
+                                ToolTip="Add Entity"
+                                Style="{StaticResource sidebarButtons}"
                                 Click="btnAddEntity_Click">
                                 <Button.ContextMenu>
                                     <ContextMenu x:Name="mnuAddEntityMenu" AllowDrop="True">
@@ -212,9 +212,9 @@
                                     <Path Fill="#EBEBEB" Data="{StaticResource trash}" Margin="0,0,2,0"/>
                                 </Viewbox>
                             </Button>
-                            <Button x:Name="btnMoveEntityTop" 
-                                ToolTip="Move Entity Top" 
-                                Style="{StaticResource sidebarButtons}" 
+                            <Button x:Name="btnMoveEntityTop"
+                                ToolTip="Move Entity Top"
+                                Style="{StaticResource sidebarButtons}"
                                 Click="btnMoveEntityTop_Click">
                                 <Viewbox Width="18" Height="18">
                                     <Grid>
@@ -223,25 +223,25 @@
                                     </Grid>
                                 </Viewbox>
                             </Button>
-                            <Button x:Name="btnMoveEntityUp" 
-                                ToolTip="Move Entity Up" 
-                                Style="{StaticResource sidebarButtons}" 
+                            <Button x:Name="btnMoveEntityUp"
+                                ToolTip="Move Entity Up"
+                                Style="{StaticResource sidebarButtons}"
                                 Click="btnMoveEntityUp_Click">
                                 <Viewbox Width="18" Height="18">
                                     <Path Fill="#004487" Data="{StaticResource arrow-up}" Margin="0,0,4,0"/>
                                 </Viewbox>
                             </Button>
-                            <Button x:Name="btnMoveEntityDown" 
-                                ToolTip="Move Entity Down" 
-                                Style="{StaticResource sidebarButtons}" 
+                            <Button x:Name="btnMoveEntityDown"
+                                ToolTip="Move Entity Down"
+                                Style="{StaticResource sidebarButtons}"
                                 Click="btnMoveEntityDown_Click">
                                 <Viewbox Width="18" Height="18">
                                     <Path Fill="#004487" Data="{StaticResource arrow-down}" Margin="0,0,4,0"/>
                                 </Viewbox>
                             </Button>
-                            <Button x:Name="btnMoveEntityBottom" 
-                                ToolTip="Move Entity Bottom" 
-                                Style="{StaticResource sidebarButtons}" 
+                            <Button x:Name="btnMoveEntityBottom"
+                                ToolTip="Move Entity Bottom"
+                                Style="{StaticResource sidebarButtons}"
                                 Click="btnMoveEntityBottom_Click">
                                 <Viewbox Width="18" Height="18">
                                     <Grid>
@@ -284,9 +284,9 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,24,4,0">
-                                <Button x:Name="btnAddProperty" 
-                                    ToolTip="Add Property" 
-                                    Style="{StaticResource sidebarButtons}" 
+                                <Button x:Name="btnAddProperty"
+                                    ToolTip="Add Property"
+                                    Style="{StaticResource sidebarButtons}"
                                     Click="btnAddProperty_Click">
                                     <Button.ContextMenu>
                                         <ContextMenu x:Name="mnuAddProperty" AllowDrop="True">
@@ -311,9 +311,9 @@
                                     </Viewbox>
                                 </Button>
 
-                                <Button x:Name="btnMovePropertyTop" 
-                                    ToolTip="Move Property Top" 
-                                    Style="{StaticResource sidebarButtons}" 
+                                <Button x:Name="btnMovePropertyTop"
+                                    ToolTip="Move Property Top"
+                                    Style="{StaticResource sidebarButtons}"
                                     Click="btnMovePropertyTop_Click">
                                     <Viewbox Width="18" Height="18">
                                         <Grid>
@@ -323,27 +323,27 @@
                                     </Viewbox>
                                 </Button>
 
-                                <Button x:Name="btnMovePropertyUp" 
-                                    ToolTip="Move Property Up" 
-                                    Style="{StaticResource sidebarButtons}" 
+                                <Button x:Name="btnMovePropertyUp"
+                                    ToolTip="Move Property Up"
+                                    Style="{StaticResource sidebarButtons}"
                                     Click="btnMovePropertyUp_Click">
                                     <Viewbox Width="18" Height="18">
                                         <Path Fill="#004487" Data="{StaticResource arrow-up}" Margin="0,0,4,0"/>
                                     </Viewbox>
                                 </Button>
 
-                                <Button x:Name="btnMovePropertyDown" 
-                                    ToolTip="Move Property Down" 
-                                    Style="{StaticResource sidebarButtons}" 
+                                <Button x:Name="btnMovePropertyDown"
+                                    ToolTip="Move Property Down"
+                                    Style="{StaticResource sidebarButtons}"
                                     Click="btnMovePropertyDown_Click">
                                     <Viewbox Width="18" Height="18">
                                         <Path Fill="#004487" Data="{StaticResource arrow-down}" Margin="0,0,4,0"/>
                                     </Viewbox>
                                 </Button>
 
-                                <Button x:Name="btnMovePropertyBottom" 
-                                    ToolTip="Move Property Bottom" 
-                                    Style="{StaticResource sidebarButtons}" 
+                                <Button x:Name="btnMovePropertyBottom"
+                                    ToolTip="Move Property Bottom"
+                                    Style="{StaticResource sidebarButtons}"
                                     Click="btnMovePropertyBottom_Click">
                                     <Viewbox Width="18" Height="18">
                                         <Grid>
@@ -409,8 +409,8 @@
                             </DataGrid>
                         </Grid>
 
-                        <Border BorderBrush="Gray" BorderThickness="1" 
-                            Grid.Row="1" Grid.Column="1" 
+                        <Border BorderBrush="Gray" BorderThickness="1"
+                            Grid.Row="1" Grid.Column="1"
                             Margin="9,0,5,0"
                             VerticalAlignment="Top">
                             <StackPanel Orientation="Vertical">
@@ -443,28 +443,28 @@
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text="Store Generated:" 
-                                            ToolTip="Store generated value" 
+                                        <TextBlock Text="Store Generated:"
+                                            ToolTip="Store generated value"
                                             Grid.Row="2" Grid.Column="0"/>
-                                        <CheckBox IsChecked="{Binding IsStoreGenerated, Mode=TwoWay}" 
+                                        <CheckBox IsChecked="{Binding IsStoreGenerated, Mode=TwoWay}"
                                             ToolTip="Store generated value"
                                             Grid.Row="2" Grid.Column="1" />
 
-                                        <TextBlock Text="Server Computed:" 
-                                            ToolTip="Server computed or generated value" 
+                                        <TextBlock Text="Server Computed:"
+                                            ToolTip="Server computed or generated value"
                                             Grid.Row="3" Grid.Column="0"/>
-                                        <CheckBox IsChecked="{Binding IsServerComputed, Mode=TwoWay}" 
+                                        <CheckBox IsChecked="{Binding IsServerComputed, Mode=TwoWay}"
                                             ToolTip="Server generated value"
                                             Grid.Row="3" Grid.Column="1" />
 
-                                        <TextBlock Text="Client Computed:" 
-                                            ToolTip="Client computed or generated value" 
+                                        <TextBlock Text="Client Computed:"
+                                            ToolTip="Client computed or generated value"
                                             Grid.Row="4" Grid.Column="0"/>
-                                        <CheckBox IsChecked="{Binding IsClientComputed, Mode=TwoWay}" 
+                                        <CheckBox IsChecked="{Binding IsClientComputed, Mode=TwoWay}"
                                             ToolTip="Client generated value"
                                             Grid.Row="4" Grid.Column="1" />
 
-                                        <TextBlock Text="Restricted Data:" 
+                                        <TextBlock Text="Restricted Data:"
                                                    ToolTip="Restricted data column"
                                                    Grid.Row="5" Grid.Column="0"/>
                                         <StackPanel HorizontalAlignment="Stretch"
@@ -474,11 +474,11 @@
                                         </StackPanel>
 
                                         <TextBlock Grid.Row="7" Grid.Column="0" Text="Comment:" />
-                                        <TextBox Text="{Binding Comment}" 
-                                            Grid.Row="7" Grid.Column="1" Margin="1" 
+                                        <TextBox Text="{Binding Comment}"
+                                            Grid.Row="7" Grid.Column="1" Margin="1"
                                             Grid.ColumnSpan="3"
                                             HorizontalAlignment="Stretch" Height="144"
-                                            TextWrapping="Wrap" 
+                                            TextWrapping="Wrap"
                                             TabIndex="8"/>
                                     </Grid>
                                     <!-- //Settings for all type properties-->
@@ -575,7 +575,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal">
-                        <Button x:Name="btnAddEnum" 
+                        <Button x:Name="btnAddEnum"
                                 ToolTip="Add New Enum"
                                 Content="Add Enum"
                                 Style="{StaticResource toolbarBigBtn}"
@@ -689,14 +689,14 @@
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Button x:Name="btnAddTarget" Content="Add New Target"
-                                    ToolTip="Add New Target Project" Height="24" 
-                                    Click="btnAddTarget_Click" Padding="8,0,8,0" 
+                                    ToolTip="Add New Target Project" Height="24"
+                                    Click="btnAddTarget_Click" Padding="8,0,8,0"
                                     Margin="2,2,4,2" />
                                 <TextBlock Text="App Engine:" ToolTip="Engine for Target Application" Height="20" Width="70" Margin="4,0,0,0" />
                                 <ComboBox x:Name="cboCodeEngines" Width="180" Height="24" Margin="4,0,4,0"
                                           ToolTip="Engine for Target Application"
                                           SelectionChanged="cboCodeEngines_SelectionChanged" />
-                                <TextBlock Text="{Binding ProjectTypeName, Mode=OneWay}" 
+                                <TextBlock Text="{Binding ProjectTypeName, Mode=OneWay}"
                                            Width="600"
                                            Style="{StaticResource selectedCodeEngineTextBlock}"/>
                             </StackPanel>
