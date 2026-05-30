@@ -117,8 +117,8 @@ namespace ");
                     "       if (CollectionFiltered.Count > 0)\r\n                        SelectedItem =" +
                     " CollectionFiltered[0];\r\n                }\r\n                RaisePropertyChanged" +
                     "(nameof(CollectionFiltered));\r\n            }\r\n        }\r\n        private string?" +
-                    " _searchString;\r\n\r\n        protected void ReplaceCollection<T>(ObservableCollect" +
-                    "ion<T> target, IEnumerable<T> source)\r\n        {\r\n            target.Clear();\r\n " +
+                    " _searchString;\r\n\r\n        protected void ReplaceCollection<K>(ObservableCollect" +
+                    "ion<K> target, IEnumerable<K> source)\r\n        {\r\n            target.Clear();\r\n " +
                     "           foreach (var item in source)\r\n            {\r\n                target.A" +
                     "dd(item);\r\n            }\r\n        }\r\n    }\r\n");
             

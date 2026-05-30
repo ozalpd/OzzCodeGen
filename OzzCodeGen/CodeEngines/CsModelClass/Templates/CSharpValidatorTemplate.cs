@@ -97,13 +97,13 @@ namespace ");
                     "              if (string.IsNullOrWhiteSpace(message))\r\n                    conti" +
                     "nue;\r\n\r\n                var members = result.MemberNames?.Any() == true\r\n       " +
                     "             ? result.MemberNames\r\n                    : new[] { string.Empty };" +
-                    "\r\n\r\n                foreach (var member in members)\r\n                    {\r\n    " +
-                    "                if (!map.TryGetValue(member, out var list))\r\n                   " +
-                    " {\r\n                        list = new List<string>();\r\n                        " +
-                    "map[member] = list;\r\n                    }\r\n\r\n                    if (!list.Cont" +
-                    "ains(message))\r\n                        list.Add(message);\r\n                }\r\n " +
-                    "           }\r\n\r\n            return map.ToDictionary(k => k.Key, v => (IReadOnlyL" +
-                    "ist<string>)v.Value.AsReadOnly(), StringComparer.Ordinal);\r\n        }\r\n    }\r\n}");
+                    "\r\n\r\n                foreach (var member in members)\r\n                {\r\n        " +
+                    "            if (!map.TryGetValue(member, out var list))\r\n                    {\r\n" +
+                    "                        list = new List<string>();\r\n                        map[" +
+                    "member] = list;\r\n                    }\r\n\r\n                    if (!list.Contains" +
+                    "(message))\r\n                        list.Add(message);\r\n                }\r\n     " +
+                    "       }\r\n\r\n            return map.ToDictionary(k => k.Key, v => (IReadOnlyList<" +
+                    "string>)v.Value.AsReadOnly(), StringComparer.Ordinal);\r\n        }\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }
