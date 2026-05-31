@@ -125,7 +125,7 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("        \r\n        public ");
+            this.Write("\r\n        public ");
             
             #line 41 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.GetTypeName(getReturnType:true)));
@@ -179,7 +179,7 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write("        \r\n        public ");
+            this.Write("\r\n        public ");
             
             #line 59 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.GetNullableTypeName()));
@@ -320,7 +320,7 @@ namespace ");
             #line default
             #line hidden
             this.Write(@" { get; }
-        
+
         /// <summary>
         /// Gets a value indicating whether there is a next page available.
         /// </summary>
@@ -330,7 +330,7 @@ namespace ");
         /// Gets a value indicating whether there is a previous page available.
         /// </summary>
         public bool HasPrevPage => QueryParameters.HasPrevPage;
-        
+
         /// <summary>
         /// Gets the total number of pages based on the total count and page size.
         /// </summary>
@@ -341,9 +341,9 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write(".PageCount;\r\n        \r\n        /// <summary>\r\n        /// Gets or sets the curren" +
-                    "t page number.\r\n        /// </summary>\r\n        public int Page\r\n        {\r\n    " +
-                    "        get => ");
+            this.Write(".PageCount;\r\n\r\n        /// <summary>\r\n        /// Gets or sets the current page n" +
+                    "umber.\r\n        /// </summary>\r\n        public int Page\r\n        {\r\n            " +
+                    "get => ");
             
             #line 114 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(queryParamClassName));
@@ -361,7 +361,7 @@ namespace ");
                 RaisePropertyChanged(nameof(Page));
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the number of items per page.
         /// </summary>
@@ -388,7 +388,7 @@ namespace ");
                 RaisePropertyChanged(nameof(RecordsInfo));
             }
         }
-        
+
         /// <summary>
         /// Gets a localized string displaying pagination information including current page, total pages.
         /// </summary>
@@ -399,9 +399,9 @@ namespace ");
             
             #line default
             #line hidden
-            this.Write(".PageInfo;\r\n\r\n        /// <summary>       \r\n        /// Gets a localized string d" +
-                    "isplaying the total number of records.\r\n        /// </summary>\r\n        public s" +
-                    "tring RecordsInfo => ");
+            this.Write(".PageInfo;\r\n\r\n        /// <summary>\r\n        /// Gets a localized string displayi" +
+                    "ng the total number of records.\r\n        /// </summary>\r\n        public string R" +
+                    "ecordsInfo => ");
             
             #line 146 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\CSharpQueryParamsVmTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(queryParamClassName));
@@ -427,7 +427,7 @@ namespace ");
                 RaisePropertyChanged(nameof(SearchString));
             }
         }
-        
+
         /// <summary>
         /// Gets the total number of records that match the query criteria.
         /// </summary>

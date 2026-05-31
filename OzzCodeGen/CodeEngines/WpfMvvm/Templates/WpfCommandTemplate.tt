@@ -34,7 +34,7 @@ namespace <#= EntitySetting.GetCommandsNamespaceName() #>
 <#  if (PassViewModelToBase) { #>
         public <#= GetClassName() #>(<#= GetConstructorParameters() #>) : base(viewModel) { }
 <#      } else { #>
-        
+
         public <#= GetClassName() #>(<#= GetConstructorParameters() #>)
         {
             _viewModel = viewModel;
