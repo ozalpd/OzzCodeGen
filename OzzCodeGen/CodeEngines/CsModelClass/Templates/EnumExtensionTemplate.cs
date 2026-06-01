@@ -68,49 +68,70 @@ namespace ");
                     "bute = enumValue.GetType()\r\n                            .GetMember(enumValue.ToS" +
                     "tring())\r\n                            .First()\r\n                            .Get" +
                     "CustomAttribute<TAttribute>();\r\n\r\n            return attribute;\r\n        }\r\n\r\n  " +
-                    "      /// <summary>\r\n        /// Gets the display value for an enum member from " +
-                    "its DisplayAttribute.\r\n        /// </summary>\r\n        /// <param name=\"value\">T" +
-                    "he enum value.</param>\r\n        /// <returns>The display name from DisplayAttrib" +
-                    "ute resources if available, the DisplayAttribute Name, or the enum\'s\r\n        //" +
-                    "/ string representation.</returns>\r\n        public static string GetDisplayValue" +
-                    "(this Enum value)\r\n        {\r\n            var fieldInfo = value.GetType().GetFie" +
-                    "ld(value.ToString());\r\n\r\n            if (fieldInfo == null)\r\n                ret" +
-                    "urn value.ToString();\r\n\r\n            DisplayAttribute[] descriptionAttributes = " +
-                    "fieldInfo.GetCustomAttributes(\r\n                                                " +
-                    "                 typeof(DisplayAttribute),\r\n                                    " +
-                    "                             false) as DisplayAttribute[] ?? [];\r\n            if" +
-                    " (descriptionAttributes.Length > 0 && descriptionAttributes[0].ResourceType != n" +
-                    "ull)\r\n            {\r\n                return LookupResource(descriptionAttributes" +
-                    "[0].ResourceType!, descriptionAttributes[0].Name ?? string.Empty);\r\n            " +
-                    "}\r\n\r\n            return (descriptionAttributes.Length > 0) ? descriptionAttribut" +
-                    "es[0].Name ?? value.ToString() : value.ToString();\r\n        }\r\n\r\n        /// <su" +
+                    "      /// <summary>\r\n        /// Returns the <see cref=\"DisplayAttribute.Order\"/" +
+                    "> value for an enum member,\r\n        /// or <see cref=\"int.MaxValue\"/> when no <" +
+                    "c>[Display(Order = ...)]</c> attribute is present.\r\n        /// </summary>\r\n    " +
+                    "    public static int GetDisplayOrder(Enum value)\r\n        {\r\n            var fi" +
+                    "eld = value.GetType().GetField(value.ToString());\r\n            if (field == null" +
+                    ")\r\n                return int.MaxValue;\r\n\r\n            return field.GetCustomAtt" +
+                    "ribute<DisplayAttribute>()?.GetOrder() ?? int.MaxValue;\r\n        }\r\n\r\n        //" +
+                    "/ <summary>\r\n        /// Gets the display value for an enum member from its Disp" +
+                    "layAttribute.\r\n        /// </summary>\r\n        /// <param name=\"value\">The enum " +
+                    "value.</param>\r\n        /// <returns>The display name from DisplayAttribute reso" +
+                    "urces if available, the DisplayAttribute Name, or the enum\'s\r\n        /// string" +
+                    " representation.</returns>\r\n        public static string GetDisplayValue(this En" +
+                    "um value)\r\n        {\r\n            var fieldInfo = value.GetType().GetField(value" +
+                    ".ToString());\r\n\r\n            if (fieldInfo == null)\r\n                return valu" +
+                    "e.ToString();\r\n\r\n            DisplayAttribute[] descriptionAttributes = fieldInf" +
+                    "o.GetCustomAttributes(\r\n                                                        " +
+                    "         typeof(DisplayAttribute),\r\n                                            " +
+                    "                     false) as DisplayAttribute[] ?? [];\r\n            if (descri" +
+                    "ptionAttributes.Length > 0 && descriptionAttributes[0].ResourceType != null)\r\n  " +
+                    "          {\r\n                return LookupResource(descriptionAttributes[0].Reso" +
+                    "urceType!, descriptionAttributes[0].Name ?? string.Empty);\r\n            }\r\n\r\n   " +
+                    "         return (descriptionAttributes.Length > 0) ? descriptionAttributes[0].Na" +
+                    "me ?? value.ToString() : value.ToString();\r\n        }\r\n        \r\n        /// <su" +
                     "mmary>\r\n        /// Gets all values of the specified enum type with their displa" +
-                    "y values.\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">The enum type" +
-                    " whose values to retrieve.</typeparam>\r\n        /// <returns>A collection of enu" +
-                    "m value items containing each enum value and its display representation.</return" +
-                    "s>\r\n        public static IEnumerable<EnumValueItem<T>> GetValues<T>() where T :" +
-                    " Enum\r\n        {\r\n            return Enum.GetValues(typeof(T)).Cast<T>().Select(" +
-                    "x => new EnumValueItem<T>\r\n            {\r\n                Value = x,\r\n          " +
-                    "      DisplayValue = x.GetDisplayValue()\r\n            });\r\n        }\r\n\r\n        " +
-                    "private static string LookupResource(Type? resourceManagerProvider, string resou" +
-                    "rceKey)\r\n        {\r\n            if (resourceManagerProvider == null)\r\n          " +
-                    "      return resourceKey;\r\n\r\n            foreach (PropertyInfo staticProperty in" +
-                    " resourceManagerProvider.GetProperties(BindingFlags.Static | BindingFlags.NonPub" +
-                    "lic | BindingFlags.Public))\r\n            {\r\n                if (staticProperty.P" +
-                    "ropertyType == typeof(ResourceManager))\r\n                {\r\n                    " +
-                    "var resourceManager = (ResourceManager?)staticProperty.GetValue(null, null);\r\n  " +
-                    "                  return resourceManager?.GetString(resourceKey) ?? resourceKey;" +
-                    "\r\n                }\r\n            }\r\n\r\n            return resourceKey; // Fallbac" +
-                    "k with the key name\r\n        }\r\n    }\r\n\r\n    /// <summary>\r\n    /// Represents a" +
-                    " strongly typed enumeration value and its associated display text for use in UI " +
-                    "selection or display\r\n    /// scenarios.\r\n    /// </summary>\r\n    /// <remarks>T" +
-                    "his class is commonly used to bind enumeration values to user interface elements" +
-                    ", such as\r\n    /// dropdown lists or combo boxes, where both the underlying valu" +
-                    "e and a user-friendly display string are\r\n    /// needed.</remarks>\r\n    /// <ty" +
-                    "peparam name=\"T\">The enumeration type represented by this item.</typeparam>\r\n   " +
-                    " public class EnumValueItem<T> where T : Enum\r\n    {\r\n        public required T " +
-                    "Value { get; set; }\r\n        public string DisplayValue { get; set; } = string.E" +
-                    "mpty;\r\n    }\r\n}");
+                    "y values, sorted by\r\n        /// <see cref=\"DisplayAttribute.Order\"/> when prese" +
+                    "nt on the enum members.\r\n        /// </summary>\r\n        /// <remarks>\r\n        " +
+                    "/// Members without a <c>[Display(Order = ...)]</c> attribute default to <c>int." +
+                    "MaxValue</c>\r\n        /// so they appear after explicitly ordered members. Membe" +
+                    "rs with the same order value retain\r\n        /// their declaration order (stable" +
+                    " sort).\r\n        /// Use this instead of <see cref=\"GetValues{T}\"/> when enum me" +
+                    "mbers carry\r\n        /// <c>[Display(Order = ...)]</c> and the UI should respect" +
+                    " that order.\r\n        /// </remarks>\r\n        /// <typeparam name=\"T\">The enum t" +
+                    "ype whose values to retrieve.</typeparam>\r\n        /// <returns>\r\n        /// A " +
+                    "collection of <see cref=\"EnumValueItem{T}\"/> sorted by <see cref=\"DisplayAttribu" +
+                    "te.Order\"/>.\r\n        /// </returns>\r\n        public static IEnumerable<EnumValu" +
+                    "eItem<T>> GetOrderedValues<T>() where T : Enum\r\n        {\r\n            return Ge" +
+                    "tValues<T>().OrderBy(x => GetDisplayOrder(x.Value));\r\n        }\r\n\r\n        /// <" +
+                    "summary>\r\n        /// Gets all values of the specified enum type with their disp" +
+                    "lay values.\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">The enum ty" +
+                    "pe whose values to retrieve.</typeparam>\r\n        /// <returns>A collection of e" +
+                    "num value items containing each enum value and its display representation.</retu" +
+                    "rns>\r\n        public static IEnumerable<EnumValueItem<T>> GetValues<T>() where T" +
+                    " : Enum\r\n        {\r\n            return Enum.GetValues(typeof(T)).Cast<T>().Selec" +
+                    "t(x => new EnumValueItem<T>\r\n            {\r\n                Value = x,\r\n        " +
+                    "        DisplayValue = x.GetDisplayValue()\r\n            });\r\n        }\r\n\r\n      " +
+                    "  private static string LookupResource(Type? resourceManagerProvider, string res" +
+                    "ourceKey)\r\n        {\r\n            if (resourceManagerProvider == null)\r\n        " +
+                    "        return resourceKey;\r\n\r\n            foreach (PropertyInfo staticProperty " +
+                    "in resourceManagerProvider.GetProperties(BindingFlags.Static | BindingFlags.NonP" +
+                    "ublic | BindingFlags.Public))\r\n            {\r\n                if (staticProperty" +
+                    ".PropertyType == typeof(ResourceManager))\r\n                {\r\n                  " +
+                    "  var resourceManager = (ResourceManager?)staticProperty.GetValue(null, null);\r\n" +
+                    "                    return resourceManager?.GetString(resourceKey) ?? resourceKe" +
+                    "y;\r\n                }\r\n            }\r\n\r\n            return resourceKey; // Fallb" +
+                    "ack with the key name\r\n        }\r\n    }\r\n\r\n    /// <summary>\r\n    /// Represents" +
+                    " a strongly typed enumeration value and its associated display text for use in U" +
+                    "I selection or display\r\n    /// scenarios.\r\n    /// </summary>\r\n    /// <remarks" +
+                    ">This class is commonly used to bind enumeration values to user interface elemen" +
+                    "ts, such as\r\n    /// dropdown lists or combo boxes, where both the underlying va" +
+                    "lue and a user-friendly display string are\r\n    /// needed.</remarks>\r\n    /// <" +
+                    "typeparam name=\"T\">The enumeration type represented by this item.</typeparam>\r\n " +
+                    "   public class EnumValueItem<T> where T : Enum\r\n    {\r\n        public required " +
+                    "T Value { get; set; }\r\n        public string DisplayValue { get; set; } = string" +
+                    ".Empty;\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

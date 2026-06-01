@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.3.11] - 2026-06-01
+
+### Changed
+- Added `GetDisplayOrder` and `GetOrderedValues<T>` to enum extensions for DisplayAttribute.Order-based sorting.
+- Refactor `GetDisplayValue` and `GetValues<T>` for clarity and ordering support.
+- Make `AppendWhere` in SQLite repo template an instance method and add `OnAppendingWhere` partial for custom WHERE logic.
+
 ## [2.3.10] - 2026-05-26
 
 ### Added

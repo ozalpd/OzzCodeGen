@@ -184,9 +184,10 @@ namespace <#= CodeEngine.NamespaceName #>
         }
 
 <#      if (EntitySetting.HasSearchableProperties) {#>
-        private static void AppendWhere(<#= GetQueryParamClassName() #> queryParameters, SqliteCommand command)
+        private void AppendWhere(<#= GetQueryParamClassName() #> queryParameters, SqliteCommand command)
         {
             var whereClauses = new List<string>();
+            OnAppendingWhere(queryParameters, whereClauses, command);
 
 <#      if (needIsActive) {#>
             if (isActive.HasValue)
@@ -230,6 +231,7 @@ namespace <#= CodeEngine.NamespaceName #>
                 command.CommandText += whereClause;
             }
         }
+        partial void OnAppendingWhere(<#= GetQueryParamClassName() #> queryParameters, List<string> whereClauses, SqliteCommand command);
 
 <#        } #>
 <#  }  #>

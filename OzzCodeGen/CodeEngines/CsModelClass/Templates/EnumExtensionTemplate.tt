@@ -36,6 +36,19 @@ namespace <#= NamespaceName #>
         }
 
         /// <summary>
+        /// Returns the <see cref="DisplayAttribute.Order"/> value for an enum member,
+        /// or <see cref="int.MaxValue"/> when no <c>[Display(Order = ...)]</c> attribute is present.
+        /// </summary>
+        public static int GetDisplayOrder(Enum value)
+        {
+            var field = value.GetType().GetField(value.ToString());
+            if (field == null)
+                return int.MaxValue;
+
+            return field.GetCustomAttribute<DisplayAttribute>()?.GetOrder() ?? int.MaxValue;
+        }
+
+        /// <summary>
         /// Gets the display value for an enum member from its DisplayAttribute.
         /// </summary>
         /// <param name="value">The enum value.</param>
@@ -57,6 +70,26 @@ namespace <#= NamespaceName #>
             }
 
             return (descriptionAttributes.Length > 0) ? descriptionAttributes[0].Name ?? value.ToString() : value.ToString();
+        }
+        
+        /// <summary>
+        /// Gets all values of the specified enum type with their display values, sorted by
+        /// <see cref="DisplayAttribute.Order"/> when present on the enum members.
+        /// </summary>
+        /// <remarks>
+        /// Members without a <c>[Display(Order = ...)]</c> attribute default to <c>int.MaxValue</c>
+        /// so they appear after explicitly ordered members. Members with the same order value retain
+        /// their declaration order (stable sort).
+        /// Use this instead of <see cref="GetValues{T}"/> when enum members carry
+        /// <c>[Display(Order = ...)]</c> and the UI should respect that order.
+        /// </remarks>
+        /// <typeparam name="T">The enum type whose values to retrieve.</typeparam>
+        /// <returns>
+        /// A collection of <see cref="EnumValueItem{T}"/> sorted by <see cref="DisplayAttribute.Order"/>.
+        /// </returns>
+        public static IEnumerable<EnumValueItem<T>> GetOrderedValues<T>() where T : Enum
+        {
+            return GetValues<T>().OrderBy(x => GetDisplayOrder(x.Value));
         }
 
         /// <summary>
