@@ -566,9 +566,9 @@ namespace OzzCodeGen.CodeEngines.CsSqliteRepository.Templates
             
             #line default
             #line hidden
-            this.Write(");\r\n            }\r\n            \r\n            await using var countCommand = conne" +
-                    "ction.CreateCommand();\r\n            countCommand.CommandText = $\"SELECT COUNT(1)" +
-                    " FROM {_tableName}\";\r\n");
+            this.Write(");\r\n            }\r\n\r\n            await using var countCommand = connection.Create" +
+                    "Command();\r\n            countCommand.CommandText = $\"SELECT COUNT(1) FROM {_tabl" +
+                    "eName}\";\r\n");
             
             #line 172 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\CsSqliteRepository\Templates\CSharpSqliteRepositoryTemplate.tt"
     if (EntitySetting.HasSearchableProperties) {

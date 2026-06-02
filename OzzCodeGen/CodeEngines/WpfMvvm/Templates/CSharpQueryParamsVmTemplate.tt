@@ -82,7 +82,9 @@ namespace <#= GetNamespace() #>
 <#      foreach (var propName in propList) { #>
             <#= propName #> = null;
 <#      } #>
+            OnReset();
         }
+        partial void OnReset(); // For any additional reset logic that may be needed in the future, such as resetting properties on a partial class.
 <#  } else {  // This is QueryParametersVM the base class if not GenerateQueryParam or entity is null #>
         public <#= GetClassName() #>(<#= queryParamClassName #> queryParam)
         {

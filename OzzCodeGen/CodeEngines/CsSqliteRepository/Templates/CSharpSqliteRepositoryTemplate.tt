@@ -166,7 +166,7 @@ namespace <#= CodeEngine.NamespaceName #>
 <#  WriteFromDictionaryLines(); #>
                 result.Add(<#= EntitySetting.Name.ToCamelCase() #>);
             }
-            
+
             await using var countCommand = connection.CreateCommand();
             countCommand.CommandText = $"SELECT COUNT(1) FROM {_tableName}";
 <#    if (EntitySetting.HasSearchableProperties) {#>
