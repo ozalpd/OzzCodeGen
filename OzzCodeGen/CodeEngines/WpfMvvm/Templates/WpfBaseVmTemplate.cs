@@ -156,10 +156,11 @@ namespace ");
     public interface IIsDirty
     {
         bool IsDirty { get; }
+        bool HasErrors { get; }
     }
 ");
             
-            #line 124 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
+            #line 125 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
   }                               // AbstractDataErrorInfoVM ↓
     else if (BaseType == BaseVM.DataErrorInfoVM)
     { 
@@ -208,7 +209,7 @@ namespace ");
                     "ual(newErrors))\r\n                return;\r\n\r\n            _errors[propertyName] = " +
                     "newErrors;\r\n            OnErrorsChanged(propertyName);\r\n        }\r\n    }\r\n");
             
-            #line 225 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
+            #line 226 "C:\Users\ozalp\Source\Repos\OzzCodeGen\OzzCodeGen\CodeEngines\WpfMvvm\Templates\WpfBaseVmTemplate.tt"
     } 
             
             #line default

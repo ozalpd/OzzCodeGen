@@ -120,6 +120,7 @@ namespace <#= GetNamespace() #>
     public interface IIsDirty
     {
         bool IsDirty { get; }
+        bool HasErrors { get; }
     }
 <#  }                               // AbstractDataErrorInfoVM ↓
     else if (BaseType == BaseVM.DataErrorInfoVM)
