@@ -21,9 +21,15 @@ public partial class StorageEngineUI : AbstractEngineUI
 
         //ReadOnlyColumns.Add("PrimaryKeyColumn");
 
+        HiddenColumns.Add("IsText");
+        HiddenColumns.Add("IsFloat");
         HiddenColumns.Add("IsSimple");
         HiddenColumns.Add("IsString");
+        HiddenColumns.Add("IsDouble");
+        HiddenColumns.Add("IsDecimal");
+        HiddenColumns.Add("IsDecimalNumeric");
         HiddenColumns.Add("IsBoolean");
+        HiddenColumns.Add("IsInteger");
         HiddenColumns.Add("IsDateTime");
         HiddenColumns.Add("PrimaryKeyColumn");
         //HiddenColumns.Add("SchemaName");
