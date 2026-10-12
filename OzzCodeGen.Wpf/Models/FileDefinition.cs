@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OzzCodeGen.Wpf.Models
 {
@@ -17,7 +12,7 @@ namespace OzzCodeGen.Wpf.Models
             {
                 if (_name == value) return;
                 _name = value;
-                RaisePropertyChanged("Name");
+                RaisePropertyChanged(nameof(Name));
             }
         }
         private string _name;
@@ -29,9 +24,8 @@ namespace OzzCodeGen.Wpf.Models
             {
                 if (_fullPath == value) return;
                 _fullPath = value;
-                Name = System.IO.Path
-                        .GetFileNameWithoutExtension(_fullPath);
-                RaisePropertyChanged("FullPath");
+                Name = Path.GetFileNameWithoutExtension(_fullPath);
+                RaisePropertyChanged(nameof(FullPath));
             }
         }
         private string _fullPath;

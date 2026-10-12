@@ -18,6 +18,8 @@ public void WriteSingleColumnAndParameter(SqliteRepositoryPropertySetting col, s
     bool isIntOrBool = col.IsIntegerNumeric || col.IsBoolean;
     if (isTimeStamp) {#>
     command.AddDateTimeToTextParameter("@<#= col.Name.ToCamelCase() #>", DateTime.Now);
+<#+ } else if (!string.IsNullOrEmpty(enumName) && isNullable) {#>
+    command.AddParameter("@<#= col.Name.ToCamelCase() #><#= suffix #>", (<#= col.PropertyDefinition.TypeName #>?)<#= value #>);
 <#+ } else if (!string.IsNullOrEmpty(enumName)) {#>
     command.AddParameter("@<#= col.Name.ToCamelCase() #><#= suffix #>", (<#= col.PropertyDefinition.TypeName #>)<#= value #>);
 <#+ } else if (col.IsDateTime ){#>

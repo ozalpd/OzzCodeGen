@@ -40,7 +40,7 @@ namespace OzzCodeGen.Wpf.Models
             {
                 if (_recentProjectFiles == value) return;
                 _recentProjectFiles = value;
-                RaisePropertyChanged("RecentProjectFiles");
+                RaisePropertyChanged(nameof(RecentProjectFiles));
             }
         }
         private List<FileDefinition> _recentProjectFiles;
@@ -51,7 +51,7 @@ namespace OzzCodeGen.Wpf.Models
             set
             {
                 _defaultsFolder = value;
-                RaisePropertyChanged("DefaultsFolder");
+                RaisePropertyChanged(nameof(DefaultsFolder));
             }
             get { return _defaultsFolder; }
         }
@@ -74,8 +74,7 @@ namespace OzzCodeGen.Wpf.Models
         public bool RemoveFromRecentFiles(string fileName)
         {
             var fileDef = RecentProjectFiles
-                            .Where(f => f.FullPath.Equals(fileName))
-                            .FirstOrDefault();
+                            .FirstOrDefault(f => f.FullPath.Equals(fileName));
             if (fileDef != null)
             {
                 RecentProjectFiles.Remove(fileDef);
