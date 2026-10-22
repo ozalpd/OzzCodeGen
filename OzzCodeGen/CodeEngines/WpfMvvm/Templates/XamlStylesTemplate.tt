@@ -76,6 +76,36 @@
         </Style.Triggers>
     </Style>
 
+    <!-- ListBox Style: with validation error display -->
+    <Style x:Key="ValidationListBoxStyle" TargetType="ListBox">
+        <Setter Property="Margin" Value="0,0,0,8"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StackPanel>
+                        <AdornedElementPlaceholder x:Name="placeholder"/>
+                        <TextBlock Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"
+                                   MaxWidth="{Binding ElementName=placeholder, Path=ActualWidth}"
+                                   Foreground="#d80000" FontSize="11" Margin="0" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ToolTipService.Placement" Value="Bottom"/>
+        <Setter Property="ToolTipService.VerticalOffset" Value="5"/>
+        <Setter Property="ToolTipService.ShowDuration" Value="10"/>
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="Margin" Value="0,0,0,32"/>
+                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="BorderBrush" Value="#d80000"/>
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <!-- TextBox Style: validation error display only -->
     <Style x:Key="ValidationTextBoxStyle" TargetType="TextBox">
         <Setter Property="Height" Value="24"/>

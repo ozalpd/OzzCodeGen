@@ -82,57 +82,78 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                     "ush\" Value=\"#d80000\"/>\r\n                <Setter Property=\"ToolTip\" Value=\"{Bindi" +
                     "ng RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorConten" +
                     "t}\"/>\r\n            </Trigger>\r\n        </Style.Triggers>\r\n    </Style>\r\n\r\n    <!" +
-                    "-- TextBox Style: validation error display only -->\r\n    <Style x:Key=\"Validatio" +
-                    "nTextBoxStyle\" TargetType=\"TextBox\">\r\n        <Setter Property=\"Height\" Value=\"2" +
+                    "-- ListBox Style: with validation error display -->\r\n    <Style x:Key=\"Validatio" +
+                    "nListBoxStyle\" TargetType=\"ListBox\">\r\n        <Setter Property=\"Margin\" Value=\"0" +
+                    ",0,0,8\"/>\r\n        <Setter Property=\"VerticalAlignment\" Value=\"Top\"/>\r\n        <" +
+                    "Setter Property=\"VerticalContentAlignment\" Value=\"Center\"/>\r\n        <Setter Pro" +
+                    "perty=\"Validation.ErrorTemplate\">\r\n            <Setter.Value>\r\n                <" +
+                    "ControlTemplate>\r\n                    <StackPanel>\r\n                        <Ado" +
+                    "rnedElementPlaceholder x:Name=\"placeholder\"/>\r\n                        <TextBloc" +
+                    "k Text=\"{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors" +
+                    ")[0].ErrorContent}\"\r\n                                   MaxWidth=\"{Binding Eleme" +
+                    "ntName=placeholder, Path=ActualWidth}\"\r\n                                   Foreg" +
+                    "round=\"#d80000\" FontSize=\"11\" Margin=\"0\" TextWrapping=\"Wrap\"/>\r\n                " +
+                    "    </StackPanel>\r\n                </ControlTemplate>\r\n            </Setter.Valu" +
+                    "e>\r\n        </Setter>\r\n        <Setter Property=\"ToolTipService.Placement\" Value" +
+                    "=\"Bottom\"/>\r\n        <Setter Property=\"ToolTipService.VerticalOffset\" Value=\"5\"/" +
+                    ">\r\n        <Setter Property=\"ToolTipService.ShowDuration\" Value=\"10\"/>\r\n        " +
+                    "<Style.Triggers>\r\n            <Trigger Property=\"Validation.HasError\" Value=\"Tru" +
+                    "e\">\r\n                <Setter Property=\"Margin\" Value=\"0,0,0,32\"/>\r\n             " +
+                    "   <Setter Property=\"BorderThickness\" Value=\"2\"/>\r\n                <Setter Prope" +
+                    "rty=\"BorderBrush\" Value=\"#d80000\"/>\r\n                <Setter Property=\"ToolTip\" " +
+                    "Value=\"{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0" +
+                    "].ErrorContent}\"/>\r\n            </Trigger>\r\n        </Style.Triggers>\r\n    </Sty" +
+                    "le>\r\n\r\n    <!-- TextBox Style: validation error display only -->\r\n    <Style x:K" +
+                    "ey=\"ValidationTextBoxStyle\" TargetType=\"TextBox\">\r\n        <Setter Property=\"Hei" +
+                    "ght\" Value=\"24\"/>\r\n        <Setter Property=\"Margin\" Value=\"0,0,0,8\"/>\r\n        " +
+                    "<Setter Property=\"VerticalAlignment\" Value=\"Top\"/>\r\n        <Setter Property=\"Ve" +
+                    "rticalContentAlignment\" Value=\"Center\"/>\r\n        <Setter Property=\"Validation.E" +
+                    "rrorTemplate\">\r\n            <Setter.Value>\r\n                <ControlTemplate>\r\n " +
+                    "                   <StackPanel>\r\n                        <AdornedElementPlacehol" +
+                    "der x:Name=\"placeholder\"/>\r\n                        <TextBlock Text=\"{Binding El" +
+                    "ementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}\"" +
+                    "\r\n                                   MaxWidth=\"{Binding ElementName=placeholder," +
+                    " Path=ActualWidth}\"\r\n                                   Foreground=\"#d80000\" Fon" +
+                    "tSize=\"11\" Margin=\"0\" TextWrapping=\"Wrap\"/>\r\n                    </StackPanel>\r\n" +
+                    "                </ControlTemplate>\r\n            </Setter.Value>\r\n        </Sette" +
+                    "r>\r\n        <Setter Property=\"ToolTipService.Placement\" Value=\"Bottom\"/>\r\n      " +
+                    "  <Setter Property=\"ToolTipService.VerticalOffset\" Value=\"5\"/>\r\n        <Setter " +
+                    "Property=\"ToolTipService.ShowDuration\" Value=\"10\"/>\r\n        <Style.Triggers>\r\n " +
+                    "           <Trigger Property=\"Validation.HasError\" Value=\"True\">\r\n              " +
+                    "  <Setter Property=\"Margin\" Value=\"0,0,0,32\"/>\r\n                <Setter Property" +
+                    "=\"BorderThickness\" Value=\"2\"/>\r\n                <Setter Property=\"BorderBrush\" V" +
+                    "alue=\"#d80000\"/>\r\n                <Setter Property=\"ToolTip\" Value=\"{Binding Rel" +
+                    "ativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}\"/>\r" +
+                    "\n            </Trigger>\r\n        </Style.Triggers>\r\n    </Style>\r\n\r\n    <!-- Tex" +
+                    "tBox Style: multi-line validation error display only -->\r\n    <Style x:Key=\"Vali" +
+                    "dationMutliLineTextBoxStyle\" TargetType=\"TextBox\" BasedOn=\"{StaticResource Valid" +
+                    "ationTextBoxStyle}\">\r\n        <Setter Property=\"Height\" Value=\"Auto\"/>\r\n        " +
+                    "<Setter Property=\"TextWrapping\" Value=\"Wrap\"/>\r\n        <Setter Property=\"Accept" +
+                    "sReturn\" Value=\"True\"/>\r\n        <Setter Property=\"VerticalAlignment\" Value=\"Str" +
+                    "etch\"/>\r\n        <Setter Property=\"VerticalContentAlignment\" Value=\"Top\"/>\r\n    " +
+                    "    <Setter Property=\"VerticalScrollBarVisibility\" Value=\"Auto\"/>\r\n    </Style>\r" +
+                    "\n\r\n    <!-- TextBox Style: read-only display only -->\r\n    <Style x:Key=\"ReadOnl" +
+                    "yTextBoxStyle\" TargetType=\"TextBox\">\r\n        <Setter Property=\"Height\" Value=\"2" +
                     "4\"/>\r\n        <Setter Property=\"Margin\" Value=\"0,0,0,8\"/>\r\n        <Setter Prope" +
-                    "rty=\"VerticalAlignment\" Value=\"Top\"/>\r\n        <Setter Property=\"VerticalContent" +
-                    "Alignment\" Value=\"Center\"/>\r\n        <Setter Property=\"Validation.ErrorTemplate\"" +
-                    ">\r\n            <Setter.Value>\r\n                <ControlTemplate>\r\n              " +
-                    "      <StackPanel>\r\n                        <AdornedElementPlaceholder x:Name=\"p" +
-                    "laceholder\"/>\r\n                        <TextBlock Text=\"{Binding ElementName=pla" +
-                    "ceholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}\"\r\n           " +
-                    "                        MaxWidth=\"{Binding ElementName=placeholder, Path=ActualW" +
-                    "idth}\"\r\n                                   Foreground=\"#d80000\" FontSize=\"11\" Ma" +
-                    "rgin=\"0\" TextWrapping=\"Wrap\"/>\r\n                    </StackPanel>\r\n             " +
-                    "   </ControlTemplate>\r\n            </Setter.Value>\r\n        </Setter>\r\n        <" +
-                    "Setter Property=\"ToolTipService.Placement\" Value=\"Bottom\"/>\r\n        <Setter Pro" +
-                    "perty=\"ToolTipService.VerticalOffset\" Value=\"5\"/>\r\n        <Setter Property=\"Too" +
-                    "lTipService.ShowDuration\" Value=\"10\"/>\r\n        <Style.Triggers>\r\n            <T" +
-                    "rigger Property=\"Validation.HasError\" Value=\"True\">\r\n                <Setter Pro" +
-                    "perty=\"Margin\" Value=\"0,0,0,32\"/>\r\n                <Setter Property=\"BorderThick" +
-                    "ness\" Value=\"2\"/>\r\n                <Setter Property=\"BorderBrush\" Value=\"#d80000" +
-                    "\"/>\r\n                <Setter Property=\"ToolTip\" Value=\"{Binding RelativeSource={" +
-                    "RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}\"/>\r\n            " +
-                    "</Trigger>\r\n        </Style.Triggers>\r\n    </Style>\r\n\r\n    <!-- TextBox Style: m" +
-                    "ulti-line validation error display only -->\r\n    <Style x:Key=\"ValidationMutliLi" +
-                    "neTextBoxStyle\" TargetType=\"TextBox\" BasedOn=\"{StaticResource ValidationTextBoxS" +
-                    "tyle}\">\r\n        <Setter Property=\"Height\" Value=\"Auto\"/>\r\n        <Setter Prope" +
-                    "rty=\"TextWrapping\" Value=\"Wrap\"/>\r\n        <Setter Property=\"AcceptsReturn\" Valu" +
-                    "e=\"True\"/>\r\n        <Setter Property=\"VerticalAlignment\" Value=\"Stretch\"/>\r\n    " +
-                    "    <Setter Property=\"VerticalContentAlignment\" Value=\"Top\"/>\r\n        <Setter P" +
-                    "roperty=\"VerticalScrollBarVisibility\" Value=\"Auto\"/>\r\n    </Style>\r\n\r\n    <!-- T" +
-                    "extBox Style: read-only display only -->\r\n    <Style x:Key=\"ReadOnlyTextBoxStyle" +
-                    "\" TargetType=\"TextBox\">\r\n        <Setter Property=\"Height\" Value=\"24\"/>\r\n       " +
-                    " <Setter Property=\"Margin\" Value=\"0,0,0,8\"/>\r\n        <Setter Property=\"IsReadOn" +
-                    "ly\" Value=\"True\"/>\r\n        <Setter Property=\"Background\" Value=\"#EDEDED\"/>\r\n   " +
-                    "     <Setter Property=\"VerticalAlignment\" Value=\"Top\"/>\r\n        <Setter Propert" +
-                    "y=\"VerticalContentAlignment\" Value=\"Center\"/>\r\n    </Style>\r\n\r\n    <!-- TextBloc" +
-                    "k Style: right-aligned display only -->\r\n    <Style x:Key=\"RightAlignedTextBlock" +
-                    "Style\" TargetType=\"TextBlock\">\r\n        <Setter Property=\"Margin\" Value=\"4,2,8,0" +
-                    "\"/>\r\n        <Setter Property=\"VerticalAlignment\" Value=\"Top\"/>\r\n        <Setter" +
-                    " Property=\"HorizontalAlignment\" Value=\"Right\"/>\r\n    </Style>\r\n\r\n    <!-- TextBl" +
-                    "ock Style: mimics read-only display only -->\r\n    <Style x:Key=\"ReadOnlyTextBloc" +
-                    "kStyle\" TargetType=\"TextBlock\">\r\n        <Setter Property=\"Margin\" Value=\"0,0,0," +
-                    "8\"/>\r\n        <Setter Property=\"Background\" Value=\"#EDEDED\"/>\r\n    </Style>\r\n\r\n " +
-                    "   <!-- Button Style: toolbar icon button 22x18 -->\r\n    <Style x:Key=\"IconButto" +
-                    "nStyle-22x18\" TargetType=\"Button\">\r\n        <Setter Property=\"Width\" Value=\"22\"/" +
-                    ">\r\n        <Setter Property=\"Height\" Value=\"18\"/>\r\n        <Setter Property=\"Mar" +
-                    "gin\" Value=\"0,4,0,0\"/>\r\n        <Setter Property=\"VerticalAlignment\" Value=\"Top\"" +
-                    "/>\r\n    </Style>\r\n\r\n    <!-- Button Style: toolbar icon button 28x24 -->\r\n    <S" +
-                    "tyle x:Key=\"IconButtonStyle-28x24\" TargetType=\"Button\">\r\n        <Setter Propert" +
-                    "y=\"Width\" Value=\"28\"/>\r\n        <Setter Property=\"Height\" Value=\"24\"/>\r\n        " +
-                    "<Setter Property=\"Margin\" Value=\"0,1,4,1\"/>\r\n        <Setter Property=\"VerticalA" +
-                    "lignment\" Value=\"Top\"/>\r\n    </Style>\r\n</ResourceDictionary>");
+                    "rty=\"IsReadOnly\" Value=\"True\"/>\r\n        <Setter Property=\"Background\" Value=\"#E" +
+                    "DEDED\"/>\r\n        <Setter Property=\"VerticalAlignment\" Value=\"Top\"/>\r\n        <S" +
+                    "etter Property=\"VerticalContentAlignment\" Value=\"Center\"/>\r\n    </Style>\r\n\r\n    " +
+                    "<!-- TextBlock Style: right-aligned display only -->\r\n    <Style x:Key=\"RightAli" +
+                    "gnedTextBlockStyle\" TargetType=\"TextBlock\">\r\n        <Setter Property=\"Margin\" V" +
+                    "alue=\"4,2,8,0\"/>\r\n        <Setter Property=\"VerticalAlignment\" Value=\"Top\"/>\r\n  " +
+                    "      <Setter Property=\"HorizontalAlignment\" Value=\"Right\"/>\r\n    </Style>\r\n\r\n  " +
+                    "  <!-- TextBlock Style: mimics read-only display only -->\r\n    <Style x:Key=\"Rea" +
+                    "dOnlyTextBlockStyle\" TargetType=\"TextBlock\">\r\n        <Setter Property=\"Margin\" " +
+                    "Value=\"0,0,0,8\"/>\r\n        <Setter Property=\"Background\" Value=\"#EDEDED\"/>\r\n    " +
+                    "</Style>\r\n\r\n    <!-- Button Style: toolbar icon button 22x18 -->\r\n    <Style x:K" +
+                    "ey=\"IconButtonStyle-22x18\" TargetType=\"Button\">\r\n        <Setter Property=\"Width" +
+                    "\" Value=\"22\"/>\r\n        <Setter Property=\"Height\" Value=\"18\"/>\r\n        <Setter " +
+                    "Property=\"Margin\" Value=\"0,4,0,0\"/>\r\n        <Setter Property=\"VerticalAlignment" +
+                    "\" Value=\"Top\"/>\r\n    </Style>\r\n\r\n    <!-- Button Style: toolbar icon button 28x2" +
+                    "4 -->\r\n    <Style x:Key=\"IconButtonStyle-28x24\" TargetType=\"Button\">\r\n        <S" +
+                    "etter Property=\"Width\" Value=\"28\"/>\r\n        <Setter Property=\"Height\" Value=\"24" +
+                    "\"/>\r\n        <Setter Property=\"Margin\" Value=\"0,1,4,1\"/>\r\n        <Setter Proper" +
+                    "ty=\"VerticalAlignment\" Value=\"Top\"/>\r\n    </Style>\r\n</ResourceDictionary>");
             return this.GenerationEnvironment.ToString();
         }
     }
