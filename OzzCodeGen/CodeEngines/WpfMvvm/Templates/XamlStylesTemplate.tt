@@ -106,12 +106,22 @@
         </Style.Triggers>
     </Style>
 
-    <!-- TextBox Style: validation error display only -->
-    <Style x:Key="ValidationTextBoxStyle" TargetType="TextBox">
+    <!-- TextBox Style: read-only display only -->
+    <Style x:Key="FormTextBoxStyle" TargetType="TextBox">
         <Setter Property="Height" Value="24"/>
         <Setter Property="Margin" Value="0,0,0,8"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!-- TextBox Style: read-only display only -->
+    <Style x:Key="ReadOnlyTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource FormTextBoxStyle}">
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="Background" Value="#EDEDED"/>
+    </Style>
+
+    <!-- TextBox Style: validation error display only -->
+    <Style x:Key="ValidationTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource FormTextBoxStyle}">
         <Setter Property="Validation.ErrorTemplate">
             <Setter.Value>
                 <ControlTemplate>
@@ -137,8 +147,8 @@
         </Style.Triggers>
     </Style>
 
-    <!-- TextBox Style: multi-line validation error display only -->
-    <Style x:Key="ValidationMutliLineTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource ValidationTextBoxStyle}">
+    <!-- TextBox Style: multi-line read-only display only -->
+    <Style x:Key="ReadOnlyMutliLineTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource ReadOnlyTextBoxStyle}">
         <Setter Property="Height" Value="Auto"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="AcceptsReturn" Value="True"/>
@@ -147,14 +157,14 @@
         <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
     </Style>
 
-    <!-- TextBox Style: read-only display only -->
-    <Style x:Key="ReadOnlyTextBoxStyle" TargetType="TextBox">
-        <Setter Property="Height" Value="24"/>
-        <Setter Property="Margin" Value="0,0,0,8"/>
-        <Setter Property="IsReadOnly" Value="True"/>
-        <Setter Property="Background" Value="#EDEDED"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    <!-- TextBox Style: multi-line validation error display only -->
+    <Style x:Key="ValidationMutliLineTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource ValidationTextBoxStyle}">
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="AcceptsReturn" Value="True"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
     </Style>
 
     <!-- TextBlock Style: right-aligned display only -->
@@ -186,7 +196,7 @@
         <Setter Property="VerticalAlignment" Value="Top"/>
     </Style>
 
-    <!-- Button Style: Dialog button 90xAuto -->
+    <!-- Button Style: Dialog button 90xAouto -->
     <Style x:Key="DlgButtonStyle" TargetType="Button">
         <Setter Property="Width" Value="90"/>
         <Setter Property="Margin" Value="18,0,0,0"/>
