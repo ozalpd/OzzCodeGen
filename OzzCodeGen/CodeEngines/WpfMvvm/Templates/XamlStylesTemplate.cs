@@ -153,7 +153,11 @@ namespace OzzCodeGen.CodeEngines.WpfMvvm.Templates
                     "4 -->\r\n    <Style x:Key=\"IconButtonStyle-28x24\" TargetType=\"Button\">\r\n        <S" +
                     "etter Property=\"Width\" Value=\"28\"/>\r\n        <Setter Property=\"Height\" Value=\"24" +
                     "\"/>\r\n        <Setter Property=\"Margin\" Value=\"0,1,4,1\"/>\r\n        <Setter Proper" +
-                    "ty=\"VerticalAlignment\" Value=\"Top\"/>\r\n    </Style>\r\n</ResourceDictionary>");
+                    "ty=\"VerticalAlignment\" Value=\"Top\"/>\r\n    </Style>\r\n\r\n    <!-- Button Style: Dia" +
+                    "log button 90xAuto -->\r\n    <Style x:Key=\"DlgButtonStyle\" TargetType=\"Button\">\r\n" +
+                    "        <Setter Property=\"Width\" Value=\"90\"/>\r\n        <Setter Property=\"Margin\"" +
+                    " Value=\"18,0,0,0\"/>\r\n        <Setter Property=\"VerticalAlignment\" Value=\"Top\"/>\r" +
+                    "\n    </Style>\r\n</ResourceDictionary>");
             return this.GenerationEnvironment.ToString();
         }
     }
